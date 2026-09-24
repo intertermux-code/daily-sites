@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signal — Independent Tech Publication</title>
+  <meta name="description" content="Signal is an independent tech publication covering the intersection of technology, culture, and policy.">
+  <meta name="theme-color" content="#ffffff">
+  
+  <!-- Fonts: Merriweather (Serif) & Inter (Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- CSS VARIABLES & RESET --- */
+    :root {
+      --c-bg: #ffffff;
+      --c-paper: #fdfdfd;
+      --c-text: #1a1a1a;
+      --c-text-muted: #555555;
+      --c-accent: #d9261c;
+      --c-border: #e5e5e5;
+      --c-border-dark: #1a1a1a;
+      
+      --f-serif: 'Merriweather', serif;
+      --f-sans: 'Inter', sans-serif;
+      
+      --space-xs: 0.5rem;
+      --space-sm: 1rem;
+      --space-md: 2rem;
+      --space-lg: 4rem;
+      --space-xl: 6rem;
+      
+      --container: 1200px;
+      --header-height: 70px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      background-color: var(--c-bg);
+      color: var(--c-text);
+      font-family: var(--f-sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* --- TYPOGRAPHY --- */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--f-serif);
+      font-weight: 900;
+      line-height: 1.2;
+      text-wrap: balance;
+      letter-spacing: -0.02em;
+    }
+
+    h1 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: var(--space-sm); }
+    h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); margin-bottom: var(--space-sm); }
+    h3 { font-size: 1.5rem; margin-bottom: var(--space-xs); }
+    h4 { font-size: 1.25rem; }
+
+    p { margin-bottom: 1.5em; font-size: 1.0625rem; color: var(--c-text); }
+    
+    a { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+    a:hover { color: var(--c-accent); }
+    
+    .serif-italic { font-family: var(--f-serif); font-style: italic; }
+    .uppercase { text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; font-size: 0.875rem; }
+    .tabular { font-variant-numeric: tabular-nums; }
+
+    /* --- UTILITIES --- */
+    .container {
+      width: 100%;
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 var(--space-sm);
+    }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
+
+    .skip-link {
+      position: absolute; top: -100px; left: 0; background: var(--c-accent); color: white;
+      padding: var(--space-sm); z-index: 100; transition: top 0.2s;
+    }
+    .skip-link:focus { top: 0; }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    /* --- BUTTONS & INPUTS --- */
+    button, input { font-family: inherit; font-size: inherit; }
+    
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.75rem 1.5rem; background: var(--c-text); color: white;
+      border: 1px solid var(--c-text); cursor: pointer; font-weight: 600;
+      min-height: 44px; min-width: 44px; touch-action: manipulation;
+      transition: transform 0.1s ease, background-color 0.2s ease;
+    }
+    .btn:hover { background: var(--c-accent); border-color: var(--c-accent); color: white; }
+    .btn:active { transform: scale(0.98); }
+    .btn:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 2px; }
+    
+    .btn-outline { background: transparent; color: var(--c-text); }
+    .btn-outline:hover { background: var(--c-text); color: white; }
+
+    input[type="email"] {
+      padding: 0.75rem; border: 1px solid var(--c-border-dark);
+      min-height: 44px; width: 100%;
+    }
+    input[type="email"]:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 0; }
+
+    /* --- HEADER --- */
+    .site-header {
+      position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px); border-bottom: 1px solid var(--c-border);
+      height: var(--header-height); display: flex; align-items: center;
+    }
+    
+    .nav-wrapper {
+      display: flex; justify-content: space-between; align-items: center; width: 100%;
+    }
+
+    .logo { font-family: var(--f-serif); font-weight: 900; font-size: 1.75rem; letter-spacing: -0.03em; }
+    .logo span { color: var(--c-accent); }
+
+    .main-nav ul { display: flex; gap: var(--space-md); list-style: none; }
+    .main-nav a { font-weight: 500; font-size: 0.95rem; position: relative; }
+    .main-nav a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+      background: var(--c-accent); transition: width 0.2s ease;
+    }
+    .main-nav a:hover::after { width: 100%; }
+
+    .mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+
+    /* --- HERO SECTION --- */
+    .hero { padding: var(--space-lg) 0; border-bottom: 1px solid var(--c-border); }
+    .hero-grid {
+      display: grid; grid-template-columns: 1fr; gap: var(--space-md);
+    }
+    .hero-content { display: flex; flex-direction: column; justify-content: center; order: 2; }
+    .hero-image { order: 1; aspect-ratio: 16/9; overflow: hidden; background: #eee; }
+    .hero-image img { width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+    .hero:hover .hero-image img { transform: scale(1.02); }
+    
+    .meta { display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-sm); color: var(--c-text-muted); font-size: 0.875rem; }
+    .category-tag { color: var(--c-accent); font-weight: 700; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
+
+    /* --- MAIN CONTENT GRID --- */
+    .content-area { padding: var(--space-lg) 0; }
+    .layout-grid {
+      display: grid; grid-template-columns: 1fr; gap: var(--space-lg);
+    }
+
+    /* Latest Articles */
+    .section-header {
+      display: flex; justify-content: space-between; align-items: baseline;
+      border-bottom: 2px solid var(--c-text); padding-bottom: var(--space-xs); margin-bottom: var(--space-md);
+    }
+    .section-title { font-size: 1.25rem; margin: 0; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--space-md); }
+    
+    .article-card { display: flex; flex-direction: column; gap: var(--space-sm); }
+    .card-image { aspect-ratio: 3/2; overflow: hidden; background: #eee; }
+    .card-image img { width: 100%; height: 100%; transition: transform 0.4s ease; }
+    .article-card:hover .card-image img { transform: scale(1.03); }
+    .card-title { font-size: 1.35rem; line-height: 1.3; margin-bottom: 0.25rem; }
+    .card-excerpt { font-size: 0.95rem; color: var(--c-text-muted); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+    /* Sidebar / Trending */
+    .sidebar { position: sticky; top: calc(var(--header-height) + var(--space-md)); align-self: start; }
+    .trending-list { list-style: none; counter-reset: trend; }
+    .trending-item {
+      counter-increment: trend; padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--c-border); display: flex; gap: var(--space-sm); align-items: baseline;
+    }
+    .trending-item::before {
+      content: "0" counter(trend); font-family: var(--f-serif); font-size: 2rem;
+      font-weight: 900; color: var(--c-border); line-height: 1; min-width: 2.5rem;
+    }
+    .trending-item:hover::before { color: var(--c-accent); }
+    .trending-title { font-family: var(--f-serif); font-weight: 700; font-size: 1.1rem; line-height: 1.3; }
+
+    /* Newsletter */
+    .newsletter {
+      background: var(--c-paper); border: 1px solid var(--c-border); padding: var(--space-md);
+      margin-top: var(--space-lg); text-align: center;
+    }
+    .newsletter-form { display: flex; flex-direction: column; gap: var(--space-sm); max-width: 400px; margin: var(--space-sm) auto 0; }
+    .form-msg { font-size: 0.875rem; margin-top: 0.5rem; min-height: 1.2em; }
+    .form-msg.error { color: var(--c-accent); }
+    .form-msg.success { color: green; }
+
+    /* Topics Cloud */
+    .topics-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: var(--space-md); }
+    .topic-pill {
+      padding: 0.25rem 0.75rem; border: 1px solid var(--c-border); font-size: 0.875rem;
+      transition: all 0.2s ease;
+    }
+    .topic-pill:hover { border-color: var(--c-text); background: var(--c-text); color: white; }
+
+    /* Footer */
+    .site-footer {
+      border-top: 4px solid var(--c-text); padding: var(--space-lg) 0 var(--space-md);
+      margin-top: var(--space-xl); background: var(--c-paper);
+    }
+    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-md); margin-bottom: var(--space-lg); }
+    .footer-col h5 { font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-sm); color: var(--c-text-muted); }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .footer-links a { font-size: 0.95rem; }
+    .copyright { font-size: 0.8rem; color: var(--c-text-muted); border-top: 1px solid var(--c-border); padding-top: var(--space-md); text-align: center; }
+
+    /* Responsive */
+    @media (min-width: 768px) {
+      .hero-grid { grid-template-columns: 1.2fr 0.8fr; align-items: center; }
+      .hero-content { order: 1; padding-right: var(--space-md); }
+      .hero-image { order: 2; aspect-ratio: 4/3; }
+      .layout-grid { grid-template-columns: 2fr 1fr; }
+      .newsletter-form { flex-direction: row; }
+    }
+
+    @media (max-width: 767px) {
+      .main-nav { 
+        position: fixed; top: var(--header-height); left: 0; right: 0; bottom: 0;
+        background: white; padding: var(--space-md); transform: translateY(-100%);
+        opacity: 0; pointer-events: none; transition: transform 0.3s ease, opacity 0.3s ease;
+        z-index: 40;
+      }
+      .main-nav.is-open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+      .main-nav ul { flex-direction: column; gap: var(--space-md); }
+      .main-nav a { font-size: 1.5rem; font-family: var(--f-serif); }
+      .mobile-toggle { display: block; }
+    }
+
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to Content</a>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="/" class="logo" aria-label="Signal Home">Signal<span>.</span></a>
+      
+      <button class="mobile-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle Navigation Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <nav id="primary-nav" class="main-nav" aria-label="Primary Navigation">
+        <ul>
+          <li><a href="#technology">Technology</a></li>
+          <li><a href="#culture">Culture</a></li>
+          <li><a href="#policy">Policy</a></li>
+          <li><a href="#science">Science</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+        </ul>
+      </nav>
+
+      <a href="#subscribe" class="btn btn-outline hide-mobile" style="display:none;">Subscribe</a>
+    </div>
+  </header>
+
+  <main id="main-content">
+    
+    <!-- Hero Section -->
+    <section class="hero container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="meta">
+            <span class="category-tag">Deep Dive</span>
+            <time datetime="2026-09-24">Sept 24, 2026</time>
+            <span class="tabular">• 12 min read</span>
+          </div>
+          <h1>The Silicon Valley Exodus: Why Engineers Are Fleeing to the Rust Belt</h1>
+          <p class="serif-italic" style="font-size: 1.25rem; color: var(--c-text-muted);">As remote work solidifies and coastal costs soar, a new generation of builders is revitalizing forgotten industrial hubs. We spent three months in Pittsburgh and Detroit to understand the shift.</p>
+          <div class="meta" style="margin-top: var(--space-sm); margin-bottom: 0;">
+            <strong>By Elena Fisher</strong>
+          </div>
+        </div>
+        <div class="hero-image">
+          <!-- Real Unsplash Image: Urban architecture/Pittsburgh vibe -->
+          <img src="https://images.unsplash.com/photo-1496568816309-51d7c20e3b21?au&fit=crop&w=1600&q=80" 
+               alt="A moody, atmospheric shot of a steel bridge in Pittsburgh at dusk with city lights reflecting on the river." 
+               width="800" height="600" loading="eager">
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Grid -->
+    <div class="container content-area">
+      <div class="layout-grid">
+        
+        <!-- Left Column: Latest Articles -->
+        <section aria-labelledby="latest-heading">
+          <div class="section-header">
+            <h2 id="latest-heading" class="section-title">Latest Stories</h2>
+            <a href="#" class="uppercase" style="font-size: 0.75rem;">View Archive →</a>
+          </div>
+
+          <div class="articles-grid">
+            
+            <!-- Article 1 -->
+            <article class="article-card">
+              <a href="#" class="card-image">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?au&fit=crop&w=800&q=80" 
+                     alt="Close up of a futuristic server rack with blue neon lighting." 
+                     width="600" height="400" loading="lazy">
+              </a>
+              <div class="card-body">
+                <div class="meta"><span class="category-tag">Hardware</span> <span class="tabular">5 min</span></div>
+                <h3 class="card-title"><a href="#">Quantum Cooling Breakthrough Could Slash Data Center Costs by 40%</a></h3>
+                <p class="card-excerpt">Researchers at ETH Zurich have demonstrated a room-temperature stabilization method that defies conventional thermodynamics…</p>
+              </div>
+            </article>
+
+            <!-- Article 2 -->
+            <article class="article-card">
+              <a href="#" class="card-image">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?au&fit=crop&w=800&q=80" 
+                     alt="Abstract visualization of data analytics on a tablet screen." 
+                     width="600" height="400" loading="lazy">
+              </a>
+              <div class="card-body">
+                <div class="meta"><span class="category-tag">Privacy</span> <span class="tabular">8 min</span></div>
+                <h3 class="card-title"><a href="#">The End of Anonymity: How Gait Analysis Is Replacing Facial Recognition</a></h3>
+                <p class="card-excerpt">Your face can change, but your walk cannot. Security firms are pivoting to behavioral biometrics faster than regulators can keep up…</p>
+              </div>
+            </article>
+
+            <!-- Article 3 -->
+            <article class="article-card">
+              <a href="#" class="card-image">
+                <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?au&fit=crop&w=800&q=80" 
+                     alt="Minimalist desk setup with a mechanical keyboard and coffee." 
+                     width="600" height="400" loading="lazy">
+              </a>
+              <div class="card-body">
+                <div class="meta"><span class="category-tag">Work</span> <span class="tabular">6 min</span></div>
+                <h3 class="card-title"><a href="#">Why “Return to Office” Mandates Failed to Boost Innovation Metrics</a></h3>
+                <p class="card-excerpt">Internal leaked documents from three Fortune 500 companies suggest that forced proximity actually decreased patent filings…</p>
+              </div>
+            </article>
+
+             <!-- Article 4 -->
+             <article class="article-card">
+              <a href="#" class="card-image">
+                <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?au&fit=crop&w=800&q=80" 
+                     alt="AI generated art displayed on a digital frame." 
+                     width="600" height="400" loading="lazy">
+              </a>
+              <div class="card-body">
+                <div class="meta"><span class="category-tag">AI Ethics</span> <span class="tabular">10 min</span></div>
+                <h3 class="card-title"><a href="#">Copyright in the Age of Synthetic Media: The Supreme Court Weighs In</a></h3>
+                <p class="card-excerpt">Oral arguments began today in the landmark case that will define intellectual property rights for the next century…</p>
+              </div>
+            </article>
+
+          </div>
+        </section>
+
+        <!-- Right Column: Sidebar -->
+        <aside class="sidebar" aria-label="Trending and Topics">
+          
+          <!-- Trending -->
+          <section style="margin-bottom: var(--space-lg);">
+            <div class="section-header">
+              <h2 class="section-title">Trending Now</h2>
+            </div>
+            <ol class="trending-list">
+              <li class="trending-item">
+                <a href="#" class="trending-title">Apple’s Foldable iPhone Prototype Leaked in Supply Chain Memo</a>
+              </li>
+              <li class="trending-item">
+                <a href="#" class="trending-title">EU Passes Landmark “Right to Repair” Legislation for Software</a>
+              </li>
+              <li class="trending-item">
+                <a href="#" class="trending-title">SpaceX Starship Successfully Completes First Orbital Refueling Test</a>
+              </li>
+              <li class="trending-item">
+                <a href="#" class="trending-title">Opinion: Stop Teaching Kids to Code, Teach Them Systems Thinking</a>
+              </li>
+              <li class="trending-item">
+                <a href="#" class="trending-title">The Hidden Environmental Cost of Your Cloud Storage</a>
+              </li>
+            </ol>
+          </section>
+
+          <!-- Newsletter -->
+          <section id="subscribe" class="newsletter">
+            <h3 style="margin-bottom: 0.5rem;">The Daily Signal</h3>
+            <p style="font-size: 0.9rem; margin-bottom: 1rem;">Essential tech insights delivered to your inbox every morning. No spam, ever.</p>
+            <form class="newsletter-form" novalidate>
+              <label for="email-input" class="sr-only">Email Address</label>
+              <input type="email" id="email-input" placeholder="your@email.com" required autocomplete="email">
+              <button type="submit" class="btn">Join Free</button>
+            </form>
+            <div class="form-msg" aria-live="polite"></div>
+          </section>
+
+          <!-- Topics Cloud -->
+          <section style="margin-top: var(--space-lg);">
+            <h4 class="uppercase" style="margin-bottom: var(--space-sm); color: var(--c-text-muted);">Explore Topics</h4>
+            <div class="topics-cloud">
+              <a href="#" class="topic-pill">Artificial Intelligence</a>
+              <a href="#" class="topic-pill">Cryptocurrency</a>
+              <a href="#" class="topic-pill">Climate Tech</a>
+              <a href="#" class="topic-pill">Startups</a>
+              <a href="#" class="topic-pill">Cybersecurity</a>
+              <a href="#" class="topic-pill">Space Exploration</a>
+              <a href="#" class="topic-pill">Biotech</a>
+              <a href="#" class="topic-pill">Gadgets</a>
+            </div>
+          </section>
+
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="/" class="logo" style="display:block; margin-bottom: 1rem;">Signal<span>.</span></a>
+          <p style="font-size: 0.9rem; color: var(--c-text-muted); max-width: 250px;">
+            Independent journalism for the digital age. We decode the technology shaping our future.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5>Sections</h5>
+          <ul class="footer-links">
+            <li><a href="#">Technology</a></li>
+            <li><a href="#">Science</a></li>
+            <li><a href="#">Policy & Law</a></li>
+            <li><a href="#">Culture</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <ul class="footer-links">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Code of Ethics</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Follow Us</h5>
+          <ul class="footer-links">
+            <li><a href="#">Twitter / X</a></li>
+            <li><a href="#">LinkedIn</a></li>
+            <li><a href="#">Mastodon</a></li>
+            <li><a href="#">RSS Feed</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        &copy; 2026 Signal Media Inc. All rights reserved. Privacy Policy • Terms of Service
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Mobile Menu Toggle
+      const toggleBtn = document.querySelector('.mobile-toggle');
+      const nav = document.querySelector('.main-nav');
+      
+      if (toggleBtn && nav) {
+        toggleBtn.addEventListener('click', () => {
+          const isOpen = nav.classList.toggle('is-open');
+          toggleBtn.setAttribute('aria-expanded', isOpen);
+          // Prevent body scroll when menu is open
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+      }
+
+      // Newsletter Form Validation
+      const form = document.querySelector('.newsletter-form');
+      const emailInput = document.getElementById('email-input');
+      const msgDiv = document.querySelector('.form-msg');
+
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const email = emailInput.value.trim();
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+          msgDiv.className = 'form-msg';
+          msgDiv.textContent = '';
+
+          if (!email) {
+            msgDiv.textContent = 'Please enter your email address.';
+            msgDiv.classList.add('error');
+            return;
+          }
+
+          if (!emailRegex.test(email)) {
+            msgDiv.textContent = 'Please enter a valid email address.';
+            msgDiv.classList.add('error');
+            return;
+          }
+
+          // Simulate success
+          msgDiv.textContent = 'Welcome aboard! Check your inbox to confirm.';
+          msgDiv.classList.add('success');
+          emailInput.value = '';
+        });
+      }
+
+      // Simple Scroll Reveal for Articles (Respecting Reduced Motion)
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      
+      if (!prefersReducedMotion) {
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'translateY(0)';
+              observer.unobserve(entry.target);
+            }
+          });
+        }, observerOptions);
+
+        document.querySelectorAll('.article-card').forEach(card => {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(20px)';
+          card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+          observer.observe(card);
+        });
+      }
+    });
+  </script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
