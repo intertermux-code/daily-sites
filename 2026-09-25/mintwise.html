@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en" style="color-scheme: light;">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ecfdf5">
+<meta name="description" content="Mintwise helps you budget, save, and grow your money with smart habits — try the interactive savings calculator.">
+<title>Mintwise — Personal Finance, Finally Feeling Fresh</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fraunces@5/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/inter@5/index.css">
+<style>
+  :root{
+    --mint:#10b981;
+    --mint-deep:#047857;
+    --mint-darker:#065f46;
+    --mint-tint:#ecfdf5;
+    --mint-tint-2:#f0fdf7;
+    --ink:#10312b;
+    --ink-soft:#3d5a52;
+    --muted:#5f7d74;
+    --line:#d7ece2;
+    --white:#ffffff;
+    --radius-lg:24px;
+    --radius-md:16px;
+    --radius-sm:10px;
+    --shadow-sm:0 1px 2px rgba(16,49,43,.06), 0 4px 14px rgba(16,49,43,.06);
+    --shadow-md:0 4px 8px rgba(16,49,43,.06), 0 16px 40px rgba(16,49,43,.10);
+    --font-display:"Fraunces Variable", Georgia, serif;
+    --font-body:"Inter Variable", system-ui, -apple-system, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:96px;-webkit-text-size-adjust:100%}
+  body{
+    font-family:var(--font-body);
+    color:var(--ink);
+    background:var(--white);
+    line-height:1.6;
+    font-size:1rem;
+    touch-action:manipulation;
+  }
+  img{max-width:100%;height:auto;display:block}
+  a{color:var(--mint-deep)}
+  h1,h2,h3,h4{font-family:var(--font-display);font-weight:650;line-height:1.15;text-wrap:balance;letter-spacing:-.01em}
+  h1{font-size:clamp(2.3rem,6vw,3.9rem)}
+  h2{font-size:clamp(1.8rem,4vw,2.6rem)}
+  h3{font-size:1.25rem}
+  p{text-wrap:pretty}
+  :focus-visible{outline:3px solid var(--mint-deep);outline-offset:3px;border-radius:4px}
+  .num{font-variant-numeric:tabular-nums}
+  .visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .skip-link{
+    position:absolute;left:16px;top:-64px;z-index:200;
+    background:var(--mint-darker);color:#fff;padding:12px 20px;border-radius:0 0 12px 12px;
+    font-weight:600;text-decoration:none;transition:transform .2s ease;
+  }
+  .skip-link:focus-visible{top:0;transform:translateY(0)}
+  .container{width:min(1160px,100% - 40px);margin-inline:auto}
+  section{scroll-margin-top:96px}
+
+  /* ============ Buttons ============ */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    min-height:48px;padding:12px 24px;border-radius:999px;border:2px solid transparent;
+    font:600 1rem/1 var(--font-body);text-decoration:none;cursor:pointer;
+    transition:transform .18s ease, box-shadow .18s ease, background-color .18s ease, opacity .18s ease;
+  }
+  .btn:hover{transform:translateY(-2px)}
+  .btn:active{transform:translateY(0)}
+  .btn-primary{background:var(--mint-deep);color:#fff;box-shadow:0 8px 20px rgba(4,120,87,.28)}
+  .btn-primary:hover{background:var(--mint-darker);box-shadow:0 12px 26px rgba(4,120,87,.34)}
+  .btn-ghost{background:transparent;color:var(--mint-darker);border-color:var(--line)}
+  .btn-ghost:hover{border-color:var(--mint);background:var(--mint-tint)}
+  .btn-mint{background:var(--mint-tint);color:var(--mint-darker)}
+  .btn-mint:hover{background:#d8f5e7}
+
+  /* ============ Header / Nav ============ */
+  .site-header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(255,255,255,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px}
+  .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:700;font-size:1.25rem;font-family:var(--font-display);letter-spacing:-.02em}
+  .brand-mark{
+    width:38px;height:38px;border-radius:12px;flex:none;
+    background:linear-gradient(135deg,#34d399,#059669);
+    display:grid;place-items:center;color:#fff;box-shadow:0 4px 10px rgba(5,150,105,.35);
+  }
+  .nav-links{display:none;list-style:none;gap:4px}
+  .nav-links a{
+    display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:999px;
+    text-decoration:none;color:var(--ink-soft);font-weight:500;font-size:.95rem;
+    transition:background-color .18s ease,color .18s ease;
+  }
+  .nav-links a:hover{background:var(--mint-tint);color:var(--mint-darker)}
+  .nav-cta{display:none;gap:10px;align-items:center}
+  .nav-toggle{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:48px;height:48px;border-radius:14px;border:1px solid var(--line);
+    background:#fff;cursor:pointer;color:var(--ink);
+    transition:background-color .18s ease,border-color .18s ease;
+  }
+  .nav-toggle:hover{background:var(--mint-tint);border-color:var(--mint)}
+  .nav-toggle .bar{display:block;width:20px;height:2px;background:currentColor;border-radius:2px;position:relative;transition:transform .25s ease,opacity .25s ease}
+  .nav-toggle .bar::before,.nav-toggle .bar::after{content:"";position:absolute;left:0;width:20px;height:2px;background:currentColor;border-radius:2px;transition:transform .25s ease}
+  .nav-toggle .bar::before{top:-6px}
+  .nav-toggle .bar::after{top:6px}
+  .nav-toggle[aria-expanded="true"] .bar{transform:rotate(45deg)}
+  .nav-toggle[aria-expanded="true"] .bar::before{transform:rotate(-90deg) translateX(0);top:0;left:-0px}
+  .nav-toggle[aria-expanded="true"] .bar::after{opacity:0;transform:translateX(8px)}
+  .mobile-panel{
+    display:none;position:absolute;left:0;right:0;top:100%;
+    background:#fff;border-bottom:1px solid var(--line);box-shadow:var(--shadow-md);
+    padding:12px 20px 20px;
+  }
+  .mobile-panel.open{display:block;animation:panelIn .25s ease both}
+  @keyframes panelIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+  .mobile-panel ul{list-style:none;display:grid;gap:4px}
+  .mobile-panel a{
+    display:flex;align-items:center;min-height:52px;padding:0 12px;border-radius:12px;
+    text-decoration:none;color:var(--ink);font-weight:600;
+    transition:background-color .18s ease;
+  }
+  .mobile-panel a:hover{background:var(--mint-tint)}
+  .mobile-panel .btn{margin-top:12px;width:100%}
+  @media (min-width:900px){
+    .nav-links{display:flex}
+    .nav-cta{display:flex}
+    .nav-toggle{display:none}
+    .mobile-panel{display:none !important}
+  }
+
+  /* ============ Hero ============ */
+  .hero{
+    background:
+      radial-gradient(900px 480px at 85% -10%, #d9f7ea 0%, transparent 60%),
+      radial-gradient(700px 420px at -10% 30%, #e6fbf1 0%, transparent 55%),
+      linear-gradient(180deg, var(--mint-tint-2), #ffffff 85%);
+    overflow:hidden;
+  }
+  .hero-grid{display:grid;gap:56px;padding:72px 0 88px;align-items:center}
+  @media (min-width:960px){.hero-grid{grid-template-columns:1.05fr .95fr;padding:96px 0 112px}}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    background:#fff;border:1px solid var(--line);border-radius:999px;
+    padding:8px 16px;font-size:.85rem;font-weight:600;color:var(--mint-darker);
+    box-shadow:var(--shadow-sm);margin-bottom:20px;
+  }
+  .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--mint);flex:none}
+  .hero h1{margin-bottom:20px}
+  .hero h1 em{font-style:italic;color:var(--mint-deep)}
+  .hero-lede{font-size:1.15rem;color:var(--ink-soft);max-width:34rem;margin-bottom:32px}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:28px}
+  .hero-proof{display:flex;align-items:center;gap:14px;color:var(--muted);font-size:.9rem}
+  .avatar-stack{display:flex}
+  .avatar-stack img{
+    width:40px;height:40px;border-radius:50%;border:3px solid #fff;object-fit:cover;
+    margin-left:-10px;box-shadow:var(--shadow-sm);
+  }
+  .avatar-stack img:first-child{margin-left:0}
+  .stars{color:#f59e0b;letter-spacing:2px}
+
+  /* Phone mockup (pure CSS) */
+  .phone-stage{position:relative;display:flex;justify-content:center}
+  .phone{
+    position:relative;width:min(320px,84vw);aspect-ratio:320/650;
+    background:linear-gradient(160deg,#1c3a32,#0c211c);
+    border-radius:46px;padding:12px;
+    box-shadow:0 30px 70px rgba(16,49,43,.28), 0 6px 18px rgba(16,49,43,.18), inset 0 0 0 2px rgba(255,255,255,.08);
+  }
+  .phone::before{ /* side button */
+    content:"";position:absolute;right:-3px;top:130px;width:3px;height:64px;border-radius:3px;background:#2c4a41;
+  }
+  .phone-screen{
+    position:relative;width:100%;height:100%;background:#fbfffd;border-radius:36px;
+    overflow:hidden;display:flex;flex-direction:column;
+  }
+  .phone-notch{
+    position:absolute;top:10px;left:50%;transform:translateX(-50%);
+    width:96px;height:22px;background:#0c211c;border-radius:999px;z-index:3;
+  }
+  .p-statusbar{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 22px 4px;font-size:.68rem;font-weight:700;color:var(--ink);
+    font-variant-numeric:tabular-nums;
+  }
+  .p-statusbar .p-icons{display:flex;gap:5px;align-items:center}
+  .p-icons i{display:block;background:var(--ink);border-radius:1px}
+  .p-icons i:nth-child(1){width:3px;height:5px;opacity:.9}
+  .p-icons i:nth-child(2){width:3px;height:8px;opacity:.9}
+  .p-icons i:nth-child(3){width:3px;height:11px;opacity:.9}
+  .p-icons .batt{width:16px;height:8px;border-radius:2px;background:transparent;border:1.5px solid var(--ink);position:relative}
+  .p-icons .batt::after{content:"";position:absolute;inset:1.5px;right:5px;background:var(--mint);border-radius:1px}
+  .p-body{padding:10px 16px 0;display:flex;flex-direction:column;gap:12px;flex:1}
+  .p-hello{font-size:.72rem;color:var(--muted)}
+  .p-name{font-family:var(--font-display);font-weight:650;font-size:1.05rem;color:var(--ink);line-height:1.2}
+  .p-card{
+    background:linear-gradient(135deg,#10b981,#047857);
+    border-radius:18px;padding:14px 16px;color:#fff;box-shadow:0 10px 22px rgba(5,150,105,.35);
+  }
+  .p-card-label{font-size:.66rem;opacity:.85;text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+  .p-card-amount{font-size:1.5rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.25}
+  .p-card-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+  .p-chip{background:rgba(255,255,255,.18);border-radius:999px;padding:4px 10px;font-size:.64rem;font-weight:700}
+  .p-progress{flex:1;height:6px;background:rgba(255,255,255,.25);border-radius:99px;margin-left:10px;overflow:hidden}
+  .p-progress span{display:block;height:100%;width:72%;background:#fff;border-radius:99px}
+  .p-panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px 14px}
+  .p-panel-title{display:flex;justify-content:space-between;align-items:baseline;font-size:.72rem;font-weight:700;color:var(--ink);margin-bottom:10px}
+  .p-panel-title span{color:var(--mint-deep);font-size:.64rem}
+  .p-bars{display:flex;align-items:flex-end;gap:7px;height:64px}
+  .p-bars i{flex:1;border-radius:5px 5px 2px 2px;background:linear-gradient(180deg,#6ee7b7,#10b981)}
+  .p-bars i.dim{background:#d9efe6}
+  .p-days{display:flex;gap:7px;margin-top:6px}
+  .p-days b{flex:1;text-align:center;font-size:.56rem;color:var(--muted);font-weight:600}
+  .p-tx{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #eef6f2}
+  .p-tx:last-child{border-bottom:0;padding-bottom:2px}
+  .p-tx-icon{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;font-size:.8rem;flex:none}
+  .p-tx-meta{flex:1;min-width:0}
+  .p-tx-name{font-size:.72rem;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .p-tx-cat{font-size:.6rem;color:var(--muted)}
+  .p-tx-amt{font-size:.72rem;font-weight:700;font-variant-numeric:tabular-nums}
+  .p-tx-amt.neg{color:var(--ink)}
+  .p-tx-amt.pos{color:var(--mint-deep)}
+  .p-tabbar{
+    margin-top:auto;display:flex;justify-content:space-around;align-items:center;
+    padding:10px 8px 14px;border-top:1px solid var(--line);background:#fff;
+  }
+  .p-tabbar i{width:22px;height:22px;border-radius:8px;background:#dcefe7}
+  .p-tabbar i.on{background:var(--mint)}
+  .float-chip{
+    position:absolute;background:#fff;border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow-md);padding:10px 16px;display:flex;align-items:center;gap:10px;
+    font-size:.8rem;font-weight:700;color:var(--ink);white-space:nowrap;
+    animation:floaty 6s ease-in-out infinite;
+  }
+  .float-chip small{display:block;font-weight:500;color:var(--muted);font-size:.68rem}
+  .float-chip .fc-icon{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;flex:none;background:var(--mint-tint);color:var(--mint-darker)}
+  .chip-a{top:9%;left:-2%;animation-delay:0s}
+  .chip-b{bottom:14%;right:-4%;animation-delay:-3s}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @media (max-width:420px){.chip-a{left:-14px}.chip-b{right:-14px}}
+
+  /* ============ Sections shared ============ */
+  .section-pad{padding:80px 0}
+  @media (min-width:900px){.section-pad{padding:104px 0}}
+  .section-head{max-width:44rem;margin-bottom:48px}
+  .section-head.center{margin-inline:auto;text-align:center}
+  .kicker{
+    display:inline-block;font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--mint-deep);margin-bottom:12px;
+  }
+  .section-head p{color:var(--ink-soft);margin-top:14px;font-size:1.05rem}
+
+  /* Reveal */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.is-visible{opacity:1;transform:translateY(0)}
+  .reveal[data-delay="1"]{transition-delay:.1s}
+  .reveal[data-delay="2"]{transition-delay:.2s}
+  .reveal[data-delay="3"]{transition-delay:.3s}
+
+  /* ============ Calculator ============ */
+  .calc-section{background:linear-gradient(180deg,#fff, var(--mint-tint-2) 40%, #fff)}
+  .calc-grid{display:grid;gap:32px}
+  @media (min-width:980px){.calc-grid{grid-template-columns:1.05fr .95fr;align-items:start}}
+  .calc-card,.calc-result{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-md);
+  }
+  .calc-card{padding:28px}
+  fieldset{border:0}
+  legend{font-weight:700;font-size:1.05rem;margin-bottom:4px;font-family:var(--font-display)}
+  .legend-note{font-size:.85rem;color:var(--muted);margin-bottom:18px}
+  .field-grid{display:grid;gap:14px;grid-template-columns:1fr}
+  @media (min-width:560px){.field-grid{grid-template-columns:1fr 1fr}}
+  .field label{display:block;font-size:.82rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+  .input-wrap{position:relative;display:flex;align-items:center}
+  .input-wrap .currency{
+    position:absolute;left:14px;font-weight:700;color:var(--muted);pointer-events:none;font-variant-numeric:tabular-nums;
+  }
+  .field input{
+    width:100%;min-height:52px;padding:12px 14px 12px 32px;border-radius:var(--radius-md);
+    border:1.5px solid var(--line);background:var(--mint-tint-2);color:var(--ink);
+    font:600 1rem var(--font-body);font-variant-numeric:tabular-nums;
+    transition:border-color .18s ease, background-color .18s ease, box-shadow .18s ease;
+  }
+  .field input:hover{border-color:#a9dcc7}
+  .field input:focus{outline:none;border-color:var(--mint);background:#fff;box-shadow:0 0 0 4px rgba(16,185,129,.18)}
+  .field input:focus-visible{outline:3px solid var(--mint-deep);outline-offset:2px}
+  .calc-hint{margin-top:16px;font-size:.82rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start}
+  .calc-hint svg{flex:none;margin-top:2px}
+
+  .calc-result{padding:32px 28px;display:flex;flex-direction:column;align-items:center;text-align:center}
+  .donut-wrap{position:relative;width:220px;height:220px;margin-bottom:20px}
+  .donut-svg{width:100%;height:100%;transform:rotate(-90deg);transform-origin:50% 50%}
+  .donut-track{fill:none;stroke:#e3f2ea;stroke-width:14}
+  .donut-fill{fill:none;stroke:url(#donutGrad);stroke-width:14;stroke-linecap:round}
+  .donut-center{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  }
+  .donut-pct{font-family:var(--font-display);font-weight:700;font-size:2.6rem;line-height:1;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .donut-label{font-size:.78rem;color:var(--muted);font-weight:600}
+  .donut-pop{animation:donutPop .45s ease}
+  @keyframes donutPop{0%{transform:scale(.96)}60%{transform:scale(1.02)}100%{transform:scale(1)}}
+  .verdict{font-size:1.05rem;font-weight:700;color:var(--mint-darker);margin-bottom:6px;text-wrap:balance}
+  .verdict-detail{color:var(--ink-soft);font-size:.95rem;max-width:26rem;margin-bottom:24px}
+  .calc-stats{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;
+    border-top:1px solid var(--line);padding-top:22px;
+  }
+  .stat{background:var(--mint-tint-2);border:1px solid var(--line);border-radius:var(--radius-md);padding:14px 8px}
+  .stat b{display:block;font-size:1.1rem;font-weight:800;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .stat span{font-size:.72rem;color:var(--muted);font-weight:600}
+  .stat.highlight b{color:var(--mint-deep)}
+  @media (max-width:400px){.calc-stats{grid-template-columns:1fr 1fr 1fr;gap:6px}.stat b{font-size:.95rem}}
+
+  /* ============ Features ============ */
+  .features-grid{display:grid;gap:20px;grid-template-columns:1fr}
+  @media (min-width:640px){.features-grid{grid-template-columns:1fr 1fr}}
+  @media (min-width:1000px){.features-grid{grid-template-columns:repeat(3,1fr)}}
+  .feature-card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);padding:28px;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .feature-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+  .feature-icon{
+    width:52px;height:52px;border-radius:16px;display:grid;place-items:center;margin-bottom:18px;
+    background:var(--mint-tint);color:var(--mint-darker);
+  }
+  .feature-card h3{margin-bottom:8px}
+  .feature-card p{color:var(--ink-soft);font-size:.95rem}
+  .spotlight{
+    margin-top:44px;display:grid;gap:0;border:1px solid var(--line);border-radius:var(--radius-lg);
+    overflow:hidden;background:#fff;box-shadow:var(--shadow-md);
+  }
+  @media (min-width:900px){.spotlight{grid-template-columns:1fr 1fr;align-items:center}}
+  .spotlight-img{position:relative;min-height:280px}
+  .spotlight-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .spotlight-copy{padding:36px 32px}
+  .spotlight-copy h3{font-size:1.6rem;margin-bottom:12px}
+  .spotlight-copy p{color:var(--ink-soft);margin-bottom:20px}
+  .spotlight-list{list-style:none;display:grid;gap:10px;margin-bottom:24px}
+  .spotlight-list li{display:flex;gap:10px;align-items:flex-start;font-size:.95rem;color:var(--ink-soft)}
+  .spotlight-list svg{flex:none;margin-top:3px;color:var(--mint-deep)}
+
+  /* ============ Security band ============ */
+  .security-band{background:linear-gradient(135deg,#064e3b,#065f46 55%,#047857);color:#d1fae5}
+  .security-inner{padding:56px 0;text-align:center}
+  .security-inner h2{color:#fff;margin-bottom:10px;font-size:clamp(1.5rem,3vw,2rem)}
+  .security-inner > .container > p{max-width:38rem;margin:0 auto 36px;color:#a7e8cd;font-size:.98rem}
+  .badges{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;list-style:none}
+  .badge{
+    display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:12px 20px;
+    font-size:.88rem;font-weight:700;color:#ecfdf5;
+    transition:transform .2s ease, background-color .2s ease;
+  }
+  .badge:hover{transform:translateY(-3px);background:rgba(255,255,255,.14)}
+  .badge svg{color:#6ee7b7;flex:none}
+  .security-fine{margin-top:24px;font-size:.75rem;color:#7fd4b1;max-width:44rem;margin-inline:auto}
+
+  /* ============ Pricing ============ */
+  .pricing-toggle-row{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:44px}
+  .pricing-toggle-row .t-label{font-weight:700;font-size:.95rem;color:var(--ink-soft)}
+  .pricing-toggle-row .t-label.active{color:var(--ink)}
+  .switch{
+    position:relative;width:64px;height:36px;border-radius:999px;border:0;cursor:pointer;
+    background:#cde8dc;transition:background-color .2s ease;flex:none;
+  }
+  .switch[aria-checked="true"]{background:var(--mint)}
+  .switch .knob{
+    position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;background:#fff;
+    box-shadow:0 2px 6px rgba(16,49,43,.25);
+    transition:transform .25s cubic-bezier(.34,1.4,.64,1);
+  }
+  .switch[aria-checked="true"] .knob{transform:translateX(28px)}
+  .save-pill{background:var(--mint-tint);color:var(--mint-darker);border:1px solid #b9ecd6;border-radius:999px;padding:5px 12px;font-size:.75rem;font-weight:800}
+  .pricing-grid{display:grid;gap:24px;grid-template-columns:1fr;max-width:1040px;margin-inline:auto}
+  @media (min-width:760px){.pricing-grid{grid-template-columns:repeat(3,1fr);align-items:stretch}}
+  .price-card{
+    background:#fff;border:1.5px solid var(--line);border-radius:var(--radius-lg);padding:32px 28px;
+    display:flex;flex-direction:column;position:relative;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .price-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+  .price-card.popular{border-color:var(--mint);box-shadow:0 18px 44px rgba(16,185,129,.18)}
+  .popular-tag{
+    position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+    background:var(--mint);color:#04302a;font-size:.72rem;font-weight:800;letter-spacing:.06em;
+    text-transform:uppercase;padding:6px 14px;border-radius:999px;white-space:nowrap;
+  }
+  .plan-name{font-family:var(--font-display);font-weight:650;font-size:1.2rem;margin-bottom:4px}
+  .plan-desc{font-size:.88rem;color:var(--muted);margin-bottom:20px;min-height:2.6em}
+  .plan-price{display:flex;align-items:baseline;gap:6px;margin-bottom:4px}
+  .plan-price .amount{font-family:var(--font-display);font-size:2.8rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+  .plan-price .per{color:var(--muted);font-size:.9rem;font-weight:600}
+  .plan-billed{font-size:.78rem;color:var(--muted);margin-bottom:24px;min-height:1.4em}
+  .price-swap{animation:priceIn .3s ease both}
+  @keyframes priceIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  .plan-features{list-style:none;display:grid;gap:10px;margin-bottom:28px;flex:1}
+  .plan-features li{display:flex;gap:10px;font-size:.92rem;color:var(--ink-soft);align-items:flex-start}
+  .plan-features svg{flex:none;margin-top:3px;color:var(--mint-deep)}
+  .plan-features li.off{color:#9db5ac}
+  .plan-features li.off svg{color:#c6d8d0}
+  .price-card .btn{width:100%}
+  .pricing-note{text-align:center;color:var(--muted);font-size:.85rem;margin-top:28px}
+
+  /* ============ Testimonials ============ */
+  .testi-section{background:var(--mint-tint-2)}
+  .testi-grid{display:grid;gap:24px;grid-template-columns:1fr}
+  @media (min-width:700px){.testi-grid{grid-template-columns:repeat(3,1fr)}}
+  .testi-card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);padding:28px;
+    display:flex;flex-direction:column;gap:18px;box-shadow:var(--shadow-sm);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .testi-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-md)}
+  .testi-quote{
+    color:var(--ink-soft);font-size:.97rem;
+    display:-webkit-box;-webkit-line-clamp:7;-webkit-box-orient:vertical;overflow:hidden;
+  }
+  .testi-person{display:flex;align-items:center;gap:12px;margin-top:auto}
+  .testi-person img{width:48px;height:48px;border-radius:50%;object-fit:cover;flex:none;border:2px solid var(--mint-tint)}
+  .testi-name{font-weight:700;font-size:.95rem}
+  .testi-role{font-size:.8rem;color:var(--muted)}
+  .testi-stars{color:#f59e0b;font-size:.85rem;letter-spacing:2px}
+
+  /* ============ FAQ ============ */
+  .faq-list{max-width:760px;margin-inline:auto;display:grid;gap:14px}
+  .faq-item{background:#fff;border:1.5px solid var(--line);border-radius:var(--radius-md);overflow:hidden;transition:border-color .2s ease}
+  .faq-item[open]{border-color:var(--mint)}
+  .faq-item summary{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    min-height:56px;padding:16px 20px;cursor:pointer;list-style:none;
+    font-weight:700;font-size:1rem;color:var(--ink);
+  }
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-icon{
+    width:32px;height:32px;border-radius:50%;flex:none;display:grid;place-items:center;
+    background:var(--mint-tint);color:var(--mint-darker);
+    transition:transform .3s ease, background-color .3s ease;
+    transform-origin:center;
+  }
+  .faq-item[open] .faq-icon{transform:rotate(45deg);background:var(--mint);color:#04302a}
+  .faq-answer{padding:0 20px 20px;color:var(--ink-soft);font-size:.95rem;max-width:40rem}
+
+  /* ============ CTA + Footer ============ */
+  .cta-band{padding:24px 0 80px}
+  .cta-inner{
+    background:linear-gradient(135deg,#10b981,#047857);border-radius:28px;
+    padding:56px 32px;text-align:center;color:#fff;position:relative;overflow:hidden;
+    box-shadow:0 24px 60px rgba(4,120,87,.3);
+  }
+  .cta-inner::before,.cta-inner::after{
+    content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.1);
+  }
+  .cta-inner::before{width:280px;height:280px;top:-120px;left:-80px}
+  .cta-inner::after{width:220px;height:220px;bottom:-100px;right:-60px}
+  .cta-inner h2{color:#fff;margin-bottom:12px;position:relative;z-index:1}
+  .cta-inner p{color:#d1fae5;max-width:34rem;margin:0 auto 28px;position:relative;z-index:1}
+  .cta-inner .btn{position:relative;z-index:1;background:#fff;color:var(--mint-darker)}
+  .cta-inner .btn:hover{background:var(--mint-tint)}
+
+  .site-footer{background:#0c211c;color:#b7d6ca;padding:64px 0 32px}
+  .footer-grid{display:grid;gap:40px;grid-template-columns:1fr}
+  @media (min-width:760px){.footer-grid{grid-template-columns:1.4fr 1fr 1fr 1.4fr}}
+  .footer-brand .brand{color:#fff;margin-bottom:14px}
+  .footer-brand p{font-size:.9rem;max-width:22rem;color:#8fb8a8}
+  .footer-col h3{color:#fff;font-size:.95rem;font-family:var(--font-body);font-weight:700;margin-bottom:14px;letter-spacing:.02em}
+  .footer-col ul{list-style:none;display:grid;gap:4px}
+  .footer-col a{
+    display:inline-flex;align-items:center;min-height:44px;color:#b7d6ca;text-decoration:none;font-size:.92rem;
+    transition:color .18s ease, transform .18s ease;
+  }
+  .footer-col a:hover{color:#6ee7b7;transform:translateX(3px)}
+  .newsletter p{font-size:.9rem;color:#8fb8a8;margin-bottom:14px}
+  .newsletter label{display:block;font-size:.82rem;font-weight:700;color:#fff;margin-bottom:6px}
+  .newsletter-form{display:flex;gap:10px;flex-wrap:wrap}
+  .newsletter input[type="email"]{
+    flex:1 1 200px;min-height:48px;padding:12px 16px;border-radius:999px;border:1.5px solid #1f4438;
+    background:#102b23;color:#eafff6;font:500 .95rem var(--font-body);
+    transition:border-color .18s ease, box-shadow .18s ease;
+  }
+  .newsletter input[type="email"]::placeholder{color:#6d9a88}
+  .newsletter input[type="email"]:focus{outline:none;border-color:var(--mint);box-shadow:0 0 0 4px rgba(16,185,129,.25)}
+  .newsletter input[type="email"]:focus-visible{outline:3px solid #6ee7b7;outline-offset:2px}
+  .newsletter .btn{background:var(--mint);color:#04302a;flex:none}
+  .newsletter .btn:hover{background:#34d399}
+  .news-status{margin-top:12px;font-size:.88rem;font-weight:600;color:#6ee7b7}
+  .socials{display:flex;gap:10px;margin-top:20px}
+  .socials a{
+    width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
+    background:#12312a;border:1px solid #1f4438;color:#b7d6ca;
+    transition:transform .18s ease, background-color .18s ease, color .18s ease;
+  }
+  .socials a:hover{transform:translateY(-3px);background:var(--mint);color:#04302a}
+  .footer-bottom{
+    margin-top:48px;padding-top:24px;border-top:1px solid #1f4438;
+    display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;
+    font-size:.82rem;color:#7ba593;
+  }
+  .footer-bottom nav ul{display:flex;gap:18px;list-style:none;flex-wrap:wrap}
+  .footer-bottom nav a{color:#7ba593;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;transition:color .18s ease}
+  .footer-bottom nav a:hover{color:#6ee7b7}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important}
+    .reveal{opacity:1;transform:none}
+    .float-chip{animation:none}
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to Main Content</a>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="#top" aria-label="Mintwise — back to top">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2C7 7 4 10.5 4 14a8 8 0 0 0 16 0c0-3.5-3-7-8-12Z"/><path d="M12 22v-6"/></svg>
+      </span>
+      Mintwise
+    </a>
+
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#calculator">Savings Calculator</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="#pricing">Sign In</a>
+      <a class="btn btn-primary" href="#pricing">Start Saving Free</a>
+    </div>
+
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobilePanel" aria-label="Open navigation menu">
+      <span class="bar" aria-hidden="true"></span>
+    </button>
+
+    <div class="mobile-panel" id="mobilePanel">
+      <nav aria-label="Mobile">
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#calculator">Savings Calculator</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+      <a class="btn btn-primary" href="#pricing">Start Saving Free</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <span id="top"></span>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow reveal"><span class="dot" aria-hidden="true"></span> Trusted by 1.2&nbsp;million savers</p>
+        <h1 id="hero-title" class="reveal" data-delay="1">Your Money, <em>Finally</em> Feeling Fresh</h1>
+        <p class="hero-lede reveal" data-delay="2">Mintwise turns your paycheck into progress. Set budgets that adapt to you, stash spare change automatically, and watch your savings rate climb — all in one calm, friendly app.</p>
+        <div class="hero-actions reveal" data-delay="3">
+          <a class="btn btn-primary" href="#pricing">Start Saving Free</a>
+          <a class="btn btn-ghost" href="#calculator">Try the Savings Calculator</a>
+        </div>
+        <div class="hero-proof reveal" data-delay="3">
+          <div class="avatar-stack">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&h=120&q=80" width="120" height="120" alt="Smiling woman in her thirties, a Mintwise member" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120&q=80" width="120" height="120" alt="Smiling man with glasses, a Mintwise member" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=120&h=120&q=80" width="120" height="120" alt="Smiling woman with blonde hair, a Mintwise member" loading="lazy">
+          </div>
+          <p><span class="stars" aria-hidden="true">★★★★★</span><br><span class="num">4.9</span> average from <span class="num">38,000+</span> reviews</p>
+        </div>
+      </div>
+
+      <div class="phone-stage reveal" data-delay="2">
+        <div class="phone" role="img" aria-label="Mintwise app shown on a phone: a savings balance of $8,432.50, a weekly spending chart, and recent transactions.">
+          <div class="phone-screen" aria-hidden="true">
+            <div class="phone-notch"></div>
+            <div class="p-statusbar">
+              <span>9:41</span>
+              <span class="p-icons"><i></i><i></i><i></i><span class="batt"></span></span>
+            </div>
+            <div class="p-body">
+              <div>
+                <p class="p-hello">Good morning,</p>
+                <p class="p-name">Sam 👋</p>
+              </div>
+              <div class="p-card">
+                <p class="p-card-label">Total Saved</p>
+                <p class="p-card-amount">$8,432.50</p>
+                <div class="p-card-row">
+                  <span class="p-chip">72% of goal</span>
+                  <span class="p-progress"><span></span></span>
+                </div>
+              </div>
+              <div class="p-panel">
+                <p class="p-panel-title">This Week’s Spending <span>−18%</span></p>
+                <div class="p-bars">
+                  <i style="height:40%"></i><i style="height:65%"></i><i class="dim" style="height:30%"></i>
+                  <i style="height:80%"></i><i style="height:55%"></i><i class="dim" style="height:25%"></i>
+                  <i style="height:95%"></i>
+                </div>
+                <div class="p-days"><b>M</b><b>T</b><b>W</b><b>T</b><b>F</b><b>S</b><b>S</b></div>
+              </div>
+              <div class="p-panel">
+                <p class="p-panel-title">Recent Activity <span>See all</span></p>
+                <div class="p-tx">
+                  <span class="p-tx-icon" style="background:#fef3c7">☕</span>
+                  <span class="p-tx-meta"><span class="p-tx-name">Bean &amp; Leaf Café</span><span class="p-tx-cat">Coffee · Round-up saved</span></span>
+                  <span class="p-tx-amt neg">−$4.60</span>
+                </div>
+                <div class="p-tx">
+                  <span class="p-tx-icon" style="background:#dbeafe">💼</span>
+                  <span class="p-tx-meta"><span class="p-tx-name">Payday — Acme Co.</span><span class="p-tx-cat">Income · Auto-save $480</span></span>
+                  <span class="p-tx-amt pos">+$3,200</span>
+                </div>
+                <div class="p-tx">
+                  <span class="p-tx-icon" style="background:#fce7f3">🛒</span>
+                  <span class="p-tx-meta"><span class="p-tx-name">Fresh Market</span><span class="p-tx-cat">Groceries · Under budget</span></span>
+                  <span class="p-tx-amt neg">−$86.20</span>
+                </div>
+              </div>
+            </div>
+            <div class="p-tabbar"><i class="on"></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+        <div class="float-chip chip-a">
+          <span class="fc-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 17 6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+          </span>
+          <span>Savings Rate <small class="num">Up 12% this month</small></span>
+        </div>
+        <div class="float-chip chip-b">
+          <span class="fc-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </span>
+          <span>Bank-Level Security <small>256-bit encryption</small></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CALCULATOR ================= -->
+  <section class="calc-section section-pad" id="calculator" aria-labelledby="calc-title">
+    <div class="container">
+      <div class="section-head center reveal">
+        <p class="kicker">Interactive Tool</p>
+        <h2 id="calc-title">See Your Savings Rate in Seconds</h2>
+        <p>Enter your monthly take-home pay and typical spending. Mintwise will show you exactly where you stand — and how much you could stash away.</p>
+      </div>
+
+      <div class="calc-grid">
+        <form class="calc-card reveal" id="calcForm" novalidate>
+          <fieldset>
+            <legend>Your Monthly Numbers</legend>
+            <p class="legend-note">All amounts in USD. Change any value and your results update instantly.</p>
+
+            <div class="field-grid" style="margin-bottom:18px">
+              <div class="field" style="grid-column:1/-1">
+                <label for="income">Monthly Take-Home Income</label>
+                <span class="input-wrap">
+                  <span class="currency" aria-hidden="true">$</span>
+                  <input type="number" id="income" name="income" min="0" step="any" inputmode="decimal" placeholder="0" value="4800" autocomplete="off">
+                </span>
+              </div>
+            </div>
+
+            <div class="field-grid">
+              <div class="field">
+                <label for="housing">Housing &amp; Utilities</label>
+                <span class="input-wrap">
+                  <span class="currency" aria-hidden="true">$</span>
+                  <input type="number" id="housing" name="housing" min="0" step="any" inputmode="decimal" placeholder="0" value="1600" autocomplete="off">
+                </span>
+              </div>
+              <div class="field">
+                <label for="food">Food &amp; Groceries</label>
+                <span class="input-wrap">
+                  <span class="currency" aria-hidden="true">$</span>
+                  <input type="number" id="food" name="food" min="0" step="any" inputmode="decimal" placeholder="0" value="560" autocomplete="off">
+                </span>
+              </div>
+              <div class="field">
+                <label for="transport">Transport &amp; Commute</label>
+                <span class="input-wrap">
+                  <span class="currency" aria-hidden="true">$</span>
+                  <input type="number" id="transport" name="transport" min="0" step="any" inputmode="decimal" placeholder="0" value="300" autocomplete="off">
+                </span>
+              </div>
+              <div class="field">
+                <label for="other">Everything Else</label>
+                <span class="input-wrap">
+                  <span class="currency" aria-hidden="true">$</span>
+                  <input type="number" id="other" name="other" min="0" step="any" inputmode="decimal" placeholder="0" value="740" autocomplete="off">
+                </span>
+              </div>
+            </div>
+
+            <p class="calc-hint">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M12 11v5"/></svg>
+              Not sure of your exact spend? Estimates are fine — you can refine budgets inside the app after you connect an account.
+            </p>
+            <div style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap">
+              <button type="button" class="btn btn-mint" id="resetCalc">Reset to Sample Numbers</button>
+              <button type="button" class="btn btn-ghost" id="clearCalc">Clear All Fields</button>
+            </div>
+          </fieldset>
+        </form>
+
+        <div class="calc-result reveal" data-delay="1">
+          <div class="donut-wrap" id="donutWrap">
+            <svg class="donut-svg" viewBox="0 0 140 140" role="img" aria-labelledby="donutTitle donutDesc" id="donutSvg">
+              <title id="donutTitle">Savings rate donut chart</title>
+              <desc id="donutDesc" id2="">Shows the share of your income you keep each month.</desc>
+              <defs>
+                <linearGradient id="donutGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#34d399"/>
+                  <stop offset="100%" stop-color="#059669"/>
+                </linearGradient>
+              </defs>
+              <circle class="donut-track" cx="70" cy="70" r="54"/>
+              <circle class="donut-fill" id="donutFill" cx="70" cy="70" r="54"/>
+            </svg>
+            <div class="donut-center">
+              <span class="donut-pct num" id="donutPct">—</span>
+              <span class="donut-label">Savings Rate</span>
+            </div>
+          </div>
+
+          <div aria-live="polite" id="liveRegion" style="width:100%">
+            <p class="verdict" id="verdict">You’re keeping 33% of your income 🎉</p>
+            <p class="verdict-detail" id="verdictDetail">That’s well above the 20% benchmark. Mintwise users at your rate typically reach an emergency fund in under six months.</p>
+          </div>
+
+          <div class="calc-stats">
+            <div class="stat highlight"><b class="num" id="statSaved">$1,600</b><span>Saved / Month</span></div>
+            <div class="stat"><b class="num" id="statSpent">$3,200</b><span>Spent / Month</span></div>
+            <div class="stat"><b class="num" id="statYear">$19,200</b><span>Saved / Year</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FEATURES ================= -->
+  <section class="section-pad" id="features" aria-labelledby="features-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="kicker">Why Mintwise</p>
+        <h2 id="features-title">Everything Your Money Needs, Nothing It Doesn’t</h2>
+        <p>Six thoughtfully built tools that work together — so saving feels effortless, not obsessive.</p>
+      </div>
+
+      <div class="features-grid">
+        <article class="feature-card reveal">
+          <span class="feature-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 10h18M8 15h4"/></svg>
+          </span>
+          <h3>Adaptive Budgets</h3>
+          <p>Budgets that learn your rhythm and adjust each month — no more guilt over a single dinner out.</p>
+        </article>
+        <article class="feature-card reveal" data-delay="1">
+          <span class="feature-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5A2.5 2.5 0 0 1 12 8c1.7 0 2.5.9 2.5 2s-.8 1.7-2.5 2-2.5.9-2.5 2 .8 2 2.5 2a2.5 2.5 0 0 0 2.5-1.5"/></svg>
+          </span>
+          <h3>Auto-Save Round-Ups</h3>
+          <p>Every purchase rounds up to the nearest dollar, and the spare change slips into savings automatically.</p>
+        </article>
+        <article class="feature-card reveal" data-delay="2">
+          <span class="feature-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M5 8c0-2 3-3.5 7-3.5S19 6 19 8s-3 3.5-7 3.5S5 10 5 8Z"/><path d="M5 8v8c0 2 3 3.5 7 3.5s7-1.5 7-3.5V8"/></svg>
+          </span>
+          <h3>Goal Vaults</h3>
+          <p>Create named vaults for trips, a home deposit, or “future me,” and watch progress bars fill week by week.</p>
+        </article>
+        <article class="feature-card reveal">
+          <span class="feature-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>
+          </span>
+          <h3>Spending Insights</h3>
+          <p>Plain-English summaries tell you where money actually goes — and the one category worth trimming.</p>
+        </article>
+        <article class="feature-card reveal" data-delay="1">
+          <span class="feature-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
+          </span>
+          <h3>Bill Watchdog</h3>
+          <p>We flag rising subscriptions and forgotten free trials before they quietly drain your balance.</p>
+        </article>
+        <article class="feature-card reveal" data-delay="2">
+          <span class="feature-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17.5" cy="9.5" r="2.5"/><path d="M15.5 15a5 5 0 0 1 6 4.9"/></svg>
+          </span>
+          <h3>Shared Money</h3>
+          <p>Split rent, plan a wedding, or save with a partner using joint vaults and crystal-clear histories.</p>
+        </article>
+      </div>
+
+      <div class="spotlight reveal">
+        <div class="spotlight-img">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80" width="1600" height="1067" loading="lazy"
+               alt="A laptop screen showing Mintwise-style spending analytics with colorful charts and dashboards">
+        </div>
+        <div class="spotlight-copy">
+          <p class="kicker">Weekly Digest</p>
+          <h3>One Email That Makes You Better With Money</h3>
+          <p>Every Sunday, Mintwise sends a two-minute recap: what you saved, what you spent, and the single smartest move for the week ahead.</p>
+          <ul class="spotlight-list">
+            <li>6" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Savings streaks and milestone celebrations</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Category comparisons against last month</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Actionable nudges, never lectures</li>
+          </ul>
+          <a class="btn btn-primary" href="#pricing">Get Your Weekly Digest</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECURITY BAND ================= -->
+  <section class="security-band" aria-labelledby="security-title">
+    <div class="container security-inner">
+      <h2 id="security-title" class="reveal">Your Data Stays Yours. Period.</h2>
+      <p class="reveal" data-delay="1">We use read-only bank connections, so Mintwise can never move or access your funds. Your information is encrypted end to end and never sold to advertisers.</p>
+      <ul class="badges reveal" data-delay="2">
+        <li class="badge">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          256-Bit AES Encryption
+        </li>
+        <li class="badge">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg>
+          SOC 2 Type II Certified
+        </li>
+        <li class="badge">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h3"/></svg>
+          FDIC-Insured Vaults*
+        </li>
+        <li class="badge">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/></svg>
+          GDPR &amp; CCPA Ready
+        </li>
+        <li class="badge">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"/><circle cx="12" cy="12" r="3"/></svg>
+          Read-Only Bank Links
+        </li>
+      </ul>
+      <p class="security-fine reveal" data-delay="3">*Deposits held with our partner bank, Member FDIC, insured up to $250,000 per depositor. Mintwise is a financial technology company, not a bank.</p>
+    </div>
+  </section>
+
+  <!-- ================= PRICING ================= -->
+  <section class="section-pad" id="pricing" aria-labelledby="pricing-title">
+    <div class="container">
+      <div class="section-head center reveal">
+        <p class="kicker">Simple Pricing</p>
+        <h2 id="pricing-title">Pick the Plan That Pays for Itself</h2>
+        <p>Start free forever. Upgrade when you’re ready — cancel anytime, in two taps, no email required.</p>
+      </div>
+
+      <div class="pricing-toggle-row reveal">
+        <span class="t-label active" id="labelMonthly">Monthly</span>
+        <button class="switch" id="billingSwitch" role="switch" aria-checked="false" aria-labelledby="labelAnnual">
+          <span class="knob" aria-hidden="true"></span>
+        </button>
+        <span class="t-label" id="labelAnnual">Annually</span>
+        <span class="save-pill">Save 17%</span>
+      </div>
+
+      <div class="pricing-grid">
+        <article class="price-card reveal" aria-labelledby="plan-sprout">
+          <h3 class="plan-name" id="plan-sprout">Sprout</h3>
+          <p class="plan-desc">For getting a clear picture of where your money goes.</p>
+          <p class="plan-price"><span class="amount num" data-monthly="0" data-annual="0">$0</span><span class="per">/ forever</span></p>
+          <p class="plan-billed">No card needed to start</p>
+          <ul class="plan-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> 2 connected accounts</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Basic budgets &amp; tracking</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> 1 goal vault</li>
+            <li class="off"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg> Auto-save round-ups</li>
+            <li class="off"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg> Weekly digest insights</li>
+          </ul>
+          <a class="btn btn-ghost" href="#calculator">Start With Sprout</a>
+        </article>
+
+        <article class="price-card popular reveal" data-delay="1" aria-labelledby="plan-thrive">
+          <span class="popular-tag">Most Popular</span>
+          <h3 class="plan-name" id="plan-thrive">Thrive</h3>
+          <p class="plan-desc">For building real savings on autopilot, every single month.</p>
+          <p class="plan-price"><span class="amount num" id="thrivePrice" data-monthly="6" data-annual="5">$6</span><span class="per" id="thrivePer">/ month</span></p>
+          <p class="plan-billed" id="thriveBilled">Billed monthly · cancel anytime</p>
+          <ul class="plan-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Unlimited connected accounts</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Adaptive budgets &amp; Bill Watchdog</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Auto-save round-ups &amp; paycheck splits</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Unlimited goal vaults (FDIC-insured*)</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Weekly digest &amp; smart insights</li>
+          </ul>
+          <a class="btn btn-primary" href="#calculator">Start 30-Day Free Trial</a>
+        </article>
+
+        <article class="price-card reveal" data-delay="2" aria-labelledby="plan-together">
+          <h3 class="plan-name" id="plan-together">Together</h3>
+          <p class="plan-desc">For couples and households planning bigger goals as a team.</p>
+          <p class="plan-price"><span class="amount num" id="togetherPrice" data-monthly="12" data-annual="10">$12</span><span class="per" id="togetherPer">/ month</span></p>
+          <p class="plan-billed" id="togetherBilled">Billed monthly · up to 5 members</p>
+          <ul class="plan-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Everything in Thrive</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Up to 5 members, one household budget</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Shared vaults &amp; bill splitting</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Priority human support</li>
+          </ul>
+          <a class="btn btn-ghost" href="#calculator">Plan Together</a>
+        </article>
+      </div>
+      <p class="pricing-note reveal">*Deposits held with our partner bank, Member FDIC. Prices in USD; taxes may apply.</p>
+    </div>
+  </section>
+
+  <!-- ================= TESTIMONIALS ================= -->
+  <section class="testi-section section-pad" id="testimonials" aria-labelledby="testi-title">
+    <div class="container">
+      <div class="section-head center reveal">
+        <p class="kicker">Real Members</p>
+        <h2 id="testi-title">Savers Who Stopped Stressing</h2>
+        <p>Don’t take our word for it — here’s what happens when budgeting finally feels friendly.</p>
+      </div>
+
+      <div class="testi-grid">
+        <figure class="testi-card reveal">
+          <span class="testi-stars" aria-label="Rated 5 out of 5 stars">★★★★★</span>
+          <blockquote class="testi-quote">“I’ve tried every budgeting app out there, and Mintwise is the first one that stuck. The round-ups feel like free money — I saved <span class="num">$1,140</span> for a trip without changing how I live.”</blockquote>
+          <figcaption class="testi-person">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&h=200&q=80" width="200" height="200" loading="lazy" alt="Portrait of Maya Torres, product designer">
+            <span><span class="testi-name">Maya Torres</span><br><span class="testi-role">Product Designer · Austin, TX</span></span>
+          </figcaption>
+        </figure>
+
+        <figure class="testi-card reveal" data-delay="1">
+          <span class="testi-stars" aria-label="Rated 5 out of 5 stars">★★★★★</span>
+          <blockquote class="testi-quote">“The weekly digest changed everything. Two minutes every Sunday and I finally understand where my paycheck goes. My savings rate went from <span class="num">6%</span> to <span class="num">24%</span> in eight months.”</blockquote>
+          <figcaption class="testi-person">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&h=200&q=80" width="200" height="200" loading="lazy" alt="Portrait of Daniel Okafor, high school teacher">
+            <span><span class="testi-name">Daniel Okafor</span><br><span class="testi-role">Teacher · Chicago, IL</span></span>
+          </figcaption>
+        </figure>
+
+        <figure class="testi-card reveal" data-delay="2">
+          <span class="testi-stars" aria-label="Rated 5 out of 5 stars">★★★★★</span>
+          <blockquote class="testi-quote">“My partner and I use the Together plan for our house fund. Shared vaults ended the ‘who paid for what’ arguments completely. We hit our deposit goal in <span class="num">14</span> months.”</blockquote>
+          <figcaption class="testi-person">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&h=200&q=80" width="200" height="200" loading="lazy" alt="Portrait of Priya Sharma, nurse practitioner">
+            <span><span class="testi-name">Priya Sharma</span><br><span class="testi-role">Nurse Practitioner · Seattle, WA</span></span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="section-pad" id="faq" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="section-head center reveal">
+        <p class="kicker">Good Questions</p>
+        <h2 id="faq-title">Everything You Want to Know</h2>
+        <p>Still curious? Our support team replies within one business day — from real humans.</p>
+      </div>
+
+      <div class="faq-list">
+        <details class="faq-item reveal">
+          <summary>Is Mintwise really free to start?<span class="faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <p class="faq-answer">Yes. The Sprout plan is free forever — no credit card, no trial countdown. You can track spending, run one goal vault, and use the savings calculator at zero cost. Upgrade only when you want automation like round-ups and adaptive budgets.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>How does Mintwise connect to my bank?<span class="faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <p class="faq-answer">We use read-only connections through trusted aggregation partners. Mintwise can see transactions to power your budgets, but it can never move money out of your accounts or view your login credentials. You can revoke access at any time from Settings.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>What exactly is a savings rate?<span class="faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <p class="faq-answer">It’s the share of your take-home pay you keep instead of spend. If you earn $4,000 and spend $3,000, your savings rate is 25%. Financial planners often suggest 20% as a healthy benchmark — the calculator above shows yours instantly.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Is my money FDIC-insured?<span class="faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <p class="faq-answer">Funds in Mintwise goal vaults are held at our partner bank, Member FDIC, and insured up to $250,000 per depositor. Mintwise itself is a financial technology company, not a bank; checking accounts at your own bank remain covered by that institution.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Can I cancel anytime?<span class="faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <p class="faq-answer">Absolutely. Cancel in two taps inside the app — no phone calls, no retention mazes. Your plan stays active until the end of the billing period, and you can export all your data as CSV before you go. We keep it painless, because that’s how trust works.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Does Mintwise work outside the United States?<span class="faq-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+          <p class="faq-answer">Mintwise currently supports US and Canadian bank connections, with the UK and EU launching later this year. Join the waitlist in the footer and we’ll email you the moment your region goes live.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <section class="cta-band" aria-labelledby="cta-title">
+    <div class="container">
+      <div class="cta-inner reveal">
+        <h2 id="cta-title">Your Future Self Will Thank You</h2>
+        <p>Join <span class="num">1.2 million</span> people who stopped wondering where their money went. Set up takes under three minutes.</p>
+        <a class="btn" href="#pricing">Create Your Free Account</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#top" aria-label="Mintwise — back to top">
+          <span class="brand-mark" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2C7 7 4 10.5 4 14a8 8 0 0 0 16 0c0-3.5-3-7-8-12Z"/><path d="M12 22v-6"/></svg>
+          </span>
+          Mintwise
+        </a>
+        <p>Budgeting, saving, and growing — made calm, clear, and a little bit delightful. Built with care in Portland, OR.</p>
+        <div class="socials">
+          <a href="#top" aria-label="Mintwise on X (formerly Twitter)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.4 22H3.3l7.3-8.3L1.2 2h6.4l4.4 5.9L18.9 2Zm-1.1 18h1.7L7.1 3.9H5.3L17.8 20Z"/></svg>
+          </a>
+          <a href="#top" aria-label="Mintwise on Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#top" aria-label="Mintwise on LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95C21.6 8.75 23 11 23 14.5V21h-4v-5.8c0-1.6-.6-2.7-2-2.7-1.1 0-1.8.75-2.05 1.5-.1.25-.05.65-.05 1V21H10V9Z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h3>Product</h3>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#calculator">Savings Calculator</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#security-title">Security</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="#testimonials">Reviews</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#top">Careers</a></li>
+          <li><a href="#top">Press Kit</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col newsletter">
+        <h3>Stay in the Loop</h3>
+        <p>One helpful money tip per week. No spam, no selling your inbox — unsubscribe anytime.</p>
+        <form class="newsletter-form" id="newsForm" novalidate>
+          <div style="flex:1 1 100%">
+            <label for="newsEmail">Email Address</label>
+            <input type="email" id="newsEmail" name="email" placeholder="you@example.com" autocomplete="email" required>
+          </div>
+          <button class="btn" type="submit">Send Me Money Tips</button>
+        </form>
+        <p class="news-status" id="newsStatus" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span class="num" id="year">2026</span> Mintwise Financial Technologies, Inc. All rights reserved.</p>
+      <nav aria-label="Legal">
+        <ul>
+          <li><a href="#top">Privacy Policy</a></li>
+          <li><a href="#top">Terms of Service</a></li>
+          <li><a href="#top">Disclosures</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- Mobile nav ---------- */
+  var navToggle = document.getElementById("navToggle");
+  var mobilePanel = document.getElementById("mobilePanel");
+
+  function closeMenu() {
+    navToggle.setAttribute("aria-expanded", "false");
+    navToggle.setAttribute("aria-label", "Open navigation menu");
+    mobilePanel.classList.remove("open");
+  }
+  function openMenu() {
+    navToggle.setAttribute("aria-expanded", "true");
+    navToggle.setAttribute("aria-label", "Close navigation menu");
+    mobilePanel.classList.add("open");
+  }
+  navToggle.addEventListener("click", function () {
+    if (navToggle.getAttribute("aria-expanded") === "true") { closeMenu(); }
+    else { openMenu(); }
+  });
+  mobilePanel.addEventListener("click", function (e) {
+    if (e.target.closest("a")) { closeMenu(); }
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && navToggle.getAttribute("aria-expanded") === "true") {
+      closeMenu();
+      navToggle.focus();
+    }
+  });
+
+  /* ---------- Scroll reveal ---------- */
+  var revealEls = document.querySelectorAll(".reveal");
+  if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+    revealEls.forEach(function (el) { el.classList.add("is-visible"); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    revealEls.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---------- Budget calculator ---------- */
+  var form = document.getElementById("calcForm");
+  var incomeInput = document.getElementById("income");
+  var expenseInputs = ["housing", "food", "transport", "other"].map(function (id) { return document.getElementById(id); });
+  var donutFill = document.getElementById("donutFill");
+  var donutWrap = document.getElementById("donutWrap");
+  var donutPct = document.getElementById("donutPct");
+  var verdict = document.getElementById("verdict");
+  var verdictDetail = document.getElementById("verdictDetail");
+  var statSaved = document.getElementById("statSaved");
+  var statSpent = document.getElementById("statSpent");
+  var statYear = document.getElementById("statYear");
+  var RADIUS = 54;
+  var CIRC = 2 * Math.PI * RADIUS;
+  donutFill.style.strokeDasharray = CIRC.toFixed(2);
+  donutFill.style.strokeDashoffset = CIRC.toFixed(2);
+
+  var money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+
+  function readVal(input) {
+    var v = parseFloat(input.value);
+    return isFinite(v) && v > 0 ? v : 0;
+  }
+
+  function verdictFor(rate, savings, hasIncome) {
+    if (!hasIncome) {
+      return {
+        title: "Add your income to see the magic",
+        detail: "Enter your monthly take-home pay above, and Mintwise will calculate your savings rate, monthly savings, and yearly projection instantly."
+      };
+    }
+    if (rate < 0) {
+      return {
+        title: "You’re spending more than you earn…",
+        detail: "It happens to the best of us. Mintwise’s Bill Watchdog spots subscriptions and creeping costs first — most members find " + money.format(120) + "+ of quick wins in week one."
+      };
+    }
+    if (rate < 10) {
+      return {
+        title: "A start — let’s build on it",
+        detail: "You’re keeping " + money.format(savings) + " a month. Nudging just one category can lift your rate past 10% without feeling restrictive."
+      };
+    }
+    if (rate < 20) {
+      return {
+        title: "Solid! You’re in the game 💪",
+        detail: "You’re saving " + money.format(savings) + " monthly. The 20% benchmark is within reach — auto round-ups close the gap surprisingly fast."
+      };
+    }
+    if (rate < 35) {
+      return {
+        title: "You’re keeping " + Math.round(rate) + "% of your income 🎉",
+        detail: "That’s well above the 20% benchmark. At this pace, Mintwise members typically fully fund an emergency buffer in under six months."
+      };
+    }
+    return {
+      title: "Outstanding — " + Math.round(rate) + "% saved 🌱",
+      detail: "You’re saving " + money.format(savings) + " a month. Consider parking the surplus in a goal vault so it earns while it waits."
+    };
+  }
+
+  function updateCalc(animate) {
+    var income = readVal(incomeInput);
+    var expenses = expenseInputs.reduce(function (sum, input) { return sum + readVal(input); }, 0);
+    var savings = income - expenses;
+    var hasIncome = incomeInput.value.trim() !== "" && income > 0;
+    var rate = hasIncome ? (savings / income) * 100 : 0;
+    var clamped = Math.max(0, Math.min(100, rate));
+    var offset = CIRC * (1 - clamped / 100);
+
+    donutFill.style.strokeDashoffset = offset.toFixed(2);
+    donutPct.textContent = hasIncome ? Math.round(clamped) + "%" : "—";
+
+    statSaved.textContent = money.format(Math.max(0, savings));
+    statSpent.textContent = money.format(expenses);
+    statYear.textContent = money.format(Math.max(0, savings) * 12);
+
+    var v = verdictFor(rate, Math.max(0, savings), hasIncome);
+    verdict.textContent = v.title;
+    verdictDetail.textContent = v.detail;
+
+    if (animate && !prefersReducedMotion) {
+      donutWrap.classList.remove("donut-pop");
+      void donutWrap.offsetWidth; /* restart animation */
+      donutWrap.classList.add("donut-pop");
+    }
+  }
+
+  form.addEventListener("input", function () { updateCalc(true); });
+  form.addEventListener("submit", function (e) { e.preventDefault(); updateCalc(true); });
+
+  var defaults = { income: "4800", housing: "1600", food: "560", transport: "300", other: "740" };
+  document.getElementById("resetCalc").addEventListener("click", function () {
+    incomeInput.value = defaults.income;
+    expenseInputs.forEach(function (input) { input.value = defaults[input.id]; });
+    updateCalc(true);
+  });
+  document.getElementById("clearCalc").addEventListener("click", function () {
+    incomeInput.value = "";
+    expenseInputs.forEach(function (input) { input.value = ""; });
+    updateCalc(true);
+    incomeInput.focus();
+  });
+  updateCalc(false);
+
+  /* ---------- Pricing toggle ---------- */
+  var billingSwitch = document.getElementById("billingSwitch");
+  var labelMonthly = document.getElementById("labelMonthly");
+  var labelAnnual = document.getElementById("labelAnnual");
+
+  function renderPricing() {
+    var annual = billingSwitch.getAttribute("aria-checked") === "true";
+    var key = annual ? "annual" : "monthly";
+
+    [["thrivePrice", "thrivePer", "thriveBilled"], ["togetherPrice", "togetherPer", "togetherBilled"]].forEach(function (ids) {
+      var priceEl = document.getElementById(ids[0]);
+      var perEl = document.getElementById(ids[1]);
+      var billedEl = document.getElementById(ids[2]);
+      priceEl.textContent = "$" + priceEl.dataset[key];
+      perEl.textContent = "/ month";
+      if (ids[0] === "thrivePrice") {
+        billedEl.textContent = annual ? "Billed as $60 yearly · save $12" : "Billed monthly · cancel anytime";
+      } else {
+        billedEl.textContent = annual ? "Billed as $120 yearly · up to 5 members" : "Billed monthly · up to 5 members";
+      }
+      [priceEl, perEl, billedEl].forEach(function (el) {
+        el.classList.remove("price-swap");
+        void el.offsetWidth;
+        el.classList.add("price-swap");
+      });
+    });
+
+    labelMonthly.classList.toggle("active", !annual);
+    labelAnnual.classList.toggle("active", annual);
+  }
+  billingSwitch.addEventListener("click", function () {
+    var next = billingSwitch.getAttribute("aria-checked") !== "true";
+    billingSwitch.setAttribute("aria-checked", String(next));
+    renderPricing();
+  });
+  renderPricing();
+
+  /* ---------- Newsletter ---------- */
+  var newsForm = document.getElementById("newsForm");
+  var newsEmail = document.getElementById("newsEmail");
+  var newsStatus = document.getElementById("newsStatus");
+  newsForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var value = newsEmail.value.trim();
+    var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    if (!valid) {
+      newsStatus.textContent = "Hmm, that email looks incomplete — mind checking it?";
+      newsEmail.focus();
+      return;
+    }
+    newsStatus.textContent = "You’re in! Check your inbox for a welcome nudge 🌱";
+    newsForm.reset();
+  });
+
+  /* ---------- Footer year ---------- */
+  document.getElementById("year").textContent = String(new Date().getFullYear());
+})();
+</script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
