@@ -1,0 +1,2141 @@
+<!DOCTYPE html>
+<html lang="en" style="color-scheme: dark;">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b0c09">
+<meta name="description" content="Forge Strength &amp; Conditioning — powerlifting, HIIT and mobility coaching in a raw, no-nonsense warehouse gym. Book your free week.">
+<title>Forge — Strength &amp; Conditioning Gym</title>
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://cdn.jsdelivr.net/fontsource/css/anton@latest/latin-400-normal.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/fontsource/css/barlow-condensed@latest/latin-400-normal.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/fontsource/css/barlow-condensed@latest/latin-600-normal.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/fontsource/css/barlow-condensed@latest/latin-700-normal.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/fontsource/css/barlow@latest/latin-400-normal.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/fontsource/css/barlow@latest/latin-600-normal.css" rel="stylesheet">
+
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --bg:#0b0c09;
+  --bg-2:#101208;
+  --surface:#15170f;
+  --surface-2:#1b1e13;
+  --surface-3:#22261a;
+  --line:#2e3323;
+  --line-2:#3d4430;
+  --text:#f4f6ec;
+  --muted:#9aa18a;
+  --muted-2:#6f7560;
+  --volt:#d4ff3f;
+  --volt-dim:#a9cf2c;
+  --volt-deep:#2a3308;
+  --danger:#ff5a3c;
+  --warn:#ffb020;
+  --ok:#8ee06a;
+
+  --f-display:"Anton","Haettenschweiler","Arial Narrow",sans-serif;
+  --f-cond:"Barlow Condensed","Arial Narrow",sans-serif;
+  --f-body:"Barlow","Helvetica Neue",sans-serif;
+
+  --gutter:clamp(1.15rem,4vw,3.5rem);
+  --maxw:1360px;
+  --hard:8px 8px 0 rgba(212,255,63,.9);
+  --hard-sm:5px 5px 0 rgba(212,255,63,.85);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{
+  -webkit-text-size-adjust:100%;
+  scroll-behavior:smooth;
+  scroll-padding-top:96px;
+}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--f-body);
+  font-size:clamp(1rem,.96rem + .18vw,1.075rem);
+  line-height:1.62;
+  overflow-x:hidden;
+  touch-action:manipulation;
+  -webkit-font-smoothing:antialiased;
+}
+body.nav-open{overflow:hidden}
+body::after{
+  content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.045;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+img{max-width:100%;display:block}
+h1,h2,h3,h4,h5,h6{text-wrap:balance;margin:0}
+p{text-wrap:pretty}
+a{color:inherit}
+
+:focus-visible{
+  outline:3px solid var(--volt);
+  outline-offset:3px;
+  border-radius:1px;
+}
+::selection{background:var(--volt);color:#0b0c09}
+
+/* ============ UTILITIES ============ */
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+.skip{
+  position:fixed;top:10px;left:10px;z-index:10000;
+  transform:translateY(-160%);
+  background:var(--volt);color:#0b0c09;
+  font-family:var(--f-cond);font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;font-size:1rem;
+  padding:.85rem 1.3rem;border:2px solid #0b0c09;
+  transition:transform .18s ease;
+  min-height:44px;display:inline-flex;align-items:center;
+}
+.skip:focus-visible{transform:translateY(0)}
+
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
+.section{padding-block:clamp(4rem,9vw,7.5rem);position:relative}
+
+.kicker{
+  font-family:var(--f-cond);font-weight:600;text-transform:uppercase;
+  letter-spacing:.28em;font-size:.82rem;color:var(--volt);
+  display:flex;align-items:center;gap:.7rem;margin:0 0 1.1rem;
+}
+.kicker::before{content:"";width:34px;height:3px;background:var(--volt);flex:none}
+
+.h2{
+  font-family:var(--f-display);font-weight:400;text-transform:uppercase;
+  font-size:clamp(2.3rem,1.4rem + 4.2vw,4.6rem);
+  line-height:.92;letter-spacing:-.005em;
+}
+.h3{
+  font-family:var(--f-cond);font-weight:700;text-transform:uppercase;
+  letter-spacing:.02em;font-size:clamp(1.35rem,1.1rem + .8vw,1.85rem);line-height:1.05;
+}
+.lede{color:var(--muted);max-width:62ch;font-size:clamp(1.02rem,1rem + .3vw,1.18rem)}
+.sec-head{display:flex;flex-wrap:wrap;gap:1.6rem 3rem;align-items:flex-end;justify-content:space-between;margin-bottom:clamp(2.2rem,5vw,3.6rem)}
+.sec-head > div:first-child{flex:1 1 34rem;min-width:0}
+
+.rule-strip{
+  height:14px;
+  background:repeating-linear-gradient(-45deg,var(--volt) 0 12px,#0b0c09 12px 24px);
+  border-block:2px solid #0b0c09;
+}
+.hr-thick{height:2px;background:var(--line);border:0;margin:0}
+
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+
+/* ============ BUTTONS ============ */
+.btn{
+  --btn-bg:var(--volt);--btn-fg:#0b0c09;--btn-bd:#0b0c09;
+  appearance:none;-webkit-appearance:none;
+  display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  min-height:52px;padding:.85rem 1.6rem;
+  font-family:var(--f-cond);font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;font-size:1.02rem;line-height:1;
+  background:var(--btn-bg);color:var(--btn-fg);
+  border:2px solid var(--btn-bd);border-radius:0;
+  text-decoration:none;cursor:pointer;touch-action:manipulation;
+  transition:transform .16s cubic-bezier(.2,.8,.2,1),box-shadow .16s cubic-bezier(.2,.8,.2,1),background-color .16s ease,color .16s ease;
+  will-change:transform;
+}
+.btn:hover{transform:translate(-3px,-3px);box-shadow:var(--hard-sm)}
+.btn:active{transform:translate(1px,1px);box-shadow:none}
+.btn[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.btn--ghost{--btn-bg:transparent;--btn-fg:var(--text);--btn-bd:var(--line-2)}
+.btn--ghost:hover{--btn-fg:#0b0c09;--btn-bg:var(--volt);--btn-bd:#0b0c09}
+.btn--outline{--btn-bg:transparent;--btn-fg:var(--volt);--btn-bd:var(--volt)}
+.btn--outline:hover{--btn-bg:var(--volt);--btn-fg:#0b0c09}
+.btn--sm{min-height:44px;padding:.6rem 1.05rem;font-size:.9rem;letter-spacing:.08em}
+.btn--block{width:100%}
+
+/* ============ HEADER ============ */
+.hdr{
+  position:sticky;top:0;z-index:900;
+  background:rgba(11,12,9,.82);
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:2px solid var(--line);
+  transition:border-color .25s ease,background-color .25s ease;
+}
+.hdr.is-stuck{border-bottom-color:var(--volt);background:rgba(11,12,9,.95)}
+.hdr__bar{
+  display:flex;align-items:center;gap:1.2rem;
+  min-height:74px;
+}
+.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none;margin-right:auto}
+.brand__mark{width:38px;height:38px;flex:none;color:var(--volt)}
+.brand__txt{
+  font-family:var(--f-display);text-transform:uppercase;font-size:1.72rem;
+  letter-spacing:.06em;line-height:1;color:var(--text);
+}
+.brand__sub{
+  display:block;font-family:var(--f-cond);font-weight:600;font-size:.62rem;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-top:.18rem;
+}
+.nav{display:none}
+.nav__list{display:flex;align-items:center;gap:.35rem;list-style:none;margin:0;padding:0}
+.nav__link{
+  display:inline-flex;align-items:center;min-height:44px;padding:.4rem .8rem;
+  font-family:var(--f-cond);font-weight:600;text-transform:uppercase;
+  letter-spacing:.12em;font-size:.94rem;text-decoration:none;color:var(--muted);
+  border:2px solid transparent;
+  transition:color .16s ease,border-color .16s ease,transform .16s ease;
+}
+.nav__link:hover{color:var(--volt);transform:translateY(-2px)}
+.nav__link[aria-current="true"]{color:var(--text);border-color:var(--line-2)}
+.hdr__cta{display:none}
+
+.burger{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:52px;height:52px;padding:0;flex:none;
+  background:transparent;border:2px solid var(--line-2);border-radius:0;
+  cursor:pointer;touch-action:manipulation;color:var(--text);
+  transition:border-color .16s ease,color .16s ease,transform .16s ease;
+}
+.burger:hover{border-color:var(--volt);color:var(--volt)}
+.burger svg{width:24px;height:24px}
+.burger .i-close{display:none}
+.burger[aria-expanded="true"] .i-open{display:none}
+.burger[aria-expanded="true"] .i-close{display:block}
+
+.drawer{
+  display:grid;grid-template-rows:0fr;
+  border-top:2px solid transparent;
+  transition:grid-template-rows .3s cubic-bezier(.2,.8,.2,1),border-color .3s ease;
+  background:var(--bg-2);
+}
+.drawer.is-open{grid-template-rows:1fr;border-top-color:var(--line)}
+.drawer__inner{overflow:hidden;min-height:0}
+.drawer__list{list-style:none;margin:0;padding:1rem var(--gutter) 1.6rem}
+.drawer__list a{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  min-height:56px;padding:.6rem 0;border-bottom:2px solid var(--line);
+  font-family:var(--f-cond);font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;font-size:1.3rem;text-decoration:none;
+  transition:color .16s ease,padding-left .16s ease;
+}
+.drawer__list a:hover{color:var(--volt);padding-left:.5rem}
+.drawer__list span{font-family:var(--f-cond);font-size:.78rem;color:var(--muted-2);letter-spacing:.2em}
+.drawer__foot{padding:0 var(--gutter) 1.6rem;display:grid;gap:.7rem}
+
+@media (min-width:1000px){
+  .nav{display:block}
+  .hdr__cta{display:inline-flex}
+  .burger{display:none}
+  .drawer{display:none}
+}
+
+/* ============ HERO ============ */
+.hero{position:relative;overflow:hidden;border-bottom:2px solid var(--line);isolation:isolate}
+.hero__media{position:absolute;inset:0;z-index:-2}
+.hero__media img{
+  width:100%;height:100%;object-fit:cover;object-position:center 40%;
+  filter:grayscale(.55) contrast(1.18) brightness(.55);
+  transform:scale(1.06);
+}
+.hero__media::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(11,12,9,.75) 0%,rgba(11,12,9,.45) 30%,rgba(11,12,9,.94) 88%),
+    radial-gradient(120% 80% at 12% 20%,rgba(212,255,63,.16),transparent 60%);
+}
+.hero__inner{
+  position:relative;padding-block:clamp(4.5rem,11vw,9rem) clamp(3.5rem,8vw,6.5rem);
+  display:grid;gap:clamp(2.5rem,5vw,3.5rem);
+}
+.hero__tag{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-family:var(--f-cond);font-weight:700;text-transform:uppercase;
+  letter-spacing:.24em;font-size:.78rem;color:var(--volt);
+  border:2px solid rgba(212,255,63,.4);padding:.5rem .85rem;background:rgba(11,12,9,.55);
+  width:fit-content;
+}
+.hero__tag .dot{width:8px;height:8px;background:var(--volt);border-radius:50%;flex:none;animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.72)}}
+
+.hero h1{
+  font-family:var(--f-display);font-weight:400;text-transform:uppercase;
+  font-size:clamp(3.2rem,1.6rem + 9.2vw,10.5rem);
+  line-height:.84;letter-spacing:-.015em;
+  margin:1.3rem 0 0;
+}
+.hero h1 .ln{display:block;overflow:hidden}
+.hero h1 .ln > span{display:block;transform:translateY(105%);animation:rise .95s cubic-bezier(.16,1,.3,1) forwards}
+.hero h1 .ln:nth-child(2) > span{animation-delay:.1s}
+.hero h1 .ln:nth-child(3) > span{animation-delay:.2s}
+@keyframes rise{to{transform:translateY(0)}}
+.hero h1 em{font-style:normal;color:var(--volt);-webkit-text-stroke:0}
+.hero h1 .outline{color:transparent;-webkit-text-stroke:2px var(--text)}
+
+.hero__body{display:grid;gap:2.2rem;align-items:end}
+.hero__copy{max-width:56ch}
+.hero__copy p{color:#c9cdba;font-size:clamp(1.05rem,1rem + .4vw,1.3rem);margin:0 0 1.8rem;line-height:1.55}
+.hero__actions{display:flex;flex-wrap:wrap;gap:.9rem}
+
+.hero__stats{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  border:2px solid var(--line);background:rgba(11,12,9,.72);
+}
+.hero__stat{padding:1.1rem 1.2rem;border-right:2px solid var(--line);border-bottom:2px solid var(--line)}
+.hero__stat:nth-child(2n){border-right:0}
+.hero__stat:nth-last-child(-n+2){border-bottom:0}
+.hero__stat b{
+  display:block;font-family:var(--f-display);font-size:clamp(1.9rem,1.4rem + 1.8vw,2.8rem);
+  line-height:1;color:var(--volt);font-variant-numeric:tabular-nums;
+}
+.hero__stat span{
+  display:block;margin-top:.45rem;font-family:var(--f-cond);font-weight:600;
+  text-transform:uppercase;letter-spacing:.16em;font-size:.76rem;color:var(--muted);
+}
+@media (min-width:900px){
+  .hero__inner{grid-template-columns:minmax(0,1.35fr) minmax(320px,.9fr);align-items:end}
+  .hero__stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+/* ============ TICKER ============ */
+.ticker{
+  overflow:hidden;border-block:2px solid var(--line);
+  background:var(--volt);color:#0b0c09;padding:.7rem 0;
+}
+.ticker__track{display:flex;width:max-content;animation:slide 34s linear infinite}
+.ticker:hover .ticker__track,.ticker:focus-within .ticker__track{animation-play-state:paused}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker__set{display:flex;align-items:center;gap:2.4rem;padding-right:2.4rem;flex:none}
+.ticker__item{
+  font-family:var(--f-display);text-transform:uppercase;font-size:1.05rem;
+  letter-spacing:.06em;display:flex;align-items:center;gap:2.4rem;white-space:nowrap;
+}
+.ticker__item::after{content:"";width:9px;height:9px;background:#0b0c09;transform:rotate(45deg);flex:none}
+
+/* ============ PROGRAMS ============ */
+.programs{background:var(--bg)}
+.prog-grid{display:grid;gap:1.5rem;grid-template-columns:1fr}
+@media (min-width:700px){.prog-grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1020px){.prog-grid{grid-template-columns:repeat(3,1fr)}}
+
+.prog{
+  position:relative;display:flex;flex-direction:column;
+  background:var(--surface);border:2px solid var(--line);
+  overflow:hidden;
+  transition:transform .28s cubic-bezier(.2,.8,.2,1),border-color .28s ease,box-shadow .28s ease;
+}
+.prog:hover{transform:translate(-4px,-4px);border-color:var(--volt);box-shadow:var(--hard)}
+.prog__media{position:relative;aspect-ratio:16/11;overflow:hidden;background:var(--surface-3)}
+.prog__media img{
+  width:100%;height:100%;object-fit:cover;
+  filter:grayscale(.4) contrast(1.12) brightness(.78);
+  transition:transform .6s cubic-bezier(.2,.8,.2,1),filter .4s ease;
+}
+.prog:hover .prog__media img{transform:scale(1.06);filter:grayscale(0) contrast(1.15) brightness(.9)}
+.prog__idx{
+  position:absolute;top:0;left:0;z-index:2;
+  background:var(--volt);color:#0b0c09;
+  font-family:var(--f-display);font-size:1.1rem;padding:.35rem .8rem;letter-spacing:.06em;
+}
+.prog__lvl{
+  position:absolute;bottom:0;right:0;z-index:2;
+  background:rgba(11,12,9,.88);color:var(--volt);border-top:2px solid var(--volt);border-left:2px solid var(--volt);
+  font-family:var(--f-cond);font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:.72rem;padding:.4rem .7rem;
+}
+.prog__body{padding:1.5rem 1.4rem 1.6rem;display:flex;flex-direction:column;gap:.85rem;flex:1}
+.prog__body p{color:var(--muted);margin:0;font-size:.99rem}
+.prog__meta{list-style:none;margin:auto 0 0;padding:0;display:grid;gap:.5rem;border-top:2px solid var(--line);padding-top:1rem}
+.prog__meta li{display:flex;justify-content:space-between;gap:1rem;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.09em;font-size:.86rem}
+.prog__meta dt,.prog__meta .k{color:var(--muted-2);font-weight:600}
+.prog__meta .v{color:var(--text);font-weight:700;font-variant-numeric:tabular-nums}
+.prog__link{
+  margin-top:1.1rem;display:inline-flex;align-items:center;gap:.5rem;
+  font-family:var(--f-cond);font-weight:700;text-transform:uppercase;letter-spacing:.12em;
+  font-size:.92rem;color:var(--volt);text-decoration:none;min-height:44px;
+  border-bottom:2px solid transparent;width:fit-content;
+  transition:border-color .18s ease,gap .18s ease;
+}
+.prog__link:hover{border-color:var(--volt);gap:.85rem}
+
+/* ============ STATS BAND ============ */
+.band{background:var(--surface);border-block:2px solid var(--line)}
+.band__grid{display:grid;gap:2px;background:var(--line);grid-template-columns:repeat(2,1fr)}
+@media (min-width:860px){.band__grid{grid-template-columns:repeat(4,1fr)}}
+.band__cell{background:var(--surface);padding:clamp(1.6rem,4vw,2.6rem) clamp(1rem,3vw,1.8rem)}
+.band__cell b{
+  display:block;font-family:var(--f-display);font-size:clamp(2.4rem,1.6rem + 3.4vw,4.2rem);
+  line-height:.9;color:var(--text);font-variant-numeric:tabular-nums;
+}
+.band__cell b i{font-style:normal;color:var(--volt)}
+.band__cell p{margin:.7rem 0 0;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.16em;font-size:.8rem;color:var(--muted)}
+
+/* ============ SCHEDULE ============ */
+.schedule{background:var(--bg-2)}
+.filters{
+  display:grid;gap:1rem;margin-bottom:1.6rem;
+  padding:1.1rem;border:2px solid var(--line);background:var(--surface);
+}
+@media (min-width:900px){.filters{grid-template-columns:1fr auto;align-items:center}}
+.dayrow{display:flex;flex-wrap:wrap;gap:.45rem}
+.chip{
+  appearance:none;-webkit-appearance:none;cursor:pointer;touch-action:manipulation;
+  min-height:44px;padding:.55rem .95rem;
+  font-family:var(--f-cond);font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:.88rem;
+  background:transparent;color:var(--muted);border:2px solid var(--line-2);border-radius:0;
+  transition:color .16s ease,border-color .16s ease,background-color .16s ease,transform .16s ease;
+}
+.chip:hover{color:var(--text);border-color:var(--volt);transform:translateY(-2px)}
+.chip[aria-pressed="true"]{background:var(--volt);border-color:var(--volt);color:#0b0c09}
+.chip .cnt{font-variant-numeric:tabular-nums;opacity:.65;margin-left:.35rem;font-size:.78rem}
+.selwrap{display:flex;align-items:center;gap:.7rem}
+.selwrap label{
+  font-family:var(--f-cond);font-weight:700;text-transform:uppercase;
+  letter-spacing:.14em;font-size:.78rem;color:var(--muted);white-space:nowrap;
+}
+select{
+  appearance:none;-webkit-appearance:none;
+  min-height:44px;padding:.5rem 2.6rem .5rem .85rem;
+  background:var(--surface-2);color:var(--text);border:2px solid var(--line-2);border-radius:0;
+  font-family:var(--f-cond);font-weight:600;text-transform:uppercase;letter-spacing:.08em;font-size:.92rem;
+  cursor:pointer;touch-action:manipulation;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d4ff3f' stroke-width='3'%3E%3Cpath d='M5 9l7 7 7-7'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right .7rem center;background-size:16px;
+  transition:border-color .16s ease;
+}
+select:hover{border-color:var(--volt)}
+
+.count{
+  font-family:var(--f-cond);font-weight:600;text-transform:uppercase;letter-spacing:.14em;
+  font-size:.82rem;color:var(--muted);margin:0 0 .8rem;font-variant-numeric:tabular-nums;
+}
+.count b{color:var(--volt)}
+
+.tablewrap{
+  overflow-x:auto;border:2px solid var(--line);background:var(--surface);
+  -webkit-overflow-scrolling:touch;
+}
+table{width:100%;border-collapse:collapse;min-width:760px}
+caption{text-align:left;padding:1rem 1.1rem;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.14em;font-size:.8rem;color:var(--muted-2);border-bottom:2px solid var(--line)}
+thead th{
+  position:sticky;top:0;z-index:2;
+  background:var(--volt);color:#0b0c09;
+  font-family:var(--f-cond);font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:.8rem;
+  padding:.85rem 1.1rem;text-align:left;white-space:nowrap;
+}
+tbody td{
+  padding:1rem 1.1rem;border-bottom:1px solid var(--line);vertical-align:middle;font-size:.97rem;
+}
+tbody tr{transition:background-color .16s ease}
+tbody tr:hover{background:var(--surface-2)}
+tbody tr:last-child td{border-bottom:0}
+td.day{
+  font-family:var(--f-display);text-transform:uppercase;font-size:1.02rem;letter-spacing:.04em;color:var(--text);white-space:nowrap;
+}
+td.time{font-family:var(--f-cond);font-weight:700;font-variant-numeric:tabular-nums;font-size:1.05rem;color:var(--volt);white-space:nowrap}
+.cls{font-family:var(--f-cond);font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:1.08rem;line-height:1.15;display:block}
+.tag{
+  display:inline-block;margin-top:.35rem;padding:.12rem .5rem;
+  border:1px solid var(--line-2);color:var(--muted);
+  font-family:var(--f-cond);font-weight:600;text-transform:uppercase;letter-spacing:.14em;font-size:.68rem;
+}
+.coach{display:flex;align-items:center;gap:.6rem;white-space:nowrap}
+.coach img{width:34px;height:34px;object-fit:cover;border:2px solid var(--line-2);flex:none;background:var(--surface-3)}
+.int{
+  display:inline-block;padding:.28rem .6rem;min-width:78px;text-align:center;
+  font-family:var(--f-cond);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.74rem;
+  border:2px solid currentColor;
+}
+.int--low{color:var(--ok)}
+.int--mod{color:#7ec8ff}
+.int--high{color:var(--warn)}
+.int--max{color:#0b0c09;background:var(--volt);border-color:var(--volt)}
+.empty{padding:3.2rem 1.4rem;text-align:center}
+.empty h3{font-family:var(--f-display);text-transform:uppercase;font-size:1.7rem;margin-bottom:.6rem}
+.empty p{color:var(--muted);margin:0 auto 1.4rem;max-width:44ch}
+
+/* ============ TRAINERS ============ */
+.trainers{background:var(--bg)}
+.tr-grid{display:grid;gap:1.5rem;grid-template-columns:1fr}
+@media (min-width:640px){.tr-grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1080px){.tr-grid{grid-template-columns:repeat(4,1fr)}}
+.tr{
+  position:relative;background:var(--surface);border:2px solid var(--line);
+  display:flex;flex-direction:column;overflow:hidden;
+  transition:transform .28s cubic-bezier(.2,.8,.2,1),border-color .28s ease,box-shadow .28s ease;
+}
+.tr:hover{transform:translate(-4px,-4px);border-color:var(--volt);box-shadow:var(--hard)}
+.tr__media{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--surface-3)}
+.tr__media img{
+  width:100%;height:100%;object-fit:cover;object-position:center 25%;
+  filter:grayscale(1) contrast(1.2) brightness(.72);
+  transition:filter .4s ease,transform .6s cubic-bezier(.2,.8,.2,1);
+}
+.tr:hover .tr__media img{filter:grayscale(.15) contrast(1.15) brightness(.9);transform:scale(1.05)}
+.tr__badge{
+  position:absolute;top:0;right:0;background:var(--volt);color:#0b0c09;
+  font-family:var(--f-cond);font-weight:700;text-transform:uppercase;letter-spacing:.14em;
+  font-size:.68rem;padding:.35rem .7rem;
+}
+.tr__body{padding:1.25rem 1.15rem 1.35rem;display:grid;gap:.55rem;flex:1}
+.tr__body h3{font-family:var(--f-display);text-transform:uppercase;font-size:1.42rem;line-height:1;letter-spacing:.02em}
+.tr__role{font-family:var(--f-cond);font-weight:700;text-transform:uppercase;letter-spacing:.16em;font-size:.76rem;color:var(--volt);margin:0}
+.tr__bio{color:var(--muted);font-size:.92rem;margin:.35rem 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.tr__facts{list-style:none;margin:.7rem 0 0;padding:.85rem 0 0;border-top:2px solid var(--line);display:grid;gap:.4rem}
+.tr__facts li{display:flex;justify-content:space-between;gap:.8rem;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.1em;font-size:.78rem}
+.tr__facts .k{color:var(--muted-2);font-weight:600}
+.tr__facts .v{color:var(--text);font-weight:700;font-variant-numeric:tabular-nums}
+
+/* ============ PRICING ============ */
+.pricing{background:var(--surface);border-block:2px solid var(--line)}
+.pr-grid{display:grid;gap:1.5rem;grid-template-columns:1fr;align-items:stretch}
+@media (min-width:820px){.pr-grid{grid-template-columns:repeat(3,1fr)}}
+.plan{
+  position:relative;display:flex;flex-direction:column;gap:1.2rem;
+  background:var(--bg);border:2px solid var(--line);padding:clamp(1.5rem,3.5vw,2.2rem);
+  transition:transform .28s cubic-bezier(.2,.8,.2,1),border-color .28s ease,box-shadow .28s ease;
+}
+.plan:hover{transform:translate(-4px,-4px);border-color:var(--volt);box-shadow:var(--hard)}
+.plan--feat{border-color:var(--volt);background:linear-gradient(180deg,var(--volt-deep) 0%,var(--bg) 55%)}
+.plan__flag{
+  position:absolute;top:-2px;right:-2px;background:var(--volt);color:#0b0c09;
+  font-family:var(--f-cond);font-weight:700;text-transform:uppercase;letter-spacing:.18em;font-size:.7rem;padding:.42rem .8rem;
+}
+.plan__name{font-family:var(--f-display);text-transform:uppercase;font-size:clamp(1.7rem,1.3rem + 1.4vw,2.3rem);line-height:1;letter-spacing:.02em}
+.plan__for{font-family:var(--f-cond);font-weight:600;text-transform:uppercase;letter-spacing:.16em;font-size:.76rem;color:var(--muted);margin:.5rem 0 0}
+.plan__price{display:flex;align-items:flex-start;gap:.35rem;padding-block:.4rem;border-block:2px solid var(--line)}
+.plan__cur{font-family:var(--f-cond);font-weight:700;font-size:1.5rem;color:var(--volt);line-height:1.2}
+.plan__amt{font-family:var(--f-display);font-size:clamp(3rem,2.2rem + 3.2vw,4.4rem);line-height:.86;color:var(--text);font-variant-numeric:tabular-nums}
+.plan__per{font-family:var(--f-cond);font-weight:600;text-transform:uppercase;letter-spacing:.14em;font-size:.82rem;color:var(--muted);align-self:flex-end;padding-bottom:.45rem}
+.plan ul{list-style:none;margin:0;padding:0;display:grid;gap:.7rem;flex:1}
+.plan li{display:flex;gap:.7rem;align-items:flex-start;font-size:.96rem;color:#c9cdba}
+.plan li svg{width:18px;height:18px;flex:none;margin-top:.28rem;color:var(--volt)}
+.plan li.off{color:var(--muted-2)}
+.plan li.off svg{color:var(--muted-2)}
+.plan__note{font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.12em;font-size:.76rem;color:var(--muted-2);margin:0}
+
+.facility{margin-top:3rem;display:grid;gap:1.6rem;grid-template-columns:1fr;align-items:center}
+@media (min-width:900px){.facility{grid-template-columns:1.05fr .95fr}}
+.facility__media{position:relative;aspect-ratio:16/10;overflow:hidden;border:2px solid var(--line);background:var(--surface-3)}
+.facility__media img{width:100%;height:100%;object-fit:cover;filter:grayscale(.45) contrast(1.15) brightness(.72)}
+.facility__media figcaption{
+  position:absolute;left:0;bottom:0;right:0;padding:.7rem .9rem;
+  background:rgba(11,12,9,.85);border-top:2px solid var(--volt);
+  font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.14em;font-size:.76rem;color:var(--muted);
+}
+.amen{list-style:none;margin:1.4rem 0 0;padding:0;display:grid;gap:.55rem}
+@media (min-width:520px){.amen{grid-template-columns:repeat(2,1fr)}}
+.amen li{display:flex;gap:.6rem;align-items:center;font-family:var(--f-cond);font-weight:600;text-transform:uppercase;letter-spacing:.08em;font-size:.88rem;color:#c9cdba;border-bottom:1px solid var(--line);padding-bottom:.55rem}
+.amen li::before{content:"";width:10px;height:10px;background:var(--volt);flex:none;transform:rotate(45deg)}
+
+/* ============ TOOLS / BMI ============ */
+.tools{background:var(--bg-2)}
+.tools__grid{display:grid;gap:1.6rem;grid-template-columns:1fr}
+@media (min-width:1000px){.tools__grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.calc{
+  border:2px solid var(--line);background:var(--surface);padding:clamp(1.4rem,3.5vw,2.2rem);
+}
+.calc__head{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between;margin-bottom:1.6rem}
+.seg{display:inline-flex;border:2px solid var(--line-2);background:var(--bg)}
+.seg button{
+  appearance:none;-webkit-appearance:none;cursor:pointer;touch-action:manipulation;
+  min-height:44px;padding:.5rem 1.1rem;background:transparent;border:0;color:var(--muted);
+  font-family:var(--f-cond);font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:.86rem;
+  transition:color .16s ease,background-color .16s ease;
+}
+.seg button:hover{color:var(--text)}
+.seg button[aria-pressed="true"]{background:var(--volt);color:#0b0c09}
+
+.field{display:grid;gap:.45rem;margin-bottom:1.1rem}
+.field label{
+  font-family:var(--f-cond);font-weight:700;text-transform:uppercase;letter-spacing:.14em;
+  font-size:.78rem;color:var(--muted);
+}
+.field input{
+  width:100%;min-height:52px;padding:.7rem .9rem;
+  background:var(--bg);color:var(--text);
+  border:2px solid var(--line-2);border-radius:0;
+  font-family:var(--f-cond);font-weight:600;font-size:1.15rem;letter-spacing:.04em;
+  font-variant-numeric:tabular-nums;touch-action:manipulation;
+  transition:border-color .16s ease,background-color .16s ease;
+}
+.field input::placeholder{color:var(--muted-2)}
+.field input:hover{border-color:var(--line-2);background:var(--surface-2)}
+.field input:focus-visible{border-color:var(--volt);outline:3px solid var(--volt);outline-offset:2px}
+.field input[aria-invalid="true"]{border-color:var(--danger)}
+.field .unit{font-family:var(--f-cond);font-weight:600;text-transform:uppercase;letter-spacing:.14em;font-size:.72rem;color:var(--muted-2)}
+.err{
+  color:var(--danger);font-family:var(--f-cond);font-weight:600;text-transform:uppercase;
+  letter-spacing:.1em;font-size:.76rem;min-height:0;display:none;
+}
+.err.show{display:block}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.calc__actions{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.4rem}
+
+.result{
+  margin-top:1.6rem;border:2px solid var(--volt);background:var(--bg);padding:1.4rem;
+  display:none;
+}
+.result.show{display:block;animation:fadeUp .45s cubic-bezier(.2,.8,.2,1) both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.result__top{display:flex;flex-wrap:wrap;gap:1.2rem;align-items:flex-end;justify-content:space-between}
+.bmi-val{font-family:var(--f-display);font-size:clamp(3.2rem,2.4rem + 3.4vw,4.6rem);line-height:.85;color:var(--volt);font-variant-numeric:tabular-nums}
+.bmi-cat{
+  font-family:var(--f-cond);font-weight:700;text-transform:uppercase;letter-spacing:.16em;font-size:1rem;
+  padding:.35rem .8rem;border:2px solid currentColor;display:inline-block;margin-bottom:.4rem;
+}
+.cat-under{color:#7ec8ff}.cat-healthy{color:var(--ok)}.cat-over{color:var(--warn)}.cat-obese{color:var(--danger)}
+.scale{margin-top:1.4rem}
+.scale__bar{position:relative;height:16px;display:flex;border:2px solid var(--line-2)}
+.scale__bar i{flex:1;height:100%}
+.scale__bar i:nth-child(1){background:#7ec8ff;flex:0 0 18.5%}
+.scale__bar i:nth-child(2){background:var(--ok);flex:0 0 31.5%}
+.scale__bar i:nth-child(3){background:var(--warn);flex:0 0 25%}
+.scale__bar i:nth-child(4){background:var(--danger);flex:1}
+.scale__pin{
+  position:absolute;top:-9px;left:0;width:4px;height:30px;background:var(--text);
+  transform:translateX(-50%);transition:transform .6s cubic-bezier(.2,.8,.2,1);
+}
+.scale__labels{display:flex;justify-content:space-between;margin-top:.5rem;font-family:var(--f-cond);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2);font-variant-numeric:tabular-nums}
+.result__grid{display:grid;gap:2px;background:var(--line);margin-top:1.4rem;border:1px solid var(--line)}
+@media (min-width:520px){.result__grid{grid-template-columns:repeat(3,1fr)}}
+.result__grid div{background:var(--surface);padding:.85rem .9rem}
+.result__grid b{display:block;font-family:var(--f-cond);font-weight:700;font-size:1.3rem;color:var(--text);font-variant-numeric:tabular-nums}
+.result__grid span{font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;color:var(--muted)}
+.result__note{margin:1.1rem 0 0;font-size:.86rem;color:var(--muted-2)}
+
+.toast{
+  position:fixed;left:50%;bottom:24px;z-index:9500;
+  transform:translate(-50%,140%);
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+  background:var(--surface-3);border:2px solid var(--volt);
+  padding:.75rem .9rem;max-width:min(92vw,460px);
+  box-shadow:0 14px 40px rgba(0,0,0,.55);
+  transition:transform .34s cubic-bezier(.2,.8,.2,1);
+}
+.toast.show{transform:translate(-50%,0)}
+.toast p{margin:0;font-family:var(--f-cond);font-weight:600;text-transform:uppercase;letter-spacing:.1em;font-size:.86rem}
+
+.tools__aside{display:grid;gap:1.5rem;align-content:start}
+.aside-card{border:2px solid var(--line);background:var(--surface);overflow:hidden}
+.aside-card__media{aspect-ratio:16/9;overflow:hidden;background:var(--surface-3)}
+.aside-card__media img{width:100%;height:100%;object-fit:cover;filter:grayscale(.4) contrast(1.14) brightness(.7)}
+.aside-card__body{padding:1.3rem 1.2rem 1.5rem;display:grid;gap:.7rem}
+.aside-card__body p{color:var(--muted);margin:0;font-size:.96rem}
+.quote{
+  border-left:4px solid var(--volt);padding:.2rem 0 .2rem 1.1rem;margin:0;
+  font-family:var(--f-cond);font-weight:600;font-size:1.24rem;line-height:1.3;text-transform:none;letter-spacing:.01em;
+}
+.quote cite{display:block;margin-top:.7rem;font-family:var(--f-cond);font-size:.8rem;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);font-style:normal}
+
+/* ============ TRIAL FORM ============ */
+.trial{background:var(--bg);position:relative;overflow:hidden}
+.trial::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(90% 60% at 85% 10%,rgba(212,255,63,.1),transparent 60%);
+}
+.trial__grid{position:relative;display:grid;gap:2.4rem;grid-template-columns:1fr}
+@media (min-width:980px){.trial__grid{grid-template-columns:1fr 1.05fr;gap:3.5rem}}
+.trial__list{list-style:none;margin:1.8rem 0 0;padding:0;display:grid;gap:.9rem;counter-reset:s}
+.trial__list li{
+  display:flex;gap:1rem;align-items:flex-start;padding-bottom:.9rem;border-bottom:2px solid var(--line);
+  font-size:1rem;color:#c9cdba;
+}
+.trial__list li::before{
+  counter-increment:s;content:"0" counter(s);
+  font-family:var(--f-display);color:var(--volt);font-size:1.05rem;line-height:1.4;flex:none;min-width:2.2rem;
+}
+.trial__media{margin-top:2rem;position:relative;aspect-ratio:16/9;overflow:hidden;border:2px solid var(--line);background:var(--surface-3)}
+.trial__media img{width:100%;height:100%;object-fit:cover;filter:grayscale(.5) contrast(1.15) brightness(.66)}
+.trial__media span{
+  position:absolute;left:0;bottom:0;background:var(--volt);color:#0b0c09;
+  font-family:var(--f-display);text-transform:uppercase;font-size:1.1rem;padding:.4rem .9rem;letter-spacing:.04em;
+}
+
+.form{
+  border:2px solid var(--volt);background:var(--surface);
+  padding:clamp(1.4rem,3.5vw,2.3rem);position:relative;
+}
+.form__tag{
+  position:absolute;top:-2px;left:-2px;background:var(--volt);color:#0b0c09;
+  font-family:var(--f-cond);font-weight:700;text-transform:uppercase;letter-spacing:.2em;font-size:.72rem;padding:.42rem .85rem;
+}
+.form h2{margin-top:1.4rem}
+.form__sub{color:var(--muted);margin:.6rem 0 1.6rem;font-size:.98rem}
+.form .field input,.form .field select,.form .field textarea{width:100%}
+.form textarea{
+  min-height:96px;padding:.7rem .9rem;background:var(--bg);color:var(--text);
+  border:2px solid var(--line-2);border-radius:0;font-family:var(--f-body);font-size:1rem;resize:vertical;
+}
+.form textarea:focus-visible{border-color:var(--volt);outline:3px solid var(--volt);outline-offset:2px}
+.check{display:flex;gap:.8rem;align-items:flex-start;margin:1.2rem 0;padding:.9rem;border:2px solid var(--line);background:var(--bg)}
+.check input{
+  appearance:none;-webkit-appearance:none;flex:none;width:24px;height:24px;margin:2px 0 0;
+  border:2px solid var(--line-2);background:var(--bg);cursor:pointer;touch-action:manipulation;
+  display:grid;place-content:center;transition:border-color .16s ease,background-color .16s ease;
+}
+.check input::after{
+  content:"";width:12px;height:12px;background:#0b0c09;transform:scale(0);
+  transition:transform .16s cubic-bezier(.2,.8,.2,1);
+  clip-path:polygon(14% 44%,0 62%,40% 100%,100% 22%,84% 8%,38% 66%);
+}
+.check input:checked{background:var(--volt);border-color:var(--volt)}
+.check input:checked::after{transform:scale(1)}
+.check input[aria-invalid="true"]{border-color:var(--danger)}
+.check label{font-size:.92rem;color:var(--muted);line-height:1.45}
+.check label a{color:var(--volt)}
+
+.success{display:none;text-align:left}
+.success.show{display:block;animation:fadeUp .45s cubic-bezier(.2,.8,.2,1) both}
+.success__mark{
+  width:64px;height:64px;border:2px solid var(--volt);display:grid;place-content:center;
+  color:var(--volt);margin-bottom:1.2rem;background:var(--volt-deep);
+}
+.success__mark svg{width:32px;height:32px}
+.success h2{font-family:var(--f-display);text-transform:uppercase;font-size:clamp(1.9rem,1.4rem + 1.8vw,2.7rem);line-height:.95;margin-bottom:.8rem}
+.success p{color:var(--muted)}
+.success dl{display:grid;gap:2px;background:var(--line);border:2px solid var(--line);margin:1.4rem 0}
+.success dl > div{background:var(--bg);padding:.8rem .9rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.success dt{font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.14em;font-size:.76rem;color:var(--muted-2)}
+.success dd{margin:0;font-family:var(--f-cond);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:.98rem;color:var(--text);overflow-wrap:anywhere}
+.success__acts{display:flex;flex-wrap:wrap;gap:.8rem}
+
+/* ============ FOOTER ============ */
+.ftr{background:var(--bg-2);border-top:2px solid var(--line)}
+.ftr__grid{display:grid;gap:2.4rem;grid-template-columns:1fr;padding-block:clamp(3rem,6vw,4.5rem)}
+@media (min-width:760px){.ftr__grid{grid-template-columns:1.4fr 1fr 1fr}}
+@media (min-width:1080px){.ftr__grid{grid-template-columns:1.6fr 1fr 1fr 1.2fr}}
+.ftr h2{
+  font-family:var(--f-cond);font-weight:700;text-transform:uppercase;letter-spacing:.2em;
+  font-size:.84rem;color:var(--volt);margin-bottom:1.1rem;
+}
+.ftr ul{list-style:none;margin:0;padding:0;display:grid;gap:.2rem}
+.ftr ul a{
+  display:inline-flex;align-items:center;min-height:44px;text-decoration:none;color:var(--muted);
+  font-family:var(--f-cond);font-weight:600;text-transform:uppercase;letter-spacing:.1em;font-size:.94rem;
+  transition:color .16s ease,transform .16s ease;
+}
+.ftr ul a:hover{color:var(--volt);transform:translateX(4px)}
+.ftr address{font-style:normal;color:var(--muted);font-size:.98rem;line-height:1.7}
+.ftr address a{color:var(--text);text-decoration:none;border-bottom:2px solid var(--line-2)}
+.ftr address a:hover{color:var(--volt);border-color:var(--volt)}
+.social{display:flex;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap}
+.social a{
+  width:46px;height:46px;display:inline-flex;align-items:center;justify-content:center;
+  border:2px solid var(--line-2);color:var(--muted);text-decoration:none;
+  transition:color .16s ease,border-color .16s ease,transform .16s ease,background-color .16s ease;
+}
+.social a:hover{color:#0b0c09;background:var(--volt);border-color:var(--volt);transform:translateY(-3px)}
+.social svg{width:20px;height:20px}
+.ftr__hours{list-style:none;margin:1rem 0 0;padding:0;display:grid;gap:.35rem}
+.ftr__hours li{display:flex;justify-content:space-between;gap:1rem;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.1em;font-size:.84rem;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:.35rem}
+.ftr__hours b{color:var(--text);font-variant-numeric:tabular-nums;font-weight:700}
+.ftr__bottom{
+  border-top:2px solid var(--line);padding-block:1.3rem;
+  display:flex;flex-wrap:wrap;gap:.8rem 1.6rem;align-items:center;justify-content:space-between;
+}
+.ftr__bottom p{margin:0;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.12em;font-size:.78rem;color:var(--muted-2)}
+.ftr__bottom nav{display:flex;flex-wrap:wrap;gap:1.2rem}
+.ftr__bottom nav a{
+  font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.12em;font-size:.78rem;
+  color:var(--muted-2);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;
+  transition:color .16s ease;
+}
+.ftr__bottom nav a:hover{color:var(--volt)}
+.wordmark{
+  font-family:var(--f-display);text-transform:uppercase;
+  font-size:clamp(3.6rem,2rem + 13vw,13rem);line-height:.8;letter-spacing:-.01em;
+  color:transparent;-webkit-text-stroke:2px var(--line-2);
+  text-align:center;padding-block:0 clamp(1.5rem,4vw,2.5rem);user-select:none;
+}
+
+/* ============ REVEAL ============ */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.rv.in{opacity:1;transform:translateY(0)}
+.rv[data-d="1"]{transition-delay:.08s}
+.rv[data-d="2"]{transition-delay:.16s}
+.rv[data-d="3"]{transition-delay:.24s}
+.rv[data-d="4"]{transition-delay:.32s}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  .rv{opacity:1;transform:none}
+  .hero h1 .ln > span{transform:none}
+  .ticker__track{animation:none}
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to Main Content</a>
+
+<!-- ================= HEADER ================= -->
+<header class="hdr" id="hdr">
+  <div class="wrap hdr__bar">
+    <a class="brand" href="#top" aria-label="Forge Strength and Conditioning — back to top">
+      <svg class="brand__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false">
+        <path d="M4 14h6v12H4zM30 14h6v12h-6z" fill="currentColor"/>
+        <path d="M10 17h20v6H10z" fill="currentColor" opacity=".55"/>
+        <path d="M1 18h3v4H1zM36 18h3v4h-3z" fill="currentColor"/>
+      </svg>
+      <span class="brand__txt">Forge<span class="brand__sub">Strength &amp; Cond.</span></span>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="#programs">Programs</a></li>
+        <li><a class="nav__link" href="#schedule">Schedule</a></li>
+        <li><a class="nav__link" href="#coaches">Coaches</a></li>
+        <li><a class="nav__link" href="#pricing">Membership</a></li>
+        <li><a class="nav__link" href="#tools">Bmi Tool</a></li>
+      </ul>
+    </nav>
+
+    <a class="btn btn--sm hdr__cta" href="#trial">Book Free Week</a>
+
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Open navigation menu">
+      <svg class="i-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      <svg class="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true" focusable="false"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    </button>
+  </div>
+
+  <div class="drawer" id="drawer">
+    <div class="drawer__inner">
+      <ul class="drawer__list">
+        <li><a href="#programs">Programs <span>01</span></a></li>
+        <li><a href="#schedule">Schedule <span>02</span></a></li>
+        <li><a href="#coaches">Coaches <span>03</span></a></li>
+        <li><a href="#pricing">Membership <span>04</span></a></li>
+        <li><a href="#tools">Bmi Tool <span>05</span></a></li>
+        <li><a href="#trial">Free Week <span>06</span></a></li>
+      </ul>
+      <div class="drawer__foot">
+        <a class="btn btn--block" href="#trial">Book My Free Week</a>
+        <a class="btn btn--ghost btn--block" href="tel:+13125550184">Call (312) 555-0184</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<span id="top"></span>
+
+<!-- ================= HERO ================= -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__media">
+    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&amp;fit=crop&amp;w=1920&amp;q=80"
+         width="1920" height="1280" alt="" data-fallback="photo-1540497077202-7c8a3999166f" fetchpriority="high">
+  </div>
+  <div class="wrap hero__inner">
+    <div>
+      <p class="hero__tag"><span class="dot" aria-hidden="true"></span> Now Training — Goose Island, Chicago</p>
+      <h1 id="hero-title">
+        <span class="ln"><span>Build Raw</span></span>
+        <span class="ln"><span><em>Strength.</em></span></span>
+        <span class="ln"><span class="outline">Earn It.</span></span>
+      </h1>
+    </div>
+
+    <div class="hero__body">
+      <div class="hero__copy">
+        <p>Forge is a 6,000&nbsp;sq&nbsp;ft warehouse built for one thing: making you measurably stronger. Coach-led powerlifting, brutal conditioning, and mobility work that keeps you in the game for decades — no mirrors, no nonsense.</p>
+        <div class="hero__actions">
+          <a class="btn" href="#trial">Start My Free Week</a>
+          <a class="btn btn--outline" href="#schedule">See Class Schedule</a>>
+      </div>
+
+      <div class="hero__stats">
+        <div class="hero__stat"><b class="num" data-count="1400">0</b><span>Active Members</span></div>
+        <div class="hero__stat"><b class="num" data-count="23">0</b><span>Classes Per Week</span></div>
+        <div class="hero__stat"><b class="num" data-count="11">0</b><span>Certified Coaches</span></div>
+        <div class="hero__stat"><b class="num">24/7</b><span>Member Access</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    <div class="ticker__set">
+      <span class="ticker__item">Squat · Bench · Deadlift</span>
+      <span class="ticker__item">Coach-Led Small Groups</span>
+      <span class="ticker__item">Open Platform 24/7</span>
+      <span class="ticker__item">Chalk Allowed</span>
+      <span class="ticker__item">No Contracts</span>
+      <span class="ticker__item">First Week Free</span>
+    </div>
+    <div class="ticker__set">
+      <span class="ticker__item">Squat · Bench · Deadlift</span>
+      <span class="ticker__item">Coach-Led Small Groups</span>
+      <span class="ticker__item">Open Platform 24/7</span>
+      <span class="ticker__item">Chalk Allowed</span>
+      <span class="ticker__item">No Contracts</span>
+      <span class="ticker__item">First Week Free</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PROGRAMS ================= -->
+<section class="section programs" id="programs" aria-labelledby="programs-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="rv">
+        <p class="kicker">01 — What We Train</p>
+        <h2 class="h2" id="programs-title">Three Pillars.<br>One Stronger You.</h2>
+      </div>
+      <div class="rv" data-d="1" style="max-width:46ch">
+        <p class="lede">Every Forge member trains across all three. Lift heavy, breathe hard, move well — in that order, on repeat, for years.</p>
+      </div>
+    </div>
+
+    <div class="prog-grid">
+      <article class="prog rv">
+        <div class="prog__media">
+          <span class="prog__idx">01</span>
+          <img src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&amp;fit=crop&amp;w=1000&amp;q=80"
+               width="1000" height="688" alt="A lifter driving up from the bottom of a heavy barbell squat on a competition platform."
+               loading="lazy" data-fallback="photo-1517836357463-d25dfeac3438">
+          <span class="prog__lvl">All Levels</span>
+        </div>
+        <div class="prog__body">
+          <h3 class="h3">Powerlifting</h3>
+          <p>Progressive overload on the squat, bench and deadlift. You get a written block, a coach on the platform, and video review on every top set.</p>
+          <ul class="prog__meta">
+            <li><span class="k">Sessions</span><span class="v">4× / Week</span></li>
+            <li><span class="k">Duration</span><span class="v num">75 Min</span></li>
+            <li><span class="k">Class Size</span><span class="v num">Max 8</span></li>
+          </ul>
+          <a class="prog__link" href="#schedule">View Powerlifting Times
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="prog rv" data-d="1">
+        <div class="prog__media">
+          <span class="prog__idx">02</span>
+          <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&amp;fit=crop&amp;w=1000&amp;q=80"
+               width="1000" height="688" alt="An athlete mid-effort on a gym floor surrounded by dumbbells and conditioning equipment."
+               loading="lazy" data-fallback="photo-1526506118085-60ce8714f8c5">
+          <span class="prog__lvl">High Output</span>
+        </div>
+        <div class="prog__body">
+          <h3 class="h3">HIIT &amp; Conditioning</h3>
+          <p>Interval work on the sled turf, assault bike, ropes and rower. Heart rate stays red, rest stays honest, and the clock never lies to you.</p>
+          <ul class="prog__meta">
+            <li><span class="k">Sessions</span><span class="v">6× / Week</span></li>
+            <li><span class="k">Duration</span><span class="v num">45 Min</span></li>
+            <li><span class="k">Class Size</span><span class="v num">Max 14</span></li>
+          </ul>
+          <a class="prog__link" href="#schedule">View Hiit Times
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="prog rv" data-d="2">
+        <div class="prog__media">
+          <span class="prog__idx">03</span>
+          <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&amp;fit=crop&amp;w=1000&amp;q=80"
+               width="1000" height="688" alt="An athlete holding a deep hip mobility stretch on a mat in a dim training studio."
+               loading="lazy" data-fallback="photo-1506126613408-eca07ce68773">
+          <span class="prog__lvl">Recovery</span>
+        </div>
+        <div class="prog__body">
+          <h3 class="h3">Mobility &amp; Rehab</h3>
+          <p>Screened, coached range-of-motion work for hips, shoulders and spine. Built by our physio so your heavy days stay heavy for the long haul.</p>
+          <ul class="prog__meta">
+            <li><span class="k">Sessions</span><span class="v">7× / Week</span></li>
+            <li><span class="k">Duration</span><span class="v num">50 Min</span></li>
+            <li><span class="k">Class Size</span><span class="v num">Max 12</span></li>
+          </ul>
+          <a class="prog__link" href="#schedule">View Mobility Times
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STATS BAND ================= -->
+<section class="band" aria-labelledby="band-title">
+  <h2 class="sr-only" id="band-title">Forge By The Numbers</h2>
+  <div class="wrap" style="padding:0">
+    <div class="band__grid">
+      <div class="band__cell rv"><b class="num" data-count="6000">0</b><p>Sq Ft Of Turf &amp; Platforms</p></div>
+      <div class="band__cell rv" data-d="1"><b><span class="num" data-count="42">0</span><i>T</i></b><p>Of Iron On The Floor</p></div>
+      <div class="band__cell rv" data-d="2"><b class="num" data-count="96">0</b><p>Percent Member Retention</p></div>
+      <div class="band__cell rv" data-d="3"><b class="num" data-count="2014">0</b><p>Forging Athletes Since</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SCHEDULE ================= -->
+<section class="section schedule" id="schedule" aria-labelledby="schedule-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="rv">
+        <p class="kicker">02 — Weekly Board</p>
+        <h2 class="h2" id="schedule-title">Class Schedule</h2>
+      </div>
+      <div class="rv" data-d="1" style="max-width:44ch">
+        <p class="lede">Pick a day and we will show you exactly what is on the board. Members reserve a spot up to seven days ahead.</p>
+      </div>
+    </div>
+
+    <div class="filters rv">
+      <div class="dayrow" role="group" aria-label="Filter classes by day">
+        <button class="chip" type="button" data-day="all" aria-pressed="true">All Days <span class="cnt num" data-count-all></span></button>
+        <button class="chip" type="button" data-day="mon" aria-pressed="false">Mon</button>
+        <button class="chip" type="button" data-day="tue" aria-pressed="false">Tue</button>
+        <button class="chip" type="button" data-day="wed" aria-pressed="false">Wed</button>
+        <button class="chip" type="button" data-day="thu" aria-pressed="false">Thu</button>
+        <button class="chip" type="button" data-day="fri" aria-pressed="false">Fri</button>
+        <button class="chip" type="button" data-day="sat" aria-pressed="false">Sat</button>
+        <button class="chip" type="button" data-day="sun" aria-pressed="false">Sun</button>
+      </div>
+      <div class="selwrap">
+        <label for="progFilter">Program</label>
+        <select id="progFilter">
+          <option value="all">All Programs</option>
+          <option value="powerlifting">Powerlifting</option>
+          <option value="hiit">HIIT &amp; Conditioning</option>
+          <option value="mobility">Mobility &amp; Rehab</option>
+        </select>
+      </div>
+    </div>
+
+    <p class="count" id="count" role="status" aria-live="polite">Showing <b>23</b> of 23 classes</p>
+
+    <div class="tablewrap rv" tabindex="0" role="region" aria-label="Weekly class schedule, scrollable">
+      <table>
+        <caption>Forge weekly class board — times shown in Central Time</caption>
+        <thead>
+          <tr>
+            <th scope="col">Day</th>
+            <th scope="col">Time</th>
+            <th scope="col">Class</th>
+            <th scope="col">Coach</th>
+            <th scope="col">Intensity</th>
+          </tr>
+        </thead>
+        <tbody id="schedBody">
+          <tr data-day="mon" data-program="powerlifting">
+            <td class="day">Mon</td><td class="time">06:00</td>
+            <td><span class="cls">Squat Lab</span><span class="tag">Powerlifting</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1500648767791-00dcc994a43e">Marcus Vale</span></td>
+            <td><span class="int int--max">Max</span></td>
+          </tr>
+          <tr data-day="mon" data-program="hiit">
+            <td class="day">Mon</td><td class="time">07:00</td>
+            <td><span class="cls">Forge 45</span><span class="tag">HIIT</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1544005313-94ddf0286df2">Nadia Brooks</span></td>
+            <td><span class="int int--high">High</span></td>
+          </tr>
+          <tr data-day="mon" data-program="mobility">
+            <td class="day">Mon</td><td class="time">12:15</td>
+            <td><span class="cls">Desk Reset</span><span class="tag">Mobility</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1494790108377-be9c29b29330">Iris Kovacs</span></td>
+            <td><span class="int int--low">Low</span></td>
+          </tr>
+          <tr data-day="mon" data-program="powerlifting">
+            <td class="day">Mon</td><td class="time">18:00</td>
+            <td><span class="cls">Deadlift Club</span><span class="tag">Powerlifting</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1506794778202-cad84cf45f1d">Theo Marsh</span></td>
+            <td><span class="int int--max">Max</span></td>
+          </tr>
+          <tr data-day="mon" data-program="hiit">
+            <td class="day">Mon</td><td class="time">19:00</td>
+            <td><span class="cls">Conditioning Circuit</span><span class="tag">HIIT</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1544005313-94ddf0286df2">Nadia Brooks</span></td>
+            <td><span class="int int--high">High</span></td>
+          </tr>
+
+          <tr data-day="tue" data-program="mobility">
+            <td class="day">Tue</td><td class="time">06:30</td>
+            <td><span class="cls">Hip &amp; Hinge</span><span class="tag">Mobility</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1494790108377-be9c29b29330">Iris Kovacs</span></td>
+            <td><span class="int int--low">Low</span></td>
+          </tr>
+          <tr data-day="tue" data-program="powerlifting">
+            <td class="day">Tue</td><td class="time">17:30</td>
+            <td><span class="cls">Bench Press Lab</span><span class="tag">Powerlifting</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1500648767791-00dcc994a43e">Marcus Vale</span></td>
+            <td><span class="int int--high">High</span></td>
+          </tr>
+          <tr data-day="tue" data-program="hiit">
+            <td class="day">Tue</td><td class="time">18:30</td>
+            <td><span class="cls">Sled &amp; Rope</span><span class="tag">HIIT</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1506794778202-cad84cf45f1d">Theo Marsh</span></td>
+            <td><span class="int int--max">Max</span></td>
+          </tr>
+
+          <tr data-day="wed" data-program="hiit">
+            <td class="day">Wed</td><td class="time">06:00</td>
+            <td><span class="cls">Forge 45</span><span class="tag">HIIT</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1544005313-94ddf0286df2">Nadia Brooks</span></td>
+            <td><span class="int int--max">Max</span></td>
+          </tr>
+          <tr data-day="wed" data-program="powerlifting">
+            <td class="day">Wed</td><td class="time">12:15</td>
+            <td><span class="cls">Technique Bar</span><span class="tag">Powerlifting</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1500648767791-00dcc994a43e">Marcus Vale</span></td>
+            <td><span class="int int--mod">Moderate</span></td>
+          </tr>
+          <tr data-day="wed" data-program="mobility">
+            <td class="day">Wed</td><td class="time">18:00</td>
+            <td><span class="cls">Spine &amp; Shoulders</span><span class="tag">Mobility</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1494790108377-be9c29b29330">Iris Kovacs</span></td>
+            <td><span class="int int--low">Low</span></td>
+          </tr>
+          <tr data-day="wed" data-program="hiit">
+            <td class="day">Wed</td><td class="time">19:15</td>
+            <td><span class="cls">Engine Room</span><span class="tag">HIIT</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1506794778202-cad84cf45f1d">Theo Marsh</span></td>
+            <td><span class="int int--high">High</span></td>
+          </tr>
+
+          <tr data-day="thu" data-program="powerlifting">
+            <td class="day">Thu</td><td class="time">06:30</td>
+            <td><span class="cls">Squat Lab</span><span class="tag">Powerlifting</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1500648767791-00dcc994a43e">Marcus Vale</span></td>
+            <td><span class="int int--max">Max</span></td>
+          </tr>
+          <tr data-day="thu" data-program="hiit">
+            <td class="day">Thu</td><td class="time">17:30</td>
+            <td><span class="cls">Intervals</span><span class="tag">HIIT</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1544005313-94ddf0286df2">Nadia Brooks</span></td>
+            <td><span class="int int--high">High</span></td>
+          </tr>
+          <tr data-day="thu" data-program="mobility">
+            <td class="day">Thu</td><td class="time">18:30</td>
+            <td><span class="cls">Deep Stretch</span><span class="tag">Mobility</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1494790108377-be9c29b29330">Iris Kovacs</span></td>
+            <td><span class="int int--low">Low</span></td>
+          </tr>
+
+          <tr data-day="fri" data-program="hiit">
+            <td class="day">Fri</td><td class="time">06:00</td>
+            <td><span class="cls">Friday Grinder</span><span class="tag">HIIT</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1506794778202-cad84cf45f1d">Theo Marsh</span></td>
+            <td><span class="int int--max">Max</span></td>
+          </tr>
+          <tr data-day="fri" data-program="powerlifting">
+            <td class="day">Fri</td><td class="time">12:15</td>
+            <td><span class="cls">Deadlift Club</span><span class="tag">Powerlifting</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1500648767791-00dcc994a43e">Marcus Vale</span></td>
+            <td><span class="int int--max">Max</span></td>
+          </tr>
+          <tr data-day="fri" data-program="mobility">
+            <td class="day">Fri</td><td class="time">17:45</td>
+            <td><span class="cls">Recovery Flow</span><span class="tag">Mobility</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1494790108377-be9c29b29330">Iris Kovacs</span></td>
+            <td><span class="int int--low">Low</span></td>
+          </tr>
+
+          <tr data-day="sat" data-program="hiit">
+            <td class="day">Sat</td><td class="time">09:00</td>
+            <td><span class="cls">Team Wod</span><span class="tag">HIIT</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1544005313-94ddf0286df2">Nadia Brooks</span></td>
+            <td><span class="int int--max">Max</span></td>
+          </tr>
+          <tr data-day="sat" data-program="powerlifting">
+            <td class="day">Sat</td><td class="time">10:30</td>
+            <td><span class="cls">Open Lift + Coaching</span><span class="tag">Powerlifting</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1506794778202-cad84cf45f1d">Theo Marsh</span></td>
+            <td><span class="int int--mod">Moderate</span></td>
+          </tr>
+          <tr data-day="sat" data-program="mobility">
+            <td class="day">Sat</td><td class="time">12:00</td>
+            <td><span class="cls">60-Minute Reset</span><span class="tag">Mobility</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1494790108377-be9c29b29330">Iris Kovacs</span></td>
+            <td><span class="int int--low">Low</span></td>
+          </tr>
+
+          <tr data-day="sun" data-program="mobility">
+            <td class="day">Sun</td><td class="time">10:00</td>
+            <td><span class="cls">Restorative</span><span class="tag">Mobility</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1494790108377-be9c29b29330">Iris Kovacs</span></td>
+            <td><span class="int int--low">Low</span></td>
+          </tr>
+          <tr data-day="sun" data-program="hiit">
+            <td class="day">Sun</td><td class="time">11:00</td>
+            <td><span class="cls">Ruck &amp; Run</span><span class="tag">HIIT</span></td>
+            <td><span class="coach"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&amp;fit=crop&amp;w=120&amp;q=70" width="34" height="34" alt="" loading="lazy" data-fallback="photo-1506794778202-cad84cf45f1d">Theo Marsh</span></td>
+            <td><span class="int int--mod">Moderate</span></td>
+          </tr>
+
+          <tr id="emptyRow" hidden>
+            <td colspan="5">
+              <div class="empty">
+                <h3>No Classes Match That Filter</h3>
+                <p>We run 23 sessions a week across powerlifting, HIIT and mobility. Try another day, or clear the filters to see the full board.</p>
+                <button class="btn btn--outline btn--sm" type="button" id="resetFilters">Show Full Week</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TRAINERS ================= -->
+<section class="section trainers" id="coaches" aria-labelledby="coaches-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="rv">
+        <p class="kicker">03 — The Staff</p>
+        <h2 class="h2" id="coaches-title">Coaches Who<br>Lift With You</h2>
+      </div>
+      <div class="rv" data-d="1" style="max-width:44ch">
+        <p class="lede">Every coach on this floor competes, screens, and writes their own programming. You will not be shouted at by someone who has never been under a bar.</p>
+      </div>
+    </div>
+
+    <div class="tr-grid">
+      <article class="tr rv">
+        <div class="tr__media">
+          <span class="tr__badge">Head Coach</span>
+          <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&amp;fit=crop&amp;w=800&amp;q=80"
+               width="800" height="1000" alt="Marcus Vale, head strength coach, standing on the lifting platform at Forge."
+               loading="lazy" data-fallback="photo-1500648767791-00dcc994a43e">
+        </div>
+        <div class="tr__body">
+          <h3>Marcus Vale</h3>
+          <p class="tr__role">Head Strength Coach</p>
+          <p class="tr__bio">Twelve years coaching raw powerlifters, including three state champions. Obsessed with bar path, bracing and boring consistency.</p>
+          <ul class="tr__facts">
+            <li><span class="k">Specialty</span><span class="v">Squat &amp; Pull</span></li>
+            <li><span class="k">Cert</span><span class="v">USAPL · CSCS</span></li>
+            <li><span class="k">Best Deadlift</span><span class="v">661 lb</span></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="tr rv" data-d="1">
+        <div class="tr__media">
+          <span class="tr__badge">Conditioning</span>
+          <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&amp;fit=crop&amp;w=800&amp;q=80"
+               width="800" height="1000" alt="Nadia Brooks, conditioning lead, coaching a member through an interval set."
+               loading="lazy" data-fallback="photo-1544005313-94ddf0286df2">
+        </div>
+        <div class="tr__body">
+          <h3>Nadia Brooks</h3>
+          <p class="tr__role">Conditioning Lead</p>
+          <p class="tr__bio">Former collegiate 800&nbsp;m runner turned interval evangelist. Builds engines without wrecking joints — and will make you love the sled.</p>
+          <ul class="tr__facts">
+            <li><span class="k">Specialty</span><span class="v">Aerobic Base</span></li>
+            <li><span class="k">Cert</span><span class="v">NASM · RRCA</span></li>
+            <li><span class="k">Coaching</span><span class="v num">9 Yrs</span></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="tr rv" data-d="2">
+        <div class="tr__media">
+          <span class="tr__badge">Performance</span>
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&amp;fit=crop&amp;w=800&amp;q=80"
+               width="800" height="1000" alt="Theo Marsh, performance coach, demonstrating a kettlebell carry on the turf."
+               loading="lazy" data-fallback="photo-1506794778202-cad84cf45f1d">
+        </div>
+        <div class="tr__body">
+          <h3>Theo Marsh</h3>
+          <p class="tr__role">Performance Coach</p>
+          <p class="tr__bio">Hybrid athlete who deadlifts 500 and runs sub-3:00 marathons. Handles our return-to-lifters and anyone chasing both strength and stamina.</p>
+          <ul class="tr__facts">
+            <li><span class="k">Specialty</span><span class="v">Hybrid</span></li>
+            <li><span class="k">Cert</span><span class="v">NSCA-CPT</span></li>
+            <li><span class="k">Best Total</span><span class="v num">1,433 lb</span></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="tr rv" data-d="3">
+        <div class="tr__media">
+          <span class="tr__badge">Mobility</span>
+          <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&amp;fit=crop&amp;w=800&amp;q=80"
+               width="800" height="1000" alt="Iris Kovacs, mobility and rehab coach, guiding a member through a hip range-of-motion drill."
+               loading="lazy" data-fallback="photo-1494790108377-be9c29b29330">
+        </div>
+        <div class="tr__body">
+          <h3>Iris Kovacs</h3>
+          <p class="tr__role">Mobility &amp; Rehab</p>
+          <p class="tr__bio">Doctor of physical therapy with a strength background. Screens every new member and writes the mobility work that keeps you squatting at 60.</p>
+          <ul class="tr__facts">
+            <li><span class="k">Specialty</span><span class="v">Hips &amp; Spine</span></li>
+            <li><span class="k">Cert</span><span class="v">DPT · FRC</span></li>
+            <li><span class="k">Coaching</span><span class="v num">11 Yrs</span></li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="rule-strip" aria-hidden="true"></div>
+
+<!-- ================= PRICING ================= -->
+<section class="section pricing" id="pricing" aria-labelledby="pricing-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="rv">
+        <p class="kicker">04 — Membership</p>
+        <h2 class="h2" id="pricing-title">Pick Your Plan.<br>Cancel Any Time.</h2>
+      </div>
+      <div class="rv" data-d="1" style="max-width:44ch">
+        <p class="lede">No joining fee, no twelve-month lock-in, no towel-fold upsell. Freeze your membership free for up to eight weeks a year.</p>
+      </div>
+    </div>
+
+    <div class="pr-grid">
+      <article class="plan rv" aria-labelledby="plan-foundation">
+        <div>
+          <h3 class="plan__name" id="plan-foundation">Foundation</h3>
+          <p class="plan__for">For self-directed lifters</p>
+        </div>
+        <p class="plan__price">
+          <span class="plan__cur">$</span><span class="plan__amt num">59</span><span class="plan__per">/ Month</span>
+        </p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" focusable="false"><path d="M4 12.5l5 5L20 6"/></svg> 24/7 gym floor access</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" focusable="false"><path d="M4 12.5l5 5L20 6"/></svg> 4 coached classes per month</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" focusable="false"><path d="M4 12.5l5 5L20 6"/></svg> Movement screen on day one</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" focusable="false"><path d="M4 12.5l5 5L20 6"/></svg> Forge training app</li>
+          <li class="off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg> Unlimited coached classes</li>
+          <li class="off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg> 1-on-1 programming</li>
+        </ul>
+        <button class="btn btn--ghost btn--block" type="button" data-plan="Foundation">Choose Foundation</button>
+        <p class="plan__note">Billed monthly · No contract</p>
+      </article>
+
+      <article class="plan plan--feat rv" data-d="1" aria-labelledby="plan-pro">
+        <span class="plan__flag">Most Picked</span>
+        <div>
+          <h3 class="plan__name" id="plan-pro">Forge Pro</h3>
+          <p class="plan__for">For members who show up weekly</p>
+        </div>
+        <p class="plan__price">
+          <span class="plan__cur">$</span><span class="plan__amt num">99</span><span class="plan__per">/ Month</span>
+        </p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" focusable="false"><path d="M4 12.5l5 5L20 6"/></svg> Everything in Foundation</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" focusable="false"><path d="M4 12.5l5 5L20 6"/></svg> Unlimited coached classes</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" focusable="false"><path d="M4 12.5l5 5L20 6"/></svg> 8-week progressive block</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" fill="none"><path d="M4 12.5l5 5L20 6" stroke="currentColor" fill="none" stroke-width="3"/></svg> Quarterly re-testing day</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" focusable="false"><path d="M4 12.5l5 5L20 6"/></svg> Guest pass every month</li>
+          <li class="off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg> 1-on-1 programming</li>
+        </ul>
+        <button class="btn btn--block" type="button" data-plan="Forge Pro">Choose Forge Pro</button>
+        <p class="plan__note">Billed monthly · Freeze any time</p>
+      </article>
+
+      <article class="plan rv" data-d="2" aria-labelledby="plan-elite">
+        <div>
+          <h3 class="plan__name" id="plan-elite">Ironworks</h3>
+          <p class="plan__for">For lifters chasing a platform</p>
+        </div>
+        <p class="plan__price">
+          <span class="plan__cur">$</span><span class="plan__amt num">179</span><span class="plan__per">/ Month</span>
+        </p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" focusable="false"><path d="M4 12.5l5 5L20 6"/></svg> Everything in Forge Pro</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" focusable="false"><path d="M4 12.5l5 5L20 6"/></svg> Written 1-on-1 programming</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" focusable="false"><path d="M4 12.5l5 5L20 6"/></svg> Two private sessions monthly</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" focusable="false"><path d="M4 12.5l5 5L20 6"/></svg> Video technique review</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" focusable="false"><path d="M4 12.5l5 5L20 6"/></svg> Physio consult each quarter</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" focusable="false"><path d="M4 12.5l5 5L20 6"/></svg> Meet-day handling &amp; attempts</li>
+        </ul>
+        <button class="btn btn--outline btn--block" type="button" data-plan="Ironworks">Choose Ironworks</button>
+        <p class="plan__note">Billed monthly · 30-day notice</p>
+      </article>
+    </div>
+
+    <figure class="facility rv" style="margin-inline:0">
+      <div class="facility__media" style="margin:0">
+        <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"
+             width="1400" height="875" alt="Racks of black dumbbells and kettlebells lined up on the Forge training floor."
+             loading="lazy" data-fallback="photo-1571902943202-507ec2618e8f">
+      </div>
+      <figcaption class="facility" style="margin:0;display:block">
+        <p class="kicker">The Facility</p>
+        <h3 class="h3" style="margin-bottom:.7rem">Built Like A Workshop, Not A Showroom</h3>
+        <p class="lede" style="font-size:1rem">Eleven competition platforms, a 40-metre sled turf, eight racks, calibrated plates, and enough chalk to fog the room by 6&nbsp;a.m.</p>
+        <ul class="amen">
+          <li>11 Lifting Platforms</li>
+          <li>40m Sled Turf</li>
+          <li>Calibrated Eleiko Bars</li>
+          <li>Assault Bikes &amp; Rowers</li>
+          <li>Physio Treatment Room</li>
+          <li>Showers · Sauna · Lockers</li>
+          <li>Free On-Site Parking</li>
+          <li>Open 24/7 For Members</li>
+        </ul>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= TOOLS / BMI ================= -->
+<section class="section tools" id="tools" aria-labelledby="tools-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="rv">
+        <p class="kicker">05 — Free Tools</p>
+        <h2 class="h2" id="tools-title">Know Your<br>Starting Point</h2>
+      </div>
+      <div class="rv" data-d="1" style="max-width:46ch">
+        <p class="lede">Use the calculator to set a baseline, then bring the number to your first session. Our coaches will pair it with a movement screen — because BMI alone never tells the whole story.</p>
+      </div>
+    </div>
+
+    <div class="tools__grid">
+      <div class="calc rv" role="region" aria-labelledby="bmi-title">
+        <div class="calc__head">
+          <h3 class="h3" id="bmi-title">Bmi Calculator</h3>
+          <div class="seg" role="group" aria-label="Choose measurement units">
+            <button type="button" id="uMetric" aria-pressed="true">Metric</button>
+            <button type="button" id="uImperial" aria-pressed="false">Imperial</button>
+          </div>
+        </div>
+
+        <form id="bmiForm" novalidate>
+          <div id="metricFields">
+            <div class="field">
+              <label for="cm">Height <span class="unit">(Centimetres)</span></label>
+              <input id="cm" name="cm" type="number" inputmode="decimal" min="90" max="250" step="0.1" placeholder="e.g. 178" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="kg">Weight <span class="unit">(Kilograms)</span></label>
+              <input id="kg" name="kg" type="number" inputmode="decimal" min="30" max="300" step="0.1" placeholder="e.g. 82" autocomplete="off">
+            </div>
+          </div>
+
+          <div id="imperialFields" hidden>
+            <div class="row2">
+              <div class="field">
+                <label for="ft">Height <span class="unit">(Feet)</span></label>
+                <input id="ft" name="ft" type="number" inputmode="numeric" min="3" max="8" step="1" placeholder="5" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="inch">Height <span class="unit">(Inches)</span></label>
+                <input id="inch" name="inch" type="number" inputmode="numeric" min="0" max="11" step="1" placeholder="10" autocomplete="off">
+              </div>
+            </div>
+            <div class="field">
+              <label for="lb">Weight <span class="unit">(Pounds)</span></label>
+              <input id="lb" name="lb" type="number" inputmode="decimal" min="60" max="660" step="0.1" placeholder="e.g. 181" autocomplete="off">
+            </div>
+          </div>
+
+          <p class="err" id="bmiErr" role="alert"></p>
+
+          <div class="calc__actions">
+            <button class="btn" type="submit">Calculate My Bmi</button>
+            <button class="btn btn--ghost" type="button" id="bmiClear">Clear Result</button>
+          </div>
+        </form>
+
+        <div class="result" id="bmiResult" role="status" aria-live="polite" tabindex="-1">
+          <div class="result__top">
+            <div>
+              <span class="bmi-cat" id="bmiCat">Healthy Range</span>
+              <div class="bmi-val num" id="bmiVal">0.0</div>
+            </div>
+            <p style="margin:0;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;color:var(--muted);text-align:right">
+              Your Bmi<br><span style="color:var(--text)" id="bmiInputs">—</span>
+            </p>
+          </div>
+
+          <div class="scale">
+            <div class="scale__bar" role="img" aria-label="Body mass index scale from underweight to obese with a marker at your result">
+              <i></i><i></i><i></i><i></i>
+              <span class="scale__pin" id="bmiPin" style="transform:translateX(-50%)"></span>
+            </div>
+            <div class="scale__labels"><span>15</span><span>18.5</span><span>25</span><span>30</span><span>40</span></div>
+          </div>
+
+          <div class="result__grid">
+            <div><b class="num" id="rHealthy">—</b><span>Healthy Weight Range</span></div>
+            <div><b class="num" id="rToHealthy">—</b><span>To Reach Healthy</span></div>
+            <div><b class="num" id="rBmr">—</b><span>Est. Resting Burn</span></div>
+          </div>
+
+          <p class="result__note">BMI is a screening measure, not a diagnosis — it cannot tell muscle from fat. Bring this number to your first session and we will pair it with a movement screen.</p>
+        </div>
+      </div>
+
+      <div class="tools__aside">
+        <article class="aside-card rv" data-d="1">
+          <div class="aside-card__media">
+            <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+                 width="1200" height="675" alt="A coach spotting a member during a heavy barbell set on the Forge floor."
+                 loading="lazy" data-fallback="photo-1571902943202-507ec2618e8f">
+          </div>
+          <div class="aside-card__body">
+            <h3 class="h3">Your First Session, Step By Step</h3>
+            <p>Walk in, meet a coach, get screened. Forty-five minutes later you leave with a baseline total, a mobility restriction list, and a starting block written for you. No sales pitch, no pressure.</p>
+            <a class="btn btn--outline btn--sm" href="#trial" style="width:fit-content">Reserve My Intro</a>
+          </div>
+        </article>
+
+        <article class="aside-card rv" data-d="2">
+          <div class="aside-card__body">
+            <h3 class="h3">What Members Say</h3>
+            <blockquote class="quote">
+              “I walked in unable to squat to depth. Eighteen months later I pulled 405 at a meet, and my back stopped hurting on the way there.”
+              <cite>Dara O. · Member Since 2023</cite>
+            </blockquote>
+            <blockquote class="quote" style="margin-top:1.2rem">
+              “The coaches actually write things down. Every block I have run has had a number attached to it, and every number has gone up.”
+              <cite>Luis R. · Member Since 2021</cite>
+            </blockquote>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TRIAL ================= -->
+<section class="section trial" id="trial" aria-labelledby="trial-title">
+  <div class="wrap trial__grid">
+    <div class="rv">
+      <p class="kicker">06 — Free Week</p>
+      <h2 class="h2" id="trial-title">Train Free<br>For Seven Days</h2>
+      <p class="lede" style="margin-top:1.2rem">Unlimited classes, full gym access, and a one-on-one intro session with a coach. No card required, no auto-enrolment, no awkward follow-up call.</p>
+
+      <ol class="trial__list">
+        <li><span>Send the form — we confirm by email within one business hour.</span></li>
+        <li><span>Book your intro session with a coach at a time that suits you.</span></li>
+        <li><span>Get screened, get a baseline, get a starting block written for you.</span></li>
+        <li><span>Train unlimited for seven days. Decide on day six, or simply walk away.</span></li>
+      </ol>
+
+      <figure class="trial__media" style="margin-block-end:0">
+        <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"
+             width="1400" height="788" alt="Barbells and weight plates racked inside the Forge warehouse gym."
+             loading="lazy" data-fallback="photo-1534438327276-14e5300c3a48">
+        <span>1,400 Lifters Strong</span>
+      </figure>
+    </div>
+
+    <div class="rv" data-d="1">
+      <div class="form">
+        <span class="form__tag">Step 01 — Reserve</span>
+
+        <form id="trialForm" novalidate>
+          <h2 class="h3" style="font-family:var(--f-display);font-size:clamp(1.9rem,1.4rem + 1.6vw,2.5rem);letter-spacing:.01em">Claim Your Free Week</h2>
+          <p class="form__sub">Four fields, sixty seconds. We only use them to book your intro.</p>
+
+          <div class="row2">
+            <div class="field">
+              <label for="fname">First Name</label>
+              <input id="fname" name="fname" type="text" autocomplete="given-name" placeholder="Alex" required>
+              <p class="err" id="err-fname">Tell us your first name</p>
+            </div>
+            <div class="field">
+              <label for="lname">Last Name</label>
+              <input id="lname" name="lname" type="text" autocomplete="family-name" placeholder="Rivera" required>
+              <p class="err" id="err-lname">Tell us your last name</p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="email">Email Address</label>
+            <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="alex@email.com" required>
+            <p class="err" id="err-email">Enter a valid email so we can confirm</p>
+          </div>
+
+          <div class="field">
+            <label for="phone">Mobile Number</label>
+            <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(312) 555-0184">
+            <p class="err" id="err-phone">Enter at least 7 digits</p>
+          </div>
+
+          <div class="row2">
+            <div class="field">
+              <label for="plan">Program Of Interest</label>
+              <select id="plan" name="plan">
+                <option value="Powerlifting">Powerlifting</option>
+                <option value="HIIT &amp; Conditioning">HIIT &amp; Conditioning</option>
+                <option value="Mobility &amp; Rehab">Mobility &amp; Rehab</option>
+                <option value="A Bit Of Everything">A Bit Of Everything</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="start">Preferred Start Day</label>
+              <select id="start" name="start">
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="notes">Anything We Should Know? <span class="unit">(Optional)</span></label>
+            <textarea id="notes" name="notes" placeholder="Old injuries, current goals, first time lifting…"></textarea>
+          </div>
+
+          <div class="check">
+            <input id="terms" name="terms" type="checkbox" required>
+            <label for="terms">I accept the <a href="#pricing">membership terms</a> and the gym waiver, and I agree to Forge emailing me about my free week.</label>
+          </div>
+          <p class="err" id="err-terms" style="margin-top:-.6rem">You must accept the waiver to train</p>
+
+          <button class="btn btn--block" type="submit" style="margin-top:1.2rem">Book My Free Week</button>
+          <p class="plan__note" style="margin-top:.9rem;text-align:center">No card required · Cancel by replying to our email</p>
+        </form>
+
+        <div class="success" id="success" role="status" aria-live="polite" tabindex="-1">
+          <div class="success__mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" focusable="false"><path d="M4 12.5l5 5L20 6"/></svg>
+          </div>
+          <h2>You Are On The Board</h2>
+          <p id="successMsg">We have emailed your confirmation. A coach will reach out within one business hour to lock in your intro session.</p>
+          <dl>
+            <div><dt>Name</dt><dd id="sName">—</dd></div>
+            <div><dt>Confirmation Sent To</dt><dd id="sEmail">—</dd></div>
+            <div><dt>Program</dt><dd id="sPlan">—</dd></div>
+            <div><dt>Start Day</dt><dd id="sStart">—</dd></div>
+            <div><dt>Reference</dt><dd id="sRef" class="num">—</dd></div>
+          </dl>
+          <div class="success__acts">
+            <button class="btn btn--sm" type="button" id="editDetails">Edit My Details</button>
+            <a class="btn btn--ghost btn--sm" href="#schedule">Browse Classes</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__grid">
+      <div>
+        <a class="brand" href="#top" style="margin-bottom:1.1rem" aria-label="Forge Strength and Conditioning — back to top">
+          <svg class="brand__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false">
+            <path d="M4 14h6v12H4zM30 14h6v12h-6z" fill="currentColor"/>
+            <path d="M10 17h20v6H10z" fill="currentColor" opacity=".55"/>
+            <path d="M1 18h3v4H1zM36 18h3v4h-3z" fill="currentColor"/>
+          </svg>
+          <span class="brand__txt">Forge<span class="brand__sub">Strength &amp; Cond.</span></span>
+        </a>
+        <address>
+          1140&nbsp;W Hubbard Street<br>
+          Goose Island, Chicago, IL 60642<br>
+          <a href="tel:+13125550184">(312) 555-0184</a><br>
+          <a href="mailto:train@forgestrength.com">train@forgestrength.com</a>
+        </address>
+        <div class="social">
+          <a href="#top" aria-label="Forge on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#top" aria-label="Forge on YouTube">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><rect x="2.5" y="5" width="19" height="14"/><path d="M10.5 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#top" aria-label="Forge on X, formerly Twitter">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M4 4l16 16M20 4L4 20"/></svg>
+          </a>
+          <a href="#top" aria-label="Forge on Strava">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M9.5 3L4 14h3.5l2-4 2 4H15z"/><path d="M15 14l2-4 2 4h-2l-1-2-1 2z" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <nav aria-labelledby="ftr-train">
+        <h2 id="ftr-train">Training</h2>
+        <ul>
+          <li><a href="#programs">Powerlifting</a></li>
+          <li><a href="#programs">HIIT &amp; Conditioning</a></li>
+          <li><a href="#programs">Mobility &amp; Rehab</a></li>
+          <li><a href="#schedule">Weekly Schedule</a></li>
+          <li><a href="#trial">Free Week Pass</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-labelledby="ftr-gym">
+        <h2 id="ftr-gym">The Gym</h2>
+        <ul>
+          <li><a href="#coaches">Meet The Coaches</a></li>
+          <li><a href="#pricing">Membership Plans</a></li>
+          <li><a href="#tools">Bmi Calculator</a></li>
+          <li><a href="#pricing">Facility Tour</a></li>
+          <li><a href="#trial">Corporate Teams</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <h2>Opening Hours</h2>
+        <ul class="ftr__hours">
+          <li><span>Mon — Fri</span><b>05:00 – 22:00</b></li>
+          <li><span>Saturday</span><b>07:00 – 18:00</b></li>
+          <li><span>Sunday</span><b>08:00 – 16:00</b></li>
+          <li><span>Member Keycard</span><b>24 / 7</b></li>
+        </ul>
+        <a class="btn btn--sm" href="#trial" style="margin-top:1.4rem;width:100%">Book My Free Week</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wordmark" aria-hidden="true">Forge</div>
+
+  <div class="wrap">
+    <div class="ftr__bottom">
+      <p>© <span class="num" id="year">2026</span> Forge Strength &amp; Conditioning LLC. Built In Chicago.</p>
+      <nav aria-label="Legal">
+        <a href="#pricing">Privacy</a>
+        <a href="#pricing">Terms</a>
+        <a href="#pricing">Waiver        <a href="#top">Back To Top</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= TOAST ================= -->
+<div class="toast" id="toast" role="region" aria-label="Notifications">
+  <p id="toastMsg">Result cleared.</p>
+  <button class="btn btn--sm" type="button" id="toastUndo">Undo</button>
+  <button class="btn btn--ghost btn--sm" type="button" id="toastClose" aria-label="Dismiss notification">Close</button>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- Footer year ---------- */
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  /* ---------- Image safety net ---------- */
+  var FALLBACKS = [
+    "photo-1534438327276-14e5300c3a48",
+    "photo-1517836357463-d25dfeac3438",
+    "photo-1540497077202-7c8a3999166f",
+    "photo-1571902943202-507ec2618e8f",
+    "photo-1526506118085-60ce8714f8c5"
+  ];
+  var fbIndex = 0;
+  document.addEventListener("error", function(ev){
+    var el = ev.target;
+    if(!el || el.tagName !== "IMG"){ return; }
+    if(el.dataset.tried === "2"){ return; }
+    var next = el.dataset.fallback || FALLBACKS[fbIndex++ % FALLBACKS.length];
+    el.dataset.tried = el.dataset.tried === "1" ? "2" : "1";
+    var params = (el.getAttribute("src").split("?")[1]) || "auto=format&fit=crop&w=1200&q=80";
+    el.src = "https://images.unsplash.com/" + next + "?" + params;
+  }, true);
+
+  /* ---------- Sticky header state ---------- */
+  var hdr = document.getElementById("hdr");
+  var onScroll = function(){
+    if(window.scrollY > 8){ hdr.classList.add("is-stuck"); }
+    else { hdr.classList.remove("is-stuck"); }
+  };
+  onScroll();
+  window.addEventListener("scroll", onScroll, {passive:true});
+
+  /* ---------- Mobile drawer ---------- */
+  var burger = document.getElementById("burger");
+  var drawer = document.getElementById("drawer");
+  function setDrawer(open){
+    burger.setAttribute("aria-expanded", open ? "true" : "false");
+    burger.setAttribute("aria-label", open ? "Close navigation menu" : "Open navigation menu");
+    drawer.classList.toggle("is-open", open);
+    document.body.classList.toggle("nav-open", open);
+  }
+  burger.addEventListener("click", function(){
+    setDrawer(burger.getAttribute("aria-expanded") !== "true");
+  });
+  drawer.addEventListener("click", function(e){
+    if(e.target.closest("a")){ setDrawer(false); }
+  });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape" && burger.getAttribute("aria-expanded") === "true"){
+      setDrawer(false); burger.focus();
+    }
+  });
+  window.addEventListener("resize", function(){
+    if(window.innerWidth >= 1000){ setDrawer(false); }
+  });
+
+  /* ---------- Scroll reveal ---------- */
+  var reveals = Array.prototype.slice.call(document.querySelectorAll(".rv"));
+  if(reduced || !("IntersectionObserver" in window)){
+    reveals.forEach(function(n){ n.classList.add("in"); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); }
+      });
+    }, {rootMargin:"0px 0px -8% 0px", threshold:0.12});
+    reveals.forEach(function(n){ io.observe(n); });
+  }
+
+  /* ---------- Count-up stats ---------- */
+  var counters = Array.prototype.slice.call(document.querySelectorAll("[data-count]"));
+  function runCount(el){
+    var target = parseFloat(el.getAttribute("data-count"));
+    if(reduced){ el.textContent = target.toLocaleString("en-US"); return; }
+    var start = performance.now(), dur = 1300;
+    function tick(now){
+      var p = Math.min((now - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased).toLocaleString("en-US");
+      if(p < 1){ requestAnimationFrame(tick); }
+    }
+    requestAnimationFrame(tick);
+  }
+  if("IntersectionObserver" in window){
+    var cio = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ runCount(en.target); cio.unobserve(en.target); }
+      });
+    }, {threshold:0.5});
+    counters.forEach(function(n){ cio.observe(n); });
+  } else {
+    counters.forEach(runCount);
+  }
+
+  /* ---------- Schedule filters ---------- */
+  var rows = Array.prototype.slice.call(document.querySelectorAll("#schedBody tr[data-day]"));
+  var dayBtns = Array.prototype.slice.call(document.querySelectorAll(".chip[data-day]"));
+  var progSel = document.getElementById("progFilter");
+  var countEl = document.getElementById("count");
+  var emptyRow = document.getElementById("emptyRow");
+  var total = rows.length;
+  var currentDay = "all";
+
+  var allBtn = document.querySelector('.chip[data-day="all"]');
+  allBtn.querySelector(".cnt").textContent = total;
+
+  function applyFilter(){
+    var prog = progSel.value;
+    var shown = 0;
+    rows.forEach(function(r){
+      var okDay = (currentDay === "all") || (r.getAttribute("data-day") === currentDay);
+      var okProg = (prog === "all") || (r.getAttribute("data-program") === prog);
+      var visible = okDay && okProg;
+      r.hidden = !visible;
+      if(visible){ shown++; }
+    });
+    emptyRow.hidden = shown !== 0;
+    countEl.innerHTML = "Showing <b>" + shown + "</b> of " + total + " classes";
+    dayBtns.forEach(function(b){
+      b.setAttribute("aria-pressed", b.getAttribute("data-day") === currentDay ? "true" : "false");
+    });
+  }
+  dayBtns.forEach(function(b){
+    b.addEventListener("click", function(){
+      currentDay = b.getAttribute("data-day");
+      applyFilter();
+    });
+  });
+  progSel.addEventListener("change", applyFilter);
+  function resetAll(){
+    currentDay = "all"; progSel.value = "all"; applyFilter();
+  }
+  document.getElementById("resetFilters").addEventListener("click", function(){
+    resetAll();
+    dayBtns[0].focus();
+  });
+  applyFilter();
+
+  /* ---------- Toast with undo ---------- */
+  var toast = document.getElementById("toast");
+  var toastMsg = document.getElementById("toastMsg");
+  var toastUndo = document.getElementById("toastUndo");
+  var toastClose = document.getElementById("toastClose");
+  var toastTimer = null, undoFn = null;
+
+  function showToast(msg, onUndo, undoLabel){
+    toastMsg.textContent = msg;
+    undoFn = onUndo || null;
+    toastUndo.hidden = !onUndo;
+    toastUndo.textContent = undoLabel || "Undo";
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    if(onUndo){
+      toastTimer = setTimeout(hideToast, 7000);
+    } else {
+      toastTimer = setTimeout(hideToast, 4000);
+    }
+  }
+  function hideToast(){
+    toast.classList.remove("show");
+    clearTimeout(toastTimer);
+    undoFn = null;
+  }
+  toastUndo.addEventListener("click", function(){
+    if(typeof undoFn === "function"){ undoFn(); }
+    hideToast();
+  });
+  toastClose.addEventListener("click", hideToast);
+
+  /* ---------- BMI calculator ---------- */
+  var bmiForm = document.getElementById("bmiForm");
+  var uMetric = document.getElementById("uMetric");
+  var uImperial = document.getElementById("uImperial");
+  var metricFields = document.getElementById("metricFields");
+  var imperialFields = document.getElementById("imperialFields");
+  var bmiErr = document.getElementById("bmiErr");
+  var bmiResult = document.getElementById("bmiResult");
+  var bmiVal = document.getElementById("bmiVal");
+  var bmiCat = document.getElementById("bmiCat");
+  var bmiPin = document.getElementById("bmiPin");
+  var bmiInputs = document.getElementById("bmiInputs");
+  var rHealthy = document.getElementById("rHealthy");
+  var rToHealthy = document.getElementById("rToHealthy");
+  var rBmr = document.getElementById("rBmr");
+  var units = "metric";
+  var lastResult = null;
+
+  function setUnits(next){
+    units = next;
+    var isM = next === "metric";
+    uMetric.setAttribute("aria-pressed", isM ? "true" : "false");
+    uImperial.setAttribute("aria-pressed", isM ? "false" : "true");
+    metricFields.hidden = !isM;
+    imperialFields.hidden = isM;
+    bmiErr.classList.remove("show");
+    bmiErr.textContent = "";
+  }
+  uMetric.addEventListener("click", function(){ setUnits("metric"); });
+  uImperial.addEventListener("click", function(){ setUnits("imperial"); });
+
+  function fail(msg, focusEl){
+    bmiErr.textContent = msg;
+    bmiErr.classList.add("show");
+    if(focusEl){ focusEl.focus(); }
+  }
+
+  function category(b){
+    if(b < 18.5) return {label:"Underweight", cls:"cat-under"};
+    if(b < 25)   return {label:"Healthy Range", cls:"cat-healthy"};
+    if(b < 30)   return {label:"Overweight", cls:"cat-over"};
+    if(b < 35)   return {label:"Obese Class I", cls:"cat-obese"};
+    if(b < 40)   return {label:"Obese Class II", cls:"cat-obese"};
+    return {label:"Obese Class III", cls:"cat-obese"};
+  }
+
+  bmiForm.addEventListener("submit", function(e){
+    e.preventDefault();
+    bmiErr.classList.remove("show");
+
+    var cm = parseFloat(document.getElementById("cm").value);
+    var kg = parseFloat(document.getElementById("kg").value);
+    var ft = parseFloat(document.getElementById("ft").value);
+    var inch = parseFloat(document.getElementById("inch").value);
+    var lb = parseFloat(document.getElementById("lb").value);
+
+    var heightM, weightKg, inputLabel;
+
+    if(units === "metric"){
+      if(!isFinite(cm) || !isFinite(kg)){ return fail("Enter both your height and weight.", document.getElementById("cm")); }
+      if(cm < 90 || cm > 250){ return fail("Height must be between 90 and 250 cm.", document.getElementById("cm")); }
+      if(kg < 30 || kg > 300){ return fail("Weight must be between 30 and 300 kg.", document.getElementById("kg")); }
+      heightM = cm / 100; weightKg = kg;
+      inputLabel = cm + " cm · " + kg + " kg";
+    } else {
+      if(!isFinite(ft) || !isFinite(lb)){ return fail("Enter both your height and weight.", document.getElementById("ft")); }
+      var totalIn = ft * 12 + (isFinite(inch) ? inch : 0);
+      if(totalIn < 36 || totalIn > 96){ return fail("Height must be between 3 ft and 8 ft.", document.getElementById("ft")); }
+      if(lb < 60 || lb > 660){ return fail("Weight must be between 60 and 660 lb.", document.getElementById("lb")); }
+      heightM = totalIn * 0.0254; weightKg = lb * 0.45359237;
+      inputLabel = ft + "′" + (isFinite(inch) ? inch : 0) + "″ · " + lb + " lb";
+    }
+
+    var bmi = weightKg / (heightM * heightM);
+    var cat = category(bmi);
+    var lowKg = 18.5 * heightM * heightM;
+    var highKg = 24.9 * heightM * heightM;
+    var diff = weightKg - ((lowKg + highKg) / 2);
+
+    bmiVal.textContent = bmi.toFixed(1);
+    bmiCat.textContent = cat.label;
+    bmiCat.className = "bmi-cat " + cat.cls;
+    bmiInputs.textContent = inputLabel;
+
+    var fmt = function(a, b){
+      if(units === "metric"){ return a.toFixed(0) + " – " + b.toFixed(0) + " kg"; }
+      return (a * 2.20462).toFixed(0) + " – " + (b * 2.20462).toFixed(0) + " lb";
+    };
+    rHealthy.textContent = fmt(lowKg, highKg);
+
+    if(bmi >= 18.5 && bmi < 25){
+      rToHealthy.textContent = "On Target";
+    } else {
+      var dKg = bmi < 18.5 ? (lowKg - weightKg) : (weightKg - highKg);
+      var u = units === "metric" ? " kg" : " lb";
+      var dv = units === "metric" ? dKg : dKg * 2.20462;
+      rToHealthy.textContent = (bmi < 18.5 ? "+" : "−") + Math.abs(dv).toFixed(0) + u;
+    }
+
+    var bmr = 10 * weightKg + 6.25 * (heightM * 100) - 5 * 30 + 5;
+    rBmr.textContent = Math.round(bmr).toLocaleString("en-US") + " kcal";
+
+    var pct = Math.max(0, Math.min(100, ((bmi - 15) / (40 - 15)) * 100));
+    bmiPin.style.transform = "translateX(-50%) translateX(" + (pct / 100) * (bmiPin.parentElement.offsetWidth - 4) + "px)";
+
+    lastResult = {html: bmiResult.innerHTML, pinTransform: bmiPin.style.transform};
+    bmiResult.classList.add("show");
+    bmiResult.focus();
+  });
+
+  document.getElementById("bmiClear").addEventListener("click", function(){
+    if(!bmiResult.classList.contains("show")){
+      showToast("Nothing to clear yet.", null);
+      return;
+    }
+    var snapshot = lastResult;
+    bmiResult.classList.remove("show");
+    bmiForm.reset();
+    lastResult = null;
+    showToast("Result cleared.", function(){
+      if(snapshot){
+        bmiResult.innerHTML = snapshot.html;
+        bmiResult.classList.add("show");
+        lastResult = snapshot;
+        bmiPin.style.transform = snapshot.pinTransform;
+      }
+    }, "Undo Clear");
+  });
+
+  /* ---------- Pricing plan picker ---------- */
+  var planSelect = document.getElementById("plan");
+  document.querySelectorAll("[data-plan]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var name = btn.getAttribute("data-plan");
+      var note = document.createElement("p");
+      note.className = "plan__note";
+      note.style.marginTop = ".7rem";
+      note.style.color = "var(--volt)";
+      note.textContent = name + " selected";
+      var existing = btn.parentNode.querySelector(".plan__note[data-sel]");
+      if(existing){ existing.remove(); }
+      note.setAttribute("data-sel", "");
+      btn.insertAdjacentElement("afterend", note);
+
+      if(planSelect){
+        planSelect.value = (name === "Ironworks") ? "Powerlifting" :
+                           (name === "Forge Pro") ? "A Bit Of Everything" : "Powerlifting";
+      }
+      document.getElementById("trial").scrollIntoView({behavior: reduced ? "auto" : "smooth", block:"start"});
+      showToast(name + " plan picked. Finish your free-week booking.", null);
+      setTimeout(function(){
+        if(planSelect){ planSelect.focus(); }
+      }, reduced ? 0 : 700);
+    });
+  });
+
+  /* ---------- Trial form ---------- */
+  var trialForm = document.getElementById("trialForm");
+  var successBox = document.getElementById("success");
+
+  function setInvalid(input, errId, bad){
+    input.setAttribute("aria-invalid", bad ? "true" : "false");
+    var errEl = document.getElementById(errId);
+    if(errEl){ errEl.classList.toggle("show", bad); }
+    return !bad;
+  }
+
+  ["fname","lname","email","phone"].forEach(function(id){
+    var input = document.getElementById(id);
+    input.addEventListener("input", function(){
+      if(input.getAttribute("aria-invalid") === "true"){
+        setInvalid(input, "err-" + id, false);
+      }
+    });
+  });
+  document.getElementById("terms").addEventListener("change", function(){
+    setInvalid(this, "err-terms", false);
+  });
+
+  trialForm.addEventListener("submit", function(e){
+    e.preventDefault();
+    var fname = document.getElementById("fname");
+    var lname = document.getElementById("lname");
+    var email = document.getElementById("email");
+    var phone = document.getElementById("phone");
+    var terms = document.getElementById("terms");
+    var firstBad = null;
+
+    var okF = setInvalid(fname, "err-fname", fname.value.trim().length < 2);
+    if(!okF && !firstBad){ firstBad = fname; }
+
+    var okL = setInvalid(lname, "err-lname", lname.value.trim().length < 2);
+    if(!okL && !firstBad){ firstBad = lname; }
+
+    var emailOk = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(email.value.trim());
+    var okE = setInvalid(email, "err-email", !emailOk);
+    if(!okE && !firstBad){ firstBad = email; }
+
+    var digits = phone.value.replace(/\D/g, "");
+    var phoneOk = digits.length === 0 || digits.length >= 7;
+    var okP = setInvalid(phone, "err-phone", !phoneOk);
+    if(!okP && !firstBad){ firstBad = phone; }
+
+    var okT = setInvalid(terms, "err-terms", !terms.checked);
+    if(!okT && !firstBad){ firstBad = terms; }
+
+    if(firstBad){
+      firstBad.focus();
+      showToast("Check the highlighted fields and try again.", null);
+      return;
+    }
+
+    var ref = "FG-" + String(Math.floor(1000 + Math.random() * 9000));
+    document.getElementById("sName").textContent = (fname.value.trim() + " " + lname.value.trim()).replace(/\s+/g," ");
+    document.getElementById("sEmail").textContent = email.value.trim();
+    document.getElementById("sPlan").textContent = document.getElementById("plan").value;
+    document.getElementById("sStart").textContent = document.getElementById("start").value;
+    document.getElementById("sRef").textContent = ref;
+    document.getElementById("successMsg").textContent =
+      "We have emailed your confirmation to " + email.value.trim() + ". A coach will reach out within one business hour to lock in your intro session.";
+
+    trialForm.style.display = "none";
+    successBox.classList.add("show");
+    successBox.focus();
+    showToast("Free week reserved — reference " + ref, function(){
+      successBox.classList.remove("show");
+      trialForm.style.display = "";
+      fname.focus();
+    }, "Undo Booking");
+  });
+
+  document.getElementById("editDetails").addEventListener("click", function(){
+    successBox.classList.remove("show");
+    trialForm.style.display = "";
+    document.getElementById("fname").focus();
+  });
+
+  /* ---------- Active nav highlight ---------- */
+  var sections = ["programs","schedule","coaches","pricing","tools"].map(function(id){
+    return document.getElementById(id);
+  }).filter(Boolean);
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll(".nav__link"));
+  if("IntersectionObserver" in window && sections.length){
+    var nio = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          navLinks.forEach(function(l){
+            l.setAttribute("aria-current", l.getAttribute("href") === "#" + en.target.id ? "true" : "false");
+          });
+        }
+      });
+    }, {rootMargin:"-45% 0px -50% 0px"});
+    sections.forEach(function(s){ nio.observe(s); });
+  }
+})();
+</script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
