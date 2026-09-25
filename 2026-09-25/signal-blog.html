@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#faf7f2">
+<meta name="description" content="Signal — an independent, reader-funded technology publication. Investigations, hardware, privacy, startups and policy, reported from the wiring up.">
+<title>Signal — Independent Technology Journalism</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fraunces/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fraunces/wght-italic.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/public-sans/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono/600.css">
+<style>
+/* ============ Tokens ============ */
+:root{
+  --paper:#faf7f2;
+  --paper-2:#f2ede3;
+  --paper-3:#e9e2d4;
+  --ink:#16120e;
+  --ink-2:#3d372f;
+  --ink-3:#6b6459;
+  --rule:#d9d2c3;
+  --red:#d9261c;
+  --red-2:#a81b12;
+  --green:#1d6b4f;
+  --serif:"Fraunces Variable",Georgia,"Times New Roman",serif;
+  --sans:"Public Sans Variable","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --nav-h:60px;
+  --shadow:0 18px 40px -22px rgba(22,18,14,.35);
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{color-scheme:light;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:1rem;line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+[hidden]{display:none!important}
+img{max-width:100%;display:block;height:auto}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;touch-action:manipulation}
+a,button,input{touch-action:manipulation}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:700;line-height:1.08;margin:0;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+ul,ol{margin:0;padding:0;list-style:none}
+::selection{background:var(--red);color:var(--paper)}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:fixed;top:-100px;left:16px;z-index:200;background:var(--ink);color:var(--paper);padding:.85rem 1.2rem;font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:transform .25s ease;transform:translateY(0)}
+.skip:focus{top:12px}
+.wrap{width:min(1280px,100% - clamp(2rem,6vw,5rem));margin-inline:auto}
+.num,.meta,time,.stat b,.trend-n,.chip{font-variant-numeric:tabular-nums}
+.meta{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.meta .k{color:var(--red);font-weight:600}
+.rule-top{border-top:1px solid var(--ink)}
+.rule-double{border-top:3px double var(--ink)}
+/* ============ Progress + header ============ */
+#progress{position:fixed;inset:0 auto auto 0;height:3px;width:100%;background:var(--red);transform:scaleX(0);transform-origin:0 50%;z-index:120;pointer-events:none}
+.topbar{border-bottom:1px solid var(--rule);background:var(--paper)}
+.topbar .wrap{display:flex;justify-content:space-between;gap:1rem;padding-block:.55rem;flex-wrap:wrap}
+.masthead{padding:clamp(1.4rem,4vw,2.6rem) 0 clamp(1rem,2.5vw,1.6rem);text-align:center;position:relative}
+.masthead h1{font-size:clamp(3.4rem,10vw,6.4rem);font-weight:900;letter-spacing:-.035em;line-height:.9}
+.masthead h1 .dot{color:var(--red)}
+.masthead .tag{margin-top:.7rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)}
+.masthead .est{position:absolute;top:clamp(1.4rem,4vw,2.4rem);font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);max-width:150px;line-height:1.7}
+.masthead .est.l{left:0;text-align:left}
+.masthead .est.r{right:0;text-align:right}
+@media (max-width:820px){.masthead .est{display:none}}
+/* nav */
+.nav{position:sticky;top:0;z-index:100;background:var(--paper);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+.nav.scrolled{box-shadow:0 10px 24px -18px rgba(22,18,14,.45)}
+.nav-inner{display:flex;align-items:center;gap:1rem;min-height:var(--nav-h)}
+.nav-brand{font-family:var(--serif);font-weight:900;font-size:1.35rem;letter-spacing:-.02em;display:none;text-decoration:none}
+.nav-brand .dot{color:var(--red)}
+.nav ul{display:none;flex:1;gap:.2rem;align-items:center}
+.nav ul a{display:inline-flex;align-items:center;min-height:44px;padding:.2rem .72rem;text-decoration:none;font-family:var(--mono);font-size:.72rem;letter-spacing:.11em;text-transform:uppercase;font-weight:500;color:var(--ink-2);position:relative;white-space:nowrap}
+.nav ul a::after{content:"";position:absolute;left:.72rem;right:.72rem;bottom:10px;height:2px;background:var(--red);transform:scaleX(0);transform-origin:0 50%;transition:transform .25s ease}
+.nav ul a:hover::after,.nav ul a:focus-visible::after{transform:scaleX(1)}
+.nav ul a:hover{color:var(--ink)}
+.nav-actions{display:flex;align-items:center;gap:.6rem;margin-left:auto}
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:1px solid var(--rule);background:var(--paper);transition:transform .2s ease,background-color .2s ease,border-color .2s ease}
+.icon-btn:hover{background:var(--ink);color:var(--paper);border-color:var(--ink);transform:translateY(-1px)}
+.icon-btn svg{width:19px;height:19px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;min-height:44px;padding:.7rem 1.35rem;border:1px solid var(--ink);font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;text-decoration:none;background:var(--paper);transition:transform .2s ease,background-color .2s ease,color .2s ease,border-color .2s ease}
+.btn:hover{background:var(--ink);color:var(--paper);transform:translateY(-1px)}
+.btn-solid{background:var(--ink);color:var(--paper)}
+.btn-solid:hover{background:var(--red);border-color:var(--red)}
+.btn-red{background:var(--red);border-color:var(--red);color:#fff}
+.btn-red:hover{background:var(--red-2);border-color:var(--red-2)}
+.btn-ghost-light{border-color:rgba(250,247,242,.4);color:var(--paper);background:transparent}
+.btn-ghost-light:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+#menuBtn{display:inline-flex}
+@media (min-width:1080px){
+  .nav ul{display:flex}
+  #menuBtn{display:none}
+  .nav-brand{display:none}
+}
+/* mobile menu */
+#mobileMenu{position:fixed;inset:0 0 auto 0;top:0;z-index:150;background:var(--paper);border-bottom:2px solid var(--ink);padding:1rem 0 1.6rem;max-height:100vh;overflow:auto;animation:menuIn .28s ease}
+@keyframes menuIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+#mobileMenu .mm-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem}
+#mobileMenu ul{display:grid;gap:.1rem}
+#mobileMenu ul a{display:flex;align-items:center;min-height:52px;text-decoration:none;font-family:var(--serif);font-size:1.5rem;font-weight:600;border-bottom:1px solid var(--rule)}
+#mobileMenu ul a:hover{color:var(--red)}
+#mobileMenu .mm-foot{display:flex;gap:.7rem;margin-top:1.3rem;flex-wrap:wrap}
+/* ============ Front page ============ */
+.frontpage{padding:clamp(1.8rem,4vw,3rem) 0 clamp(2rem,4vw,3.4rem)}
+.hero-grid{display:grid;gap:clamp(1.8rem,3.5vw,3rem);grid-template-columns:1fr}
+@media (min-width:1000px){.hero-grid{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}}
+.hero figure{margin:0 0 1.4rem;position:relative;overflow:hidden}
+.hero figure img{width:100%;aspect-ratio:16/10;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.hero article:hover figure img{transform:scale(1.025)}
+figcaption{margin-top:.55rem;font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;color:var(--ink-3);line-height:1.6}
+.kicker{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:.85rem}
+.kicker::before{content:"";width:26px;height:2px;background:var(--red)}
+.hero h2{font-size:clamp(2.15rem,4.8vw,3.9rem);font-weight:800;letter-spacing:-.025em}
+.hero h2 a{text-decoration:none;background-image:linear-gradient(var(--red),var(--red));background-size:0% 3px;background-repeat:no-repeat;background-position:0 92%;transition:background-size .4s ease}
+.hero h2 a:hover{background-size:100% 3px}
+.standfirst{margin-top:1.05rem;font-family:var(--serif);font-style:italic;font-size:clamp(1.05rem,1.6vw,1.28rem);line-height:1.55;color:var(--ink-2);max-width:56ch;text-wrap:pretty}
+.byline{display:flex;align-items:center;gap:.8rem;margin-top:1.4rem;flex-wrap:wrap}
+.byline img{width:44px;height:44px;border-radius:50%;object-fit:cover;filter:grayscale(1) contrast(1.05)}
+.byline .who{font-size:.86rem;line-height:1.35}
+.byline .who b{font-weight:600}
+.byline .who span{display:block;color:var(--ink-3);font-size:.78rem}
+.byline .meta{margin-left:auto}
+@media (max-width:560px){.byline .meta{margin-left:0;width:100%}}
+/* rail */
+.rail{display:grid;gap:1.6rem;align-content:start;border-top:3px double var(--ink);padding-top:1.6rem}
+@media (min-width:640px) and (max-width:999px){.rail{grid-template-columns:1fr 1fr}}
+@media (min-width:1000px){.rail{border-top:0;padding-top:0;border-left:1px solid var(--rule);padding-left:clamp(1.4rem,2.5vw,2.2rem)}}
+.rail-card{display:grid;gap:1rem;border-bottom:1px solid var(--rule);padding-bottom:1.5rem;position:relative}
+.rail-card figure{margin:0;overflow:hidden}
+.rail-card img{width:100%;aspect-ratio:4/3;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.rail-card:hover img{transform:scale(1.03)}
+.rail-card h3{font-size:clamp(1.25rem,2vw,1.55rem);font-weight:700}
+.rail-card h3 a{text-decoration:none}
+.rail-card h3 a:hover{color:var(--red)}
+.rail-card p{font-size:.92rem;color:var(--ink-2);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.brief{border:1px solid var(--ink);background:var(--paper-2);padding:1.3rem 1.3rem 1.1rem}
+.brief h3{font-size:1.15rem;display:flex;align-items:baseline;justify-content:space-between;gap:1rem}
+.brief h3 .live{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;color:var(--red);display:inline-flex;align-items:center;gap:.4rem}
+.brief h3 .live i{width:7px;height:7px;background:var(--red);border-radius:50%;animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.8)}}
+.brief ol{margin-top:.9rem;display:grid}
+.brief li{display:grid;grid-template-columns:52px 1fr;gap:.8rem;padding:.62rem 0;border-top:1px dotted var(--rule);font-size:.88rem;line-height:1.45}
+.brief li time{font-family:var(--mono);font-size:.7rem;color:var(--red);font-weight:600;padding-top:.15rem}
+.brief li a{text-decoration:none}
+.brief li a:hover{color:var(--red)}
+/* ============ Latest + sidebar ============ */
+.latest{padding:clamp(2.2rem,5vw,4rem) 0}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;border-top:3px double var(--ink);padding-top:1.2rem}
+.section-head h2{font-size:clamp(1.7rem,3.4vw,2.5rem);font-weight:800}
+.section-head .sub{color:var(--ink-3);font-size:.94rem;max-width:46ch;text-wrap:pretty}
+.chips{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.4rem}
+.chip{display:inline-flex;align-items:center;min-height:44px;padding:.45rem 1.05rem;border:1px solid var(--rule);background:var(--paper);font-family:var(--mono);font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);transition:transform .2s ease,background-color .2s ease,color .2s ease,border-color .2s ease}
+.chip:hover{border-color:var(--ink);transform:translateY(-1px)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.latest-layout{display:grid;gap:clamp(2rem,4vw,3.2rem);margin-top:2rem;grid-template-columns:1fr}
+@media (min-width:1080px){.latest-layout{grid-template-columns:minmax(0,1fr) 320px}}
+.cards{display:grid;gap:clamp(1.6rem,3vw,2.4rem);grid-template-columns:1fr}
+@media (min-width:620px){.cards{grid-template-columns:1fr 1fr}}
+@media (min-width:1500px){.cards{grid-template-columns:1fr 1fr 1fr}}
+.card{position:relative;display:flex;flex-direction:column;border-top:1px solid var(--ink);padding-top:1.1rem;animation:popIn .35s ease}
+@keyframes popIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.card figure{margin:0 0 1rem;overflow:hidden;position:relative}
+.card img{width:100%;aspect-ratio:4/3;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.card:hover img{transform:scale(1.035)}
+.card .cat{position:absolute;top:.7rem;left:.7rem;background:var(--paper);border:1px solid var(--ink);padding:.32rem .6rem;font-family:var(--mono);font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.card h3{font-size:1.32rem;font-weight:700;letter-spacing:-.015em}
+.card h3 a{text-decoration:none}
+.card h3 a:hover{color:var(--red)}
+.card .ex{margin-top:.6rem;font-size:.9rem;color:var(--ink-2);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-wrap:pretty}
+.card .foot{margin-top:auto;padding-top:1rem;display:flex;align-items:center;gap:.6rem}
+.mono-av{width:34px;height:34px;flex:none;border-radius:50%;background:var(--ink);color:var(--paper);display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.68rem;font-weight:600;letter-spacing:.04em}
+.mono-av.r{background:var(--red)}
+.card .foot .who{font-size:.78rem;line-height:1.3}
+.card .foot .who span{display:block;color:var(--ink-3);font-size:.7rem}
+.save{margin-left:auto;width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;border:1px solid transparent;transition:transform .2s ease,border-color .2s ease}
+.save:hover{border-color:var(--rule);transform:translateY(-1px)}
+.save svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7}
+.save[aria-pressed="true"]{color:var(--red)}
+.save[aria-pressed="true"] svg{fill:var(--red);stroke:var(--red)}
+.flash::after{content:"";position:absolute;inset:-4px;background:var(--red);opacity:.16;pointer-events:none;animation:flashOut 1.4s ease forwards}
+@keyframes flashOut{to{opacity:0}}
+.empty{border:1px dashed var(--rule);padding:3rem 1.5rem;text-align:center;display:grid;gap:1rem;justify-items:center}
+.empty h3{font-size:1.4rem}
+.empty p{color:var(--ink-3);font-size:.92rem}
+/* sidebar */
+.sidebar{display:grid;gap:2rem;align-content:start}
+@media (min-width:1080px){.sidebar{position:sticky;top:calc(var(--nav-h) + 20px)}}
+.widget{border-top:3px double var(--ink);padding-top:1.1rem}
+.widget h2{font-size:1.25rem;display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+.widget h2 small{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--ink-3);text-transform:uppercase}
+.trend{margin-top:.6rem}
+.trend li{display:grid;grid-template-columns:44px 1fr;gap:.7rem;padding:.95rem 0;border-bottom:1px dotted var(--rule)}
+.trend-n{font-family:var(--serif);font-weight:900;font-size:1.9rem;line-height:1;color:var(--paper-3);-webkit-text-stroke:1px var(--ink-3)}
+.trend li:nth-child(-n+3) .trend-n{-webkit-text-stroke:1px var(--red);color:var(--paper)}
+.trend a{text-decoration:none;font-family:var(--serif);font-weight:600;font-size:1rem;line-height:1.3;display:block}
+.trend a:hover{color:var(--red)}
+.trend .meta{margin-top:.3rem;display:block}
+.idx{margin-top:.8rem;display:grid}
+.idx li{display:flex;justify-content:space-between;gap:1rem;padding:.6rem 0;border-bottom:1px dotted var(--rule);font-size:.84rem}
+.idx .stat b{font-family:var(--mono);font-weight:600;font-size:.9rem}
+.idx .up{color:var(--red)}
+.idx .dn{color:var(--green)}
+.arch{margin-top:.7rem;display:grid}
+.arch li{padding:.7rem 0;border-bottom:1px dotted var(--rule)}
+.arch a{text-decoration:none;font-family:var(--serif);font-weight:600;font-size:.98rem;line-height:1.35;display:block}
+.arch a:hover{color:var(--red)}
+.arch .meta{display:block;margin-top:.25rem}
+/* ============ Newsletter ============ */
+.newsletter{background:var(--paper-2);border-block:1px solid var(--ink);padding:clamp(2.4rem,5vw,4.2rem) 0}
+.nl-grid{display:grid;gap:clamp(1.8rem,4vw,3rem);grid-template-columns:1fr}
+@media (min-width:960px){.nl-grid{grid-template-columns:minmax(0,6fr) minmax(0,6fr)}}
+.nl-copy h2{font-size:clamp(1.9rem,3.6vw,2.8rem);font-weight:800}
+.nl-copy .standfirst{margin-top:.9rem}
+.nl-points{margin-top:1.4rem;display:grid;gap:.55rem}
+.nl-points li{display:grid;grid-template-columns:22px 1fr;gap:.6rem;font-size:.92rem;color:var(--ink-2)}
+.nl-points svg{width:15px;height:15px;margin-top:.3rem;stroke:var(--red);stroke-width:2.2;fill:none}
+.nl-visual{margin-top:1.8rem;overflow:hidden;border:1px solid var(--ink)}
+.nl-visual img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.nl-box{background:var(--paper);border:1px solid var(--ink);box-shadow:var(--shadow);padding:clamp(1.5rem,3vw,2.3rem)}
+.nl-box h3{font-size:1.35rem}
+.nl-box p.hint{margin-top:.5rem;font-size:.86rem;color:var(--ink-3)}
+.nl-form{margin-top:1.4rem;display:grid;gap:.7rem}
+.nl-form label{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.nl-form input{width:100%;min-height:52px;padding:.7rem 1rem;border:1px solid var(--ink);background:var(--paper);font:inherit;font-size:1rem;transition:border-color .2s ease,box-shadow .2s ease}
+.nl-form input:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.nl-form input[aria-invalid="true"]{border-color:var(--red);box-shadow:0 0 0 3px rgba(217,38,28,.14)}
+.nl-err{font-size:.82rem;color:var(--red);font-weight:600}
+.nl-note{margin-top:.9rem;font-size:.74rem;color:var(--ink-3);line-height:1.6}
+.nl-ok{display:grid;gap:1rem;justify-items:start;margin-top:1rem}
+.nl-ok .tick{width:46px;height:46px;border-radius:50%;background:var(--red);color:#fff;display:inline-flex;align-items:center;justify-content:center;animation:popIn .4s ease}
+.nl-ok .tick svg{width:20px;height:20px;stroke:#fff;stroke-width:2.6;fill:none}
+.nl-ok h3{font-size:1.5rem}
+/* ============ Topics ============ */
+.topics{padding:clamp(2.4rem,5vw,4rem) 0}
+.cloud{margin-top:1.8rem;display:flex;flex-wrap:wrap;gap:.7rem .8rem;align-items:baseline}
+.cloud a{display:inline-flex;align-items:baseline;gap:.45rem;min-height:44px;text-decoration:none;border:1px solid var(--rule);padding:.5rem 1.1rem;background:var(--paper);transition:transform .2s ease,background-color .2s ease,color .2s ease,border-color .2s ease}
+.cloud a:hover{background:var(--ink);color:var(--paper);border-color:var(--ink);transform:translateY(-2px)}
+.cloud a b{font-family:var(--serif);font-weight:700}
+.cloud a .n{font-family:var(--mono);font-size:.64rem;color:var(--ink-3)}
+.cloud a:hover .n{color:var(--paper-3)}
+.cloud .s b{font-size:.95rem}
+.cloud .m b{font-size:1.2rem}
+.cloud .l b{font-size:1.55rem}
+.cloud .xl b{font-size:2rem;color:var(--red)}
+/* ============ Podcast ============ */
+.podcast{background:var(--ink);color:var(--paper);padding:clamp(2.6rem,5vw,4.4rem) 0}
+.podcast .section-head{border-top-color:var(--paper)}
+.podcast .section-head .sub{color:rgba(250,247,242,.65)}
+.pod-grid{display:grid;gap:clamp(1.8rem,4vw,3rem);grid-template-columns:1fr;margin-top:2rem}
+@media (min-width:900px){.pod-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}}
+.pod-art{overflow:hidden;border:1px solid rgba(250,247,242,.25)}
+.pod-art img{width:100%;aspect-ratio:4/3;object-fit:cover;filter:grayscale(.35) contrast(1.05)}
+.pod-list{display:grid;align-content:start}
+.pod-ep{display:grid;grid-template-columns:51fr auto;gap:1.1rem;align-items:center;padding:1.15rem 0;border-bottom:1px solid rgba(250,247,242,.18)}
+.pod-ep:first-child{border-top:1px solid rgba(250,247,242,.18)}
+.play{width:52px;height:52px;border-radius:50%;border:1px solid rgba(250,247,242,.45);display:inline-flex;align-items:center;justify-content:center;transition:transform .2s ease,background-color .2s ease,border-color .2s ease}
+.play:hover{background:var(--red);border-color:var(--red);transform:scale(1.05)}
+.play svg{width:16px;height:16px;fill:var(--paper)}
+.play .ic-pause{display:none}
+.play[aria-pressed="true"]{background:var(--red);border-color:var(--red)}
+.play[aria-pressed="true"] .ic-play{display:none}
+.play[aria-pressed="true"] .ic-pause{display:block}
+.pod-ep h3{font-size:1.15rem;font-weight:600}
+.pod-ep .meta{color:rgba(250,247,242,.55);margin-top:.3rem;display:block}
+.eq{display:none;gap:3px;align-items:flex-end;height:20px}
+.pod-ep.on .eq{display:inline-flex}
+.eq i{width:3px;background:var(--red);height:100%;transform-origin:50% 100%;animation:eq 1s ease-in-out infinite}
+.eq i:nth-child(2){animation-delay:.2s}
+.eq i:nth-child(3){animation-delay:.4s}
+@keyframes eq{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+.pod-ep .dur{font-family:var(--mono);font-size:.74rem;color:rgba(250,247,242,.6)}
+/* ============ Footer ============ */
+footer{background:var(--paper);border-top:3px double var(--ink);padding:clamp(2.4rem,5vw,4rem) 0 2rem}
+.foot-grid{display:grid;gap:2.2rem;grid-template-columns:1fr}
+@media (min-width:760px){.foot-grid{grid-template-columns:1fr 1fr}}
+@media (min-width:1080px){.foot-grid{grid-template-columns:2fr 1fr 1fr 1fr}}
+.foot-brand .word{font-family:var(--serif);font-weight:900;font-size:2.2rem;letter-spacing:-.03em}
+.foot-brand .word .dot{color:var(--red)}
+.foot-brand p{margin-top:.9rem;font-size:.9rem;color:var(--ink-2);max-width:38ch}
+footer h2{font-family:var(--mono);font-weight:600;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+.foot-grid ul{margin-top:1rem;display:grid}
+.foot-grid ul a{display:inline-flex;align-items:center;min-height:40px;text-decoration:none;font-size:.9rem;color:var(--ink-2)}
+.foot-grid ul a:hover{color:var(--red)}
+.foot-bottom{margin-top:2.6rem;border-top:1px solid var(--rule);padding-top:1.2rem;display:flex;flex-wrap:wrap;gap:.8rem 1.6rem;justify-content:space-between;font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:var(--ink-3);text-transform:uppercase}
+.foot-bottom a{text-decoration:none;min-height:32px;display:inline-flex;align-items:center}
+.foot-bottom a:hover{color:var(--red)}
+/* ============ Overlays ============ */
+#searchDialog{position:fixed;inset:0;z-index:180;display:grid;grid-template-rows:auto 1fr;background:rgba(22,18,14,.55);padding:clamp(1rem,6vh,5rem) 1rem 1rem}
+#searchDialog .panel{background:var(--paper);border:1px solid var(--ink);box-shadow:var(--shadow);max-width:720px;width:100%;margin:0 auto;max-height:70vh;display:flex;flex-direction:column;animation:popIn .25s ease}
+.sd-head{display:flex;gap:.8rem;align-items:center;padding:1rem 1.1rem;border-bottom:1px solid var(--rule)}
+.sd-head svg{width:18px;height:18px;flex:none;stroke:var(--ink-3);fill:none;stroke-width:2}
+#searchInput{border:0;background:transparent;flex:1;font:inherit;font-size:1.05rem;min-height:40px}
+#searchInput:focus{outline:none}
+#searchResults{overflow:auto;padding:.5rem}
+#searchResults button{display:grid;grid-template-columns:1fr auto;gap:1rem;width:100%;text-align:left;padding:.85rem .8rem;border-bottom:1px dotted var(--rule);align-items:baseline}
+#searchResults button:hover,.sel{background:var(--paper-2)}
+#searchResults .t{font-family:var(--serif);font-weight:600;font-size:1.02rem;line-height:1.35}
+#searchResults .c{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--red)}
+#searchResults .none{padding:1.6rem 1rem;color:var(--ink-3);font-size:.92rem}
+#toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;z-index:190;background:var(--ink);color:var(--paper);display:flex;align-items:center;gap:1rem;padding:.85rem 1.2rem;box-shadow:var(--shadow);pointer-events:none;transition:transform .3s ease,opacity .3s ease;max-width:min(92vw,480px)}
+#toast.show{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+#toast p{font-size:.86rem}
+#toast button{font-family:var(--mono);font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#ffb4ae;min-height:36px;padding:0 .4rem}
+#toast button:hover{color:#fff}
+#toTop{position:fixed;right:18px;bottom:18px;z-index:110;width:50px;height:50px;border-radius:50%;background:var(--ink);color:var(--paper);display:inline-flex;align-items:center;justify-content:center;opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity .3s ease,transform .3s ease,background-color .2s ease;box-shadow:var(--shadow)}
+#toTop.show{opacity:1;transform:none;pointer-events:auto}
+#toTop:hover{background:var(--red)}
+#toTop svg{width:17px;height:17px;stroke:currentColor;stroke-width:2;fill:none}
+/* reveal */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}
+  .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div id="progress" aria-hidden="true"></div>
+
+<header id="top">
+  <div class="topbar">
+    <div class="wrap">
+      <p class="meta"><time datetime="2026-09-25">Friday, September 25, 2026</time> · Issue № 412</p>
+      <p class="meta">Reader-funded · No ads · No trackers</p>
+    </div>
+  </div>
+
+  <div class="masthead wrap">
+    <p class="est l">An independent co-operative of fourteen journalists — Berlin, Lagos, Taipei.</p>
+    <h1>Signal<span class="dot">.</span><span class="sr-only"> — independent technology journalism</span></h1>
+    <p class="tag">Technology, reported from the wiring up</p>
+    <p class="est r">Est. 2019 · Funded by 41,208 members · Circulation: everywhere</p>
+  </div>
+
+  <nav class="nav" id="nav" aria-label="Topics">
+    <div class="wrap nav-inner">
+      <a class="nav-brand" href="#top" aria-label="Signal home">Signal<span class="dot">.</span></a>
+      <ul>
+        <li><a href="#latest" data-nav-filter="ai">Artificial Intelligence</a></li>
+        <li><a href="#latest" data-nav-filter="hardware">Hardware</a></li>
+        <li><a href="#latest" data-nav-filter="privacy">Privacy &amp; Security</a></li>
+        <li><a href="#latest" data-nav-filter="startups">Startups</a></li>
+        <li><a href="#latest" data-nav-filter="climate">Climate &amp; Energy</a></li>
+        <li><a href="#latest" data-nav-filter="space">Space</a></li>
+        <li><a href="#latest" data-nav-filter="policy">Policy</a></li>
+        <li><a href="#latest" data-nav-filter="reviews">Reviews</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="icon-btn" id="searchBtn" aria-label="Search stories" aria-haspopup="dialog">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2"/></svg>
+        </button>
+        <button class="icon-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2"/></svg>
+        </button>
+        <a class="btn btn-solid" href="#newsletter">Become a Member</a>
+      </div>
+    </div>
+  </nav>
+
+  <div id="mobileMenu" hidden>
+    <div class="wrap">
+      <div class="mm-head">
+        <p class="meta"><span class="k">Browse</span> the desks</p>
+        <button class="icon-btn" id="menuClose" aria-label="Close menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="2"/></svg>
+        </button>
+      </div>
+      <ul>
+        <li><a href="#latest" data-nav-filter="ai">Artificial Intelligence</a></li>
+        <li><a href="#latest" data-nav-filter="hardware">Hardware</a></li>
+        <li><a href="#latest" data-nav-filter="privacy">Privacy &amp; Security</a></li>
+        <li><a href="#latest" data-nav-filter="startups">Startups</a></li>
+        <li><a href="#latest" data-nav-filter="climate">Climate &amp; Energy</a></li>
+        <li><a href="#latest" data-nav-filter="space">Space</a></li>
+        <li><a href="#latest" data-nav-filter="policy">Policy</a></li>
+        <li><a href="#latest" data-nav-filter="reviews">Reviews</a></li>
+      </ul>
+      <div class="mm-foot">
+        <button class="btn" id="searchBtn2" aria-label="Search stories">Search the Archive</button>
+        <a class="btn btn-red" href="#newsletter">Become a Member</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <!-- ============ FRONT PAGE ============ -->
+  <section class="frontpage wrap" aria-labelledby="fp-title">
+    <h2 id="fp-title" class="sr-only">The Front Page</h2>
+    <div class="hero-grid">
+      <article class="hero" id="art-hero" tabindex="-1" data-search-title="Five Companies Stand Between You and Every AI You Talk To" data-cat-label="Investigation">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=80" width="1600" height="1000" fetchpriority="high" alt="Rows of server racks in a dim interconnect hall, bundles of fibre optic cable overhead and status LEDs glowing along the aisle">
+          <figcaption>The Nordhaven exchange hall, one of fourteen sites where rival model providers share the same fibre. Photograph for Signal by R. Okafor.</figcaption>
+        </figure>
+        <p class="kicker">The Investigation · Infrastructure</p>
+        <h2><a href="#art-hero">Five Companies Stand Between You and Every AI You Talk To</a></h2>
+        <p class="standfirst">We spent six months mapping the inference stack — fibre, fabs, foundries and the fine print. What we found is a toll road with five booths, and nobody holding a map…</p>
+        <div class="byline">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=160&q=80" width="96" height="96" loading="lazy" alt="Portrait of Mara Ellison, infrastructure editor">
+          <p class="who"><b>Mara Ellison</b><span>Infrastructure editor</span></p>
+          <p class="meta num">Sep 24, 2026 · 24 min read</p>
+        </div>
+      </article>
+
+      <div class="rail">
+        <article class="rail-card" id="feat-1" tabindex="-1" data-search-title="Inside the Last Silicon Fab Still Standing in Europe" data-cat-label="Hardware">
+          <figure>
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80" width="640" height="480" loading="lazy" alt="Macro photograph of a silicon circuit board, fine copper traces catching cool light">
+          </figure>
+          <p class="kicker">Hardware</p>
+          <h3><a href="#feat-1">Inside the Last Silicon Fab Still Standing in Europe</a></h3>
+          <p>Dresden’s line 7 runs at 92% yield and loses money every quarter. The engineers who keep it alive explain why the maths never included sovereignty.</p>
+          <p class="meta num">Tobias Renn · 14 min read</p>
+        </article>
+
+        <article class="rail-card" id="feat-2" tabindex="-1" data-search-title="The Moderation Team That Quit All at Once" data-cat-label="Platforms">
+          <figure>
+            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80" width="640" height="480" loading="lazy" alt="A group of contractors gathered around laptops on a wooden table, faces lit by their screens">
+          </figure>
+          <p class="kicker">Platforms</p>
+          <h3><a href="#feat-2">The Moderation Team That Quit All at Once</a></h3>
+          <p>Forty-one contractors, one group chat, and a decision made at 2 a.m. What their exit interviews say about the real cost of “safe enough.”</p>
+          <p class="meta num">Dev Okonjo · 17 min read</p>
+        </article>
+
+        <section class="brief" aria-labelledby="brief-title">
+          <h3 id="brief-title">The Brief <span class="live"><i aria-hidden="true"></i>Updated 15:47</span></h3>
+          <ol>
+            <li><time datetime="2026-09-25T08:12">08:12</time><a href="#latest">Export licence for 2 nm tooling clears final review in The Hague</a></li>
+            <li><time datetime="2026-09-25T10:40">10:40</time><a href="#latest">Three EU states pilot identity wallets at land border crossings</a></li>
+            <li><time datetime="2026-09-25T13:05">13:05</time><a href="#latest">Open-weights model tops reasoning bench — and refuses to say how</a></li>
+            <li><time datetime="2026-09-25T15:47">15:47</time><a href="#latest">Grid operators ask data centres to pause training runs at peak</a></li>
+          </ol>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LATEST ============ -->
+  <section class="latest wrap" id="latest" aria-labelledby="latest-title">
+    <div class="section-head">
+      <div>
+        <h2 id="latest-title">The Latest</h2>
+        <p class="sub">Reporting, reviews and dispatches from our eight desks. Updated as the ink dries.</p>
+      </div>
+      <p class="meta num" id="filterStatus" role="status">Showing 9 stories across all desks</p>
+    </div>
+
+    <div class="chips" role="group" aria-label="Filter stories by desk">
+      <button class="chip" data-filter="all" aria-pressed="true">All Desks</button>
+      <button class="chip" data-filter="ai" aria-pressed="false">AI</button>
+      <button class="chip" data-filter="hardware" aria-pressed="false">Hardware</button>
+      <button class="chip" data-filter="privacy" aria-pressed="false">Privacy</button>
+      <button class="chip" data-filter="startups" aria-pressed="false">Startups</button>
+      <button class="chip" data-filter="climate" aria-pressed="false">Climate</button>
+      <button class="chip" data-filter="space" aria-pressed="false">Space</button>
+      <button class="chip" data-filter="policy" aria-pressed="false">Policy</button>
+      <button class="chip" data-filter="reviews" aria-pressed="false">Reviews</button>
+    </div>
+
+    <div class="latest-layout">
+      <div>
+        <div class="cards" id="cards">
+
+          <article class="card reveal" data-cat="privacy" id="art-1" tabindex="-1" data-search-title="Everything You Own Now Phones Home — Here’s the Call Log" data-cat-label="Privacy & Security">
+            <figure>
+              <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=900&q=80" width="640" height="480" loading="lazy" alt="A dark circuit board photographed at an angle, a single cold light raking across its components">
+              <span class="cat">Privacy &amp; Security</span>
+            </figure>
+            <h3><a href="#art-1">Everything You Own Now Phones Home — Here’s the Call Log</a></h3>
+            <p class="ex">We packet-captured 31 smart devices for a fortnight. Your kettle contacted eleven domains; your toothbrush, four. Three of them belong to ad-tech brokers you never met.</p>
+            <div class="foot">
+              <span class="mono-av" aria-hidden="true">JW</span>
+              <p class="who"><b>Jonas Weill</b><span class="num">Sep 24 · 13 min read</span></p>
+              <button class="save" aria-pressed="false" aria-label="Save story: Everything You Own Now Phones Home">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="card reveal" data-cat="hardware" id="art-2" tabindex="-1" data-search-title="Quantum Error Correction Clears the Only Hurdle That Mattered" data-cat-label="Hardware">
+            <figure>
+              <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=900&q=80" width="640" height="480" loading="lazy" alt="Close view of a teal circuit board with gold connectors and a black chip at its centre">
+              <span class="cat">Hardware</span>
+            </figure>
+            <h3><a href="#art-2">Quantum Error Correction Clears the Only Hurdle That Mattered</a></h3>
+            <p class="ex">A logical qubit in Delft outlived its physical parts by a factor of 900. The road to useful quantum just got considerably shorter — and considerably more expensive.</p>
+            <div class="foot">
+              <span class="mono-av" aria-hidden="true">IH</span>
+              <p class="who"><b>Iris Hallam</b><span class="num">Sep 23 · 11 min read</span></p>
+              <button class="save" aria-pressed="false" aria-label="Save story: Quantum Error Correction Clears the Only Hurdle That Mattered">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="card reveal" data-cat="startups" id="art-3" tabindex="-1" data-search-title="Seed Rounds Are Shrinking, and So Are the Ideas" data-cat-label="Startups">
+            <figure>
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80" width="640" height="480" loading="lazy" alt="A laptop on a desk displaying declining analytics charts beside a notepad and glasses">
+              <span class="cat">Startups</span>
+            </figure>
+            <h3><a href="#art-3">Seed Rounds Are Shrinking, and So Are the Ideas</a></h3>
+            <p class="ex">Median cheques fell 38% this year. Founders tell us smaller money changed what they build — safer, smaller, and quietly acqui-hired before the option pool vests.</p>
+            <div class="foot">
+              <span class="mono-av r" aria-hidden="true">CD</span>
+              <p class="who"><b>Camille Duarte</b><span class="num">Sep 23 · 8 min read</span></p>
+              <button class="save" aria-pressed="false" aria-label="Save story: Seed Rounds Are Shrinking, and So Are the Ideas">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="card reveal" data-cat="space" id="art-4" tabindex="-1" data-search-title="The Satellite Graveyard Nobody Budgeted For" data-cat-label="Space">
+            <figure>
+              <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=900&q=80" width="640" height="480" loading="lazy" alt="A satellite with solar panels extended, photographed above the curved limb of the Earth">
+              <span class="cat">Space</span>
+            </figure>
+            <h3><a href="#art-4">The Satellite Graveyard Nobody Budgeted For</a></h3>
+            <p class="ex">Orbit is becoming a commons with no caretaker. Insurers are pricing debris, operators are pointing fingers, and the debris — patient as ever — keeps the score.</p>
+            <div class="foot">
+              <span class="mono-av" aria-hidden="true">TL</span>
+              <p class="who"><b>Theo Lindqvist</b><span class="num">Sep 22 · 15 min read</span></p>
+              <button class="save" aria-pressed="false" aria-label="Save story: The Satellite Graveyard Nobody Budgeted For">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="card reveal" data-cat="climate" id="art-5" tabindex="-1" data-search-title="Solid-State Batteries Have Arrived — in the Wrong Cars" data-cat-label="Climate & Energy">
+            <figure>
+              <img src="https://picsum.photos/seed/signal-blog-a5bba169978a/1600/900?auto=format&fit=crop&w=900&q=80" width="640" height="480" loading="lazy" alt="A hand plugging a charge cable into the port of a white electric car at a wallbox">
+              <span class="cat">Climate &amp; Energy</span>
+            </figure>
+            <h3><a href="#art-5">Solid-State Batteries Have Arrived — in the Wrong Cars</a></h3>
+            <p class="ex">The cells promise 900 km and twelve-minute charges. This year they ship in six-figure flagships, while the mass market gets yesterday’s chemistry at yesterday’s prices.</p>
+            <div class="foot">
+              <span class="mono-av r" aria-hidden="true">AB</span>
+              <p class="who"><b>Amara Boateng</b><span class="num">Sep 22 · 12 min read</span></p>
+              <button class="save" aria-pressed="false" aria-label="Save story: Solid-State Batteries Have Arrived — in the Wrong Cars">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="card reveal" data-cat="policy" id="art-6" tabindex="-1" data-search-title="What the EU’s New Chip Rules Actually Say (Without the Press Release)" data-cat-label="Policy">
+            <figure>
+              <img src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=900&q=80" width="640" height="480" loading="lazy" alt="Extreme macro of a processor package and solder points on a computer board">
+              <span class="cat">Policy</span>
+            </figure>
+            <h3><a href="#art-6">What the EU’s New Chip Rules Actually Say (Without the Press Release)</a></h3>
+            <p class="ex">Sixty-one pages, three subsidies, one very careful definition of “strategic.” We read the fine print so your Monday stand-up doesn’t have to.</p>
+            <div class="foot">
+              <span class="mono-av" aria-hidden="true">MK</span>
+              <p class="who"><b>Marta Kovač</b><span class="num">Sep 21 · 7 min read</span></p>
+              <button class="save" aria-pressed="false" aria-label="Save story: What the EU’s New Chip Rules Actually Say">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="card reveal" data-cat="reviews" id="art-7" tabindex="-1" data-search-title="The Framework 15 Is the Repairable Laptop We Were Promised" data-cat-label="Reviews">
+            <figure>
+              <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=900&q=80" width="640" height="480" loading="lazy" alt="An open laptop on a wooden desk showing a terminal window of code">
+              <span class="cat">Reviews</span>
+            </figure>
+            <h3><a href="#art-7">The Framework 15 Is the Repairable Laptop We Were Promised</a></h3>
+            <p class="ex">Eleven replaceable modules, a schematic in the box, and a screwdriver that isn’t a gimmick. Nine months of daily abuse later, it’s still the standard we measure against.</p>
+            <div class="foot">
+              <span class="mono-av" aria-hidden="true">EN</span>
+              <p class="who"><b>Elliot Nakamura</b><span class="num">Sep 20 · 10 min read</span></p>
+              <button class="save" aria-pressed="false" aria-label="Save story: The Framework 15 Is the Repairable Laptop We Were Promised">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="card reveal" data-cat="ai" id="art-8" tabindex="-1" data-search-title="Open Source Is Eating the Cloud, One Licence at a Time" data-cat-label="Artificial Intelligence">
+            <figure>
+              <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=900&q=80" width="640" height="480" loading="lazy" alt="Green cascading code glyphs falling down a black screen">
+              <span class="cat">Artificial Intelligence</span>
+            </figure>
+            <h3><a href="#art-8">Open Source Is Eating the Cloud, One Licence at a Time</a></h3>
+            <p class="ex">The new clause war: providers restrict “managed usage” of open weights. Maintainers are fighting back with licences drafted by lawyers, not hackers — and that changes everything.</p>
+            <div class="foot">
+              <img class="mono-av" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=96&q=80" width="34" height="34" loading="lazy" alt="" style="border-radius:50%;object-fit:cover">
+              <p class="who"><b>Priya Raghunathan</b><span class="num">Sep 20 · 9 min read</span></p>
+              <button class="save" aria-pressed="false" aria-label="Save story: Open Source Is Eating the Cloud, One Licence at a Time">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="card reveal" data-cat="policy" id="art-9" tabindex="-1" data-search-title="Your Car Is a Subscription Now, Whether You Signed Up or Not" data-cat-label="Policy">
+            <figure>
+              <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80" width="640" height="480" loading="lazy" alt="An orange sports car cornering on a coastal road at dusk">
+              <span class="cat">Policy</span>
+            </figure>
+            <h3><a href="#art-9">Your Car Is a Subscription Now, Whether You Signed Up or Not</a></h3>
+            <p class="ex">Heated seats were the trial run. Now brakes-by-software and tow-limits-by-geofence: owners are discovering what “licence to operate” really means in the terms of sale.</p>
+            <div class="foot">
+              <span class="mono-av r" aria-hidden="true">SM</span>
+              <p class="who"><b>Sofia Marchetti</b><span class="num">Sep 19 · 9 min read</span></p>
+              <button class="save" aria-pressed="false" aria-label="Save story: Your Car Is a Subscription Now, Whether You Signed Up or Not">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>
+              </button>
+            </div>
+          </article>
+        </div>
+
+        <div class="empty" id="emptyState" hidden>
+          <h3>Nothing on this desk yet…</h3>
+          <p>Our reporters are filing as fast as the coffee allows. Try another desk, or read everything we’ve published this week.</p>
+          <button class="btn" id="resetFilter">Show All Desks</button>
+        </div>
+      </div>
+
+      <aside class="sidebar" aria-label="Sidebar">
+        <section class="widget reveal" aria-labelledby="trend-title">
+          <h2 id="trend-title">Most Read <small>This week</small></h2>
+          <ol class="trend">
+            <li><span class="trend-n num" aria-hidden="true">1</span><div><a href="#latest">The great GPU repatriation: why three labs moved training back in-house</a><span class="meta num">AI · 19 min</span></div></li>
+            <li><span class="trend-n num" aria-hidden="true">2</span><div><a href="#latest">Your router is older than the threats it faces</a><span class="meta num">Security · 6 min</span></div></li>
+            <li><span class="trend-n num" aria-hidden="true">3</span><div><a href="#latest">We ranked eleven password managers so your team doesn’t have to guess</a><span class="meta num">Reviews · 14 min</span></div></li>
+            <li><span class="trend-n num" aria-hidden="true">4</span><div><a href="#latest">Rust in the kernel: two years of CVEs, counted honestly</a><span class="meta num">Open source · 12 min</span></div></li>
+            <li><span class="trend-n num" aria-hidden="true">5</span><div><a href="#latest">The internship that quietly replaced a hiring pipeline</a><span class="meta num">Labour · 8 min</span></div></li>
+          </ol>
+        </section>
+
+        <section class="widget reveal" aria-labelledby="idx-title">
+          <h2 id="idx-title">The Signal Index <small>Live data</small></h2>
+          <ul class="idx">
+            <li><span>Median GPU cluster utilisation</span><span class="stat num"><b>61%</b> <span class="up">▲ 4 pts</span></span></li>
+            <li><span>Global chip lead time</span><span class="stat num"><b>24 wks</b> <span class="dn">▼ 2</span></span></li>
+            <li><span>Open-weights share of new models</span><span class="stat num"><b>47%</b> <span class="up">▲ 9</span></span></li>
+            <li><span>Tech layoffs, rolling 30 days</span><span class="stat num"><b>12,480</b> <span class="dn">▼ 18%</span></span></li>
+          </ul>
+          <p class="meta" style="margin-top:.7rem">Sources: public filings, customs data, our own counters.</p>
+        </section>
+
+        <section class="widget reveal" aria-labelledby="arch-title">
+          <h2 id="arch-title">From the Archive <small>2019–2025</small></h2>
+          <ul class="arch">
+            <li><a href="#latest">The data centre that ate a river</a><span class="meta num">2024 · Investigation</span></li>
+            <li><a href="#latest">Who actually owns your domain registrar?</a><span class="meta num">2022 · Follow the money</span></li>
+            <li><a href="#latest">A field guide to quitting big tech, in nine letters</a><span class="meta num">2021 · Essay</span></li>
+          </ul>
+        </section>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ NEWSLETTER ============ -->
+  <section class="newsletter" id="newsletter" aria-labelledby="nl-title">
+    <div class="wrap nl-grid">
+      <div class="nl-copy reveal">
+        <p class="kicker">Free, forever</p>
+        <h2 id="nl-title">The Morning Signal</h2>
+        <p class="standfirst">One brief, five links, zero hype. In your inbox by 7 a.m. CET, Monday to Friday — written by the editors, not by a growth team.</p>
+        <ul class="nl-points">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg><span>The one story that matters today, in 200 words.</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg><span>Five links worth your commute, annotated by our desks.</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg><span>One chart from the Signal Index, explained properly.</span></li>
+        </ul>
+        <div class="nl-visual">
+          <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=1200&q=80" width="720" height="405" loading="lazy" alt="A stack of folded newspapers on a desk beside a cup of coffee, morning light across the page">
+        </div>
+      </div>
+
+      <div class="nl-box reveal">
+        <form class="nl-form" id="nlForm" novalidate>
+          <h3>Subscribe to the brief</h3>
+          <p class="hint">Join 41,208 readers. We’ll never sell, swap or “share” your address.</p>
+          <div style="margin-top:1rem;display:grid;gap:.45rem">
+            <label for="nlEmail">Email address</label>
+            <input id="nlEmail" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.org" aria-describedby="nlErr nlNote" required>
+            <p class="nl-err" id="nlErr" role="alert" hidden></p>
+          </div>
+          <button class="btn btn-red" type="submit" style="margin-top:.4rem">Subscribe Free</button>
+          <p class="nl-note" id="nlNote">No trackers, no third-party ads, one-click unsubscribe. Members get the full archive and the Sunday longread.</p>
+        </form>
+
+        <div class="nl-ok" id="nlSuccess" hidden>
+          <span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>
+          <h3>You’re on the list.</h3>
+          <p>We’ve sent a confirmation link to <b id="nlEcho"></b>. Click it and tomorrow’s brief is yours — welcome aboard.</p>
+          <button class="btn" id="nlReset" type="button">Use a Different Address</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TOPICS ============ -->
+  <section class="topics wrap" aria-labelledby="topics-title">
+    <div class="section-head">
+      <div>
+        <h2 id="topics-title">Browse by Topic</h2>
+        <p class="sub">Every story we’ve published since 2019, filed under the beats we cover. Size reflects the depth of the pile.</p>
+      </div>
+    </div>
+    <div class="cloud">
+      <a href="#latest" class="xl" data-nav-filter="ai"><b>Artificial Intelligence</b><span class="n num">214</span></a>
+      <a href="#latest" class="l" data-nav-filter="privacy"><b>Privacy</b><span class="n num">148</span></a>
+      <a href="#latest" class="l" data-nav-filter="privacy"><b>Security</b><span class="n num">132</span></a>
+      <a href="#latest" class="m" data-nav-filter="policy"><b>Policy &amp; Regulation</b><span class="n num">118</span></a>
+      <a href="#latest" class="m" data-nav-filter="hardware"><b>Semiconductors</b><span class="n num">96</span></a>
+      <a href="#latest" class="m" data-nav-filter="startups"><b>Startups &amp; VC</b><span class="n num">87</span></a>
+      <a href="#latest" class="m" data-nav-filter="climate"><b>Climate &amp; Energy</b><span class="n num">74</span></a>
+      <a href="#latest" class="s" data-nav-filter="reviews"><b>Reviews</b><span class="n num">63</span></a>
+      <a href="#latest" class="s" data-nav-filter="ai"><b>Open Source</b><span class="n num">58</span></a>
+      <a href="#latest" class="s" data-nav-filter="hardware"><b>Telecoms</b><span class="n num">45</span></a>
+      <a href="#latest" class="s" data-nav-filter="space"><b>Space</b><span class="n num">41</span></a>
+      <a href="#latest" class="s" data-nav-filter="hardware"><b>Robotics</b><span class="n num">39</span></a>
+      <a href="#latest" class="s" data-nav-filter="policy"><b>Labour</b><span class="n num">33</span></a>
+      <a href="#latest" class="s" data-nav-filter="climate"><b>Biotech</b><span class="n num">27</span></a>
+    </div>
+  </section>
+
+  <!-- ============ PODCAST ============ -->
+  <section class="podcast" aria-labelledby="pod-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2 id="pod-title">Signal/Noise, the Podcast</h2>
+          <p class="sub">Forty minutes, twice a month. Two editors argue about what the week actually meant.</p>
+        </div>
+        <a class="btn btn-ghost-light" href="#podcast">Open the Podcast Feed</a>
+      </div>
+      <div class="pod-grid">
+        <div class="pod-art reveal">
+          <img src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?auto=format&fit=crop&w=1000&q=80" width="900" height="675" loading="lazy" alt="A studio condenser microphone in warm light against a dark bokeh background">
+        </div>
+        <div class="pod-list">
+          <div class="pod-ep" data-ep="148">
+            <button class="play" aria-pressed="false" aria-label="Play episode 148: The Toll Road Internet">
+              <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+              <svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 4.5h4v15h-4zM13.5 4.5h4v15h-4z"/></svg>
+            </button>
+            <div>
+              <h3>Ep. 148 — The Toll Road Internet</h3>
+              <p class="meta num">With Mara Ellison · Sep 22, 2026 <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></p>
+            </div>
+            <span class="dur num">42 min</span>
+          </div>
+          <div class="pod-ep" data-ep="147">
+            <button class="play" aria-pressed="false" aria-label="Play episode 147: Chips, Chips, Chips">
+              <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+              <svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 4.5h4v15h-4zM13.5 4.5h4v15h-4z"/></svg>
+            </button>
+            <div>
+              <h3>Ep. 147 — Chips, Chips, Chips</h3>
+              <p class="meta num">With Tobias Renn · Sep 8, 2026 <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></p>
+            </div>
+            <span class="dur num">38 min</span>
+          </div>
+          <div class="pod-ep" data-ep="146">
+            <button class="play" aria-pressed="false" aria-label="Play episode 146: The Right to Repair Wins?">
+              <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+              <svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 4.5h4v15h-4zM13.5 4.5h4v15h-4z"/></svg>
+            </button>
+            <div>
+              <h3>Ep. 146 — The Right to Repair Wins?</h3>
+              <p class="meta num">With Elliot Nakamura · Aug 25, 2026 <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></p>
+            </div>
+            <span class="dur num">51 min</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <p class="word">Signal<span class="dot">.</span></p>
+        <p>An independent, reader-funded technology publication. A co-operative of fourteen journalists in Berlin, Lagos and Taipei — no ads, no trackers, no billionaire owner.</p>
+        <p class="meta" style="margin-top:1rem">Corrections published within 24 h, forever.</p>
+      </div>
+      <nav aria-labelledby="f-sec">
+        <h2 id="f-sec">Sections</h2>
+        <ul>
+          <li><a href="#latest" data-nav-filter="ai">Artificial Intelligence</a></li>
+          <li><a href="#latest" data-nav-filter="hardware">Hardware</a></li>
+          <li><a href="#latest" data-nav-filter="privacy">Privacy &amp; Security</a></li>
+          <li><a href="#latest" data-nav-filter="startups">Startups</a></li>
+          <li><a href="#latest" data-nav-filter="climate">Climate &amp; Energy</a></li>
+          <li><a href="#latest" data-nav-filter="space">Space</a></li>
+          <li><a href="#latest" data-nav-filter="reviews">Reviews</a></li>
+        </ul>
+      </nav>
+      <nav aria-labelledby="f-pub">
+        <h2 id="f-pub">The Publication</h2>
+        <ul>
+          <li><a href="#top">Ethics &amp; Corrections</a></li>
+          <li><a href="#top">Funding &amp; Ownership</a></li>
+          <li><a href="#top">Pitch Us a Story</a></li>
+          <li><a href="#top">Freelance Rates</a></li>
+          <li><a href="#top">Syndication &amp; Press</a></li>
+          <li><a href="#top">Accessibility Statement</a></li>
+        </ul>
+      </nav>
+      <nav aria-labelledby="f-else">
+        <h2 id="f-else">Elsewhere</h2>
+        <ul>
+          <li><a href="#newsletter">The Morning Signal</a></li>
+          <li><a href="#podcast">Podcast Feed (RSS)</a></li>
+          <li><a href="#top">Mastodon</a></li>
+          <li><a href="#top">Bluesky</a></li>
+          <li><a href="#top">LinkedIn</a></li>
+          <li><a href="#top">Full-text RSS</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="foot-bottom">
+      <p>© <span id="year">2026</span> Signal Media Co-operative eG · Berlin HRB 214 882</p>
+      <p>Set in Fraunces, Public Sans &amp; IBM Plex Mono.</p>
+      <p><a href="#top">Privacy</a> <a href="#top">Terms</a> <a href="#top">Imprint</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ SEARCH DIALOG ============ -->
+<div id="searchDialog" hidden role="dialog" aria-modal="true" aria-labelledby="sd-title">
+  <div class="panel">
+    <div class="sd-head">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <h2 id="sd-title" class="sr-only">Search the archive</h2>
+      <label class="sr-only" for="searchInput">Search stories by title</label>
+      <input id="searchInput" type="search" placeholder="Search 1,100+ stories… try “chips” or “orbit”" autocomplete="off">
+      <button class="icon-btn" id="searchClose" aria-label="Close search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+    </div>
+    <div id="searchResults" role="listbox" aria-label="Search results"></div>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite" hidden>
+  <p id="toastMsg"></p>
+  <button id="toastUndo" type="button">Undo</button>
+</div>
+
+<button id="toTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V5M5.5 11.5 12 5l6.5 6.5"/></svg>
+</button>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(s,c){return (c||document).querySelector(s);};
+  var $$ = function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s));};
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* Year */
+  $("#year").textContent = new Date().getFullYear();
+
+  /* Reading progress + nav shadow + back-to-top */
+  var progress = $("#progress"), nav = $("#nav"), toTop = $("#toTop"), ticking = false;
+  function onScroll(){
+    var y = window.scrollY || document.documentElement.scrollTop;
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.transform = "scaleX(" + (h > 0 ? Math.min(y / h, 1) : 0) + ")";
+    nav.classList.toggle("scrolled", y > 6);
+    toTop.classList.toggle("show", y > 900);
+    ticking = false;
+  }
+  window.addEventListener("scroll", function(){
+    if(!ticking){ ticking = true; window.requestAnimationFrame(onScroll); }
+  }, {passive:true});
+  onScroll();
+  toTop.addEventListener("click", function(){
+    window.scrollTo({top:0, behavior: reduced ? "auto" : "smooth"});
+  });
+
+  /* Scroll reveals */
+  if("IntersectionObserver" in window && !reduced){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, {threshold:.12, rootMargin:"0px 0px -6% 0px"});
+    $$(".reveal").forEach(function(el){ io.observe(el); });
+  } else {
+    $$(".reveal").forEach(function(el){ el.classList.add("in"); });
+  }
+
+  /* Mobile menu */
+  var menu = $("#mobileMenu"), menuBtn = $("#menuBtn"), lastFocus = null;
+  function openMenu(){
+    lastFocus = document.activeElement;
+    menu.hidden = false;
+    menuBtn.setAttribute("aria-expanded","true");
+    menuBtn.setAttribute("aria-label","Close menu");
+    document.body.style.overflow = "hidden";
+    $("#menuClose").focus();
+  }
+  function closeMenu(){
+    if(menu.hidden) return;
+    menu.hidden = true;
+    menuBtn.setAttribute("aria-expanded","false");
+    menuBtn.setAttribute("aria-label","Open menu");
+    document.body.style.overflow = "";
+    if(lastFocus) lastFocus.focus();
+  }
+  menuBtn.addEventListener("click", function(){ menu.hidden ? openMenu() : closeMenu(); });
+  $("#menuClose").addEventListener("click", closeMenu);
+  $$("#mobileMenu a").forEach(function(a){ a.addEventListener("click", closeMenu); });
+
+  /* Filtering */
+  var chips = $$(".chip"), cards = $$("#cards .card"), emptyState = $("#emptyState"), status = $("#filterStatus");
+  var labels = {all:"all desks", ai:"AI", hardware:"Hardware", privacy:"Privacy", startups:"Startups", climate:"Climate", space:"Space", policy:"Policy", reviews:"Reviews"};
+  function setFilter(key){
+    chips.forEach(function(c){ c.setAttribute("aria-pressed", String(c.dataset.filter === key)); });
+    var shown = 0;
+    cards.forEach(function(card){
+      var match = (key === "all") || (card.dataset.cat === key);
+      card.hidden = !match;
+      if(match){
+        shown++;
+        if(!reduced){ card.style.animation = "none"; void card.offsetWidth; card.style.animation = ""; }
+      }
+    });
+    emptyState.hidden = shown !== 0;
+    status.textContent = "Showing " + shown + (shown === 1 ? " story in " : " stories in ") + labels[key];
+  }
+  chips.forEach(function(c){ c.addEventListener("click", function(){ setFilter(c.dataset.filter); }); });
+  $("#resetFilter").addEventListener("click", function(){ setFilter("all"); });
+  $$("[data-nav-filter]").forEach(function(a){
+    a.addEventListener("click", function(){ setFilter(a.dataset.navFilter); });
+  });
+
+  /* Save / bookmark with undo toast */
+  var toast = $("#toast"), toastMsg = $("#toastMsg"), toastUndo = $("#toastUndo"), toastTimer = null, undoFn = null;
+  function showToast(msg, fn){
+    toastMsg.textContent = msg;
+    undoFn = fn || null;
+    toastUndo.style.display = fn ? "" : "none";
+    toast.hidden = false;
+    requestAnimationFrame(function(){ toast.classList.add("show"); });
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(hideToast, 6000);
+  }
+  function hideToast(){
+    toast.classList.remove("show");
+    setTimeout(function(){ toast.hidden = true; }, 320);
+  }
+  toastUndo.addEventListener("click", function(){ if(undoFn) undoFn(); hideToast(); });
+  $$(".save").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var on = btn.getAttribute("aria-pressed") === "true";
+      var title = btn.getAttribute("aria-label").replace(/^Save story: /,"");
+      btn.setAttribute("aria-pressed", String(!on));
+      if(!on){
+        showToast("Saved “" + title + "” to your reading list.", function(){ btn.setAttribute("aria-pressed","false"); });
+      } else {
+        showToast("Removed “" + title + "” from your reading list.", function(){ btn.setAttribute("aria-pressed","true"); });
+      }
+    });
+  });
+
+  /* Newsletter validation */
+  var nlForm = $("#nlForm"), nlEmail = $("#nlEmail"), nlErr = $("#nlErr"), nlOk = $("#nlSuccess"), nlEcho = $("#nlEcho");
+  var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  function fail(msg){
+    nlErr.textContent = msg;
+    nlErr.hidden = false;
+    nlEmail.setAttribute("aria-invalid","true");
+    nlEmail.focus();
+  }
+  nlEmail.addEventListener("input", function(){
+    nlErr.hidden    nlEmail.removeAttribute("aria-invalid");
+  });
+  nlForm.addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var v = nlEmail.value.trim();
+    if(!v){ fail("Please enter your email address so we know where to send the brief."); return; }
+    if(!emailRe.test(v)){ fail("That address doesn’t look right — check for a typo after the “@”."); return; }
+    nlEcho.textContent = v;
+    nlForm.hidden = true;
+    nlOk.hidden = false;
+    $("#nlReset").focus();
+  });
+  $("#nlReset").addEventListener("click", function(){
+    nlOk.hidden = true;
+    nlForm.hidden = false;
+    nlEmail.value = "";
+    nlEmail.focus();
+  });
+
+  /* Podcast play toggles */
+  var eps = $$(".pod-ep");
+  eps.forEach(function(ep){
+    var btn = $(".play", ep);
+    btn.addEventListener("click", function(){
+      var playing = btn.getAttribute("aria-pressed") === "true";
+      eps.forEach(function(other){
+        $(".play", other).setAttribute("aria-pressed","false");
+        other.classList.remove("on");
+      });
+      if(!playing){
+        btn.setAttribute("aria-pressed","true");
+        ep.classList.add("on");
+      }
+    });
+  });
+
+  /* Search dialog */
+  var dialog = $("#searchDialog"), input = $("#searchInput"), results = $("#searchResults");
+  var index = $$("[data-search-title]").map(function(el){
+    return { id: el.id, title: el.getAttribute("data-search-title"), cat: el.getAttribute("data-cat-label") };
+  });
+  var opener = null;
+  function renderResults(q){
+    var query = q.trim().toLowerCase();
+    results.innerHTML = "";
+    var hits = index.filter(function(item){
+      return !query || item.title.toLowerCase().indexOf(query) !== -1 || item.cat.toLowerCase().indexOf(query) !== -1;
+    }).slice(0, 8);
+    if(!hits.length){
+      var none = document.createElement("p");
+      none.className = "none";
+      none.textContent = "No stories match “" + q + "”. Try “chips”, “orbit”, “battery” or “privacy”.";
+      results.appendChild(none);
+      return;
+    }
+    hits.forEach(function(item){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("role","option");
+      b.setAttribute("aria-selected","false");
+      var t = document.createElement("span"); t.className = "t"; t.textContent = item.title;
+      var c = document.createElement("span"); c.className = "c"; c.textContent = item.cat;
+      b.appendChild(t); b.appendChild(c);
+      b.addEventListener("click", function(){ goTo(item.id); });
+      results.appendChild(b);
+    });
+  }
+  function goTo(id){
+    closeSearch();
+    var el = document.getElementById(id);
+    if(!el) return;
+    el.scrollIntoView({behavior: reduced ? "auto" : "smooth", block: "center"});
+    el.classList.add("flash");
+    setTimeout(function(){ el.classList.remove("flash"); }, 1500);
+    el.focus({preventScroll:true});
+  }
+  function openSearch(btn){
+    opener = btn || document.activeElement;
+    dialog.hidden = false;
+    document.body.style.overflow = "hidden";
+    renderResults("");
+    input.value = "";
+    input.focus();
+  }
+  function closeSearch(){
+    if(dialog.hidden) return;
+    dialog.hidden = true;
+    document.body.style.overflow = "";
+    if(opener) opener.focus();
+  }
+  $("#searchBtn").addEventListener("click", function(){ openSearch($("#searchBtn")); });
+  $("#searchBtn2").addEventListener("click", function(){ closeMenu(); openSearch($("#searchBtn2")); });
+  $("#searchClose").addEventListener("click", closeSearch);
+  dialog.addEventListener("mousedown", function(e){ if(e.target === dialog) closeSearch(); });
+  input.addEventListener("input", function(){ renderResults(input.value); });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "/" && !dialog.hidden === false && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)){
+      e.preventDefault(); openSearch($("#searchBtn")); return;
+    }
+    if(e.key === "Escape"){
+      if(!dialog.hidden){ closeSearch(); return; }
+      if(!menu.hidden){ closeMenu(); return; }
+    }
+    if(e.key === "Tab" && !dialog.hidden){
+      var f = $$("input, button", dialog).filter(function(el){ return !el.disabled; });
+      if(!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+  });
+})();
+</script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
