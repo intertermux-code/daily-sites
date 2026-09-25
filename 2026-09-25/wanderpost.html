@@ -1,502 +1,330 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f7f0e5">
-<meta name="description" content="Wanderpost designs unhurried, small-group journeys to Kyoto, Patagonia, Marrakech and Lofoten. Slow travel, thoughtfully planned.">
-<title>Wanderpost — Slow Travel, Thoughtfully Planned</title>
+<meta name="description" content="Wanderpost designs unhurried, small-group journeys to Kyoto, Patagonia, Marrakech and the Lofoten Islands. Travel slowly. Arrive wholly.">
+<meta name="theme-color" content="#f7f1e8" id="metaTheme">
+<title>Wanderpost — Slow Travel, Designed With Care</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fraunces/index.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/inter/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/manrope/index.css">
 <style>
-  :root{
-    --cream:#f7f0e5;
-    --paper:#fffaf2;
-    --ink:#26201a;
-    --ink-soft:#5f554a;
-    --ink-faint:#8a7d6e;
-    --terra:#c96f4a;
-    --terra-deep:#a8552f;
-    --terra-soft:#f0d9cc;
-    --sand:#e8dcc8;
-    --olive:#6f7a5c;
-    --night:#1d1712;
-    --night-soft:#2b231b;
-    --line:rgba(38,32,26,.14);
-    --line-strong:rgba(38,32,26,.28);
-    --shadow:0 18px 44px -18px rgba(38,32,26,.28);
-    --serif:"Fraunces Variable","Iowan Old Style",Georgia,serif;
-    --sans:"Inter Variable",system-ui,-apple-system,"Segoe UI",sans-serif;
-    --ease:cubic-bezier(.22,.61,.36,1);
-    color-scheme:light;
-  }
-  *,*::before,*::after{box-sizing:border-box}
-  html{scroll-padding-top:88px}
-  @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
-  body{
-    margin:0;
-    background:var(--cream);
-    color:var(--ink);
-    font-family:var(--sans);
-    font-size:1rem;
-    line-height:1.65;
-    -webkit-font-smoothing:antialiased;
-    touch-action:manipulation;
-  }
-  img{max-width:100%;display:block;height:auto}
-  h1,h2,h3,h4{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em;margin:0;text-wrap:balance}
-  p{margin:0;text-wrap:pretty}
-  a{color:inherit}
-  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;touch-action:manipulation}
-  .num{font-variant-numeric:tabular-nums}
-  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
-  :focus-visible{outline:2px solid var(--terra);outline-offset:3px;border-radius:2px}
-  ::selection{background:var(--terra);color:var(--paper)}
+/* ============ Tokens ============ */
+:root{
+  --bg:#f7f1e8; --bg-2:#efe5d6; --surface:#fffaf2; --surface-2:#fbf4e9;
+  --ink:#241b14; --ink-2:#63564a; --line:#e2d5c2; --line-2:#d3c2aa;
+  --terra:#c96f4a; --terra-2:#a8563a; --terra-soft:#f2ddcf; --terra-tint:#e9c3ae;
+  --sage:#6f7f68; --gold:#d9a441;
+  --shadow-lg:0 30px 60px -28px rgba(64,38,20,.38);
+  --shadow-sm:0 12px 28px -16px rgba(64,38,20,.30);
+  --radius:18px;
+  --font-serif:"Fraunces Variable","Fraunces",Georgia,"Times New Roman",serif;
+  --font-sans:"Manrope Variable","Manrope","Segoe UI",system-ui,-apple-system,sans-serif;
+  color-scheme:light;
+}
+html[data-theme="dark"]{
+  --bg:#161009; --bg-2:#1d150e; --surface:#241a12; --surface-2:#2b2016;
+  --ink:#f4ead9; --ink-2:#c4b2a0; --line:#3b2d20; --line-2:#4d3a29;
+  --terra:#e08a63; --terra-2:#c96f4a; --terra-soft:#3a2718; --terra-tint:#5a3a24;
+  --sage:#96a78d; --gold:#e2b566;
+  --shadow-lg:0 30px 60px -26px rgba(0,0,0,.65);
+  --shadow-sm:0 12px 28px -14px rgba(0,0,0,.55);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){ html{scroll-behavior:smooth} }
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--font-sans); font-size:1.0625rem; line-height:1.68;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+body.is-locked{overflow:hidden}
+img{display:block; max-width:100%; height:auto}
+button,input,select,textarea{font:inherit; color:inherit}
+button{touch-action:manipulation; cursor:pointer}
+a{color:var(--terra-2); text-underline-offset:3px}
+html[data-theme="dark"] a{color:var(--terra)}
+h1,h2,h3,h4{font-family:var(--font-serif); font-weight:600; line-height:1.08; letter-spacing:-.015em; margin:0; text-wrap:balance}
+p{margin:0; text-wrap:pretty}
+:focus-visible{outline:3px solid var(--terra); outline-offset:3px; border-radius:6px}
+::selection{background:var(--terra); color:#fff8f2}
+.sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0}
+.skip-link{position:fixed; top:-100px; left:16px; z-index:200; background:var(--terra); color:#fff8f2; padding:.8rem 1.3rem; border-radius:999px; font-weight:700; text-decoration:none; transition:top .25s ease}
+.skip-link:focus-visible{top:16px}
+.container{width:min(1180px,92%); margin-inline:auto}
+.section{padding-block:clamp(4.2rem,9vw,7.6rem); scroll-margin-top:96px}
+.eyebrow{display:inline-flex; align-items:center; gap:.6rem; font-size:.74rem; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:var(--terra-2); margin:0 0 1.1rem}
+html[data-theme="dark"] .eyebrow{color:var(--terra)}
+.eyebrow::before{content:""; width:34px; height:2px; background:currentColor; border-radius:2px}
+.lede{color:var(--ink-2); font-size:clamp(1.02rem,1.5vw,1.16rem); max-width:56ch}
+.nums{font-variant-numeric:tabular-nums lining-nums}
 
-  .wrap{width:min(1180px,100% - 3rem);margin-inline:auto}
-  .eyebrow{
-    font-family:var(--sans);font-size:.72rem;font-weight:600;letter-spacing:.22em;
-    text-transform:uppercase;color:var(--terra-deep);display:flex;align-items:center;gap:.7rem;
-  }
-  .eyebrow::before{content:"";width:2.2rem;height:1px;background:var(--terra);flex:none}
-  .section{padding:clamp(4rem,9vw,7.5rem) 0}
-  .section-head{max-width:44rem;margin-bottom:clamp(2.2rem,5vw,3.6rem)}
-  .section-head h2{font-size:clamp(2rem,4.6vw,3.1rem);margin:.9rem 0 1rem}
-  .section-head p{color:var(--ink-soft);font-size:1.06rem}
+/* ============ Buttons ============ */
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:.55rem; min-height:48px; padding:.85rem 1.7rem; border-radius:999px; border:1.5px solid transparent; font-weight:800; font-size:.95rem; letter-spacing:.01em; text-decoration:none; transition:transform .22s ease, box-shadow .22s ease, background-color .22s ease, color .22s ease, border-color .22s ease}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--terra); color:#fff8f2; box-shadow:var(--shadow-sm)}
+.btn-primary:hover{background:var(--terra-2); transform:translateY(-2px)}
+html[data-theme="dark"] .btn-primary{color:#20130b}
+html[data-theme="dark"] .btn-primary:hover{background:var(--terra-tint); color:#f4ead9}
+.btn-ghost{border-color:var(--line-2); color:var(--ink); background:transparent}
+.btn-ghost:hover{border-color:var(--terra); color:var(--terra-2); transform:translateY(-2px)}
+html[data-theme="dark"] .btn-ghost:hover{color:var(--terra)}
+.btn-light{background:var(--surface); color:var(--ink); box-shadow:var(--shadow-sm)}
+.btn-light:hover{transform:translateY(-2px)}
+.btn-sm{min-height:44px; padding:.6rem 1.25rem; font-size:.88rem}
 
-  /* ---------- Skip link ---------- */
-  .skip{
-    position:absolute;left:1rem;top:-4rem;z-index:120;background:var(--night);color:var(--paper);
-    padding:.8rem 1.3rem;border-radius:0 0 .6rem .6rem;text-decoration:none;font-weight:600;
-    transition:top .25s var(--ease);
-  }
-  .skip:focus{top:0}
-
-  /* ---------- Header ---------- */
-  .site-header{
-    position:fixed;inset:0 0 auto 0;z-index:80;
-    background:transparent;
-    transition:background-color .35s var(--ease),box-shadow .35s var(--ease);
-  }
-  .site-header.scrolled{background:rgba(247,240,229,.94);box-shadow:0 1px 0 var(--line),0 12px 30px -22px rgba(38,32,26,.4);backdrop-filter:blur(8px)}
-  .header-bar{display:flex;align-items:center;gap:1.4rem;min-height:76px}
-  .brand{display:flex;align-items:center;gap:.65rem;text-decoration:none;font-family:var(--serif);font-size:1.42rem;font-weight:600;letter-spacing:-.02em;color:var(--paper);transition:color .35s var(--ease)}
-  .brand svg{flex:none}
-  .site-header.scrolled .brand{color:var(--ink)}
-  .main-nav{margin-left:auto}
-  .nav-list{display:flex;gap:.4rem;list-style:none;margin:0;padding:0}
-  .nav-list a{
-    display:inline-flex;align-items:center;min-height:44px;padding:0 1rem;border-radius:999px;
-    text-decoration:none;font-size:.94rem;font-weight:500;color:rgba(255,250,242,.92);
-    transition:color .3s var(--ease),background-color .3s var(--ease);
-  }
-  .site-header.scrolled .nav-list a{color:var(--ink-soft)}
-  .nav-list a:hover{background:rgba(255,250,242,.14);color:var(--paper)}
-  .site-header.scrolled .nav-list a:hover{background:var(--sand);color:var(--ink)}
-  .header-actions{display:flex;align-items:center;gap:.6rem;margin-left:.6rem}
-  .icon-btn{
-    position:relative;display:inline-flex;align-items:center;justify-content:center;
-    width:44px;height:44px;border-radius:50%;color:var(--paper);
-    transition:background-color .3s var(--ease),color .3s var(--ease),transform .2s var(--ease);
-  }
-  .site-header.scrolled .icon-btn{color:var(--ink)}
-  .icon-btn:hover{background:rgba(255,250,242,.16)}
-  .site-header.scrolled .icon-btn:hover{background:var(--sand)}
-  .icon-btn:active{transform:scale(.94)}
-  .badge{
-    position:absolute;top:5px;right:4px;min-width:18px;height:18px;padding:0 4px;border-radius:999px;
-    background:var(--terra);color:#fff;font-size:.66rem;font-weight:700;line-height:18px;text-align:center;
-    font-variant-numeric:tabular-nums;
-  }
-  .badge[hidden]{display:none}
-  .nav-cta{
-    display:inline-flex;align-items:center;min-height:44px;padding:0 1.35rem;border-radius:999px;
-    background:var(--terra);color:#fff;text-decoration:none;font-weight:600;font-size:.92rem;
-    transition:background-color .3s var(--ease),transform .2s var(--ease);
-  }
-  .nav-cta:hover{background:var(--terra-deep)}
-  .nav-cta:active{transform:scale(.97)}
+/* ============ Header ============ */
+.site-header{position:sticky; top:0; z-index:90; background:color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid transparent; transition:border-color .3s ease, box-shadow .3s ease, background-color .3s ease}
+.site-header.is-scrolled{border-bottom-color:var(--line); box-shadow:0 10px 30px -22px rgba(60,35,18,.4)}
+.header-row{display:flex; align-items:center; justify-content:space-between; gap:1rem; min-height:74px}
+.brand{display:inline-flex; align-items:center; gap:.65rem; text-decoration:none; color:var(--ink); font-family:var(--font-serif); font-size:1.42rem; font-weight:700; letter-spacing:-.01em}
+.brand svg{color:var(--terra); flex:none}
+.brand small{display:block; font-family:var(--font-sans); font-size:.6rem; font-weight:800; letter-spacing:.28em; text-transform:uppercase; color:var(--ink-2); margin-top:-2px}
+.primary-nav{display:none}
+.primary-nav ul{display:flex; gap:.4rem; list-style:none; margin:0; padding:0}
+.primary-nav a{display:inline-flex; align-items:center; min-height:44px; padding:.4rem 1rem; border-radius:999px; text-decoration:none; color:var(--ink-2); font-weight:700; font-size:.94rem; transition:color .2s ease, background-color .2s ease}
+.primary-nav a:hover{color:var(--terra-2); background:var(--terra-soft)}
+html[data-theme="dark"] .primary-nav a:hover{color:var(--terra)}
+.header-actions{display:flex; align-items:center; gap:.5rem}
+.icon-btn{display:inline-flex; align-items:center; justify-content:center; width:46px; height:46px; border-radius:50%; border:1.5px solid var(--line-2); background:transparent; color:var(--ink); transition:transform .2s ease, border-color .2s ease, color .2s ease, background-color .2s ease}
+.icon-btn:hover{border-color:var(--terra); color:var(--terra-2); transform:translateY(-2px)}
+html[data-theme="dark"] .icon-btn:hover{color:var(--terra)}
+.menu-btn{display:inline-flex}
+.mobile-panel{position:fixed; inset:0; z-index:120; background:var(--bg); padding:1.4rem 5% 3rem; display:flex; flex-direction:column; gap:.4rem; transform:translateY(-102%); transition:transform .38s cubic-bezier(.22,.9,.3,1); overflow-y:auto}
+.mobile-panel.is-open{transform:translateY(0)}
+.mobile-panel ul{list-style:none; margin:1.6rem 0 0; padding:0; display:grid; gap:.2rem}
+.mobile-panel a{display:flex; align-items:center; justify-content:space-between; min-height:58px; text-decoration:none; color:var(--ink); font-family:var(--font-serif); font-size:1.6rem; border-bottom:1px solid var(--line)}
+.mobile-panel .panel-top{display:flex; align-items:center; justify-content:space-between}
+@media (min-width:900px){
+  .primary-nav{display:block}
   .menu-btn{display:none}
-  @media (max-width:900px){
-    .main-nav{
-      position:fixed;inset:0 0 auto 0;padding:6.4rem 1.5rem 2rem;margin:0;
-      background:var(--night);transform:translateY(-102%);visibility:hidden;
-      transition:transform .4s var(--ease),visibility 0s linear .4s;
-    }
-    .main-nav.open{transform:translateY(0);visibility:visible;transition:transform .4s var(--ease)}
-    .nav-list{flex-direction:column;gap:.2rem}
-    .nav-list a{color:var(--paper);font-size:1.25rem;font-family:var(--serif);padding:.7rem .4rem;border-radius:.5rem;min-height:52px}
-    .menu-btn{display:inline-flex;position:relative;z-index:90;color:var(--paper)}
-    .site-header.scrolled .menu-btn{color:var(--ink)}
-    .nav-cta{margin-left:auto}
-    .header-actions .shortlist-btn{order:3}
-  }
+  .mobile-panel{display:none}
+}
 
-  /* ---------- Hero ---------- */
-  .hero{position:relative;min-height:min(96vh,860px);display:flex;align-items:flex-end;overflow:hidden;color:var(--paper)}
-  .hero-media{position:absolute;inset:0;z-index:-2}
-  .hero-media img{width:100%;height:100%;object-fit:cover}
-  .hero::after{
-    content:"";position:absolute;inset:0;z-index:-1;
-    background:linear-gradient(180deg,rgba(29,23,18,.62) 0%,rgba(29,23,18,.18) 42%,rgba(29,23,18,.82) 100%);
-  }
-  .hero-inner{padding:9.5rem 0 clamp(3rem,7vw,5rem);width:100%}
-  .hero .eyebrow{color:#f3c9b4}
-  .hero .eyebrow::before{background:#f3c9b4}
-  .hero h1{font-size:clamp(2.7rem,7.2vw,5.2rem);max-width:15ch;margin:1.1rem 0 1.2rem;font-weight:600}
-  .hero-sub{max-width:36rem;font-size:clamp(1.02rem,1.6vw,1.18rem);color:rgba(255,250,242,.9)}
-  .hero-search{
-    margin-top:2.4rem;background:rgba(255,250,242,.97);border-radius:1.1rem;padding:.9rem;
-    display:grid;grid-template-columns:1fr auto;gap:.7rem;box-shadow:var(--shadow);max-width:44rem;
-  }
-  .hero-search .field{display:flex;flex-direction:column;gap:.25rem;padding:.35rem .8rem}
-  .hero-search label{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--terra-deep)}
-  .hero-search input{
-    border:0;background:transparent;font:inherit;font-size:1.05rem;color:var(--ink);padding:.15rem 0;min-height:32px;width:100%;
-  }
-  .hero-search input:focus{outline:none}
-  .hero-search .field:focus-within{outline:2px solid var(--terra);outline-offset:2px;border-radius:.5rem}
-  .btn{
-    display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
-    min-height:48px;padding:0 1.6rem;border-radius:999px;font-weight:600;font-size:.96rem;
-    transition:background-color .3s var(--ease),color .3s var(--ease),transform .2s var(--ease),box-shadow .3s var(--ease);
-  }
-  .btn:active{transform:scale(.97)}
-  .btn-primary{background:var(--terra);color:#fff}
-  .btn-primary:hover{background:var(--terra-deep)}
-  .btn-ghost{border:1px solid var(--line-strong);color:var(--ink)}
-  .btn-ghost:hover{background:var(--sand)}
-  .btn-light{background:var(--paper);color:var(--ink)}
-  .btn-light:hover{background:var(--sand)}
-  .hero-chips{display:flex;flex-wrap:wrap;align-items:center;gap:.55rem;margin-top:1.1rem;font-size:.86rem;color:rgba(255,250,242,.82)}
-  .chip{
-    min-height:36px;padding:.3rem 1rem;border-radius:999px;border:1px solid rgba(255,250,242,.42);
-    color:var(--paper);font-size:.85rem;font-weight:500;
-    transition:background-color .3s var(--ease),border-color .3s var(--ease),transform .2s var(--ease);
-  }
-  .chip:hover{background:rgba(255,250,242,.16);border-color:rgba(255,250,242,.7)}
-  .chip:active{transform:scale(.95)}
-  .scroll-cue{
-    position:absolute;right:clamp(1.2rem,4vw,3rem);bottom:2rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;
-    color:rgba(255,250,242,.75);font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;text-decoration:none;
-  }
-  .scroll-cue span{writing-mode:vertical-rl}
-  .scroll-cue::after{content:"";width:1px;height:44px;background:currentColor;animation:cue 2.4s var(--ease) infinite;transform-origin:top}
-  @keyframes cue{0%{transform:scaleY(0)}45%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
-  @media (max-width:560px){
-    .hero-search{grid-template-columns:1fr}
-    .scroll-cue{display:none}
-  }
+/* ============ Hero ============ */
+.hero{position:relative; isolation:isolate; display:flex; align-items:flex-end; min-height:min(94svh,860px); padding:clamp(6rem,14vh,9rem) 0 clamp(2.6rem,6vh,4rem); overflow:hidden; color:#fdf6ee}
+.hero-media{position:absolute; inset:0; z-index:-2; overflow:hidden}
+.hero-media img{width:100%; height:100%; object-fit:cover; transform-origin:60% 40%; animation:kenburns 26s ease-in-out infinite alternate}
+@keyframes kenburns{from{transform:scale(1) translate3d(0,0,0)}to{transform:scale(1.09) translate3d(-1.5%,-1%,0)}}
+.hero::after{content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg, rgba(24,14,8,.55) 0%, rgba(24,14,8,.18) 34%, rgba(24,14,8,.72) 82%, rgba(24,14,8,.9) 100%)}
+.hero .eyebrow{color:#f0b48d}
+.hero .eyebrow::before{background:#f0b48d}
+.hero h1{font-size:clamp(2.7rem,7.4vw,5.4rem); color:#fdf6ee; max-width:14ch}
+.hero h1 em{font-style:italic; color:#f4c9a8}
+.hero .lede{color:#f3e4d4; margin-top:1.4rem; max-width:50ch}
+.hero-search{margin-top:2.4rem; background:color-mix(in srgb, var(--surface) 94%, transparent); backdrop-filter:blur(8px); border:1px solid color-mix(in srgb, var(--line) 70%, transparent); border-radius:22px; padding:1.1rem; display:grid; gap:.9rem; box-shadow:var(--shadow-lg); color:var(--ink); max-width:760px}
+@media (min-width:760px){ .hero-search{grid-template-columns:1.5fr 1fr auto; align-items:end; gap:1rem; padding:1.25rem} }
+.field{display:grid; gap:.42rem}
+.field label{font-size:.78rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-2)}
+.field input,.field select,.field textarea{width:100%; min-height:50px; padding:.72rem 1rem; border-radius:12px; border:1.5px solid var(--line-2); background:var(--bg); color:var(--ink); transition:border-color .2s ease, box-shadow .2s ease}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--terra); box-shadow:0 0 0 4px color-mix(in srgb, var(--terra) 22%, transparent); outline:none}
+.field textarea{min-height:130px; resize:vertical}
+.hero-stats{display:flex; flex-wrap:wrap; gap:1.4rem 2.6rem; margin-top:2.2rem; padding-top:1.5rem; border-top:1px solid rgba(253,246,238,.28)}
+.hero-stats div{display:grid; gap:.1rem}
+.hero-stats strong{font-family:var(--font-serif); font-size:1.7rem; font-weight:600; color:#f8d9bd; font-variant-numeric:tabular-nums}
+.hero-stats span{font-size:.82rem; letter-spacing:.06em; color:#e9d5c2}
+.search-status{margin-top:1rem; font-size:.9rem; color:#f3e4d4; min-height:1.4em}
 
-  /* ---------- Journeys ---------- */
-  .results-line{display:flex;flex-wrap:wrap;align-items:center;gap:.8rem;margin-bottom:1.6rem;color:var(--ink-soft);font-size:.94rem}
-  .results-line strong{color:var(--ink)}
-  .link-btn{color:var(--terra-deep);font-weight:600;text-decoration:underline;text-underline-offset:3px;min-height:32px}
-  .journey-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:1.6rem}
-  .journey-card{
-    display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line);border-radius:1.1rem;overflow:hidden;
-    transition:transform .45s var(--ease),box-shadow .45s var(--ease);
-  }
-  .journey-card:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
-  .card-media{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--sand)}
-  .card-media img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
-  .journey-card:hover .card-media img{transform:scale(1.05)}
-  .card-tag{
-    position:absolute;left:.9rem;top:.9rem;background:rgba(29,23,18,.72);color:var(--paper);
-    font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:.4rem .8rem;border-radius:999px;backdrop-filter:blur(4px);
-  }
-  .save-btn{
-    position:absolute;right:.8rem;top:.8rem;width:44px;height:44px;border-radius:50%;
-    background:rgba(255,250,242,.92);color:var(--ink);display:grid;place-items:center;
-    transition:background-color .3s var(--ease),transform .2s var(--ease);
-  }
-  .save-btn:hover{background:#fff;transform:scale(1.06)}
-  .save-btn[aria-pressed="true"]{background:var(--terra);color:#fff}
-  .save-btn svg{transition:transform .3s var(--ease)}
-  .save-btn[aria-pressed="true"] svg{transform:scale(1.1)}
-  .card-body{display:flex;flex-direction:column;gap:.7rem;padding:1.35rem 1.35rem 1.5rem;flex:1}
-  .card-meta{display:flex;gap:.5rem;align-items:center;color:var(--ink-faint);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
-  .card-meta .dot{width:3px;height:3px;border-radius:50%;background:currentColor}
-  .card-body h3{font-size:1.42rem}
-  .card-blurb{color:var(--ink-soft);font-size:.94rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-  .card-foot{margin-top:auto;padding-top:1rem;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:.8rem}
-  .price{font-family:var(--serif);font-size:1.18rem;font-weight:600}
-  .price small{display:block;font-family:var(--sans);font-size:.72rem;font-weight:500;color:var(--ink-faint);letter-spacing:.06em}
-  .btn-sm{min-height:44px;padding:0 1.15rem;font-size:.88rem}
+/* ============ Journeys ============ */
+.section-head{display:grid; gap:1rem; margin-bottom:clamp(2.2rem,5vw,3.4rem)}
+@media (min-width:860px){ .section-head{grid-template-columns:1.2fr .8fr; align-items:end; gap:3rem} .section-head .lede{justify-self:end} }
+.section-head h2{font-size:clamp(2rem,4.6vw,3.2rem)}
+.journey-grid{display:grid; gap:1.6rem; grid-template-columns:1fr}
+@media (min-width:640px){ .journey-grid{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1080px){ .journey-grid{grid-template-columns:repeat(4,1fr)} }
+.journey-card{position:relative; display:flex; flex-direction:column; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow-sm); transition:transform .3s ease, box-shadow .3s ease, opacity .3s ease}
+.journey-card:hover{transform:translateY(-8px); box-shadow:var(--shadow-lg)}
+.journey-card.is-hidden{display:none}
+.journey-media{position:relative; aspect-ratio:4/3; overflow:hidden}
+.journey-media img{width:100%; height:100%; object-fit:cover; transition:transform .6s ease}
+.journey-card:hover .journey-media img{transform:scale(1.06)}
+.journey-tag{position:absolute; top:.9rem; left:.9rem; background:color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter:blur(6px); color:var(--ink); font-size:.7rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; padding:.42rem .8rem; border-radius:999px}
+.journey-body{display:flex; flex-direction:column; gap:.7rem; padding:1.3rem 1.3rem 1.5rem; flex:1}
+.journey-body h3{font-size:1.42rem}
+.journey-meta{display:flex; flex-wrap:wrap; gap:.4rem 1rem; font-size:.8rem; font-weight:700; letter-spacing:.05em; color:var(--ink-2); text-transform:uppercase}
+.journey-blurb{color:var(--ink-2); font-size:.95rem; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden}
+.journey-foot{margin-top:auto; padding-top:1rem; border-top:1px dashed var(--line-2); display:flex; align-items:center; justify-content:space-between; gap:.8rem}
+.price{font-family:var(--font-serif); font-size:1.22rem; font-weight:600; font-variant-numeric:tabular-nums}
+.price small{display:block; font-family:var(--font-sans); font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-2)}
+.empty{display:grid; justify-items:center; gap:1rem; text-align:center; padding:3.4rem 1.4rem; border:1.5px dashed var(--line-2); border-radius:var(--radius); background:var(--surface-2); color:var(--ink-2)}
+.empty svg{color:var(--terra)}
 
-  .empty-state{
-    border:1px dashed var(--line-strong);border-radius:1.1rem;padding:3.2rem 2rem;text-align:center;
-    display:flex;flex-direction:column;align-items:center;gap:.9rem;color:var(--ink-soft);background:var(--paper);
-  }
-  .empty-state h3{font-size:1.5rem;color:var(--ink)}
+/* ============ Modal ============ */
+.modal-backdrop{position:fixed; inset:0; z-index:150; display:grid; place-items:center; padding:1rem; background:rgba(20,12,7,.62); backdrop-filter:blur(6px); opacity:0; pointer-events:none; transition:opacity .3s ease}
+.modal-backdrop.is-open{opacity:1; pointer-events:auto}
+.modal{width:min(880px,100%); max-height:min(88svh,860px); overflow-y:auto; background:var(--surface); color:var(--ink); border-radius:24px; box-shadow:var(--shadow-lg); transform:translateY(26px) scale(.98); transition:transform .34s cubic-bezier(.22,.9,.3,1)}
+.modal-backdrop.is-open .modal{transform:translateY(0) scale(1)}
+.modal-close{position:sticky; top:1rem; margin-left:calc(100% - 3.6rem); z-index:5; width:46px; height:46px; border-radius:50%; border:none; background:var(--ink); color:var(--bg); display:inline-flex; align-items:center; justify-content:center}
+.modal-close:hover{background:var(--terra)}
+.modal-hero{margin:-3.6rem 0 0; aspect-ratio:16/8; overflow:hidden; border-radius:24px 24px 0 0}
+.modal-hero img{width:100%; height:100%; object-fit:cover}
+.modal-inner{padding:1.8rem clamp(1.3rem,4vw,2.6rem) 2.4rem; display:grid; gap:1.6rem}
+.modal-kicker{font-size:.74rem; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:var(--terra-2)}
+html[data-theme="dark"] .modal-kicker{color:var(--terra)}
+.modal-inner h2{font-size:clamp(1.8rem,4vw,2.6rem); margin-top:.4rem}
+.modal-cols{display:grid; gap:1.6rem}
+@media (min-width:760px){ .modal-cols{grid-template-columns:1.25fr .75fr} }
+.modal-side{display:grid; gap:1.1rem; align-content:start; background:var(--surface-2); border:1px solid var(--line); border-radius:16px; padding:1.3rem}
+.modal-side img{border-radius:12px; aspect-ratio:16/10; object-fit:cover; width:100%}
+.fact-row{display:flex; justify-content:space-between; gap:1rem; padding:.5rem 0; border-bottom:1px dashed var(--line-2); font-size:.92rem}
+.fact-row:last-of-type{border-bottom:none}
+.fact-row dt{color:var(--ink-2); font-weight:700}
+.fact-row dd{margin:0; font-weight:800; font-variant-numeric:tabular-nums}
+.itinerary{list-style:none; margin:0; padding:0; display:grid; gap:.85rem}
+.itinerary li{display:grid; grid-template-columns:auto 1fr; gap:.9rem; align-items:start}
+.itinerary .day{font-family:var(--font-serif); font-size:.82rem; font-weight:700; letter-spacing:.06em; color:var(--terra-2); background:var(--terra-soft); border-radius:8px; padding:.3rem .6rem; white-space:nowrap; margin-top:.15rem}
+html[data-theme="dark"] .itinerary .day{color:var(--terra)}
+.includes{list-style:none; margin:.4rem 0 0; padding:0; display:grid; gap:.55rem}
+.includes li{display:flex; gap:.6rem; align-items:flex-start; font-size:.95rem; color:var(--ink-2)}
+.includes svg{flex:none; color:var(--sage); margin-top:.28rem}
+.chips{display:flex; flex-wrap:wrap; gap:.45rem; margin-top:.6rem}
+.chip{font-size:.76rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; background:var(--terra-soft); color:var(--terra-2); border-radius:999px; padding:.36rem .8rem}
+html[data-theme="dark"] .chip{color:var(--terra)}
+.modal-actions{display:flex; flex-wrap:wrap; gap:.8rem}
 
-  /* ---------- Why band ---------- */
-  .why{background:var(--night);color:var(--paper)}
-  .why .eyebrow{color:#e8b394}
-  .why .eyebrow::before{background:#e8b394}
-  .why-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(2.4rem,5vw,4.5rem);align-items:start}
-  .why-media{position:relative;border-radius:1.2rem;overflow:hidden;aspect-ratio:4/5}
-  .why-media img{width:100%;height:100%;object-fit:cover}
-  .why-media figcaption{
-    position:absolute;left:1rem;right:1rem;bottom:1rem;background:rgba(29,23,18,.78);backdrop-filter:blur(6px);
-    border-radius:.8rem;padding:.85rem 1.1rem;font-size:.85rem;color:rgba(255,250,242,.9);
-  }
-  .why h2{font-size:clamp(2rem,4.2vw,3rem);margin:.9rem 0 1.1rem}
-  .why-lede{color:rgba(255,250,242,.78);max-width:34rem}
-  .feature-list{list-style:none;margin:2.4rem 0 0;padding:0;display:grid;gap:1.5rem}
-  .feature{display:grid;grid-template-columns:auto 1fr;gap:1.1rem;align-items:start}
-  .feature-icon{
-    width:52px;height:52px;border-radius:.9rem;background:rgba(201,111,74,.18);color:#e8b394;
-    display:grid;place-items:center;border:1px solid rgba(201,111,74,.4);
-  }
-  .feature h3{font-size:1.2rem;margin-bottom:.3rem}
-  .feature p{color:rgba(255,250,242,.72);font-size:.94rem}
-  .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2.8rem;padding-top:2rem;border-top:1px solid rgba(255,250,242,.16)}
-  .stat b{display:block;font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.4rem);font-weight:600;color:#f3c9b4;font-variant-numeric:tabular-nums}
-  .stat span{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,250,242,.6)}
-  @media (max-width:900px){.why-grid{grid-template-columns:1fr}.why-media{aspect-ratio:16/10}}
-  @media (max-width:560px){.stat-row{grid-template-columns:repeat(2,1fr)}}
+/* ============ Why band ============ */
+.why{background:var(--bg-2); border-block:1px solid var(--line)}
+.why-grid{display:grid; gap:clamp(2rem,5vw,4rem)}
+@media (min-width:900px){ .why-grid{grid-template-columns:.9fr 1.1fr; align-items:center} }
+.why-media{position:relative; border-radius:24px; overflow:hidden; box-shadow:var(--shadow-lg); transform:rotate(-1.4deg)}
+.why-media img{width:100%; aspect-ratio:1/1; object-fit:cover}
+.why-media figcaption{position:absolute; left:1rem; bottom:1rem; right:1rem; background:color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter:blur(6px); border-radius:12px; padding:.7rem 1rem; font-size:.82rem; font-weight:700; color:var(--ink)}
+.pillars{list-style:none; margin:2.2rem 0 0; padding:0; display:grid; gap:1.5rem}
+@media (min-width:640px){ .pillars{grid-template-columns:1fr 1fr} }
+.pillars li{display:grid; gap:.55rem}
+.pillar-icon{width:52px; height:52px; border-radius:14px; background:var(--terra-soft); color:var(--terra-2); display:grid; place-items:center}
+html[data-theme="dark"] .pillar-icon{color:var(--terra)}
+.pillars h3{font-size:1.2rem}
+.pillars p{color:var(--ink-2); font-size:.95rem}
+.stat-band{margin-top:clamp(2.6rem,6vw,4rem); padding-top:2rem; border-top:1px solid var(--line-2); display:grid; grid-template-columns:repeat(2,1fr); gap:1.6rem}
+@media (min-width:800px){ .stat-band{grid-template-columns:repeat(4,1fr)} }
+.stat-band strong{display:block; font-family:var(--font-serif); font-size:clamp(2.2rem,4.6vw,3.1rem); font-weight:600; color:var(--terra-2); font-variant-numeric:tabular-nums}
+html[data-theme="dark"] .stat-band strong{color:var(--terra)}
+.stat-band span{font-size:.86rem; color:var(--ink-2); letter-spacing:.04em}
 
-  /* ---------- Stories slider ---------- */
-  .stories{background:var(--sand)}
-  .slider{position:relative}
-  .slider-viewport{overflow:hidden;border-radius:1.2rem}
-  .slider-track{display:flex;transition:transform .65s var(--ease)}
-  .slide{min-width:100%;padding:.4rem}
-  .slide-inner{
-    display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:clamp(1.6rem,4vw,3rem);
-    background:var(--paper);border-radius:1.1rem;overflow:hidden;border:1px solid var(--line);
-  }
-  .slide-media{position:relative;min-height:320px}
-  .slide-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-  .slide-quote{padding:clamp(1.8rem,4vw,3.2rem) clamp(1.6rem,4vw,3rem) clamp(1.8rem,4vw,3rem) 0;display:flex;flex-direction:column;gap:1.3rem;justify-content:center}
-  .slide-quote blockquote{margin:0;font-family:var(--serif);font-size:clamp(1.15rem,2.2vw,1.55rem);line-height:1.45;font-style:italic}
-  .slide-quote blockquote::before{content:"“";color:var(--terra);font-size:2.6em;line-height:0;vertical-align:-.32em;margin-right:.08em}
-  .slide-quote figcaption{display:flex;align-items:center;gap:.9rem}
-  .avatar-note b{display:block;font-size:.98rem}
-  .avatar-note span{font-size:.84rem;color:var(--ink-faint)}
-  .journey-pill{
-    margin-left:auto;background:var(--terra-soft);color:var(--terra-deep);font-size:.76rem;font-weight:700;
-    letter-spacing:.1em;text-transform:uppercase;padding:.45rem .9rem;border-radius:999px;white-space:nowrap;
-  }
-  .slider-controls{display:flex;align-items:center;gap:1rem;margin-top:1.5rem}
-  .slider-btn{
-    width:48px;height:48px;border-radius:50%;border:1px solid var(--line-strong);display:grid;place-items:center;
-    transition:background-color .3s var(--ease),color .3s var(--ease),transform .2s var(--ease);
-  }
-  .slider-btn:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-  .slider-btn:active{transform:scale(.94)}
-  .dots{display:flex;gap:.5rem;margin-left:.4rem}
-  .dot-btn{width:44px;height:44px;display:grid;place-items:center}
-  .dot-btn i{width:9px;height:9px;border-radius:999px;background:var(--line-strong);transition:transform .3s var(--ease),background-color .3s var(--ease)}
-  .dot-btn[aria-current="true"] i{background:var(--terra);transform:scaleX(2.6)}
-  .slider-count{margin-left:auto;font-size:.86rem;color:var(--ink-faint);font-variant-numeric:tabular-nums}
-  @media (max-width:760px){
-    .slide-inner{grid-template-columns:1fr}
-    .slide-media{min-height:240px;aspect-ratio:16/10}
-    .slide-quote{padding:0 1.5rem 2rem}
-    .journey-pill{display:none}
-  }
+/* ============ Stories slider ============ */
+.stories{overflow:hidden}
+.slider{position:relative; margin-top:1rem}
+.slider-track{display:flex; transition:transform .55s cubic-bezier(.22,.9,.3,1)}
+.slide{flex:0 0 100%; min-width:0; padding:.4rem}
+.slide-card{display:grid; gap:1.6rem; background:var(--surface); border:1px solid var(--line); border-radius:24px; padding:clamp(1.5rem,4vw,2.8rem); box-shadow:var(--shadow-sm)}
+@media (min-width:820px){ .slide-card{grid-template-columns:.8fr 1.2fr; align-items:center} }
+.slide-card img{width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:18px}
+.slide-card blockquote{margin:0; font-family:var(--font-serif); font-size:clamp(1.25rem,2.6vw,1.85rem); line-height:1.4; font-style:italic}
+.slide-card blockquote::before{content:"“"; display:block; font-size:3.4rem; line-height:.6; color:var(--terra); margin-bottom:.6rem; font-style:normal}
+.slide-who{margin-top:1.3rem; display:flex; flex-wrap:wrap; align-items:center; gap:.5rem 1rem; font-size:.9rem; color:var(--ink-2)}
+.slide-who strong{color:var(--ink); font-size:1rem}
+.slide-who .dot{width:5px; height:5px; border-radius:50%; background:var(--terra)}
+.slider-controls{display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-top:1.5rem}
+.slider-arrows{display:flex; gap:.6rem}
+.slider-dots{display:flex; gap:.5rem}
+.slider-dots button{width:44px; height:44px; display:grid; place-items:center; background:none; border:none; padding:0}
+.slider-dots button::after{content:""; width:10px; height:10px; border-radius:999px; background:var(--line-2); transition:transform .25s ease, background-color .25s ease}
+.slider-dots button[aria-current="true"]::after{background:var(--terra); transform:scale(1.5)}
 
-  /* ---------- When to go ---------- */
-  .month-bar{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.8rem}
-  .month-btn{
-    min-height:44px;padding:0 1.05rem;border-radius:999px;border:1px solid var(--line-strong);
-    font-weight:600;font-size:.88rem;color:var(--ink-soft);
-    transition:background-color .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease),transform .2s var(--ease);
-  }
-  .month-btn:hover{background:var(--sand)}
-  .month-btn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-  .month-btn:active{transform:scale(.95)}
-  .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:1.1rem;background:var(--paper);padding:.4rem}
-  table.calendar{border-collapse:separate;border-spacing:4px;width:100%;min-width:760px}
-  table.calendar caption{text-align:left;padding:.9rem 1rem .5rem;color:var(--ink-faint);font-size:.85rem}
-  table.calendar th{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;padding:.5rem .3rem}
-  table.calendar th[scope="row"]{
-    text-align:left;font-family:var(--serif);font-size:1.02rem;letter-spacing:0;text-transform:none;color:var(--ink);
-    font-weight:600;white-space:nowrap;padding-right:1rem;
-  }
-  .cell{
-    width:100%;min-height:44px;border-radius:.55rem;font-size:.78rem;font-weight:600;
-    display:grid;place-items:center;
-    transition:transform .2s var(--ease),background-color .3s var(--ease),color .3s var(--ease),box-shadow .3s var(--ease);
-  }
-  .cell:hover{transform:scale(1.06)}
-  .cell.p{background:var(--terra);color:#fff}
-  .cell.s{background:var(--terra-soft);color:var(--terra-deep)}
-  .cell.q{background:transparent;color:var(--ink-faint);border:1px dashed var(--line-strong)}
-  .cell[aria-pressed="true"]{box-shadow:0 0 0 2px var(--ink);transform:scale(1.06)}
-  .legend{display:flex;flex-wrap:wrap;gap:1.4rem;margin:1.1rem 0 1.8rem;font-size:.85rem;color:var(--ink-soft)}
-  .legend span{display:inline-flex;align-items:center;gap:.5rem}
-  .swatch{width:14px;height:14px;border-radius:4px;flex:none}
-  .swatch.p{background:var(--terra)}
-  .swatch.s{background:var(--terra-soft)}
-  .swatch.q{border:1px dashed var(--line-strong)}
-  .month-panel{
-    display:grid;grid-template-columns:auto 1fr auto;gap:clamp(1.2rem,3vw,2.4rem);align-items:center;
-    background:var(--night);color:var(--paper);border-radius:1.1rem;padding:clamp(1.4rem,3vw,2.2rem);
-  }
-  .month-panel .big-month{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);line-height:1;font-weight:600}
-  .month-panel .big-month small{display:block;font-family:var(--sans);font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:#e8b394;margin-bottom:.5rem;font-weight:700}
-  .panel-body h3{font-size:1.3rem;margin-bottom:.4rem}
-  .panel-body p{color:rgba(255,250,242,.78);font-size:.95rem}
-  .panel-badges{display:flex;gap:.5rem;margin-bottom:.6rem;flex-wrap:wrap}
-  .pbadge{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.35rem .8rem;border-radius:999px;background:rgba(201,111,74,.25);color:#f3c9b4}
-  .pbadge.temp{background:rgba(255,250,242,.12);color:rgba(255,250,242,.85)}
-  @media (max-width:820px){.month-panel{grid-template-columns:1fr}.month-panel .btn{justify-self:start}}
+/* ============ When to go ============ */
+.when{background:var(--bg-2); border-block:1px solid var(--line)}
+.matrix-wrap{overflow-x:auto; padding-bottom:.6rem; -webkit-overflow-scrolling:touch}
+.matrix{min-width:760px; width:100%; border-collapse:separate; border-spacing:5px}
+.matrix th{font-size:.74rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-2); padding:.4rem .2rem}
+.matrix th button,.matrix td button{width:100%; min-height:44px; border-radius:10px; border:1.5px solid transparent; font-weight:800; font-size:.82rem; letter-spacing:.04em; transition:transform .18s ease, background-color .18s ease, color .18s ease, border-color .18s ease}
+.matrix thead th button{background:transparent; color:var(--ink-2)}
+.matrix thead th button:hover{color:var(--terra-2); background:var(--terra-soft)}
+.matrix thead th button[aria-pressed="true"]{background:var(--ink); color:var(--bg)}
+.matrix .row-head{text-align:left; min-width:190px}
+.row-head-inner{display:flex; align-items:center; gap:.7rem; padding:.35rem .2rem}
+.row-head-inner img{width:44px; height:44px; border-radius:50%; object-fit:cover; flex:none; border:2px solid var(--surface)}
+.row-head-inner span{font-family:var(--font-serif); font-size:1.02rem; font-weight:600; color:var(--ink)}
+.cell{font-variant-numeric:tabular-nums}
+.cell.rate-3{background:var(--terra); color:#fff8f2}
+html[data-theme="dark"] .cell.rate-3{color:#20130b}
+.cell.rate-2{background:var(--terra-soft); color:var(--terra-2); border-color:var(--terra-tint)}
+html[data-theme="dark"] .cell.rate-2{color:var(--terra)}
+.cell.rate-1{background:color-mix(in srgb, var(--terra) 12%, transparent); color:var(--ink-2)}
+.cell.rate-0{background:transparent; border:1.5px dashed var(--line-2); color:var(--ink-2)}
+.matrix td button:hover{transform:scale(1.06)}
+.matrix td button[aria-pressed="true"]{outline:3px solid var(--ink); outline-offset:2px}
+.legend{display:flex; flex-wrap:wrap; gap:1.2rem; margin-top:1.2rem; font-size:.82rem; color:var(--ink-2)}
+.legend span{display:inline-flex; align-items:center; gap:.5rem}
+.legend i{width:14px; height:14px; border-radius:4px; display:inline-block}
+.season-panel{margin-top:1.8rem; background:var(--surface); border:1px solid var(--line); border-left:5px solid var(--terra); border-radius:16px; padding:1.5rem clamp(1.2rem,3vw,2rem); display:grid; gap:.7rem; box-shadow:var(--shadow-sm)}
+.season-panel h3{font-size:1.4rem}
+.season-panel .rating-pill{justify-self:start; font-size:.74rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; border-radius:999px; padding:.4rem .9rem; background:var(--terra-soft); color:var(--terra-2)}
+html[data-theme="dark"] .season-panel .rating-pill{color:var(--terra)}
+.season-panel p{color:var(--ink-2)}
+.season-facts{display:flex; flex-wrap:wrap; gap:.6rem 1.8rem; font-size:.9rem; font-variant-numeric:tabular-nums}
+.season-facts strong{color:var(--ink)}
 
-  /* ---------- Enquiry ---------- */
-  .enquiry{background:var(--paper);border-top:1px solid var(--line)}
-  .enq-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(2.4rem,5vw,4.5rem)}
-  .enq-aside figure{margin:2rem 0 0;border-radius:1.1rem;overflow:hidden;aspect-ratio:4/3}
-  .enq-aside img{width:100%;height:100%;object-fit:cover}
-  .contact-list{list-style:none;margin:1.8rem 0 0;padding:0;display:grid;gap:.7rem;color:var(--ink-soft);font-size:.95rem}
-  .contact-list a{text-decoration:none;border-bottom:1px solid var(--line-strong)}
-  .contact-list a:hover{color:var(--terra-deep);border-color:var(--terra-deep)}
-  form.enq{display:grid;gap:1.25rem}
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
-  .form-field{display:flex;flex-direction:column;gap:.45rem}
-  .form-field label{font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
-  .form-field input,.form-field select,.form-field textarea{
-    font:inherit;font-size:1rem;color:var(--ink);background:var(--cream);
-    border:1px solid var(--line-strong);border-radius:.7rem;padding:.75rem .95rem;min-height:48px;width:100%;
-    transition:border-color .3s var(--ease),box-shadow .3s var(--ease);
-  }
-  .form-field textarea{min-height:120px;resize:vertical}
-  .form-field input:focus,.form-field select:focus,.form-field textarea:focus{outline:none;border-color:var(--terra);box-shadow:0 0 0 3px rgba(201,111,74,.2)}
-  .form-field [aria-invalid="true"]{border-color:#b3402e;box-shadow:0 0 0 3px rgba(179,64,46,.15)}
-  .error-msg{color:#a03524;font-size:.82rem;font-weight:600;min-height:}
-  .check-field{display:flex;gap:.75rem;align-items:flex-start;font-size:.92rem;color:var(--ink-soft)}
-  .check-field input{width:22px;height:22px;accent-color:var(--terra);margin-top:.15rem;flex:none}
-  .form-actions{display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
-  .form-note{font-size:.82rem;color:var(--ink-faint)}
-  .success-panel{
-    border:1px solid var(--olive);background:#eef0e6;border-radius:1.1rem;padding:clamp(1.8rem,4vw,2.8rem);
-    display:flex;flex-direction:column;gap:1rem;align-items:flex-start;
-  }
-  .success-panel h3{font-size:1.7rem}
-  .success-panel p{color:var(--ink-soft)}
-  .success-panel dl{display:grid;grid-template-columns:auto 1fr;gap:.4rem 1.4rem;margin:0;font-size:.95rem}
-  .success-panel dt{font-weight:700;color:var(--ink)}
-  .success-panel dd{margin:0;color:var(--ink-soft)}
-  @media (max-width:900px){.enq-grid{grid-template-columns:1fr}}
-  @media (max-width:560px){.form-row{grid-template-columns:1fr}}
+/* ============ Enquiry ============ */
+.enquiry-grid{display:grid; gap:clamp(2.2rem,5vw,4rem)}
+@media (min-width:940px){ .enquiry-grid{grid-template-columns:.9fr 1.1fr} }
+.enquiry-aside{display:grid; gap:1.6rem; align-content:start}
+.contact-list{list-style:none; margin:0; padding:0; display:grid; gap:.9rem}
+.contact-list li{display:flex; gap:.8rem; align-items:flex-start; color:var(--ink-2); font-size:.98rem}
+.contact-list svg{flex:none; color:var(--terra); margin-top:.24rem}
+.contact-list a{font-weight:700; text-decoration:none}
+.contact-list a:hover{text-decoration:underline}
+.postcard-figure{margin:0; position:relative; border-radius:20px; overflow:hidden; box-shadow:var(--shadow-lg); transform:rotate(1.6deg)}
+.postcard-figure img{width:100%; aspect-ratio:16/10; object-fit:cover}
+.enquiry-form{background:var(--surface); border:1px solid var(--line); border-radius:24px; padding:clamp(1.5rem,4vw,2.6rem); box-shadow:var(--shadow-sm); display:grid; gap:1.2rem}
+.form-row{display:grid; gap:1.2rem}
+@media (min-width:640px){ .form-row.two{grid-template-columns:1fr 1fr} }
+.field-error{margin:.35rem 0 0; font-size:.82rem; font-weight:700; color:#b3402a; min-height:1.2em}
+html[data-theme="dark"] .field-error{color:#f0a08a}
+.field input[aria-invalid="true"],.field textarea[aria-invalid="true"]{border-color:#b3402a}
+html[data-theme="dark"] .field input[aria-invalid="true"],.field textarea[aria-invalid="true"]{border-color:#f0a08a}
+.check-row{display:flex; gap:.7rem; align-items:flex-start; font-size:.92rem; color:var(--ink-2)}
+.check-row input{width:22px; height:22px; margin-top:.15rem; accent-color:var(--terra); flex:none}
+.form-note{font-size:.82rem; color:var(--ink-2)}
+.form-success{display:grid; gap:1rem; justify-items:start; background:var(--terra-soft); border:1px solid var(--terra-tint); border-radius:24px; padding:clamp(1.6rem,4vw,2.6rem)}
+.form-success svg{color:var(--terra-2)}
+html[data-theme="dark"] .form-success svg{color:var(--terra)}
+.form-success h3{font-size:1.7rem}
+.form-success p{color:var(--ink-2)}
 
-  /* ---------- Footer ---------- */
-  .site-footer{background:var(--night);color:rgba(255,250,242,.78);padding:clamp(3.4rem,7vw,5.5rem) 0 2rem}
-  .footer-grid{display:grid;grid-template-columns:minmax(0,4fr) repeat(3,minmax(0,2fr));gap:clamp(2rem,4vw,3.4rem)}
-  .site-footer h2{font-size:.8rem;font-family:var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#e8b394;margin-bottom:1.1rem;font-weight:700}
-  .footer-brand p{font-size:.94rem;max-width:26rem;margin-top:1rem}
-  .footer-brand .brand{color:var(--paper)}
-  .footer-list{list-style:none;margin:0;padding:0;display:grid;gap:.55rem;font-size:.94rem}
-  .footer-list a{display:inline-flex;align-items:center;min-height:36px;text-decoration:none;transition:color .3s var(--ease)}
-  .footer-list a:hover{color:#f3c9b4}
-  .news-form{display:flex;gap:.6rem;margin-top:1rem;flex-wrap:wrap}
-  .news-form label{flex-basis:100%;font-size:.9rem}
-  .news-form input{
-    flex:1;min-width:0;min-height:48px;border-radius:999px;border:1px solid rgba(255,250,242,.3);
-    background:rgba(255,250,242,.08);color:var(--paper);padding:0 1.1rem;font:inherit;font-size:.95rem;
-  }
-  .news-form input::placeholder{color:rgba(255,250,242,.5)}
-  .news-form input:focus{outline:2px solid var(--terra);outline-offset:2px}
-  .footer-bottom{
-    margin-top:clamp(2.6rem,5vw,4rem);padding-top:1.6rem;border-top:1px solid rgba(255,250,242,.14);
-    display:flex;flex-wrap:wrap;gap:1rem;align-items:center;font-size:.84rem;color:rgba(255,250,242,.55);
-  }
-  .footer-bottom a{color:inherit}
-  .to-top{margin-left:auto;display:inline-flex;align-items:center;gap:.5rem;min-height:44px;text-decoration:none;font-weight:600;color:rgba(255,250,242,.8)}
-  .to-top:hover{color:#f3c9b4}
-  @media (max-width:820px){.footer-grid{grid-template-columns:1fr 1fr}}
-  @media (max-width:520px){.footer-grid{grid-template-columns:1fr}}
+/* ============ Footer ============ */
+.site-footer{background:var(--ink); color:var(--bg-2); padding:clamp(3.4rem,7vw,5.4rem) 0 2rem}
+html[data-theme="dark"] .site-footer{background:#0d0906}
+.footer-grid{display:grid; gap:2.4rem}
+@media (min-width:820px){ .footer-grid{grid-template-columns:1.4fr 1fr 1fr 1fr} }
+.site-footer h2,.site-footer h3{color:#f6ead9; font-size:1.05rem; font-family:var(--font-sans); font-weight:800; letter-spacing:.16em; text-transform:uppercase; margin-bottom:1.1rem}
+.footer-brand p{color:#cbb6a2; font-size:.95rem; max-width:34ch; margin-top:1rem}
+.footer-brand .brand{color:#f6ead9}
+.footer-col ul{list-style:none; margin:0; padding:0; display:grid; gap:.15rem}
+.footer-col a{display:inline-flex; align-items:center; min-height:40px; color:#cbb6a2; text-decoration:none; font-size:.95rem; transition:color .2s ease, transform .2s ease}
+.footer-col a:hover{color:var(--terra); transform:translateX(3px)}
+.footer-bottom{margin-top:3rem; padding-top:1.6rem; border-top:1px solid rgba(246,234,217,.18); display:flex; flex-wrap:wrap; gap:1rem 2rem; align-items:center; justify-content:space-between; font-size:.85rem; color:#b7a18d}
+.socials{display:flex; gap:.6rem}
+.socials a{width:44px; height:44px; border-radius:50%; border:1.5px solid rgba(246,234,217,.3); display:grid; place-items:center; color:#f6ead9; transition:transform .2s ease, border-color .2s ease, color .2s ease}
+.socials a:hover{transform:translateY(-3px); border-color:var(--terra); color:var(--terra)}
+.to-top{position:fixed; right:1.2rem; bottom:1.2rem; z-index:80; width:52px; height:52px; border-radius:50%; border:none; background:var(--terra); color:#fff8f2; display:grid; place-items:center; box-shadow:var(--shadow-sm); opacity:0; transform:translateY(16px); pointer-events:none; transition:opacity .3s ease, transform .3s ease}
+html[data-theme="dark"] .to-top{color:#20130b}
+.to-top.is-visible{opacity:1; transform:translateY(0); pointer-events:auto}
 
-  /* ---------- Dialogs ---------- */
-  dialog{
-    border:0;padding:0;background:var(--paper);color:var(--ink);border-radius:1.2rem;
-    width:min(880px,calc(100% - 2rem));max-height:min(88vh,900px);overflow:hidden;box-shadow:0 40px 90px -30px rgba(29,23,18,.55);
-  }
-  dialog::backdrop{background:rgba(29,23,18,.62)}
-  dialog[open]{animation:dialogIn .4s var(--ease)}
-  dialog[open]::backdrop{animation:fadeIn .4s var(--ease)}
-  @keyframes dialogIn{from{opacity:0;transform:translateY(22px) scale(.98)}to{opacity:1;transform:none}}
-  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-  .dialog-scroll{overflow-y:auto;max-height:min(88vh,900px)}
-  .dialog-media{position:relative;aspect-ratio:21/9;background:var(--sand)}
-  .dialog-media img{width:100%;height:100%;object-fit:cover}
-  .dialog-close{
-    position:absolute;top:.9rem;right:.9rem;width:46px;height:46px;border-radius:50%;
-    background:rgba(29,23,18,.68);color:var(--paper);display:grid;place-items:center;backdrop-filter:blur(4px);
-    transition:background-color .3s var(--ease),transform .2s var(--ease);
-  }
-  .dialog-close:hover{background:var(--terra)}
-  .dialog-close:active{transform:scale(.93)}
-  .dialog-body{padding:clamp(1.6rem,4vw,2.6rem);display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:clamp(1.6rem,4vw,2.6rem)}
-  .dialog-body h2{font-size:clamp(1.7rem,3.4vw,2.4rem)}
-  .dialog-kicker{color:var(--terra-deep);font-size:.78rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.6rem}
-  .dialog-intro{color:var(--ink-soft);margin-top:.9rem}
-  .dialog-body h3{font-size:1.05rem;margin:1.8rem 0 .9rem;font-family:var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);font-weight:700}
-  .itin{list-style:none;margin:0;padding:0;display:grid;gap:.85rem}
-  .itin li{display:grid;grid-template-columns:auto 1fr;gap:.9rem;font-size:.94rem;color:var(--ink-soft)}
-  .itin b{color:var(--ink);font-variant-numeric:tabular-nums;font-family:var(--serif);font-size:1rem;min-width:2.6rem}
-  .facts{list-style:none;margin:0;padding:0;display:grid;gap:.75rem;font-size:.92rem}
-  .facts li{display:flex;justify-content:space-between;gap:1rem;padding-bottom:.7rem;border-bottom:1px solid var(--line)}
-  .facts span{color:var(--ink-faint)}
-  .facts b{text-align:right;font-weight:600}
-  .includes{list-style:none;margin:0;padding:0;display:grid;gap:.5rem;font-size:.92rem;color:var(--ink-soft)}
-  .includes li{display:flex;gap:.6rem;align-items:flex-start}
-  .includes svg{flex:none;margin-top:.28rem;color:var(--olive)}
-  .dialog-cta{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:1rem;align-items:center;border-top:1px solid var(--line);padding-top:1.5rem}
-  .dialog-cta .price{margin-right:auto}
-  @media (max-width:720px){.dialog-body{grid-template-columns:1fr}.dialog-media{aspect-ratio:16/10}}
-  .shortlist-list{list-style:none;margin:0;padding:0;display:grid;gap:.7rem}
-  .shortlist-list li{display:flex;align-items:center;gap:1rem;border:1px solid var(--line);border-radius:.8rem;padding:.7rem .9rem}
-  .shortlist-list img{width:64px;height:64px;object-fit:cover;border-radius:.5rem;flex:none}
-  .shortlist-list b{font-family:var(--serif);font-size:1.05rem;display:block}
-  .shortlist-list small{color:var(--ink-faint)}
-  .shortlist-list .remove{margin-left:auto;color:#a03524;font-weight:600;font-size:.86rem;min-height:44px;display:inline-flex;align-items:center;padding:0 .7rem;border-radius:.5rem}
-  .shortlist-list .remove:hover{background:rgba(179,64,46,.1)}
-  .dialog-pad{padding:clamp(1.5rem,4vw,2.4rem)}
-  .dialog-pad h2{font-size:1.6rem;margin-bottom:1.2rem}
-
-  /* ---------- Toast ---------- */
-  .toast{
-    position:fixed;left:50%;bottom:1.4rem;transform:translate(-50%,140%);z-index:110;
-    background:var(--night);color:var(--paper);border-radius:999px;padding:.75rem .9rem .75rem 1.4rem;
-    display:flex;align-items:center;gap:1rem;box-shadow:0 20px 44px -18px rgba(0,0,0,.5);
-    font-size:.92rem;max-width:calc(100% - 2rem);
-    transition:transform .45s var(--ease),opacity .45s var(--ease);opacity:0;pointer-events:none;
-  }
-  .toast.show{transform:translate(-50%,0);opacity:1;pointer-events:auto}
-  .toast button{color:#f3c9b4;font-weight:700;text-decoration:underline;text-underline-offset:3px;min-height:44px;padding:0 .8rem}
-
-  /* ---------- Reveal ---------- */
-  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
-  .reveal.is-visible{opacity:1;transform:none}
-  .reveal[data-delay="1"]{transition-delay:.1s}
-  .reveal[data-delay="2"]{transition-delay:.2s}
-  .reveal[data-delay="3"]{transition-delay:.3s}
-
-  @media (prefers-reduced-motion:reduce){
-    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
-    .reveal{opacity:1;transform:none}
-    .slider-track{transition:none}
-  }
+/* ============ Reveal & motion ============ */
+.reveal{opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s cubic-bezier(.22,.9,.3,1)}
+.reveal.in{opacity:1; transform:translateY(0)}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important}
+  .hero-media img{animation:none}
+  .reveal{opacity:1; transform:none}
+}
 </style>
 </head>
 <body>
-<a class="skip" href="#content">Skip to Content</a>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<header class="site-header" id="top">
-  <div class="wrap header-bar">
-    <a class="brand" href="#top" aria-label="Wanderpost — back to top">
-      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
-        <circle cx="15" cy="15" r="13.2" stroke="currentColor" stroke-width="1.6"/>
-        <path d="M15 4.5c4 3.6 4 17.4 0 21-4-3.6-4-17.4 0-21Z" stroke="currentColor" stroke-width="1.4"/>
-        <path d="M3.6 12h22.8M3.6 18h22.8" stroke="currentColor" stroke-width="1.4"/>
-      </svg>
-      Wanderpost
+<header class="site-header" id="siteHeader">
+  <div class="container header-row">
+    <a class="brand" href="#top" aria-label="Wanderpost — home">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M15.6 8.4l-2.2 5-5 2.2 2.2-5z" fill="currentColor" stroke="none"/></svg>
+      <span>Wanderpost<small>Slow travel studio</small></span>
     </a>
-    <nav class="main-nav" id="mainNav" aria-label="Primary">
-      <ul class="nav-list">
+    <nav class="primary-nav" aria-label="Primary">
+      <ul>
         <li><a href="#journeys">Journeys</a></li>
         <li><a href="#why">Why Wanderpost</a></li>
         <li><a href="#stories">Traveler Stories</a></li>
@@ -504,78 +332,158 @@
       </ul>
     </nav>
     <div class="header-actions">
-      <button class="icon-btn shortlist-btn" id="shortlistOpen" type="button" aria-label="Open your shortlist">
-        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-          <path d="M12 20.4 4.7 13a4.9 4.9 0 0 1 7-6.9l.3.3.3-.3a4.9 4.9 0 0 1 7 6.9L12 20.4Z"/>
-        </svg>
-        <span class="badge num" id="shortlistCount" hidden>0</span>
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="Switch to dark theme">
+        <svg id="themeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"/></svg>
       </button>
-      <a class="nav-cta" href="#enquiry">Plan Your Trip</a>
-      <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
-        <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true">
-          <path d="M4 7h16M4 12h16M4 17h16"/>
-        </svg>
+      <a class="btn btn-primary btn-sm" href="#enquiry">Plan Your Journey</a>
+      <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobilePanel">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
     </div>
   </div>
 </header>
 
-<main id="content">
+<div class="mobile-panel" id="mobilePanel" aria-hidden="true">
+  <div class="panel-top">
+    <span class="brand" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9.2"/><path d="M15.6 8.4l-2.2 5-5 2.2 2.2-5z" fill="currentColor" stroke="none"/></svg><span>Wanderpost</span></span>
+    <button class="icon-btn" id="menuClose" type="button" aria-label="Close menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <nav aria-label="Mobile">
+    <ul>
+      <li><a href="#journeys">Journeys <span aria-hidden="true">→</span></a></li>
+      <li><a href="#why">Why Wanderpost <span aria-hidden="true">→</span></a></li>
+      <li><a href="#stories">Traveler Stories <span aria-hidden="true">→</span></a></li>
+      <li><a href="#when">When to Go <span aria-hidden="true">→</span></a></li>
+      <li><a href="#enquiry">Plan Your Journey <span aria-hidden="true">→</span></a></li>
+    </ul>
+  </nav>
+</div>
+
+<main id="main">
+  <span id="top"></span>
 
   <!-- ============ HERO ============ -->
   <section class="hero" aria-labelledby="heroTitle">
     <div class="hero-media" aria-hidden="true">
-      <img src="https://picsum.photos/seed/wanderpost-56623f02e42e/1600/900?auto=format&fit=crop&w=2000&q=80" alt="" width="2000" height="1333" fetchpriority="high">
+      <img src="https://image.qwenlm.ai/public_source/2ecdb26d-9120-4f2c-bfae-e2e2e1a7bb7a/31d5a1047-d5b1-4c34-aed4-ba46d1d920754251.png" alt="" width="1600" height="1000" fetchpriority="high">
     </div>
-    <div class="wrap hero-inner">
-      <p class="eyebrow">Slow Travel, Thoughtfully Planned</p>
-      <h1 id="heroTitle">Take the Long Way There</h1>
-      <p class="hero-sub">Wanderpost designs unhurried journeys of seven nights or more — fewer places, explored deeply. Stay in family-run rooms, walk with local guides, and let the destination set the pace.</p>
-      <form class="hero-search" id="searchForm" role="search">
+    <div class="container">
+      <p class="eyebrow">Est. 2014 · Four regions, deeply known</p>
+      <h1 id="heroTitle">The world, at <em>walking pace</em>.</h1>
+      <p class="lede">Wanderpost designs unhurried journeys for travelers who would rather linger than tick boxes. One region, ten days or so, and enough empty afternoons to let a place sink in…</p>
+
+      <form class="hero-search" id="searchForm" role="search" aria-label="Find a journey">
         <div class="field">
-          <label for="searchInput">Where Should We Slow Down?</label>
-          <input id="searchInput" name="destination" type="text" list="destinations" placeholder="Try Kyoto, Patagonia, Marrakech…" autocomplete="off">
-          <datalist id="destinations">
-            <option value="Kyoto"></option>
-            <option value="Patagonia"></option>
-            <option value="Marrakech"></option>
-            <option value="Lofoten"></option>
-            <option value="Northern lights"></option>
-            <option value="Autumn foliage"></option>
-            <option value="Desert"></option>
-            <option value="Fjords"></option>
+          <label for="searchWhere">Where would you like to linger?</label>
+          <input id="searchWhere" name="where" type="text" list="destList" placeholder="Try “Kyoto”, “aurora”, “desert”…" autocomplete="off">
+          <datalist id="destList">
+            <option value="Kyoto"></option><option value="Patagonia"></option>
+            <option value="Marrakech"></option><option value="Lofoten"></option>
+            <option value="Temples"></option><option value="Trekking"></option>
+            <option value="Aurora"></option><option value="Desert"></option>
           </datalist>
         </div>
-        <button class="btn btn-primary" type="submit">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
-          Find My Journey
-        </button>
+        <div class="field">
+          <label for="searchWhen">When are you dreaming of?</label>
+          <select id="searchWhen" name="when">
+            <option value="">Any month</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Find My Journey</button>
       </form>
-      <div class="hero-chips">
-        <span>Popular right now:</span>
-        <button class="chip" type="button" data-chip="Kyoto">Kyoto in November</button>
-        <button class="chip" type="button" data-chip="Lofoten">Lofoten aurora</button>
-        <button class="chip" type="button" data-chip="Patagonia">Patagonia trekking</button>
-        <button class="chip" type="button" data-chip="Marrakech">Marrakech riads</button>
+      <p class="search-status" id="searchStatus" role="status" aria-live="polite"></p>
+
+      <div class="hero-stats nums" aria-label="Wanderpost in numbers">
+        <div><strong>12</strong><span>years crafting slow routes</span></div>
+        <div><strong>6</strong><span>travelers, never more</span></div>
+        <div><strong>94%</strong><span>return within two years</span></div>
+        <div><strong>4</strong><span>regions, known by heart</span></div>
       </div>
     </div>
-    <a class="scroll-cue" href="#journeys"><span>Scroll</span></a>
   </section>
 
   <!-- ============ JOURNEYS ============ -->
   <section class="section" id="journeys" aria-labelledby="journeysTitle">
-    <div class="wrap">
+    <div class="container">
       <div class="section-head reveal">
-        <p class="eyebrow">Curated Journeys</p>
-        <h2 id="journeysTitle">Four Regions We Know by Heart</h2>
-        <p>Each itinerary is built around one place and one season, with room left in every day for the unplanned hour. Prices are per person, including stays, guides and most meals.</p>
+        <div>
+          <p class="eyebrow">Curated journeys</p>
+          <h2 id="journeysTitle">Four places we refuse to rush</h2>
+        </div>
+        <p class="lede">Each route is built with the people who live there, capped at six travelers, and paced so the last day feels like belonging, not departure.</p>
       </div>
-      <p class="results-line" id="resultsLine" aria-live="polite"></p>
-      <div class="journey-grid" id="journeyGrid"></div>
-      <div class="empty-state" id="emptyState" hidden>
-        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6M8.5 11h5"/></svg>
-        <h3>No Journeys Match That Yet</h3>
-        <p>We plan in four regions only — Kyoto, Patagonia, Marrakech and Lofoten — so we can go deep instead of wide. Try one of those, or clear the search to browse everything.</p>
+
+      <div class="journey-grid" id="journeyGrid">
+        <article class="journey-card reveal" data-journey="kyoto" data-keywords="kyoto japan temples tea gardens autumn cherry zen asia">
+          <div class="journey-media">
+            <img src="https://image.qwenlm.ai/public_source/2ecdb26d-9120-4f2c-bfae-e2e2e1a7bb7a/31d5a1047-d5b1-4c34-aed4-ba46d1d920755471.png" alt="A gravel path lined with fiery orange maple trees leading to a wooden temple in Kyoto" width="1024" height="724" loading="lazy">
+            <span class="journey-tag">Temples &amp; tea</span>
+          </div>
+          <div class="journey-body">
+            <h3>Kyoto, Slowly</h3>
+            <p class="journey-meta"><span>Japan</span><span>10 days</span><span>Gentle pace</span></p>
+            <p class="journey-blurb">Temple gardens at opening hour, a tea master who learns your name, and evenings that end in a cedar-scented ryokan bath.</p>
+            <div class="journey-foot">
+              <p class="price nums">€3,480<small>per person</small></p>
+              <button class="btn btn-ghost btn-sm" type="button" data-open-journey="kyoto">View Journey</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="journey-card reveal d1" data-journey="patagonia" data-keywords="patagonia chile argentina trekking mountains glacier wind hiking andes Torres del Paine">
+          <div class="journey-media">
+            <img src="https://image.qwenlm.ai/public_source/2ecdb26d-9120-4f2c-bfae-e2e2e1a7bb7a/11d5a1047-d5b1-4c34-aed4-ba46d1d920757855.png" alt="A lone trekker standing above a turquoise glacial lake beneath the granite towers of Torres del Paine" width="640" height="960" loading="lazy">
+            <span class="journey-tag">Mountains &amp; ice</span>
+          </div>
+          <div class="journey-body">
+            <h3>Patagonia on Foot</h3>
+            <p class="journey-meta"><span>Chile &amp; Argentina</span><span>12 days</span><span>Steady pace</span></p>
+            <p class="journey-blurb">Walk the W at a reader’s pace — glacier mornings, estancia asados, and wind that edits your thoughts down to the essential.</p>
+            <div class="journey-foot">
+              <p class="price nums">€4,960<small>per person</small></p>
+              <button class="btn btn-ghost btn-sm" type="button" data-open-journey="patagonia">View Journey</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="journey-card reveal d2" data-journey="marrakech" data-keywords="marrakech morocco desert medina riad souk spice atlas mountains north africa">
+          <div class="journey-media">
+            <img src="https://image.qwenlm.ai/public_source/2ecdb26d-9120-4f2c-bfae-e2e2e1a7bb7a/11d5a1047-d5b1-4c34-aed4-ba46d1d920754375.png" alt="Looking down into a Marrakech riad courtyard with a tiled pool, hanging green lanterns and potted palms" width="1427" height="760" loading="lazy">
+            <span class="journey-tag">Medina &amp; mint tea</span>
+          </div>
+          <div class="journey-body">
+            <h3>Marrakech, Unhurried</h3>
+            <p class="journey-meta"><span>Morocco</span><span>8 days</span><span>Gentle pace</span></p>
+            <p class="journey-blurb">A riad courtyard, a spice merchant’s patience, and the Atlas footholds an hour away whenever you need cooler air.</p>
+            <div class="journey-foot">
+              <p class="price nums">€2,740<small>per person</small></p>
+              <button class="btn btn-ghost btn-sm" type="button" data-open-journey="marrakech">View Journey</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="journey-card reveal d3" data-journey="lofoten" data-keywords="lofoten norway arctic fjord aurora northern lights midnight sun fishing cabins rorbu">
+          <div class="journey-media">
+            <img src="https://image.qwenlm.ai/public_source/2ecdb26d-9120-4f2c-bfae-e2e2e1a7bb7a/41d5a1047-d5b1-4c34-aed4-ba46d1d920756253.png" alt="Red rorbu fishing cabins on stilts above a calm fjord with snow-covered Lofoten peaks at sunset" width="1200" height="676" loading="lazy">
+            <span class="journey-tag">Arctic light</span>
+          </div>
+          <div class="journey-body">
+            <h3>Lofoten Light</h3>
+            <p class="journey-meta"><span>Norway</span><span>9 days</span><span>Easy–moderate</span></p>
+            <p class="journey-blurb">Red rorbu cabins, midnight sun or winter aurora, and third-generation fishermen who will teach you to read the sea.</p>
+            <div class="journey-foot">
+              <p class="price nums">€3,920<small>per person</small></p>
+              <button class="btn btn-ghost btn-sm" type="button" data-open-journey="lofoten">View Journey</button>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="empty" id="journeyEmpty" hidden>
+        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M15.6 8.4l-2.2 5-5 2.2 2.2-5z"/></svg>
+        <p id="journeyEmptyText">No journeys match that search yet — our map is deliberately small.</p>
         <button class="btn btn-ghost btn-sm" type="button" id="clearSearch">Show All Journeys</button>
       </div>
     </div>
@@ -583,50 +491,42 @@
 
   <!-- ============ WHY ============ -->
   <section class="section why" id="why" aria-labelledby="whyTitle">
-    <div class="wrap why-grid">
-      <figure class="why-media reveal" style="margin:0">
-        <img src="https://picsum.photos/seed/wanderpost-781cb71495f3/1600/900?auto=format&fit=crop&w=1200&q=80" alt="A railway line curving through an amber autumn forest, seen from above" width="1200" height="1500" loading="lazy" decoding="async">
-        <figcaption>The Bernina line in October — one of the rail routes we build journeys around instead of short-haul flights.</figcaption>
+    <div class="container why-grid">
+      <figure class="why-media reveal">
+        <img src="https://image.qwenlm.ai/public_source/2ecdb26d-9120-4f2c-bfae-e2e2e1a7bb7a/91d5a1047-d5b1-4c34-aed4-ba46d1d920754651.png" alt="A flat lay of a leather travel journal, paper map, compass, film camera and passports on a wooden table" width="2000" height="2000" loading="lazy">
+        <figcaption>Every Wanderpost route begins on paper, at this table, with a local co-planner on the phone.</figcaption>
       </figure>
-      <div class="reveal" data-delay="1">
+      <div class="reveal d1">
         <p class="eyebrow">Why Wanderpost</p>
-        <h2 id="whyTitle">Slower by Design, Not by Accident</h2>
-        <p class="why-lede">Anyone can stack six cities into nine days. We do the opposite: one region, one season, and enough mornings to actually notice where you are.</p>
-        <ul class="feature-list">
-          <li class="feature">
-            <span class="feature-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/><path d="m3 17.5 9 5 9-5"/></svg></span>
-            <div>
-              <h3>One Place, Many Layers</h3>
-              <p>Weeks built around a single region — its food, crafts, weather and walking routes — so the place unfolds instead of flashing past.</p>
-            </div>
+        <h2 id="whyTitle">We plan less, so you experience more</h2>
+        <p class="lede" style="margin-top:1.1rem">Most itineraries are checklists with a logo. Ours are conversations — with a Kyoto tea grower, a Patagonian baqueano, a Marrakech zellige master, a Lofoten skipper — written into days that breathe.</p>
+        <ul class="pillars">
+          <li>
+            <span class="pillar-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.4 19c.6-3.4 2.9-5.2 5.6-5.2S14 15.6 14.6 19"/><circle cx="17" cy="9" r="2.6"/><path d="M15.4 14.2c2.6-.4 4.7 1.2 5.2 4"/></svg></span>
+            <h3>Small by design</h3>
+            <p>Six travelers, one guide, one long table. Anything larger and a place stops talking to you.</p>
           </li>
-          <li class="feature">
-            <span class="feature-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="8" cy="8" r="3"/><circle cx="16.5" cy="9.5" r="3"/><path d="M2.8 19c.6-3.2 2.7-5 5.2-5s4.6 1.8 5.2 5M13.6 14.6c.8-.4 1.8-.6 2.9-.6 2.5 0 4.4 1.7 5 4.6"/></svg></span>
-            <div>
-              <h3>Local Hands on Every Day</h3>
-              <p>Guides, cooks, skippers and weavers are paid properly and named in your itinerary. Your money stays in the valley you're walking through.</p>
-            </div>
+          <li>
+            <span class="pillar-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg></span>
+            <h3>Local hands</h3>
+            <p>Every stay, meal and guide is owned by residents. Roughly 78% of your fee stays in the region.</p>
           </li>
-          <li class="feature">
-            <span class="feature-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 4c-8 0-14 4.6-14 11.4 0 2 .6 3.6 1.4 4.6C9 15 13 11.6 17 10.4c-3.4 2-7.4 5.4-8.8 9.6 1 .4 2.2.6 3.4.6C18 20.6 20 12.8 20 4Z"/></svg></span>
-            <div>
-              <h3>Lighter Footprints</h3>
-              <p>Trains and ferries wherever the map allows, small family stays over chains, and 1% of every journey funds trail and medina conservation.</p>
-            </div>
+          <li>
+            <span class="pillar-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-8 0-14 4.6-14 11 0 2 .8 3.8 2 5"/><path d="M20 4c0 8-4.6 14-11.2 14"/><path d="M6 20c2-6 6-10 11-12"/></svg></span>
+            <h3>Lighter footprints</h3>
+            <p>Rail and ferry first where the map allows, and a published carbon ledger for every single journey.</p>
           </li>
-          <li class="feature">
-            <span class="feature-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12.5A8.5 8.5 0 0 1 12.5 21c-1.5 0-3-.4-4.2-1L3 21l1.1-5.1A8.5 8.5 0 1 1 21 12.5Z"/><path d="M8.5 10.5h7M8.5 14h4.5"/></svg></span>
-            <div>
-              <h3>A Human on Call</h3>
-              <p>One planner from your first call to your flight home, plus a 24-hour line in every destination. No call centres, no ticket numbers.</p>
-            </div>
+          <li>
+            <span class="pillar-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.4 2"/></svg></span>
+            <h3>Room to wander</h3>
+            <p>Two unscheduled afternoons in every week, on purpose. The best stories never appear on a schedule.</p>
           </li>
         </ul>
-        <div class="stat-row">
-          <p class="stat"><b class="num">14</b><span>Years Planning</span></p>
-          <p class="stat"><b class="num">38</b><span>Slow Journeys</span></p>
-          <p class="stat"><b class="num">6</b><span>Travellers Max</span></p>
-          <p class="stat"><b class="num">92%</b><span>Travel Again</span></p>
+        <div class="stat-band nums">
+          <div><strong data-count="12">0</strong><span>years of slow routes</span></div>
+          <div><strong data-count="48">0</strong><span>departures each year</span></div>
+          <div><strong data-count="6">0</strong><span>travelers per group</span></div>
+          <div><strong data-count="94" data-suffix="%">0</strong><span>return within 2 years</span></div>
         </div>
       </div>
     </div>
@@ -634,815 +534,764 @@
 
   <!-- ============ STORIES ============ -->
   <section class="section stories" id="stories" aria-labelledby="storiesTitle">
-    <div class="wrap">
+    <div class="container">
       <div class="section-head reveal">
-        <p class="eyebrow">Traveler Stories</p>
-        <h2 id="storiesTitle">Postcards From the Slow Lane</h2>
-        <p>Unedited notes from people who let a single place keep them for a while. Swipe, tap the arrows, or let them turn on their own.</p>
+        <div>
+          <p class="eyebrow">Traveler stories</p>
+          <h2 id="storiesTitle">Postcards from people who slowed down</h2>
+        </div>
+        <p class="lede">Unedited notes from the road, sent back to our studio table. Use the arrows, dots, or your keyboard’s left and right keys.</p>
       </div>
-      <div class="slider reveal" id="slider" aria-roledescription="carousel" aria-label="Traveler stories">
-        <div class="slider-viewport" id="sliderViewport">
-          <div class="slider-track" id="sliderTrack"></div>
+
+      <div class="slider reveal" id="slider" role="group" aria-roledescription="carousel" aria-label="Traveler stories">
+        <div class="slider-track" id="sliderTrack">
+          <div class="slide" role="group" aria-roledescription="slide" aria-label="Story 1 of 4">
+            <div class="slide-card">
+              <img src="https://image.qwenlm.ai/public_source/2ecdb26d-9120-4f2c-bfae-e2e2e1a7bb7a/71d5a1047-d5b1-4c34-aed4-ba46d1d920759162.png" alt="Portrait of Maren Holt in a linen shirt standing against a warm stone wall" width="800" height="1160" loading="lazy">
+              <div>
+                <blockquote>I came home with fewer photos and far better memories. Ten days in Kyoto felt like a month of actually living there — I still write to my tea teacher.</blockquote>
+                <p class="slide-who"><strong>Maren Holt</strong><span class="dot" aria-hidden="true"></span><span>Oslo</span><span class="dot" aria-hidden="true"></span><span>Kyoto, Slowly · Oct 2025</span></p>
+              </div>
+            </div>
+          </div>
+          <div class="slide" role="group" aria-roledescription="slide" aria-label="Story 2 of 4">
+            <div class="slide-card">
+              <img src="https://image.qwenlm.ai/public_source/2ecdb26d-9120-4f2c-bfae-e2e2e1a7bb7a/21d5a1047-d5b1-4c34-aed4-ba46d1d920751224.png" alt="Portrait of Diego Ramírez in a wool sweater and beanie leaning on a pale wall" width="640" height="480" loading="lazy">
+              <div>
+                <blockquote>Nobody rushed us off a ridge. Our guide waited for the light, and we waited with him. That patience is the whole philosophy, really.</blockquote>
+                <p class="slide-who"><strong>Diego Ramírez</strong><span class="dot" aria-hidden="true"></span><span>Valencia</span><span class="dot" aria-hidden="true"></span><span>Patagonia on Foot · Feb 2026</span></p>
+              </div>
+            </div>
+          </div>
+          <div class="slide" role="group" aria-roledescription="slide" aria-label="Story 3 of 4">
+            <div class="slide-card">
+              <img src="https://image.qwenlm.ai/public_source/2ecdb26d-9120-4f2c-bfae-e2e2e1a7bb7a/01d5a1047-d5b1-4c34-aed4-ba46d1d920757125.png" alt="Portrait of Aoife Byrne in a white blouse seated by a bright window" width="570" height="760" loading="lazy">
+              <div>
+                <blockquote>We read whole books in the rorbu while the rain went by. Then the sky cleared at midnight and I understood exactly why we had waited.</blockquote>
+                <p class="slide-who"><strong>Aoife Byrne</strong><span class="dot" aria-hidden="true"></span><span>Galway</span><span class="dot" aria-hidden="true"></span><span>Lofoten Light · Jun 2025</span></p>
+              </div>
+            </div>
+          </div>
+          <div class="slide" role="group" aria-roledescription="slide" aria-label="Story 4 of 4">
+            <div class="slide-card">
+              <img src="https://image.qwenlm.ai/public_source/2ecdb26d-9120-4f2c-bfae-e2e2e1a7bb7a/61d5a1047-d5b1-4c34-aed4-ba46d1d920751604.png" alt="Portrait of Tomas Novak wearing a red cable-knit sweater against a neutral backdrop" width="800" height="1160" loading="lazy">
+              <div>
+                <blockquote>Wanderpost planned the bones and left the flesh to us. Every free afternoon in the medina became the story I still tell at dinner.</blockquote>
+                <p class="slide-who"><strong>Tomas Novak</strong><span class="dot" aria-hidden="true"></span><span>Prague</span><span class="dot" aria-hidden="true"></span><span>Marrakech, Unhurried · Nov 2025</span></p>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="slider-controls">
-          <button class="slider-btn" type="button" id="prevSlide" aria-label="Previous story">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
-          </button>
-          <button class="slider-btn" type="button" id="nextSlide" aria-label="Next story">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
-          </button>
-          <div class="dots" id="sliderDots" role="group" aria-label="Choose a story"></div>
-          <p class="slider-count num" id="sliderCount">1 / 4</p>
-          <p class="sr-only" aria-live="polite" id="sliderLive"></p>
+          <div class="slider-dots" id="sliderDots" role="tablist" aria-label="Choose story"></div>
+          <div class="slider-arrows">
+            <button class="icon-btn" type="button" id="slidePrev" aria-label="Previous story"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+            <button class="icon-btn" type="button" id="slideNext" aria-label="Next story"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ============ WHEN TO GO ============ -->
-  <section class="section" id="when" aria-labelledby="whenTitle">
-    <div class="wrap">
+  <section class="section when" id="when" aria-labelledby="whenTitle">
+    <div class="container">
       <div class="section-head reveal">
-        <p class="eyebrow">Best Time to Visit</p>
-        <h2 id="whenTitle">Pick a Month, Get an Honest Answer</h2>
-        <p>Choose a month above the table, then tap any square to see what that place feels like then — the light, the crowds, the weather. We'll tell you when to skip, too.</p>
+        <div>
+          <p class="eyebrow">Best time to visit</p>
+          <h2 id="whenTitle">Read the season before you book</h2>
+        </div>
+        <p class="lede">Tap any month — or any cell — to see how each region feels then: the light, the crowds, the weather in your bones. Peak is not always right; quiet has its own rewards.</p>
       </div>
-      <div class="month-bar reveal" id="monthBar" role="group" aria-label="Choose a month"></div>
-      <div class="table-scroll reveal" tabindex="0" role="region" aria-label="Season calendar for the four Wanderpost journeys, scrollable">
-        <table class="calendar" id="calendarTable">
-          <caption class="sr-only">Season quality by destination and month. Peak, shoulder and quiet seasons.</caption>
-          <thead><tr id="calHead"><th scope="col">Journey</th></tr></thead>
-          <tbody id="calBody"></tbody>
+
+      <div class="matrix-wrap reveal" tabindex="0" role="region" aria-label="Seasonal guide matrix, scrolls horizontally">
+        <table class="matrix" id="matrix">
+          <caption class="sr-only">Suitability of each Wanderpost journey by month, from off-season to peak</caption>
+          <thead><tr id="matrixHead"><th scope="col"><span class="sr-only">Journey</span></th></tr></thead>
+          <tbody id="matrixBody"></tbody>
         </table>
       </div>
-      <div class="legend" aria-hidden="true">
-        <span><i class="swatch p"></i> Peak season — go</span>
-        <span><i class="swatch s"></i> Shoulder — quieter, still good</span>
-        <span><i class="swatch q"></i> Quiet — we'd wait</span>
+      <p class="legend" aria-hidden="true">
+        <span><i style="background:var(--terra)"></i>Peak</span>
+        <span><i style="background:var(--terra-soft);border:1px solid var(--terra-tint)"></i>Good</span>
+        <span><i style="background:color-mix(in srgb, var(--terra) 12%, transparent)"></i>Shoulder</span>
+        <span><i style="border:1.5px dashed var(--line-2)"></i>Off-season</span>
+      </p>
+
+      <div class="season-panel reveal" id="seasonPanel" aria-live="polite">
+        <h3 id="seasonTitle">Choose a month, or a single cell</h3>
+        <p id="seasonText">Start with the month you can get away, and we will tell you honestly where the light will be kindest — and where you should wait a season.</p>
+        <p class="season-facts" id="seasonFacts"></p>
       </div>
-      <div class="month-panel reveal" id="monthPanel" aria-live="polite"></div>
+      <noscript><p style="margin-top:1rem;color:var(--ink-2)">Enable JavaScript to explore the interactive seasonal guide, or write to us and we will send the printed almanac.</p></noscript>
     </div>
   </section>
 
   <!-- ============ ENQUIRY ============ -->
-  <section class="section enquiry" id="enquiry" aria-labelledby="enquiryTitle">
-    <div class="wrap enq-grid">
-      <div class="enq-aside reveal">
-        <p class="eyebrow">Start the Conversation</p>
-        <h2 id="enquiryTitle" style="font-size:clamp(2rem,4.2vw,3rem);margin:.9rem 0 1.1rem">Tell Us the Shape of the Trip</h2>
-        <p style="color:var(--ink-soft)">A planner — not a quote machine — replies within two working days with ideas, honest season advice and a first sketch of your days. Nothing is booked until you're happy with the sketch.</p>
-        <figure>
-          <img src="https://picsum.photos/seed/wanderpost-d4c2b47f0c81/1600/900?auto=format&fit=crop&w=1200&q=80" alt="A well-worn paper map, brass compass and leather notebook laid out on a wooden table" width="1200" height="900" loading="lazy" decoding="async">
-        </figure>
+  <section class="section" id="enquiry" aria-labelledby="enquiryTitle">
+    <div class="container enquiry-grid">
+      <div class="enquiry-aside reveal">
+        <div>
+          <p class="eyebrow">Enquiries</p>
+          <h2 id="enquiryTitle">Tell us how you like to travel</h2>
+          <p class="lede" style="margin-top:1.1rem">Mornings or lie-ins? Museums or mountain passes? A real person — never a bot — replies within two working days with a first sketch of your route.</p>
+        </div>
         <ul class="contact-list">
-          <li>Write to us: <a href="mailto:hello@wanderpost.travel">hello@wanderpost.travel</a></li>
-          <li>Call the studio: <a href="tel:+441315550148" class="num">+44 131 555 0148</a> (Mon–Fri, 9–6 GMT)</li>
-          <li>Or visit: 14 Argyle Lane, Edinburgh EH1 2JY</li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/></svg><span>Write to <a href="mailto:hello@wanderpost.travel">hello@wanderpost.travel</a></span></li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span>Call <a href="tel:+441315550148">+44 131 555 0148</a>, Mon–Fri, 9–5 GMT</span></li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg><span>The Map Room, 14 Candlemaker’s Lane, Edinburgh EH1 2QW</span></li>
         </ul>
+        <figure class="postcard-figure">
+          <img src="https://image.qwenlm.ai/public_source/2ecdb26d-9120-4f2c-bfae-e2e2e1a7bb7a/11d5a1047-d5b1-4c34-aed4-ba46d1d920758912.png" alt="Handwritten letters tied with a red ribbon beside vintage stamps and a fountain pen on a wooden desk" width="640" height="384" loading="lazy">
+        </figure>
       </div>
-      <div class="reveal" data-delay="1">
-        <form class="enq" id="enquiryForm" novalidate>
-          <div class="form-row">
-            <div class="form-field">
-              <label for="fName">Your Name</label>
-              <input id="fName" name="name" type="text" autocomplete="name" required aria-describedby="eName">
-              <p class="error-msg" id="eName"></p>
+
+      <div class="reveal d1">
+        <form class="enquiry-form" id="enquiryForm" novalidate>
+          <div class="form-row two">
+            <div class="field">
+              <label for="fName">Your name</label>
+              <input id="fName" name="name" type="text" autocomplete="name" required aria-describedby="errName">
+              <p class="field-error" id="errName"></p>
             </div>
-            <div class="form-field">
-              <label for="fEmail">Email Address</label>
-              <input id="fEmail" name="email" type="email" autocomplete="email" required aria-describedby="eEmail">
-              <p class="error-msg" id="eEmail"></p>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-field">
-              <label for="fDest">Which Journey Calls You?</label>
-              <select id="fDest" name="destination" required aria-describedby="eDest">
-                <option value="">Choose a destination…</option>
-                <option value="kyoto">Kyoto, Japan</option>
-                <option value="patagonia">Patagonia, Chile &amp; Argentina</option>
-                <option value="marrakech">Marrakech, Morocco</option>
-                <option value="lofoten">Lofoten, Norway</option>
-                <option value="unsure">Not sure yet — advise me</option>
-              </select>
-              <p class="error-msg" id="eDest"></p>
-            </div>
-            <div class="form-field">
-              <label for="fMonth">Travel Month</label>
-              <select id="fMonth" name="month" required aria-describedby="eMonth">
-                <option value="">Choose a month…</option>
-              </select>
-              <p class="error-msg" id="eMonth"></p>
+            <div class="field">
+              <label for="fEmail">Email address</label>
+              <input id="fEmail" name="email" type="email" autocomplete="email" required aria-describedby="errEmail">
+              <p class="field-error" id="errEmail"></p>
             </div>
           </div>
-          <div class="form-row">
-            <div class="form-field">
-              <label for="fPax">Travellers</label>
-              <input id="fPax" name="travellers" type="number" inputmode="numeric" min="1" max="6" value="2" class="num" aria-describedby="ePax">
-              <p class="error-msg" id="ePax"></p>
+          <div class="form-row two">
+            <div class="field">
+              <label for="fJourney">Which journey calls you?</label>
+              <select id="fJourney" name="journey">
+                <option value="">Not sure yet — advise me</option>
+                <option value="kyoto">Kyoto, Slowly</option>
+                <option value="patagonia">Patagonia on Foot</option>
+                <option value="marrakech">Marrakech, Unhurried</option>
+                <option value="lofoten">Lofoten Light</option>
+              </select>
             </div>
-            <div class="form-field">
-              <label for="fPace">Preferred Pace</label>
+            <div class="field">
+              <label for="fMonth">Hopeful travel month</label>
+              <select id="fMonth" name="month"><option value="">Flexible</option></select>
+            </div>
+          </div>
+          <div class="form-row two">
+            <div class="field">
+              <label for="fTravelers">Travelers</label>
+              <select id="fTravelers" name="travelers" class="nums">
+                <option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="fPace">Preferred pace</label>
               <select id="fPace" name="pace">
-                <option value="gentle">Gentle — one thing a day</option>
-                <option value="balanced" selected>Balanced — walks plus rest</option>
-                <option value="active">Active — long days on foot</option>
+                <option>Very gentle — mostly strolls</option>
+                <option selected>Gentle — walking days, rest days</option>
+                <option>Steady — real hikes, real naps</option>
               </select>
-              <p class="error-msg"></p>
             </div>
           </div>
-          <div class="form-field">
-            <label for="fNotes">Anything We Should Know?</label>
-            <textarea id="fNotes" name="notes" placeholder="Dietary needs, anniversaries, mobility, the book that started this…"></textarea>
+          <div class="field">
+            <label for="fMessage">What should we know about how you travel?</label>
+            <textarea id="fMessage" name="message" placeholder="Dietary needs, anniversaries, a fear of heights, a love of night markets…" aria-describedby="errMessage"></textarea>
+            <p class="field-error" id="errMessage"></p>
           </div>
-          <label class="check-field" for="fNews">
-            <input id="fNews" type="checkbox" name="newsletter">
-            <span>Send me the monthly dispatch — one letter, four ideas, no flashing banners.</span>
+          <label class="check-row" for="fNews">
+            <input id="fNews" name="newsletter" type="checkbox" checked>
+            <span>Send me the seasonal almanac — one letter per quarter, no noise.</span>
           </label>
-          <div class="form-actions">
-            <button class="btn btn-primary" type="submit" id="enqSubmit">Send My Enquiry</button>
-            <button class="btn btn-ghost" type="button" id="enqReset">Clear the Form</button>
-            <p class="form-note">We reply within two working days.</p>
-          </div>
+          <button class="btn btn-primary" type="submit">Send My Enquiry</button>
+          <p class="form-note">We reply within two working days. Your details never leave our studio.</p>
         </form>
-        <div class="success-panel" id="successPanel" hidden tabindex="-1">
-          <h3>Your Enquiry Is on Its Way</h3>
-          <p>Thank you — a planner is already reading it. Expect a considered reply, with season notes and a first sketch of your days, within two working days.</p>
-          <dl id="successSummary"></dl>
-          <button class="btn btn-ghost btn-sm" type="button" id="enqAgain">Plan Another Journey</button>
+
+        <div class="form-success" id="formSuccess" hidden>
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.4"/><path d="M8 12.4l2.7 2.8L16 9.6"/></svg>
+          <h3>Your enquiry is on our table</h3>
+          <p id="successText">Thank you — a route sketch is being drawn.</p>
+          <button class="btn btn-ghost" type="button" id="sendAnother">Send Another Enquiry</button>
         </div>
       </div>
     </div>
   </section>
 </main>
 
+<!-- ============ MODAL ============ -->
+<div class="modal-backdrop" id="modalBackdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" id="modalDialog">
+    <button class="modal-close" id="modalClose" type="button" aria-label="Close journey details">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<button class="to-top" id="toTop" type="button" aria-label="Back to top">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5.5 11.5L12 5l6.5 6.5"/></svg>
+</button>
+
 <!-- ============ FOOTER ============ -->
 <footer class="site-footer">
-  <div class="wrap">
+  <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a class="brand" href="#top" aria-label="Wanderpost — back to top">
-          <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
-            <circle cx="15" cy="15" r="13.2" stroke="currentColor" stroke-width="1.6"/>
-            <path d="M15 4.5c4 3.6 4 17.4 0 21-4-3.6-4-17.4 0-21Z" stroke="currentColor" stroke-width="1.4"/>
-            <path d="M3.6 12h22.8M3.6 18h22.8" stroke="currentColor" stroke-width="1.4"/>
-          </svg>
-          Wanderpost
-        </a>
-        <p>A small studio of planners, guides and reformed itinerary-hoarders. We build slow journeys in four regions we know by foot, ferry and night train.</p>
+        <span class="brand"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M15.6 8.4l-2.2 5-5 2.2 2.2-5z" fill="currentColor" stroke="none"/></svg><span>Wanderpost</span></span>
+        <p>A slow-travel studio in Edinburgh, drawing unhurried routes through four regions we know by heart.</p>
       </div>
-      <nav aria-labelledby="fJourneys">
-        <h2 id="fJourneys">Journeys</h2>
-        <ul class="footer-list">
-          <li><a href="#journeys">Kyoto in the Quiet Hours</a></li>
-          <li><a href="#journeys">Patagonia at Walking Pace</a></li>
-          <li><a href="#journeys">Marrakech Without the Map</a></li>
-          <li><a href="#journeys">Lofoten Under the Low Sun</a></li>
-          <li><a href="#when">Season Calendar</a></li>
+      <nav class="footer-col" aria-label="Journeys">
+        <h3>Journeys</h3>
+        <ul>
+          <li><a href="#journeys">Kyoto, Slowly</a></li>
+          <li><a href="#journeys">Patagonia on Foot</a></li>
+          <li><a href="#journeys">Marrakech, Unhurried</a></li>
+          <li><a href="#journeys">Lofoten Light</a></li>
         </ul>
       </nav>
-      <nav aria-labelledby="fStudio">
-        <h2 id="fStudio">The Studio</h2>
-        <ul class="footer-list">
-          <li><a href="#why">How We Plan</a></li>
+      <nav class="footer-col" aria-label="Explore">
+        <h3>Explore</h3>
+        <ul>
+          <li><a href="#why">Why Wanderpost</a></li>
           <li><a href="#stories">Traveler Stories</a></li>
-          <li><a href="#enquiry">Enquire</a></li>
-          <li><a href="mailto:hello@wanderpost.travel">hello@wanderpost.travel</a></li>
-          <li><a href="tel:+441315550148" class="num">+44 131 555 0148</a></li>
+          <li><a href="#when">When to Go</a></li>
+          <li><a href="#enquiry">Plan Your Journey</a></li>
         </ul>
       </nav>
-      <div>
-        <h2 id="fDispatch">The Monthly Dispatch</h2>
-        <form class="news-form" id="newsForm">
-          <label for="newsEmail">One letter a month. Four ideas, zero noise.</label>
-          <input id="newsEmail" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
-          <button class="btn btn-light btn-sm" type="submit">Subscribe</button>
-        </form>
+      <div class="footer-col">
+        <h3>Studio</h3>
+        <ul>
+          <li><a href="mailto:hello@wanderpost.travel">hello@wanderpost.travel</a></li>
+          <li><a href="tel:+441315550148">+44 131 555 0148</a></li>
+          <li><a href="#top">The Map Room, Edinburgh</a></li>
+        </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© <span class="num" id="year">2026</span> Wanderpost Travel Studio Ltd. Registered in Scotland, SC441207.</p>
-      <p>ATOL protected · 1% for trail &amp; medina conservation</p>
-      <a class="to-top" href="#top">Back to Top
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 19V5m-7 7 7-7 7 7"/></svg>
-      </a>
+      <p>© <span id="year" class="nums">2026</span> Wanderpost Ltd. Travel slowly; arrive wholly.</p>
+      <div class="socials">
+        <a href="#top" aria-label="Wanderpost on Instagram"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#top" aria-label="Wanderpost journal feed"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5.5" cy="18.5" r="1.6" fill="currentColor" stroke="none"/></svg></a>
+        <a href="mailto:hello@wanderpost.travel" aria-label="Email Wanderpost"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/></svg></a>
+      </div>
     </div>
   </div>
 </footer>
-
-<!-- ============ JOURNEY DIALOG ============ -->
-<dialog id="journeyDialog" aria-labelledby="dialogTitle">
-  <div class="dialog-scroll" id="journeyDialogBody"></div>
-</dialog>
-
-<!-- ============ SHORTLIST DIALOG ============ -->
-<dialog id="shortlistDialog" aria-labelledby="shortlistTitle">
-  <div class="dialog-pad">
-    <h2 id="shortlistTitle">Your Shortlist</h2>
-    <div id="shortlistContent"></div>
-  </div>
-</dialog>
-
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 (function(){
   "use strict";
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  /* ---------------- Data ---------------- */
   var MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-  var MONTHS_S = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var M3 = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var BASE = "https://image.qwenlm.ai/public_source/2ecdb26d-9120-4f2c-bfae-e2e2e1a7bb7a/";
 
-  var JOURNEYS = [
-    {
-      id:"kyoto", name:"Kyoto", country:"Japan", title:"Kyoto in the Quiet Hours",
-      days:9, price:4180, season:"Autumn · Spring", bestMonth:10,
-      tag:"Temples & Tea",
-      blurb:"Nine days in the old capital at walking pace — dawn at the moss temples, afternoons with a tea grower in Ohara, evenings in a six-room ryokan run by the same family for four generations.",
-      img:"https://picsum.photos/seed/wanderpost-9eb8b30979d9/1600/900?auto=format&fit=crop&w=1200&q=80",
-      imgAlt:"A wooden pagoda rising above Kyoto rooftops at dusk",
-      modalImg:"https://picsum.photos/seed/wanderpost-13d401cdc186/1600/900?auto=format&fit=crop&w=1600&q=80",
-      modalAlt:"Vermilion torii gates lining a forested hillside path at Fushimi Inari",
-      tags:["japan","temples","autumn","blossom","culture","food","zen"],
-      pace:"Gentle — 4–6 km walking days", group:"Max 6 travellers", stay:"Ryokan & machiya townhouse",
+  /* ---------- Journey data ---------- */
+  var JOURNEYS = {
+    kyoto: {
+      name:"Kyoto, Slowly", region:"Japan", days:10, pace:"Gentle", price:"€3,480", group:"6 travelers",
+      img:BASE+"31d5a1047-d5b1-4c34-aed4-ba46d1d920755471.png", imgAlt:"Maple-lined temple path in Kyoto in autumn",
+      img2:BASE+"01d5a1047-d5b1-4c34-aed4-ba46d1d920757117.png", img2Alt:"Sunlight breaking through autumn maples at a Kyoto temple veranda",
+      overview:"Ten days in the old capital, timed to the rhythm of temple bells rather than tour buses. Mornings begin at opening hour with a gardener or a tea grower; afternoons are deliberately yours. You will stay in a family ryokan in the Higashiyama foothills and a machiya townhouse near the Kamo river.",
       itinerary:[
-        ["Day 1","Arrive into a machiya townhouse in Nakagyō; evening stroll to a neighbourhood sentō and a bowl of oyako-don."],
-        ["Day 2","Higashiyama before the crowds: Kennin-ji, the stone lanes of Ninenzaka, tea in a 160-year-old house."],
-        ["Day 3","Free morning; afternoon kaiseki cooking session with a family who have run their kitchen since 1898."],
-        ["Day 4","Local train to Kurama, walk the cedar ridge to Kibune; onsen before the last train home."],
-        ["Day 5","Ohara valley: Sanzen-in moss gardens, then an afternoon with a tea grower drying leaves by hand."],
-        ["Day 6","Fushimi Inari at first light, sake tasting in the brewery district, rest, then Gion at dusk."],
-        ["Day 7","Day trip to Nara: deer, the Great Buddha, and a mochi-pounding workshop."],
-        ["Day 8","Unscheduled day — your planner leaves three hand-written options on your table."],
-        ["Day 9","Slow breakfast, one last temple bell, transfer to Kansai airport."]
+        ["Days 1–2","Arrive, unpack once. Evening walk along the Kamo with your guide; first kaiseki dinner at a twelve-seat counter."],
+        ["Days 3–4","Opening-hour visits to Daitoku-ji’s sub-temples with a resident monk; afternoon tea lesson with master Sasaki."],
+        ["Days 5–6","Ohara valley by local bus: moss gardens, persimmon farms, and a night in a mountain onsen inn."],
+        ["Day 7","Free day — our printed list of twelve quiet corners, from a bell-foundry to a two-table soba room."],
+        ["Days 8–9","Uji tea fields: pick, steam and roll your own gyokuro; farewell dinner in a restored machiya."],
+        ["Day 10","Slow checkout, last temple bell at noon, and a shinkansen seat reserved on the quiet side of the mountain."]
       ],
-      includes:["8 nights in a family ryokan & machiya","Daily private guide (English & Japanese)","Two kaiseki dinners, one cooking class","Tea ceremony with a Urasenke teacher","Rail passes & all local transfers"]
+      includes:["Nine nights in family-run ryokan & machiya","Daily opening-hour temple access","Tea ceremony with a Urasenke-trained master","All regional rail, reserved window seats","Carbon ledger & rail-first routing"],
+      best:[2,3,9,10]
     },
-    {
-      id:"patagonia", name:"Patagonia", country:"Chile & Argentina", title:"Patagonia at Walking Pace",
-      days:12, price:6240, season:"Nov – Mar", bestMonth:1,
-      tag:"Mountains & Ice",
-      blurb:"Twelve days between Torres del Paine and Los Glaciares, hiking short stages between refugios and estancias. No summit bagging — just the towers, the ice and the wind, given room to land.",
-      img:"https://picsum.photos/seed/wanderpost-fed622ff2c3b/1600/900?auto=format&fit=crop&w=1200&q=80",
-      imgAlt:"Snow-streaked granite peaks of Patagonia under a clear sky",
-      modalImg:"https://picsum.photos/seed/wanderpost-7a8e488e8606/1600/900?auto=format&fit=crop&w=1600&q=80",
-      modalAlt:"Mist rolling between blue mountain ridges at dawn",
-      tags:["chile","argentina","hiking","mountains","glaciers","wildlife","trekking"],
-      pace:"Active — 5–7 hr walking days", group:"Max 6 travellers", stay:"Refugios & working estancias",
+    patagonia: {
+      name:"Patagonia on Foot", region:"Chile & Argentina", days:12, pace:"Steady", price:"€4,960", group:"6 travelers",
+      img:BASE+"11d5a1047-d5b1-4c34-aed4-ba46d1d920757855.png", imgAlt:"Trekker above a turquoise glacial lake under the towers of Torres del Paine",
+      img2:BASE+"21d5a1047-d5b1-4c34-aed4-ba46d1d920755557.png", img2Alt:"A still Patagonian lake ringed by wind-blasted scrub and granite peaks",
+      overview:"Twelve days walking the finest sections of the W and the Fitz Roy trails — never the whole crowded circuit, always the views worth the sweat. Nights alternate between warm refugios and a working estancia where the asado starts at four and ends when it ends.",
       itinerary:[
-        ["Day 1","Fly into Punta Arenas; cross the steppe to Puerto Natales as the light goes rose."],
-        ["Day 2","Gear check and a short coastal walk; evening briefing over calafate sour."],
-        ["Day 3","Enter Torres del Paine; boat across Lago Pehoé, first night at Refugio Paine Grande."],
-        ["Day 4","Walk to the Grey Glacier lookout; icebergs the colour of bottle glass."],
-        ["Day 5","Stage to Refugio Los Cuernos beneath the horns; condors if the wind is kind."],
-        ["Day 6","The base of the Towers at sunrise — the walk everyone remembers, done slowly."],
-        ["Day 7","Rest day at an estancia: horses, asado, and a baqueano who reads weather like text."],
-        ["Day 8","Cross to Argentina; El Calafate and a first sight of the Perito Moreno ice wall."],
-        ["Day 9","Boardwalks and boat approach to the glacier; listen for the calving cracks."],
-        ["Day 10","Drive north to El Chaltén; afternoon walk to Chorrillo del Salto waterfall."],
-        ["Day 11","Laguna de los Tres beneath Fitz Roy, or the gentler Loma del Pliegue — your call."],
-        ["Day 12","Morning at leisure, transfer out with a bag of dulce de leche alfajores."]
+        ["Days 1–2","Punta Arenas to Puerto Natales; gear check with your baqueano guide, wind briefing over king crab stew."],
+        ["Days 3–5","Base of the Towers at sunrise, then the French Valley at our own tempo; two nights at a quiet refugio."],
+        ["Days 6–7","Grey Glacier by catamaran and foot; ice hike with crampons for those who want it, reading by the stove for those who don’t."],
+        ["Days 8–9","Cross to El Chaltén; Laguna de los Tres at first light, then a whole rest day of bakeries and birdlife."],
+        ["Days 10–11","Estancia days: ride with the herd, learn the asado, sleep under the southern stars."],
+        ["Day 12","Slow morning, mate on the porch, transfer out with a lighter pack and heavier heart."]
       ],
-      includes:["11 nights: refugios, estancias & lodges","Mountain guide (UIMLA certified)","All park fees & border transfers","Full board while trekking","Porter support for shared gear"]
+      includes:["Eleven nights: refugios, lodges & one estancia","Baqueano guide, ratio 1:6","All park fees & glacier catamaran","Full-board with regional wine","Carbon ledger & offset flight advice"],
+      best:[0,1,10,11]
     },
-    {
-      id:"marrakech", name:"Marrakech", country:"Morocco", title:"Marrakech Without the Map",
-      days:7, price:2450, season:"Oct – Apr", bestMonth:10,
-      tag:"Medina & Desert",
-      blurb:"A week inside the red city: a riad with a courtyard the size of a whisper, mornings learning zellige from a master tiler, evenings on a rooftop as the square fills with smoke and drums.",
-      img:"https://picsum.photos/seed/wanderpost-72479768bada/1600/900?auto=format&fit=crop&w=1200&q=80",
-      imgAlt:"Warm-toned streets and walls of Marrakech's old medina",
-      modalImg:"https://picsum.photos/seed/wanderpost-7cc2caa01a7e/1600/900?auto=format&fit=crop&w=1600&q=80",
-      modalAlt:"Colourful spices and goods stacked in a Moroccan souk",
-      tags:["morocco","desert","souks","riad","food","craft","hammam"],
-      pace:"Gentle — medina wandering", group:"Max 6 travellers", stay:"Family riad & desert camp",
+    marrakech: {
+      name:"Marrakech, Unhurried", region:"Morocco", days:8, pace:"Gentle", price:"€2,740", group:"6 travelers",
+      img:BASE+"11d5a1047-d5b1-4c34-aed4-ba46d1d920754375.png", imgAlt:"Riad courtyard in Marrakech with tiled pool and hanging lanterns",
+      img2:BASE+"31d5a1047-d5b1-4c34-aed4-ba46d1d920759949.png", img2Alt:"Terracotta-plastered salon with striped cushions in a Marrakech riad",
+      overview:"A week based in one beautiful riad rather than four hotels, so the medina stops being a maze and becomes a neighbourhood. Mornings with artisans — zellige, saffron, bookbinding — afternoons for the hammam, the rooftop, the long lunch that becomes dinner.",
       itinerary:[
-        ["Day 1","Arrive to mint tea on the riad roof; first unhurried loop of the medina walls."],
-        ["Day 2","Souk morning with a local artisan: brass, leather, then a zellige tiling workshop."],
-        ["Day 3","Bahia Palace and the Saadian Tombs early; hammam and black-soap scrub at noon."],
-        ["Day 4","Cooking day: market shopping with Fatima, then tagine and couscous on the roof."],
-        ["Day 5","Over the Atlas to the Agafay desert: camel hour, camp dinner under a hard sky of stars."],
-        ["Day 6","Sunrise over the stone desert, return for a free afternoon — hammam again, perhaps."],
-        ["Day 7","Last bread from the ferran, one more rooftop tea, transfer to the airport."]
+        ["Day 1","Arrive to mint tea on the riad roof; dusk walk to hear the square wake up."],
+        ["Day 2","Souk apprenticeship: spice merchant Rahal teaches you to smell your way home."],
+        ["Day 3","Zellige workshop with master tile-cutter Hassan; afternoon hammam and black-soap ritual."],
+        ["Day 4","Free day — our map of nine quiet courtyards and the best msemen in the mellah."],
+        ["Days 5–6","Atlas foothills: walnut valleys, a Berber lunch, and a night in a mountain guesthouse."],
+        ["Days 7–8","Bookbinding in the morning, farewell tagine at dusk, and a slow airport transfer."]
       ],
-      includes:["6 nights in a family-run riad + 1 desert camp","Daily medina host & craft workshops","Traditional hammam ritual","Two cooking sessions with market visits","All transfers incl. Atlas day drive"]
+      includes:["Seven nights in one family riad, rooftop room","Daily artisan workshops with translators","Private hammam ritual & Atlas excursion","Most meals, including two home kitchens","Carbon ledger & rail-from-Europe options"],
+      best:[2,3,9,10]
     },
-    {
-      id:"lofoten", name:"Lofoten", country:"Norway", title:"Lofoten Under the Low Sun",
-      days:8, price:3890, season:"Feb · Jun", bestMonth:1,
-      tag:"Arctic & Aurora",
-      blurb:"Eight days above the Arctic Circle in a red rorbu on stilts: fishing with a third-generation skipper, hiking ridges that fall straight into the sea, and aurora watchings that start after dinner.",
-      img:"https://picsum.photos/seed/wanderpost-7c912a4589a7/1600/900?auto=format&fit=crop&w=1200&q=80",
-      imgAlt:"Snow-covered peaks and red fishing cabins reflected in a Lofoten fjord at night",
-      modalImg:"https://picsum.photos/seed/wanderpost-fc06c17e4f43/1600/900?auto=format&fit=crop&w=1600&q=80",
-      modalAlt:"A pale arctic beach and steep green peaks along the Lofoten coast",
-      tags:["norway","arctic","aurora","fjords","sea","hiking","fishing"],
-      pace:"Balanced — hikes & boat days", group:"Max 6 travellers", stay:"Rorbu cabins & sea lodge",
+    lofoten: {
+      name:"Lofoten Light", region:"Norway", days:9, pace:"Easy–moderate", group:"6 travelers", price:"€3,920",
+      img:BASE+"41d5a1047-d5b1-4c34-aed4-ba46d1d920756253.png", imgAlt:"Red rorbu cabins above a fjord with snowy Lofoten peaks at sunset",
+      img2:BASE+"01d5a1047-d5b1-4c34-aed4-ba46d1d920756007.png", img2Alt:"Aurora borealis reflected in a still Lofoten fjord between dark headlands",
+      overview:"Nine days above the Arctic Circle, chasing the two lights that matter: midnight sun in summer, aurora in winter. You will sleep in restored rorbu fishermen’s cabins, row out with a third-generation skipper, and hike ridges that end in beaches the colour of cream.",
       itinerary:[
-        ["Day 1","Land at Leknes; settle into a rorbu in Reine as the blue hour settles in."],
-        ["Day 2","Morning walk to Reinebringen's steps; afternoon drying boots by the wood stove."],
-        ["Day 3","Out with skipper Oddvar: set lines, gut cod, eat what you catch at noon."],
-        ["Day 4","Sea-eagle safari through the Trollfjord; sauna and a 4°C fjord plunge after."],
-        ["Day 5","Drive the kingfisher coast to Henningsvær; gallery, coffee, the harbour mural."],
-        ["Day 6","Beach day at Haukland and the ridge to Kvalvika — swimming suits optional, bravery not."],
-        ["Day 7","Free day; at 21:30 the aurora call goes out if the sky is clearing."],
-        ["Day 8","Cinnamon buns at the bakery in Å, then the slow road back to the airport."]
+        ["Days 1–2","Svolvær to Henningsvær by local ferry; gallery crawl and a fisherman’s sup on the pier."],
+        ["Days 3–4","Reine rorbu base; the Reinebringen stairs at golden hour, then a rest day of drying racks and cinnamon buns."],
+        ["Day 5","Sea day: row or sail with skipper Ingrid; cod jigging and a beach BBQ at Kvalvika."],
+        ["Days 6–7","Å and the stockfish museum; free afternoon for the sauna-and-sea ritual, repeated."],
+        ["Day 8","Aurora watch (winter) or midnight-sun picnic (summer) with a local photographer."],
+        ["Day 9","Slow breakfast, one last ridge view, ferry-and-fly home with salt in your coat."]
       ],
-      includes:["7 nights in heated rorbu cabins","Fishing skipper & sea-eagle boat safari","Mountain guide for ridge hikes","Sauna sessions & winter kit loan","All island transfers & ferries"]
-    }
-  ];
-
-  var SEASONS = {
-    kyoto:{
-      temps:[5,6,10,16,21,25,29,30,26,20,14,8],
-      levels:["q","q","s","p","s","q","q","q","s","p","p","s"],
-      notes:["Hatsumōde shrine visits; cold, clear and uncrowded.","Plum blossoms open; snow sometimes dusts the temples.","Warming streets; early cherry in the imperial park.","Full blossom frenzy — book rooms a year ahead.","Fresh green maples and Aoi Matsuri processions.","Tsuyu rains; moss gardens at their most luminous.","Hot and humid; Gion Matsuri floats at night.","Peak heat; Obon lanterns and riverside dining.","Typhoon tails; quiet trails and late-summer light.","Crisp air; the first maples turn in Ohara.","Momiji peak — the whole city glows amber and red.","Hushed lanes, illuminations and a chance of snow."]
-    },
-    patagonia:{
-      temps:[12,12,10,8,5,3,2,4,6,8,10,11],
-      levels:["p","p","s","s","q","q","q","q","s","s","p","p"],
-      notes:["Long light and full trails; book refugios early.","The best weather window for the W circuit.","Autumn gold in the lenga forests; fewer hikers.","Shoulder closing; estancias quiet, winds easing.","Snow lines drop; most mountain lodges close.","Deep winter; ice drives and puma tracking.","Cold and dark; estancia life by the fire.","Storm season — superb for photographers.","Spring returns; wildflowers on the steppe.","The windiest month; glaciers calve loudly.","Summer begins; turquoise lakes, open passes.","Midnight light; guanaco calves on the steppe."]
-    },
-    marrakech:{
-      temps:[19,21,24,27,31,35,38,38,34,29,24,20],
-      levels:["s","s","p","p","s","q","q","q","s","p","p","s"],
-      notes:["Cool clear nights; rooftop soup and hammam hours.","Almond blossom in the Ourika valley.","Gardens in flower; perfect medina walking weather.","Warm evenings for Jemaa el-Fnaa at dusk.","Last of the mild spring before heat builds.","Hot afternoons; retreat to courtyards and pools.","Furnace heat; head for the Atlas or the coast.","Hottest month; the souks slow to a siesta pace.","Heat softens; olive harvest in the foothills.","Ideal light for photographers; warm nights.","Best month of all — mild, golden, uncrowded.","Cool and clear; Atlas snow on the horizon."]
-    },
-    lofoten:{
-      temps:[0,0,2,4,9,13,15,15,11,7,3,1],
-      levels:["p","p","p","s","s","p","p","s","s","q","q","p"],
-      notes:["Polar night; aurora over the rorbu roofs.","Aurora season peaks; low sun paints the peaks rose.","Lengthening light; ski-to-sea days begin.","Snow melts to crocus; the fishing fleet is busy.","Green returns; midnight sun arrives late month.","The sun never sets; hikes can start at 11pm.","Warmest sea and air; beaches, if you're brave.","Berry season; the last of the midnight sun.","Aurora returns; autumn colour on the ridges.","Storm watching from a sauna window.","Short days; quiet villages, wool and coffee.","Blue hour lasts all day; northern lights nightly."]
+      includes:["Eight nights in restored rorbu cabins","Skipper, sauna & aurora/midnight-sun outings","Two guided ridge hikes, optional by design","Breakfasts & three shore dinners","Carbon ledger & rail+ferry routing from Oslo"],
+      best:[0,1,5,6,7]
     }
   };
 
-  var STORIES = [
-    {name:"Elena Marchetti", from:"Bologna, Italy", journey:"Kyoto · November",
-     img:"https://picsum.photos/seed/wanderpost-be9c29b29330/1600/900?auto=format&fit=crop&w=800&q=80",
-     alt:"Portrait of Elena Marchetti smiling in warm light",
-     quote:"I stopped counting temples on day three. Instead I counted mornings — nine of them, each slower than the last. My host in Ohara taught me to fold tea leaves like letters. I still write to her."},
-    {name:"Marcus Adeyemi", from:"London, UK", journey:"Patagonia · February",
-     img:"https://picsum.photos/seed/wanderpost-0a1dd7228f2d/1600/900?auto=format&fit=crop&w=800&q=80",
-     alt:"Portrait of Marcus Adeyemi looking to the side",
-     quote:"Twelve days, four refugios, one pair of socks I regretted. Our guide knew which wind to trust. When the towers finally cleared at sunrise, nobody spoke for ten whole minutes."},
-    {name:"", from:"Bengaluru, India", journey:"Marrakech · March",
-     img:"https://picsum.photos/seed/wanderpost-6461ffad8d80/1600/900?auto=format&fit=crop&w=800&q=80",
-     alt:"Portrait of Priya Raman smiling outdoors",
-     quote:"I arrived wanting a checklist and left with a bread recipe and a standing invitation to a rooftop in the medina. Seven days felt like a month — in the best possible way."},
-    {name:"Tomás Herrera", from:"Seville, Spain", journey:"Lofoten · January",
-     img:"https://picsum.photos/seed/wanderpost-00dcc994a43e/1600/900?auto=format&fit=crop&w=800&q=80",
-     alt:"Portrait of Tomás Herrera in soft daylight",
-     quote:"We sautéed cod we had caught that morning, then watched the sky go green over the fjord. My daughter put her phone away on night two. Enough said."}
+  /* Season ratings: 3 peak, 2 good, 1 shoulder, 0 off */
+  var RATINGS = {
+    kyoto:[2,2,3,3,2,1,1,1,1,3,3,2],
+    patagonia:[3,3,2,1,0,0,0,0,1,2,3,3],
+    marrakech:[2,2,3,3,2,1,0,0,2,3,3,2],
+    lofoten:[2,2,2,1,2,3,3,3,2,1,1,2]
+  };
+  var TEMPS = {
+    kyoto:[9,10,14,20,25,28,32,33,29,23,17,12],
+    patagonia:[15,15,12,9,5,3,2,4,7,10,12,14],
+    marrakech:[19,21,24,27,31,35,38,37,33,28,23,19],
+    lofoten:[1,1,2,5,9,12,15,14,11,7,4,2]
+  };
+  var NOTES = {
+    kyoto:{2:"Plum blossom and quiet trails before the city wakes.",3:"Cherry blossom along the Kamo; the whole town walks at petal pace.",9:"Crisp air, golden ginkgo, harvest food in Nishiki Market.",10:"Maple fire in every temple garden — book the ryokan six months out."},
+    patagonia:{0:"Longest days and full hut camaraderie; book refugios early.",1:"Still-summer wind windows and the best light on the towers.",2:"Autumn colour in the lenga forests and quieter refugios.",10:"Spring wildflowers and empty trails before the summer rush.",11:"Early summer: snow sculptures on the passes, lakes turning turquoise."},
+    marrakech:{2:"Rose season in the souks and comfortable medina evenings.",3:"Warm without heat; Atlas day-trips are at their finest.",9:"Date harvest, cooling roofs, mint tea on every terrace.",10:"Clear skies and festival energy as the city exhales summer."},
+    lofoten:{0:"Aurora nights from the rorbu doorstep; snow sharpens every peak.",1:"Blue hour lasts all afternoon and the aurora is still reliable.",5:"Midnight sun — hike at 11pm and call it an evening stroll.",6:"Warmest sea breeze, puffins on the cliffs, light that never quits.",7:"Berry season and glassy fjords; the light turns honeyed."}
+  };
+  var RATING_LABEL = ["Off-season","Shoulder","Good","Peak"];
+  var RATING_GENERIC = [
+    "Off-season: some refugios and ferries run reduced schedules, and the weather writes the itinerary. For the right traveler, that is the point.",
+    "Shoulder season: pack for four seasons in one day and enjoy the paths almost to yourself.",
+    "A fine time to go — honest weather, fewer travelers, and room to breathe in every courtyard and on every ridge.",
+    "Peak season for good reason: the landscape is at its most generous, and so are the people."
   ];
 
-  /* ---------------- Helpers ---------------- */
-  function $(sel, root){ return (root||document).querySelector(sel); }
-  function $$(sel, root){ return Array.prototype.slice.call((root||document).querySelectorAll(sel)); }
-  function money(n){ return "£" + n.toLocaleString("en-GB"); }
-  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
-
-  var toastEl = $("#toast"), toastTimer = null;
-  function toast(msg, actionLabel, onAction){
-    clearTimeout(toastTimer);
-    toastEl.innerHTML = "";
-    var span = document.createElement("span");
-    span.textContent = msg;
-    toastEl.appendChild(span);
-    if(actionLabel){
-      var b = document.createElement("button");
-      b.type = "button";
-      b.textContent = actionLabel;
-      b.addEventListener("click", function(){ onAction(); hideToast(); });
-      toastEl.appendChild(b);
-    }
-    toastEl.classList.add("show");
-    toastTimer = setTimeout(hideToast, 5200);
+  /* ---------- Theme ---------- */
+  var root = document.documentElement;
+  var themeToggle = document.getElementById("themeToggle");
+  var metaTheme = document.getElementById("metaTheme");
+  function applyTheme(mode){
+    root.setAttribute("data-theme", mode);
+    metaTheme.setAttribute("content", mode === "dark" ? "#161009" : "#f7f1e8");
+    themeToggle.setAttribute("aria-label", mode === "dark" ? "Switch to light theme" : "Switch to dark theme");
+    themeToggle.innerHTML = mode === "dark"
+      ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>'
+      : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"/></svg>';
+    try{ localStorage.setItem("wp-theme", mode); }catch(e){}
   }
-  function hideToast(){ toastEl.classList.remove("show"); }
+  var saved = null;
+  try{ saved = localStorage.getItem("wp-theme"); }catch(e){}
+  if(saved === "dark"){ applyTheme("dark"); }
+  themeToggle.addEventListener("click", function(){
+    applyTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark");
+  });
 
-  /* ---------------- Header ---------------- */
-  var header = $(".site-header");
-  function onScroll(){ header.classList.toggle("scrolled", window.scrollY > 24); }
+  /* ---------- Header / menu / to-top ---------- */
+  var header = document.getElementById("siteHeader");
+  var toTop = document.getElementById("toTop");
+  function onScroll(){
+    header.classList.toggle("is-scrolled", window.scrollY > 12);
+    toTop.classList.toggle("is-visible", window.scrollY > 700);
+  }
   window.addEventListener("scroll", onScroll, {passive:true});
   onScroll();
+  toTop.addEventListener("click", function(){
+    window.scrollTo({top:0, behavior: reduceMotion ? "auto" : "smooth"});
+  });
 
-  var menuBtn = $("#menuBtn"), mainNav = $("#mainNav");
+  var menuBtn = document.getElementById("menuBtn");
+  var menuClose = document.getElementById("menuClose");
+  var panel = document.getElementById("mobilePanel");
   function setMenu(open){
-    mainNav.classList.toggle("open", open);
+    panel.classList.toggle("is-open", open);
+    panel.setAttribute("aria-hidden", String(!open));
     menuBtn.setAttribute("aria-expanded", String(open));
-    menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-    if(open){ var first = mainNav.querySelector("a"); if(first) first.focus(); }
+    document.body.classList.toggle("is-locked", open);
+    if(open){ menuClose.focus(); } else { menuBtn.focus(); }
   }
-  menuBtn.addEventListener("click", function(){ setMenu(!mainNav.classList.contains("open")); });
+  menuBtn.addEventListener("click", function(){ setMenu(true); });
+  menuClose.addEventListener("click", function(){ setMenu(false); });
+  panel.addEventListener("click", function(e){ if(e.target.closest("a")) setMenu(false); });
   document.addEventListener("keydown", function(e){
-    if(e.key === "Escape" && mainNav.classList.contains("open")){ setMenu(false); menuBtn.focus(); }
-  });
-  $$("#mainNav a").forEach(function(a){ a.addEventListener("click", function(){ setMenu(false); }); });
-
-  /* ---------------- Journey cards ---------------- */
-  var grid = $("#journeyGrid"), resultsLine = $("#resultsLine"), emptyState = $("#emptyState");
-  var shortlist = [];
-
-  function heartSVG(filled){
-    return '<svg width="20" height="20" viewBox="0 0 24 24" fill="'+(filled?"currentColor":"none")+'" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 20.4 4.7 13a4.9 4.9 0 0 1 7-6.9l.3.3.3-.3a4.9 4.9 0 0 1 7 6.9L12 20.4Z"/></svg>';
-  }
-
-  function renderCards(){
-    grid.innerHTML = JOURNEYS.map(function(j){
-      var saved = shortlist.indexOf(j.id) > -1;
-      return '<article class="journey-card" data-id="'+j.id+'" data-search="'+esc((j.name+" "+j.country+" "+j.title+" "+j.tags.join(" ")).toLowerCase())+'">'
-        + '<div class="card-media">'
-        +   '<img src="'+j.img+'" alt="'+esc(j.imgAlt)+'" width="1200" height="900" loading="lazy" decoding="async">'
-        +   '<span class="card-tag">'+esc(j.tag)+'</span>'
-        +   '<button class="save-btn" type="button" data-save="'+j.id+'" aria-pressed="'+saved+'" aria-label="'+(saved?"Remove ":"Save ")+esc(j.name)+(saved?" from":" to")+' your shortlist">'+heartSVG(saved)+'</button>'
-        + '</div>'
-        + '<div class="card-body">'
-        +   '<p class="card-meta"><span>'+esc(j.country)+'</span><span class="dot" aria-hidden="true"></span><span class="num">'+j.days+' days</span><span class="dot" aria-hidden="true"></span><span>'+esc(j.season)+'</span></p>'
-        +   '<h3>'+esc(j.title)+'</h3>'
-        +   '<p class="card-blurb">'+esc(j.blurb)+'</p>'
-        +   '<div class="card-foot">'
-        +     '<p class="price num">'+money(j.price)+'<small>per person</small></p>'
-        +     '<button class="btn btn-ghost btn-sm" type="button" data-open="'+j.id+'">View Journey</button>'
-        +   '</div>'
-        + '</div>'
-        + '</article>';
-    }).join("");
-  }
-  renderCards();
-
-  grid.addEventListener("click", function(e){
-    var saveBtn = e.target.closest("[data-save]");
-    if(saveBtn){ toggleSave(saveBtn.getAttribute("data-save")); return; }
-    var openBtn = e.target.closest("[data-open]");
-    if(openBtn){ openJourney(openBtn.getAttribute("data-open"), openBtn); }
+    if(e.key === "Escape" && panel.classList.contains("is-open")) setMenu(false);
   });
 
-  /* ---------------- Shortlist ---------------- */
-  var countBadge = $("#shortlistCount");
-  function updateBadge(){
-    countBadge.textContent = String(shortlist.length);
-    countBadge.hidden = shortlist.length === 0;
-  }
-  function syncSaveButtons(){
-    $$("[data-save]").forEach(function(b){
-      var on = shortlist.indexOf(b.getAttribute("data-save")) > -1;
-      b.setAttribute("aria-pressed", String(on));
-      b.innerHTML = heartSVG(on);
-      var j = findJourney(b.getAttribute("data-save"));
-      b.setAttribute("aria-label", (on?"Remove ":"Save ")+j.name+(on?" from":" to")+" your shortlist");
-    });
-  }
-  function findJourney(id){ return JOURNEYS.filter(function(j){return j.id===id;})[0]; }
-  function toggleSave(id){
-    var idx = shortlist.indexOf(id);
-    var j = findJourney(id);
-    if(idx > -1){
-      shortlist.splice(idx,1);
-      toast("Removed "+j.name+" from your shortlist.", "Undo", function(){
-        if(shortlist.indexOf(id) === -1) shortlist.push(id);
-        updateBadge(); syncSaveButtons(); renderShortlistDialog();
+  /* ---------- Month selects ---------- */
+  var searchWhen = document.getElementById("searchWhen");
+  var fMonth = document.getElementById("fMonth");
+  MONTHS.forEach(function(m,i){
+    var o1 = document.createElement("option"); o1.value = i; o1.textContent = m; searchWhen.appendChild(o1);
+    var o2 = document.createElement("option"); o2.value = i; o2.textContent = m; fMonth.appendChild(o2);
+  });
+
+  /* ---------- Reveal on scroll ---------- */
+  var revealEls = document.querySelectorAll(".reveal");
+  if("IntersectionObserver" in window && !reduceMotion){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); }
       });
-    } else {
-      shortlist.push(id);
-      toast("Saved "+j.name+" to your shortlist.");
-    }
-    updateBadge(); syncSaveButtons(); renderShortlistDialog();
+    }, {threshold:.14, rootMargin:"0px 0px -6% 0px"});
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add("in"); });
   }
 
-  var shortlistDialog = $("#shortlistDialog"), shortlistContent = $("#shortlistContent");
-  function renderShortlistDialog(){
-    if(shortlist.length === 0){
-      shortlistContent.innerHTML = '<div class="empty-state" style="border-style:dashed"><h3>Nothing Saved Yet</h3><p>Tap the heart on any journey to keep it here while you decide. Your shortlist stays on this device.</p></div>';
-      return;
+  /* ---------- Counters ---------- */
+  var counters = document.querySelectorAll("[data-count]");
+  function runCounter(el){
+    var target = parseInt(el.getAttribute("data-count"),10);
+    var suffix = el.getAttribute("data-suffix") || "";
+    if(reduceMotion){ el.textContent = target + suffix; return; }
+    var start = null, dur = 1400;
+    function step(ts){
+      if(!start) start = ts;
+      var p = Math.min((ts-start)/dur, 1);
+      var eased = 1 - Math.pow(1-p, 3);
+      el.textContent = Math.round(target*eased) + suffix;
+      if(p < 1) requestAnimationFrame(step);
     }
-    shortlistContent.innerHTML = '<ul class="shortlist-list">' + shortlist.map(function(id){
-      var j = findJourney(id);
-      return '<li><img src="'+j.img+'" alt="" width="64" height="64" loading="lazy"><span><b>'+esc(j.title)+'</b><small class="num">'+j.days+' days · from '+money(j.price)+'</small></span>'
-        + '<button class="remove" type="button" data-remove="'+id+'">Remove</button></li>';
-    }).join("") + '</ul>'
-    + '<div class="form-actions" style="margin-top:1.4rem"><button class="btn btn-primary btn-sm" type="button" id="shortlistEnquire">Enquire About These</button></div>';
+    requestAnimationFrame(step);
   }
-  shortlistContent.addEventListener("click", function(e){
-    var rm = e.target.closest("[data-remove]");
-    if(rm){ toggleSave(rm.getAttribute("data-remove")); return; }
-    if(e.target.closest("#shortlistEnquire")){
-      shortlistDialog.close();
-      prefillEnquiry(shortlist[0], null);
-    }
-  });
-  $("#shortlistOpen").addEventListener("click", function(){
-    renderShortlistDialog();
-    shortlistDialog.showModal();
-  });
+  if("IntersectionObserver" in window){
+    var cio = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ runCounter(en.target); cio.unobserve(en.target); }
+      });
+    }, {threshold:.6});
+    counters.forEach(function(el){ cio.observe(el); });
+  } else { counters.forEach(runCounter); }
 
-  /* ---------------- Journey dialog ---------------- */
-  var journeyDialog = $("#journeyDialog"), dialogBody = $("#journeyDialogBody"), lastFocus = null;
-  function openJourney(id, trigger){
-    var j = findJourney(id);
-    if(!j) return;
-    lastFocus = trigger || document.activeElement;
-    var saved = shortlist.indexOf(j.id) > -1;
-    dialogBody.innerHTML =
-      '<div class="dialog-media">'
-      + '<img src="'+j.modalImg+'" alt="'+esc(j.modalAlt)+'" width="1600" height="900">'
-      + '<button class="dialog-close" type="button" data-close aria-label="Close journey details"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>'
-      + '</div>'
-      + '<div class="dialog-body">'
-      + '<div>'
-      +   '<p class="dialog-kicker">'+esc(j.country)+' · '+esc(j.season)+'</p>'
-      +   '<h2 id="dialogTitle">'+esc(j.title)+'</h2>'
-      +   '<p class="dialog-intro">'+esc(j.blurb)+'</p>'
-      +   '<h3>Day by Day</h3>'
-      +   '<ol class="itin">' + j.itinerary.map(function(row){
-              return '<li><b>'+esc(row[0]).replace("Day ","D")+'</b><span>'+esc(row[1])+'</span></li>';
-            }).join("") + '</ol>'
-      + '</div>'
-      + '<aside>'
-      +   '<h3 style="margin-top:0">The Particulars</h3>'
-      +   '<ul class="facts">'
-      +     '<li><span>Duration</span><b class="num">'+j.days+' days</b></li>'
-      +     '<li><span>Pace</span><b>'+esc(j.pace)+'</b></li>'
-      +     '<li><span>Group</span><b>'+esc(j.group)+'</b></li>'
-      +     '<li><span>Stays</span><b>'+esc(j.stay)+'</b></li>'
-      +     '<li><span>Best month</span><b>'+MONTHS[j.bestMonth]+'</b></li>'
-      +   '</ul>'
-      +   '<h3>What Is Included</h3>'
-      +   '<ul class="includes">' + j.includes.map(function(item){
-              return '<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m4 12.5 5 5L20 6.5"/></svg><span>'+esc(item)+'</span></li>';
-            }).join("") + '</ul>'
-      + '</aside>'
-      + '<div class="dialog-cta">'
-      +   '<p class="price num">'+money(j.price)+'<small>per person, land only</small></p>'
-      +   '<button class="btn btn-ghost" type="button" data-save="'+j.id+'" aria-pressed="'+saved+'">'+heartSVG(saved)+' '+(saved?'Saved':'Save to Shortlist')+'</button>'
-      +   '<button class="btn btn-primary" type="button" data-enquire="'+j.id+'">Enquire About This Journey</button>'
-      + '</div>'
-      + '</div>';
-    journeyDialog.showModal();
-  }
-  dialogBody.addEventListener("click", function(e){
-    if(e.target.closest("[data-close]")){ journeyDialog.close(); return; }
-    var saveBtn = e.target.closest("[data-save]");
-    if(saveBtn){
-      toggleSave(saveBtn.getAttribute("data-save"));
-      var on = shortlist.indexOf(saveBtn.getAttribute("data-save")) > -1;
-      saveBtn.setAttribute("aria-pressed", String(on));
-      saveBtn.innerHTML = heartSVG(on) + " " + (on ? "Saved" : "Save to Shortlist");
-      return;
-    }
-    var enq = e.target.closest("[data-enquire]");
-    if(enq){
-      var id = enq.getAttribute("data-enquire");
-      journeyDialog.close();
-      prefillEnquiry(id, findJourney(id).bestMonth);
-    }
-  });
-  journeyDialog.addEventListener("click", function(e){
-    if(e.target === journeyDialog) journeyDialog.close();
-  });
-  journeyDialog.addEventListener("close", function(){ if(lastFocus) lastFocus.focus(); });
-  shortlistDialog.addEventListener("click", function(e){ if(e.target === shortlistDialog) shortlistDialog.close(); });
+  /* ---------- Search / filter ---------- */
+  var searchForm = document.getElementById("searchForm");
+  var searchWhere = document.getElementById("searchWhere");
+  var searchStatus = document.getElementById("searchStatus");
+  var cards = Array.prototype.slice.call(document.querySelectorAll(".journey-card"));
+  var emptyBox = document.getElementById("journeyEmpty");
+  var emptyText = document.getElementById("journeyEmptyText");
 
-  /* ---------------- Search ---------------- */
-  var searchForm = $("#searchForm"), searchInput = $("#searchInput");
-  function applySearch(raw){
-    var q = (raw || "").trim().toLowerCase();
-    var cards = $$(".journey-card", grid);
+  function filterJourneys(){
+    var q = searchWhere.value.trim().toLowerCase();
     var shown = 0;
     cards.forEach(function(card){
-      var hit = !q || card.getAttribute("data-search").indexOf(q) > -1;
-      card.hidden = !hit;
-      if(hit) shown++;
+      var hay = (card.getAttribute("data-keywords") + " " + card.querySelector("h3").textContent).toLowerCase();
+      var match = !q || hay.indexOf(q) !== -1;
+      card.classList.toggle("is-hidden", !match);
+      if(match) shown++;
     });
-    emptyState.hidden = shown !== 0;
-    if(q){
-      resultsLine.innerHTML = 'Showing <strong class="num">'+shown+'</strong> of <span class="num">'+JOURNEYS.length+'</span> journeys for “'+esc(raw.trim())+'” · <button class="link-btn" type="button" id="inlineClear">clear search</button>';
-      var ic = $("#inlineClear");
-      if(ic) ic.addEventListener("click", function(){ searchInput.value=""; applySearch(""); });
+    emptyBox.hidden = shown !== 0;
+    if(shown === 0){
+      emptyText.textContent = "No journeys match “" + searchWhere.value.trim() + "” yet — our map is deliberately small. Try Kyoto, Patagonia, Marrakech or Lofoten.";
+      searchStatus.textContent = "No matches yet — showing you how to reset below.";
+    } else if(q){
+      searchStatus.textContent = shown + (shown === 1 ? " journey matches" : " journeys match") + " “" + searchWhere.value.trim() + "” — see them below.";
     } else {
-      resultsLine.innerHTML = 'Showing all <strong class="num">'+JOURNEYS.length+'</strong> journeys · each one bookable private or in a group of six';
+      searchStatus.textContent = "Showing all four journeys below.";
     }
+    return shown;
   }
   searchForm.addEventListener("submit", function(e){
     e.preventDefault();
-    applySearch(searchInput.value);
-    $("#journeys").scrollIntoView({behavior: reduceMotion ? "auto" : "smooth", block:"start"});
+    filterJourneys();
+    var m = searchWhen.value;
+    if(m !== ""){ selectMonth(parseInt(m,10), true); fMonth.value = m; }
+    document.getElementById("journeys").scrollIntoView({behavior: reduceMotion ? "auto" : "smooth"});
   });
-  searchInput.addEventListener("input", function(){ applySearch(searchInput.value); });
-  $("#clearSearch").addEventListener("click", function(){ searchInput.value=""; applySearch(""); searchInput.focus(); });
-  $$(".chip").forEach(function(chip){
-    chip.addEventListener("click", function(){
-      searchInput.value = chip.getAttribute("data-chip");
-      applySearch(searchInput.value);
-      $("#journeys").scrollIntoView({behavior: reduceMotion ? "auto" : "smooth", block:"start"});
+  document.getElementById("clearSearch").addEventListener("click", function(){
+    searchWhere.value = ""; searchWhen.value = "";
+    filterJourneys();
+    searchWhere.focus();
+  });
+
+  /* ---------- Modal ---------- */
+  var backdrop = document.getElementById("modalBackdrop");
+  var dialog = document.getElementById("modalDialog");
+  var modalBody = document.getElementById("modalBody");
+  var modalClose = document.getElementById("modalClose");
+  var lastFocus = null;
+
+  function journeyHTML(key){
+    var j = JOURNEYS[key];
+    var itin = j.itinerary.map(function(row){
+      return '<li><span class="day nums">' + row[0] + '</span><span>' + row[1] + '</span></li>';
+    }).join("");
+    var inc = j.includes.map(function(t){
+      return '<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.3L19 7"/></svg><span>' + t + '</span></li>';
+    }).join("");
+    var chips = j.best.map(function(m){ return '<span class="chip">' + MONTHS[m] + '</span>'; }).join("");
+    return '' +
+    '<div class="modal-hero"><img src="' + j.img + '" alt="' + j.imgAlt + '" width="1600" height="800"> +
+    '<div class="modal-inner">' +
+      '<div><p class="modal-kicker">' + j.region + ' · ' + j.days + ' days · ' + j.pace + ' pace</p>' +
+      '<h2 id="modalTitle">' + j.name + '</h2></div>' +
+      '<div class="modal-cols">' +
+        '<div>' +
+          '<p style="color:var(--ink-2)">' + j.overview + '</p>' +
+          '<h3 style="margin:1.6rem 0 .9rem;font-size:1.25rem">How the days unfold</h3>' +
+          '<ol class="itinerary">' + itin + '</ol>' +
+          '<h3 style="margin:1.6rem 0 .5rem;font-size:1.25rem">Always included</h3>' +
+          '<ul class="includes">' + inc + '</ul>' +
+        '</div>' +
+        '<aside class="modal-side" aria-label="Journey facts">' +
+          '<img src="' + j.img2 + '" alt="' + j.img2Alt + '" width="800" height="500" loading="lazy">' +
+          '<dl style="margin:0">' +
+            '<div class="fact-row"><dt>From</dt><dd>' + j.price + '</dd></div>' +
+            '<div class="fact-row"><dt>Length</dt><dd>' + j.days + ' days</dd></div>' +
+            '<div class="fact-row"><dt>Group</dt><dd>' + j.group + '</dd></div>' +
+            '<div class="fact-row"><dt>Pace</dt><dd>' + j.pace + '</dd></div>' +
+          '</dl>' +
+          '<div><p style="font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)">Best months</p><div class="chips">' + chips + '</div></div>' +
+          '<div class="modal-actions" style="margin-top:.4rem">' +
+            '<button class="btn btn-primary btn-sm" type="button" data-enquire="' + key + '">Start an Enquiry</button>' +
+          '</div>' +
+        '</aside>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function openModal(key){
+    lastFocus = document.activeElement;
+    modalBody.innerHTML = journeyHTML(key);
+    backdrop.hidden = false;
+    requestAnimationFrame(function(){ backdrop.classList.add("is-open"); });
+    document.body.classList.add("is-locked");
+    modalClose.focus();
+    var enq = modalBody.querySelector("[data-enquire]");
+    if(enq){
+      enq.addEventListener("click", function(){
+        closeModal();
+        var sel = document.getElementById("fJourney");
+        sel.value = key;
+        var best = JOURNEYS[key].best[0];
+        fMonth.value = String(best);
+        selectMonth(best, false);
+        document.getElementById("enquiry").scrollIntoView({behavior: reduceMotion ? "auto" : "smooth"});
+        setTimeout(function(){ document.getElementById("fName").focus({preventScroll:true}); }, reduceMotion ? 0 : 500);
+      });
+    }
+  }
+  function closeModal(){
+    backdrop.classList.remove("is-open");
+    document.body.classList.remove("is-locked");
+    setTimeout(function(){ backdrop.hidden = true; }, reduceMotion ? 0 : 300);
+    if(lastFocus) lastFocus.focus();
+  }
+  document.querySelectorAll("[data-open-journey]").forEach(function(btn){
+    btn.addEventListener("click", function(){ openModal(btn.getAttribute("data-open-journey")); });
+  });
+  modalClose.addEventListener("click", closeModal);
+  backdrop.addEventListener("click", function(e){ if(e.target === backdrop) closeModal(); });
+  document.addEventListener("keydown", function(e){
+    if(backdrop.hidden) return;
+    if(e.key === "Escape"){ closeModal(); return; }
+    if(e.key === "Tab"){
+      var focusables = dialog.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      if(!focusables.length) return;
+      var first = focusables[0], last = focusables[focusables.length-1];
+      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+  });
+
+  /* ---------- Stories slider ---------- */
+  var track = document.getElementById("sliderTrack");
+  var slides = track.children;
+  var dotsWrap = document.getElementById("sliderDots");
+  var slider = document.getElementById("slider");
+  var index = 0, timer = null;
+  for(var i=0;i<slides.length;i++){
+    (function(n){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-label", "Show story " + (n+1) + " of " + slides.length);
+      b.setAttribute("aria-current", n === 0 ? "true" : "false");
+      b.addEventListener("click", function(){ go(n); restart(); });
+      dotsWrap.appendChild(b);
+    })(i);
+  }
+  function go(n){
+    index = (n + slides.length) % slides.length;
+    track.style.transform = "translateX(-" + (index*100) + "%)";
+    Array.prototype.forEach.call(dotsWrap.children, function(d,i2){
+      d.setAttribute("aria-current", i2 === index ? "true" : "false");
     });
-  });
-  applySearch("");
-
-  /* ---------------- Stories slider ---------------- */
-  var track = $("#sliderTrack"), dotsWrap = $("#sliderDots"), countEl = $("#sliderCount"), liveEl = $("#sliderLive");
-  var slideIndex = 0, autoTimer = null;
-  track.innerHTML = STORIES.map(function(s, i){
-    return '<figure class="slide" role="group" aria-roledescription="slide" aria-label="Story '+(i+1)+' of '+STORIES.length+'">'
-      + '<div class="slide-inner">'
-      +   '<div class="slide-media"><img src="'+s.img+'" alt="'+esc(s.alt)+'" width="800" height="800" loading="lazy" decoding="async"></div>'
-      +   '<blockquote class="slide-quote" style="border:0;margin:0">'
-      +     '<p style="font-family:var(--serif);font-style:italic;font-size:clamp(1.12rem,2.1vw,1.5rem);line-height:1.5">'+esc(s.quote)+'</p>'
-      +     '<figcaption><span class="avatar-note"><b>'+esc(s.name)+'</b><span>'+esc(s.from)+'</span></span><span class="journey-pill">'+esc(s.journey)+'</span></figcaption>'
-      +   '</blockquote>'
-      + '</div></figure>';
-  }).join("");
-  dotsWrap.innerHTML = STORIES.map(function(s, i){
-    return '<button class="dot-btn" type="button" data-dot="'+i+'" aria-label="Go to story '+(i+1)+' of '+STORIES.length+': '+esc(s.name)+'"><i aria-hidden="true"></i></button>';
-  }).join("");
-
-  function goTo(i, announce){
-    slideIndex = (i + STORIES.length) % STORIES.length;
-    track.style.transform = "translateX(-" + (slideIndex * 100) + "%)";
-    $$(".dot-btn", dotsWrap).forEach(function(d, k){ d.setAttribute("aria-current", String(k === slideIndex)); });
-    countEl.textContent = (slideIndex+1) + " / " + STORIES.length;
-    if(announce !== false) liveEl.textContent = "Story " + (slideIndex+1) + " of " + STORIES.length + ": " + STORIES[slideIndex].name + ", " + STORIES[slideIndex].journey;
   }
-  $("#prevSlide").addEventListener("click", function(){ goTo(slideIndex-1); restartAuto(); });
-  $("#nextSlide").addEventListener("click", function(){ goTo(slideIndex+1); restartAuto(); });
-  dotsWrap.addEventListener("click", function(e){
-    var d = e.target.closest("[data-dot]");
-    if(d){ goTo(parseInt(d.getAttribute("data-dot"),10)); restartAuto(); }
-  });
-  var sliderEl = $("#slider"), viewport = $("#sliderViewport");
-  var startX = null;
-  viewport.addEventListener("pointerdown", function(e){ startX = e.clientX; });
-  viewport.addEventListener("pointerup", function(e){
-    if(startX === null) return;
-    var dx = e.clientX - startX;
-    if(Math.abs(dx) > 42){ goTo(slideIndex + (dx < 0 ? 1 : -1)); restartAuto(); }
-    startX = null;
-  });
-  sliderEl.addEventListener("keydown", function(e){
-    if(e.key === "ArrowLeft"){ goTo(slideIndex-1); restartAuto(); }
-    if(e.key === "ArrowRight"){ goTo(slideIndex+1); restartAuto(); }
-  });
-  function startAuto(){
-    if(reduceMotion) return;
-    stopAuto();
-    autoTimer = setInterval(function(){ if(!document.hidden) goTo(slideIndex+1, false); }, 7000);
+  function restart(){
+    if(timer){ clearInterval(timer); timer = null; }
+    if(!reduceMotion){ timer = setInterval(function(){ go(index+1); }, 7000); }
   }
-  function stopAuto(){ if(autoTimer){ clearInterval(autoTimer); autoTimer = null; } }
-  function restartAuto(){ startAuto(); }
-  ["pointerenter","focusin"].forEach(function(ev){ sliderEl.addEventListener(ev, stopAuto); });
-  ["pointerleave","focusout"].forEach(function(ev){ sliderEl.addEventListener(ev, startAuto); });
-  goTo(0, false);
-  startAuto();
-
-  /* ---------------- Month picker ---------------- */
-  var monthBar = $("#monthBar"), calHead = $("#calHead"), calBody = $("#calBody"), panel = $("#monthPanel");
-  var selMonth = 10, selDest = "kyoto";
-  var LEVEL_LABEL = {p:"Peak season", s:"Shoulder season", q:"Quiet season"};
-
-  monthBar.innerHTML = MONTHS_S.map(function(m, i){
-    return '<button class="month-btn" type="button" data-month="'+i+'" aria-pressed="'+(i===selMonth)+'">'+m+'</button>';
-  }).join("");
-  calHead.innerHTML = "<th scope=\"col\">Journey</th>" + MONTHS_S.map(function(m){ return '<th scope="col" abbr="'+m+'">'+m+"</th>"; }).join("");
-  calBody.innerHTML = JOURNEYS.map(function(j){
-    var s = SEASONS[j.id];
-    return '<tr><th scope="row">'+esc(j.name)+'</th>' + s.levels.map(function(lv, m){
-      return '<td><button class="cell '+lv+'" type="button" data-cell="'+j.id+':'+m+'" aria-pressed="false" aria-label="'+esc(j.name)+' in '+MONTHS[m]+': '+LEVEL_LABEL[lv]+'. '+esc(s.notes[m])+'">'+MONTHS_S[m].charAt(0)+'</button></td>';
-    }).join("") + '</tr>';
-  }).join("");
-
-  function renderPanel(){
-    var j = findJourney(selDest), s = SEASONS[selDest], lv = s.levels[selMonth];
-    panel.innerHTML =
-      '<p class="big-month"><small>Selected month</small>'+MONTHS[selMonth]+'</p>'
-      + '<div class="panel-body">'
-      +   '<div class="panel-badges"><span class="pbadge">'+LEVEL_LABEL[lv]+'</span><span class="pbadge temp num">Avg '+s.temps[selMonth]+'°C</span></div>'
-      +   '<h3>'+esc(j.name)+' in '+MONTHS[selMonth]+'</h3>'
-      +   '<p>'+esc(s.notes[selMonth])+' '+(lv==="q" ? "If your dates are flexible, we would point you elsewhere this month — see the table for greener squares." : "A fine month to let "+j.name+" keep you for a while.")+'</p>'
-      + '</div>'
-      + '<button class="btn btn-primary" type="button" id="panelEnquire">Enquire About '+esc(j.name)+' in '+MONTHS_S[selMonth]+'</button>';
-    $("#panelEnquire").addEventListener("click", function(){ prefillEnquiry(selDest, selMonth); });
-  }
-  function syncCalendar(){
-    $$(".month-btn", monthBar).forEach(function(b){ b.setAttribute("aria-pressed", String(parseInt(b.getAttribute("data-month"),10) === selMonth)); });
-    $$(".cell", calBody).forEach(function(c){
-      var parts = c.getAttribute("data-cell").split(":");
-      c.setAttribute("aria-pressed", String(parts[0] === selDest && parseInt(parts[1],10) === selMonth));
-    });
-  }
-  monthBar.addEventListener("click", function(e){
-    var b = e.target.closest("[data-month]");
-    if(!b) return;
-    selMonth = parseInt(b.getAttribute("data-month"),10);
-    syncCalendar(); renderPanel();
+  document.getElementById("slidePrev").addEventListener("click", function(){ go(index-1); restart(); });
+  document.getElementById("slideNext").addEventListener("click", function(){ go(index+1); restart(); });
+  slider.addEventListener("pointerenter", function(){ if(timer){ clearInterval(timer); timer = null; } });
+  slider.addEventListener("pointerleave", restart);
+  slider.addEventListener("focusin", function(){ if(timer){ clearInterval(timer); timer = null; } });
+  slider.addEventListener("focusout", restart);
+  slider.addEventListener("keydown", function(e){
+    if(e.key === "ArrowLeft"){ e.preventDefault(); go(index-1); restart(); }
+    if(e.key === "ArrowRight"){ e.preventDefault(); go(index+1); restart(); }
   });
-  calBody.addEventListener("click", function(e){
-    var c = e.target.closest("[data-cell]");
-    if(!c) return;
-    var parts = c.getAttribute("data-cell").split(":");
-    selDest = parts[0]; selMonth = parseInt(parts[1],10);
-    syncCalendar(); renderPanel();
+  restart();
+
+  /* ---------- Season matrix ---------- */
+  var matrixHead = document.getElementById("matrixHead");
+  var matrixBody = document.getElementById("matrixBody");
+  var seasonTitle = document.getElementById("seasonTitle");
+  var seasonText = document.getElementById("seasonText");
+  var seasonFacts = document.getElementById("seasonFacts");
+  var selectedMonth = null, selectedCell = null;
+  var keys = ["kyoto","patagonia","marrakech","lofoten"];
+
+  M3.forEach(function(m,i){
+    var th = document.createElement("th");
+    th.scope = "col";
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = m;
+    b.setAttribute("aria-pressed","false");
+    b.setAttribute("aria-label", "Show " + MONTHS[i] + " across all journeys");
+    b.addEventListener("click", function(){ selectMonth(i, true); });
+    th.appendChild(b);
+    matrixHead.appendChild(th);
   });
-  syncCalendar(); renderPanel();
 
-  /* ---------------- Enquiry form ---------------- */
-  var form = $("#enquiryForm"), monthSelect = $("#fMonth"), successPanel = $("#successPanel");
-  monthSelect.innerHTML = '<option value="">Choose a month…</option>' + MONTHS.map(function(m,i){ return '<option value="'+i+'">'+m+'</option>'; }).join("");
+  keys.forEach(function(key, r){
+    var tr = document.createElement("tr");
+    var head = document.createElement("th");
+    head.scope = "row";
+    head.className = "row-head";
+    head.innerHTML = '<span class="row-head-inner"><img src="' + JOURNEYS[key].img + '" alt="" width="44" height="44" loading="lazy"><span>' + JOURNEYS[key].name + '</span></span>';
+    tr.appendChild(head);
+    for(var m=0;m<12;m++){
+      (function(month){
+        var td = document.createElement("td");
+        var b = document.createElement("button");
+        b.type = "button";
+        var rating = RATINGS[key][month];
+        b.className = "cell rate-" + rating;
+        b.textContent = TEMPS[key][month] + "°";
+        b.setAttribute("aria-pressed","false");
+        b.setAttribute("aria-label", JOURNEYS[key].name + " in " + MONTHS[month] + ": " + RATING_LABEL[rating] + ", average high " + TEMPS[key][month] + " degrees");
+        b.dataset.key = key; b.dataset.month = month;
+        b.addEventListener("click", function(){ selectCell(key, month); });
+        td.appendChild(b);
+        tr.appendChild(td);
+      })(m);
+    }
+    matrixBody.appendChild(tr);
+  });
 
-  function prefillEnquiry(destId, monthIdx){
-    form.hidden = false;
-    successPanel.hidden = true;
-    if(destId) $("#fDest").value = destId;
-    if(monthIdx !== null && monthIdx !== undefined) monthSelect.value = String(monthIdx);
-    $("#enquiry").scrollIntoView({behavior: reduceMotion ? "auto" : "smooth", block:"start"});
-    setTimeout(function(){ $("#fName").focus({preventScroll:true}); }, reduceMotion ? 0 : 600);
+  function clearPressed(){
+    matrixBody.querySelectorAll("button[aria-pressed='true']").forEach(function(b){ b.setAttribute("aria-pressed","false"); });
+    matrixHead.querySelectorAll("button[aria-pressed='true']").forEach(function(b){ b.setAttribute("aria-pressed","false"); });
   }
+  function selectMonth(m, announce){
+    selectedMonth = m; selectedCell = null;
+    clearPressed();
+    matrixHead.querySelectorAll("button")[m].setAttribute("aria-pressed","true");
+    var ranked = keys.map(function(k){ return {k:k, r:RATINGS[k][m]}; }).sort(function(a,b){ return b.r - a.r; });
+    var bestKey = ranked[0].k;
+    seasonTitle.textContent = MONTHS[m] + ", across our four regions";
+    seasonText.textContent = "In " + MONTHS[m] + " the kindest light falls on " + JOURNEYS[bestKey].name + " (" + RATING_LABEL[ranked[0].r].toLowerCase() + "). " +
+      (NOTES[bestKey] && NOTES[bestKey][m] ? NOTES[bestKey][m] + " " : "") +
+      "Ranking this month: " + ranked.map(function(x){ return JOURNEYS[x.k].name.split(",")[0] + " (" + RATING_LABEL[x.r].toLowerCase() + ")"; }).join(" · ") + ".";
+    seasonFacts.innerHTML = ranked.map(function(x){
+      return '<span><strong>' + JOURNEYS[x.k].name.split(",")[0] + '</strong> ' + TEMPS[x.k][m] + "°C avg high</span>";
+    }).join("");
+    if(announce){ /* panel is aria-live; nothing else needed */ }
+  }
+  function selectCell(key, month){
+    selectedCell = {key:key, month:month};
+    clearPressed();
+    var btn = matrixBody.querySelector("button[data-key='" + key + "'][data-month='" + month + "']");
+    btn.setAttribute("aria-pressed","true");
+    var rating = RATINGS[key][month];
+    var note = (NOTES[key] && NOTES[key][month]) ? NOTES[key][month] : RATING_GENERIC[rating];
+    seasonTitle.textContent = JOURNEYS[key].name + " in " + MONTHS[month];
+    var pill = '<span class="rating-pill">' + RATING_LABEL[rating] + " season</span>";
+    seasonText.innerHTML = pill + "<span style='display:block;margin-top:.6rem'>" + note + "</span>";
+    seasonFacts.innerHTML =
+      '<span><strong>Average high</strong> ' + TEMPS[key][month] + "°C</span>" +
+      '<span><strong>Pace</strong> ' + JOURNEYS[key].pace + "</span>" +
+      '<span><strong>From</strong> ' + JOURNEYS[key].price + " per person</span>";
+  }
+  /* keyboard navigation inside matrix */
+  matrixBody.addEventListener("keydown", function(e){
+    var t = e.target;
+    if(!t.classList || !t.classList.contains("cell")) return;
+    var row = t.closest("tr");
+    var cells = Array.prototype.slice.call(row.querySelectorAll("button"));
+    var rows = Array.prototype.slice.call(matrixBody.querySelectorAll("tr"));
+    var ri = rows.indexOf(row), ci = cells.indexOf(t);
+    var next = null;
+    if(e.key === "ArrowRight") next = cells[(ci+1)%12];
+    if(e.key === "ArrowLeft") next = cells[(ci+11)%12];
+    if(e.key === "ArrowDown") next = rows[(ri+1)%rows.length].querySelectorAll("button")[ci];
+    if(e.key === "ArrowUp") next = rows[(ri+rows.length-1)%rows.length].querySelectorAll("button")[ci];
+    if(e.key === "Home") next = cells[0];
+    if(e.key === "End") next = cells[11];
+    if(next){ e.preventDefault(); next.focus(); }
+  });
+  selectMonth(9, false); /* October as a welcoming default */
 
-  function setError(input, msgEl, msg){
-    var inputEl = $(input);
-    if(msg){ inputEl.setAttribute("aria-invalid","true"); $(msgEl).textContent = msg; }
-    else { inputEl.removeAttribute("aria-invalid"); $(msgEl).textContent = ""; }
+  /* ---------- Enquiry form ---------- */
+  var form = document.getElementById("enquiryForm");
+  var success = document.getElementById("formSuccess");
+  var successText = document.getElementById("successText");
+  function setErr(input, errEl, msg){
+    errEl.textContent = msg || "";
+    if(msg){ input.setAttribute("aria-invalid","true"); } else { input.removeAttribute("aria-invalid"); }
   }
   form.addEventListener("submit", function(e){
     e.preventDefault();
-    var ok = true, firstBad = null;
-    var name = $("#fName"), email = $("#fEmail"), dest = $("#fDest"), month = $("#fMonth"), pax = $("#fPax");
-    if(!name.value.trim()){ setError("#fName","#eName","Please tell us your name."); ok=false; firstBad=firstBad||name; } else setError("#fName","#eName","");
+    var name = document.getElementById("fName");
+    var email = document.getElementById("fEmail");
+    var msg = document.getElementById("fMessage");
+    var ok = true;
+    if(name.value.trim().length < 2){ setErr(name, document.getElementById("errName"), "Please tell us your name so we know who to write back to."); ok = false; }
+    else setErr(name, document.getElementById("errName"), "");
     var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim());
-    if(!emailOk){ setError("#fEmail","#eEmail","Please enter a valid email, like you@example.com."); ok=false; firstBad=firstBad||email; } else setError("#fEmail","#eEmail","");
-    if(!dest.value){ setError("#fDest","#eDest","Please choose a destination."); ok=false; firstBad=firstBad||dest; } else setError("#fDest","#eDest","");
-    if(month.value === ""){ setError("#fMonth","#eMonth","Please pick a month — we can advise later."); ok=false; firstBad=firstBad||month; } else setError("#fMonth","#eMonth","");
-    var paxN = parseInt(pax.value,10);
-    if(isNaN(paxN) || paxN < 1 || paxN > 6){ setError("#fPax","#ePax","We plan for 1–6 travellers per group."); ok=false; firstBad=firstBad||pax; } else setError("#fPax","#ePax","");
-    if(!ok){ firstBad.focus(); return; }
-
-    var submitBtn = $("#enqSubmit");
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Sending…";
-    setTimeout(function(){
-      var destLabel = dest.options[dest.selectedIndex].text;
-      var paceLabel = $("#fPace").options[$("#fPace").selectedIndex].text;
-      $("#successSummary").innerHTML =
-        '<dt>Name</dt><dd>'+esc(name.value.trim())+'</dd>'
-        + '<dt>Journey</dt><dd>'+esc(destLabel)+'</dd>'
-        + '<dt>Month</dt><dd>'+MONTHS[parseInt(month.value,10)]+' · '+paxN+' traveller'+(paxN>1?"s":"")+'</dd>'
-        + '<dt>Pace</dt><dd>'+esc(paceLabel)+'</dd>';
-      form.hidden = true;
-      successPanel.hidden = false;
-      successPanel.focus();
-      submitBtn.disabled = false;
-      submitBtn.textContent = "Send My Enquiry";
-      toast("Enquiry sent — watch your inbox for a planner's reply.");
-    }, 900);
-  });
-  ["#fName","#fEmail","#fDest","#fMonth","#fPax"].forEach(function(sel){
-    $(sel).addEventListener("input", function(){
-      var map = {"#fName":"#eName","#fEmail":"#eEmail","#fDest":"#eDest","#fMonth":"#eMonth","#fPax":"#ePax"};
-      setError(sel, map[sel], "");
-    });
-  });
-  $("#enqReset").addEventListener("click", function(){
-    if(confirm("Clear everything you have typed into this form?")){
-      form.reset();
-      ["#fName","#fEmail","#fDest","#fMonth","#fPax"].forEach(function(sel){
-        var map = {"#fName":"#eName","#fEmail":"#eEmail","#fDest":"#eDest","#fMonth":"#eMonth","#fPax":"#ePax"};
-        setError(sel, map[sel], "");
-      });
-      toast("Form cleared.");
-    }
-  });
-  $("#enqAgain").addEventListener("click", function(){
-    form.reset();
-    form.hidden = false;
-    successPanel.hidden = true;
-    $("#fName").focus();
-  });
-
-  /* ---------------- Newsletter ---------------- */
-  $("#newsForm").addEventListener("submit", function(e){
-    e.preventDefault();
-    var input = $("#newsEmail");
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(input.value.trim())){
-      toast("That email doesn't look right — mind checking it?");
-      input.focus();
+    if(!emailOk){ setErr(email, document.getElementById("errEmail"), "That email looks incomplete — check for a typo, perhaps?"); ok = false; }
+    else setErr(email, document.getElementById("errEmail"), "");
+    if(msg.value.trim().length > 600){ setErr(msg, document.getElementById("errMessage"), "Lovely detail — please keep it under 600 characters."); ok = false; }
+    else setErr(msg, document.getElementById("errMessage"), "");
+    if(!ok){
+      var firstBad = form.querySelector("[aria-invalid='true']");
+      if(firstBad) firstBad.focus();
       return;
     }
-    toast("You're on the list — the next dispatch lands on the first Sunday of the month.");
-    input.value = "";
+    var jKey = document.getElementById("fJourney").value;
+    var mName = fMonth.value === "" ? "a flexible month" : MONTHS[parseInt(fMonth.value,10)];
+    var jName = jKey ? JOURNEYS[jKey].name : "a journey we will choose together";
+    successText.textContent = "Thank you, " + name.value.trim().split(" ")[0] + " — your note about " + jName + " in " + mName.toLowerCase() +
+      " is on our studio table. Expect a hand-drawn route sketch within two working days" +
+      (document.getElementById("fNews").checked ? ", and the next seasonal almanac in your inbox." : ".");
+    form.hidden = true;
+    success.hidden = false;
+    success.focus ? success.setAttribute("tabindex","-1") : null;
+    success.focus();
+  });
+  document.getElementById("sendAnother").addEventListener("click", function(){
+    form.reset();
+    form.hidden = false;
+    success.hidden = true;
+    document.getElementById("fName").focus();
   });
 
-  /* ---------------- Reveal on scroll ---------------- */
-  var revealEls = $$(".reveal");
-  if(reduceMotion || !("IntersectionObserver" in window)){
-    revealEls.forEach(function(el){ el.classList.add("is-visible"); });
-  } else {
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){ entry.target.classList.add("is-visible"); io.unobserve(entry.target); }
-      });
-    }, {threshold:.12, rootMargin:"0px 0px -8% 0px"});
-    revealEls.forEach(function(el){ io.observe(el); });
-  }
-
-  $("#year").textContent = String(new Date().getFullYear());
+  /* ---------- Year ---------- */
+  document.getElementById("year").textContent = String(new Date().getFullYear());
 })();
 </script>
 <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
