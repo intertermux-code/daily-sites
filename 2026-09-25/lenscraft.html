@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Lenscraft is the wedding photography studio of Camille Roux — quiet, honest photographs for the loudest day of your life. Based in Florence, available worldwide.">
+<meta name="theme-color" content="#faf8f4">
+<title>Lenscraft — Wedding Photography by Camille Roux</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#faf8f4;
+    --paper-2:#f4efe6;
+    --card:#fffdf8;
+    --ink:#2a2724;
+    --ink-2:#57524a;
+    --ink-3:#8a8478;
+    --line:#e3dccd;
+    --bronze:#9c7a45;
+    --charcoal:#262220;
+    --serif:"Cormorant Garamond",Georgia,serif;
+    --sans:"Jost","Helvetica Neue",Arial,sans-serif;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  html{color-scheme:light;scroll-behavior:smooth;scroll-padding-top:96px}
+  *,*::before,*::after{box-sizing:border-box}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--sans);font-weight:300;font-size:1.0625rem;line-height:1.7;
+    -webkit-font-smoothing:antialiased;touch-action:manipulation;
+  }
+  body.no-scroll{overflow:hidden}
+  img{max-width:100%;height:auto;display:block}
+  [hidden]{display:none !important}
+  a{color:inherit}
+  button{font:inherit;color:inherit;touch-action:manipulation}
+  :focus-visible{outline:2px solid var(--bronze);outline-offset:3px;border-radius:2px}
+  ::selection{background:var(--bronze);color:var(--paper)}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .skip-link{position:absolute;left:16px;top:-64px;z-index:120;background:var(--ink);color:var(--paper);padding:12px 22px;text-decoration:none;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;transition:transform .3s var(--ease)}
+  .skip-link:focus{top:16px}
+  .wrap{width:min(1200px,92vw);margin-inline:auto}
+  .num{font-variant-numeric:tabular-nums}
+
+  /* ---------- Type ---------- */
+  h1,h2,h3{font-family:var(--serif);font-weight:300;margin:0;text-wrap:balance}
+  h1{font-size:clamp(3.6rem,11vw,8.6rem);line-height:.94;letter-spacing:-.015em}
+  h1 .ital{font-style:italic;display:block;padding-left:.6em}
+  h2{font-size:clamp(2.3rem,5vw,3.7rem);line-height:1.06;letter-spacing:-.01em}
+  h3{font-size:1.5rem;line-height:1.25}
+  p{margin:0 0 1.1em}
+  .overline{display:flex;align-items:center;gap:14px;font-size:.7rem;font-weight:500;letter-spacing:.34em;text-transform:uppercase;color:var(--bronze);margin:0 0 22px}
+  .overline::before{content:"";width:44px;height:1px;background:var(--bronze);flex:none}
+  .lede{font-size:clamp(1.08rem,1.6vw,1.28rem);color:var(--ink-2);max-width:52ch}
+  .serif-i{font-family:var(--serif);font-style:italic}
+
+  /* ---------- Buttons ---------- */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 30px;border:1px solid var(--ink);background:transparent;color:var(--ink);text-decoration:none;font-size:.74rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background-color .35s var(--ease),color .35s var(--ease),border-color .35s var(--ease),transform .35s var(--ease)}
+  .btn:hover{background:var(--ink);color:var(--paper);transform:translateY(-2px)}
+  .btn-solid{background:var(--ink);color:var(--paper)}
+  .btn-solid:hover{background:var(--bronze);border-color:var(--bronze);color:var(--paper)}
+  .btn-light{border-color:rgba(250,248,244,.5);color:var(--paper)}
+  .btn-light:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+  .btn[disabled]{opacity:.55;cursor:wait;transform:none}
+
+  /* ---------- Header ---------- */
+  .site-header{position:fixed;inset:0 0 auto 0;z-index:60;background:rgba(250,248,244,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .4s var(--ease),background-color .4s var(--ease)}
+  .site-header.scrolled{border-bottom-color:var(--line);background:rgba(250,248,244,.95)}
+  .header-in{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:76px}
+  .brand{font-family:var(--serif);font-size:1.55rem;letter-spacing:.02em;text-decoration:none;display:inline-flex;align-items:baseline;gap:8px;min-height:44px}
+  .brand em{font-style:italic;color:var(--bronze)}
+  .brand small{font-family:var(--sans);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3);transform:translateY(-2px)}
+  .primary-nav ul{display:flex;align-items:center;gap:6px;list-style:none;margin:0;padding:0}
+  .primary-nav a:not(.btn){display:inline-flex;align-items:center;min-height:44px;padding:0 14px;text-decoration:none;font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);transition:color .3s var(--ease)}
+  .primary-nav a:not(.btn):hover{color:var(--ink)}
+  .primary-nav .btn{margin-left:14px;min-height:44px;padding:0 22px}
+  .menu-toggle{display:none;width:48px;height:48px;border:1px solid var(--line);background:transparent;cursor:pointer;place-items:center}
+  .menu-toggle .bars{display:block;width:20px;height:9px;position:relative}
+  .menu-toggle .bars::before,.menu-toggle .bars::after{content:"";position:absolute;left:0;width:100%;height:1px;background:var(--ink);transition:transform .35s var(--ease)}
+  .menu-toggle .bars::before{top:0}
+  .menu-toggle .bars::after{top:8px}
+  body.nav-open .menu-toggle .bars::before{transform:translateY(4px) rotate(45deg)}
+  body.nav-open .menu-toggle .bars::after{transform:translateY(-4px) rotate(-45deg)}
+  @media (max-width:900px){
+    .menu-toggle{display:grid}
+    .primary-nav{position:fixed;top:76px;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--line);padding:12px 4vw 30px;opacity:0;transform:translateY(-12px);pointer-events:none;transition:opacity .35s var(--ease),transform .35s var(--ease)}
+    body.nav-open .primary-nav{opacity:1;transform:translateY(0);pointer-events:auto}
+    .primary-nav ul{flex-direction:column;align-items:stretch;gap:2px}
+    .primary-nav a:not(.btn){min-height:52px;font-size:.95rem;padding:0 4px;border-bottom:1px solid var(--line)}
+    .primary-nav .btn{margin:18px 0 0;width:100%}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{padding:clamp(120px,17vh,170px) 0 40px}
+  .hero-grid{display:grid;gap:56px;align-items:center}
+  @media (min-width:940px){.hero-grid{grid-template-columns:1.04fr .96fr;gap:72px}}
+  .hero h1{margin:0 0 30px}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin:36px 0 26px}
+  .hero-note{font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+  .hero-media{position:relative;padding:0 0 44px 44px}
+  .hero-frame{position:absolute;top:24px;right:-14px;bottom:64px;left:58px;border:1px solid var(--line);pointer-events:none}
+  .hero-main{position:relative;width:100%;aspect-ratio:3/4;object-fit:cover;filter:saturate(.92)}
+  .hero-inset{position:absolute;left:0;bottom:0;width:42%;border:10px solid var(--paper);box-shadow:0 24px 50px rgba(42,39,36,.16);animation:floaty 9s var(--ease) infinite alternate}
+  @keyframes floaty{from{transform:translateY(0)}to{transform:translateY(-12px)}}
+  .scroll-cue{display:inline-flex;align-items:center;gap:12px;margin-top:44px;font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3);text-decoration:none}
+  .scroll-cue svg{transition:transform .4s var(--ease)}
+  .scroll-cue:hover svg{transform:translateY(4px)}
+  @media (max-width:939px){.hero-media{padding:0 0 32px 28px}.hero-frame{left:40px;right:-6px}}
+
+  /* ---------- Press ---------- */
+  .press{border-block:1px solid var(--line);padding:20px 0;margin-top:56px}
+  .press-in{display:flex;flex-wrap:wrap;align-items:center;gap:14px 38px;justify-content:center}
+  .press-label{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)}
+  .press-name{font-family:var(--serif);font-style:italic;font-size:1.12rem;color:var(--ink-2)}
+
+  /* ---------- Sections ---------- */
+  section{padding:clamp(76px,10vw,124px) 0}
+  .section-head{display:grid;gap:20px;max-width:760px;margin-bottom:clamp(40px,5vw,64px)}
+  @media (min-width:900px){.section-head.split{grid-template-columns:1.2fr .8fr;align-items:end;max-width:none}}
+
+  /* ---------- Gallery ---------- */
+  .filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+  .chip{min-height:44px;padding:0 22px;border:1px solid var(--line);background:transparent;border-radius:999px;font-size:.72rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);cursor:pointer;transition:background-color .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease)}
+  .chip:hover{border-color:var(--ink);color:var(--ink)}
+  .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+  .gallery-count{font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);margin:0 0 30px}
+  .gallery{columns:1;column-gap:22px}
+  @media (min-width:640px){.gallery{columns:2}}
+  @media (min-width:1024px){.gallery{columns:3}}
+  .tile{break-inside:avoid;margin:0 0 22px;position:relative}
+  .tile.pop{animation:tileIn .55s var(--ease) both}
+  @keyframes tileIn{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
+  .tile-btn{display:block;width:100%;padding:0;border:0;background:none;cursor:pointer;overflow:hidden;position:relative}
+  .tile-btn img{width:100%;transition:transform 1s var(--ease),filter .6s var(--ease);filter:saturate(.94)}
+  .tile-btn::after{content:"";position:absolute;inset:0;background:rgba(38,34,32,0);transition:background-color .45s var(--ease)}
+  .tile-btn:hover img,.tile-btn:focus-visible img{transform:scale(1.045)}
+  .tile-btn:hover::after,.tile-btn:focus-visible::after{background:rgba(38,34,32,.14)}
+  .tile-btn .zoom{position:absolute;right:14px;bottom:14px;z-index:2;width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:rgba(250,248,244,.92);color:var(--ink);opacity:0;transform:translateY(8px);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+  .tile-btn:hover .zoom,.tile-btn:focus-visible .zoom{opacity:1;transform:none}
+  figcaption.tile-cap{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 2px 0}
+  .tile-title{font-family:var(--serif);font-style:italic;font-size:1.14rem}
+  .tile-meta{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
+  .gallery-empty{border:1px dashed var(--line);padding:56px 28px;text-align:center;color:var(--ink-2)}
+
+  /* ---------- Lightbox ---------- */
+  .lightbox{position:fixed;inset:0;z-index:90;background:rgba(24,22,19,.95);display:grid;place-items:center;padding:76px 20px}
+  .lb-figure{margin:0;max-width:min(1080px,94vw);text-align:center}
+  .lb-figure img{max-height:74vh;width:auto;max-width:100%;margin-inline:auto;object-fit:contain;box-shadow:0 40px 90px rgba(0,0,0,.5)}
+  .lb-cap{margin-top:18px;color:var(--paper)}
+  .lb-cap .lb-title{font-family:var(--serif);font-style:italic;font-size:1.3rem;display:block}
+  .lb-meta{font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(250,248,244,.6)}
+  .lb-btn{position:fixed;width:52px;height:52px;border-radius:50%;border:1px solid rgba(250,248,244,.35);background:transparent;color:var(--paper);display:grid;place-items:center;cursor:pointer;transition:background-color .3s var(--ease),border-color .3s var(--ease),transform .3s var(--ease)}
+  .lb-btn:hover{background:rgba(250,248,244,.14);border-color:var(--paper);transform:scale(1.05)}
+  .lb-close{top:20px;right:20px}
+  .lb-prev{left:16px;top:50%;translate:0 -50%}
+  .lb-next{right:16px;top:50%;translate:0 -50%}
+  .lb-count{position:fixed;top:34px;left:24px;color:rgba(250,248,244,.7);font-size:.78rem;letter-spacing:.24em;margin:0}
+  @media (max-width:640px){.lb-prev{left:10px}.lb-next{right:10px}}
+
+  /* ---------- Quote band ---------- */
+  .quote-band{background:var(--charcoal);color:var(--paper);padding:clamp(84px,11vw,132px) 0}
+  .quote-band blockquote{margin:0;max-width:900px}
+  .quote-band p{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(1.65rem,3.6vw,2.7rem);line-height:1.34;text-wrap:balance}
+  .quote-band cite{display:block;margin-top:30px;font-style:normal;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:#c8a878}
+  .quote-mark{font-family:var(--serif);font-size:5rem;line-height:1;color:#c8a878;display:block;margin-bottom:8px}
+
+  /* ---------- About ---------- */
+  .about-grid{display:grid;gap:56px;align-items:start}
+  @media (min-width:940px){.about-grid{grid-template-columns:.9fr 1.1fr;gap:80px}}
+  .about-media{position:relative;padding:0 40px 52px 0}
+  .about-portrait{width:100%;aspect-ratio:3/4;object-fit:cover}
+  .about-gear{position:absolute;right:0;bottom:0;width:52%;border:10px solid var(--paper);box-shadow:0 22px 46px rgba(42,39,36,.14)}
+  .signature{font-family:var(--serif);font-style:italic;font-size:2.1rem;color:var(--bronze);margin:6px 0 26px}
+  .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:26px 18px;margin:38px 0 6px;padding:32px 0 0;border-top:1px solid var(--line)}
+  @media (min-width:700px){.stats{grid-template-columns:repeat(4,1fr)}}
+  .stat b{display:block;font-family:var(--serif);font-weight:300;font-size:2.5rem;line-height:1;font-variant-numeric:tabular-nums}
+  .stat span{font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3)}
+  .approach{list-style:none;margin:34px 0 0;padding:0;display:grid;gap:18px}
+  .approach li{display:grid;grid-template-columns:52px 1fr;gap:16px;align-items:start}
+  .approach .n{font-family:var(--serif);font-style:italic;font-size:1.3rem;color:var(--bronze);line-height:1.4}
+  .approach h3{font-size:1.22rem;margin-bottom:4px}
+  .approach p{margin:0;color:var(--ink-2);font-size:.98rem}
+
+  /* ---------- Packages ---------- */
+  .packages{background:var(--paper-2)}
+  .pkg-grid{display:grid;gap:26px;align-items:stretch}
+  @media (min-width:980px){.pkg-grid{grid-template-columns:repeat(3,1fr);gap:30px}}
+  .pkg{background:var(--card);border:1px solid var(--line);padding:40px 34px 36px;display:flex;flex-direction:column;position:relative;transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+  .pkg:hover{transform:translateY(-6px);box-shadow:0 30px 60px rgba(42,39,36,.09)}
+  .pkg.featured{background:var(--charcoal);color:var(--paper);border-color:var(--charcoal)}
+  @media (min-width:980px){.pkg.featured{transform:translateY(-16px)}.pkg.featured:hover{transform:translateY(-22px)}}
+  .pkg-badge{position:absolute;top:-13px;left:34px;background:var(--bronze);color:var(--paper);font-size:.62rem;font-weight:500;letter-spacing:.26em;text-transform:uppercase;padding:7px 14px}
+  .pkg h3{font-size:1.9rem;margin-bottom:6px}
+  .pkg .pkg-tag{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);margin:0 0 26px}
+  .pkg.featured .pkg-tag{color:rgba(250,248,244,.6)}
+  .pkg .price{font-family:var(--serif);font-weight:300;font-size:3rem;line-height:1;font-variant-numeric:tabular-nums}
+  .pkg .per{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);display:block;margin:10px 0 26px}
+  .pkg.featured .per{color:rgba(250,248,244,.6)}
+  .pkg ul{list-style:none;margin:0 0 32px;padding:0;display:grid;gap:12px}
+  .pkg li{display:grid;grid-template-columns:22px 1fr;gap:10px;font-size:.96rem;color:var(--ink-2)}
+  .pkg.featured li{color:rgba(250,248,244,.82)}
+  .pkg li svg{margin-top:5px;color:var(--bronze)}
+  .pkg .btn{margin-top:auto;width:100%}
+  .pkg.featured .btn{border-color:var(--paper);color:var(--paper)}
+  .pkg.featured .btn:hover{background:var(--paper);color:var(--ink)}
+  .pkg-note{margin:44px auto 0;max-width:640px;text-align:center;color:var(--ink-2);font-size:.95rem}
+
+  /* ---------- Reviews ---------- */
+  .rev-grid{display:grid;gap:26px}
+  @media (min-width:900px){.rev-grid{grid-template-columns:repeat(3,1fr)}}
+  .rev{background:var(--card);border:1px solid var(--line);padding:34px 30px;display:flex;flex-direction:column;gap:18px}
+  .stars{display:flex;gap:4px;color:var(--bronze)}
+  .rev blockquote{margin:0;font-family:var(--serif);font-size:1.16rem;line-height:1.6;color:var(--ink-2);display:-webkit-box;-webkit-line-clamp:7;-webkit-box-orient:vertical;overflow:hidden}
+  .rev-who{display:flex;align-items:center;gap:14px;margin-top:auto;padding-top:6px;border-top:1px solid var(--line)}
+  .rev-who img{width:52px;height:52px;border-radius:50%;object-fit:cover;flex:none}
+  .rev-who h3{font-size:1.2rem}
+  .rev-who p{margin:2px 0 0;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)}
+
+  /* ---------- Contact ---------- */
+  .contact{background:var(--paper-2)}
+  .contact-grid{display:grid;gap:56px}
+  @media (min-width:940px){.contact-grid{grid-template-columns:.85fr 1.15fr;gap:80px}}
+  .info-list{list-style:none;margin:30px 0 0;padding:0;display:grid;gap:22px}
+  .info-list li{display:grid;gap:4px}
+  .info-list .k{font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--bronze)}
+  .info-list .v{font-size:1.05rem;color:var(--ink-2)}
+  .info-list a{text-decoration:none;border-bottom:1px solid var(--line);transition:border-color .3s var(--ease),color .3s var(--ease)}
+  .info-list a:hover{color:var(--bronze);border-color:var(--bronze)}
+  form{display:grid;gap:26px}
+  .field{display:grid;gap:8px}
+  .field label{font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-2)}
+  .field input,.field select,.field textarea{width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;padding:12px 2px;font:inherit;font-size:1.02rem;color:var(--ink);border-radius:0;transition:border-color .3s var(--ease)}
+  .field textarea{resize:vertical;min-height:110px}
+  .field input:focus,.field select:focus,.field textarea:focus{border-bottom-color:var(--bronze);outline:none}
+  .field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible{outline:2px solid var(--bronze);outline-offset:4px}
+  .field-row{display:grid;gap:26px}
+  @media (min-width:640px){.field-row{grid-template-columns:1fr 1fr}}
+  .form-success{border:1px solid var(--bronze);background:var(--card);padding:44px 36px;text-align:center}
+  .form-success svg{color:var(--bronze);margin:0 auto 16px;display:block}
+  .form-success h3{font-size:2rem;margin-bottom:10px}
+  .form-success p{color:var(--ink-2);max-width:44ch;margin-inline:auto}
+  .form-success .btn{margin-top:14px}
+
+  /* ---------- Footer ---------- */
+  .site-footer{background:var(--charcoal);color:rgba(250,248,244,.78);padding:clamp(64px,8vw,96px) 0 34px}
+  .footer-grid{display:grid;gap:44px}
+  @media (min-width:860px){.footer-grid{grid-template-columns:1.4fr 1fr 1fr 1fr}}
+  .footer-brand{font-family:var(--serif);font-size:2rem;color:var(--paper);margin:0 0 14px}
+  .footer-brand em{color:#c8a878}
+  .footer-h{font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:#c8a878;margin:0 0 18px}
+  .site-footer ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+  .site-footer a{color:rgba(250,248,244,.78);text-decoration:none;transition:color .3s var(--ease);display:inline-flex;align-items:center;min-height:32px}
+  .site-footer a:hover{color:var(--paper)}
+  .footer-bottom{display:flex;flex-wrap:wrap;gap:14px 28px;justify-content:space-between;align-items:center;margin-top:60px;padding-top:26px;border-top:1px solid rgba(250,248,244,.14);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(250,248,244,.5)}
+  .footer-bottom a{min-height:44px}
+
+  /* ---------- Reveal ---------- */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .85s var(--ease),transform .85s var(--ease)}
+  .reveal.is-in{opacity:1;transform:translateY(0)}
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+    .reveal{opacity:1;transform:none}
+    .hero-inset{animation:none}
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to Content</a>
+
+<header class="site-header" id="top">
+  <div class="wrap header-in">
+    <a class="brand" href="#top" aria-label="Lens back to top">Lens<em>craft</em><small>Studio</small></a>
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="primaryNav" aria-label="Open menu"><span class="bars" aria-hidden="true"></span></button>
+    <nav class="primary-nav" id="primaryNav" aria-label="Primary">
+      <ul>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#collections">Collections</a></li>
+        <li><a href="#kind-words">Kind Words</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a class="btn btn-solid" href="#contact">Book a Date</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" aria-labelledby="heroName">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="overline">Lenscraft · Wedding &amp; Editorial Photography</p>
+        <h1 id="heroName">Camille<span class="ital">Roux</span></h1>
+        <p class="lede">Quiet, honest photographs for the loudest day of your life. I document weddings the way they actually feel — unposed, unhurried, and impossible to repeat… then I hand them back to you in light.</p>
+        <div class="hero-cta">
+          <a class="btn btn-solid" href="#portfolio">View the Portfolio</a>
+          <a class="btn" href="#contact">Check Your Date</a>
+        </div>
+        <p class="hero-note">Based in Florence · Packing for everywhere else</p>
+        <a class="scroll-cue" href="#portfolio">Scroll to explore
+          <svg width="14" height="22" viewBox="0 0 14 22" fill="none" aria-hidden="true"><path d="M7 1v19M1 14l6 6 6-6" stroke="currentColor" stroke-width="1.2"/></svg>
+        </a>
+      </div>
+      <div class="hero-media">
+        <span class="hero-frame" aria-hidden="true"></span>
+        <img class="hero-main" src="https://picsum.photos/seed/lenscraft-7470076d4098/1600/900?auto=format&fit=crop&w=900&h=1200&q=80" width="900" height="1200" alt="Bride and groom standing close together beneath a sheer silk veil, photographed in soft monochrome light" fetchpriority="high">
+        <img class="hero-inset" src="https://picsum.photos/seed/lenscraft-247f67b3557e/1600/900?auto=format&fit=crop&w=640&h=640&q=80" width="640" height="640" alt="Close-up of a gold engagement ring resting in cupped hands" loading="lazy">
+      </div>
+    </div>
+    <div class="wrap press reveal">
+      <div class="press-in">
+        <span class="press-label">As featured in</span>
+        <span class="press-name">Vogue Weddings</span>
+        <span class="press-name">Harper’s Bazaar</span>
+        <span class="press-name">Brides</span>
+        <span class="press-name">Junebug Weddings</span>
+        <span class="press-name">Style Me Pretty</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY ============ -->
+  <section id="portfolio" aria-labelledby="portfolioTitle">
+    <div class="wrap">
+      <div class="section-head split reveal">
+        <div>
+          <p class="overline">Portfolio</p>
+          <h2 id="portfolioTitle">Selected Work, 2019 — 2026</h2>
+        </div>
+        <p class="lede">Twelve frames from four hundred weddings. Filter by the moments that matter most to you, then click any photograph to sit with it for a while.</p>
+      </div>
+
+      <div class="filters reveal" role="group" aria-label="Filter gallery by category">
+        <button class="chip" type="button" data-filter="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-filter="portraits" aria-pressed="false">Portraits</button>
+        <button class="chip" type="button" data-filter="ceremony" aria-pressed="false">Ceremony</button>
+        <button class="chip" type="button" data-filter="details" aria-pressed="false">Details</button>
+      </div>
+      <p class="gallery-count num" id="galleryCount" aria-live="polite">Showing 12 of 12 photographs</p>
+
+      <div class="gallery" id="gallery">
+        <figure class="tile" data-cat="portraits">
+          <button class="tile-btn" type="button" data-full="https://picsum.photos/seed/lenscraft-611481863552/1600/900?auto=format&fit=crop&w=1200&h=1600&q=80" data-title="Amara &amp; Jonah" data-meta="Portraits · Rosewood Manor" data-alt="Bride and groom embracing in a sunlit meadow, foreheads touching" aria-label="View photograph: Amara and Jonah, Portraits, Rosewood Manor">
+            <img src="https://picsum.photos/seed/lenscraft-611481863552/1600/900?auto=format&fit=crop&w=900&h=1200&q=80" width="900" height="1200" alt="Bride and groom embracing in a sunlit meadow, foreheads touching" loading="lazy">
+            <span class="zoom" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          </button>
+          <figcaption class="tile-cap"><span class="tile-title">Amara &amp; Jonah</span><span class="tile-meta">Portraits</span></figcaption>
+        </figure>
+
+        <figure class="tile" data-cat="ceremony">
+          <button class="tile-btn" type="button" data-full="https://picsum.photos/seed/lenscraft-80b456fea0bc/1600/900?auto=format&fit=crop&w=1600&h=1200&q=80" data-title="The Recessional" data-meta="Ceremony · St. Anne’s Chapel" data-alt="Newly married couple walking back down the aisle as guests applaud" aria-label="View photograph: The Recessional, Ceremony, St. Anne’s Chapel">
+            <img src="https://picsum.photos/seed/lenscraft-80b456fea0bc/1600/900?auto=format&fit=crop&w=1200&h=900&q=80" width="1200" height="900" alt="Newly married couple walking back down the aisle as guests applaud" loading="lazy">
+            <span class="zoom" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          </button>
+          <figcaption class="tile-cap"><span class="tile-title">The Recessional</span><span class="tile-meta">Ceremony</span></figcaption>
+        </figure>
+
+        <figure class="tile" data-cat="details">
+          <button class="tile-btn" type="button" data-full="https://picsum.photos/seed/lenscraft-e635ba2c371e/1600/900?auto=format&fit=crop&w=1200&h=1600&q=80" data-title="The Bouquet" data-meta="Details · Garden Roses &amp; Sage" data-alt="Bride holding a loose garden bouquet of white roses and sage greenery" aria-label="View photograph: The Bouquet, Details, garden roses and sage">
+            <img src="https://picsum.photos/seed/lenscraft-e635ba2c371e/1600/900?auto=format&fit=crop&w=900&h=1200&q=80" width="900" height="1200" alt="Bride holding a loose garden bouquet of white roses and sage greenery" loading="lazy">
+            <span class="zoom" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          </button>
+          <figcaption class="tile-cap"><span class="tile-title">The Bouquet</span><span class="tile-meta">Details</span></figcaption>
+        </figure>
+
+        <figure class="tile" data-cat="portraits">
+          <button class="tile-btn" type="button" data-full="https://picsum.photos/seed/lenscraft-95e059d581b8/1600/900?auto=format&fit=crop&w=1200&h=1600&q=80" data-title="Morning Light" data-meta="Portraits · The Bridal Suite" data-alt="Bride in a lace gown standing in warm morning window light" aria-label="View photograph: Morning Light, Portraits, the bridal suite">
+            <img src="https://picsum.photos/seed/lenscraft-95e059d581b8/1600/900?auto=format&fit=crop&w=900&h=1200&q=80" width="900" height="1200" alt="Bride in a lace gown standing in warm morning window light" loading="lazy">
+            <span class="zoom" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          </button>
+          <figcaption class="tile-cap"><span class="tile-title">Morning Light</span><span class="tile-meta">Portraits</span></figcaption>
+        </figure>
+
+        <figure class="tile" data-cat="ceremony">
+          <button class="tile-btn" type="button" data-full="https://picsum.photos/seed/lenscraft-92182e662485/1600/900?auto=format&fit=crop&w=1600&h=1200&q=80" data-title="Sparkler Exit" data-meta="Ceremony · Nightfall, Villa Serena" data-alt="Couple kissing beneath a tunnel of guest-held sparklers at night" aria-label="View photograph: Sparkler Exit, Ceremony, nightfall at Villa Serena">
+            <img src="https://picsum.photos/seed/lenscraft-92182e662485/1600/900?auto=format&fit=crop&w=1200&h=900&q=80" width="1200" height="900" alt="Couple kissing beneath a tunnel of guest-held sparklers at night" loading="lazy">
+            <span class="zoom" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          </button>
+          <figcaption class="tile-cap"><span class="tile-title">Sparkler Exit</span><span class="tile-meta">Ceremony</span></figcaption>
+        </figure>
+
+        <figure class="tile" data-cat="details">
+          <button class="tile-btn" type="button" data-full="https://picsum.photos/seed/lenscraft-715cb0215aed/1600/900?auto=format&fit=crop&w=1600&h=1200&q=80" data-title="The Long Table" data-meta="Details · Olive Grove Reception" data-alt="Candlelit reception table dressed in linen beneath olive trees" aria-label="View photograph: The Long Table, Details, olive grove reception">
+            <img src="https://picsum.photos/seed/lenscraft-715cb0215aed/1600/900?auto=format&fit=crop&w=1200&h=900&q=80" width="1200" height="900" alt="Candlelit reception table dressed in linen beneath olive trees" loading="lazy">
+            <span class="zoom" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          </button>
+          <figcaption class="tile-cap"><span class="tile-title">The Long Table</span><span class="tile-meta">Details</span></figcaption>
+        </figure>
+
+        <figure class="tile" data-cat="portraits">
+          <button class="tile-btn" type="button" data-full="https://picsum.photos/seed/lenscraft-4387d4b0b4c6/1600/900?auto=format&fit=crop&w=1600&h=1200&q=80" data-title="Hand in Hand" data-meta="Portraits · Willow Creek" data-alt="Couple walking through tall grass holding hands, bride laughing" aria-label="View photograph: Hand in Hand, Portraits, Willow Creek">
+            <img src="https://picsum.photos/seed/lenscraft-4387d4b0b4c6/1600/900?auto=format&fit=crop&w=1200&h=900&q=80" width="1200" height="900" alt="Couple walking through tall grass holding hands, bride laughing" loading="lazy">
+            <span class="zoom" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          </button>
+          <figcaption class="tile-cap"><span class="tile-title">Hand in Hand</span><span class="tile-meta">Portraits</span></figcaption>
+        </figure>
+
+        <figure class="tile" data-cat="ceremony">
+          <button class="tile-btn" type="button" data-full="https://picsum.photos/seed/lenscraft-34cb3982ef74/1600/900?auto=format&fit=crop&w=1200&h=1600&q=80" data-title="The Vows" data-meta="Ceremony · Santorini Cliffside" data-alt="Bride and groom exchanging vows facing each other outdoors" aria-label="View photograph: The Vows, Ceremony, Santorini cliffside">
+            <img src="https://picsum.photos/seed/lenscraft-34cb3982ef74/1600/900?auto=format&fit=crop&w=900&h=1200&q=80" width="900" height="1200" alt="Bride and groom exchanging vows facing each other outdoors" loading="lazy">
+            <span class="zoom" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          </button>
+          <figcaption class="tile-cap"><span class="tile-title">The Vows</span><span class="tile-meta">Ceremony</span></figcaption>
+        </figure>
+
+        <figure class="tile" data-cat="details">
+          <button class="tile-btn" type="button" data-full="https://picsum.photos/seed/lenscraft-e9a21285b5f3/1600/900?auto=format&fit=crop&w=1400&h=1400&q=80" data-title="Three Tiers" data-meta="Details · The Wedding Cake" data-alt="Ivory wedding cake decorated with fresh berries and flowers" aria-label="View photograph: Three Tiers, Details, the wedding cake">
+            <img src="https://picsum.photos/seed/lenscraft-e9a21285b5f3/1600/900?auto=format&fit=crop&w=1000&h=1000&q=80" width="1000" height="1000" alt="Ivory wedding cake decorated with fresh berries and flowers" loading="lazy">
+            <span class="zoom" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          </button>
+          <figcaption class="tile-cap"><span class="tile-title">Three Tiers</span><span class="tile-meta">Details</span></figcaption>
+        </figure>
+
+        <figure class="tile" data-cat="portraits">
+          <button class="tile-btn" type="button" data-full="https://picsum.photos/seed/lenscraft-164d1b6ce486/1600/900?auto=format&fit=crop&w=1200&h=1600&q=80" data-title="A Quiet Moment" data-meta="Portraits · Lake Como" data-alt="Couple sharing a quiet embrace beside the lake at dusk" aria-label="View photograph: A Quiet Moment, Portraits, Lake Como">
+            <img src="https://picsum.photos/seed/lenscraft-164d1b6ce486/1600/900?auto=format&fit=crop&w=900&h=1200&q=80" width="900" height="1200" alt="Couple sharing a quiet embrace beside the lake at dusk" loading="lazy">
+            <span class="zoom" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          </button>
+          <figcaption class="tile-cap"><span class="tile-title">A Quiet Moment</span><span class="tile-meta">Portraits</span></figcaption>
+        </figure>
+
+        <figure class="tile" data-cat="ceremony">
+          <button class="tile-btn" type="button" data-full="https://picsum.photos/seed/lenscraft-013ccf25f16a/1600/900?auto=format&fit=crop&w=1600&h=1200&q=80" data-title="The Processional" data-meta="Ceremony · Bridesmaids in Silk" data-alt="Bridesmaids in flowing dresses walking toward the ceremony arch" aria-label="View photograph: The Processional, Ceremony, bridesmaids in silk">
+            <img src="https://picsum.photos/seed/lenscraft-013ccf25f16a/1600/900?auto=format&fit=crop&w=1200&h=900&q=80" width="1200" height="900" alt="Bridesmaids in flowing dresses walking toward the ceremony arch" loading="lazy">
+            <span class="zoom" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          </button>
+          <figcaption class="tile-cap"><span class="tile-title">The Processional</span><span class="tile-meta">Ceremony</span></figcaption>
+        </figure>
+
+        <figure class="tile" data-cat="details">
+          <button class="tile-btn" type="button" data-full="https://picsum.photos/seed/lenscraft-17451cc331bf/1600/900?auto=format&fit=crop&w=1600&h=1200&q=80" data-title="Place Settings" data-meta="Details · Lakeside Terrace" data-alt="Wedding reception table setting with glassware and florals by the water" aria-label="View photograph: Place Settings, Details, lakeside terrace">
+            <img src="https://picsum.photos/seed/lenscraft-17451cc331bf/1600/900?auto=format&fit=crop&w=1200&h=900&q=80" width="1200" height="900" alt="Wedding reception table setting with glassware and florals by the water" loading="lazy">
+            <span class="zoom" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          </button>
+          <figcaption class="tile-cap"><span class="tile-title">Place Settings</span><span class="tile-meta">Details</span></figcaption>
+        </figure>
+      </div>
+
+      <div class="gallery-empty" id="galleryEmpty" hidden>
+        <p>No photographs in this category yet — new weddings are added every season.</p>
+        <button class="chip" type="button" data-filter="all">Show All Photographs</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUOTE ============ -->
+  <section class="quote-band" aria-label="Client quote">
+    <div class="wrap reveal">
+      <blockquote>
+        <span class="quote-mark" aria-hidden="true">“</span>
+        <p>She didn’t just photograph our wedding — she remembered it better than we did, and handed it back in light.</p>
+        <cite>Priya &amp; Daniel · Lake Como, October 2025</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about" aria-labelledby="aboutTitle">
+    <div class="wrap about-grid">
+      <div class="about-media reveal">
+        <img class="about-portrait" src="https://picsum.photos/seed/lenscraft-29a1b244cc32/1600/900?auto=format&fit=crop&w=900&h=1200&q=80" width="900" height="1200" alt="Camille Roux raising a vintage film camera to her eye in soft window light" loading="lazy">
+        <img class="about-gear" src="https://picsum.photos/seed/lenscraft-a576cf803bda/1600/900?auto=format&fit=crop&w=800&h=600&q=80" width="800" height="600" alt="Camera bodies and prime lenses laid out on linen before a wedding" loading="lazy">
+      </div>
+      <div class="reveal">
+        <p class="overline">About</p>
+        <h2 id="aboutTitle">The Woman Behind the Lens</h2>
+        <p class="lede" style="margin-top:22px">Hello — I’m Camille. For twelve years I’ve photographed weddings the way I’d want my own remembered: honestly, warmly, and without a single forced smile.</p>
+        <p>I trained as a documentary photographer before I ever touched a wedding, and it shows. I work mostly in available light, mostly from the edge of the room, and mostly without you noticing. The portraits we do make together take twenty minutes, never more — then I hand you back to your people and your champagne.</p>
+        <p>My studio sits in a former print workshop in Florence, where every gallery is edited by hand and every album is bound by a bookbinder two streets away… because the day deserves better than a hard drive.</p>
+        <p class="signature">Camille</p>
+        <div class="stats" role="list">
+          <div class="stat" role="listitem"><b class="num">240+</b><span>Weddings Photographed</span></div>
+          <div class="stat" role="listitem"><b class="num">12</b><span>Years Behind the Lens</span></div>
+          <div class="stat" role="listitem"><b class="num">18</b><span>Countries Covered</span></div>
+          <div class="stat" role="listitem"><b class="num">48</b><span>Hour Preview Delivery</span></div>
+        </div>
+        <ul class="approach">
+          <li><span class="n" aria-hidden="true">01</span><div><h3>Documentary First</h3><p>Seventy percent of your gallery is candid — the glances you missed and the ones you didn’t.</p></div></li>
+          <li><span class="n" aria-hidden="true">02</span><div><h3>Light Over Staging</h3><p>No flash guns at the altar, no ring-bearer rearranged. I follow the light that’s already there.</p></div></li>
+          <li><span class="n" aria-hidden="true">03</span><div><h3>Calm Direction</h3><p>Portraits guided in a soft voice and finished in twenty minutes, so you return to the party relaxed.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PACKAGES ============ -->
+  <section id="collections" class="packages" aria-labelledby="pkgTitle">
+    <div class="wrap">
+      <div class="section-head reveal" style="margin-inline:auto;text-align:center">
+        <p class="overline" style="justify-content:center">Collections</p>
+        <h2 id="pkgTitle">Collections &amp; Investment</h2>
+        <p class="lede" style="margin-inline:auto">Three ways to be covered, from a single golden day to a whole weekend of them. Every collection is photographed by me personally — never outsourced, never second-shot by a stranger.</p>
+      </div>
+      <div class="pkg-grid">
+        <article class="pkg reveal">
+          <h3>The Essential</h3>
+          <p class="pkg-tag">For intimate days</p>
+          <p class="price num">€2,400</p>
+          <span class="per">Per wedding · 8 hours</span>
+          <ul>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5 11-11" stroke="currentColor" stroke-width="1.8"/></svg><span>Eight hours of coverage, one photographer</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5 11-11" stroke="currentColor" stroke-width="1.8"/></svg><span>400+ hand-edited photographs</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5 11-11" stroke="currentColor" stroke-width="1.8"/></svg><span>Private online gallery for 12 months</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5 11-11" stroke="currentColor" stroke-width="1.8"/></svg><span>48-hour sneak-peek selection</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5 11-11" stroke="currentColor" stroke-width="1.8"/></svg><span>Full print release included</span></li>
+          </ul>
+          <a class="btn" href="#contact" data-package="The Essential">Reserve the Essential</a>
+        </article>
+
+        <article class="pkg featured reveal">
+          <span class="pkg-badge">Most Chosen</span>
+          <h3>The Signature</h3>
+          <p class="pkg-tag">The complete day</p>
+          <p class="price num">€3,900</p>
+          <span class="per">Per wedding · 12 hours</span>
+          <ul>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5 11-11" stroke="currentColor" stroke-width="1.8"/></svg><span>Twelve hours, getting-ready to last dance</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5 11-11" stroke="currentColor" stroke-width="1.8"/></svg><span>Second photographer for parallel moments</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5 11-11" stroke="currentColor" stroke-width="1.8"/></svg><span>600+ hand-edited photographs</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5 11-11" stroke="currentColor" stroke-width="1.8"/></svg><span>60-page linen-bound fine-art album</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5 11-11" stroke="currentColor" stroke-width="1.8"/></svg><span>Complimentary engagement session</span></li>
+          </ul>
+          <a class="btn" href="#contact" data-package="The Signature">Reserve the Signature</a>
+        </article>
+
+        <article class="pkg reveal">
+          <h3>The Heirloom</h3>
+          <p class="pkg-tag">The whole weekend</p>
+          <p class="price num">€5,600</p>
+          <span class="per">Per wedding · 2 days</span>
+          <ul>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5 11-11" stroke="currentColor" stroke-width="1.8"/></svg><span>Welcome dinner plus full wedding day</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5 11-11" stroke="currentColor" stroke-width="1.8"/></svg><span>Two photographers across both days</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5 11-11" stroke="currentColor" stroke-width="1.8"/></svg><span>900+ hand-edited photographs</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5 11-11" stroke="currentColor" stroke-width="1.8"/></svg><span>Two linen albums plus a folio of prints</span></li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5 11-11" stroke="currentColor" stroke-width="1.8"/></svg><span>Archival walnut box with master files</span></li>
+          </ul>
+          <a class="btn" href="#contact" data-package="The Heirloom">Reserve the Heirloom</a>
+        </article>
+      </div>
+      <p class="pkg-note reveal">Every collection includes travel within Tuscany, timeline planning calls, and a printed proof box… destination weddings elsewhere are quoted individually, with love.</p>
+    </div>
+  </section>
+
+  <!-- ============ REVIEWS ============ -->
+  <section id="kind-words" aria-labelledby="revTitle">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="overline">Kind Words</p>
+        <h2 id="revTitle">Couples, In Their Own Words</h2>
+      </div>
+      <div class="rev-grid">
+        <article class="rev reveal">
+          <div class="stars" role="img" aria-label="Rated 5 out of 5 stars">
+            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="currentColor"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="currentColor"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="currentColor"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="currentColor"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="currentColor"/></svg>
+          </div>
+          <blockquote>“Camille moved through our day like a guest who happened to carry a camera. When the album arrived we wept at photographs we didn’t know existed — our father’s hands, the rain on the marquee, the exact second our vows landed…”</blockquote>
+          <div class="rev-who">
+            <img src="https://picsum.photos/seed/lenscraft-be9c29b29330/1600/900?auto=format&fit=crop&w=160&h=160&q=80" width="52" height="52" alt="Portrait of Priya Nair" loading="lazy">
+            <div><h3>Priya &amp; Daniel</h3><p>Married October 2025 · Lake Como</p></div>
+          </div>
+        </article>
+
+        <article class="rev reveal">
+          <div class="stars" role="img" aria-label="Rated 5 out of 5 stars">
+            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="currentColor"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="currentColor"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="currentColor"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="currentColor"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="currentColor"/></svg>
+          </div>
+          <blockquote>“We both hate having our picture taken. Somehow Lenscraft gave us two hundred frames we’ll keep forever… the preview gallery arrived in thirty-six hours and the full gallery in three weeks, exactly as promised.”</blockquote>
+          <div class="rev-who">
+            <img src="https://picsum.photos/seed/lenscraft-00dcc994a43e/1600/900?auto=format&fit=crop&w=160&h=160&q=80" width="52" height="52" alt="Portrait of Marcus Feld" loading="lazy">
+            <div><h3>Marcus &amp; Sophie</h3><p>Married May 2026 · Provence</p></div>
+          </div>
+        </article>
+
+        <article class="rev reveal">
+          <div class="stars" role="img" aria-label="Rated 5 out of 5 stars">
+            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="currentColor"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="currentColor"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="currentColor"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="currentColor"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="currentColor"/></svg>
+          </div>
+          <blockquote>“Worth every euro, and then some. She coordinated forty family portraits in eleven minutes flat, then disappeared into the crowd and caught everything we missed. Our planner now recommends her to every couple…”</blockquote>
+          <div class="rev-who">
+            <img src="https://picsum.photos/seed/lenscraft-6461ffad8d80/1600/900?auto=format&fit=crop&w=160&h=160&q=80" width="52" height="52" alt="Portrait of Claire Donovan" loading="lazy">
+            <div><h3>Claire &amp; Tom</h3><p>Married September 2025 · Tuscany</p></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" class="contact" aria-labelledby="contactTitle">
+    <div class="wrap contact-grid">
+      <div class="reveal">
+        <p class="overline">Contact</p>
+        <h2 id="contactTitle">Check Your Date</h2>
+        <p class="lede" style="margin-top:20px">Tell me a little about the two of you and the day you’re planning. I take eighteen weddings a year — no more — so dates for 2027 are already moving.</p>
+        <ul class="info-list">
+          <li><span class="k">Studio</span><span class="v">Studio 4, Via delle Caldaie, Florence, Italy</span></li>
+          <li><span class="k">Email</span><span class="v"><a href="mailto:studio@lenscraft.studio">studio@lenscraft.studio</a></span></li>
+          <li><span class="k">Telephone</span><span class="v"><a href="tel:+390550104476" class="num">+39 055 010 4476</a></span></li>
+          <li><span class="k">Hours</span><span class="v">By appointment, Tuesday to Saturday</span></li>
+          <li><span class="k">Reply Time</span><span class="v">Within 48 hours — usually with far too many questions.</span></li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <form id="enquiryForm" novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label for="fullName">Your Names</label>
+              <input id="fullName" name="fullName" type="text" autocomplete="name" placeholder="Sofia &amp; Marco" required>
+            </div>
+            <div class="field">
+              <label for="email">Email Address</label>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="weddingDate">Wedding Date</label>
+              <input id="weddingDate" name="weddingDate" type="date" required>
+            </div>
+            <div class="field">
+              <label for="venue">Venue or City</label>
+              <input id="venue" name="venue" type="text" placeholder="Villa di Maiano, Fiesole">
+            </div>
+          </div>
+          <div class="field">
+            <label for="package">Collection of Interest</label>
+            <select id="package" name="package">
+              <option value="">Not sure yet…</option>
+              <option value="The Essential">The Essential — €2,400</option>
+              <option value="The Signature">The Signature — €3,900</option>
+              <option value="The Heirloom">The Heirloom — €5,600</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="message">Tell Me Your Story</label>
+            <textarea id="message" name="message" rows="4" placeholder="How you met, what the day will feel like, the one photo you already know you want…" required></textarea>
+          </div>
+          <div>
+            <button class="btn btn-solid" type="submit" id="submitBtn">Send Enquiry</button>
+          </div>
+        </form>
+        <div class="form-success" id="formSuccess" hidden tabindex="-1">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" stroke="currentColor" stroke-width="1.2"/><path d="M7 12.5l3.4 3.4L17 9" stroke="currentColor" stroke-width="1.4"/></svg>
+          <h3>Enquiry Received</h3>
+          <p>Thank you for trusting me with your day. I’ll reply within 48 hours to hold your date while we talk…</p>
+          <button class="btn" type="button" id="sendAnother">Send Another Enquiry</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <p class="footer-brand">Lens<em>craft</em></p>
+        <p style="max-width:34ch">The studio of Camille Roux — wedding and editorial photography made slowly, printed carefully, and kept forever.</p>
+      </div>
+      <div>
+        <p class="footer-h">Explore</p>
+        <ul>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#about">About Camille</a></li>
+          <li><a href="#kind-words">Kind Words</a></li>
+          <li><a href="#contact">Check Your Date</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-h">Collections</p>
+        <ul>
+          <li><a href="#collections">The Essential</a></li>
+          <li><a href="#collections">The Signature</a></li>
+          <li><a href="#collections">The Heirloom</a></li>
+          <li><a href="#collections">Destination Weddings</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-h">Follow</p>
+        <ul>
+          <li><a href="https://instagram.com" rel="noopener" target="_blank">Instagram ↗</a></li>
+          <li><a href="https://pinterest.com" rel="noopener" target="_blank">Pinterest ↗</a></li>
+          <li><a href="https://vimeo.com" rel="noopener" target="_blank">Vimeo ↗</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year" class="num">2026</span> Lenscraft Photography · Florence, Italy</span>
+      <a href="#top">Back to Top ↑</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ LIGHTBOX ============ -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photograph viewer" hidden>
+  <p class="lb-count num" id="lbCount" aria-live="polite"></p>
+  <button class="lb-btn lb-close" id="lbClose" type="button" aria-label="Close viewer">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.4"/></svg>
+  </button>
+  <button class="lb-btn lb-prev" id="lbPrev" type="button" aria-label="Previous photograph">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.4"/></svg>
+  </button>
+  <button class="lb-btn lb-next" id="lbNext" type="button" aria-label="Next photograph">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.4"/></svg>
+  </button>
+  <figure class="lb-figure">
+    <img id="lbImg" src="https://picsum.photos/seed/lenscraft-611481863552/1600/900?auto=format&fit=crop&w=1200&h=1600&q=80" alt="" width="1600" height="1200">
+    <figcaption class="lb-cap"><span class="lb-title" id="lbTitle"></span><span class="lb-meta" id="lbMeta"></span></figcaption>
+  </figure>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(s,c){ return (c||document).querySelector(s); };
+  var $$ = function(s,c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)); };
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ----- Header ----- */
+  var header = $(".site-header");
+  var onScroll = function(){ header.classList.toggle("scrolled", window.scrollY > 8); };
+  window.addEventListener("scroll", onScroll, {passive:true});
+  onScroll();
+
+  /* ----- Mobile menu ----- */
+  var menuToggle = $("#menuToggle");
+  var primaryNav = $("#primaryNav");
+  function setMenu(open){
+    document.body.classList.toggle("nav-open", open);
+    menuToggle.setAttribute("aria-expanded", String(open));
+    menuToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  }
+  menuToggle.addEventListener("click", function(){
+    setMenu(!document.body.classList.contains("nav-open"));
+  });
+  $$("#primaryNav a").forEach(function(a){
+    a.addEventListener("click", function(){ setMenu(false); });
+  });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape" && document.body.classList.contains("nav-open")){
+      setMenu(false); menuToggle.focus();
+    }
+  });
+
+  /* ----- Scroll reveals ----- */
+  var revealEls = $$(".reveal");
+  if(reduceMotion || !("IntersectionObserver" in window)){
+    revealEls.forEach(function(el){ el.classList.add("is-in"); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add("is-in"); io.unobserve(en.target); }
+      });
+    }, {threshold:.14, rootMargin:"0px 0px -6% 0px"});
+    revealEls.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ----- Gallery filter ----- */
+  var tiles = $$("#gallery .tile");
+  var chips = $$(".chip[data-filter]");
+  var countEl = $("#galleryCount");
+  var emptyEl = $("#galleryEmpty");
+  var total = tiles.length;
+  function applyFilter(filter){
+    var shown = 0;
+    tiles.forEach(function(tile){
+      var match = (filter === "all") || (tile.dataset.cat === filter);
+      tile.hidden = !match;
+      if(match){
+        shown++;
+        tile.classList.remove("pop");
+        void tile.offsetWidth;
+        tile.classList.add("pop");
+      }
+    });
+    countEl.textContent = "Showing " + shown + " of " + total + " photographs";
+    emptyEl.hidden = shown !== 0;
+    chips.forEach(function(ch){
+      ch.setAttribute("aria-pressed", String(ch.dataset.filter === filter));
+    });
+  }
+  chips.forEach(function(ch){
+    ch.addEventListener("click", function(){ applyFilter(ch.dataset.filter); });
+  });
+
+  /* ----- Lightbox ----- */
+  var lightbox = $("#lightbox"), lbImg = $("#lbImg"), lbTitle = $("#lbTitle"),
+      lbMeta = $("#lbMeta"), lbCount = $("#lbCount"),
+      lbClose = $("#lbClose"), lbPrev = $("#lbPrev"), lbNext = $("#lbNext");
+  var lbItems = [], lbIndex = 0, lastFocus = null;
+
+  function renderLb(){
+    var btn = lbItems[lbIndex];
+    lbImg.src = btn.dataset.full;
+    lbImg.alt = btn.dataset.alt || "";
+    lbTitle.textContent = btn.dataset.title || "";
+    lbMeta.textContent = btn.dataset.meta || "";
+    lbCount.textContent = (lbIndex + 1) + " / " + lbItems.length;
+  }
+  function openLb(btn){
+    lbItems = $$("#gallery .tile").filter(function(t){ return !t.hidden; })
+              .map(function(t){ return $(".tile-btn", t); });
+    lbIndex = Math.max(0, lbItems.indexOf(btn));
+    lastFocus = document.activeElement;
+    lightbox.hidden = false;
+    document.body.classList.add("no-scroll");
+    renderLb();
+    lbClose.focus();
+  }
+  function closeLb(){
+    lightbox.hidden = true;
+    document.body.classList.remove("no-scroll");
+    if(lastFocus){ lastFocus.focus(); }
+  }
+  function stepLb(dir){
+    if(!lbItems.length){ return; }
+    lbIndex = (lbIndex + dir + lbItems.length) % lbItems.length;
+    renderLb();
+  }
+  $$("#gallery .tile-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){ openLb(btn); });
+  });
+  lbClose.addEventListener("click", closeLb);
+  lbPrev.addEventListener("click", function(){ stepLb(-1); });
+  lbNext.addEventListener("click", function(){ stepLb(1); });
+  lightbox.addEventListener("click", function(e){ if(e.target === lightbox){ closeLb(); } });
+  document.addEventListener("keydown", function(e){
+    if(lightbox.hidden){ return; }
+    if(e.key === "Escape"){ closeLb(); }
+    else if(e.key === "ArrowLeft"){ stepLb(-1); }
+    else if(e.key === "ArrowRight"){ stepLb(1); }
+    else if(e.key === "Tab"){
+      var f = [lbClose, lbPrev, lbNext];
+      var i = f.indexOf(document.activeElement);
+      e.preventDefault();
+      var next = e.shiftKey ? (i <= 0 ? f.length - 1 : i - 1) : (i === f.length - 1 ? 0 : i + 1);
+      f[next].focus();
+    }
+  });
+
+  /* ----- Package preselect ----- */
+  var pkgSelect = $("#package");
+  $$("[data-package]").forEach(function(a){
+    a.addEventListener("click", function(){
+      if(pkgSelect){ pkgSelect.value = a.dataset.package; }
+    });
+  });
+
+  /* ----- Contact form ----- */
+  var form = $("#enquiryForm"), success = $("#formSuccess"),
+      submitBtn = $("#submitBtn"), sendAnother = $("#sendAnother"),
+      dateInput = $("#weddingDate");
+  if(dateInput){ dateInput.min = new Date().toISOString().split("T")[0]; }
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    if(!form.checkValidity()){ form.reportValidity(); return; }
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending…";
+    window.setTimeout(function(){
+      form.hidden = true;
+      success.hidden = false;
+      success.focus();
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Send Enquiry";
+    }, reduceMotion ? 0 : 800);
+  });
+  sendAnother.addEventListener("click", function(){
+    success.hidden = true;
+    form.hidden = false;
+    form.reset();
+    $("#fullName").focus();
+  });
+
+  /* ----- Year ----- */
+  $("#year").textContent = String(new Date().getFullYear());
+})();
+</script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
