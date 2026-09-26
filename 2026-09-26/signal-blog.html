@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signal — Independent Tech Publication</title>
+  <meta name="description" content="Signal is an independent tech publication covering the intersection of technology, culture, and society.">
+  <meta name="theme-color" content="#ffffff">
+  
+  <!-- Fonts: Merriweather (Serif) & Inter (Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --color-bg: #ffffff;
+      --color-paper: #fcfbf9;
+      --color-text: #1a1a1a;
+      --color-text-muted: #555555;
+      --color-accent: #d9261c;
+      --color-border: #e5e5e5;
+      --color-border-dark: #1a1a1a;
+      
+      --font-serif: 'Merriweather', serif;
+      --font-sans: 'Inter', sans-serif;
+      
+      --spacing-xs: 0.5rem;
+      --spacing-sm: 1rem;
+      --spacing-md: 2rem;
+      --spacing-lg: 4rem;
+      --spacing-xl: 6rem;
+      
+      --container-width: 1200px;
+      --header-height: 80px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      /* Keeping strictly to "Paper White" request as primary, 
+         but ensuring system doesn't break if forced. 
+         The prompt asked for Paper White specifically. */
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Accessibility Utilities */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 0;
+      background: var(--color-accent);
+      color: white;
+      padding: 1rem;
+      z-index: 1000;
+      font-weight: 600;
+    }
+    .skip-link:focus {
+      top: 0;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-serif);
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      text-wrap: balance;
+    }
+
+    h1 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1.5rem; }
+    h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); margin-bottom: 1rem; }
+    h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+    h4 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+
+    p { margin-bottom: 1rem; }
+    
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    
+    a:hover { color: var(--color-accent); }
+    
+    .accent-text { color: var(--color-accent); }
+    .meta-text { 
+      font-family: var(--font-sans); 
+      font-size: 0.875rem; 
+      color: var(--color-text-muted); 
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+
+    /* Layout */
+    .container {
+      max-width: var(--container-width);
+      margin: 0 auto;
+      padding: 0 var(--spacing-sm);
+    }
+
+    section { padding: var(--spacing-lg) 0; }
+
+    /* Header / Masthead */
+    header {
+      border-bottom: 1px solid var(--color-border);
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .logo {
+      font-family: var(--font-serif);
+      font-weight: 900;
+      font-size: 1.75rem;
+      letter-spacing: -0.03em;
+      color: var(--color-text);
+    }
+
+    .main-nav ul {
+      display: flex;
+      gap: var(--spacing-md);
+      list-style: none;
+    }
+
+    .main-nav a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+
+    .main-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--color-accent);
+      transition: width 0.3s ease;
+    }
+
+    .main-nav a:hover::after,
+    .main-nav a:focus-visible::after {
+      width: 100%;
+    }
+
+    .subscribe-btn {
+      background: var(--color-text);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 2px;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .subscribe-btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.9;
+      color: white;
+    }
+
+    /* Mobile Menu Toggle */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding-top: var(--spacing-xl);
+      padding-bottom: var(--spacing-lg);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-lg);
+      align-items: center;
+    }
+
+    .hero-image-wrapper {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+
+    .hero-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-image-wrapper:hover img {
+      transform: scale(1.03);
+    }
+
+    .hero-content .category-tag {
+      color: var(--color-accent);
+      margin-bottom: var(--spacing-sm);
+      display: inline-block;
+    }
+
+    .hero-excerpt {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      color: var(--color-text-muted);
+      margin-bottom: var(--spacing-md);
+      font-family: var(--font-serif);
+    }
+
+    .author-block {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: var(--spacing-md);
+    }
+
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* Latest Grid */
+    .latest-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: var(--spacing-md);
+      border-bottom: 2px solid var(--color-text);
+      padding-bottom: 0.5rem;
+    }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--spacing-md);
+    }
+
+    .article-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      group: ;
+    }
+
+    .card-image {
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .article-card:hover .card-image img {
+      transform: scale(1.05);
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-size: 0.75rem;
+    }
+
+    .read-time { font-variant-numeric: tabular-nums; }
+
+    .card-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .card-excerpt {
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+      line-clamp: 3;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: auto;
+    }
+
+    /* Sidebar / Trending */
+    .content-layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--spacing-lg);
+      margin-top: var(--spacing-lg);
+    }
+
+    .trending-sidebar {
+      position: sticky;
+      top: calc(var(--header-height) + 2rem);
+      align-self: start;
+      padding-left: var(--spacing-md);
+      border-left: 1px solid var(--color-border);
+    }
+
+    .trending-list {
+      list-style: none;
+      counter-reset: trending;
+    }
+
+    .trending-item {
+      counter-increment: trending;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-left: 2.5rem;
+    }
+
+    .trending-item::before {
+      content: counter(trending);
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--color-border);
+      line-height: 1;
+    }
+
+    .trending-item:hover::before {
+      color: var(--color-accent);
+    }
+
+    .trending-title {
+      font-family: var(--font-serif);
+      font-weight: 700;
+      font-size: 1.1rem;
+      line-height: 1.4;
+    }
+
+    /* Newsletter */
+    .newsletter-section {
+      background-color: var(--color-paper);
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+      text-align: center;
+    }
+
+    .newsletter-form {
+      max-width: 500px;
+      margin: var(--spacing-md) auto 0;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .input-group {
+      flex: 1;
+      position: relative;
+    }
+
+    input[type="email"] {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid var(--color-border-dark);
+      background: white;
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      border-radius: 0; /* Newspaper style sharp edges */
+    }
+
+    input[type="email"]:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 2px;
+    }
+
+    .submit-btn {
+      background: var(--color-accent);
+      color: white;
+      border: none;
+      padding: 0 2rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: opacity 0.2s ease;
+    }
+
+    .submit-btn:hover { opacity: 0.9; }
+
+    .form-message {
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      min-height: 1.2em;
+    }
+    .error { color: var(--color-accent); }
+    .success { color: green; }
+
+    /* Topics Cloud */
+    .topics-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      margin-top: var(--spacing-md);
+    }
+
+    .topic-pill {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: 50px;
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+    }
+
+    .topic-pill:hover {
+      border-color: var(--color-text);
+      background: var(--color-text);
+      color: white;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--color-text);
+      color: white;
+      padding: var(--spacing-xl) 0 var(--spacing-md);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .footer-logo {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .footer-col h5 {
+      color: rgba(255,255,255,0.5);
+      font-family: var(--font-sans);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li { margin-bottom: 0.75rem; }
+    .footer-links a { color: rgba(255,255,255,0.8); }
+    .footer-links a:hover { color: white; text-decoration: underline; }
+
+    .copyright {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: var(--spacing-md);
+      text-align: center;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-image-wrapper { order: -1; margin-bottom: var(--spacing-md); }
+      .content-layout { grid-template-columns: 1fr; }
+      .trending-sidebar { 
+        position: static; 
+        border-left: none; 
+        padding-left: 0;
+        border-top: 1px solid var(--color-border);
+        padding-top: var(--spacing-md);
+      }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .main-nav { display: none; } /* Simplified mobile handling */
+      .menu-toggle { display: block; }
+      .newsletter-form { flex-direction: column; }
+      .footer-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 2.25rem; }
+    }
+
+    /* Animation Utilities */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to Content</a>
+
+  <!-- Masthead -->
+  <header role="banner">
+    <div class="container nav-wrapper">
+      <button class="menu-toggle" aria-label="Open Menu" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <a href="/" class="logo" aria-label="Signal Home">SIGNAL.</a>
+
+      <nav class="main-nav" role="navigation" aria-label="Main Navigation">
+        <ul>
+          <li><a href="#technology">Technology</a></li>
+          <li><a href="#culture">Culture</a></li>
+          <li><a href="#science">Science</a></li>
+          <li><a href="#policy">Policy</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+        </ul>
+      </nav>
+
+      <a href="#newsletter" class="subscribe-btn">Subscribe</a>
+    </div>
+  </header>
+
+  <main id="main-content">
+    
+    <!-- Featured Hero -->
+    <section class="hero container fade-in">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <span class="meta-text category-tag">Artificial Intelligence</span>
+          <h1>The Silicon Plateau: Why Moore’s Law Is Finally Gasping for Air</h1>
+          <p class="hero-excerpt">
+            For fifty years, we rode the exponential curve. But as transistors approach atomic limits, the industry faces a reckoning that no amount of venture capital can solve. We investigate the desperate pivot to photonics.
+          </p>
+          <div class="author-block">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80" alt="Elena Fisher" width="48" height="48" class="author-avatar">
+            <div>
+              <div class="meta-text" style="text-transform: none; font-weight: 700; color: var(--color-text);">Elena Fisher</div>
+              <div class="meta-text" style="font-size: 0.75rem;">Sept 24, 2026 · 14 min read</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-image-wrapper">
+          <!-- Real image: Abstract macro of chip/tech -->
+          <img src="https://picsum.photos/seed/signal-blog-778a693065af/1600/900?auto=format&fit=crop&w=1600&q=80" alt="Macro photography of a processor wafer reflecting blue light" width="800" height="600" loading="eager">
+        </div>
+      </div>
+    </section>
+
+    <!-- Latest Articles & Sidebar Layout -->
+    <div class="container">
+      <div class="content-layout">
+        
+        <!-- Main Feed -->
+        <div class="feed">
+          <div class="latest-header">
+            <h2>Latest Stories</h2>
+            <a href="#" class="meta-text" style="font-size: 0.8rem;">View Archive →</a>
+          </div>
+
+          <div class="articles-grid">
+            
+            <!-- Article 1 -->
+            <article class="article-card fade-in">
+              <a href="#" class="card-image">
+                <img src="https://picsum.photos/seed/signal-blog-1e22ba0e982c/1600/900?auto=format&fit=crop&w=800&q=80" alt="Person using VR headset in a minimalist room" width="400" height="225" loading="lazy">
+              </a>
+              <div class="card-meta">
+                <span class="meta-text accent-text">Virtual Reality</span>
+                <span class="meta-text read-time">6 min</span>
+              </div>
+              <h3 class="card-title"><a href="#">The Haptic Feedback Revolution Is Finally Here</a></h3>
+              <p class="card-excerpt">New ultrasonic gloves allow users to “feel” digital textures with 98% accuracy, changing remote surgery forever.</p>
+            </article>
+
+            <!-- Article 2 -->
+            <article class="article-card fade-in">
+              <a href="#" class="card-image">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="Data visualization on multiple screens" width="400" height="225" loading="lazy">
+              </a>
+              <div class="card-meta">
+                <span class="meta-text accent-text">Privacy</span>
+                <span class="meta-text read-time">8 min</span>
+              </div>
+              <h3 class="card-title"><a href="#">Your Browser Fingerprint Is More Unique Than Your DNA</a></h3>
+              <p class="card-excerpt">How ad-tech firms are bypassing cookie bans using canvas hashing and audio context analysis.</p>
+            </article>
+
+            <!-- Article 3 -->
+            <article class="article-card fade-in">
+              <a href="#" class="card-image">
+                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Close up of motherboard components" width="400" height="225" loading="lazy">
+              </a>
+              <div class="card-meta">
+                <span class="meta-text accent-text">Hardware</span>
+                <span class="meta-text read-time">5 min</span>
+              </div>
+              <h3 class="card-title"><a href="#">RISC-V Architecture Challenges ARM’s Mobile Dominance</a></h3>
+              <p class="card-excerpt">Open-source silicon is moving from hobbyist garages to flagship smartphones in record time.</p>
+            </article>
+
+            <!-- Article 4 -->
+            <article class="article-card fade-in">
+              <a href="#" class="card-image">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80" alt="Cybersecurity lock icon digital art" width="400" height="225" loading="lazy">
+              </a>
+              <div class="card-meta">
+                <span class="meta-text accent-text">Security</span>
+                <span class="meta-text read-time">11 min</span>
+              </div>
+              <h3 class="card-title"><a href="#">Post-Quantum Cryptography: Are We Ready?</a></h3>
+              <p class="card-excerpt">NIST’s new standards are out, but legacy banking systems might take decades to upgrade.</p>
+            </article>
+
+             <!-- Article 5 -->
+             <article class="article-card fade-in">
+              <a href="#" class="card-image">
+                <img src="https://picsum.photos/seed/signal-blog-9ae5348df83e/1600/900?auto=format&fit=crop&w=800&q=80" alt="Futuristic electric vehicle charging station" width="400" height="225" loading="lazy">
+              </a>
+              <div class="card-meta">
+                <span class="meta-text accent-text">Energy</span>
+                <span class="meta-text read-time">7 min</span>
+              </div>
+              <h3 class="card-title"><a href="#">Solid-State Batteries Enter Mass Production</a></h3>
+              <p class="card-excerpt">Toyota and Samsung SDI announce joint ventures that could double EV range by 2027.</p>
+            </article>
+
+             <!-- Article 6 -->
+             <article class="article-card fade-in">
+              <a href="#" class="card-image">
+                <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80" alt="Matrix code rain digital art" width="400" height="225" loading="lazy">
+              </a>
+              <div class="card-meta">
+                <span class="meta-text accent-text">Culture</span>
+                <span class="meta-text read-time">4 min</span>
+              </div>
+              <h3 class="card-title"><a href="#">The Death of the Algorithmic Feed</a></h3>
+              <p class="card-excerpt">Why Gen Z is flocking to chronological timelines and RSS readers in droves.</p>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- Trending Sidebar -->
+        <aside class="trending-sidebar" aria-label="Trending Articles">
+          <h4 class="meta-text" style="margin-bottom: 2rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem;">Trending Now</h4>
+          <ol class="trending-list">
+            <li class="trending-item">
+              <a href="#" class="trending-title">Apple Vision Pro 2 Leaked With Neural Interface Support</a>
+              <div class="meta-text" style="margin-top: 0.25rem;">24k Reads</div>
+            </li>
+            <li class="trending-item">
+              <a href="#" class="trending-title">EU Passes Comprehensive AI Liability Act</a>
+              <div class="meta-text" style="margin-top: 0.25rem;">18k Reads</div>
+            </li>
+            <li class="trending-item">
+              <a href="#" class="trending-title">SpaceX Starship Completes First Orbital Refueling</a>
+              <div class="meta-text" style="margin-top: 0.25rem;">15k Reads</div>
+            </li>
+            <li class="trending-item">
+              <a href="#" class="trending-title">Review: Framework Laptop 16 Is The Repair King</a>
+              <div class="meta-text" style="margin-top: 0.25rem;">12k Reads</div>
+            </li>
+            <li class="trending-item">
+              <a href="#" class="trending-title">Why Rust Is Replacing C++ in Critical Infrastructure</a>
+              <div class="meta-text" style="margin-top: 0.25rem;">9k Reads</div>
+            </li>
+          </ol>
+
+          <div style="margin-top: 3rem; background: var(--color-paper); padding: 1.5rem; border: 1px solid var(--color-border);">
+            <h5 style="font-family: var(--font-serif); margin-bottom: 0.5rem;">Signal Premium</h5>
+            <p style="font-size: 0.9rem; margin-bottom: 1rem;">Support independent journalism. Get ad-free reading and exclusive weekly deep dives.</p>
+            <a href="#" class="subscribe-btn" style="display: block; text-align: center;">Join for $5/mo</a>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+
+    <!-- Newsletter Section -->
+    <section id="newsletter" class="newsletter-section fade-in">
+      <div class="container">
+        <span class="meta-text accent-text">Newsletter</span>
+        <h2>Decode the Noise</h2>
+        <p style="max-width: 600px; margin: 0 auto; color: var(--color-text-muted);">
+          Join 45,000+ engineers, founders, and thinkers. Every Tuesday and Thursday, we deliver the stories that actually matter—no fluff, no clickbait.
+        </p>
+        
+        <form class="newsletter-form" id="signupForm" novalidate>
+          <div class="input-group">
+            <label for="email" class="sr-only">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email">
+          </div>
+          <button type="submit" class="submit-btn">Sign Up</button>
+        </form>
+        <div id="formMessage" class="form-message" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- Topics Cloud -->
+    <section class="container fade-in" style="text-align: center;">
+      <h3 class="meta-text" style="margin-bottom: 1.5rem;">Explore Topics</h3>
+      <div class="topics-cloud">
+        <a href="#" class="topic-pill">Machine Learning</a>
+        <a href="#" class="topic-pill">Cryptocurrency</a>
+        <a href="#" class="topic-pill">Climate Tech</a>
+        <a href="#" class="topic-pill">Biotech</a>
+        <a href="#" class="topic-pill">Space Exploration</a>
+        <a href="#" class="topic-pill">Cybersecurity</a>
+        <a href="#" class="topic-pill">Remote Work</a>
+        <a href="#" class="topic-pill">Robotics</a>
+        <a href="#" class="topic-pill">Social Media</a>
+        <a href="#" class="topic-pill">Semiconductors</a>
+        <a href="#" class="topic-pill">Open Source</a>
+        <a href="#" class="topic-pill">Gadgets</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="/" class="footer-logo">SIGNAL.</a>
+          <p style="color: rgba(255,255,255,0.6); max-width: 300px;">
+            Independent tech journalism for the curious mind. Funded by readers, not advertisers.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5>Sections</h5>
+          <ul class="footer-links">
+            <li><a href="#">Technology</a></li>
+            <li><a href="#">Science</a></li>
+            <li><a href="#">Culture</a></li>
+            <li><a href="#">Policy</a></li>
+            <li><a href="#">Reviews</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <ul class="footer-links">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Code of Ethics</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Advertise</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Legal</h5>
+          <ul class="footer-links">
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+            <li><a href="#">Accessibility</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        &copy; 2026 Signal Media Inc. All rights reserved. Designed with precision.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Newsletter Form Validation
+    const form = document.getElementById('signupForm');
+    const emailInput = document.getElementById('email');
+    const messageDiv = document.getElementById('formMessage');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = emailInput.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      messageDiv.className = 'form-message';
+      messageDiv.textContent = '';
+
+      if (!email) {
+        messageDiv.textContent = 'Please enter your email address.';
+        messageDiv.classList.add('error');
+        return;
+      }
+
+      if (!emailRegex.test(email)) {
+        messageDiv.textContent = 'Please enter a valid email address.';
+        messageDiv.classList.add('error');
+        return;
+      }
+
+      // Simulate API call
+      const btn = form.querySelector('.submit-btn');
+      const originalText = btn.textContent;
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        messageDiv.textContent = 'Welcome aboard! Check your inbox to confirm.';
+        messageDiv.classList.add('success');
+        emailInput.value = '';
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }, 1200);
+    });
+
+    // Scroll Reveal Animation
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Mobile Menu Toggle Logic
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mainNav = document.querySelector('.main-nav');
+    
+    menuToggle.addEventListener('click', () => {
+      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', !isExpanded);
+      
+      // Simple toggle for demo purposes - in production would animate
+      if (!isExpanded) {
+        mainNav.style.display = 'block';
+        mainNav.style.position = 'absolute';
+        mainNav.style.top = '100%';
+        mainNav.style.left = '0';
+        mainNav.style.width = '100%';
+        mainNav.style.background = 'white';
+        mainNav.style.padding = '1rem';
+        mainNav.style.borderBottom = '1px solid var(--color-border)';
+        mainNav.querySelector('ul').style.flexDirection = 'column';
+        mainNav.querySelector('ul').style.gap = '1rem';
+      } else {
+        mainNav.style.display = '';
+        mainNav.style.position = '';
+        mainNav.style.top = '';
+        mainNav.style.left = '';
+        mainNav.style.width = '';
+        mainNav.style.background = '';
+        mainNav.style.padding = '';
+        mainNav.style.borderBottom = '';
+        mainNav.querySelector('ul').style.flexDirection = '';
+        mainNav.querySelector('ul').style.gap = '';
+      }
+    });
+  </script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
