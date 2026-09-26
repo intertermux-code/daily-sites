@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lenscraft | Wedding Photography</title>
+    <meta name="description" content="Fine art wedding photography capturing authentic moments and timeless details.">
+    <meta name="theme-color" content="#faf8f4">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #faf8f4;
+            --text-color: #2c2c2c;
+            --accent-color: #8c7b75;
+            --border-color: #e0ded9;
+            --white: #ffffff;
+            
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Montserrat', sans-serif;
+            
+            --container-width: 1200px;
+            --header-height: 80px;
+            
+            --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        /* Reset & Base */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Accessibility & Utilities */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 0;
+            background: var(--text-color);
+            color: var(--white);
+            padding: 1rem;
+            z-index: 1000;
+            transition: top 0.3s var(--ease-out);
+        }
+        .skip-link:focus { top: 0; }
+
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--text-color);
+            outline-offset: 4px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a { text-decoration: none; color: inherit; transition: opacity 0.3s ease; }
+        a:hover { opacity: 0.7; }
+
+        button {
+            background: none; border: none; cursor: pointer; font-family: inherit;
+            touch-action: manipulation;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: var(--font-serif);
+            font-weight: 400;
+            text-wrap: balance;
+            line-height: 1.1;
+        }
+
+        h1 { font-size: clamp(3.5rem, 8vw, 7rem); letter-spacing: -0.02em; }
+        h2 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 2rem; }
+        h3 { font-size: 1.75rem; margin-bottom: 1rem; }
+        
+        p { margin-bottom: 1.5rem; font-weight: 300; }
+        
+        .label {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Layout */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        section { padding: 6rem 0; }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: var(--header-height);
+            background: rgba(250, 248, 244, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+        
+        header.scrolled { border-bottom-color: var(--border-color); }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+
+        nav ul { display: flex; gap: 2.5rem; list-style: none; }
+        nav a { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .mobile-menu-btn { display: none; padding: 10px; }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: var(--header-height);
+            position: relative;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            font-style: italic;
+            font-family: var(--font-serif);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            animation: bounce 2s infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        /* Gallery */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: 1px solid transparent;
+            border-radius: 50px;
+            transition: all 0.3s var(--ease-out);
+            min-height: 44px;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            border-color: var(--text-color);
+            background: var(--white);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 3/4;
+            background: #eee;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s var(--ease-out);
+        }
+
+        .gallery-item:hover img { transform: scale(1.05); }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(250, 248, 244, 0.98);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s var(--ease-out);
+        }
+
+        .lightbox.active { opacity: 1; pointer-events: auto; }
+
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+        }
+
+        .lightbox-img {
+            max-height: 85vh;
+            width: auto;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 2rem; right: 2rem;
+            font-size: 2rem;
+            width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* About */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-img-wrapper {
+            position: relative;
+        }
+        
+        .about-img-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 20px; left: -20px;
+            width: 100%; height: 100%;
+            border: 1px solid var(--accent-color);
+            z-index: -1;
+        }
+
+        /* Packages */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .package-card {
+            background: var(--white);
+            padding: 3rem 2rem;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+        }
+
+        .price {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            margin: 1.5rem 0;
+            display: block;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .features-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--text-color);
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            transition: background 0.3s ease, transform 0.2s ease;
+            min-height: 44px;
+        }
+
+        .btn-primary:hover { background: var(--accent-color); opacity: 1; }
+        .btn-primary:active { transform: scale(0.98); }
+
+        /* Reviews */
+        .reviews-section { background: var(--white); }
+        
+        .review-carousel {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 2rem;
+            padding-bottom: 2rem;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .review-carousel::-webkit-scrollbar { display: none; }
+
+        .review-card {
+            min-width: 300px;
+            max-width: 400px;
+            scroll-snap-align: center;
+            padding: 2rem;
+            background: var(--bg-color);
+        }
+
+        .stars { color: var(--accent-color); margin-bottom: 1rem; letter-spacing: 2px; }
+
+        /* Contact */
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 4rem;
+        }
+
+        form { display: grid; gap: 1.5rem; }
+
+        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        
+        label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; }
+        
+        input, textarea, select {
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            background: var(--white);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            min-height: 44px;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--text-color);
+            outline: none;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-color);
+            color: var(--bg-color);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .copyright { opacity: 0.5; font-size: 0.8rem; }
+
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .reveal { opacity: 1; transform: none; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            .nav-wrapper nav { display: none; } /* Simplified for single file demo */
+            .mobile-menu-btn { display: block; }
+            .about-grid, .contact-layout { grid-template-columns: 1fr; gap: 2rem; }
+            .about-img-wrapper { order: -1; margin-bottom: 2rem; }
+            .about-img-wrapper::after { display: none; }
+            section { padding: 4rem 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to Content</a>
+
+    <header id="header">
+        <div class="container nav-wrapper">
+            <a href="#" class="logo" aria-label="Lenscraft Home">Lenscraft</a>
+            <nav aria-label="Main Navigation">
+                <ul>
+                    <li><a href="#gallery">Portfolio</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#packages">Investment</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn" aria-label="Open Menu" aria-expanded="false">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container reveal">
+                <span class="label">Est. 2018</span>
+                <h1>Capturing the<br><em>Unscripted</em></h1>
+                <p class="hero-subtitle">Fine art wedding photography for the modern romantic.</p>
+                <div style="margin-top: 3rem;">
+                    <a href="#contact" class="btn-primary">Inquire Availability</a>
+                </div>
+            </div>
+            <div class="scroll-indicator" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                    <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery">
+            <div class="container">
+                <div class="reveal" style="text-align: center; margin-bottom: 3rem;">
+                    <span class="label">Selected Works</span>
+                    <h2>Visual Stories</h2>
+                </div>
+
+                <div class="filters reveal" role="group" aria-label="Gallery Filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="portrait">Portraits</button>
+                    <button class="filter-btn" data-filter="ceremony">Ceremony</button>
+                    <button class="filter-btn" data-filter="details">Details</button>
+                </div>
+
+                <div class="gallery-grid reveal">
+                    <!-- Portrait 1 -->
+                    <div class="gallery-item" data-category="portrait">
+                        <img src="https://picsum.photos/seed/lenscraft-1351cdeb9821/1600/900?auto=format&fit=crop&w=800&q=80" 
+                             alt="Bride laughing candidly in natural light" width="800" height="1067" loading="lazy">
+                    </div>
+                    <!-- Ceremony 1 -->
+                    <div class="gallery-item" data-category="ceremony">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" 
+                             alt="Couple exchanging vows under floral arch" width="800" height="1067" loading="lazy">
+                    </div>
+                    <!-- Details 1 -->
+                    <div class="gallery-item" data-category="details">
+                        <img src="https://picsum.photos/seed/lenscraft-1645062cd495/1600/900?auto=format&fit=crop&w=800&q=80" 
+                             alt="Close up of wedding rings on textured linen" width="800" height="1067" loading="lazy">
+                    </div>
+                    <!-- Portrait 2 -->
+                    <div class="gallery-item" data-category="portrait">
+                        <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800&q=80" 
+                             alt="Groom adjusting tie looking out window" width="800" height="1067" loading="lazy">
+                    </div>
+                    <!-- Ceremony 2 -->
+                    <div class="gallery-item" data-category="ceremony">
+                        <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=800&q=80" 
+                             alt="Wide shot of outdoor garden ceremony seating" width="800" height="1067" loading="lazy">
+                    </div>
+                    <!-- Details 2 -->
+                    <div class="gallery-item" data-category="details">
+                        <img src="https://picsum.photos/seed/lenscraft-17451cc330e7/1600/900?auto=format&fit=crop&w=800&q=80" 
+                             alt="Elegant table setting with candles and greenery" width="800" height="1067" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" style="background: var(--white);">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-img-wrapper reveal">
+                        <img src="https://picsum.photos/seed/lenscraft-387768052bf7/1600/900?auto=format&fit=crop&w=800&q=80" 
+                             alt="Photographer Elena holding vintage camera" width="800" height="1000">
+                    </div>
+                    <div class="reveal">
+                        <span class="label">The Artist</span>
+                        <h2>Hello, I’m Elena.</h2>
+                        <p>I believe that the most beautiful images are the ones that feel true. My approach is rooted in documentary storytelling mixed with editorial elegance. I don’t just capture how your day looked; I strive to preserve how it felt.</p>
+                        <p>Based in San Francisco but available worldwide, I specialize in intimate elopements and grand celebrations alike. When I’m not behind the lens, I’m likely hunting for vintage vinyl or perfecting my sourdough recipe.</p>
+                        <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=200&q=80" alt="Signature" width="150" height="60" style="margin-top: 1rem; opacity: 0.6;">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Packages Section -->
+        <section id="packages">
+            <div class="container">
+                <div class="reveal" style="text-align: center; margin-bottom: 4rem;">
+                    <span class="label">Investment</span>
+                    <h2>Curated Collections</h2>
+                </div>
+                
+                <div class="packages-grid reveal">
+                    <!-- Package 1 -->
+                    <article class="package-card">
+                        <h3>Elopement</h3>
+                        <span class="price">$3,200</span>
+                        <ul class="features-list">
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> 4 Hours Coverage</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Online Gallery</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> 300+ Edited Images</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Print Rights</li>
+                        </ul>
+                        <a href="#contact" class="btn-primary">Book Elopement</a>
+                    </article>
+
+                    <!-- Package 2 -->
+                    <article class="package-card" style="border-color: var(--text-color); transform: scale(1.02);">
+                        <div class="label" style="margin-bottom: 0.5rem;">Most Popular</div>
+                        <h3>Full Day</h3>
+                        <span class="price">$5,800</span>
+                        <ul class="features-list">
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> 10 Hours Coverage</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Second Shooter</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Engagement Session</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Premium Album Credit</li>
+                        </ul>
+                        <a href="#contact" class="btn-primary">Book Full Day</a>
+                    </article>
+
+                    <!-- Package 3 -->
+                    <article class="package-card">
+                        <h3>Weekend</h3>
+                        <span class="price">$8,500</span>
+                        <ul class="features-list">
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Multi-day Coverage</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Welcome Party & Brunch</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Two Photographers</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Heirloom Album Included</li>
+                        </ul>
+                        <a href="#contact" class="btn-primary">Book Weekend</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section class="reviews-section">
+            <div class="container">
+                <div class="reveal" style="text-align: center; margin-bottom: 3rem;">
+                    <span class="label">Kind Words</span>
+                    <h2>Client Love</h2>
+                </div>
+                <div class="review-carousel reveal">
+                    <article class="review-card">
+                        <div class="stars" aria-label="5 stars">★★★★★</div>
+                        <p>“Elena has an incredible eye for light and emotion. Looking through our gallery felt like reliving the best day of our lives.”</p>
+                        <cite>— Sarah & James</cite>
+                    </article>
+                    <article class="review-card">
+                        <div class="stars" aria-label="5 stars">★★★★★</div>
+                        <p>“Professional, calming, and wildly talented. She captured moments we didn't even know happened. Worth every penny.”</p>
+                        <cite>— Michael & David</cite>
+                    </article>
+                    <article class="review-card">
+                        <div class="stars" aria-label="5 stars">★★★★★</div>
+                        <p>“The editing style is timeless. I never want to stop looking at these photos. Lenscraft is simply the best.”</p>
+                        <cite>— Emily & Tom</cite>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="container">
+                <div class="contact-layout">
+                    <div class="reveal">
+                        <span class="label">Get In Touch</span>
+                        <h2>Let’s Create Magic</h2>
+                        <p>Tell me about your vision, your venue, and your story. I limit my bookings to ensure dedicated attention to every couple.</p>
+                        <p><strong>Email:</strong> hello@lenscraft.com<br><strong>Studio:</strong> San Francisco, CA</p>
+                    </div>
+                    
+                    <form class="reveal" action="#" method="POST" novalidate>
+                        <div class="form-group">
+                            <label for="name">Your Names</label>
+                            <input type="text" id="name" name="name" required autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required autocomplete="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Wedding Date</label>
+                            <input type="date" id="date" name="date">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Tell Me Your Story…</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary" style="border:none; width: fit-content;">Send Inquiry</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <a href="#" class="logo" style="color: var(--bg-color); font-size: 2rem;">Lenscraft</a>
+            <nav class="footer-links" aria-label="Footer Navigation">
+                <a href="#gallery">Portfolio</a>
+                <a href="#about">About</a>
+                <a href="#packages">Pricing</a>
+                <a href="#">Instagram</a>
+                <a href="#">Privacy Policy</a>
+            </nav>
+            <p class="copyright">&copy; 2024 Lenscraft Photography. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image Viewer">
+        <button class="lightbox-close" aria-label="Close Image Viewer">&times;</button>
+        <div class="lightbox-content">
+            <img src="" alt="" class="lightbox-img" id="lightbox-img">
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Header Scroll Effect
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+            }, { passive: true });
+
+            // Gallery Filtering
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Update active state
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const filter = btn.dataset.filter;
+
+                    galleryItems.forEach(item => {
+                        if (filter === 'all' || item.dataset.category === filter) {
+                            item.style.display = 'block';
+                            // Small timeout to allow display:block to apply before opacity transition
+                            setTimeout(() => item.style.opacity = '1', 10);
+                        } else {
+                            item.style.opacity = '0';
+                            setTimeout(() => item.style.display = 'none', 300);
+                        }
+                    });
+                });
+            });
+
+            // Lightbox Logic
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const closeBtn = document.querySelector('.lightbox-close');
+            let lastFocusedElement;
+
+            function openLightbox(src, alt) {
+                lastFocusedElement = document.activeElement;
+                lightboxImg.src = src.replace('w=800', 'w=1600'); // Load higher res
+                lightboxImg.alt = alt;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                closeBtn.focus();
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+                if (lastFocusedElement) lastFocusedElement.focus();
+            }
+
+            galleryItems.forEach(item => {
+                item.setAttribute('tabindex', '0');
+                item.setAttribute('role', 'button');
+                
+                const handler = () => {
+                    const img = item.querySelector('img');
+                    openLightbox(img.src, img.alt);
+                };
+
+                item.addEventListener('click', handler);
+                item.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handler();
+                    }
+                });
+            });
+
+            closeBtn.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeLightbox();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
+            });
+
+            // Scroll Reveal Animation
+            const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            // Simple Form Handling (Prevent Default for Demo)
+            document.querySelector('form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const btn = e.target.querySelector('button[type="submit"]');
+                const originalText = btn.textContent;
+                btn.textContent = 'Sent Successfully!';
+                btn.style.background = '#4a6741';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                    e.target.reset();
+                }, 3000);
+            });
+        });
+    </script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
