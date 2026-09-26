@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en" style="color-scheme: dark;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ember & Oak | Wood-Fire Dining</title>
+    <meta name="description" content="Experience the primal art of wood-fire cooking at Ember & Oak. Upscale dining with a modern twist.">
+    <meta name="theme-color" content="#121212">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --text-main: #f0f0f0;
+            --text-muted: #a0a0a0;
+            --accent: #e8641c;
+            --accent-hover: #ff7b3a;
+            --border: #333333;
+            
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Montserrat', sans-serif;
+            
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 4rem;
+            
+            --container: 1200px;
+            --nav-height: 80px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-display);
+            font-weight: 400;
+            text-wrap: balance;
+            line-height: 1.1;
+        }
+
+        h1 { font-size: clamp(3rem, 8vw, 6rem); letter-spacing: -0.02em; }
+        h2 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: var(--spacing-lg); color: var(--accent); }
+        h3 { font-size: 1.5rem; margin-bottom: var(--spacing-sm); }
+        p { margin-bottom: var(--spacing-md); color: var(--text-muted); }
+        
+        .serif-italic { font-family: var(--font-display); font-style: italic; }
+        .tabular-nums { font-variant-numeric: tabular-nums; }
+
+        /* --- UTILITIES --- */
+        .container { max-width: var(--container); margin: 0 auto; padding: 0 var(--spacing-md); }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }
+        .flex-center { display: flex; align-items: center; justify-content: center; }
+        .grid-gap { display: grid; gap: var(--spacing-lg); }
+        
+        img { max-width: 100%; height: auto; display: block; object-fit: cover; }
+
+        /* --- ANIMATIONS --- */
+        @media (prefers-reduced-motion: no-preference) {
+            .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+            .reveal.active { opacity: 1; transform: translateY(0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+
+        /* --- BUTTONS --- */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 1rem 2rem;
+            background-color: var(--accent); color: #fff;
+            font-family: var(--font-body); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+            text-decoration: none; border: none; cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            min-height: 44px; min-width: 44px;
+        }
+        .btn:hover, .btn:focus-visible { background-color: var(--accent-hover); transform: translateY(-2px); outline: 2px solid var(--accent); outline-offset: 2px; }
+        .btn-outline { background: transparent; border: 1px solid var(--text-main); color: var(--text-main); }
+        .btn-outline:hover, .btn-outline:focus-visible { background: var(--text-main); color: var(--bg-dark); }
+
+        /* --- NAVIGATION --- */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: rgba(18, 18, 18, 0.9); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            height: var(--nav-height);
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; height: 100%; }
+        .logo { font-family: var(--font-display); font-size: 1.8rem; color: var(--text-main); text-decoration: none; font-weight: 600; }
+        .logo span { color: var(--accent); }
+        
+        nav ul { display: flex; gap: var(--spacing-lg); list-style: none; }
+        nav a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; transition: color 0.3s; }
+        nav a:hover, nav a:focus-visible, nav a[aria-current="page"] { color: var(--accent); }
+        
+        .mobile-toggle { display: none; background: none; border: none; color: var(--text-main); cursor: pointer; padding: 10px; }
+
+        /* --- HERO --- */
+        #hero {
+            position: relative; height: 100vh; min-height: 600px;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover; background-position: center;
+            padding-top: var(--nav-height);
+        }
+        .hero-content { max-width: 800px; padding: var(--spacing-md); }
+        .hero-subtitle { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent); margin-bottom: var(--spacing-md); display: block; }
+
+        /* --- ABOUT --- */
+        #about { padding: var(--spacing-xl) 0; }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-xl); align-items: center; }
+        .about-img-wrapper { position: relative; overflow: hidden; aspect-ratio: 4/5; }
+        .about-img-wrapper img { width: 100%; height: 100%; transition: transform 0.6s ease; }
+        .about-img-wrapper:hover img { transform: scale(1.03); }
+
+        /* --- MENU --- */
+        #menu { padding: var(--spacing-xl) 0; background-color: #161616; }
+        .menu-tabs { display: flex; justify-content: center; gap: var(--spacing-md); margin-bottom: var(--spacing-xl); flex-wrap: wrap; }
+        .tab-btn {
+            background: none; border: none; color: var(--text-muted);
+            font-family: var(--font-display); font-size: 1.5rem; cursor: pointer;
+            padding: 0.5rem 1rem; border-bottom: 2px solid transparent; transition: all 0.3s;
+        }
+        .tab-btn[aria-selected="true"], .tab-btn:hover { color: var(--accent); border-bottom-color: var(--accent); }
+        
+        .menu-section { display: none; animation: fadeIn 0.5s ease; }
+        .menu-section.active { display: block; }
+        
+        .menu-item { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--border); padding: var(--spacing-md) 0; }
+        .menu-item:last-child { border-bottom: none; }
+        .item-details h4 { font-size: 1.25rem; color: var(--text-main); margin-bottom: 0.25rem; }
+        .item-desc { font-size: 0.9rem; color: var(--text-muted); font-style: italic; }
+        .item-price { font-family: var(--font-body); font-weight: 600; color: var(--accent); font-size: 1.1rem; white-space: nowrap; margin-left: var(--spacing-md); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- GALLERY --- */
+        #gallery { padding: var(--spacing-xl) 0; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-sm); }
+        .gallery-item { aspect-ratio: 1; overflow: hidden; position: relative; }
+        .gallery-item img { width: 100%; height: 100%; transition: transform 0.5s ease; }
+        .gallery-item:hover img { transform: scale(1.05); }
+
+        /* --- TESTIMONIALS --- */
+        #testimonials { padding: var(--spacing-xl) 0; background: #161616; text-align: center; }
+        .testimonial-slider { max-width: 800px; margin: 0 auto; position: relative; min-height: 250px; }
+        .testimonial-slide { position: absolute; top: 0; left: 0; width: 100%; opacity: 0; transition: opacity 0.5s ease; pointer-events: none; }
+        .testimonial-slide.active { opacity: 1; position: relative; pointer-events: auto; }
+        .quote-icon { font-size: 4rem; color: var(--accent); opacity: 0.3; line-height: 1; margin-bottom: var(--spacing-md); font-family: var(--font-display); }
+        .testimonial-text { font-size: 1.5rem; font-family: var(--font-display); font-style: italic; margin-bottom: var(--spacing-md); }
+        .testimonial-author { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); }
+        
+        .slider-controls { display: flex; justify-content: center; gap: var(--spacing-md); margin-top: var(--spacing-lg); }
+        .slider-btn { background: none; border: 1px solid var(--border); color: var(--text-main); width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .slider-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* --- RESERVATION --- */
+        #reservations { padding: var(--spacing-xl) 0; }
+        .reservation-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-xl); background: var(--bg-card); padding: var(--spacing-xl); border: 1px solid var(--border); }
+        .form-group { margin-bottom: var(--spacing-md); }
+        .form-label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted); }
+        .form-input {
+            width: 100%; padding: 1rem; background: var(--bg-dark); border: 1px solid var(--border);
+            color: var(--text-main); font-family: var(--font-body); font-size: 1rem; transition: border-color 0.3s;
+        }
+        .form-input:focus { outline: none; border-color: var(--accent); }
+        .form-input:invalid:not(:placeholder-shown) { border-color: #ff4444; }
+        .error-msg { color: #ff4444; font-size: 0.8rem; margin-top: 0.25rem; display: none; }
+        .form-input:invalid:not(:placeholder-shown) + .error-msg { display: block; }
+
+        /* --- FOOTER --- */
+        footer { background: #0a0a0a; padding: var(--spacing-xl) 0 var(--spacing-md); border-top: 1px solid var(--border); }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--spacing-xl); margin-bottom: var(--spacing-xl); }
+        .footer-col h5 { font-size: 1.2rem; color: var(--text-main); margin-bottom: var(--spacing-md); }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 0.5rem; color: var(--text-muted); }
+        .map-placeholder { width: 100%; height: 200px; background: #222; display: flex; align-items: center; justify-content: center; color: var(--text-muted); border: 1px solid var(--border); }
+        .copyright { text-align: center; padding-top: var(--spacing-lg); border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.8rem; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .mobile-toggle { display: block; }
+            nav ul {
+                position: fixed; top: var(--nav-height); left: 0; width: 100%;
+                background: var(--bg-dark); flex-direction: column; padding: var(--spacing-lg);
+                transform: translateY(-150%); transition: transform 0.3s ease; border-bottom: 1px solid var(--border);
+            }
+            nav ul.open { transform: translateY(0); }
+            .about-grid, .reservation-wrapper { grid-template-columns: 1fr; }
+            .about-img-wrapper { order: -1; aspect-ratio: 16/9; }
+            h1 { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="#main-content" class="sr-only" style="position:absolute; top:0; left:0; background:var(--accent); color:white; padding:1rem; z-index:2000; transform:translateY(-100%); transition:transform 0.3s;" onfocus="this.style.transform='translateY(0)'" onblur="this.style.transform='translateY(-100%)'">Skip to Content</a>
+
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo" aria-label="Ember & Oak Home">Ember <span>&</span> Oak</a>
+            <button class="mobile-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle Navigation Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+            <nav id="primary-nav">
+                <ul role="list">
+                    <li><a href="#about">Our Story</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                    <li><a href="#reservations" class="btn" style="padding: 0.5rem 1.5rem; margin-left: 1rem;">Book a Table</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- HERO SECTION -->
+        <section id="hero" aria-label="Introduction">
+            <div class="hero-content reveal">
+                <span class="hero-subtitle">Wood-Fire Dining</span>
+                <h1>Taste the Primal Art of Fire</h1>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem; color: #ddd;">Seasonal ingredients, open flames, and unforgettable moments.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="#reservations" class="btn">Reserve Your Table</a>
+                    <a href="#menu" class="btn btn-outline">View Menu</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="reveal">
+                        <h2>Rooted in Tradition, Refined by Flame</h2>
+                        <p>At Ember & Oak, we believe cooking over an open fire is more than a technique—it’s a ritual. Our kitchen centers around a custom-built oak wood hearth that imparts a distinct, smoky complexity to every dish.</p>
+                        <p>We partner with local farmers and foragers to source ingredients at their peak, allowing the natural flavors to shine through the alchemy of heat and smoke. Whether you’re joining us for an intimate dinner or a celebratory feast, expect warmth, authenticity, and culinary excellence.</p>
+                        <p class="serif-italic" style="color: var(--accent); font-size: 1.2rem; margin-top: 1rem;">“Fire is the oldest ingredient.”</p>
+                    </div>
+                    <div class="about-img-wrapper reveal">
+                        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1000&q=80" alt="Chef carefully tending to meat grilling over an open oak wood fire in a dimly lit kitchen" width="800" height="1000" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MENU SECTION -->
+        <section id="menu">
+            <div class="container">
+                <div style="text-align: center;" class="reveal">
+                    <h2>The Menu</h2>
+                    <p style="max-width: 600px; margin: 0 auto var(--spacing-lg);">Curated daily based on market availability. Prices reflect our commitment to premium, sustainable sourcing.</p>
+                </div>
+
+                <div class="menu-tabs reveal" role="tablist" aria-label="Menu Categories">
+                    <button class="tab-btn" role="tab" aria-selected="true" aria-controls="starters" id="tab-starters">Starters</button>
+                    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="mains" id="tab-mains">Mains</button>
+                    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="desserts" id="tab-desserts">Desserts</button>
+                </div>
+
+                <div id="starters" class="menu-section active reveal" role="tabpanel" aria-labelledby="tab-starters">
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <h4>Smoked Bone Marrow</h4>
+                            <p class="item-desc">Sourdough toast, pickled shallots, herb gremolata</p>
+                        </div>
+                        <span class="item-price tabular-nums">$24</span>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <h4>Charred Octopus</h4>
+                            <p class="item-desc">Romesco sauce, crispy potatoes, smoked paprika oil</p>
+                        </div>
+                        <span class="item-price tabular-nums">$28</span>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <h4>Ember-Roasted Beet Tartare</h4>
+                            <p class="item-desc">Horseradish cream, capers, rye crumble (V)</p>
+                        </div>
+                        <span class="item-price tabular-nums">$19</span>
+                    </div>
+                </div>
+
+                <div id="mains" class="menu-section" role="tabpanel" aria-labelledby="tab-mains" hidden>
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <h4>Dry-Aged Ribeye 14oz</h4>
+                            <p class="item-desc">45-day aged, bone-in, charred broccolini, red wine jus</p>
+                        </div>
+                        <span class="item-price tabular-nums">$68</span>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <h4>Whole Roasted Branzino</h4>
+                            <p class="item-desc">Lemon butter, fennel salad, olive tapenade</p>
+                        </div>
+                        <span class="item-price tabular-nums">$42</span>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <h4>Wood-Fired Cauliflower Steak</h4>
+                            <p class="item-desc">Tahini, pomegranate, toasted almonds, za'atar (VG)</p>
+                        </div>
+                        <span class="item-price tabular-nums">$32</span>
+                    </div>
+                </div>
+
+                <div id="desserts" class="menu-section" role="tabpanel" aria-labelledby="tab-desserts" hidden>
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <h4>Smoked Chocolate Fondant</h4>
+                            <p class="item-desc">Salted caramel core, vanilla bean ice cream</p>
+                        </div>
+                        <span class="item-price tabular-nums">$16</span>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <h4>Burnt Basque Cheesecake</h4>
+                            <p class="item-desc">Macera ted cherries, honeycomb crumble</p>
+                        </div>
+                        <span class="item-price tabular-nums">$14</span>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-details">
+                            <h4>Grilled Stone Fruit</h4>
+                            <p class="item-desc">Mascarpone, pistachio dust, balsamic glaze (GF)</p>
+                        </div>
+                        <span class="item-price tabular-nums">$15</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GALLERY SECTION -->
+        <section id="gallery" aria-label="Photo Gallery">
+            <div class="container">
+                <div class="gallery-grid reveal">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80" alt="Artfully plated seared scallops with microgreens on a dark ceramic plate" width="600" height="600" loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://picsum.photos/seed/ember-oak-3ed3c622762c/1600/900?auto=format&fit=crop&w=800&q=80" alt="Interior shot showing warm ambient lighting and rustic wooden tables" width="600" height="600" loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://picsum.photos/seed/ember-oak-d76690b67f26/1600/900?auto=format&fit=crop&w=800&q=80" alt="Close up of glowing orange embers in the wood fire oven" width="600" height="600" loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80" alt="Bartender crafting a smoked cocktail with rosemary sprig garnish" width="600" height="600" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS SECTION -->
+        <section id="testimonials">
+            <div class="container reveal">
+                <h2>Guest Experiences</h2>
+                <div class="testimonial-slider" aria-live="polite">
+                    <div class="testimonial-slide active">
+                        <div class="quote-icon" aria-hidden="true">“</div>
+                        <p class="testimonial-text">The dry-aged ribeye was transcendent. You can taste the oak smoke in every bite. Easily the best dining experience in the city this year.</p>
+                        <cite class="testimonial-author">— Elena R., Food Critic</cite>
+                    </div>
+                    <div class="testimonial-slide">
+                        <div class="quote-icon" aria-hidden="true">“</div>
+                        <p class="testimonial-text">Moody atmosphere, impeccable service, and food that feels both ancient and modern. The burnt cheesecake is non-negotiable.</p>
+                        <cite class="testimonial-author">— Marcus T., Local Guide</cite>
+                    </div>
+                    <div class="testimonial-slide">
+                        <div class="quote-icon" aria-hidden="true">“</div>
+                        <p class="testimonial-text">We celebrated our anniversary here and it was magical. The staff made us feel incredibly special without being intrusive.</p>
+                        <cite class="testimonial-author">— Sarah & James D.</cite>
+                    </div>
+                </div>
+                <div class="slider-controls">
+                    <button class="slider-btn" aria-label="Previous Testimonial" data-dir="-1">←</button>
+                    <button class="slider-btn" aria-label="Next Testimonial" data-dir="1">→</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESERVATION SECTION -->
+        <section id="reservations">
+            <div class="container">
+                <div class="reservation-wrapper reveal">
+                    <div>
+                        <h2>Reserve Your Table</h2>
+                        <p>Join us for an evening of fire-kissed cuisine. For parties larger than 8, please contact us directly.</p>
+                        <ul style="list-style: none; margin-top: 2rem; color: var(--text-muted);">
+                            <li style="margin-bottom: 1rem;"><strong style="color: var(--text-main); display: block;">Hours</strong>Tue–Sun: 5:00 PM – 10:00 PM<br>Mon: Closed</li>
+                            <li style="margin-bottom: 1rem;"><strong style="color: var(--text-main); display: block;">Location</strong>142 Hearthstone Ave, Culinary District</li>
+                            <li><strong style="color: var(--text-main); display: block;">Contact</strong>(555) 019-2834<br>reservations@emberandoak.com</li>
+                        </ul>
+                    </div>
+                    <form id="booking-form" novalidate>
+                        <div class="form-group">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" id="name" class="form-input" placeholder="John Doe" required autocomplete="name">
+                            <span class="error-msg">Please enter your name</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" id="phone" class="form-input" placeholder="(555) 000-0000" required autocomplete="tel">
+                            <span class="error-msg">Please enter a valid phone number</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label for="date" class="form-label">Date</label>
+                                <input type="date" id="date" class="form-input" required>
+                                <span class="error-msg">Select a future date</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="guests" class="form-label">Party Size</label>
+                                <select id="guests" class="form-input" required>
+                                    <option value="">Select...</option>
+                                    <option value="1">1 Person</option>
+                                    <option value="2">2 People</option>
+                                    <option value="3">3 People</option>
+                                    <option value="4">4 People</option>
+                                    <option value="5">5 People</option>
+                                    <option value="6">6 People</option>
+                                    <option value="7">7 People</option>
+                                    <option value="8">8 People</option>
+                                </select>
+                                <span class="error-msg">Select party size</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="requests" class="form-label">Special Requests (Optional)</label>
+                            <textarea id="requests" class="form-input" rows="3" placeholder="Allergies, celebrations, seating preferences..."></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%;">Confirm Reservation</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="#" class="logo" style="display: inline-block; margin-bottom: 1rem;">Ember <span>&</span> Oak</a>
+                    <p style="font-size: 0.9rem;">Primal flavors, modern elegance. Experience the art of wood-fire cooking in the heart of the city.</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="#menu" style="color: var(--text-muted); text-decoration: none;">Menu</a></li>
+                        <li><a href="#reservations" style="color: var(--text-muted); text-decoration: none;">Reservations</a></li>
+                        <li><a href="#" style="color: var(--text-muted); text-decoration: none;">Gift Cards</a></li>
+                        <li><a href="#" style="color: var(--text-muted); text-decoration: none;">Private Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Find Us</h5>
+                    <div class="map-placeholder" aria-label="Map Placeholder">
+                        <span>Interactive Map Loading…</span>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 Ember & Oak Restaurant. All rights reserved. Designed with 🔥
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Navigation Toggle
+            const toggleBtn = document.querySelector('.mobile-toggle');
+            const navUl = document.querySelector('nav ul');
+            
+            toggleBtn.addEventListener('click', () => {
+                const isOpen = navUl.classList.toggle('open');
+                toggleBtn.setAttribute('aria-expanded', isOpen);
+            });
+
+            // Close mobile nav when clicking a link
+            navUl.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navUl.classList.remove('open');
+                    toggleBtn.setAttribute('aria-expanded', 'false');
+                });
+            });
+
+            // Menu Tabs Logic
+            const tabs = document.querySelectorAll('.tab-btn');
+            const panels = document.querySelectorAll('.menu-section');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Reset all
+                    tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+                    panels.forEach(p => {
+                        p.classList.remove('active');
+                        p.hidden = true;
+                    });
+
+                    // Activate clicked
+                    tab.setAttribute('aria-selected', 'true');
+                    const targetId = tab.getAttribute('aria-controls');
+                    const targetPanel = document.getElementById(targetId);
+                    targetPanel.classList.add('active');
+                    targetPanel.hidden = false;
+                });
+            });
+
+            // Testimonial Slider
+            const slides = document.querySelectorAll('.testimonial-slide');
+            let currentSlide = 0;
+
+            function showSlide(index) {
+                slides.forEach(s => s.classList.remove('active'));
+                currentSlide = (index + slides.length) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }
+
+            document.querySelectorAll('.slider-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const dir = parseInt(btn.dataset.dir);
+                    showSlide(currentSlide + dir);
+                });
+            });
+
+            // Auto-advance testimonials every 6s
+            setInterval(() => showSlide(currentSlide + 1), 6000);
+
+            // Scroll Reveal Animation
+            const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            // Form Validation & Handling
+            const form = document.getElementById('booking-form');
+            const dateInput = document.getElementById('date');
+            
+            // Set min date to today
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.setAttribute('min', today);
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Simple validation check
+                let isValid = true;
+                const inputs = form.querySelectorAll('[required]');
+                
+                inputs.forEach(input => {
+                    if (!input.value || !input.checkValidity()) {
+                        isValid = false;
+                        input.classList.add('invalid');
+                    } else {
+                        input.classList.remove('invalid');
+                    }
+                });
+
+                if (isValid) {
+                    const btn = form.querySelector('button[type="submit"]');
+                    const originalText = btn.textContent;
+                    
+                    btn.textContent = "Confirming...";
+                    btn.disabled = true;
+                    
+                    // Simulate API call
+                    setTimeout(() => {
+                        alert(`Thank you! Your table for ${document.getElementById('guests').value} on ${document.getElementById('date').value} has been requested. We will confirm via SMS shortly.`);
+                        form.reset();
+                        btn.textContent = originalText;
+                        btn.disabled = false;
+                    }, 1500);
+                }
+            });
+        });
+    </script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
