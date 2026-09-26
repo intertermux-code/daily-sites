@@ -1,705 +1,406 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="color-scheme: light;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lenscraft | Wedding Photography</title>
-    <meta name="description" content="Fine art wedding photography capturing authentic moments and timeless details.">
+    <meta name="description" content="Editorial wedding photography by Lenscraft. Capturing authentic moments with a timeless aesthetic.">
     <meta name="theme-color" content="#faf8f4">
     
-    <!-- Fonts -->
+    <!-- Fonts: Playfair Display (Serif) & Inter (Sans) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
     <style>
+        /* --- RESET & VARIABLES --- */
         :root {
             --bg-color: #faf8f4;
-            --text-color: #2c2c2c;
-            --accent-color: #8c7b75;
-            --border-color: #e0ded9;
-            --white: #ffffff;
-            
-            --font-serif: 'Cormorant Garamond', serif;
-            --font-sans: 'Montserrat', sans-serif;
-            
-            --container-width: 1200px;
-            --header-height: 80px;
-            
+            --text-main: #2c2c2c;
+            --text-muted: #666666;
+            --accent: #a39b8b;
+            --border: #e5e5e5;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+            --container: 1200px;
             --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
         }
 
-        /* Reset & Base */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px;
-        }
-
+        html { scroll-behavior: smooth; font-size: 16px; }
+        
         body {
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-main);
             font-family: var(--font-sans);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
 
-        /* Accessibility & Utilities */
-        .skip-link {
-            position: absolute;
-            top: -100%;
-            left: 0;
-            background: var(--text-color);
-            color: var(--white);
-            padding: 1rem;
-            z-index: 1000;
-            transition: top 0.3s var(--ease-out);
-        }
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3, h4 { font-family: var(--font-serif); font-weight: 400; text-wrap: balance; color: var(--text-main); }
+        h1 { font-size: clamp(3rem, 8vw, 6rem); line-height: 1.1; letter-spacing: -0.02em; }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.5rem; }
+        h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+        p { margin-bottom: 1.5rem; color: var(--text-muted); max-width: 65ch; }
+        
+        .serif-italic { font-family: var(--font-serif); font-style: italic; }
+        .tabular-nums { font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
+
+        /* --- UTILITIES --- */
+        .container { width: 90%; max-width: var(--container); margin: 0 auto; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
+        .skip-link { position: absolute; top: -100px; left: 0; background: var(--text-main); color: white; padding: 1rem; z-index: 100; transition: top 0.3s; }
         .skip-link:focus { top: 0; }
-
-        .sr-only {
-            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-            overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
-        }
-
-        :focus-visible {
-            outline: 2px solid var(--text-color);
-            outline-offset: 4px;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        a { text-decoration: none; color: inherit; transition: opacity 0.3s ease; }
-        a:hover { opacity: 0.7; }
-
-        button {
-            background: none; border: none; cursor: pointer; font-family: inherit;
-            touch-action: manipulation;
-        }
-
-        /* Typography */
-        h1, h2, h3, h4 {
-            font-family: var(--font-serif);
-            font-weight: 400;
-            text-wrap: balance;
-            line-height: 1.1;
-        }
-
-        h1 { font-size: clamp(3.5rem, 8vw, 7rem); letter-spacing: -0.02em; }
-        h2 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 2rem; }
-        h3 { font-size: 1.75rem; margin-bottom: 1rem; }
         
-        p { margin-bottom: 1.5rem; font-weight: 300; }
+        img { display: block; max-width: 100%; height: auto; object-fit: cover; }
         
-        .label {
-            font-family: var(--font-sans);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--accent-color);
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        /* Layout */
-        .container {
-            max-width: var(--container-width);
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        section { padding: 6rem 0; }
-
-        /* Header */
-        header {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            height: var(--header-height);
-            background: rgba(250, 248, 244, 0.9);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.3s ease;
-        }
+        button, a { touch-action: manipulation; }
         
-        header.scrolled { border-bottom-color: var(--border-color); }
-
-        .nav-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 100%;
-        }
-
-        .logo {
-            font-family: var(--font-serif);
-            font-size: 1.5rem;
-            font-style: italic;
-        }
-
-        nav ul { display: flex; gap: 2.5rem; list-style: none; }
-        nav a { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; }
-
-        .mobile-menu-btn { display: none; padding: 10px; }
-
-        /* Hero */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding-top: var(--header-height);
-            position: relative;
-        }
-
-        .hero-subtitle {
-            font-size: 1.1rem;
-            margin-top: 1.5rem;
-            font-style: italic;
-            font-family: var(--font-serif);
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            animation: bounce 2s infinite;
-            opacity: 0.5;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-10px);}
-            60% {transform: translateY(-5px);}
-        }
-
-        /* Gallery */
-        .filters {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 0.75rem 1.5rem;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            border: 1px solid transparent;
-            border-radius: 50px;
-            transition: all 0.3s var(--ease-out);
-            min-height: 44px;
-        }
-
-        .filter-btn.active, .filter-btn:hover {
-            border-color: var(--text-color);
-            background: var(--white);
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            aspect-ratio: 3/4;
-            background: #eee;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.7s var(--ease-out);
-        }
-
-        .gallery-item:hover img { transform: scale(1.05); }
-
-        /* Lightbox */
-        .lightbox {
-            position: fixed;
-            inset: 0;
-            background: rgba(250, 248, 244, 0.98);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s var(--ease-out);
-        }
-
-        .lightbox.active { opacity: 1; pointer-events: auto; }
-
-        .lightbox-content {
-            max-width: 90vw;
-            max-height: 90vh;
-            position: relative;
-        }
-
-        .lightbox-img {
-            max-height: 85vh;
-            width: auto;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-        }
-
-        .lightbox-close {
-            position: absolute;
-            top: 2rem; right: 2rem;
-            font-size: 2rem;
-            width: 50px; height: 50px;
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        /* About */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .about-img-wrapper {
-            position: relative;
-        }
-        
-        .about-img-wrapper::after {
-            content: '';
-            position: absolute;
-            top: 20px; left: -20px;
-            width: 100%; height: 100%;
-            border: 1px solid var(--accent-color);
-            z-index: -1;
-        }
-
-        /* Packages */
-        .packages-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .package-card {
-            background: var(--white);
-            padding: 3rem 2rem;
-            border: 1px solid var(--border-color);
-            text-align: center;
-            transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
-        }
-
-        .package-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
-        }
-
-        .price {
-            font-family: var(--font-serif);
-            font-size: 2.5rem;
-            margin: 1.5rem 0;
-            display: block;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .features-list {
-            list-style: none;
-            margin-bottom: 2rem;
-            text-align: left;
-        }
-
-        .features-list li {
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary {
-            display: inline-block;
-            background: var(--text-color);
-            color: var(--white);
-            padding: 1rem 2.5rem;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            transition: background 0.3s ease, transform 0.2s ease;
-            min-height: 44px;
-        }
-
-        .btn-primary:hover { background: var(--accent-color); opacity: 1; }
-        .btn-primary:active { transform: scale(0.98); }
-
-        /* Reviews */
-        .reviews-section { background: var(--white); }
-        
-        .review-carousel {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            gap: 2rem;
-            padding-bottom: 2rem;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        .review-carousel::-webkit-scrollbar { display: none; }
-
-        .review-card {
-            min-width: 300px;
-            max-width: 400px;
-            scroll-snap-align: center;
-            padding: 2rem;
-            background: var(--bg-color);
-        }
-
-        .stars { color: var(--accent-color); margin-bottom: 1rem; letter-spacing: 2px; }
-
-        /* Contact */
-        .contact-layout {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 4rem;
-        }
-
-        form { display: grid; gap: 1.5rem; }
-
-        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
-        
-        label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; }
-        
-        input, textarea, select {
-            padding: 1rem;
-            border: 1px solid var(--border-color);
-            background: var(--white);
-            font-family: var(--font-sans);
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-            min-height: 44px;
-        }
-
-        input:focus, textarea:focus, select:focus {
-            border-color: var(--text-color);
-            outline: none;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--text-color);
-            color: var(--bg-color);
-            padding: 4rem 0;
-            text-align: center;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-        }
-
-        .copyright { opacity: 0.5; font-size: 0.8rem; }
+        /* Focus Styles */
+        :focus-visible { outline: 2px solid var(--text-main); outline-offset: 4px; }
+        button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
 
         /* Animations */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
         }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-            .reveal { opacity: 1; transform: none; }
+        /* --- HEADER --- */
+        header { position: fixed; top: 0; left: 0; width: 100%; z-index: 50; padding: 1.5rem 0; transition: background 0.3s, padding 0.3s; mix-blend-mode: normal; }
+        header.scrolled { background: rgba(250, 248, 244, 0.95); backdrop-filter: blur(5px); padding: 1rem 0; border-bottom: 1px solid var(--border); }
+        
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--font-serif); font-size: 1.5rem; text-decoration: none; color: var(--text-main); letter-spacing: -0.02em; }
+        
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-main); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--text-main); transition: width 0.3s var(--ease-out); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+        
+        @media (max-width: 768px) {
+            .nav-links { position: fixed; top: 0; right: 0; height: 100vh; width: 80%; background: var(--bg-color); flex-direction: column; justify-content: center; align-items: center; transform: translateX(100%); transition: transform 0.4s var(--ease-out); box-shadow: -5px 0 15px rgba(0,0,0,0.05); }
+            .nav-links.open { transform: translateX(0); }
+            .mobile-toggle { display: block; z-index: 60; }
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 { font-size: 3rem; }
-            .nav-wrapper nav { display: none; } /* Simplified for single file demo */
-            .mobile-menu-btn { display: block; }
-            .about-grid, .contact-layout { grid-template-columns: 1fr; gap: 2rem; }
-            .about-img-wrapper { order: -1; margin-bottom: 2rem; }
-            .about-img-wrapper::after { display: none; }
-            section { padding: 4rem 0; }
-        }
+        /* --- HERO --- */
+        .hero { min-height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6rem 0 4rem; position: relative; overflow: hidden; }
+        .hero-content { position: relative; z-index: 2; }
+        .hero-subtitle { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 1rem; display: block; color: var(--text-muted); }
+        
+        /* --- GALLERY --- */
+        .gallery-section { padding: 4rem 0; }
+        .filters { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
+        .filter-btn { background: none; border: 1px solid transparent; padding: 0.5rem 1.5rem; font-family: var(--font-sans); font-size: 0.9rem; cursor: pointer; border-radius: 50px; transition: all 0.3s; color: var(--text-muted); }
+        .filter-btn:hover, .filter-btn.active { border-color: var(--text-main); color: var(--text-main); }
+        
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+        .gallery-item { position: relative; aspect-ratio: 3/4; overflow: hidden; cursor: pointer; border-radius: 2px; }
+        .gallery-item img { width: 100%; height: 100%; transition: transform 0.6s var(--ease-out); }
+        .gallery-item:hover img { transform: scale(1.05); }
+        .gallery-item.hidden { display: none; }
+
+        /* Lightbox */
+        .lightbox { position: fixed; inset: 0; background: rgba(250, 248, 244, 0.98); z-index: 100; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .lightbox.active { opacity: 1; pointer-events: auto; }
+        .lightbox img { max-height: 90vh; max-width: 90vw; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .lightbox-close { position: absolute; top: 2rem; right: 2rem; background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--text-main); }
+
+        /* --- ABOUT --- */
+        .about { padding: 6rem 0; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .about-img { aspect-ratio: 4/5; overflow: hidden; border-radius: 2px; }
+        .about-img img { width: 100%; height: 100%; }
+        @media (max-width: 768px) { .about { grid-template-columns: 1fr; } }
+
+        /* --- PACKAGES --- */
+        .packages { padding: 6rem 0; background: #fff; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .price-card { padding: 3rem 2rem; border: 1px solid var(--border); text-align: center; transition: transform 0.3s, box-shadow 0.3s; }
+        .price-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-color: var(--text-main); }
+        .price { font-size: 2.5rem; font-family: var(--font-serif); margin: 1.5rem 0; display: block; }
+        .features { list-style: none; margin-bottom: 2rem; text-align: left; }
+        .features li { padding: 0.5rem 0; border-bottom: 1px solid #eee; font-size: 0.95rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem; }
+        .btn { display: inline-block; padding: 1rem 2rem; background: var(--text-main); color: #fff; text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; transition: background 0.3s; border: none; cursor: pointer; min-height: 44px; }
+        .btn:hover { background: #000; }
+        .btn-outline { background: transparent; color: var(--text-main); border: 1px solid var(--text-main); }
+        .btn-outline:hover { background: var(--text-main); color: #fff; }
+
+        /* --- REVIEWS --- */
+        .reviews { padding: 6rem 0; text-align: center; }
+        .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; margin-top: 3rem; text-align: left; }
+        .review-card blockquote { font-family: var(--font-serif); font-size: 1.25rem; font-style: italic; margin-bottom: 1.5rem; line-height: 1.4; }
+        .client-name { font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        /* --- CONTACT --- */
+        .contact { padding: 6rem 0; background: #f4f1eb; }
+        .contact-form { max-width: 600px; margin: 0 auto; display: grid; gap: 1.5rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        label { font-size: 0.9rem; font-weight: 500; }
+        input, textarea, select { padding: 1rem; border: 1px solid #ccc; background: #fff; font-family: var(--font-sans); font-size: 1rem; border-radius: 2px; }
+        input:focus, textarea:focus, select:focus { border-color: var(--text-main); outline: none; }
+
+        /* --- FOOTER --- */
+        footer { padding: 4rem 0; border-top: 1px solid var(--border); text-align: center; font-size: 0.9rem; color: var(--text-muted); }
+        .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 2rem; }
+        .social-links a { color: var(--text-main); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
     </style>
 </head>
 <body>
 
     <a href="#main-content" class="skip-link">Skip to Content</a>
 
-    <header id="header">
-        <div class="container nav-wrapper">
-            <a href="#" class="logo" aria-label="Lenscraft Home">Lenscraft</a>
+    <header id="navbar">
+        <div class="container">
             <nav aria-label="Main Navigation">
-                <ul>
+                <a href="#" class="logo">Lenscraft.</a>
+                <button class="mobile-toggle" aria-label="Toggle Menu" aria-expanded="false" aria-controls="nav-menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <ul id="nav-menu" class="nav-links">
                     <li><a href="#gallery">Portfolio</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#packages">Investment</a></li>
+                    <li><a href="#reviews">Kind Words</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
-            <button class="mobile-menu-btn" aria-label="Open Menu" aria-expanded="false">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-            </button>
         </div>
     </header>
 
     <main id="main-content">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="container reveal">
-                <span class="label">Est. 2018</span>
-                <h1>Capturing the<br><em>Unscripted</em></h1>
-                <p class="hero-subtitle">Fine art wedding photography for the modern romantic.</p>
-                <div style="margin-top: 3rem;">
-                    <a href="#contact" class="btn-primary">Inquire Availability</a>
-                </div>
-            </div>
-            <div class="scroll-indicator" aria-hidden="true">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                    <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
-                </svg>
+        <!-- HERO -->
+        <section class="hero reveal">
+            <div class="container hero-content">
+                <span class="hero-subtitle">Est. 2018 • New York</span>
+                <h1>Authentic Moments,<br><span class="serif-italic">Timelessly Crafted.</span></h1>
+                <p style="margin: 2rem auto; text-align: center;">Editorial wedding photography for the modern romantic. We capture the raw, unscripted beauty of your celebration.</p>
+                <a href="#contact" class="btn">Inquire Availability</a>
             </div>
         </section>
 
-        <!-- Gallery Section -->
-        <section id="gallery">
-            <div class="container">
-                <div class="reveal" style="text-align: center; margin-bottom: 3rem;">
-                    <span class="label">Selected Works</span>
-                    <h2>Visual Stories</h2>
-                </div>
-
-                <div class="filters reveal" role="group" aria-label="Gallery Filters">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="portrait">Portraits</button>
+        <!-- GALLERY -->
+        <section id="gallery" class="gallery-section container">
+            <div class="reveal">
+                <h2 style="text-align: center;">Selected Works</h2>
+                <div class="filters" role="group" aria-label="Filter Gallery">
+                    <button class="filter-btn active" data-filter="all">All Stories</button>
                     <button class="filter-btn" data-filter="ceremony">Ceremony</button>
+                    <button class="filter-btn" data-filter="portraits">Portraits</button>
                     <button class="filter-btn" data-filter="details">Details</button>
                 </div>
+            </div>
 
-                <div class="gallery-grid reveal">
-                    <!-- Portrait 1 -->
-                    <div class="gallery-item" data-category="portrait">
-                        <img src="https://picsum.photos/seed/lenscraft-1351cdeb9821/1600/900?auto=format&fit=crop&w=800&q=80" 
-                             alt="Bride laughing candidly in natural light" width="800" height="1067" loading="lazy">
-                    </div>
-                    <!-- Ceremony 1 -->
-                    <div class="gallery-item" data-category="ceremony">
-                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" 
-                             alt="Couple exchanging vows under floral arch" width="800" height="1067" loading="lazy">
-                    </div>
-                    <!-- Details 1 -->
-                    <div class="gallery-item" data-category="details">
-                        <img src="https://picsum.photos/seed/lenscraft-1645062cd495/1600/900?auto=format&fit=crop&w=800&q=80" 
-                             alt="Close up of wedding rings on textured linen" width="800" height="1067" loading="lazy">
-                    </div>
-                    <!-- Portrait 2 -->
-                    <div class="gallery-item" data-category="portrait">
-                        <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800&q=80" 
-                             alt="Groom adjusting tie looking out window" width="800" height="1067" loading="lazy">
-                    </div>
-                    <!-- Ceremony 2 -->
-                    <div class="gallery-item" data-category="ceremony">
-                        <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=800&q=80" 
-                             alt="Wide shot of outdoor garden ceremony seating" width="800" height="1067" loading="lazy">
-                    </div>
-                    <!-- Details 2 -->
-                    <div class="gallery-item" data-category="details">
-                        <img src="https://picsum.photos/seed/lenscraft-17451cc330e7/1600/900?auto=format&fit=crop&w=800&q=80" 
-                             alt="Elegant table setting with candles and greenery" width="800" height="1067" loading="lazy">
-                    </div>
+            <div class="gallery-grid">
+                <!-- Ceremony -->
+                <div class="gallery-item reveal" data-category="ceremony">
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" alt="Couple exchanging vows under an oak tree" width="800" height="1066" loading="lazy">
+                </div>
+                <!-- Portraits -->
+                <div class="gallery-item reveal" data-category="portraits">
+                    <img src="https://picsum.photos/seed/lenscraft-1351cdeb9821/1600/900?auto=format&fit=crop&w=800&q=80" alt="Bride laughing in golden hour light" width="800" height="1066" loading="lazy">
+                </div>
+                <!-- Details -->
+                <div class="gallery-item reveal" data-category="details">
+                    <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800&q=80" alt="Minimalist wedding table setting with linen napkins" width="800" height="1066" loading="lazy">
+                </div>
+                <!-- Portraits -->
+                <div class="gallery-item reveal" data-category="portraits">
+                    <img src="https://picsum.photos/seed/lenscraft-1645062cd495/1600/900?auto=format&fit=crop&w=800&q=80" alt="Groom adjusting tie in mirror reflection" width="800" height="1066" loading="lazy">
+                </div>
+                <!-- Ceremony -->
+                <div class="gallery-item reveal" data-category="ceremony">
+                    <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=800&q=80" alt="Guests throwing confetti at newlyweds" width="800" height="1066" loading="lazy">
+                </div>
+                <!-- Details -->
+                <div class="gallery-item reveal" data-category="details">
+                    <img src="https://picsum.photos/seed/lenscraft-17451cc330e7/1600/900?auto=format&fit=crop&w=800&q=80" alt="Close up of bridal bouquet with white roses" width="800" height="1066" loading="lazy">
                 </div>
             </div>
         </section>
 
-        <!-- About Section -->
-        <section id="about" style="background: var(--white);">
-            <div class="container">
-                <div class="about-grid">
-                    <div class="about-img-wrapper reveal">
-                        <img src="https://picsum.photos/seed/lenscraft-387768052bf7/1600/900?auto=format&fit=crop&w=800&q=80" 
-                             alt="Photographer Elena holding vintage camera" width="800" height="1000">
-                    </div>
-                    <div class="reveal">
-                        <span class="label">The Artist</span>
-                        <h2>Hello, I’m Elena.</h2>
-                        <p>I believe that the most beautiful images are the ones that feel true. My approach is rooted in documentary storytelling mixed with editorial elegance. I don’t just capture how your day looked; I strive to preserve how it felt.</p>
-                        <p>Based in San Francisco but available worldwide, I specialize in intimate elopements and grand celebrations alike. When I’m not behind the lens, I’m likely hunting for vintage vinyl or perfecting my sourdough recipe.</p>
-                        <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=200&q=80" alt="Signature" width="150" height="60" style="margin-top: 1rem; opacity: 0.6;">
-                    </div>
-                </div>
+        <!-- ABOUT -->
+        <section id="about" class="container about">
+            <div class="about-img reveal">
+                <img src="https://picsum.photos/seed/lenscraft-387768052bf7/1600/900?auto=format&fit=crop&w=1000&q=80" alt="Portrait of photographer Elena holding a vintage camera" width="1000" height="1250">
+            </div>
+            <div class="reveal">
+                <span class="hero-subtitle">The Artist</span>
+                <h2>Hello, I’m Elena.</h2>
+                <p>I believe that the best photographs aren’t posed—they’re felt. With over eight years of experience documenting love stories across the globe, my approach blends fine-art aesthetics with documentary candor.</p>
+                <p>My work has been featured in Vogue Weddings, Harper’s Bazaar, and Overjoyed. When I’m not behind the lens, I’m likely hunting for vintage ceramics or drinking too much espresso.</p>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Signature_sample.svg" alt="Elena's Signature" style="height: 40px; opacity: 0.6; margin-top: 1rem;" width="150" height="40">
             </div>
         </section>
 
-        <!-- Packages Section -->
-        <section id="packages">
+        <!-- PACKAGES -->
+        <section id="packages" class="packages">
             <div class="container">
-                <div class="reveal" style="text-align: center; margin-bottom: 4rem;">
-                    <span class="label">Investment</span>
-                    <h2>Curated Collections</h2>
+                <div class="reveal" style="text-align: center;">
+                    <h2>Investment</h2>
+                    <p>Transparent pricing for peace of mind. All collections include high-resolution digital files and a custom online gallery.</p>
                 </div>
                 
-                <div class="packages-grid reveal">
-                    <!-- Package 1 -->
-                    <article class="package-card">
+                <div class="pricing-grid">
+                    <!-- Card 1 -->
+                    <article class="price-card reveal">
                         <h3>Elopement</h3>
-                        <span class="price">$3,200</span>
-                        <ul class="features-list">
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> 4 Hours Coverage</li>
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Online Gallery</li>
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> 300+ Edited Images</li>
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Print Rights</li>
+                        <span class="price tabular-nums">$2,800</span>
+                        <ul class="features">
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Up to 4 Hours Coverage</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> 300+ Edited Images</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Private Online Gallery</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Print Rights Included</li>
                         </ul>
-                        <a href="#contact" class="btn-primary">Book Elopement</a>
+                        <a href="#contact" class="btn btn-outline">Book Elopement</a>
                     </article>
 
-                    <!-- Package 2 -->
-                    <article class="package-card" style="border-color: var(--text-color); transform: scale(1.02);">
-                        <div class="label" style="margin-bottom: 0.5rem;">Most Popular</div>
+                    <!-- Card 2 -->
+                    <article class="price-card reveal">
                         <h3>Full Day</h3>
-                        <span class="price">$5,800</span>
-                        <ul class="features-list">
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> 10 Hours Coverage</li>
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Second Shooter</li>
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Engagement Session</li>
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Premium Album Credit</li>
+                        <span class="price tabular-nums">$4,500</span>
+                        <ul class="features">
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Up to 10 Hours Coverage</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Second Photographer</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Engagement Session</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Premium Linen Album</li>
                         </ul>
-                        <a href="#contact" class="btn-primary">Book Full Day</a>
+                        <a href="#contact" class="btn">Book Full Day</a>
                     </article>
 
-                    <!-- Package 3 -->
-                    <article class="package-card">
+                    <!-- Card 3 -->
+                    <article class="price-card reveal">
                         <h3>Weekend</h3>
-                        <span class="price">$8,500</span>
-                        <ul class="features-list">
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Multi-day Coverage</li>
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Welcome Party & Brunch</li>
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Two Photographers</li>
-                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Heirloom Album Included</li>
+                        <span class="price tabular-nums">$7,200</span>
+                        <ul class="features">
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Multi-Day Coverage</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Two Second Photographers</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Welcome Party & Brunch</li>
+                            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Heirloom Box + Album</li>
                         </ul>
-                        <a href="#contact" class="btn-primary">Book Weekend</a>
+                        <a href="#contact" class="btn btn-outline">Book Weekend</a>
                     </article>
                 </div>
             </div>
         </section>
 
-        <!-- Reviews Section -->
-        <section class="reviews-section">
+        <!-- REVIEWS -->
+        <section id="reviews" class="reviews container">
+            <div class="reveal">
+                <h2>Kind Words</h2>
+            </div>
+            <div class="review-grid">
+                <article class="review-card reveal">
+                    <blockquote>“Elena has this incredible ability to be everywhere without ever being intrusive. Our photos feel like memories we get to hold.”</blockquote>
+                    <cite class="client-name">— Sarah & James, Brooklyn</cite>
+                </article>
+                <article class="review-card reveal">
+                    <blockquote>“We were worried about feeling awkward in front of the camera, but she made us feel like we were just hanging out with a friend.”</blockquote>
+                    <cite class="client-name">— Marcus & David, Hudson Valley</cite>
+                </article>
+                <article class="review-card reveal">
+                    <blockquote>“Worth every single penny. The album she designed is now the centerpiece of our living room. Pure art.”</blockquote>
+                    <cite class="client-name">— Priya & Tom, London</cite>
+                </article>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="contact">
             <div class="container">
                 <div class="reveal" style="text-align: center; margin-bottom: 3rem;">
-                    <span class="label">Kind Words</span>
-                    <h2>Client Love</h2>
+                    <h2>Let’s Create Together</h2>
+                    <p>Tell me about your vision. Limited dates remain for the 2026 season.</p>
                 </div>
-                <div class="review-carousel reveal">
-                    <article class="review-card">
-                        <div class="stars" aria-label="5 stars">★★★★★</div>
-                        <p>“Elena has an incredible eye for light and emotion. Looking through our gallery felt like reliving the best day of our lives.”</p>
-                        <cite>— Sarah & James</cite>
-                    </article>
-                    <article class="review-card">
-                        <div class="stars" aria-label="5 stars">★★★★★</div>
-                        <p>“Professional, calming, and wildly talented. She captured moments we didn't even know happened. Worth every penny.”</p>
-                        <cite>— Michael & David</cite>
-                    </article>
-                    <article class="review-card">
-                        <div class="stars" aria-label="5 stars">★★★★★</div>
-                        <p>“The editing style is timeless. I never want to stop looking at these photos. Lenscraft is simply the best.”</p>
-                        <cite>— Emily & Tom</cite>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact">
-            <div class="container">
-                <div class="contact-layout">
-                    <div class="reveal">
-                        <span class="label">Get In Touch</span>
-                        <h2>Let’s Create Magic</h2>
-                        <p>Tell me about your vision, your venue, and your story. I limit my bookings to ensure dedicated attention to every couple.</p>
-                        <p><strong>Email:</strong> hello@lenscraft.com<br><strong>Studio:</strong> San Francisco, CA</p>
+                
+                <form class="contact-form reveal" action="#" method="POST" onsubmit="event.preventDefault(); alert('Thank you! This is a demo form.');">
+                    <div class="form-group">
+                        <label for="name">Your Names</label>
+                        <input type="text" id="name" name="name" placeholder="e.g. Jane & John" required autocomplete="name">
                     </div>
                     
-                    <form class="reveal" action="#" method="POST" novalidate>
-                        <div class="form-group">
-                            <label for="name">Your Names</label>
-                            <input type="text" id="name" name="name" required autocomplete="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" required autocomplete="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="date">Wedding Date</label>
-                            <input type="date" id="date" name="date">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Tell Me Your Story…</label>
-                            <textarea id="message" name="message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn-primary" style="border:none; width: fit-content;">Send Inquiry</button>
-                    </form>
-                </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="hello@example.com" required autocomplete="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date">Wedding Date</label>
+                        <input type="date" id="date" name="date">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="venue">Venue / Location</label>
+                        <input type="text" id="venue" name="venue" placeholder="City or Specific Venue">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Tell Me Your Story</label>
+                        <textarea id="message" name="message" rows="5" placeholder="How did you meet? What's most important to you about your day?" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn" style="width: 100%;">Send Inquiry</button>
+                </form>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <a href="#" class="logo" style="color: var(--bg-color); font-size: 2rem;">Lenscraft</a>
-            <nav class="footer-links" aria-label="Footer Navigation">
-                <a href="#gallery">Portfolio</a>
-                <a href="#about">About</a>
-                <a href="#packages">Pricing</a>
-                <a href="#">Instagram</a>
-                <a href="#">Privacy Policy</a>
-            </nav>
-            <p class="copyright">&copy; 2024 Lenscraft Photography. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Instagram">Instagram</a>
+                <a href="#" aria-label="Pinterest">Pinterest</a>
+                <a href="#" aria-label="Twitter">Twitter</a>
+            </div>
+            <p>&copy; 2026 Lenscraft Photography. All rights reserved.</p>
+            <p style="font-size: 0.8rem; margin-top: 1rem; opacity: 0.6;">Designed with intention.</p>
         </div>
     </footer>
 
-    <!-- Lightbox Modal -->
+    <!-- LIGHTBOX MODAL -->
     <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image Viewer">
-        <button class="lightbox-close" aria-label="Close Image Viewer">&times;</button>
-        <div class="lightbox-content">
-            <img src="" alt="" class="lightbox-img" id="lightbox-img">
-        </div>
+        <button class="lightbox-close" aria-label="Close Lightbox">&times;</button>
+        <img src="" alt="" id="lightbox-img">
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Header Scroll Effect
-            const header = document.getElementById('header');
+            // --- NAVIGATION ---
+            const navbar = document.getElementById('navbar');
+            const mobileToggle = document.querySelector('.mobile-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
             window.addEventListener('scroll', () => {
-                header.classList.toggle('scrolled', window.scrollY > 50);
-            }, { passive: true });
+                if (window.scrollY > 50) navbar.classList.add('scrolled');
+                else navbar.classList.remove('scrolled');
+            });
 
-            // Gallery Filtering
+            mobileToggle.addEventListener('click', () => {
+                const isOpen = navLinks.classList.toggle('open');
+                mobileToggle.setAttribute('aria-expanded', isOpen);
+            });
+
+            // Close mobile menu on link click
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('open');
+                    mobileToggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+
+            // --- GALLERY FILTERING ---
             const filterBtns = document.querySelectorAll('.filter-btn');
             const galleryItems = document.querySelectorAll('.gallery-item');
 
@@ -709,59 +410,46 @@
                     filterBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
 
-                    const filter = btn.dataset.filter;
+                    const filterValue = btn.getAttribute('data-filter');
 
                     galleryItems.forEach(item => {
-                        if (filter === 'all' || item.dataset.category === filter) {
-                            item.style.display = 'block';
-                            // Small timeout to allow display:block to apply before opacity transition
-                            setTimeout(() => item.style.opacity = '1', 10);
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.classList.remove('hidden');
+                            // Small timeout to allow display:block to apply before opacity transition if we added one
+                            requestAnimationFrame(() => {
+                                item.style.opacity = '1';
+                                item.style.transform = 'scale(1)';
+                            });
                         } else {
-                            item.style.opacity = '0';
-                            setTimeout(() => item.style.display = 'none', 300);
+                            item.classList.add('hidden');
                         }
                     });
                 });
             });
 
-            // Lightbox Logic
+            // --- LIGHTBOX ---
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
             const closeBtn = document.querySelector('.lightbox-close');
-            let lastFocusedElement;
-
-            function openLightbox(src, alt) {
-                lastFocusedElement = document.activeElement;
-                lightboxImg.src = src.replace('w=800', 'w=1600'); // Load higher res
-                lightboxImg.alt = alt;
-                lightbox.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                closeBtn.focus();
-            }
-
-            function closeLightbox() {
-                lightbox.classList.remove('active');
-                document.body.style.overflow = '';
-                if (lastFocusedElement) lastFocusedElement.focus();
-            }
 
             galleryItems.forEach(item => {
-                item.setAttribute('tabindex', '0');
-                item.setAttribute('role', 'button');
-                
-                const handler = () => {
+                item.addEventListener('click', () => {
                     const img = item.querySelector('img');
-                    openLightbox(img.src, img.alt);
-                };
-
-                item.addEventListener('click', handler);
-                item.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        handler();
-                    }
+                    // Get higher res version for lightbox
+                    const highResSrc = img.src.replace('w=800', 'w=1600');
+                    lightboxImg.src = highResSrc;
+                    lightboxImg.alt = img.alt;
+                    lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    closeBtn.focus();
                 });
             });
+
+            const closeLightbox = () => {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+                setTimeout(() => { lightboxImg.src = ''; }, 300);
+            };
 
             closeBtn.addEventListener('click', closeLightbox);
             lightbox.addEventListener('click', (e) => {
@@ -771,8 +459,8 @@
                 if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
             });
 
-            // Scroll Reveal Animation
-            const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+            // --- SCROLL REVEAL ---
+            const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -783,20 +471,6 @@
             }, observerOptions);
 
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-            // Simple Form Handling (Prevent Default for Demo)
-            document.querySelector('form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const btn = e.target.querySelector('button[type="submit"]');
-                const originalText = btn.textContent;
-                btn.textContent = 'Sent Successfully!';
-                btn.style.background = '#4a6741';
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.style.background = '';
-                    e.target.reset();
-                }, 3000);
-            });
         });
     </script>
 <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
