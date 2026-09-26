@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#14100d">
+<meta name="description" content="Copperline Brewing Co. — small-batch craft beer forged in a century-old copper shop in Portland, Oregon. Taproom, barrel program, events, and merch.">
+<title>Copperline Brewing Co. — Small-Batch Beer, Forged in Copper</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/black-ops-one/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/oswald/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/karla/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono/index.css">
+<style>
+:root{
+  --char-950:#0e0c0a; --char-900:#14100d; --char-850:#191512; --char-800:#1e1915;
+  --char-700:#262019; --char-600:#332a21;
+  --copper:#b87333; --copper-bright:#e0955a; --copper-deep:#8a5222; --copper-glow:rgba(184,115,51,.35);
+  --cream:#f3e9da; --sand:#cdbba4; --muted:#9d8f7e;
+  --line:rgba(184,115,51,.28); --line-soft:rgba(243,233,218,.10);
+  --ok:#8fae6b; --warn:#d9825f;
+  --font-stencil:"Black Ops One","Oswald",Impact,sans-serif;
+  --font-head:"Oswald","Arial Narrow",sans-serif;
+  --font-body:"Karla","Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono","SFMono-Regular",monospace;
+  --shadow:0 24px 60px -24px rgba(0,0,0,.75);
+  --head-h:76px;
+}
+html{color-scheme:dark; scroll-behavior:smooth; scroll-padding-top:calc(var(--head-h) + 16px);}
+*,*::before,*::after{box-sizing:border-box;}
+body{
+  margin:0; background:var(--char-900); color:var(--cream);
+  font-family:var(--font-body); font-size:1.0625rem; line-height:1.65;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  background-image:
+    radial-gradient(1200px 600px at 85% -10%, rgba(184,115,51,.10), transparent 60%),
+    repeating-linear-gradient(90deg, rgba(243,233,218,.018) 0 1px, transparent 1px 96px);
+}
+img{max-width:100%; height:auto; display:block;}
+a{color:var(--copper-bright);}
+button{font:inherit; color:inherit; touch-action:manipulation;}
+a,button,input,select{touch-action:manipulation;}
+h1,h2,h3,h4{text-wrap:balance; line-height:1.08; margin:0;}
+p{margin:0;}
+ul,ol,dl,dd{margin:0; padding:0; list-style:none;}
+.num{font-variant-numeric:tabular-nums;}
+.mono{font-family:var(--font-mono);}
+.sr-only{position:absolute!important; width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+:focus-visible{outline:2px solid var(--copper-bright); outline-offset:3px; border-radius:2px;}
+::selection{background:var(--copper); color:#160f08;}
+.wrap{width:min(1180px, 100% - 3rem); margin-inline:auto;}
+.skip{position:fixed; left:1rem; top:-4rem; z-index:200; background:var(--copper); color:#160f08; padding:.8rem 1.2rem; font-weight:700; text-decoration:none; border-radius:0 0 6px 6px; transition:top .25s ease;}
+.skip:focus{top:0;}
+
+/* ---------- progress + header ---------- */
+.progress{position:fixed; inset:0 0 auto 0; height:3px; z-index:120; pointer-events:none;}
+.progress span{display:block; height:100%; background:linear-gradient(90deg,var(--copper-deep),var(--copper-bright)); transform:scaleX(0); transform-origin:0 50%;}
+.site-head{position:sticky; top:0; z-index:100; background:rgba(14,12,10,.82); backdrop-filter:blur(10px); border-bottom:1px solid var(--line-soft); transition:background .3s ease, box-shadow .3s ease;}
+.site-head.scrolled{background:rgba(14,12,10,.97); box-shadow:0 10px 30px -18px rgba(0,0,0,.9);}
+.head-in{display:flex; align-items:center; gap:1.25rem; min-height:var(--head-h);}
+.brand{display:flex; align-items:center; gap:.7rem; text-decoration:none; color:var(--cream); min-height:44px;}
+.brand svg{width:38px; height:38px; flex:none;}
+.brand-txt{font-family:var(--font-stencil); font-size:1.05rem; letter-spacing:.06em; line-height:1.1; display:flex; flex-direction:column;}
+.brand-txt small{font-family:var(--font-mono); font-size:.62rem; letter-spacing:.34em; color:var(--copper-bright); text-transform:uppercase;}
+.nav{margin-left:auto; display:flex; align-items:center; gap:1.6rem;}
+.nav ul{display:flex; gap:1.4rem;}
+.nav a.nav-link{font-family:var(--font-head); text-transform:uppercase; letter-spacing:.14em; font-size:.82rem; font-weight:600; color:var(--sand); text-decoration:none; padding:.6rem .2rem; position:relative; min-height:44px; display:inline-flex; align-items:center;}
+.nav a.nav-link::after{content:""; position:absolute; left:0; right:100%; bottom:.35rem; height:2px; background:var(--copper); transition:right .3s cubic-bezier(.2,.7,.2,1);}
+.nav a.nav-link:hover::after,.nav a.nav-link:focus-visible::after{right:0;}
+.nav a.nav-link:hover{color:var(--cream);}
+.head-actions{display:flex; align-items:center; gap:.5rem; margin-left:auto;}
+.nav .head-actions{margin-left:0;}
+.icon-btn{position:relative; display:inline-grid; place-items:center; width:44px; height:44px; background:transparent; border:1px solid var(--line); border-radius:8px; color:var(--sand); cursor:pointer; transition:border-color .25s ease, color .25s ease, transform .25s ease;}
+.icon-btn:hover{border-color:var(--copper); color:var(--copper-bright); transform:translateY(-1px);}
+.icon-btn svg{width:20px; height:20px;}
+.bag-count{position:absolute; top:-7px; right:-7px; min-width:20px; height:20px; padding:0 5px; border-radius:999px; background:var(--copper); color:#160f08; font-family:var(--font-mono); font-size:.68rem; font-weight:700; display:grid; place-items:center;}
+.bag-count.pop{animation:pop .4s cubic-bezier(.2,1.4,.4,1);}
+@keyframes pop{0%{transform:scale(.4);}60%{transform:scale(1.25);}100%{transform:scale(1);}}
+.nav-toggle{display:none;}
+@media (max-width:940px){
+  .nav-toggle{display:inline-grid;}
+  .nav{position:fixed; inset:var(--head-h) 0 auto 0; margin:0; flex-direction:column; align-items:stretch; gap:0; background:var(--char-850); border-bottom:1px solid var(--line); padding:1rem 1.5rem 1.6rem; transform:translateY(-12px); opacity:0; visibility:hidden; transition:transform .3s cubic-bezier(.2,.7,.2,1), opacity .3s ease, visibility .3s;}
+  .nav.open{transform:translateY(0); opacity:1; visibility:visible;}
+  .nav ul{flex-direction:column; gap:0;}
+  .nav a.nav-link{padding:.9rem .2rem; font-size:.95rem; border-bottom:1px solid var(--line-soft);}
+  .nav .nav-cta{margin-top:1rem;}
+}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:.55rem; min-height:48px; padding:.8rem 1.5rem; border-radius:6px; border:1px solid transparent; font-family:var(--font-head); font-weight:600; font-size:.92rem; letter-spacing:.12em; text-transform:uppercase; text-decoration:none; cursor:pointer; transition:transform .25s cubic-bezier(.2,.7,.2,1), background-color .25s ease, border-color .25s ease, color .25s ease, box-shadow .25s ease;}
+.btn-solid{background:linear-gradient(160deg,var(--copper-bright),var(--copper) 55%,var(--copper-deep)); color:#180f07; box-shadow:0 10px 26px -12px var(--copper-glow);}
+.btn-solid:hover{transform:translateY(-2px); box-shadow:0 16px 34px -12px var(--copper-glow);}
+.btn-ghost{background:transparent; border-color:var(--line); color:var(--copper-bright);}
+.btn-ghost:hover{border-color:var(--copper); background:rgba(184,115,51,.10); transform:translateY(-2px);}
+.btn-sm{min-height:44px; padding:.55rem 1.1rem; font-size:.8rem;}
+.btn[disabled]{opacity:.45; cursor:not-allowed; transform:none;}
+
+/* ---------- kicker / section heads ---------- */
+.kicker{display:flex; align-items:center; gap:.8rem; font-family:var(--font-mono); font-size:.72rem; letter-spacing:.34em; text-transform:uppercase; color:var(--copper-bright);}
+.kicker::before{content:""; width:44px; height:1px; background:var(--copper);}
+.sec-head{max-width:720px; margin-bottom:clamp(2.2rem,5vw,3.6rem);}
+.sec-head h2{font-family:var(--font-stencil); font-size:clamp(1.9rem,4.6vw,3.1rem); letter-spacing:.02em; margin:.9rem 0 1rem; color:var(--cream);}
+.sec-head p{color:var(--muted); max-width:56ch;}
+section{padding:clamp(4rem,9vw,7rem) 0; position:relative;}
+
+/* ---------- rivet panel ---------- */
+.panel{position:relative; background:linear-gradient(170deg,var(--char-800),var(--char-850)); border:1px solid var(--line); border-radius:10px;}
+.panel::before{content:""; position:absolute; inset:10px; border:1px dashed rgba(184,115,51,.18); border-radius:6px; pointer-events:none;}
+.rivets::after{content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit;
+  background:
+   radial-gradient(circle 3px at 14px 14px, var(--copper) 98%, transparent),
+   radial-gradient(circle 3px at calc(100% - 14px) 14px, var(--copper) 98%, transparent),
+   radial-gradient(circle 3px at 14px calc(100% - 14px), var(--copper) 98%, transparent),
+   radial-gradient(circle 3px at calc(100% - 14px) calc(100% - 14px), var(--copper) 98%, transparent);
+  opacity:.55;}
+
+/* ---------- hero ---------- */
+.hero{padding:clamp(2.5rem,6vw,5rem) 0 clamp(3.5rem,7vw,5.5rem); overflow:hidden;}
+.hero::before{content:""; position:absolute; inset:0; background:radial-gradient(900px 480px at 12% 8%, rgba(184,115,51,.14), transparent 65%); pointer-events:none;}
+.hero-grid{display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr); gap:clamp(2rem,5vw,4rem); align-items:start; position:relative;}
+.hero h1{font-family:var(--font-stencil); font-size:clamp(2.5rem,6.4vw,4.6rem); letter-spacing:.015em; margin:1.1rem 0 1.2rem;}
+.hero h1 em{font-style:normal; color:var(--copper-bright); display:block;}
+.hero-lede{color:var(--sand); max-width:52ch; font-size:clamp(1rem,1.6vw,1.15rem);}
+.hero-ctas{display:flex; flex-wrap:wrap; gap:.9rem; margin:1.8rem 0 2rem;}
+.hero-stats{display:flex; flex-wrap:wrap; gap:2.2rem; padding-top:1.4rem; border-top:1px solid var(--line-soft);}
+.hero-stats div{display:flex; flex-direction:column;}
+.hero-stats strong{font-family:var(--font-head); font-weight:600; font-size:1.7rem; color:var(--copper-bright); font-variant-numeric:tabular-nums;}
+.hero-stats span{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.24em; text-transform:uppercase; color:var(--muted);}
+.hero-visual{position:relative;}
+.hero-frame{position:relative; border:1px solid var(--line); border-radius:12px; padding:12px; background:linear-gradient(165deg,rgba(184,115,51,.16),rgba(14,12,10,.2));}
+.hero-frame img{border-radius:8px; width:100%; object-fit:cover; aspect-ratio:2/3; filter:saturate(.92) contrast(1.05);}
+.hero-frame::after{content:""; position:absolute; inset:-14px; border:1px dashed rgba(184,115,51,.30); border-radius:16px; pointer-events:none;}
+.hero-stamp{position:absolute; top:-18px; right:-14px; width:96px; height:96px; border-radius:50%; background:var(--char-850); border:1px solid var(--copper); display:grid; place-items:center; text-align:center; font-family:var(--font-mono); font-size:.56rem; letter-spacing:.18em; line-height:1.5; color:var(--copper-bright); text-transform:uppercase; transform:rotate(8deg); box-shadow:var(--shadow);}
+/* tap teaser */
+.tap-panel{margin-top:2.2rem; padding:1.5rem 1.4rem 1.1rem;}
+.tap-head{display:flex; align-items:baseline; justify-content:space-between; gap:1rem; margin-bottom:.6rem;}
+.tap-head h2{font-family:var(--font-head); font-weight:600; font-size:1.05rem; letter-spacing:.22em; text-transform:uppercase; color:var(--cream);}
+.tap-head .live{display:inline-flex; align-items:center; gap:.45rem; font-family:var(--font-mono); font-size:.66rem; letter-spacing:.16em; color:var(--ok); text-transform:uppercase;}
+.tap-head .live i{width:8px; height:8px; border-radius:50%; background:var(--ok); animation:blink 2.4s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1; transform:scale(1);}50%{opacity:.35; transform:scale(.8);}}
+.tap-list{display:flex; flex-direction:column;}
+.tap-row{display:grid; grid-template-columns:auto minmax(0,1fr) auto auto; align-items:center; gap:.9rem; padding:.72rem .5rem; border-top:1px solid var(--line-soft); transition:background-color .25s ease, transform .25s ease;}
+.tap-row:first-child{border-top:0;}
+.tap-row:hover{background:rgba(184,115,51,.08); transform:translateX(4px);}
+.tap-no{font-family:var(--font-mono); font-size:.78rem; color:var(--copper); border:1px solid var(--line); border-radius:4px; padding:.15rem .45rem;}
+.tap-name{font-family:var(--font-head); font-weight:600; font-size:1rem; letter-spacing:.04em; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.tap-style{font-size:.78rem; color:var(--muted); display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.tap-abv{font-family:var(--font-mono); font-size:.82rem; color:var(--sand);}
+.tap-btn{width:44px; height:44px; display:inline-grid; place-items:center; background:transparent; border:1px solid transparent; border-radius:8px; color:var(--copper-bright); cursor:pointer; transition:border-color .25s ease, background-color .25s ease;}
+.tap-btn:hover{border-color:var(--line); background:rgba(184,115,51,.12);}
+.tap-btn svg{width:18px; height:18px;}
+.tap-foot{display:flex; justify-content:space-between; align-items:center; gap:1rem; padding-top:.9rem; margin-top:.4rem; border-top:1px dashed var(--line);}
+.tap-foot a{font-family:var(--font-mono); font-size:.74rem; letter-spacing:.16em; text-transform:uppercase; text-decoration:none;}
+.tap-foot a:hover{text-decoration:underline;}
+.tap-foot span{font-family:var(--font-mono); font-size:.7rem; color:var(--muted);}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-visual{order:-1; max-width:440px;}
+  .hero-stamp{right:6px;}
+}
+
+/* ---------- marquee ---------- */
+.marquee{border-block:1px solid var(--line); background:var(--char-850); overflow:hidden; padding:.85rem 0;}
+.marquee-track{display:flex; gap:3rem; width:max-content; animation:slide 32s linear infinite;}
+.marquee:hover .marquee-track{animation-play-state:paused;}
+.marquee-track span{font-family:var(--font-stencil); font-size:.92rem; letter-spacing:.3em; text-transform:uppercase; color:var(--copper); white-space:nowrap;}
+.marquee-track span b{color:var(--sand); font-weight:400;}
+@keyframes slide{to{transform:translateX(-50%);}}
+
+/* ---------- story ---------- */
+.story-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(2rem,5vw,4.5rem); align-items:center;}
+.story-copy p + p{margin-top:1.1rem;}
+.story-copy p{color:var(--sand);}
+.pull{margin:1.6rem 0; padding-left:1.3rem; border-left:3px solid var(--copper); font-family:var(--font-head); font-size:1.25rem; font-weight:500; line-height:1.4; color:var(--cream);}
+.pull cite{display:block; margin-top:.6rem; font-family:var(--font-mono); font-style:normal; font-size:.7rem; letter-spacing:.22em; text-transform:uppercase; color:var(--copper-bright);}
+.story-media{position:relative; display:grid; grid-template-columns:1.25fr .85fr; gap:1rem;}
+.story-media img{border-radius:10px; border:1px solid var(--line); object-fit:cover; width:100%;}
+.story-media .m1{aspect-ratio:4/3;}
+.story-media .m2{aspect-ratio:1/1; margin-top:2.4rem;}
+.story-media .m3{position:absolute; left:8%; bottom:-2.2rem; width:44%; aspect-ratio:4/3; object-fit:cover; border:4px solid var(--char-900); border-radius:10px; box-shadow:var(--shadow);}
+.timeline{margin-top:3.4rem; display:grid; grid-template-columns:repeat(4,1fr); gap:1rem;}
+.timeline li{border-top:2px solid var(--line); padding-top:.9rem;}
+.timeline strong{font-family:var(--font-mono); color:var(--copper-bright); font-size:.95rem; display:block;}
+.timeline span{color:var(--muted); font-size:.9rem; display:block; margin-top:.3rem;}
+@media (max-width:900px){
+  .story-grid{grid-template-columns:1fr;}
+  .story-media{margin-bottom:2.5rem;}
+  .timeline{grid-template-columns:repeat(2,1fr);}
+}
+
+/* ---------- beers ---------- */
+#beers{background:linear-gradient(180deg,transparent,rgba(184,115,51,.05) 18%,transparent 85%);}
+.filters{display:flex; flex-wrap:wrap; gap:.6rem; margin-bottom:2rem;}
+.chip{min-height:44px; padding:.5rem 1.15rem; border-radius:999px; border:1px solid var(--line); background:transparent; color:var(--sand); font-family:var(--font-mono); font-size:.76rem; letter-spacing:.14em; text-transform:uppercase; cursor:pointer; transition:background-color .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;}
+.chip:hover{border-color:var(--copper); color:var(--copper-bright); transform:translateY(-1px);}
+.chip[aria-pressed="true"]{background:var(--copper); border-color:var(--copper); color:#180f07; font-weight:700;}
+.beer-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem;}
+@media (max-width:980px){.beer-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:620px){.beer-grid{grid-template-columns:1fr;}}
+.beer-card{overflow:hidden; display:flex; flex-direction:column; transition:transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s ease, box-shadow .35s ease;}
+.beer-card:hover{transform:translateY(-6px); border-color:var(--copper); box-shadow:var(--shadow);}
+.beer-card.hidden{display:none;}
+.beer-media{position:relative; overflow:hidden; border-radius:9px 9px 0 0;}
+.beer-media img{aspect-ratio:4/3; object-fit:cover; width:100%; transition:transform .6s cubic-bezier(.2,.7,.2,1); filter:saturate(.95);}
+.beer-card:hover .beer-media img{transform:scale(1.06);}
+.beer-style{position:absolute; left:.8rem; bottom:.8rem; background:rgba(14,12,10,.85); border:1px solid var(--line); color:var(--copper-bright); font-family:var(--font-mono); font-size:.64rem; letter-spacing:.18em; text-transform:uppercase; padding:.35rem .6rem; border-radius:4px;}
+.beer-body{padding:1.2rem 1.2rem 1.35rem; display:flex; flex-direction:column; gap:.8rem; flex:1;}
+.beer-body h3{font-family:var(--font-head); font-weight:600; font-size:1.3rem; letter-spacing:.05em; text-transform:uppercase;}
+.beer-body > p{color:var(--muted); font-size:.94rem;}
+.clamp-2{display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
+.beer-stats{display:flex; gap:1.4rem; padding:.7rem 0; border-block:1px solid var(--line-soft); margin-top:auto;}
+.beer-stats div{display:flex; flex-direction:column;}
+.beer-stats dt{font-family:var(--font-mono); font-size:.62rem; letter-spacing:.22em; color:var(--muted); text-transform:uppercase;}
+.beer-stats dd{font-family:var(--font-mono); font-weight:700; color:var(--copper-bright); font-size:1rem;}
+.empty-state{display:none; text-align:center; padding:3.5rem 1.5rem; border:1px dashed var(--line); border-radius:10px; color:var(--muted);}
+.empty-state.show{display:block;}
+.empty-state strong{display:block; font-family:var(--font-head); font-size:1.2rem; letter-spacing:.1em; text-transform:uppercase; color:var(--cream); margin-bottom:.5rem;}
+
+/* ---------- taproom ---------- */
+.taproom-grid{display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:clamp(2rem,4.5vw,3.5rem); align-items:start;}
+.taproom-media{display:grid; gap:1rem;}
+.taproom-media img{border-radius:10px; border:1px solid var(--line); object-fit:cover; width:100%;}
+.taproom-media .t1{aspect-ratio:1/1;}
+.taproom-media .t2{aspect-ratio:2/1;}
+.info-card{padding:1.8rem 1.6rem;}
+.info-card h3{font-family:var(--font-head); font-size:1.15rem; letter-spacing:.2em; text-transform:uppercase; color:var(--copper-bright); margin-bottom:1rem;}
+.addr{font-style:normal; color:var(--sand); line-height:1.8;}
+.addr a{color:var(--cream); text-decoration:none; border-bottom:1px solid var(--line);}
+.addr a:hover{color:var(--copper-bright);}
+.hours{width:100%; border-collapse:collapse; margin-top:.4rem;}
+.hours caption{text-align:left; font-family:var(--font-mono); font-size:.68rem; letter-spacing:.24em; text-transform:uppercase; color:var(--muted); padding-bottom:.6rem;}
+.hours th,.hours td{padding:.55rem .2rem; border-bottom:1px solid var(--line-soft); text-align:left; font-size:.95rem;}
+.hours th{font-weight:600; font-family:var(--font-head); letter-spacing:.1em; text-transform:uppercase; color:var(--sand); font-size:.85rem;}
+.hours td{font-family:var(--font-mono); color:var(--cream); font-variant-numeric:tabular-nums;}
+.hours tr.today th,.hours tr.today td{color:var(--copper-bright);}
+.hours tr.today{background:rgba(184,115,51,.08);}
+.today-badge{display:inline-block; margin-left:.5rem; background:var(--copper); color:#180f07; font-family:var(--font-mono); font-size:.58rem; letter-spacing:.14em; padding:.12rem .4rem; border-radius:3px; text-transform:uppercase; vertical-align:middle;}
+.amenities{display:flex; flex-wrap:wrap; gap:.55rem; margin-top:1.2rem;}
+.amenities li{font-family:var(--font-mono); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--sand); border:1px solid var(--line-soft); border-radius:999px; padding:.42rem .8rem; display:inline-flex; align-items:center; gap:.45rem;}
+.amenities li::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--copper);}
+.info-actions{display:flex; flex-wrap:wrap; gap:.8rem; margin-top:1.5rem;}
+@media (max-width:900px){.taproom-grid{grid-template-columns:1fr;}}
+
+/* ---------- events ---------- */
+.event-list{display:flex; flex-direction:column; gap:1.2rem;}
+.event{display:grid; grid-template-columns:96px 200px minmax(0,1fr) auto; gap:1.6rem; align-items:center; padding:1.2rem 1.4rem; transition:transform .3s cubic-bezier(.2,.7,.2,1), border-color .3s ease;}
+.event:hover{transform:translateX(6px); border-color:var(--copper);}
+.event-date{display:flex; flex-direction:column; align-items:center; justify-content:center; border:1px solid var(--line); border-radius:8px; padding:.6rem .4rem; background:rgba(184,115,51,.07);}
+.event-date strong{font-family:var(--font-stencil); font-size:1.7rem; color:var(--copper-bright); line-height:1;}
+.event-date span{font-family:var(--font-mono); font-size:.64rem; letter-spacing:.24em; text-transform:uppercase; color:var(--sand); margin-top:.3rem;}
+.event img{border-radius:8px; object-fit:cover; aspect-ratio:4/3; width:100%; border:1px solid var(--line-soft);}
+.event-body h3{font-family:var(--font-head); font-weight:600; font-size:1.25rem; letter-spacing:.05em; text-transform:uppercase; margin-bottom:.35rem;}
+.event-meta{font-family:var(--font-mono); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; color:var(--copper-bright); margin-bottom:.5rem;}
+.event-body p{color:var(--muted); font-size:.94rem;}
+.event-side{display:flex; flex-direction:column; align-items:flex-end; gap:.7rem;}
+.event-price{font-family:var(--font-mono); font-size:.85rem; color:var(--sand); font-variant-numeric:tabular-nums;}
+.soldout-tag{font-family:var(--font-mono); font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; color:var(--warn); border:1px solid rgba(217,130,95,.4); padding:.25rem .55rem; border-radius:4px;}
+@media (max-width:980px){
+  .event{grid-template-columns:80px minmax(0,1fr); grid-template-areas:"date body" "img body" "side side";}
+  .event-date{grid-area:date;} .event > img{grid-area:img;} .event-body{grid-area:body;} .event-side{grid-area:side; flex-direction:row; align-items:center; justify-content:space-between;}
+}
+@media (max-width:560px){
+  .event{grid-template-columns:72px minmax(0,1fr);}
+  .event > img{display:none;}
+}
+
+/* ---------- merch ---------- */
+#merch{background:var(--char-850); border-block:1px solid var(--line-soft);}
+.merch-strip{display:grid; grid-auto-flow:column; grid-auto-columns:minmax(250px,300px); gap:1.2rem; overflow-x:auto; padding:.4rem .2rem 1.4rem; scroll-snap-type:x mandatory; scrollbar-color:var(--copper) var(--char-800);}
+.merch-strip::-webkit-scrollbar{height:8px;}
+.merch-strip::-webkit-scrollbar-thumb{background:var(--copper-deep); border-radius:99px;}
+.merch-strip::-webkit-scrollbar-track{background:var(--char-800); border-radius:99px;}
+.merch-card{scroll-snap-align:start; overflow:hidden; display:flex; flex-direction:column; transition:transform .3s cubic-bezier(.2,.7,.2,1), border-color .3s ease;}
+.merch-card:hover{transform:translateY(-5px); border-color:var(--copper);}
+.merch-card img{aspect-ratio:1/1; object-fit:cover; width:100%; filter:saturate(.9);}
+.merch-body{padding:1.1rem 1.1rem 1.25rem; display:flex; flex-direction:column; gap:.55rem; flex:1;}
+.merch-body h3{font-family:var(--font-head); font-weight:600; letter-spacing:.06em; text-transform:uppercase; font-size:1.02rem;}
+.merch-body .desc{color:var(--muted); font-size:.86rem; flex:1;}
+.merch-row{display:flex; align-items:center; justify-content:space-between; gap:.8rem; margin-top:.4rem;}
+.price{font-family:var(--font-mono); font-weight:700; color:var(--copper-bright); font-variant-numeric:tabular-nums;}
+.merch-hint{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-top:.4rem;}
+
+/* ---------- club / newsletter ---------- */
+.club{padding:clamp(3.5rem,7vw,5.5rem) 0;}
+.club-card{padding:clamp(2rem,5vw,3.4rem); display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr); gap:clamp(1.6rem,4vw,3rem); align-items:center; overflow:hidden;}
+.club-card::before{border-color:rgba(184,115,51,.25);}
+.club-card h2{font-family:var(--font-stencil); font-size:clamp(1.6rem,3.6vw,2.4rem); margin:.8rem 0 .9rem;}
+.club-card p{color:var(--sand);}
+.club-form{display:flex; flex-direction:column; gap:.9rem;}
+.club-form label{font-family:var(--font-mono); font-size:.7rem; letter-spacing:.22em; text-transform:uppercase; color:var(--copper-bright);}
+.club-form .row{display:flex; gap:.7rem; flex-wrap:wrap;}
+.club-form input{flex:1 1 220px; min-height:50px; padding:.7rem 1rem; border-radius:6px; border:1px solid var(--line); background:var(--char-900); color:var(--cream); font:inherit;}
+.club-form input::placeholder{color:var(--muted);}
+.club-form input:focus-visible{outline:2px solid var(--copper-bright); outline-offset:2px;}
+.form-msg{font-size:.88rem; min-height:1.4em;}
+.form-msg.err{color:var(--warn);}
+.form-msg.ok{color:var(--ok);}
+.club-perks{display:flex; gap:1.4rem; flex-wrap:wrap; margin-top:1.2rem;}
+.club-perks li{font-family:var(--font-mono); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); display:flex; gap:.5rem; align-items:center;}
+.club-perks li::before{content:"◆"; color:var(--copper); font-size:.6rem;}
+@media (max-width:860px){.club-card{grid-template-columns:1fr;}}
+
+/* ---------- footer ---------- */
+.site-foot{background:var(--char-950); border-top:1px solid var(--line); padding:clamp(3rem,6vw,4.5rem) 0 2rem;}
+.foot-grid{display:grid; grid-template-columns:1.3fr 1fr 1fr 1.2fr; gap:2.2rem;}
+.foot-grid h3{font-family:var(--font-mono); font-size:.7rem; letter-spacing:.28em; text-transform:uppercase; color:var(--copper-bright); margin-bottom:1.1rem;}
+.foot-grid p,.foot-grid li,.foot-grid address{color:var(--muted); font-size:.92rem; line-height:1.9;}
+.foot-grid a{color:var(--sand); text-decoration:none;}
+.foot-grid a:hover{color:var(--copper-bright); text-decoration:underline;}
+.foot-brand{display:flex; align-items:center; gap:.7rem; margin-bottom:1rem;}
+.foot-brand svg{width:34px; height:34px;}
+.foot-brand span{font-family:var(--font-stencil); font-size:1rem; letter-spacing:.05em;}
+.socials{display:flex; gap:.6rem; margin-top:1.2rem;}
+.socials a{width:44px; height:44px; display:inline-grid; place-items:center; border:1px solid var(--line-soft); border-radius:8px; color:var(--sand); transition:border-color .25s ease, color .25s ease, transform .25s ease;}
+.socials a:hover{border-color:var(--copper); color:var(--copper-bright); transform:translateY(-2px);}
+.socials svg{width:18px; height:18px;}
+.foot-bottom{margin-top:3rem; padding-top:1.4rem; border-top:1px solid var(--line-soft); display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; align-items:center; font-family:var(--font-mono); font-size:.7rem; letter-spacing:.12em; color:var(--muted); text-transform:uppercase;}
+.foot-bottom .age{border:1px solid var(--copper); color:var(--copper-bright); border-radius:4px; padding:.2rem .5rem;}
+@media (max-width:900px){.foot-grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:560px){.foot-grid{grid-template-columns:1fr;}}
+
+/* ---------- modals ---------- */
+.modal{position:fixed; inset:0; z-index:150; display:grid; place-items:center; padding:1.2rem;}
+.modal[hidden]{display:none;}
+.modal-backdrop{position:absolute; inset:0; background:rgba(8,6,4,.82); backdrop-filter:blur(5px); animation:fade .3s ease;}
+@keyframes fade{from{opacity:0;}to{opacity:1;}}
+.modal-card{position:relative; width:min(560px,100%); max-height:min(86vh,760px); overflow:auto; background:linear-gradient(170deg,var(--char-800),var(--char-900)); border:1px solid var(--copper); border-radius:12px; padding:2.2rem 1.9rem; box-shadow:var(--shadow); animation:rise .38s cubic-bezier(.2,.9,.3,1); transform-origin:50% 100%;}
+.modal-card.wide{width:min(860px,100%);}
+@keyframes rise{from{opacity:0; transform:translateY(26px) scale(.97);}to{opacity:1; transform:none;}}
+.modal-close{position:absolute; top:.9rem; right:.9rem; width:44px; height:44px; display:inline-grid; place-items:center; background:transparent; border:1px solid var(--line); border-radius:8px; color:var(--sand); cursor:pointer; transition:color .25s ease, border-color .25s ease, transform .25s ease;}
+.modal-close:hover{color:var(--copper-bright); border-color:var(--copper); transform:rotate(90deg);}
+.modal-close svg{width:18px; height:18px;}
+.age-mark{width:74px; height:74px; margin-bottom:1.2rem; border:2px solid var(--copper); border-radius:50%; display:grid; place-items:center; font-family:var(--font-stencil); font-size:1.5rem; color:var(--copper-bright);}
+.modal h2{font-family:var(--font-stencil); font-size:clamp(1.5rem,4vw,2.1rem); margin-bottom:.9rem;}
+.modal .modal-lede{color:var(--sand); margin-bottom:1.6rem;}
+.age-actions{display:flex; flex-wrap:wrap; gap:.9rem;}
+.age-note{margin-top:1.4rem; font-family:var(--font-mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted);}
+.beer-modal-grid{display:grid; grid-template-columns:.9fr 1.1fr; gap:1.8rem;}
+@media (max-width:720px){.beer-modal-grid{grid-template-columns:1fr;}}
+.beer-modal-grid img{width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:10px; border:1px solid var(--line);}
+.spec-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:.6rem; margin:1.1rem 0;}
+.spec-grid div{border:1px solid var(--line-soft); border-radius:8px; padding:.6rem .4rem; text-align:center;}
+.spec-grid dt{font-family:var(--font-mono); font-size:.6rem; letter-spacing:.2em; color:var(--muted); text-transform:uppercase;}
+.spec-grid dd{font-family:var(--font-mono); font-weight:700; color:var(--copper-bright); font-size:1.05rem; margin-top:.2rem;}
+.detail-block{margin-top:1rem;}
+.detail-block h4{font-family:var(--font-mono); font-size:.66rem; letter-spacing:.26em; text-transform:uppercase; color:var(--copper-bright); margin-bottom:.45rem;}
+.detail-block p,.detail-block li{color:var(--sand); font-size:.94rem;}
+.detail-block ul{display:flex; flex-wrap:wrap; gap:.45rem;}
+.detail-block ul li{border:1px solid var(--line-soft); border-radius:999px; padding:.3rem .7rem; font-family:var(--font-mono); font-size:.72rem;}
+.avail{display:inline-flex; align-items:center; gap:.5rem; font-family:var(--font-mono); font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ok); border:1px solid rgba(143,174,107,.4); border-radius:4px; padding:.35rem .6rem; margin-top:1.1rem;}
+
+/* ---------- toasts / totop ---------- */
+.toasts{position:fixed; left:50%; bottom:1.4rem; transform:translateX(-50%); z-index:180; display:flex; flex-direction:column; gap:.7rem; width:min(440px,calc(100% - 2rem));}
+.toast{display:flex; align-items:center; gap:1rem; background:var(--char-800); border:1px solid var(--copper); border-radius:10px; padding:.85rem 1rem; box-shadow:var(--shadow); animation:toastIn .4s cubic-bezier(.2,.9,.3,1);}
+.toast.out{animation:toastOut .3s ease forwards;}
+@keyframes toastIn{from{opacity:0; transform:translateY(18px);}to{opacity:1; transform:none;}}
+@keyframes toastOut{to{opacity:0; transform:translateY(12px);}}
+.toast p{flex:1; font-size:.92rem; color:var(--cream);}
+.toast button{background:transparent; border:1px solid var(--line); border-radius:6px; min-height:40px; padding:.3rem .8rem; color:var(--copper-bright); font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; cursor:pointer; transition:background-color .25s ease;}
+.toast button:hover{background:rgba(184,115,51,.14);}
+.to-top{position:fixed; right:1.2rem; bottom:1.4rem; z-index:140; width:48px; height:48px; border-radius:10px; border:1px solid var(--copper); background:var(--char-850); color:var(--copper-bright); display:grid; place-items:center; cursor:pointer; opacity:0; transform:translateY(14px); pointer-events:none; transition:opacity .3s ease, transform .3s ease;}
+.to-top.show{opacity:1; transform:none; pointer-events:auto;}
+.to-top:hover{background:var(--copper); color:#180f07;}
+.to-top svg{width:18px; height:18px;}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); transition-delay:var(--d,0s);}
+.rv.in{opacity:1; transform:none;}
+body.locked{overflow:hidden;}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important;}
+  .rv{opacity:1; transform:none;}
+  .marquee-track{animation:none; width:auto; flex-wrap:wrap;}
+}
+</style>
+<noscript><style>.modal-age{display:none!important;} .rv{opacity:1;transform:none;}</style></noscript>
+</head>
+<body>
+" href="#main">Skip to Content</a>
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+<header class="site-head" id="top">
+  <div class="wrap head-in">
+    <a class="brand" href="#top" aria-label="Copperline Brewing Co. — back to top">
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="24" cy="24" r="21" stroke="#b87333" stroke-width="2.5"/><path d="M24 9c5 5 8 9.5 8 14a8 8 0 1 1-16 0c0-4.5 3-9 8-14Z" fill="#b87333"/><path d="M14 33h20M17 38h14" stroke="#e0955a" stroke-width="2.5" stroke-linecap="round"/></svg>
+      <span class="brand-txt">Copperline<small>Brewing Co.</small></span>
+    </a>
+    <nav class="nav" id="primaryNav" aria-label="Primary">
+      <ul>
+        <li><a class="nav-link" href="#beers">On Tap</a></li>
+        <li><a class="nav-link" href="#story">Our Story</a></li>
+        <li><a class="nav-link" href="#taproom">Taproom</a></li>
+        <li><a class="nav-link" href="#events">Events</a></li>
+        <li><a class="nav-link" href="#merch">Merch</a></li>
+      </ul>
+      <a class="btn btn-solid nav-cta" href="#taproom">Plan Your Visit</a>
+    </nav>
+    <div class="head-actions">
+      <a class="icon-btn" id="bagBtn" href="#merch" aria-label="View your merch bag, 0 items">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span class="bag-count num" id="bagCount" aria-hidden="true">0</span>
+      </a>
+      <button class="icon-btn nav-toggle" id="navToggle" aria-expanded="false" aria-controls="primaryNav" aria-label="Open navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <!-- ============ HERO ============ -->
+  <section class="hero" aria-labelledby="heroTitle">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="kicker rv">Est. 2011 · Portland, Oregon</p>
+        <h1 id="heroTitle" class="rv" style="--d:.08s">Forged in Copper,<em>Poured with Pride.</em></h1>
+        <p class="hero-lede rv" style="--d:.16s">We brew small-batch beer in a century-old copper smithy on the east side. Fire-kissed kettles, whole-cone hops, and a taproom that smells like malt and machine oil — pull up a stool and stay a while…</p>
+        <div class="hero-ctas rv" style="--d:.24s">
+          <a class="btn btn-solid" href="#beers">See the Tap List</a>
+          <a class="btn btn-ghost" href="#taproom">Plan Your Visit</a>
+        </div>
+        <div class="hero-stats rv num" style="--d:.32s">
+          <div><strong>32</strong><span>Taps Pouring</span></div>
+          <div><strong>14</strong><span>Core Beers</span></div>
+          <div><strong>210</strong><span>Barrels at Rest</span></div>
+          <div><strong>8,400</strong><span>BBL per Year</span></div>
+        </div>
+
+        <div class="tap-panel panel rivets rv" style="--d:.4s">
+          <div class="tap-head">
+            <h2>On Tap Now</h2>
+            <span class="live"><i aria-hidden="true"></i>Live from the cold room</span>
+          </div>
+          <ul class="tap-list">
+            <li class="tap-row">
+              <span class="tap-no num" aria-hidden="true">01</span>
+              <span class="tap-info"><span class="tap-name">Foundry Line IPA</span><span class="tap-style">West Coast IPA</span></span>
+              <span class="tap-abv num">6.8%</span>
+              <button class="tap-btn" data-open-beer="foundry" aria-label="View details for Foundry Line IPA"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button>
+            </li>
+            <li class="tap-row">
+              <span class="tap-no num" aria-hidden="true">02</span>
+              <span class="tap-info"><span class="tap-name">Hammerfall Hazy</span><span class="tap-style">Hazy Double IPA</span></span>
+              <span class="tap-abv num">8.2%</span>
+              <button class="tap-btn" data-open-beer="hammerfall" aria-label="View details for Hammerfall Hazy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button>
+            </li>
+            <li class="tap-row">
+              <span class="tap-no num" aria-hidden="true">03</span>
+              <span class="tap-info"><span class="tap-name">Slackline Pils</span><span class="tap-style">Czech-Style Pilsner</span></span>
+              <span class="tap-abv num">4.9%</span>
+              <button class="tap-btn" data-open-beer="slackline" aria-label="View details for Slackline Pils"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button>
+            </li>
+            <li class="tap-row">
+              <span class="tap-no num" aria-hidden="true">04</span>
+              <span class="tap-info"><span class="tap-name">Rivet &amp; Rust Porter</span><span class="tap-style">Robust Porter</span></span>
+              <span class="tap-abv num">5.6%</span>
+              <button class="tap-btn" data-open-beer="rivet" aria-label="View details for Rivet and Rust Porter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button>
+            </li>
+            <li class="tap-row">
+              <span class="tap-no num" aria-hidden="true">05</span>
+              <span class="tap-info"><span class="tap-name">Oxidizer Sour</span><span class="tap-style">Raspberry Kettle Sour</span></span>
+              <span class="tap-abv num">4.2%</span>
+              <button class="tap-btn" data-open-beer="oxidizer" aria-label="View details for Oxidizer Sour"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button>
+            </li>
+          </ul>
+          <div class="tap-foot">
+            <a href="#beers">Browse all 32 taps →</a>
+            <span class="num">Keg list updated Sat, Sep 26 · 11:04 AM</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual rv" style="--d:.2s">
+        <div class="hero-frame">
+          <img src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/3a12868bc-8881-46a5-a628-2035edd23c026364.png" width="1000" height="1500" fetchpriority="high" alt="Hand-hammered copper brew kettle glowing under warm taproom light">
+          <span class="hero-stamp" aria-hidden="true">Batch<br>No. 447<br>Cu · 99.9</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Small Batch <b>·</b> Copper Fired <b>·</b> Whole-Cone Hops <b>·</b> Barrel Aged <b>·</b> Est. 2011 <b>·</b> Portland, OR <b>·</b>&nbsp;</span>
+      <span>Small Batch <b>·</b> Copper Fired <b>·</b> Whole-Cone Hops <b>·</b> Barrel Aged <b>·</b> Est. 2011 <b>·</b> Portland, OR <b>·</b>&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- ============ STORY ============ -->
+  <section id="story" aria-labelledby="storyTitle">
+    <div class="wrap">
+      <div class="story-grid">
+        <div class="story-copy">
+          <p class="kicker rv">01 — Our Story</p>
+          <h2 id="storyTitle" class="rv" style="--d:.06s; font-family:var(--font-stencil); font-size:clamp(1.9rem,4.6vw,3.1rem); margin:.9rem 0 1.2rem;">A Copper Shop Turned Brew House</h2>
+          <p class="rv" style="--d:.12s">In 1923 this building rang with hammers — a copper smithy shipping stills and roofing seams across the Northwest. When we signed the lease in 2011, we kept the forge, the crane rail, and the name etched over the door: <em>Copperline</em>.</p>
+          <p class="rv" style="--d:.18s">Our brewhouse runs on a copper-clad kettle we rebuilt from a retired Idaho sugar refinery. Copper scrubs sulfur out of the boil and rounds every beer we pour. It is finicky, it is gorgeous, and it is the reason our lagers taste this clean.</p>
+          <blockquote class="pull rv" style="--d:.24s">“We didn’t set out to build a big brewery. We set out to build a honest one — one batch, one barrel, one neighbor at a time.”<cite>Marisol Vega — Co-Founder &amp; Head Brewer</cite></blockquote>
+          <p class="rv" style="--d:.3s">Fifteen years on, we still mill grain every morning, still hand-pitch every fermenter, and still ring the shop bell when a new beer taps for the first time. Come hear it.</p>
+        </div>
+        <div class="story-media rv" style="--d:.15s">
+          <img class="m1" src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/8a12868bc-8881-46a5-a628-2035edd23c024513.png" width="1024" height="731" loading="lazy" alt="Brewers in work shirts turning grain mash beside a copper kettle">
+          <img class="m2" src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/6a12868bc-8881-46a5-a628-2035edd23c029779.png" width="800" height="800" loading="lazy" alt="Rows of oak barrels resting in the timber-framed barrel hall">
+          <img class="m3" src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/0a12868bc-8881-46a5-a628-2035edd23c026354.png" width="1200" height="900" loading="lazy" alt="A brewer’s cupped hands holding freshly picked green hop cones">
+        </div>
+      </div>
+      <ol class="timeline">
+        <li class="rv"><strong class="num">2011</strong><span>First batch of Foundry Line IPA boils in the old smithy.</span></li>
+        <li class="rv" style="--d:.08s"><strong class="num">2016</strong><span>The barrel program begins with twelve bourbon barrels.</span></li>
+        <li class="rv" style="--d:.16s"><strong class="num">2021</strong><span>We knock through to the next bay and triple the taproom.</span></li>
+        <li class="rv" style="--d:.24s"><strong class="num">2025</strong><span>Rooftop solar now fires 60% of every boil.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ BEERS ============ -->
+  <section id="beers" aria-labelledby="beersTitle">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="kicker rv">02 — The Beers</p>
+        <h2 id="beersTitle" class="rv" style="--d:.06s;">Fourteen Core Beers, Zero Shortcuts</h2>
+        <p class="rv" style="--d:.12s;">Every recipe below pours in the taproom year-round or in season. Filter by family, then open a card for hops, malt bill, and what to eat beside it.</p>
+      </div>
+
+      <div class="filters rv" role="group" aria-label="Filter beers by style">
+        <button class="chip" data-filter="all" aria-pressed="true">All Beers</button>
+        <button class="chip" data-filter="ipa" aria-pressed="false">IPAs</button>
+        <button class="chip" data-filter="lager" aria-pressed="false">Lagers</button>
+        <button class="chip" data-filter="dark" aria-pressed="false">Dark &amp; Roasty</button>
+        <button class="chip" data-filter="sour" aria-pressed="false">Sours</button>
+      </div>
+      <p class="sr-only" id="filterStatus" role="status" aria-live="polite"></p>
+
+      <div class="beer-grid" id="beerGrid">
+        <article class="beer-card panel rv" data-style="ipa" data-beer="foundry">
+          <div class="beer-media"><img src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/3a12868bc-8881-46a5-a628-2035edd23c027875.png" width="1000" height="600" loading="lazy" alt="Tall glass of golden West Coast IPA with a dense white head against black"><span class="beer-style">West Coast IPA</span></div>
+          <div class="beer-body">
+            <h3>Foundry Line IPA</h3>
+            <p class="clamp-2">The beer that built the shop: pine-resin bitterness, grapefruit pith, and a dry finish that asks for one more.</p>
+            <dl class="beer-stats num"><div><dt>ABV</dt><dd>6.8%</dd></div><div><dt>IBU</dt><dd>62</dd></div><div><dt>SRM</dt><dd>6</dd></div></dl>
+            <button class="btn btn-ghost btn-sm" data-open-beer="foundry">View Details<span class="sr-only"> for Foundry Line IPA</span></button>
+          </div>
+        </article>
+
+        <article class="beer-card panel rv" style="--d:.06s" data-style="ipa" data-beer="hammerfall">
+          <div class="beer-media"><img src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/1a12868bc-8881-46a5-a628-2035edd23c029520.png" width="800" height="800" loading="lazy" alt="Stemmed glass of hazy orange double IPA on a marble table"><span class="beer-style">Hazy Double IPA</span></div>
+          <div class="beer-body">
+            <h3>Hammerfall Hazy</h3>
+            <p class="clamp-2">Double dry-hopped with Citra and Mosaic for ripe mango, citrus zest, and a pillowy oat-soft body.</p>
+            <dl class="beer-stats num"><div><dt>ABV</dt><dd>8.2%</dd></div><div><dt>IBU</dt><dd>35</dd></div><div><dt>SRM</dt><dd>4</dd></div></dl>
+            <button class="btn btn-ghost btn-sm" data-open-beer="hammerfall">View Details<span class="sr-only"> for Hammerfall Hazy</span></button>
+          </div>
+        </article>
+
+        <article class="beer-card panel rv" style="--d:.12s" data-style="lager" data-beer="slackline">
+          <div class="beer-media"><img src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/0a12868bc-8881-46a5-a628-2035edd23c022259.png" width="1000" height="750" loading="lazy" alt="Cold pilsner glass with foam cascading over the rim on a wooden bar"><span class="beer-style">Czech-Style Pilsner</span></div>
+          <div class="beer-body">
+            <h3>Slackline Pils</h3>
+            <p class="clamp-2">Floor-malted Bohemian pilsner malt, whole Saaz cones, and six weeks of cold lagering. Cracker, honey, snap.</p>
+            <dl class="beer-stats num"><div><dt>ABV</dt><dd>4.9%</dd></div><div><dt>IBU</dt><dd>38</dd></div><div><dt>SRM</dt><dd>3</dd></div></dl>
+            <button class="btn btn-ghost btn-sm" data-open-beer="slackline">View Details<span class="sr-only"> for Slackline Pils</span></button>
+          </div>
+        </article>
+
+        <article class="beer-card panel rv" data-style="dark" data-beer="rivet">
+          <div class="beer-media"><img src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/2a12868bc-8881-46a5-a628-2035edd23c022718.png" width="1000" height="700" loading="lazy" alt="Two dark porter pints resting on a polished bar top"><span class="beer-style">Robust Porter</span></div>
+          <div class="beer-body">
+            <h3>Rivet &amp; Rust Porter</h3>
+            <p class="clamp-2">Cocoa nib, cold brew, and toffee over a firm roasty spine — the taste of the shop after a rain.</p>
+            <dl class="beer-stats num"><div><dt>ABV</dt><dd>5.6%</dd></div><div><dt>IBU</dt><dd>41</dd></div><div><dt>SRM</dt><dd>27</dd></div></dl>
+            <button class="btn btn-ghost btn-sm" data-open-beer="rivet">View Details<span class="sr-only"> for Rivet and Rust Porter</span></button>
+          </div>
+        </article>
+
+        <article class="beer-card panel rv" style="--d:.06s" data-style="dark" data-beer="anvil">
+          <div class="beer-media"><img src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/3a12868bc-8881-46a5-a628-2035edd23c025154.png" width="1000" height="750" loading="lazy" alt="Snifter of near-black imperial stout crowned with tan foam"><span class="beer-style">Barrel-Aged Imperial Stout</span></div>
+          <div class="beer-body">
+            <h3>Anvil Drop Stout</h3>
+            <p class="clamp-2">Eighteen months in bourbon barrels: vanilla, charred oak, and dark cherry under a velvet head.</p>
+            <dl class="beer-stats num"><div><dt>ABV</dt><dd>11.4%</dd></div><div><dt>IBU</dt><dd>55</dd></div><div><dt>SRM</dt><dd>40</dd></div></dl>
+            <button class="btn btn-ghost btn-sm" data-open-beer="anvil">View Details<span class="sr-only"> for Anvil Drop Stout</span></button>
+          </div>
+        </article>
+
+        <article class="beer-card panel rv" style="--d:.12s" data-style="sour" data-beer="oxidizer">
+          <div class="beer-media"><img src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/4a12868bc-8881-46a5-a628-2035edd23c023284.png" width="1000" height="700" loading="lazy" alt="Close view of pink raspberry sour beer with a frothy rose-colored head"><span class="beer-style">Raspberry Kettle Sour</span></div>
+          <div class="beer-body">
+            <h3>Oxidizer Sour</h3>
+            <p class="clamp-2">Two hundred twenty pounds of Oregon raspberries per barrel. Bright, jammy, and dangerously sessionable.</p>
+            <dl class="beer-stats num"><div><dt>ABV</dt><dd>4.2%</dd></div><div><dt>IBU</dt><dd>8</dd></div><div><dt>SRM</dt><dd>12</dd></div></dl>
+            <button class="btn btn-ghost btn-sm" data-open-beer="oxidizer">View Details<span class="sr-only"> for Oxidizer Sour</span></button>
+          </div>
+        </article>
+      </div>
+
+      <div class="empty-state" id="beerEmpty" role="status">
+        <strong>No Beers in This Family Yet</strong>
+        <p>Our brewers are always hammering out something new. Try another filter, or ask the bar what is hiding in the pilot tank.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TAPROOM ============ -->
+  <section id="taproom" aria-labelledby="taproomTitle">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="kicker rv">03 — The Taproom</p>
+        <h2 id="taproomTitle" class="rv" style="--d:.06s;">Thirty-Two Taps Under the Crane Rail</h2>
+        <p class="rv" style="--d:.12s;">Reclaimed fir tables, the original forge on the wall, and a bar built from the shop’s old workbenches. Dogs welcome, kids welcome until 8 PM, and everyone leaves smelling faintly of malt.</p>
+      </div>
+      <div class="taproom-grid">
+        <div class="taproom-media rv">
+          <img class="t1" src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/1a12868bc-8881-46a5-a628-2035edd23c024689.png" width="900" height="900" loading="lazy" alt="Taproom bar wall lined with numbered tap handles beneath a hand-lettered menu board">
+          <img class="t2" src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/6a12868bc-8881-46a5-a628-2035edd23c027273.png" width="1600" height="800" loading="lazy" alt="Copper and black steel tap pipe running the length of the concrete bar">
+        </div>
+        <div class="info-card panel rivets rv" style="--d:.1s">
+          <h3>Find Us &amp; Join Us</h3>
+          <address class="addr">
+            1923 E Burnside St, Portland, OR 97214<br>
+            <a href="tel:+15035550142">(503) 555-0142</a> · <a href="mailto:cheers@copperlinebrewing.example">cheers@copperlinebrewing.example</a>
+          </address>
+          <table class="hours">
+            <caption>Taproom Hours, Every Week</caption>
+            <tbody>
+              <tr data-day="1"><th scope="row">Monday</th><td>Closed — brew day</td></tr>
+              <tr data-day="2"><th scope="row">Tuesday</th><td>3:00 PM – 10:00 PM</td></tr>
+              <tr data-day="3"><th scope="row">Wednesday</th><td>3:00 PM – 10:00 PM</td></tr>
+              <tr data-day="4"><th scope="row">Thursday</th><td>3:00 PM – 10:00 PM</td></tr>
+              <tr data-day="5"><th scope="row">Friday</th><td>12:00 PM – 12:00 AM</td></tr>
+              <tr data-day="6"><th scope="row">Saturday</th><td>11:00 AM – 12:00 AM</td></tr>
+              <tr data-day="0"><th scope="row">Sunday</th><td>11:00 AM – 8:00 PM</td></tr>
+            </tbody>
+          </table>
+          <ul class="amenities" aria-label="Taproom amenities">
+            <li>Dog Friendly</li><li>Food Trucks Daily</li><li>Free Wi-Fi</li><li>Patio Seating</li><li>Saturday Tours</li><li>Bottle Shop</li>
+          </ul>
+          <div class="info-actions">
+            <a class="btn btn-solid" href="https://maps.google.com/?q=1923+E+Burnside+St+Portland+OR" target="_blank" rel="noopener">Get Directions</a>
+            <a class="btn btn-ghost" href="#events">See What’s On</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EVENTS ============ -->
+  <section id="events" aria-labelledby="eventsTitle">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="kicker rv">04 — Events</p>
+        <h2 id="eventsTitle" class="rv" style="--d:.06s;">This Month at the Forge</h2>
+        <p class="rv" style="--d:.12s;">Candlelit concerts in the barrel hall, food trucks on the patio, and one very serious stout vertical. Reserve a spot below — we hold seats for fifteen minutes past start time.</p>
+      </div>
+      <div class="event-list">
+        <article class="event panel rv">
+          <div class="event-date num" aria-hidden="true"><strong>03</strong><span>Oct · Sat</span></div>
+          <img src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/0a12868bc-8881-46a5-a628-2035edd23c028324.png" width="1200" height="800" loading="lazy" alt="Barrel hall lit by hundreds of candles arranged around a small stage">
+          <div class="event-body">
+            <h3>Candlelight Barrel Sessions</h3>
+            <p class="event-meta">7:00 PM – 9:00 PM · Barrel Hall · 21+</p>
+            <p class="clamp-2">A string quartet plays low and slow between two hundred oak barrels, lit by candlelight. Your ticket includes two pours from the barrel-only taps.</p>
+          </div>
+          <div class="event-side">
+            <span class="event-price num">$28 · two pours</span>
+            <button class="btn btn-solid btn-sm" data-reserve="Candlelight Barrel Sessions" data-when="Sat, Oct 3">Reserve a Spot</button>
+          </div>
+        </article>
+
+        <article class="event panel rv" style="--d:.06s">
+          <div class="event-date num" aria-hidden="true"><strong>09</strong><span>Oct · Fri</span></div>
+          <img src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/5a12868bc-8881-46a5-a628-2035edd23c024918.png" width="900" height="900" loading="lazy" alt="Friends sharing burgers and bottled beer at a taproom table">
+          <div class="event-body">
+            <h3>Street Food Fridays: Smoke &amp; Brine</h3>
+            <p class="event-meta">5:00 PM – 10:00 PM · Patio · All Ages</p>
+            <p class="clamp-2">Smoke &amp; Brine BBQ parks on the patio with brisket burnt ends and fried pickles. Add the $14 smoked-porter pairing flight at the bar.</p>
+          </div>
+          <div class="event-side">
+            <span class="event-price num">Free entry · $14 pairing</span>
+            <button class="btn btn-solid btn-sm" data-reserve="Street Food Fridays: Smoke & Brine" data-when="Fri, Oct 9">Reserve a Table</button>
+          </div>
+        </article>
+
+        <article class="event panel rv" style="--d:.12s">
+          <div class="event-date num" aria-hidden="true"><strong>17</strong><span>Oct · Sat</span></div>
+          <img src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/4a12868bc-8881-46a5-a628-2035edd23c028418.png" width="1200" height="900" loading="lazy" alt="Bluegrass band performing under warm string lights on an outdoor stage">
+          <div class="event-body">
+            <h3>Forge &amp; Folk: The Copper Still Trio</h3>
+            <p class="event-meta">6:00 PM – 9:00 PM · Main Room · All Ages</p>
+            <p class="clamp-2">Three-piece bluegrass with a standup bass older than the building. First come, first seated — reservations guarantee a stool at the rail.</p>
+          </div>
+          <div class="event-side">
+            <span class="event-price num">Free · no cover</span>
+            <button class="btn btn-solid btn-sm" data-reserve="Forge & Folk: The Copper Still Trio" data-when="Sat, Oct 17">Reserve a Rail Seat</button>
+          </div>
+        </article>
+
+        <article class="event panel rv" style="--d:.18s">
+          <div class="event-date num" aria-hidden="true"><strong>24</strong><span>Oct · Sat</span></div>
+          <img src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/5a12868bc-8881-46a5-a628-2035edd23c028388.png" width="800" height="1200" loading="lazy" alt="Amber bottles and filled beer glasses arranged on a sunlit wooden counter">
+          <div class="event-body">
+            <h3>Brewmaster’s Table: Anvil Drop Vertical</h3>
+            <p class="event-meta">4:00 PM – 6:30 PM · Cellar Room · 21+ · Sold Out</p>
+            <p class="clamp-2">Five vintages of Anvil Drop Stout, 2021 through 2025, poured side by side with Marisol at the head of the table. Every seat is spoken for — the waitlist opens cancellations 48 hours out.</p>
+          </div>
+          <div class="event-side">
+            <span class="soldout-tag">Sold Out</span>
+            <button class="btn btn-ghost btn-sm" data-reserve="Brewmaster’s Table: Anvil Drop Vertical" data-when="Sat, Oct 24" data-waitlist="true">Join the Waitlist</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MERCH ============ -->
+  <section id="merch" aria-labelledby="merchTitle">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="kicker rv">05 — Merch</p>
+        <h2 id="merchTitle" class="rv" style="--d:.06s;">Wear the Patina</h2>
+        <p class="rv" style="--d:.12s;">Heavyweight cotton, brushed steel, and glass blown two blocks from the shop. Everything ships in recycled kraft, and every purchase refills the staff training fund.</p>
+      </div>
+      <div class="merch-strip rv" tabindex="0" role="region" aria-label="Merchandise, scroll horizontally">
+        <article class="merch-card panel">
+          <img src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/4a12868bc-8881-46a5-a628-2035edd23c022579.png" width="800" height="800" loading="lazy" alt="Brushed stainless steel growler flanked by two steel pint cups">
+          <div class="merch-body">
+            <h3>Copperline Steel Growler</h3>
+            <p class="desc clamp-2">64 oz double-wall stainless with a copper swing-top. Keeps a pilsner cold for 24 hours.</p>
+            <div class="merch-row"><span class="price num">$42.00</span><button class="btn btn-solid btn-sm" data-add-bag="Copperline Steel Growler">Add to Bag</button></div>
+          </div>
+        </article>
+        <article class="merch-card panel">
+          <img src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/4a12868bc-8881-46a5-a628-2035edd23c021094.png" width="800" height="800" loading="lazy" alt="Walnut tasting flight board holding four empty pilsner-shaped glasses">
+          <div class="merch-body">
+            <h3>Flight Board &amp; Glass Set</h3>
+            <p class="desc clamp-2">Oiled walnut paddle with four 5 oz pilsner glasses, stamped with the batch ledger on the underside.</p>
+            <div class="merch-row"><span class="price num">$38.00</span><button class="btn btn-solid btn-sm" data-add-bag="Flight Board & Glass Set">Add to Bag</button></div>
+          </div>
+        </article>
+        <article class="merch-card panel">
+          <img src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/1a12868bc-8881-46a5-a628-2035edd23c025180.png" width="800" height="800" loading="lazy" alt="Black trucker cap with white mesh back resting on a dark surface">
+          <div class="merch-body">
+            <h3>Foundry Trucker Cap</h3>
+            <p class="desc clamp-2">Charcoal front panel, bone mesh, and a woven copper kettle patch. One size, snapback closure.</p>
+            <div class="merch-row"><span class="price num">$28.00</span><button class="btn btn-solid btn-sm" data-add-bag="Foundry Trucker Cap">Add to Bag</button></div>
+          </div>
+        </article>
+        <article class="merch-card panel">
+          <img src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/5a12868bc-8881-46a5-a628-2035edd23c028566.png" width="800" height="1400" loading="lazy" alt="Folded charcoal hoodie resting on a weathered steel crate">
+          <div class="merch-body">
+            <h3>Barrel Hall Hoodie</h3>
+            <p class="desc clamp-2">13 oz garment-dyed fleece in soot black, stencil-printed with the barrel hall elevation drawing.</p>
+            <div class="merch-row"><span class="price num">$68.00</span><button class="btn btn-solid btn-sm" data-add-bag="Barrel Hall Hoodie">Add to Bag</button></div>
+          </div>
+        </article>
+        <article class="merch-card panel">
+          <img src="https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/7a12868bc-8881-46a5-a628-2035edd23c021731.png" width="800" height="800" loading="lazy" alt="Set of four hand-blown clear beer glasses in varied shapes">
+          <div class="merch-body">
+            <h3>Tasting Glass Set of Four</h3>
+            <p class="desc clamp-2">Hand-blown pilsner, tulip, nonic, and snifter — one honest glass for every family we brew.</p>
+            <div class="merch-row"><span class="price num">$34.00</span><button class="btn btn-solid btn-sm" data-add-bag="Tasting Glass Set of Four">Add to Bag</button></div>
+          </div>
+        </article>
+      </div>
+      <p class="merch-hint rv">Swipe or scroll the rail → · Pickup at the bottle shop is always free</p>
+    </div>
+  </section>
+
+  <!-- ============ BARREL CLUB ============ -->
+  <section class="club" id="club" aria-labelledby="clubTitle">
+    <div class="wrap">
+      <div class="club-card panel rivets rv">
+        <div>
+          <p class="kicker">The Barrel Club</p>
+          <h2 id="clubTitle">First Pours, First Dibs</h2>
+          <p>One email a month: what’s tapping, what’s barreling down, and a presale code for every limited release before it reaches the board. No spam, no fluff — just the good stuff.</p>
+          <ul class="club-perks">
+            <li>Presale codes</li><li>Members-only taps</li><li>Birthday pint</li>
+          </ul>
+        </div>
+        <form class="club-form" id="clubForm" novalidate>
+          <label for="clubEmail">Your email address</label>
+          <div class="row">
+            <input type="email" id="clubEmail" name="email" placeholder="you@example.com" autocomplete="email" required aria-describedby="clubMsg">
+            <button class="btn btn-solid" type="submit">Join the Barrel Club</button>
+          </div>
+          <p class="form-msg" id="clubMsg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">
+          <svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="24" cy="24" r="21" stroke="#b87333" stroke-width="2.5"/><path d="M24 9c5 5 8 9.5 8 14a8 8 0 1 1-16 0c0-4.5 3-9 8-14Z" fill="#b87333"/><path d="M14 33h20M17 38h14" stroke="#e0955a" stroke-width="2.5" stroke-linecap="round"/></svg>
+          <span>Copperline Brewing Co.</span>
+        </div>
+        <p>Small-batch beer forged in a 1923 copper smithy. Brewed with city water, whole-cone hops, and an unreasonable amount of patience.</p>
+        <div class="socials">
+          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Copperline Brewing on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><circle cx="12" cy="12" r="4"/><path d="M17 7h.01"/></svg></a>
+          <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Copperline Brewing on Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 8h3V4.5h-3A4.5 4.5 0 0 0 9.5 9v2.5H7V15h2.5v6H13v-6h3l.5-3.5H13V9a1 1 0 0 1 1-1Z"/></svg></a>
+          <a href="https://untappd.com" target="_blank" rel="noopener" aria-label="Copperline Brewing on Untappd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 3h8l-1 6a4 4 0 0 1-6 0L8 3Z"/><path d="M12 12v9M9 21h6"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h3>Explore</h3>
+        <ul>
+          <li><a href="#beers">Tap List &amp; Beers</a></li>
+          <li><a href="#story">Our Story</a></li>
+          <li><a href="#taproom">Taproom &amp; Hours</a></li>
+          <li><a href="#events">Events Calendar</a></li>
+          <li><a href="#merch">Merch Rail</a></li>
+          <li><a href="#club">Barrel Club</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Visit</h3>
+        <address>
+          1923 E Burnside St<br>Portland, OR 97214<br>
+          <a href="tel:+15035550142">(503) 555-0142</a><br>
+          <a href="mailto:cheers@copperlinebrewing.example">cheers@copperlinebrewing.example</a>
+        </address>
+      </div>
+      <div>
+        <h3>Good to Know</h3>
+        <p>Tours run Saturdays at 1 PM and 3 PM — free, first come, 21+ only. The taproom is step-free from the street, and the cellar room seats service animals comfortably. Please enjoy responsibly.</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year" class="num">2026</span> Copperline Brewing Co. · All rights reserved</span>
+      <span>Drink well. Drink slow. <span class="age num">21+</span></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ AGE GATE ============ -->
+<div class="modal modal-age" id="ageGate" role="dialog" aria-modal="true" aria-labelledby="ageTitle" aria-describedby="ageLede">
+  <div class="modal-backdrop"></div>
+  <div class="modal-card" id="ageCard" tabindex="-1">
+    <div class="age-mark" aria-hidden="true">21+</div>
+    <div id="ageAsk">
+      <h2 id="ageTitle">Are You 21 or Older?</h2>
+      <p class="modal-lede" id="ageLede">Copperline Brewing Co. pours beer for grown-ups. Confirm your age once and the taproom doors swing open — we won’t ask again this session.</p>
+      <div class="age-actions">
+        <button class="btn btn-solid" id="ageYes">I’m 21 or Older — Enter</button>
+        <button class="btn btn-ghost" id="ageNo">I’m Under 21</button>
+      </div>
+      <p class="age-note">We store your answer in this browser session only.</p>
+    </div>
+    <div id="ageDenied" hidden>
+      <h2>Come Back in a Few Years</h2>
+      <p class="modal-lede">Thanks for stopping by honestly. The sodas, sparkling water, and pretzels are always yours — but the beer side of the site waits until you turn 21. Meanwhile, our parents-friendly patio menu lives on at the taproom.</p>
+      <div class="age-actions">
+        <button class="btn btn-ghost" id="ageBack">Go Back</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ BEER MODAL ============ -->
+<div class="modal" id="beerModal" role="dialog" aria-modal="true" aria-labelledby="bmTitle" hidden>
+  <div class="modal-backdrop" data-close-beer></div>
+  <div class="modal-card wide" id="beerCard" tabindex="-1">
+    <button class="modal-close" data-close-beer aria-label="Close beer details">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="beer-modal-grid">
+      <img id="bmImg" src="" alt="" width="800" height="1000">
+      <div>
+        <p class="kicker" id="bmStyle">Style</p>
+        <h2 id="bmTitle" style="margin-top:.7rem;">Beer</h2>
+        <p class="modal-lede" id="bmDesc" style="margin-top:.6rem;"></p>
+        <dl class="spec-grid num" id="bmSpecs"></dl>
+        <div class="detail-block"><h4>Tasting Notes</h4><ul id="bmNotes"></ul></div>
+        <div class="detail-block"><h4>Hops &amp; Malt</h4><p id="bmGrist"></p></div>
+        <div class="detail-block"><h4>Pairs With</h4><p id="bmPair"></p></div>
+        <span class="avail" id="bmAvail"></span>
+        <div class="age-actions" style="margin-top:1.4rem;">
+          <a class="btn btn-solid btn-sm" href="#taproom" data-close-beer>Find It in the Taproom</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+<button class="to-top" id="toTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+</button>
+
+<script>
+(function(){
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- beer data ---------- */
+  var BEERS = {
+    foundry:{name:'Foundry Line IPA', style:'West Coast IPA', img:'https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/3a12868bc-8881-46a5-a628-2035edd23c027875.png', alt:'Tall glass of golden West Coast IPA against a black backdrop', abv:'6.8%', ibu:'62', srm:'6', serve:'16 oz pint · 38 °F', desc:'Batch one, still the benchmark. We build Foundry Line on a firm bittering charge and let the copper kettle polish it bright: pine resin up front, grapefruit pith in the middle, and a bone-dry finish that rings like a struck anvil.', notes:['Pine resin','Grapefruit pith','Cracked pepper','Dry finish'], hops:'Simcoe · Centennial · Chinook', malt:'2-Row · Munich · Crystal 15', pair:'Smash burgers, sharp cheddar, charred street corn.', avail:'Year-Round · Cans & Draft'},
+    hammerfall:{name:'Hammerfall Hazy', style:'Hazy Double IPA', img:'https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/1a12868bc-8881-46a5-a628-2035edd23c029520.png', alt:'Stemmed glass of hazy orange double IPA on marble', abv:'8.2%', ibu:'35', srm:'4', serve:'16 oz can-shaped glass · 40 °F', desc:'Double dry-hopped in the fermenter and again in the bright tank. Hammerfall pours like fresh-squeezed mango and lands soft, thanks to a heavy hand of flaked oats and white wheat.', notes:['Ripe mango','Citrus zest','Stone fruit','Pillowy body'], hops:'Citra · Mosaic · Nelson Sauvin', malt:'Golden Promise · Flaked Oats · White Wheat', pair:'Korean fried chicken, mango salsa, coconut rice.', avail:'Year-Round · Draft Only'},
+    slackline:{name:'Slackline Pils', style:'Czech-Style Pilsner', img:'https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/0a12868bc-8881-46a5-a628-2035edd23c022259.png', alt:'Cold pilsner glass with foam cascading over the rim', abv:'4.9%', ibu:'38', srm:'3', serve:'500 ml side-handle mug · 36 °F', desc:'A decoction-mashed, side-poured pilsner lagered six cold weeks. Saaz cones arrive whole each harvest and go in by the armful — cracker malt, wildflower honey, and a floral snap that cleans the palate.', notes:['Water cracker','Wildflower honey','Saaz snap','Clean lager finish'], hops:'Whole-cone Saaz', malt:'Bohemian floor-malted Pilsner', pair:'Bratwurst, soft pretzels, anything with pickle brine.', avail:'Year-Round · Cans & Draft'},
+    rivet:{name:'Rivet & Rust Porter', style:'Robust Porter', img:'https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/2a12868bc-8881-46a5-a628-2035edd23c022718.png', alt:'Two dark porter pints on a polished bar top', abv:'5.6%', ibu:'41', srm:'27', serve:'20 oz nonic pint · 42 °F', desc:'Named for the hardware still holding this roof up. Four roasted malts stack into cocoa nib and cold brew, while Maris Otter keeps the middle toffee-sweet. The taste of the shop after a rain.', notes:['Cocoa nib','Cold brew','Toffee','Light smoke'], hops:'East Kent Goldings', malt:'Maris Otter · Brown · Chocolate · Black', pair:'Smoked brisket, fudge brownies, rainy Tuesdays.', avail:'Year-Round · Cans & Draft'},
+    anvil:{name:'Anvil Drop Stout', style:'Barrel-Aged Imperial Stout', img:'https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f7e-83ab17272e9a/3a12868bc-8881-46a5-a628-2035edd23c025154.png', alt:'Snifter of near-black imperial stout with tan foam', abv:'11.4%', ibu:'55', srm:'40', serve:'5 oz snifter · 50 °F', desc:'Eighteen months asleep in second-fill bourbon barrels in the unheated loft. We blend three barrels per bottling run, so every vintage wears a slightly different patina: vanilla, charred oak, dark cherry, and warmth all the way down.', notes:['Bourbon vanilla','Charred oak','Dark cherry','Molasses'], hops:'Magnum, barely', malt:'Golden Promise · Roasted Barley · Special B', pair:'Blue cheese, chocolate torte, quiet contemplation.', avail:'Limited · 500 ml bottles, cellar door only'},
+    oxidizer:{name:'Oxidizer Sour', style:'Raspberry Kettle Sour', img:'https://image.qwenlm.ai/public_source/6e1fabd5-df56-41f6-8e7e-83ab17272e9a/4a12868bc-8881-46a5-a628-2035edd23c023284.png', alt:'Pink raspberry sour beer with a frothy rose head', abv:'4.2%', ibu:'8', srm:'12', serve:'10 oz tulip · 40 °F', desc:'Two hundred twenty pounds of Willamette Valley raspberries per barrel, added whole after a clean kettle sour. Bright and jammy with a lemon-candy lift — the patio beer, full stop.', notes:['Raspberry jam','Lemon candy','Bright tart finish'], hops:'Hallertau Blanc', malt:'Pilsner · White Wheat', pair:'Goat cheese, fruit tarts, long summer evenings.', avail:'Seasonal · Draft & 4-packs, Jun–Oct'}
+  };
+
+  /* ---------- header ---------- */
+  var head = document.querySelector('.site-head');
+  var bar = document.getElementById('progressBar');
+  var toTop = document.getElementById('toTop');
+  function onScroll(){
+    var y = window.scrollY || document.documentElement.scrollTop;
+    head.classList.toggle('scrolled', y > 10);
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.transform = 'scaleX(' + (h > 0 ? Math.min(y / h, 1) : 0) + ')';
+    toTop.classList.toggle('show', y > 600);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  toTop.addEventListener('click', function(){ window.scrollTo({top:0, behavior: reduce ? 'auto' : 'smooth'}); });
+
+  /* ---------- mobile nav ---------- */
+  var navToggle = document.getElementById('navToggle');
+  var nav = document.getElementById('primaryNav');
+  function setNav(open){
+    nav.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+  }
+  navToggle.addEventListener('click', function(){ setNav(!nav.classList.contains('open')); });
+  nav.addEventListener('click', function(e){ if(e.target.closest('a')) setNav(false); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && nav.classList.contains('open')){ setNav(false); navToggle.focus(); } });
+
+  /* ---------- reveal ---------- */
+  var rvs = document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+    rvs.forEach(function(el){ io.observe(el); });
+  } else { rvs.forEach(function(el){ el.classList.add('in'); }); }
+
+  /* ---------- hours: highlight today ---------- */
+  var today = new Date().getDay();
+  var row = document.querySelector('.hours tr[data-day="' + today + '"]');
+  if(row){
+    row.classList.add('today');
+    var b = document.createElement('span');
+    b.className = 'today-badge'; b.textContent = 'Today';
+    row.querySelector('th').appendChild(b);
+  }
+
+  /* ---------- beer filters ---------- */
+  var chips = document.querySelectorAll('.chip');
+  var cards = document.querySelectorAll('.beer-card');
+  var empty = document.getElementById('beerEmpty');
+  var status = document.getElementById('filterStatus');
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      chips.forEach(function(c){ c.setAttribute('aria-pressed', String(c === chip)); });
+      var f = chip.dataset.filter, shown = 0;
+      cards.forEach(function(card){
+        var show = (f === 'all') || (card.dataset.style === f);
+        card.classList.toggle('hidden', !show);
+        if(show) shown++;
+      });
+      empty.classList.toggle('show', shown === 0);
+      status.textContent = 'Showing ' + shown + ' of ' + cards.length + ' beers.';
+    });
+  });
+
+  /* ---------- focus trap helper ---------- */
+  function trap(dialog, e){
+    if(e.key !== 'Tab') return;
+    var f = dialog.querySelectorAll('a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if(!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  }
+
+  /* ---------- age gate ---------- */
+  var gate = document.getElementById('ageGate');
+  var ageCard = document.getElementById('ageCard');
+  var ageAsk = document.getElementById('ageAsk');
+  var ageDenied = document.getElementById('ageDenied');
+  var lastFocus = null;
+  function openGate(){
+    lastFocus = document.activeElement;
+    gate.hidden = false;
+    document.body.classList.add('locked');
+    ageCard.focus();
+  }
+  function closeGate(){
+    gate.hidden = true;
+    document.body.classList.remove('locked');
+    if(lastFocus) lastFocus.focus();
+  }
+  if(!sessionStorage.getItem('cb-age-ok')){ openGate(); }
+  document.getElementById('ageYes').addEventListener('click', function(){
+    sessionStorage.setItem('cb-age-ok', '1');
+    closeGate();
+  });
+  document.getElementById('ageNo').addEventListener('click', function(){
+    ageAsk.hidden = true; ageDenied.hidden = false;
+    document.getElementById('ageBack').focus();
+  });
+  document.getElementById('ageBack').addEventListener('click', function(){
+    ageDenied.hidden = true; ageAsk.hidden = false;
+    document.getElementById('ageYes').focus();
+  });
+  gate.addEventListener('keydown', function(e){ trap(gate, e); });
+
+  /* ---------- beer modal ---------- */
+  var bModal = document.getElementById('beerModal');
+  var bCard = document.getElementById('beerCard');
+  var beerReturn = null;
+  function openBeer(id, trigger){
+    var b = BEERS[id]; if(!b) return;
+    beerReturn = trigger || document.activeElement;
+    document.getElementById('bmImg').src = b.img;
+    document.getElementById('bmImg').alt = b.alt;
+    document.getElementById('bmStyle').textContent = b.style;
+    document.getElementById('bmTitle').textContent = b.name;
+    document.getElementById('bmDesc').textContent = b.desc;
+    document.getElementById('bmSpecs').innerHTML =
+      '<div><dt>ABV</dt><dd>' + b.abv + '</dd></div>' +
+      '<div><dt>IBU</dt><dd>' + b.ibu + '</dd></div>' +
+      '<div><dt>SRM</dt><dd>' + b.srm + '</dd></div>' +
+      '<div><dt>Pour</dt><dd style="font-size:.62rem;line-height:1.3;padding-top:.35rem;">' + b.serve + '</dd></div>';
+    document.getElementById('bmNotes').innerHTML = b.notes.map(function(n){ return '<li>' + n + '</li>'; }).join('');
+    document.getElementById('bmGrist').textContent = 'Hops: ' + b.hops + '  ·  Malt: ' + b.malt;
+    document.getElementById('bmPair').textContent = b.pair;
+   <!DOCTYPE html>
+ document.getElementById('bm<html lang="enAvail').textContent"> = b.avail;
+    b
+<head>
+<meta charset="UTFModal.hidden = false-8">
+<meta name="viewport;
+    document.body.classList.add('" contentlocked');
+   ="width=device-width bCard.focus();, initial-scale=1">
+<meta
+  }
+  function closeBeer name="theme-color" content(){
+    b="#141Modal.hidden = true110;
+    document">
+<meta name.body.classList.remove('="color-schemelocked');
+   " content="dark if(beerReturn">
+<meta) beerReturn.focus name="description"();
+  } content="Copper
+  document.querySelectorAllline Brewing Co.('[data-open-be — smaller]').forEach(function-batch(btn){
+    craft beer brewed in btn.addEventListener('click copper kettles in Portland, Oregon', function(){ open. TapBeer(btn.datasetroom.openBeer hours, tap, btn); }); list, events and
+  });
+ merch.  bModal">
+<title>Copperline Brewing.querySelectorAll('[data-close-beer]').forEach(function(el){
+    el.addEventListener('click', closeBeer);
+  });
+  b Co. — Brewed In Copper, Poured With Patience</title>
+<link rel="stylesheet" href="https://Modal.addEventListener('keydowncdn.jsdelivr.net/npm', function(e){/@fontsource/big
+    if(e-shoulders-display.key === 'Escape'){@latest/4 closeBeer(); }00.css">
+    trap
+<link rel="(bModalstylesheet" href=", e);
+https://cdn.jsdelivr  });
+
+.net/npm/@font  /* ---------- tosource/big-shoulders-display@latestasts ---------- */
+  var toasts/700 = document.getElementById('.css">
+<linktoasts');
+ rel="stylesheet"  function toast href="https://cdn.jsdelivr.net/npm(msg, undo/@fontsource/bigLabel,-shoulders-display onUndo){
+@latest/9    var t = document.createElement('00.css">
+<link rel="div');
+   stylesheet" href=" t.className = 'https://cdn.jsdelivrtoast';
+   .net/npm/@font var psource/saira-st = document.createElement('encil-one@latestp'); p.textContent/400 = msg;
+.css">
+<link    t.appendChild(p rel="stylesheet");
+    if href="https://(cdn.jsdelivr.net/npm/@fontsource/barundoLabel){
+low@latest/      var u400.css = document.createElement('">
+<link relbutton');
+     ="stylesheet" href u.type = '="https://cdnbutton'; u.textContent = undoLabel;.jsdelivr.net/npm/@
+      u.addEventListener('click', functionfontsource/barlow@latest/500.css">(){ on
+<link rel="Undo &&stylesheet" href="https://cdn.jsdelivr onUndo.net/npm/@font(); dismiss(); });source/barlow@
+      t.appendChild(u);
+    }
+    toasts.appendChild(t);
+    varlatest/600.css">
+<link rel="stylesheet" href="https timer = setTimeout(dismiss, 52://cdn.jsdelivr.net/npm/@fontsource/barlow@latest/70000);
+.css">
+<style>
+:root    function dismiss(){
+      clearTimeout(timer{
+  --);
+      tchar-95.classList.add('out');
+      setTimeout0:#0e0c(function(){ t.remove0a(); }, reduce ? 0;
+  --char-90 : 300:#140);
+   1110 }
+ ;
+  -- }
+
+char-85  /* ---------- events0:#19 ---------- */1512
+  document;
+  --.querySelectorAll('[data-reserve]').forEach(functionchar-80(btn){
+   0:#1e19 btn.addEventListener('click16', function(){
+;
+  --      var name =char-70 btn.dataset.reserve0:#2a, when231 = btn.dataset.when;
+      ife(btn.dataset.waitlist;
+  --line:#){
+        toast3a2('Youf26’re on the wait;
+  --line-softlist for ' + name + ' (':#2 + whene + ').26 We’ll email20 if a seat opens.',;
+  --copper:#b8733 'Undo');
+3;
+       } else { --copper-b
+        toast('right:#d99aSpot reserved for ' + name5b + ' on;
+  -- ' + when + '. Confirmationcopper-deep:#8 senta542 to your inbox.',3;
+  'Undo');
+ --cream:#f      }
+   2 });
+ e8 });
+
+  /*dc;
+  ---------- bag ---------- */ --cream-d
+  var bagim:#d8cabbCount = 0;;
+  --muted:#a
+  var bag8El = document.getElementById('bagCount');988a
+  var bag;
+  --Btn = document.getElementByIdember('bagBtn');
+  function:#e2 render54Bag(){
+   2c bagEl.textContent =;
+  -- bagfont-display:'Big Shoulders Display','Count;
+    bagBtn.setAttribute('Arial Narrow',Impact,sans-serifaria-label', ';
+  --View your merch bagfont-stencil:', ' + bagSaira StencilCount + ( One','Big Shoulders Display',ImpactbagCount ===,sans-serif; 1 ? ' item' : '
+  --font items'));
+   -body:'Barlow bagEl.classList.remove',system-ui,-('pop');
+apple-system,'Segoe UI',    void bagElsans-serif;
+.offsetWidth;  --shadow-
+    bagEl1:0 .classList.add('pop');
+  }18px 44px -18px rgba(0,0,0,.75);
+  --ease-out:cubic-bezier(.22,.9,.28,1);
+}
+*,*::before,*
+  document.querySelectorAll('[data-add-bag]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var name = btn.dataset.addBag;
+      bagCount++; renderBag();
+      toast(name + ' added to your bag.',::after{ 'Undo', functionbox-sizing:border-box(){ bagCount =}
+html{color-scheme: Math.max(0dark;scroll-be, bagCount - 1); renderhavior:smooth}
+Bag(); });
+body{
+    });
+  });
+
+  margin:0;background:  /* ---------- newsletter ---------- */var(--char-900);
+  var formcolor:var(-- = documentcream);
+ .getElementById('clubForm font-family:var');
+  var(--font-body);font-size:1.0 email = document.getElementById('clubEmail62');
+  var5rem;line msg = document-height:1..getElementById('clubMsg65;
+  -');
+  form.addEventListener('submit',webkit-font-sm function(e){
+oothing:antiali    e.preventDefault();ased;overflow
+    var v = email.value.trim-x:hidden;
+}
+body.is-locked{overflow();
+    if:hidden}(!/
+img{^[^\s@max]+@[^\s-width:10@]+\.[^\0%;display:blocks@;height:auto}
+]{2,a}$/.test{color(v)){
+     :var(--c msg.className = 'opper-bright)}
+buttonform-msg err{font:';
+      msg.textContent = 'Thatinherit;color address:inherit doesn’t look right;touch-action:manipulation} — check
+a, forbutton,input a typo and try,select{touch again.';
+-action:manipulation}
+      email.focus();
+      return;h1,h2
+    }
+,h3,h4    msg.className ={text-wrap:balance 'form-msg ok;line';
+    msg-height:1..textContent = 'Welcome02;margin:0}
+p{text to the Barrel Club. Your first presale code lands with next-wrap:pretty}
+.num month’s pour list…';
+    form.reset{font-variant-numeric:tabular-nums}
+:focus-visible{outline:();
+  });
+
+2px solid var(--copper-bright);outline-offset  /* ---------- year:3px;border ---------- */
+ -radius:2 document.getElementById('yearpx}
+::').textContent = new Date().getFullYear();selection{background:var(--c
+})();
+opper);color:</script>
+var(--char-<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+950)}
+.skip</html>-link{
+  position:fixed;top:-100px;left:16px;z-index:200;background:var(--copper);color:var(--char-950);
+  padding:12px 20px;font-weight:700;text-decoration:none;letter-spacing:.06em;text-transform:uppercase;
+  font-family:var(--font-display);font-size:1rem;transition:top .25s var(--ease-out);
+}
+.skip-link:focus-visible{top:16px}
+.wrap{width:min(1180px,100% - 2.5rem);margin-inline:auto}
+.eyebrow{
+  font-family:var(--font-stencil);font-size:.82rem;letter-spacing:.32em;text-transform:uppercase;
+  color:
