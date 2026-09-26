@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter & Verse | Independent Bookstore</title>
+    <meta name="description" content="Your local independent bookstore for classics, modern fiction, and community events.">
+    <meta name="theme-color" content="#7c2d3e">
+    
+    <!-- Fonts: Libre Baskerville (Serif) and Lato (Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --color-paper: #f7f1e5;
+            --color-paper-dark: #eaddcf;
+            --color-burgundy: #7c2d3e;
+            --color-burgundy-light: #9e4b5d;
+            --color-ink: #2c2420;
+            --color-ink-light: #5a524e;
+            --color-gold: #c5a059;
+            
+            --font-serif: 'Libre Baskerville', serif;
+            --font-sans: 'Lato', sans-serif;
+            
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 8rem;
+            
+            --container-width: 1200px;
+            --radius: 4px;
+            --shadow: 0 4px 6px -1px rgba(44, 36, 32, 0.1), 0 2px 4px -1px rgba(44, 36, 32, 0.06);
+            --transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 100%;
+        }
+
+        body {
+            background-color: var(--color-paper);
+            color: var(--color-ink);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-serif);
+            color: var(--color-burgundy);
+            text-wrap: balance;
+            line-height: 1.2;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        h1 { font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: -0.02em; }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); }
+        h3 { font-size: 1.5rem; }
+
+        p { margin-bottom: var(--spacing-sm); max-width: 65ch; }
+        
+        a { color: var(--color-burgundy); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; transition: var(--transition); }
+        a:hover { color: var(--color-burgundy-light); text-decoration-thickness: 2px; }
+        
+        img { max-width: 100%; height: auto; display: block; object-fit: cover; }
+
+        ul { list-style: none; }
+
+        button {
+            font-family: var(--font-sans);
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 1rem;
+        }
+
+        /* Focus Styles for Accessibility */
+        :focus-visible {
+            outline: 3px solid var(--color-burgundy);
+            outline-offset: 4px;
+            border-radius: 2px;
+        }
+
+        /* Skip Link */
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            background: var(--color-burgundy);
+            color: white;
+            padding: 1rem;
+            z-index: 100;
+            transition: top 0.2s;
+        }
+        .skip-link:focus { top: 0; }
+
+        /* Utility Classes */
+        .container {
+            width: 90%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+        }
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
+        }
+        .btn {
+            display: inline-block;
+            background-color: var(--color-burgundy);
+            color: white;
+            padding: 0.875rem 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            border-radius: var(--radius);
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            min-height: 44px; /* Touch target */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn:hover {
+            background-color: var(--color-burgundy-light);
+            transform: translateY(-2px);
+            color: white;
+        }
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--color-burgundy);
+            color: var(--color-burgundy);
+        }
+        .btn-outline:hover {
+            background-color: var(--color-burgundy);
+            color: white;
+        }
+
+        /* --- HEADER --- */
+        header {
+            padding: var(--spacing-sm) 0;
+            position: sticky;
+            top: 0;
+            background-color: rgba(247, 241, 229, 0.95);
+            backdrop-filter: blur(5px);
+            z-index: 50;
+            border-bottom: 1px solid rgba(44, 36, 32, 0.1);
+        }
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-ink);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo span { color: var(--color-burgundy); }
+        
+        nav ul { display: flex; gap: var(--spacing-md); }
+        nav a { text-decoration: none; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        
+        /* Mobile Menu Toggle */
+        .menu-toggle { display: none; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: var(--spacing-xl) 0;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            opacity: 0.15;
+            background-image: url('https://picsum.photos/seed/chapter-and-verse-9e93c8aaf27c/1600/900?auto=format&fit=crop&w=1600&q=80'); 
+            background-size: cover;
+            background-position: center;
+            filter: sepia(0.4);
+        }
+        .hero-content {
+            max-width: 800px;
+            padding: var(--spacing-md);
+            animation: fadeIn 1s ease-out;
+        }
+        .hero-subtitle {
+            font-family: var(--font-sans);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-burgundy);
+            margin-bottom: var(--spacing-sm);
+            display: block;
+        }
+
+        /* --- STAFF PICKS (BOOKSHELF) --- */
+        .shelf-section {
+            padding: var(--spacing-xl) 0;
+            background-color: white;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        /* Filter Controls */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--color-ink-light);
+            border-radius: 50px;
+            color: var(--color-ink);
+            transition: all 0.2s ease;
+            min-height: 44px;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--color-burgundy);
+            border-color: var(--color-burgundy);
+            color: white;
+        }
+
+        /* The Shelf Grid */
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            perspective: 1000px;
+        }
+
+        /* Book Card Design */
+        .book-card {
+            position: relative;
+            aspect-ratio: 2/3;
+            transform-style: preserve-3d;
+            transition: transform 0.4s ease;
+            cursor: pointer;
+        }
+        .book-card:hover {
+            transform: rotateY(-25deg) translateX(-10px);
+        }
+        
+        /* Spine (Left edge) */
+        .book-spine {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 30px;
+            background: linear-gradient(to right, rgba(0,0,0,0.3), rgba(0,0,0,0.1));
+            transform: rotateY(-90deg);
+            transform-origin: left;
+            z-index: 1;
+        }
+        
+        /* Cover */
+        .book-cover {
+            width: 100%;
+            height: 100%;
+            background-color: #ddd;
+            position: relative;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1rem;
+        }
+        .book-cover img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        .book-info {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.75rem;
+            border-radius: var(--radius);
+            backdrop-filter: blur(2px);
+            transform: translateY(10px);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .book-card:hover .book-info {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .book-title {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-ink);
+            margin-bottom: 0.25rem;
+            line-height: 1.2;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .book-author {
+            font-size: 0.85rem;
+            color: var(--color-ink-light);
+        }
+        .book-price {
+            font-family: var(--font-sans);
+            font-weight: 700;
+            color: var(--color-burgundy);
+            margin-top: 0.5rem;
+            font-feature-settings: "tnum";
+        }
+
+        /* --- EVENTS CALENDAR --- */
+        .events-section {
+            padding: var(--spacing-xl) 0;
+            background-color: var(--color-paper);
+        }
+        .event-list {
+            display: grid;
+            gap: var(--spacing-md);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .event-item {
+            display: flex;
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease;
+        }
+        .event-item:hover { transform: translateY(-4px); }
+        .event-date {
+            background-color: var(--color-burgundy);
+            color: white;
+            padding: var(--spacing-md);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 100px;
+            text-align: center;
+        }
+        .event-month { text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.1em; font-weight: 700; }
+        .event-day { font-size: 2rem; font-family: var(--font-serif); font-weight: 700; line-height: 1; }
+        .event-details { padding: var(--spacing-md); flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .event-time { font-size: 0.9rem; color: var(--color-ink-light); margin-bottom: 0.25rem; display: block; }
+        .event-title { font-size: 1.25rem; margin-bottom: 0.5rem; }
+
+        /* --- BOOK CLUB SIGNUP --- */
+        .signup-section {
+            padding: var(--spacing-xl) 0;
+            background-color: var(--color-ink);
+            color: var(--color-paper);
+            text-align: center;
+        }
+        .signup-section h2 { color: var(--color-gold); }
+        .signup-form {
+            max-width: 500px;
+            margin: var(--spacing-md) auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+        .form-group { text-align: left; }
+        .form-label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--color-paper-dark); }
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            border-radius: var(--radius);
+            font-family: var(--font-sans);
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-gold);
+            background: rgba(255,255,255,0.1);
+        }
+        .signup-btn {
+            background-color: var(--color-gold);
+            color: var(--color-ink);
+            margin-top: var(--spacing-sm);
+        }
+        .signup-btn:hover { background-color: #d4af37; }
+
+        /* --- ABOUT --- */
+        .about-section {
+            padding: var(--spacing-xl) 0;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+        .about-img {
+            border-radius: var(--radius);
+            box-shadow: 20px 20px 0 var(--color-paper-dark);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #1a1512;
+            color: var(--color-paper-dark);
+            padding: var(--spacing-lg) 0 var(--spacing-md);
+            font-size: 0.9rem;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        .footer-col h4 { color: white; margin-bottom: var(--spacing-sm); font-size: 1.1rem; }
+        .footer-col ul li { margin-bottom: 0.5rem; }
+        .footer-col a { color: var(--color-paper-dark); text-decoration: none; }
+        .footer-col a:hover { color: var(--color-gold); text-decoration: underline; }
+        .copyright {
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: var(--spacing-md);
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-wrapper { flex-wrap: wrap; }
+            .menu-toggle { display: block; color: var(--color-ink); font-size: 1.5rem; padding: 0.5rem; }
+            nav { width: 100%; display: none; margin-top: 1rem; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 1rem; }
+            nav.open { display: block; animation: fadeIn 0.3s ease; }
+            nav ul { flex-direction: column; text-align: center; }
+            
+            .about-grid { grid-template-columns: 1fr; }
+            .about-img { order: -1; box-shadow: 10px 10px 0 var(--color-paper-dark); }
+            
+            .event-item { flex-direction: column; }
+            .event-date { flex-direction: row; gap: 0.5rem; padding: 0.75rem; min-width: auto; justify-content: flex-start; }
+            .event-day { font-size: 1.5rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+            .reveal { opacity: 1; transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to Content</a>
+
+    <header>
+        <div class="container nav-wrapper">
+            <a href="#" class="logo" aria-label="Chapter & Verse Home">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                Chapter <span>&</span> Verse
+            </a>
+            
+            <button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle Navigation Menu">
+                ☰
+            </button>
+
+            <nav id="primary-nav">
+                <ul>
+                    <li><a href="#staff-picks">Staff Picks</a></li>
+                    <li><a href="#events">Events</a></li>
+                    <li><a href="#book-club">Book Club</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-bg" role="img" aria-label="Background texture of old book pages"></div>
+            <div class="hero-content reveal">
+                <span class="hero-subtitle">Est. 1984 • Independent Bookseller</span>
+                <h1>Stories That Stay With You</h1>
+                <p>Discover your next great adventure in our curated collection of classics, contemporary fiction, and rare finds. Grab a coffee, pull up a chair, and stay a while.</p>
+                <div style="margin-top: var(--spacing-md);">
+                    <a href="#staff-picks" class="btn">Browse Collection</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Staff Picks / Shelf -->
+        <section id="staff-picks" class="shelf-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>Staff Picks</h2>
+                    <p>Hand-selected favorites from our booksellers this month.</p>
+                </div>
+
+                <div class="filters reveal" role="group" aria-label="Filter books by genre">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="classic">Classics</button>
+                    <button class="filter-btn" data-filter="fiction">Modern Fiction</button>
+                    <button class="filter-btn" data-filter="scifi">Sci-Fi & Fantasy</button>
+                </div>
+
+                <div class="book-grid" id="bookGrid">
+                    <!-- Books injected via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Calendar -->
+        <section id="events" class="events-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>Upcoming Events</h2>
+                    <p>Join our community for readings, signings, and discussions.</p>
+                </div>
+
+                <div class="event-list reveal">
+                    <article class="event-item">
+                        <div class="event-date">
+                            <span class="event-month">Oct</span>
+                            <span class="event-day">12</span>
+                        </div>
+                        <div class="event-details">
+                            <span class="event-time">Saturday • 6:00 PM – 8:00 PM</span>
+                            <h3 class="event-title">Local Author Spotlight: Sarah J. Maas</h3>
+                            <p>An evening of reading and Q&A with the bestselling author.</p>
+                        </div>
+                    </article>
+
+                    <article class="event-item">
+                        <div class="event-date">
+                            <span class="event-month">Oct</span>
+                            <span class="event-day">18</span>
+                        </div>
+                        <div class="event-details">
+                            <span class="event-time">Friday • 10:00 AM – 11:30 AM</span>
+                            <h3 class="event-title">Children’s Story Hour</h3>
+                            <p>Interactive storytelling for ages 3-7. Snacks provided!</p>
+                        </div>
+                    </article>
+
+                    <article class="event-item">
+                        <div class="event-date">
+                            <span class="event-month">Nov</span>
+                            <span class="event-day">02</span>
+                        </div>
+                        <div class="event-details">
+                            <span class="event-time">Saturday • 2:00 PM – 4:00 PM</span>
+                            <h3 class="event-title">Poetry Workshop: Finding Your Voice</h3>
+                            <p>A guided workshop for aspiring poets of all levels.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Book Club Signup -->
+        <section id="book-club" class="signup-section">
+            <div class="container reveal">
+                <h2>Join the “Midnight Readers” Club</h2>
+                <p>We meet every last Thursday of the month to discuss our latest read. Wine and cheese are always served.</p>
+                
+                <form class="signup-form" onsubmit="handleSignup(event)">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" id="name" class="form-input" required placeholder="Jane Austen">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" id="email" class="form-input" required placeholder="jane@example.com">
+                    </div>
+                    <button type="submit" class="btn signup-btn">Reserve My Seat</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="container about-grid">
+                <div class="reveal">
+                    <h2>More Than Just Books</h2>
+                    <p>Founded in 1984, Chapter & Verse has been a sanctuary for story lovers in the heart of the city. We believe that a bookstore should be a living, breathing part of the community.</p>
+                    <p>Our shelves are stocked not just with bestsellers, but with hidden gems chosen by staff who genuinely love to read. Whether you’re looking for a first edition or a cozy mystery, we’re here to help you find it.</p>
+                    <a href="#contact" class="btn btn-outline" style="margin-top: 1rem;">Visit Us Today</a>
+                </div>
+                <div class="reveal">
+                    <img src="https://picsum.photos/seed/chapter-and-verse-444d633d7902/1600/900?auto=format&fit=crop&w=800&q=80" alt="Interior of a cozy bookstore with wooden shelves and warm lighting" class="about-img" width="600" height="400" loading="lazy">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Chapter & Verse</h4>
+                    <p>123 Literary Lane<br>Booktown, BK 90210</p>
+                    <p><a href="tel:+15551234567">(555) 123-4567</a></p>
+                </div>
+                <div class="footer-col">
+                    <h4>Hours</h4>
+                    <ul>
+                        <li>Mon–Fri: 9am – 8pm</li>
+                        <li>Sat: 10am – 9pm</li>
+                        <li>Sun: 11am – 6pm</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="#staff-picks">Staff Picks</a></li>
+                        <li><a href="#events">Events Calendar</a></li>
+                        <li><a href="#book-club">Book Clubs</a></li>
+                        <li><a href="#">Gift Cards</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 Chapter & Verse Bookstore. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- DATA ---
+        const books = [
+            { id: 1, title: "Pride and Prejudice", author: "Jane Austen", genre: "classic", price: "$14.99", img: "photo-1541963463532-d68292c34b19" },
+            { id: 2, title: "1984", author: "George Orwell", genre: "classic", price: "$12.50", img: "photo-1535905557558-afc4877a26fc" },
+            { id: 3, title: "The Great Gatsby", author: "F. Scott Fitzgerald", genre: "classic", price: "$13.95", img: "photo-1544947950-fa07a98d237f" },
+            { id: 4, title: "Dune", author: "Frank Herbert", genre: "scifi", price: "$18.99", img: "photo-1541963463532-d68292c34b19" }, // Reusing generic book textures if specific covers aren't guaranteed, but using distinct IDs
+            { id: 5, title: "Project Hail Mary", author: "Andy Weir", genre: "scifi", price: "$24.00", img: "photo-1629196914168-3a9644338eb5" },
+            { id: 6, title: "Normal People", author: "Sally Rooney", genre: "fiction", price: "$16.00", img: "photo-1589829085413-56de8ae18c73" },
+            { id: 7, title: "To Kill a Mockingbird", author: "Harper Lee", genre: "classic", price: "$14.50", img: "photo-1599557404482-3df93546d855" },
+            { id: 8, title: "The Midnight Library", author: "Matt Haig", genre: "fiction", price: "$22.99", img: "photo-1512820790803-83ca734da794" }
+        ];
+
+        // --- RENDER BOOKS ---
+        const grid = document.getElementById('bookGrid');
+        
+        function renderBooks(filter = 'all') {
+            grid.innerHTML = '';
+            const filtered = filter === 'all' ? books : books.filter(b => b.genre === filter);
+            
+            filtered.forEach(book => {
+                // Using Unsplash Source with specific IDs known to be book-related or abstract textures
+                // Note: In a real production app, we would use actual ISBN cover art APIs.
+                // Here we use reliable Unsplash IDs for "Book" aesthetics.
+                const imgUrl = `https://images.unsplash.com/${book.img}?auto=format&fit=crop&w=400&q=80`;
+                
+                const card = document.createElement('article');
+                card.className = 'book-card';
+                card.setAttribute('tabindex', '0');
+                card.setAttribute('aria-label', `${book.title} by ${book.author}, Price ${book.price}`);
+                
+                card.innerHTML = `
+                    <div class="book-spine" aria-hidden="true"></div>
+                    <div class="book-cover">
+                        <img src="${imgUrl}" alt="Cover of ${book.title}" width="300" height="450" loading="lazy">
+                        <div class="book-info">
+                            <h3 class="book-title">${book.title}</h3>
+                            <p class="book-author">${book.author}</p>
+                            <p class="book-price">${book.price}</p>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        renderBooks();
+
+        // --- FILTER LOGIC ---
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Add to clicked
+                btn.classList.add('active');
+                // Filter
+                renderBooks(btn.dataset.filter);
+            });
+        });
+
+        // --- MOBILE MENU ---
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.getElementById('primary-nav');
+        
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            nav.classList.toggle('open');
+            menuToggle.textContent = isExpanded ? '☰' : '✕';
+        });
+
+        // Close menu when clicking a link
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('open');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.textContent = '☰';
+            });
+        });
+
+        // --- SCROLL REVEAL ---
+        const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // --- FORM HANDLING ---
+        function handleSignup(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.textContent;
+            
+            btn.textContent = "Welcome Aboard!";
+            btn.style.backgroundColor = "#4ade80"; // Green success
+            btn.style.color = "#064e3b";
+            
+            setTimeout(() => {
+                e.target.reset();
+                btn.textContent = originalText;
+                btn.style.backgroundColor = "";
+                btn.style.color = "";
+            }, 3000);
+        }
+    </script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
