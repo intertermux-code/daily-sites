@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mintwise — Master Your Money</title>
+    <meta name="description" content="Take control of your finances with Mintwise. The smart budget calculator and personal finance tracker designed for your future.">
+    <meta name="theme-color" content="#ffffff">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;500;700&family=Fraunces:opsz,wght@9..144,300;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- RESET & VARIABLES --- */
+        :root {
+            --c-primary: #10b981; /* Mint Green */
+            --c-primary-dark: #059669;
+            --c-primary-light: #d1fae5;
+            --c-text-main: #1f2937;
+            --c-text-muted: #6b7280;
+            --c-bg-body: #f9fafb;
+            --c-bg-card: #ffffff;
+            --c-border: #e5e7eb;
+            
+            --f-head: 'Fraunces', serif;
+            --f-body: 'DM Sans', sans-serif;
+            
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 4rem;
+            --space-xl: 8rem;
+            
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-full: 9999px;
+            
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        html { scroll-behavior: smooth; color-scheme: light; }
+        
+        body {
+            font-family: var(--f-body);
+            color: var(--c-text-main);
+            background-color: var(--c-bg-body);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        img { max-width: 100%; height: auto; display: block; object-fit: cover; }
+        
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--f-head);
+            font-weight: 600;
+            line-height: 1.1;
+            text-wrap: balance;
+            letter-spacing: -0.02em;
+            color: var(--c-text-main);
+        }
+
+        h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 800; margin-bottom: var(--space-sm); }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: var(--space-md); }
+        h3 { font-size: 1.5rem; margin-bottom: var(--space-xs); }
+        p { margin-bottom: var(--space-sm); color: var(--c-text-muted); font-size: 1.125rem; }
+        
+        .text-accent { color: var(--c-primary-dark); }
+        .tabular-nums { font-variant-numeric: tabular-nums; }
+
+        /* --- UTILITIES --- */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-sm);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.875rem 2rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: var(--radius-full);
+            transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out), background-color 0.2s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            min-height: 44px; /* Touch target */
+        }
+        
+        .btn:focus-visible { outline: 2px solid var(--c-primary); outline-offset: 2px; }
+        
+        .btn-primary {
+            background-color: var(--c-primary);
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(16, 1129, 0.39);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--c-primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.23);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--c-text-main);
+            border: 1px solid var(--c-border);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--c-bg-body);
+            border-color: var(--c-text-muted);
+        }
+
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
+        }
+
+        /* --- ANIMATIONS --- */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+        }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- NAVIGATION --- */
+        header {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: var(--space-sm) 0;
+        }
+        
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo { font-family: var(--f-head); font-weight: 800; font-size: 1.5rem; color: var(--c-text-main); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+        .logo span { color: var(--c-primary); }
+        
+        .nav-links { display: none; gap: var(--space-md); list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--c-text-main); font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--c-primary); }
+        
+        .mobile-menu-btn { display: block; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+        
+        @media (min-width: 768px) {
+            .nav-links { display: flex; align-items: center; }
+            .mobile-menu-btn { display: none; }
+        }
+
+        /* --- HERO SECTION --- */
+        .hero { padding: var(--space-lg) 0; position: relative; overflow: hidden; }
+        .hero-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-lg); align-items: center; }
+        
+        .hero-content { max-width: 600px; }
+        .badge { display: inline-block; background: var(--c-primary-light); color: var(--c-primary-dark); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 0.875rem; font-weight: 700; margin-bottom: var(--space-sm); }
+        
+        /* CSS Phone Mockup */
+        .phone-mockup {
+            width: 300px; height: 600px;
+            background: #111;
+            border-radius: 40px;
+            border: 8px solid #333;
+            position: relative;
+            margin: 0 auto;
+            box-shadow: var(--shadow-lg), inset 0 0 20px rgba(255,255,255,0.1);
+            overflow: hidden;
+            transform: rotate(-3deg);
+            transition: transform 0.5s var(--ease-out);
+        }
+        .phone-mockup:hover { transform: rotate(0deg) scale(1.02); }
+        
+        .phone-screen {
+            width: 100%; height: 100%;
+            background: #fff;
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+        }
+        .phone-notch {
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 120px; height: 25px; background: #333;
+            border-bottom-left-radius: 16px; border-bottom-right-radius: 16px;
+            z-index: 10;
+        }
+        .app-header { height: 80px; background: var(--c-primary); padding-top: 35px; padding-left: 20px; color: white; font-weight: bold; font-size: 1.2rem; }
+        .app-balance { padding: 20px; text-align: center; }
+        .app-balance h4 { font-size: 0.9rem; color: #666; margin-bottom: 5px; }
+        .app-balance div { font-size: 2rem; font-weight: 800; color: #111; font-family: var(--f-head); }
+        .app-chart { height: 150px; background: #f3f4f6; margin: px; border-radius: 12px; display: flex; align-items: flex-end; justify-content: space-around; padding: 10px; }
+        .bar { width: 15%; background: var(--c-primary); border-radius: 4px 4px 0 0; opacity: 0.7; }
+        .app-list { padding: 15px; }
+        .list-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        
+        @media (min-width: 992px) {
+            .hero-grid { grid-template-columns: 1fr 1fr; }
+            .phone-mockup { margin: 0 0 0 auto; }
+        }
+
+        /* --- CALCULATOR SECTION --- */
+        .calculator-section { background: white; padding: var(--space-xl) 0; border-top: 1px solid var(--c-border); border-bottom: 1px solid var(--c-border); }
+        .calc-container { display: grid; grid-template-columns: 1fr; gap: var(--space-lg); max-width: 1000px; margin: 0 auto; }
+        
+        .input-group { margin-bottom: var(--space-md); }
+        .input-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--c-text-main); }
+        .currency-input { position: relative; }
+        .currency-input span { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--c-text-muted); }
+        .currency-input input {
+            width: 100%; padding: 1rem 1rem 1rem 2.5rem;
+            border: 1px solid var(--c-border); border-radius: var(--radius-sm);
+            font-size: 1.125rem; font-family: var(--f-body);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .currency-input input:focus { outline: none; border-color: var(--c-primary); box-shadow: 0 0 0 3px var(--c-primary-light); }
+        
+        .result-display {
+            background: var(--c-bg-body); border-radius: var(--radius-lg); padding: var(--space-md);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; min-height: 300px;
+        }
+        
+        /* SVG Donut Chart */
+        .donut-chart { width: 200px; height: 200px; transform: rotate(-90deg); }
+        .donut-segment { fill: transparent; stroke-width: 30; transition: stroke-dasharray 1s var(--ease-out); }
+        .chart-center-text { font-size: 2.5rem; font-weight: 800; fill: var(--c-text-main); font-family: var(--f-head); dominant-baseline: middle; text-anchor: middle; transform: rotate(90deg); transform-origin: center; }
+        .chart-label { font-size: 0.875rem; fill: var(--c-text-muted); font-family: var(--f-body); dominant-baseline: middle; text-anchor: middle; transform: rotate(90deg); transform-origin: center; }
+
+        @media (min-width: 768px) {
+            .calc-container { grid-template-columns: 1fr 1fr; align-items: center; }
+        }
+
+        /* --- FEATURES --- */
+        .features { padding: var(--space-xl) 0; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-md); margin-top: var(--space-lg); }
+        .feature-card { background: white; padding: var(--space-md); border-radius: var(--radius-md); border: 1px solid var(--c-border); transition: transform 0.3s var(--ease-out), box-shadow 0.3s; }
+        .feature-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+        .icon-box { width: 50px; height: 50px; background: var(--c-primary-light); color: var(--c-primary-dark); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-sm); font-size: 1.5rem; }
+
+        /* --- SECURITY BAND --- */
+        .security-band { background: var(--c-text-main); color: white; padding: var(--space-md) 0; text-align: center; }
+        .security-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-md); align-items: center; opacity: 0.8; }
+        .security-item { display: flex; align-items: center; gap: 0.5rem; font-weight: 600; font-size: 0.9rem; }
+
+        /* --- PRICING --- */
+        .pricing { padding: var(--space-xl) 0; background: var(--c-bg-body); }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-md); max-width: 1000px; margin: 0 auto; }
+        .price-card { background: white; padding: var(--space-md); border-radius: var(--radius-lg); border: 1px solid var(--c-border); display: flex; flex-direction: column; position: relative; }
+        .price-card.popular { border: 2px solid var(--c-primary); box-shadow: var(--shadow-lg); transform: scale(1.02); z-index: 1; }
+        .popular-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--c-primary); color: white; padding: 4px 12px; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .price { font-size: 3rem; font-weight: 800; font-family: var(--f-head); margin: var(--space-sm) 0; color: var(--c-text-main); }
+        .price span { font-size: 1rem; color: var(--c-text-muted); font-weight: 400; font-family: var(--f-body); }
+        .features-list { list-style: none; margin-bottom: var(--space-md); flex-grow: 1; }
+        .features-list li { margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; color: var(--c-text-muted); }
+        .check-icon { color: var(--c-primary); }
+
+        /* --- TESTIMONIALS --- */
+        .testimonials { padding: var(--space-xl) 0; }
+        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-md); }
+        .testimonial-card { background: white; padding: var(--space-md); border-radius: var(--radius-md); border: 1px solid var(--c-border); }
+        .user-profile { display: flex; align-items: center; gap: 1rem; margin-top: var(--space-sm); }
+        .avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+        .quote { font-style: italic; font-size: 1.1rem; color: var(--c-text-main); margin-bottom: var(--space-sm); }
+
+        /* --- FAQ --- */
+        .faq { padding: var(--space-xl) 0; background: white; }
+        .faq-list { max-width: 800px; margin: 0 auto; }
+        details { border-bottom: 1px solid var(--c-border); padding: var(--space-sm) 0; }
+        summary { font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-size: 1.125rem; }
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: '+'; font-size: 1.5rem; color: var(--c-primary); transition: transform 0.2s; }
+        details[open] summary::after { transform: rotate(45deg); }
+        .faq-answer { padding-top: var(--space-sm); color: var(--c-text-muted); line-height: 1.6; animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- FOOTER --- */
+        footer { background: #111827; color: #d1d5db; padding: var(--space-lg) 0 var(--space-md); }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-lg); margin-bottom: var(--space-lg); }
+        .footer-col h4 { color: white; margin-bottom: var(--space-sm); font-size: 1.1rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 0.5rem; }
+        .footer-col a { color: #9ca3af; text-decoration: none; transition: color 0.2s; }
+        .footer-col a:hover { color: var(--c-primary); }
+        .copyright { text-align: center; border-top: 1px solid #374151; padding-top: var(--space-md); font-size: 0.875rem; }
+
+        /* Mobile Nav Overlay */
+        .mobile-nav {
+            position: fixed; top: 0; right: 0; bottom: 0; width: 80%; max-width: 300px;
+            background: white; z-index: 200; transform: translateX(100%); transition: transform 0.3s var(--ease-out);
+            padding: var(--space-md); box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            display: flex; flex-direction: column; gap: var(--space-sm);
+        }
+        .mobile-nav.open { transform: translateX(0); }
+        .overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5);
+            z-index: 150; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+        }
+        .overlay.open { opacity: 1; pointer-events: auto; }
+        .close-btn { align-self: flex-end; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Skip Link -->
+    <a href="#main-content" class="sr-only" style="position:absolute; top:0; left:0; padding:1rem; background:white; z-index:999;">Skip to content</a>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav aria-label="Main Navigation">
+                <a href="#" class="logo" aria-label="Mintwise Home">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Mint<span>wise</span>
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#calculator">Calculator</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#" class="btn btn-primary" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Get Started</a></li>
+                </ul>
+
+                <button class="mobile-menu-btn" aria-label="Open Menu" aria-expanded="false" aria-controls="mobile-nav">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Nav -->
+    <div class="overlay" id="overlay" aria-hidden="true"></div>
+    <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+        <button class="close-btn" aria-label="Close Menu">&times;</button>
+        <a href="#features" class="btn btn-secondary">Features</a>
+        <a href="#calculator" class="btn btn-secondary">Calculator</a>
+        <a href="#pricing" class="btn btn-secondary">Pricing</a>
+        <a href="#faq" class="btn btn-secondary">FAQ</a>
+        <a href="#" class="btn btn-primary">Get Started</a>
+    </div>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-content reveal">
+                    <span class="badge">New: AI Budgeting</span>
+                    <h1>Make Your Money Grow With <span class="text-accent">Confidence</span></h1>
+                    <p>Stop guessing where your money goes. Mintwise gives you a clear picture of your finances, helping you save more and spend smarter without the spreadsheet headaches.</p>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <a href="#calculator" class="btn btn-primary">Try the Calculator</a>
+                        <a href="#features" class="btn btn-secondary">Learn More</a>
+                    </div>
+                    <p style="font-size: 0.875rem; margin-top: 1rem; opacity: 0.7;">Trusted by 10,000+ users worldwide.</p>
+                </div>
+                
+                <div class="hero-visual reveal" style="transition-delay: 0.2s;">
+                    <div class="phone-mockup">
+                        <div class="phone-notch"></div>
+                        <div class="phone-screen">
+                            <div class="app-header">Dashboard</div>
+                            <div class="app-balance">
+                                <h4>Total Balance</h4>
+                                <div>$12,450.00</div>
+                            </div>
+                            <div class="app-chart">
+                                <div class="bar" style="height: 40%"></div>
+                                <div class="bar" style="height: 70%"></div>
+                                <div class="bar" style="height: 50%"></div>
+                                <div class="bar" style="height: 90%"></div>
+                                <div class="bar" style="height: 60%"></div>
+                            </div>
+                            <div class="app-list">
+                                <div class="list-item"><span>Grocery Store</span> <span style="color:red">-$84.20</span></div>
+                                <div class="list-item"><span>Paycheck</span> <span style="color:green">+$3,200</span></div>
+                                <div class="list-item"><span>Coffee Shop</span> <span style="color:red">-$4.50</span></div>
+                                <div class="list-item"><span>Electric Bill</span> <span style="color:red">-$120.00</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Calculator -->
+        <section id="calculator" class="calculator-section">
+            <div class="container">
+                <div style="text-align: center; max-width: 600px; margin: 0 auto var(--space-lg);" class="reveal">
+                    <h2>See Your Savings Potential</h2>
+                    <p>Use our interactive budget calculator to visualize your savings rate. Adjust your income and expenses to see how small changes make a big impact.</p>
+                </div>
+                
+                <div class="calc-container reveal">
+                    <div class="calc-inputs">
+                        <div class="input-group">
+                            <label for="income">Monthly Income (After Tax)</label>
+                            <div class="currency-input">
+                                <span>$</span>
+                                <input type="number" id="income" value="5000" min="0" step="100">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="expenses">Monthly Expenses</label>
+                            <div class="currency-input">
+                                <span>$</span>
+                                <input type="number" id="expenses" value="3500" min="0" step="100">
+                            </div>
+                        </div>
+                        <div style="background: var(--c-primary-light); padding: 1rem; border-radius: var(--radius-sm); margin-top: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span style="font-weight: 600;">Remaining:</span>
+                                <span class="tabular-nums" style="font-weight: 700; color: var(--c-primary-dark);" id="remaining-display">$1,500</span>
+                            </div>
+                            <small style="color: var(--c-primary-dark);">This is your potential monthly savings.</small>
+                        </div>
+                    </div>
+
+                    <div class="result-display">
+                        <svg class="donut-chart" viewBox="0 0 200 200" aria-labelledby="chartTitle chartDesc">
+                            <title id="chartTitle">Savings Rate Chart</title>
+                            <desc id="chartDesc">A donut chart showing the percentage of income saved versus spent.</desc>
+                            <!-- Background Circle -->
+                            <circle cx="100" cy="100" r="70" fill="transparent" stroke="#e5e7eb" stroke-width="30" />
+                            <!-- Expense Segment (Red/Grey) -->
+                            <circle cx="100" cy="100" r="70" fill="transparent" stroke="#9ca3af" stroke-width="30" 
+                                    stroke-dasharray="440 440" stroke-dashoffset="0" class="donut-segment" id="expense-segment" />
+                            <!-- Savings Segment (Green) -->
+                            <circle cx="100" cy="100" r="70" fill="transparent" stroke="#10b981" stroke-width="30" 
+                                    stroke-dasharray="0 440" stroke-dashoffset="0" class="donut-segment" id="savings-segment" />
+                            
+                            <!-- Center Text -->
+                            <text x="100" y="90" class="chart-center-text" id="percent-text">30%</text>
+                            <text x="100" y="120" class="chart-label">Savings Rate</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section id="features" class="features">
+            <div class="container">
+                <div style="text-align: center; max-width: 600px; margin: 0 auto;" class="reveal">
+                    <h2>Everything You Need to Thrive</h2>
+                    <p>We've packed Mintwise with powerful tools designed to be simple enough for beginners but robust enough for pros.</p>
+                </div>
+                
+                <div class="features-grid">
+                    <article class="feature-card reveal">
+                        <div class="icon-box" aria-hidden="true">📊</div>
+                        <h3>Smart Analytics</h3>
+                        <p>Visualize your spending habits with beautiful charts that update in real-time as you sync your accounts.</p>
+                    </article>
+                    <article class="feature-card reveal" style="transition-delay: 0.1s;">
+                        <div class="icon-box" aria-hidden="true">🔔</div>
+                        <h3>Bill Reminders</h3>
+                        <p>Never miss a payment again. Get notified before bills are due to avoid late fees and credit score hits.</p>
+                    </article>
+                    <article class="feature-card reveal" style="transition-delay: 0.2s;">
+                        <div class="icon-box" aria-hidden="true">🎯</div>
+                        <h3>Goal Tracking</h3>
+                        <p>Set goals for vacations, emergency funds, or new gadgets, and track your progress visually.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Band -->
+        <section class="security-band" aria-label="Security Features">
+            <div class="container">
+                <div class="security-grid">
+                    <div class="security-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        Bank-Level Encryption
+                    </div>
+                    <div class="security-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        GDPR Compliant
+                    </div>
+                    <div class="security-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        Read-Only Access
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing -->
+        <section id="pricing" class="pricing">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: var(--space-lg);" class="reveal">
+                    <h2>Simple, Transparent Pricing</h2>
+                    <p>Start for free, upgrade when you need more power.</p>
+                </div>
+                
+                <div class="pricing-grid">
+                    <div class="price-card reveal">
+                        <h3>Starter</h3>
+                        <div class="price">$0<span>/mo</span></div>
+                        <p>Perfect for getting organized.</p>
+                        <ul class="features-list">
+                            <li><span class="check-icon">✓</span> 1 Bank Account</li>
+                            <li><span class="check-icon">✓</span> Basic Budgeting</li>
+                            <li><span class="check-icon">✓</span> Monthly Reports</li>
+                        </ul>
+                        <a href="#" class="btn btn-secondary">Sign Up Free</a>
+                    </div>
+                    
+                    <div class="price-card popular reveal" style="transition-delay: 0.1s;">
+                        <div class="popular-badge">Most Popular</div>
+                        <h3>Pro</h3>
+                        <div class="price">$9<span>/mo</span></div>
+                        <p>For serious wealth builders.</p>
+                        <ul class="features-list">
+                            <li><span class="check-icon">✓</span> Unlimited Accounts</li>
+                            <li><span class="check-icon">✓</span> Advanced Analytics</li>
+                            <li><span class="check-icon">✓</span> Investment Tracking</li>
+                            <li><span class="check-icon">✓</span> Priority Support</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary">Start Free Trial</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: var(--space-lg);" class="reveal">Loved by Savers Everywhere</h2>
+                <div class="testimonial-grid">
+                    <div class="testimonial-card reveal">
+                        <p class="quote">“I finally understand where my money goes every month. Mintwise helped me save $2,000 in just three months!”</p>
+                        <div class="user-profile">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80" alt="Sarah J." class="avatar" width="48" height="48">
+                            <div>
+                                <strong>Sarah Jenkins</strong><br>
+                                <small style="color: var(--c-text-muted);">Freelance Designer</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card reveal" style="transition-delay: 0.1s;">
+                        <p class="quote">“The interface is so clean and friendly. It doesn't feel like doing chores when I check my budget.”</p>
+                        <div class="user-profile">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" alt="Mike T." class="avatar" width="48" height="48">
+                            <div>
+                                <strong>Mike Torres</strong><br>
+                                <small style="color: var(--c-text-muted);">Software Engineer</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card reveal" style="transition-delay: 0.2s;">
+                        <p class="quote">“Security was my main concern, and Mintwise nailed it. I feel safe connecting all my accounts.”</p>
+                        <div class="user-profile">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Elena R." class="avatar" width="48" height="48">
+                            <div>
+                                <strong>Elena Rodriguez</strong><br>
+                                <small style="color: var(--c-text-muted);">Small Business Owner</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="faq">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: var(--space-md);" class="reveal">Frequently Asked Questions</h2>
+                <div class="faq-list reveal">
+                    <details>
+                        <summary>Is Mintwise really free?</summary>
+                        <div class="faq-answer">
+                            <p>Yes! Our Starter plan is completely free forever and includes basic budgeting tools and one bank connection. You can upgrade to Pro anytime for advanced features.</p>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>How secure is my financial data?</summary>
+                        <div class="faq-answer">
+                            <p>We use 256-bit AES encryption and read-only access via Plaid. We never store your banking credentials on our servers, and we cannot move money out of your accounts.</p>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>Can I cancel my subscription anytime?</summary>
+                        <div class="faq-answer">
+                            <p>Absolutely. There are no contracts or hidden fees. You can cancel your Pro subscription directly from your dashboard, and you'll retain access until the end of your billing cycle.</p>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>Does it work with international banks?</summary>
+                        <div class="faq-answer">
+                            <p>Currently, we support over 10,000 financial institutions across the US, Canada, UK, and EU. We are constantly adding more banks based on user requests.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="#" class="logo" style="color: white; margin-bottom: 1rem; display: inline-block;">Mint<span>wise</span></a>
+                    <p style="font-size: 0.9rem; color: #9ca3af;">Making personal finance personal again. Join the movement towards financial freedom.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Roadmap</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 Mintwise Inc. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- MOBILE MENU LOGIC ---
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const closeBtn = document.querySelector('.close-btn');
+        const mobileNav = document.getElementById('mobile-nav');
+        const overlay = document.getElementById('overlay');
+        const mobileLinks = mobileNav.querySelectorAll('a');
+
+        function toggleMenu() {
+            const isOpen = mobileNav.classList.contains('open');
+            if (isOpen) {
+                mobileNav.classList.remove('open');
+                overlay.classList.remove('open');
+                mobileNav.setAttribute('aria-hidden', 'true');
+                overlay.setAttribute('aria-hidden', 'true');
+                menuBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            } else {
+                mobileNav.classList.add('open');
+                overlay.classList.add('open');
+                mobileNav.setAttribute('aria-hidden', 'false');
+                overlay.setAttribute('aria-hidden', 'false');
+                menuBtn.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+        // --- CALCULATOR LOGIC ---
+        const incomeInput = document.getElementById('income');
+        const expenseInput = document.getElementById('expenses');
+        const remainingDisplay = document.getElementById('remaining-display');
+        const percentText = document.getElementById('percent-text');
+        const savingsSegment = document.getElementById('savings-segment');
+        const expenseSegment = document.getElementById('expense-segment');
+
+        // Circumference of circle with r=70 is approx 440
+        const CIRCUMFERENCE = 2 * Math.PI * 70; 
+
+        function updateCalculator() {
+            let income = parseFloat(incomeInput.value) || 0;
+            let expenses = parseFloat(expenseInput.value) || 0;
+            
+            // Prevent negative logic issues for visualization
+            if (income < 0) income = 0;
+            if (expenses < 0) expenses = 0;
+
+            const remaining = income - expenses;
+            const savingsRate = income > 0 ? (remaining / income) * 100 : 0;
+            
+            // Clamp visual rate between 0 and 100 for the donut
+            const visualRate = Math.max(0, Math.min(100, savingsRate));
+            
+            // Update Text
+            remainingDisplay.textContent = `$${remaining.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}`;
+            percentText.textContent = `${Math.round(visualRate)}%`;
+            
+            // Update Donut Chart
+            // Stroke Dasharray: "length gap"
+            // Length = (percentage / 100) * circumference
+            const savingsLength = (visualRate / 100) * CIRCUMFERENCE;
+            const expenseLength = CIRCUMFERENCE - savingsLength;
+
+            // Note: SVG circles start at 3 o'clock. We rotated -90deg in CSS to start at 12.
+            // Expense segment is the base grey circle effectively, but here we draw green ON TOP.
+            // Actually, simpler approach: Draw full grey bg. Draw green segment on top.
+            
+            savingsSegment.style.strokeDasharray = `${savingsLength} ${CIRCUMFERENCE}`;
+            
+            // Color change if negative savings
+            if (remaining < 0) {
+                savingsSegment.style.stroke = '#ef4444'; // Red
+                remainingDisplay.style.color = '#ef4444';
+            } else {
+                savingsSegment.style.stroke = '#10b981'; // Green
+                remainingDisplay.style.color = '#059669';
+            }
+        }
+
+        incomeInput.addEventListener('input', updateCalculator);
+        expenseInput.addEventListener('input', updateCalculator);
+        
+        // Initialize
+        updateCalculator();
+
+        // --- SCROLL REVEAL ANIMATION ---
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    </script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
