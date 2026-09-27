@@ -1,798 +1,1063 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bright Harvest — Nourishing Communities, Growing Hope</title>
-  <meta name="description" content="Bright Harvest is a community food bank dedicated to fighting hunger and cultivating hope through sustainable programs and volunteer support.">
-  <meta name="theme-color" content="#f59e0b">
-  
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;500;700&family=Fraunces:opsz,wght@9..144,300;600;800&display=swap" rel="stylesheet">
-
-  <style>
-    /* --- CSS VARIABLES & RESET --- */
-    :root {
-      --color-orange: #f59e0b;
-      --color-orange-dark: #d97706;
-      --color-green: #166534;
-      --color-green-light: #dcfce7;
-      --color-text: #1f2937;
-      --color-bg: #ffffff;
-      --color-surface: #f9fafb;
-      
-      --font-display: 'Fraunces', serif;
-      --font-body: 'DM Sans', sans-serif;
-      
-      --spacing-container: clamp(1rem, 5vw, 8rem);
-      --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --color-text: #f3f4f6;
-        --color-bg: #111827;
-        --color-surface: #1f2937;
-        --color-green-light: #064e3b;
-      }
-      html { color-scheme: dark; }
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bright Harvest | Nourishing Communities</title>
+    <meta name="description" content="Bright Harvest is a food bank nonprofit dedicated to fighting hunger and building community resilience through sustainable programs.">
+    <meta name="theme-color" content="#f59e0b">
     
-    html { scroll-behavior: smooth; }
-    
-    body {
-      font-family: var(--font-body);
-      color: var(--color-text);
-      background-color: var(--color-bg);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
+    <!-- Fonts: Merriweather (Serif) & Inter (Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
 
-    /* --- TYPOGRAPHY --- */
-    h1, h2, h3, h4, h5, h6 {
-      font-family: var(--font-display);
-      text-wrap: balance;
-      line-height: 1.1;
-      color: var(--color-green);
-    }
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --color-primary: #f59e0b; /* Harvest Orange */
+            --color-primary-hover: #d97706;
+            --color-secondary: #166534; /* Deep Green */
+            --color-secondary-light: #dcfce7;
+            --color-text-main: #1f2937;
+            --color-text-muted: #4b5563;
+            --color-bg-body: #ffffff;
+            --color-bg-alt: #f9fafb;
+            --font-serif: 'Merriweather', serif;
+            --font-sans: 'Inter', sans-serif;
+            --container-width: 1200px;
+            --spacing-unit: 1rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 1rem;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-    h1 { font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem); font-weight: 800; letter-spacing: -0.02em; }
-    h2 { font-size: clamp(2rem, 4vw + 0.5rem, 3rem); font-weight: 600; margin-bottom: 1rem; }
-    h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem; }
-    p { margin-bottom: 1.5rem; max-width: 65ch; }
-    
-    .text-highlight { color: var(--color-orange); }
-    .tabular-nums { font-variant-numeric: tabular-nums; }
+        @media (prefers-color-scheme: dark) {
+            /* Optional Dark Mode Support if requested, sticking to "Hopeful Light" per prompt but ensuring contrast */
+            :root {
+                color-scheme: light; 
+            }
+        }
 
-    /* --- UTILITIES --- */
-    .container {
-      width: 100%;
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 var(--spacing-container);
-    }
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    .sr-only {
-      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    .skip-link {
-      position: absolute; top: -100%; left: 50%; transform: translateX(-50%);
-      background: var(--color-green); color: white; padding: 1rem 2rem;
-      z-index: 100; border-radius: 0 0 8px 8px; transition: top 0.2s;
-    }
-    .skip-link:focus { top: 0; outline: none; }
+        body {
+            font-family: var(--font-sans);
+            color: var(--color-text-main);
+            background-color: var(--color-bg-body);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
 
-    /* --- BUTTONS & INTERACTIVE --- */
-    button, .btn {
-      display: inline-flex; align-items: center; justify-content: center;
-      min-height: 44px; min-width: 44px; padding: 0.75rem 1.5rem;
-      font-family: var(--font-body); font-weight: 700; text-decoration: none;
-      border-radius: 999px; cursor: pointer; touch-action: manipulation;
-      transition: transform var(--transition-base), opacity var(--transition-base), background-color var(--transition-base);
-      border: 2px solid transparent;
-    }
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-serif);
+            font-weight: 700;
+            text-wrap: balance;
+            color: var(--color-secondary);
+            line-height: 1.2;
+        }
 
-    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
-      outline: 3px solid var(--color-orange);
-      outline-offset: 2px;
-    }
+        h1 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1.5rem; }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; }
+        h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+        p { margin-bottom: 1.5rem; color: var(--color-text-muted); }
+        
+        .text-highlight { color: var(--color-primary); }
+        .tabular-nums { font-variant-numeric: tabular-nums; }
 
-    .btn-primary {
-      background-color: var(--color-orange); color: white;
-    }
-    .btn-primary:hover { background-color: var(--color-orange-dark); transform: translateY(-2px); }
-    
-    .btn-secondary {
-      background-color: transparent; border-color: var(--color-green); color: var(--color-green);
-    }
-    .btn-secondary:hover { background-color: var(--color-green); color: white; transform: translateY(-2px); }
+        /* --- UTILITIES --- */
+        .container {
+            width: 100%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-unit);
+        }
 
-    .btn-icon { padding: 0.5rem; border-radius: 50%; background: transparent; color: var(--color-text); }
-    .btn-icon:hover { background: rgba(0,0,0,0.05); }
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
 
-    /* --- ANIMATIONS --- */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--color-secondary);
+            color: white;
+            padding: 8px;
+            z-index: 100;
+            transition: top var(--transition-base);
+        }
+        .skip-link:focus { top: 0; }
 
-    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+        /* --- BUTTONS --- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: transform var(--transition-base), background-color var(--transition-base), box-shadow var(--transition-base);
+            text-decoration: none;
+            min-height: 44px; /* Touch target */
+            border: 2px solid transparent;
+            font-family: var(--font-sans);
+        }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-      .reveal { opacity: 1; transform: none; }
-    }
+        .btn:focus-visible {
+            outline: 3px solid var(--color-primary);
+            outline-offset: 2px;
+        }
 
-    /* --- COMPONENT STYLES --- */
-    
-    /* Header */
-    header {
-      position: sticky; top: 0; z-index: 50;
-      background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-    }
-    @media (prefers-color-scheme: dark) {
-      header { background: rgba(17, 24, 39, 0.9); border-bottom-color: rgba(255,255,255,0.05); }
-    }
-    
-    .nav-wrapper {
-      display: flex; align-items: center; justify-content: space-between;
-      height: 80px;
-    }
-    
-    .logo { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; color: var(--color-green); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
-    
-    .desktop-nav { display: none; gap: 2rem; align-items: center; }
-    .desktop-nav a { text-decoration: none; color: var(--color-text); font-weight: 500; position: relative; }
-    .desktop-nav a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--color-orange); transition: width 0.3s; }
-    .desktop-nav a:hover::after { width: 100%; }
-    
-    @media (min-width: 768px) {
-      .desktop-nav { display: flex; }
-      .mobile-menu-btn { display: none; }
-    }
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: var(--color-primary-hover);
+            transform: translateY(-2px);
+        }
 
-    /* Mobile Menu */
-    .mobile-menu {
-      position: fixed; inset: 0; background: var(--color-bg); z-index: 60;
-      transform: translateX(100%); transition: transform 0.3s ease-in-out;
-      padding: 2rem; display: flex; flex-direction: column; gap: 2rem;
-    }
-    .mobile-menu.open { transform: translateX(0); }
-    .mobile-menu a { font-size: 1.5rem; font-family: var(--font-display); color: var(--color-green); text-decoration: none; }
+        .btn-secondary {
+            background-color: white;
+            color: var(--color-secondary);
+            border-color: var(--color-secondary);
+        }
+        .btn-secondary:hover {
+            background-color: var(--color-secondary-light);
+            transform: translateY(-2px);
+        }
 
-    /* Hero */
-    .hero {
-      position: relative; padding: 6rem 0; overflow: hidden;
-      background: linear-gradient(135deg, var(--color-green-light) 0%, var(--color-bg) 100%);
-    }
-    .hero-grid {
-      display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center;
-    }
-    @media (min-width: 992px) {
-      .hero-grid { grid-template-columns: 1fr 1fr; }
-    }
-    .hero-img-wrapper {
-      position: relative; border-radius: 2rem; overflow: hidden;
-      box-shadow: 0 20px 40px -10px rgba(22, 101, 52, 0.2);
-      aspect-ratio: 4/3;
-    }
-    .hero-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        /* --- HEADER --- */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e5e7eb;
+        }
 
-    /* Stats */
-    .stats-strip {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(0,0,0,0.1);
-    }
-    .stat-item h4 { font-size: 3rem; color: var(--color-orange); margin-bottom: 0.25rem; }
-    .stat-item p { font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; color: var(--color-green); margin: 0; }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
 
-    /* Donation Widget */
-    .donate-section { background: var(--color-green); color: white; padding: 5rem 0; position: relative; overflow: hidden; }
-    .donate-section h2, .donate-section p { color: white; }
-    .donate-card {
-      background: white; color: var(--color-text); border-radius: 1.5rem; padding: 2rem;
-      max-width: 500px; margin: 0 auto; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-      position: relative; z-index: 10;
-    }
-    .frequency-toggle {
-      display: flex; background: #f3f4f6; border-radius: 999px; padding: 4px; margin-bottom: 1.5rem;
-    }
-    .freq-btn {
-      flex: 1; border: none; background: transparent; padding: 0.5rem; border-radius: 999px;
-      font-weight: 600; color: #6b7280; cursor: pointer; transition: all 0.2s;
-    }
-    .freq-btn.active { background: white; color: var(--color-green); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-    
-    .amount-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; }
-    .amount-btn {
-      border: 2px solid #e5e7eb; background: white; color: var(--color-text);
-      font-weight: 700; font-size: 1.125rem; border-radius: 0.75rem;
-    }
-    .amount-btn.selected { border-color: var(--color-orange); background: #fffbeb; color: var(--color-orange-dark); }
-    
-    .custom-input-wrapper { position: relative; margin-bottom: 1.5rem; }
-    .custom-input-wrapper span { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-weight: 700; color: #6b7280; }
-    .custom-input {
-      width: 100%; padding: 1rem 1rem 1rem 2rem; border: 2px solid #e5e7eb; border-radius: 0.75rem;
-      font-size: 1.125rem; font-weight: 600; font-family: var(--font-body);
-    }
-    .custom-input:focus { border-color: var(--color-orange); outline: none; }
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-    /* Programs */
-    .programs-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;
-    }
-    .program-card {
-      background: var(--color-surface); border-radius: 1rem; overflow: hidden;
-      transition: transform 0.3s; border: 1px solid rgba(0,0,0,0.05);
-    }
-    .program-card:hover { transform: translateY(-5px); }
-    .program-img { height: 200px; width: 100%; object-fit: cover; }
-    .program-content { padding: 1.5rem; }
+        .nav-links {
+            display: none;
+            list-style: none;
+            gap: 2rem;
+        }
 
-    /* Volunteer Form */
-    .volunteer-section { background: var(--color-surface); padding: 5rem 0; }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
-    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
-    .form-group label { font-weight: 600; font-size: 0.875rem; color: var(--color-green); }
-    .form-control {
-      padding: 0.75rem 1rem; border: 2px solid #e5e7eb; border-radius: 0.5rem;
-      font-family: var(--font-body); font-size: 1rem; background: white;
-    }
-    .form-control:focus { border-color: var(--color-orange); outline: none; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--color-text-main);
+            font-weight: 500;
+            transition: color var(--transition-base);
+        }
+        .nav-links a:hover { color: var(--color-primary); }
 
-    /* Stories */
-    .stories-slider { display: flex; gap: 2rem; overflow-x: auto; padding-bottom: 2rem; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
-    .story-card { min-width: 300px; max-width: 350px; scroll-snap-align: start; background: white; border-radius: 1rem; padding: 2rem; border: 1px solid rgba(0,0,0,0.05); }
-    .story-quote { font-family: var(--font-display); font-style: italic; font-size: 1.25rem; color: var(--color-green); margin-bottom: 1rem; line-height: 1.4; }
-    .story-author { display: flex; align-items: center; gap: 1rem; }
-    .author-img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+        .mobile-menu-btn {
+            display: block;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
 
-    /* Partners */
-    .partners-strip { padding: 3rem 0; border-top: 1px solid rgba(0,0,0,0.05); opacity: 0.6; }
-    .partners-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem; align-items: center; }
-    .partner-logo { height: 40px; width: auto; filter: grayscale(100%); transition: filter 0.3s; }
-    .partner-logo:hover { filter: grayscale(0%); }
+        @media (min-width: 768px) {
+            .nav-links { display: flex; }
+            .mobile-menu-btn { display: none; }
+        }
 
-    /* Footer */
-    footer { background: var(--color-green); color: white; padding: 4rem 0 2rem; }
-    footer h5 { color: var(--color-orange); margin-bottom: 1rem; font-size: 1.125rem; }
-    footer a { color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.2s; }
-    footer a:hover { color: white; }
-    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; margin-bottom: 3rem; }
-    .copyright { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.875rem; opacity: 0.7; }
+        /* --- HERO SECTION --- */
+        .hero {
+            position: relative;
+            padding: 6rem 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #fffbeb 0%, #ffffff 100%);
+        }
 
-    /* Notification Toast */
-    .toast {
-      position: fixed; bottom: 2rem; right: 2rem; background: var(--color-green); color: white;
-      padding: 1rem 1.5rem; border-radius: 0.75rem; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      transform: translateY(150%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      z-index: 100; display: flex; align-items: center; gap: 0.75rem; font-weight: 600;
-    }
-    .toast.show { transform: translateY(0); }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
 
-  </style>
+        .hero-image-wrapper {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            aspect-ratio: 4/3;
+        }
+
+        .hero-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1s ease-out;
+        }
+        
+        .hero-image-wrapper:hover img {
+            transform: scale(1.03);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .stat-item strong {
+            display: block;
+            font-size: 2.5rem;
+            color: var(--color-primary);
+            font-family: var(--font-serif);
+            line-height: 1;
+        }
+
+        @media (min-width: 992px) {
+            .hero-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        /* --- DONATION WIDGET --- */
+        .donation-section {
+            background-color: var(--color-secondary);
+            color: white;
+            padding: 5rem 0;
+            position: relative;
+        }
+        
+        .donation-card {
+            background: white;
+            color: var(--color-text-main);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            text-align: center;
+        }
+
+        .frequency-toggle {
+            display: flex;
+            background: #f3f4f6;
+            border-radius: var(--radius-md);
+            padding: 0.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .freq-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            transition: all var(--transition-base);
+        }
+
+        .freq-btn.active {
+            background: white;
+            color: var(--color-secondary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .amount-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .amount-btn {
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 1.125rem;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            color: var(--color-text-main);
+        }
+
+        .amount-btn:hover, .amount-btn.selected {
+            border-color: var(--color-primary);
+            background: #fffbeb;
+            color: var(--color-primary-hover);
+        }
+
+        .custom-input-wrapper {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .custom-input-wrapper span {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: 600;
+            color: var(--color-text-muted);
+        }
+
+        .custom-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 2rem;
+            border: 2px solid #e5e7eb;
+            border-radius: var(--radius-md);
+            font-size: 1.125rem;
+            font-family: var(--font-sans);
+        }
+        .custom-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        /* --- PROGRAMS GRID --- */
+        .programs {
+            padding: 6rem 0;
+            background: var(--color-bg-alt);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem auto;
+        }
+
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .program-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: transform var(--transition-base), box-shadow var(--transition-base);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .program-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-link {
+            margin-top: auto;
+            color: var(--color-secondary);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .card-link:hover { text-decoration: underline; }
+
+        /* --- STORIES --- */
+        .stories {
+            padding: 6rem 0;
+        }
+        
+        .story-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .quote-block {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--color-text-main);
+            position: relative;
+            padding-left: 2rem;
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .quote-author {
+            margin-top: 1.5rem;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            font-style: normal;
+            font-weight: 700;
+            color: var(--color-secondary);
+        }
+
+        @media (min-width: 768px) {
+            .story-container { grid-template-columns: 1fr 1fr; }
+        }
+
+        /* --- VOLUNTEER FORM --- */
+        .volunteer {
+            padding: 6rem 0;
+            background: #fffbeb;
+        }
+
+        .form-box {
+            background: white;
+            padding: 3rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 600px) {
+            .form-grid { grid-template-columns: 1fr 1fr; }
+            .full-width { grid-column: span 2; }
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--color-text-main);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: var(--radius-md);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            transition: border-color var(--transition-base);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+        }
+
+        /* --- PARTNERS --- */
+        .partners {
+            padding: 4rem 0;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+        }
+        
+        .partners-strip {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 3rem;
+            opacity: 0.6;
+            filter: grayscale(100%);
+            margin-top: 2rem;
+        }
+        
+        .partner-logo {
+            height: 40px;
+            width: auto;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--color-secondary);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li { margin-bottom: 0.75rem; }
+
+        .footer-links a {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: color var(--transition-base);
+        }
+        .footer-links a:hover { color: var(--color-primary); }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+
+        /* --- ANIMATIONS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { transition: none; opacity: 1; transform: none; }
+            html { scroll-behavior: auto; }
+            .btn:hover { transform: none; }
+        }
+
+        /* Success State for Donation */
+        .donation-success {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+        .donation-success svg {
+            width: 64px;
+            height: 64px;
+            color: var(--color-secondary);
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body>
 
-  <a href="#main-content" class="skip-link">Skip to Content</a>
+    <a href="#main-content" class="skip-link">Skip to Content</a>
 
-  <!-- HEADER -->
-  <header>
-    <div class="container nav-wrapper">
-      <a href="#" class="logo" aria-label="Bright Harvest Home">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--color-orange);">
-          <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
-          <path d="M12 6v6l4 2"/>
-        </svg>
-        Bright Harvest
-      </a>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav aria-label="Main Navigation">
+                <a href="#" class="logo" aria-label="Bright Harvest Home">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--color-primary);">
+                        <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path>
+                        <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+                        <path d="M12 2v4"></path><path d="M12 18v4"></path><path d="M4.93 4.93l2.83 2.83"></path><path d="M16.24 16.24l2.83 2.83"></path><path d="M2 12h4"></path><path d="M18 12h4"></path><path d="M4.93 19.07l2.83-2.83"></path><path d="M16.24 7.76l2.83-2.83"></path>
+                    </svg>
+                    Bright Harvest
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="#mission">Our Mission</a></li>
+                    <li><a href="#programs">Programs</a></li>
+                    <li><a href="#stories">Stories</a></li>
+                    <li><a href="#volunteer">Volunteer</a></li>
+                    <li><a href="#donate" class="btn btn-primary" style="padding: 0.5rem 1rem;">Donate Now</a></li>
+                </ul>
 
-      <nav class="desktop-nav" aria-label="Main Navigation">
-        <a href="#mission">Our Mission</a>
-        <a href="#programs">Programs</a>
-        <a href="#stories">Stories</a>
-        <a href="#volunteer">Volunteer</a>
-        <a href="#donate" class="btn btn-primary">Donate Now</a>
-      </nav>
-
-      <button class="mobile-menu-btn btn-icon" aria-label="Open Menu" aria-expanded="false" aria-controls="mobile-menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-      </button>
-    </div>
-  </header>
-
-  <!-- MOBILE MENU OVERLAY -->
-  <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
-    <button class="btn-icon self-end close-menu-btn" aria-label="Close Menu">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
-    </button>
-    <nav aria-label="Mobile Navigation">
-      <a href="#mission" class="mobile-link">Our Mission</a>
-      <a href="#programs" class="mobile-link">Programs</a>
-      <a href="#stories" class="mobile-link">Stories</a>
-      <a href="#volunteer" class="mobile-link">Volunteer</a>
-      <a href="#donate" class="btn btn-primary w-full text-center mobile-link">Donate Now</a>
-    </nav>
-  </div>
-
-  <main id="main-content">
-    
-    <!-- HERO SECTION -->
-    <section id="mission" class="hero">
-      <div class="container hero-grid">
-        <div class="reveal">
-          <span style="color: var(--color-orange); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.875rem;">Nourishing Communities</span>
-          <h1>Cultivating Hope,<br><span class="text-highlight">One Meal</span> at a Time</h1>
-          <p style="font-size: 1.25rem; color: #4b5563; margin-top: 1.5rem;">
-            We believe no one should face hunger alone. Bright Harvest connects surplus food with families in need, building a stronger, healthier community for everyone.
-          </p>
-          <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem;">
-            <a href="#donate" class="btn btn-primary">Give Today</a>
-            <a href="#programs" class="btn btn-secondary">Explore Programs</a>
-          </div>
-
-          <div class="stats-strip">
-            <div class="stat-item">
-              <h4 class="tabular-nums counter" data-target="2500000">0</h4>
-              <p>Meals Served</p>
-            </div>
-            <div class="stat-item">
-              <h4 class="tabular-nums counter" data-target="12400">0</h4>
-              <p>Families Supported</p>
-            </div>
-            <div class="stat-item">
-              <h4 class="tabular-nums counter" data-target="850">0</h4>
-              <p>Active Volunteers</p>
-            </div>
-          </div>
+                <button class="mobile-menu-btn" aria-label="Open Menu" aria-expanded="false" aria-controls="mobile-nav">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </nav>
         </div>
+    </header>
 
-        <div class="hero-img-wrapper reveal" style="transition-delay: 200ms;">
-          <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=1600&q=80" 
-               alt="Volunteers happily packing fresh vegetable boxes in a bright warehouse" 
-               width="800" height="600" loading="eager">
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section id="mission" class="hero">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="reveal">
+                        <h1>Nourishing Neighbors,<br><span class="text-highlight">Cultivating Hope</span></h1>
+                        <p>We believe no one should face hunger alone. Bright Harvest connects surplus food with families in need, building a resilient community one meal at a time.</p>
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <a href="#donate" class="btn btn-primary">Give Today</a>
+                            <a href="#programs" class="btn btn-secondary">Explore Programs</a>
+                        </div>
+
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <strong data-target="2500000" class="counter tabular-nums">0</strong>
+                                <span>Meals Served</span>
+                            </div>
+                            <div class="stat-item">
+                                <strong data-target="12400" class="counter tabular-nums">0</strong>
+                                <span>Families Helped</span>
+                            </div>
+                            <div class="stat-item">
+                                <strong data-target="850" class="counter tabular-nums">0</strong>
+                                <span>Active Volunteers</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-image-wrapper reveal">
+                        <!-- Real Unsplash Image: Community/Food Box -->
+                        <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=1600&q=80" 
+                             alt="Volunteers packing fresh vegetable boxes at a food distribution center" 
+                             width="800" height="600" loading="eager">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Donation Widget -->
+        <section id="donate" class="donation-section">
+            <div class="container">
+                <div class="donation-card reveal">
+                    <div id="donation-form-ui">
+                        <h2 style="color: var(--color-secondary);">Make an Impact</h2>
+                        <p>Your contribution directly funds meals for local families.</p>
+                        
+                        <div class="frequency-toggle" role="group" aria-label="Donation Frequency">
+                            <button class="freq-btn active" aria-pressed="true" data-freq="once">One-Time</button>
+                            <button class="freq-btn" aria-pressed="false" data-freq="monthly">Monthly</button>
+                        </div>
+
+                        <form id="donation-widget" onsubmit="return false;">
+                            <fieldset style="border:none; padding:0; margin:0;">
+                                <legend class="sr-only">Select Donation Amount</legend>
+                                <div class="amount-grid">
+                                    <button type="button" class="amount-btn" data-amount="25">$25</button>
+                                    <button type="button" class="amount-btn selected" data-amount="50">$50</button>
+                                    <button type="button" class="amount-btn" data-amount="100">$100</button>
+                                    <button type="button" class="amount-btn" data-amount="250">$250</button>
+                                    <button type="button" class="amount-btn" data-amount="500">$500</button>
+                                    <button type="button" class="amount-btn" data-amount="1000">$1000</button>
+                                </div>
+                            </fieldset>
+
+                            <div class="custom-input-wrapper">
+                                <label for="custom-amount" class="sr-only">Custom Amount</label>
+                                <span>$</span>
+                                <input type="number" id="custom-amount" class="custom-input" placeholder="Other Amount" min="1">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%;" id="donate-submit">
+                                Donate $50
+                            </button>
+                        </form>
+                    </div>
+
+                    <div id="donation-success" class="donation-success">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                        <h3 style="color: var(--color-secondary);">Thank You!</h3>
+                        <p>Your generosity brings hope to our community. A receipt has been sent to your email.</p>
+                        <button class="btn btn-secondary" onclick="resetDonation()">Make Another Gift</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Programs Grid -->
+        <section id="programs" class="programs">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>Our Core Programs</h2>
+                    <p>We go beyond emergency relief to address the root causes of hunger through education, sustainability, and direct support.</p>
+                </div>
+
+                <div class="program-grid">
+                    <!-- Program 1 -->
+                    <article class="program-card reveal">
+                        <img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=800&q=80" 
+                             alt="Fresh colorful vegetables displayed in wooden crates at a market" 
+                             class="card-img" width="400" height="300" loading="lazy">
+                        <div class="card-content">
+                            <h3>Fresh Market Pantry</h3>
+                            <p>A client-choice pantry experience where families shop for fresh produce, dairy, and proteins in a dignified environment.</p>
+                            <a href="#" class="card-link">Learn More <span aria-hidden="true">→</span></a>
+                        </div>
+                    </article>
+
+                    <!-- Program 2 -->
+                    <article class="program-card reveal">
+                        <img src="https://images.unsplash.com/photo-1577563908411-5077b6dc7624?auto=format&fit=crop&w=800&q=80" 
+                             alt="Children learning about nutrition in a classroom setting" 
+                             class="card-img" width="400" height="300" loading="lazy">
+                        <div class="card-content">
+                            <h3>Kids Nutrition Academy</h3>
+                            <p>After-school workshops teaching children healthy eating habits and simple cooking skills to last a lifetime.</p>
+                            <a href="#" class="card-link">Learn More <span aria-hidden="true">→</span></a>
+                        </div>
+                    </article>
+
+                    <!-- Program 3 -->
+                    <article class="program-card reveal">
+                        <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=800&q=80" 
+                             alt="Hands holding soil with young plant sprouting, symbolizing community farming" 
+                             class="card-img" width="400" height="300" loading="lazy">
+                        <div class="card-content">
+                            <h3>Community Roots Garden</h3>
+                            <p>Urban farming initiatives that turn vacant lots into productive gardens, providing jobs and fresh food.</p>
+                            <a href="#" class="card-link">Learn More <span aria-hidden="true">→</span></a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stories Section -->
+        <section id="stories" class="stories">
+            <div class="container">
+                <div class="story-container reveal">
+                    <div class="story-image-wrapper" style="border-radius: var(--radius-lg); overflow: hidden;">
+                        <img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&w=1000&q=80" 
+                             alt="Portrait of a smiling woman standing in her kitchen" 
+                             width="600" height="700" style="width:100%; height:auto; display:block;" loading="lazy">
+                    </div>
+                    <div>
+                        <h2>Voices of Resilience</h2>
+                        <blockquote class="quote-block">
+                            “When I lost my job, I didn’t know how I’d feed my kids. Bright Harvest didn’t just give me food; they gave me the confidence to get back on my feet. The volunteers treated me like family.”
+                            <footer class="quote-author">— Maria G., Community Member</footer>
+                        </blockquote>
+                        <p style="margin-top: 2rem;">Every statistic represents a neighbor. Read more stories of hope and recovery from the people we serve.</p>
+                        <a href="#" class="btn btn-secondary">Read All Stories</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Volunteer Signup -->
+        <section id="volunteer" class="volunteer">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>Join the Movement</h2>
+                    <p>Whether you can spare an hour or a year, your time makes a tangible difference. Sign up to volunteer today.</p>
+                </div>
+
+                <div class="form-box reveal">
+                    <form id="volunteer-form" onsubmit="handleVolunteerSubmit(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="first-name">First Name</label>
+                                <input type="text" id="first-name" class="form-control" required autocomplete="given-name">
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Last Name</label>
+                                <input type="text" id="last-name" class="form-control" required autocomplete="family-name">
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" class="form-control" required autocomplete="email">
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="interest">Area of Interest</label>
+                                <select id="interest" class="form-control">
+                                    <option value="">Select an option...</option>
+                                    <option value="pantry">Pantry Operations</option>
+                                    <option value="delivery">Home Delivery Driver</option>
+                                    <option value="garden">Community Garden</option>
+                                    <option value="events">Event Support</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up to Volunteer</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partners Strip -->
+        <section class="partners">
+            <div class="container">
+                <p style="font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; color: #9ca3af;">Trusted By Community Leaders</p>
+                <div class="partners-strip">
+                    <!-- Using text placeholders styled as logos for simplicity/compliance, or generic SVG icons representing partners -->
+                    <svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="City Council Partner"><rect width="120" height="40" rx="4" fill="#E5E7EB"/><text x="60" y="25" text-anchor="middle" fill="#6B7280" font-family="sans-serif" font-weight="bold">CITY COUNCIL</text></svg>
+                    <svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Local Farms Co-op"><rect width="120" height="40" rx="4" fill="#E5E7EB"/><text x="60" y="25" text-anchor="middle" fill="#6B7280" font-family="sans-serif" font-weight="bold">FARMS CO-OP</text></svg>
+                    <svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Health Foundation"><rect width="120" height="40" rx="4" fill="#E5E7EB"/><text x="60" y="25" text-anchor="middle" fill="#6B7280" font-family="sans-serif" font-weight="bold">HEALTH FDN</text></svg>
+                    <svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="State University"><rect width="120" height="40" rx="4" fill="#E5E7EB"/><text x="60" y="25" text-anchor="middle" fill="#6B7280" font-family="sans-serif" font-weight="bold">STATE UNIV</text></svg>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="#" class="logo" style="color: white; margin-bottom: 1rem; display: inline-block;">
+                        Bright Harvest
+                    </a>
+                    <p style="color: #d1d5db; font-size: 0.9rem;">
+                        123 Orchard Way<br>
+                        Springfield, IL 62704<br>
+                        (555) 123-4567
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h4>Organization</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Financial Reports</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press Room</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Get Involved</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Donate</a></li>
+                        <li><a href="#">Volunteer</a></li>
+                        <li><a href="#">Food Drive Kit</a></li>
+                        <li><a href="#">Corporate Partners</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Stay Updated</h4>
+                    <p style="color: #d1d5db; font-size: 0.9rem;">Subscribe to our newsletter for impact stories.</p>
+                    <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                        <label for="footer-email" class="sr-only">Email for newsletter</label>
+                        <input type="email" id="footer-email" placeholder="Your email" style="padding: 0.5rem; border-radius: 4px; border: none; flex: 1;">
+                        <button class="btn btn-primary" style="padding: 0.5rem 1rem;">Join</button>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 Bright Harvest Nonprofit. All rights reserved. EIN: 12-3456789
+            </div>
         </div>
-      </div>
-    </section>
+    </footer>
 
-    <!-- DONATION WIDGET -->
-    <section id="donate" class="donate-section">
-      <div class="container" style="text-align: center;">
-        <h2 class="reveal">Make a Difference Today</h2>
-        <p class="reveal" style="margin: 0 auto 3rem; opacity: 0.9;">Your generosity puts fresh food on tables and smiles on faces.</p>
-        
-        <div class="donate-card reveal" style="transition-delay: 200ms;">
-          <div id="donation-form-content">
-            <div class="frequency-toggle" role="radiogroup" aria-label="Donation Frequency">
-              <button class="freq-btn active" type="button" aria-pressed="true" data-freq="once">One-Time</button>
-              <button class="freq-btn" type="button" aria-pressed="false" data-freq="monthly">Monthly</button>
-            </div>
-
-            <div class="amount-grid" role="radiogroup" aria-label="Donation Amount">
-              <button class="amount-btn" type="button" data-amount="25">$25</button>
-              <button class="amount-btn selected" type="button" data-amount="50">$50</button>
-              <button class="amount-btn" type="button" data-amount="100">$100</button>
-              <button class="amount-btn" type="button" data-amount="250">$250</button>
-              <button class="amount-btn" type="button" data-amount="500">$500</button>
-              <button class="amount-btn" type="button" data-amount="other">Other</button>
-            </div>
-
-            <div class="custom-input-wrapper" id="custom-amount-wrapper" style="display: none;">
-              <span>$</span>
-              <label for="custom-amount" class="sr-only">Custom Amount</label>
-              <input type="number" id="custom-amount" class="custom-input" placeholder="Enter amount" min="1">
-            </div>
-
-            <button class="btn btn-primary" style="width: 100%; font-size: 1.125rem;" id="donate-submit-btn">
-              Donate $50
-            </button>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
             
-            <p style="font-size: 0.75rem; color: #6b7280; margin-top: 1rem; margin-bottom: 0; text-align: center;">
-              Secure 256-bit SSL encrypted donation. Tax deductible.
-            </p>
-          </div>
+            // --- 1. Animated Counters ---
+            const counters = document.querySelectorAll('.counter');
+            const speed = 200; 
 
-          <!-- Thank You State (Hidden by default) -->
-          <div id="donation-thank-you" style="display: none; text-align: center; padding: 2rem 0;">
-            <div style="width: 64px; height: 64px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--color-green);">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </div>
-            <h3 style="color: var(--color-green);">Thank You!</h3>
-            <p style="margin-bottom: 0;">Your kindness creates real change. A receipt has been sent to your email.</p>
-            <button class="btn btn-secondary" style="margin-top: 1.5rem;" onclick="resetDonation()">Make Another Gift</button>
-          </div>
-        </div>
-      </div>
-    </section>
+            const animateCounters = () => {
+                counters.forEach(counter => {
+                    const updateCount = () => {
+                        const target = +counter.getAttribute('data-target');
+                        const count = +counter.innerText.replace(/,/g, '');
+                        const inc = target / speed;
 
-    <!-- PROGRAMS GRID -->
-    <section id="programs" style="padding: 6rem 0;">
-      <div class="container">
-        <div style="text-align: center; max-width: 600px; margin: 0 auto 3rem;" class="reveal">
-          <h2>Our Core Programs</h2>
-          <p>We tackle hunger from every angle, providing immediate relief and long-term solutions.</p>
-        </div>
+                        if (count < target) {
+                            counter.innerText = Math.ceil(count + inc).toLocaleString();
+                            setTimeout(updateCount, 20);
+                        } else {
+                            counter.innerText = target.toLocaleString();
+                        }
+                    };
+                    updateCount();
+                });
+            };
 
-        <div class="programs-grid">
-          <article class="program-card reveal">
-            <img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=800&q=80" alt="Fresh colorful produce arranged in wooden crates" class="program-img" width="400" height="300" loading="lazy">
-            <div class="program-content">
-              <h3>Fresh Food Pantry</h3>
-              <p>Daily distribution of nutritious fruits, vegetables, dairy, and proteins to registered families.</p>
-              <a href="#" style="color: var(--color-orange); font-weight: 700; text-decoration: none;">Learn More →</a>
-            </div>
-          </article>
+            // Trigger counters when hero is visible
+            const heroObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        heroObserver.disconnect();
+                    }
+                });
+            }, { threshold: 0.5 });
 
-          <article class="program-card reveal" style="transition-delay: 100ms;">
-            <img src="https://picsum.photos/seed/bright-harvest-12e44b5d4657/1600/900?auto=format&fit=crop&w=800&q=80" alt="Children eating healthy lunch together at school" class="program-img" width="400" height="300" loading="lazy">
-            <div class="program-content">
-              <h3>Kids' Lunch Initiative</h3>
-              <p>Ensuring students have access to balanced meals during weekends and school holidays.</p>
-              <a href="#" style="color: var(--color-orange); font-weight: 700; text-decoration: none;">Learn More →</a>
-            </div>
-          </article>
+            const statsSection = document.querySelector('.stats-grid');
+            if(statsSection) heroObserver.observe(statsSection);
 
-          <article class="program-card reveal" style="transition-delay: 200ms;">
-            <img src="https://picsum.photos/seed/bright-harvest-1c02745a30bf/1600/900?auto=format&fit=crop&w=800&q=80" alt="Chef teaching cooking class to community members" class="program-img" width="400" height="300" loading="lazy">
-            <div class="program-content">
-              <h3>Culinary Training</h3>
-              <p>Job skills program teaching food preparation, safety, and nutrition to unemployed adults.</p>
-              <a href="#" style="color: var(--color-orange); font-weight: 700; text-decoration: none;">Learn More →</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
 
-    <!-- VOLUNTEER SIGNUP -->
-    <section id="volunteer" class="volunteer-section">
-      <div class="container">
-        <div class="reveal" style="display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: start;">
-          <div style="max-width: 500px;">
-            <h2>Lend a Hand, Grow Hope</h2>
-            <p>Whether you can give an hour or a year, your time matters. Join our family of volunteers making tangible differences every single day.</p>
-            <ul style="list-style: none; margin-bottom: 2rem;">
-              <li style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem; align-items: start;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-orange)" stroke-width="3" style="flex-shrink: 0; margin-top: 2px;" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Flexible scheduling options
-              </li>
-              <li style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem; align-items: start;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-orange)" stroke-width="3" style="flex-shrink: 0; margin-top: 2px;" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Comprehensive training provided
-              </li>
-              <li style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem; align-items: start;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-orange)" stroke-width="3" style="flex-shrink: 0; margin-top: 2px;" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Community events & appreciation perks
-              </li>
-            </ul>
-          </div>
+            // --- 2. Scroll Reveal Animation ---
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
-          <form id="volunteer-form" style="background: white; padding: 2rem; border-radius: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05);" novalidate>
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="vol-name">Full Name</label>
-                <input type="text" id="vol-name" class="form-control" required placeholder="Jane Doe">
-              </div>
-              <div class="form-group">
-                <label for="vol-email">Email Address</label>
-                <input type="email" id="vol-email" class="form-control" required placeholder="jane@example.com">
-              </div>
-            </div>
-            <div class="form-group" style="margin-top: 1.5rem;">
-              <label for="vol-interest">Area of Interest</label>
-              <select id="vol-interest" class="form-control">
-                <option value="">Select a program...</option>
-                <option value="pantry">Food Pantry Sorting</option>
-                <option value="delivery">Home Delivery Driver</option>
-                <option value="events">Community Events</option>
-                <option value="admin">Administrative Support</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;">Sign Up to Volunteer</button>
-          </form>
-        </div>
-      </div>
-    </section>
+            revealElements.forEach(el => revealObserver.observe(el));
 
-    <!-- STORIES -->
-    <section id="stories" style="padding: 6rem 0;">
-      <div class="container">
-        <h2 class="reveal" style="margin-bottom: 2rem;">Voices of Impact</h2>
-        <div class="stories-slider reveal">
-          
-          <article class="story-card">
-            <p class="story-quote">“When I lost my job, Bright Harvest didn’t just give me food—they gave me dignity. The volunteers treated me like family.”</p>
-            <div class="story-author">
-              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80" alt="Portrait of Maria S." class="author-img" width="48" height="48">
-              <div>
-                <strong>Maria S.</strong>
-                <div style="font-size: 0.875rem; color: #6b7280;">Program Recipient</div>
-              </div>
-            </div>
-          </article>
 
-          <article class="story-card">
-            <p class="story-quote">“Volunteering here changed my perspective entirely. Seeing the direct impact of sorting a single box of apples is incredibly moving.”</p>
-            <div class="story-author">
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="Portrait of David Chen" class="author-img" width="48" height="48">
-              <div>
-                <strong>David Chen</strong>
-                <div style="font-size: 0.875rem; color: #6b7280;">Weekend Volunteer</div>
-              </div>
-            </div>
-          </article>
+            // --- 3. Donation Widget Logic ---
+            const amountBtns = document.querySelectorAll('.amount-btn');
+            const customInput = document.getElementById('custom-amount');
+            const submitBtn = document.getElementById('donate-submit');
+            const freqBtns = document.querySelectorAll('.freq-btn');
+            let currentAmount = 50;
+            let currentFreq = 'once';
 
-          <article class="story-card">
-            <p class="story-quote">“The culinary training program gave me skills and confidence. I’m now working full-time as a prep cook thanks to their mentorship.”</p>
-            <div class="story-author">
-              <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=100&q=80" alt="Portrait of Sarah Jenkins" class="author-img" width="48" height="48">
-              <div>
-                <strong>Sarah J.</strong>
-                <div style="font-size: 0.875rem; color: #6b7280;">Culinary Grad 2024</div>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- PARTNERS -->
-    <section class="partners-strip">
-      <div class="container">
-        <p style="text-align: center; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 2rem; color: #6b7280;">Trusted By Community Leaders</p>
-        <div class="partners-grid">
-          <!-- Using text-based logos via SVG for reliability since specific partner images might break -->
-          <svg class="partner-logo" viewBox="0 0 120 40" aria-label="Green Valley Farms"><text x="0" y="30" font-family="sans-serif" font-weight="bold" font-size="20" fill="currentColor">GreenValley</text></svg>
-          <svg class="partner-logo" viewBox="0 0 120 40" aria-label="City United Way"><text x="0" y="30" font-family="sans-serif" font-weight="bold" font-size="20" fill="currentColor">UnitedWay</text></svg>
-          <svg class="partner-logo" viewBox="0 0 120 40" aria-label="Fresh Market Co-op"><text x="0" y="30" font-family="sans-serif" font-weight="bold" font-size="20" fill="currentColor">FreshMkt</text></svg>
-          <svg class="partner-logo" viewBox="0 0 120 40" aria-label="Community Foundation"><text x="0" y="30" font-family="sans-serif" font-weight="bold" font-size="20" fill="currentColor">CommFound</text></svg>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <a href="#" class="logo" style="color: white; margin-bottom: 1rem; display: inline-block;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color: var(--color-orange);"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            Bright Harvest
-          </a>
-          <p style="font-size: 0.875rem; opacity: 0.8; max-width: 250px;">
-            A 501(c)(3) nonprofit organization dedicated to eliminating food insecurity through compassion and action.
-          </p>
-        </div>
-        <div>
-          <h5>Quick Links</h5>
-          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem;">
-            <li><a href="#mission">About Us</a></li>
-            <li><a href="#programs">Programs</a></li>
-            <li><a href="#volunteer">Volunteer</a></li>
-            <li><a href="#donate">Donate</a></li>
-          </ul>
-        </div>
-        <div>
-          <h5>Contact</h5>
-          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem;">
-            <li>123 Harvest Lane, Suite 100</li>
-            <li>Springfield, IL 62704</li>
-            <li><a href="tel:+15551234567">(555) 123-4567</a></li>
-            <li><a href="mailto:hello@brightharvest.org">hello@brightharvest.org</a></li>
-          </ul>
-        </div>
-        <div>
-          <h5>Stay Connected</h5>
-          <p style="font-size: 0.875rem; opacity: 0.8;">Get monthly updates on our impact.</p>
-          <form style="display: flex; gap: 0.5rem; margin-top: 0.5rem;" onsubmit="event.preventDefault(); showToast('Subscribed successfully!');">
-            <label for="footer-email" class="sr-only">Email for newsletter</label>
-            <input type="email" id="footer-email" placeholder="Your email" required style="padding: 0.5rem; border-radius: 4px; border: none; flex: 1; min-width: 0;">
-            <button type="submit" class="btn btn-primary" style="padding: 0.5rem 1rem; min-height: auto;">Join</button>
-          </form>
-        </div>
-      </div>
-      <div class="copyright">
-        &copy; 2026 Bright Harvest Food Bank. All rights reserved. Privacy Policy | Terms of Service
-      </div>
-    </div>
-  </footer>
-
-  <!-- TOAST NOTIFICATION -->
-  <div id="toast" class="toast" role="alert" aria-live="polite">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-    <span id="toast-message">Action completed</span>
-  </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      
-      // --- MOBILE MENU LOGIC ---
-      const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-      const closeMenuBtn = document.querySelector('.close-menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const mobileLinks = document.querySelectorAll('.mobile-link');
-
-      function toggleMenu() {
-        const isOpen = mobileMenu.classList.contains('open');
-        mobileMenu.classList.toggle('open');
-        mobileMenu.setAttribute('aria-hidden', isOpen);
-        mobileMenuBtn.setAttribute('aria-expanded', !isOpen);
-        document.body.style.overflow = isOpen ? '' : 'hidden';
-      }
-
-      mobileMenuBtn.addEventListener('click', toggleMenu);
-      closeMenuBtn.addEventListener('click', toggleMenu);
-      mobileLinks.forEach(link => link.addEventListener('click', () => {
-        if(mobileMenu.classList.contains('open')) toggleMenu();
-      }));
-
-      // --- SCROLL REVEAL ANIMATION ---
-      const revealElements = document.querySelectorAll('.reveal');
-      const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-
-      revealElements.forEach(el => revealObserver.observe(el));
-
-      // --- STAT COUNTER ANIMATION ---
-      const counters = document.querySelectorAll('.counter');
-      const counterObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const target = +entry.target.getAttribute('data-target');
-            const duration = 2000; 
-            const startTime = performance.now();
-
-            function updateCounter(currentTime) {
-              const elapsed = currentTime - startTime;
-              const progress = Math.min(elapsed / duration, 1);
-              // Ease out quart
-              const easeProgress = 1 - Math.pow(1 - progress, 4);
-              
-              const current = Math.floor(easeProgress * target);
-              entry.target.textContent = current.toLocaleString() + (target >= 1000 ? '+' : '');
-              
-              if (progress < 1) {
-                requestAnimationFrame(updateCounter);
-              } else {
-                entry.target.textContent = target.toLocaleString() + '+';
-              }
+            function updateButtonText() {
+                const freqText = currentFreq === 'monthly' ? '/month' : '';
+                submitBtn.textContent = `Donate $${currentAmount}${freqText}`;
             }
-            requestAnimationFrame(updateCounter);
-            counterObserver.unobserve(entry.target);
-          }
+
+            amountBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    amountBtns.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    currentAmount = btn.getAttribute('data-amount');
+                    customInput.value = '';
+                    updateButtonText();
+                });
+            });
+
+            customInput.addEventListener('input', (e) => {
+                if(e.target.value) {
+                    amountBtns.forEach(b => b.classList.remove('selected'));
+                    currentAmount = e.target.value;
+                    updateButtonText();
+                }
+            });
+
+            freqBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    freqBtns.forEach(b => {
+                        b.classList.remove('active');
+                        b.setAttribute('aria-pressed', 'false');
+                    });
+                    btn.classList.add('active');
+                    btn.setAttribute('aria-pressed', 'true');
+                    currentFreq = btn.getAttribute('data-freq');
+                    updateButtonText();
+                });
+            });
+
+            // Fake Submit
+            const donationFormUI = document.getElementById('donation-form-ui');
+            const donationSuccess = document.getElementById('donation-success');
+
+            document.getElementById('donation-widget').addEventListener('submit', (e) => {
+                e.preventDefault();
+                // Simulate processing
+                submitBtn.textContent = "Processing...";
+                submitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    donationFormUI.style.display = 'none';
+                    donationSuccess.style.display = 'block';
+                }, 1500);
+            });
+
+            window.resetDonation = function() {
+                donationSuccess.style.display = 'none';
+                donationFormUI.style.display = 'block';
+                submitBtn.textContent = `Donate $${currentAmount}`;
+                submitBtn.disabled = false;
+            }
+
+
+            // --- 4. Mobile Menu Toggle ---
+            const mobileBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            // Simple toggle implementation for demo purposes
+            // In production, would add proper aria-expanded logic and focus trapping
+            mobileBtn.addEventListener('click', () => {
+                const isExpanded = mobileBtn.getAttribute('aria-expanded') === 'true';
+                mobileBtn.setAttribute('aria-expanded', !isExpanded);
+                
+                if (!isExpanded) {
+                    navLinks.style.display = 'flex';
+                    navLinks.style.flexDirection = 'column';
+                    navLinks.style.position = 'absolute';
+                    navLinks.style.top = '80px';
+                    navLinks.style.left = '0';
+                    navLinks.style.width = '100%';
+                    navLinks.style.background = 'white';
+                    navLinks.style.padding = '2rem';
+                    navLinks.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.1)';
+                } else {
+                    navLinks.style.display = ''; // Reset to CSS default
+                    navLinks.style.position = '';
+                    navLinks.style.width = '';
+                    navLinks.style.background = '';
+                    navLinks.style.padding = '';
+                    navLinks.style.boxShadow = '';
+                }
+            });
         });
-      }, { threshold: 0.5 });
 
-      counters.forEach(counter => counterObserver.observe(counter));
+        // Volunteer Form Handler
+        function handleVolunteerSubmit(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
+            
+            btn.textContent = "Submitting...";
+            btn.disabled = true;
 
-      // --- DONATION WIDGET LOGIC ---
-      const freqBtns = document.querySelectorAll('.freq-btn');
-      const amountBtns = document.querySelectorAll('.amount-btn');
-      const customWrapper = document.getElementById('custom-amount-wrapper');
-      const customInput = document.getElementById('custom-amount');
-      const submitBtn = document.getElementById('donate-submit-btn');
-      let selectedAmount = 50;
-      let frequency = 'once';
-
-      // Frequency Toggle
-      freqBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          freqBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
-          btn.classList.add('active');
-          btn.setAttribute('aria-pressed', 'true');
-          frequency = btn.dataset.freq;
-          updateDonateButton();
-        });
-      });
-
-      // Amount Selection
-      amountBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          amountBtns.forEach(b => b.classList.remove('selected'));
-          btn.classList.add('selected');
-          
-          if (btn.dataset.amount === 'other') {
-            customWrapper.style.display = 'block';
-            customInput.focus();
-            selectedAmount = null;
-          } else {
-            customWrapper.style.display = 'none';
-            selectedAmount = parseInt(btn.dataset.amount);
-          }
-          updateDonateButton();
-        });
-      });
-
-      customInput.addEventListener('input', (e) => {
-        selectedAmount = parseInt(e.target.value) || 0;
-        updateDonateButton();
-      });
-
-      function updateDonateButton() {
-        const amtText = selectedAmount ? `$${selectedAmount}` : '';
-        const freqText = frequency === 'monthly' ? '/mo' : '';
-        submitBtn.textContent = selectedAmount ? `Donate ${amtText}${freqText}` : 'Enter Amount';
-        submitBtn.disabled = !selectedAmount || selectedAmount <= 0;
-        submitBtn.style.opacity = submitBtn.disabled ? '0.5' : '1';
-      }
-
-      // Fake Submit
-      submitBtn.addEventListener('click', () => {
-        if (!selectedAmount || selectedAmount <= 0) return;
-        
-        submitBtn.textContent = 'Processing...';
-        setTimeout(() => {
-          document.getElementById('donation-form-content').style.display = 'none';
-          document.getElementById('donation-thank-you').style.display = 'block';
-          showToast(`Thank you for your $${selectedAmount} gift!`);
-        }, 1500);
-      });
-
-      // Expose reset function globally for the thank-you button
-      window.resetDonation = function() {
-        document.getElementById('donation-form-content').style.display = 'block';
-        document.getElementById('donation-thank-you').style.display = 'none';
-        submitBtn.textContent = 'Donate $50';
-        selectedAmount = 50;
-        amountBtns.forEach(b => b.classList.remove('selected'));
-        document.querySelector('[data-amount="50"]').classList.add('selected');
-        customWrapper.style.display = 'none';
-      };
-
-      // --- VOLUNTEER FORM ---
-      const volForm = document.getElementById('volunteer-form');
-      volForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const btn = volForm.querySelector('button[type="submit"]');
-        const originalText = btn.textContent;
-        
-        btn.textContent = 'Sending...';
-        btn.disabled = true;
-
-        setTimeout(() => {
-          showToast('Welcome aboard! Check your email.');
-          volForm.reset();
-          btn.textContent = originalText;
-          btn.disabled = false;
-        }, 1500);
-      });
-
-      // --- TOAST UTILITY ---
-      window.showToast = function(message) {
-        const toast = document.getElementById('toast');
-        document.getElementById('toast-message').textContent = message;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 4000);
-      };
-
-    });
-  </script>
+            setTimeout(() => {
+                alert("Thank you for signing up! We will contact you shortly.");
+                e.target.reset();
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }, 1000);
+        }
+    </script>
 <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
 </html>
