@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en" style="color-scheme: light;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haven Estates | Luxury Real Estate</title>
+    <meta name="description" content="Discover exclusive luxury properties with Haven Estates. Premium homes for discerning buyers.">
+    <meta name="theme-color" content="#0f2a43">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS Variables & Reset --- */
+        :root {
+            --navy: #0f2a43;
+            --gold: #c9a227;
+            --gold-hover: #b08d1f;
+            --white: #ffffff;
+            --off-white: #f8f9fa;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-500: #6b7280;
+            --gray-900: #111827;
+            
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+            
+            --container: 1280px;
+            --header-height: 80px;
+            
+            --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--navy);
+            background-color: var(--white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* --- Accessibility & Utilities --- */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 0;
+            background: var(--gold);
+            color: var(--navy);
+            padding: 1rem;
+            z-index: 1000;
+            font-weight: bold;
+            transition: top 0.3s;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+
+        *:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 4px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a { text-decoration: none; color: inherit; transition: color 0.3s ease; }
+        ul { list-style: none; }
+
+        /* --- Typography --- */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-serif);
+            font-weight: 600;
+            line-height: 1.1;
+            text-wrap: balance;
+        }
+
+        h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); letter-spacing: -0.02em; }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; }
+        h3 { font-size: 1.5rem; }
+        
+        .text-gold { color: var(--gold); }
+        .tabular-nums { font-variant-numeric: tabular-nums; }
+
+        /* --- Layout Components --- */
+        .container {
+            width: 100%;
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-padding { padding: 5rem 0; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2rem;
+            font-family: var(--font-sans);
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: transform 0.3s var(--ease-out), background-color 0.3s ease, color 0.3s ease;
+            min-height: 44px; /* Touch target */
+        }
+
+        .btn-primary {
+            background-color: var(--gold);
+            color: var(--white);
+        }
+        .btn-primary:hover {
+            background-color: var(--gold-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border-color: var(--navy);
+            color: var(--navy);
+            background: transparent;
+        }
+        .btn-outline:hover {
+            background-color: var(--navy);
+            color: var(--white);
+        }
+
+        /* --- Header --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after { width: 100%; }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            position: relative;
+            height: 90vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: var(--header-height);
+            background-color: var(--navy);
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: var(--white);
+            max-width: 800px;
+            padding: 0 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-sans);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            color: var(--gold);
+        }
+
+        /* --- Search Widget --- */
+        .search-widget {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 4px;
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-500);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 0;
+            border: none;
+            border-bottom: 1px solid var(--gray-200);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            color: var(--navy);
+            background: transparent;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-bottom-color: var(--gold);
+        }
+
+        /* --- Listings Grid --- */
+        .listings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px rgba(15, 42, 67, 0.08);
+        }
+
+        .card-img-wrapper {
+            position: relative;
+            padding-top: 66%; /* 3:2 Aspect Ratio */
+            overflow: hidden;
+        }
+
+        .card-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s var(--ease-out);
+        }
+
+        .card:hover .card-img {
+            transform: scale(1.05);
+        }
+
+        .card-tag {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--white);
+            color: var(--navy);
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-price {
+            font-family: var(--font-serif);
+            font-size: 1.75rem;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-address {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .card-location {
+            color: var(--gray-500);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-stats {
+            display: flex;
+            gap: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-100);
+            margin-top: auto;
+            font-size: 0.9rem;
+            color: var(--gray-500);
+        }
+
+        .stat-item span {
+            color: var(--navy);
+            font-weight: 600;
+            margin-right: 0.25rem;
+        }
+
+        /* --- Mortgage Calculator --- */
+        .calc-section {
+            background-color: var(--off-white);
+        }
+
+        .calc-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .calc-form {
+            background: var(--white);
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .range-group { margin-bottom: 2rem; }
+        
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        input[type=range] {
+            width: 100%;
+            height: 4px;
+            background: var(--gray-200);
+            border-radius: 2px;
+            appearance: none;
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--gold);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+        .monthly-display {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .monthly-amount {
+            font-family: var(--font-serif);
+            font-size: 3.5rem;
+            color: var(--navy);
+            line-height: 1;
+        }
+
+        /* --- Agents --- */
+        .agent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .agent-card {
+            text-align: center;
+        }
+
+        .agent-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+            filter: grayscale(100%);
+            transition: filter 0.3s;
+        }
+
+        .agent-card:hover .agent-img { filter: grayscale(0%); }
+
+        /* --- Contact --- */
+        .contact-section {
+            background-color: var(--navy);
+            color: var(--white);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 4rem;
+        }
+
+        .contact-info h2 { color: var(--white); }
+        .contact-text { opacity: 0.8; margin-bottom: 2rem; }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 1rem;
+            color: var(--white);
+            margin-bottom: 1rem;
+            font-family: var(--font-sans);
+        }
+
+        .contact-form input:focus, .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #0a1c2e;
+            color: var(--white);
+            padding: 4rem 0 2rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-col h4 {
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-col ul li { margin-bottom: 0.75rem; }
+        .footer-col a { opacity: 0.7; transition: opacity 0.2s; }
+        .footer-col a:hover { opacity: 1; color: var(--gold); }
+
+        .copyright {
+            text-align: center;
+            opacity: 0.5;
+            font-size: 0.8rem;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 900px) {
+            .calc-wrapper, .contact-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; } /* Simplified mobile handling */
+            .mobile-menu-btn { display: block; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .reveal { opacity: 1; transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to Content</a>
+
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo" aria-label="Haven Estates Home">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M3 21V9L12 2L21 9V21H15V14H9V21H3Z" fill="#0f2a43"/>
+                    <rect x="10" y="16" width="4" height="5" fill="#c9a227"/>
+                </svg>
+                HAVEN ESTATES
+            </a>
+            <nav class="nav-links" aria-label="Main Navigation">
+                <a href="#listings">Buy</a>
+                <a href="#listings">Rent</a>
+                <a href="#agents">Agents</a>
+                <a href="#calculator">Calculate</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <button class="mobile-menu-btn" aria-label="Open Menu" aria-expanded="false">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0f2a43" stroke-width="2" aria-hidden="true">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <img src="https://picsum.photos/seed/haven-estates-e32cb5313d5b/1600/900?auto=format&fit=crop&w=1600&q=80" 
+                 alt="Modern luxury home exterior at twilight with warm interior lighting" 
+                 class="hero-bg" width="1600" height="900">
+            
+            <div class="hero-content reveal">
+                <p class="hero-subtitle">Exclusive Properties</p>
+                <h1>Find Your Sanctuary</h1>
+                <p style="font-size: 1.1rem; opacity: 0.9; margin-top: 1rem;">Curated listings for the discerning buyer. Experience living redefined.</p>
+                
+                <!-- Search Widget -->
+                <form class="search-widget" id="searchForm" role="search" aria-label="Property Search">
+                    <div class="form-group">
+                        <label for="loc-input">Location</label>
+                        <input type="text" id="loc-input" class="form-control" placeholder="City, Zip, or Address">
+                    </div>
+                    <div class="form-group">
+                        <label for="price-select">Max Price</label>
+                        <select id="price-select" class="form-control">
+                            <option value="10000000">Any Price</option>
+                            <option value="1000000">$1,000,000</option>
+                            <option value="2000000">$2,000,000</option>
+                            <option value="3000000">$3,000,000</option>
+                            <option value="5000000">$5,000,000</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="beds-select">Bedrooms</label>
+                        <select id="beds-select" class="form-control">
+                            <option value="0">Any</option>
+                            <option value="2">2+</option>
+                            <option value="3">3+</option>
+                            <option value="4">4+</option>
+                            <option value="5">5+</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display:flex; align-items:flex-end;">
+                        <button type="submit" class="btn btn-primary" style="width:100%">Search</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Featured Spotlight -->
+        <section class="section-padding container reveal">
+            <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 4rem; align-items: center;" class="spotlight-grid">
+                <div style="position: relative;">
+                    <div style="position: absolute; top: -20px; left: -20px; width: 100px; height: 100px; border-top: 2px solid var(--gold); border-left: 2px solid var(--gold);" aria-hidden="true"></div>
+                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80" 
+                         alt="Spacious modern living room with floor-to-ceiling windows and minimalist furniture" 
+                         width="800" height="600" style="width: 100%;">
+                    <div style="position: absolute; bottom: -20px; right: -20px; width: 100px; height: 100px; border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold);" aria-hidden="true"></div>
+                </div>
+                <div>
+                    <span class="text-gold" style="text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;">Featured Listing</span>
+                    <h2 style="margin-top: 0.5rem;">The Glass House Retreat</h2>
+                    <p class="tabular-nums" style="font-size: 1.5rem; font-family: var(--font-serif); margin-bottom: 1.5rem;">$4,250,000</p>
+                    <p style="color: var(--gray-500); margin-bottom: 2rem;">
+                        An architectural masterpiece nestled in the hills. Featuring panoramic views, an infinity pool, and smart-home integration throughout. This property defines modern luxury living.
+                    </p>
+                    <ul style="margin-bottom: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <li><strong>5</strong> Bedrooms</li>
+                        <li><strong>6</strong> Bathrooms</li>
+                        <li><strong>5,200</strong> Sq Ft</li>
+                        <li><strong>1.2</strong> Acre Lot</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-outline">Schedule Viewing</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Listings Grid -->
+        <section id="listings" class="section-padding" style="background: var(--off-white);">
+            <div class="container">
+                <div class="listings-header reveal">
+                    <div>
+                        <h2>Current Portfolio</h2>
+                        <p style="color: var(--gray-500);">Handpicked residences for exceptional lifestyles.</p>
+                    </div>
+                    <div id="results-count" class="tabular-nums" style="font-weight: 500;">Showing 6 properties</div>
+                </div>
+
+                <div class="grid" id="listingsGrid">
+                    <!-- JS will populate this -->
+                </div>
+                
+                <div id="no-results" style="display:none; text-align: center; padding: 4rem 0;">
+                    <h3>No properties found</h3>
+                    <p style="color: var(--gray-500); margin-top: 1rem;">Try adjusting your search criteria.</p>
+                    <button onclick="resetFilters()" class="btn btn-outline" style="margin-top: 1.5rem;">Clear Filters</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mortgage Calculator -->
+        <section id="calculator" class="section-padding calc-section">
+            <div class="container">
+                <div class="calc-wrapper reveal">
+                    <div>
+                        <h2>Estimate Your Investment</h2>
+                        <p style="color: var(--gray-500); margin-bottom: 2rem;">Use our calculator to understand your monthly commitment. Adjust the values to see how different terms affect your payment.</p>
+                        <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80" 
+                             alt="Person writing financial notes in a notebook with a pen" 
+                             width="600" height="400" style="border-radius: 4px;">
+                    </div>
+                    
+                    <div class="calc-form">
+                        <div class="range-group">
+                            <div class="range-labels">
+                                <label for="loan-amount">Loan Amount</label>
+                                <span class="tabular-nums" id="amount-display">$500,000</span>
+                            </div>
+                            <input type="range" id="loan-amount" min="100000" max="5000000" step="10000" value="500000">
+                        </div>
+
+                        <div class="range-group">
+                            <div class="range-labels">
+                                <label for="interest-rate">Interest Rate</label>
+                                <span class="tabular-nums" id="rate-display">6.5%</span>
+                            </div>
+                            <input type="range" id="interest-rate" min="2" max="12" step="0.1" value="6.5">
+                        </div>
+
+                        <div class="range-group">
+                            <div class="range-labels">
+                                <label for="loan-term">Loan Term</label>
+                                <span class="tabular-nums" id="term-display">30 Years</span>
+                            </div>
+                            <input type="range" id="loan-term" min="10" max="30" step="5" value="30">
+                        </div>
+
+                        <div class="monthly-display">
+                            <p style="text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem; color: var(--gray-500);">Estimated Monthly Payment</p>
+                            <div class="monthly-amount tabular-nums" id="monthly-payment">$3,160</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Agents -->
+        <section id="agents" class="section-padding container">
+            <div style="text-align: center; max-width: 600px; margin: 0 auto 4rem;" class="reveal">
+                <h2>Meet Our Experts</h2>
+                <p style="color: var(--gray-500);">Our dedicated team brings decades of experience in luxury real estate markets.</p>
+            </div>
+            
+            <div class="agent-grid reveal">
+                <article class="agent-card">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80" alt="Portrait of James Sterling" class="agent-img" width="180" height="180">
+                    <h3>James Sterling</h3>
+                    <p class="text-gold" style="font-size: 0.9rem; margin-bottom: 0.5rem;">Senior Broker</p>
+                    <p style="color: var(--gray-500); font-size: 0.9rem;">Specializing in waterfront estates and historic renovations.</p>
+                </article>
+                <article class="agent-card">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80" alt="Portrait of Elena Rossi" class="agent-img" width="180" height="180">
+                    <h3>Elena Rossi</h3>
+                    <p class="text-gold" style="font-size: 0.9rem; margin-bottom: 0.5rem;">Luxury Specialist</p>
+                    <p style="color: var(--gray-500); font-size: 0.9rem;">Expert in high-rise condos and urban penthouses.</p>
+                </article>
+                <article class="agent-card">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80" alt="Portrait of Marcus Chen" class="agent-img" width="180" height="180">
+                    <h3>Marcus Chen</h3>
+                    <p class="text-gold" style="font-size: 0.9rem; margin-bottom: 0.5rem;">Investment Advisor</p>
+                    <p style="color: var(--gray-500); font-size: 0.9rem;">Helping clients build portfolios through strategic acquisitions.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="section-padding contact-section">
+            <div class="container">
+                <div class="contact-grid reveal">
+                    <div class="contact-info">
+                        <h2>Begin Your Journey</h2>
+                        <p class="contact-text">Whether you are buying, selling, or simply curious about the market, we are here to provide expert guidance tailored to your needs.</p>
+                        
+                        <div style="margin-bottom: 2rem;">
+                            <h4 style="color: var(--gold); margin-bottom: 0.5rem;">Visit Us</h4>
+                            <p>1200 Brickell Avenue, Suite 400<br>Miami, FL 33131</p>
+                        </div>
+                        
+                        <div>
+                            <h4 style="color: var(--gold); margin-bottom: 0.5rem;">Contact</h4>
+                            <p>+1 (305) 555-0123<br>inquiries@havenestates.com</p>
+                        </div>
+                    </div>
+
+                    <form class="contact-form" onsubmit="event.preventDefault(); alert('Thank you. An agent will contact you shortly.');">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div>
+                                <label for="fname" class="sr-only">First Name</label>
+                                <input type="text" id="fname" placeholder="First Name" required>
+                            </div>
+                            <div>
+                                <label for="lname" class="sr-only">Last Name</label>
+                                <input type="text" id="lname" placeholder="Last Name" required>
+                            </div>
+                        </div>
+                        <label for="email" class="sr-only">Email Address</label>
+                        <input type="email" id="email" placeholder="Email Address" required>
+                        
+                        <label for="message" class="sr-only">Your Message</label>
+                        <textarea id="message" rows="5" placeholder="How can we help you?" required></textarea>
+                        
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Inquiry</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="#" class="logo" style="color: var(--white); margin-bottom: 1rem; display: inline-block;">HAVEN ESTATES</a>
+                    <p style="opacity: 0.6; font-size: 0.9rem;">Redefining luxury real estate with integrity, expertise, and an unwavering commitment to excellence.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="#listings">Buy a Home</a></li>
+                        <li><a href="#listings">Rent a Property</a></li>
+                        <li><a href="#agents">Our Agents</a></li>
+                        <li><a href="#">Market Reports</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Fair Housing</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 Haven Estates. All rights reserved. Designed for Excellence.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- Data ---
+        const properties = [
+            {
+                id: 1,
+                title: "Oceanfront Villa",
+                location: "Miami Beach, FL",
+                price: 4500000,
+                beds: 5,
+                baths: 6,
+                sqft: 4800,
+                image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80",
+                tag: "Waterfront"
+            },
+            {
+                id: 2,
+                title: "Modern Penthouse",
+                location: "New York, NY",
+                price: 3200000,
+                beds: 3,
+                baths: 3,
+                sqft: 2400,
+                image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
+                tag: "City View"
+            },
+            {
+                id: 3,
+                title: "Historic Manor",
+                location: "Charleston, SC",
+                price: 1850000,
+                beds: 4,
+                baths: 3.5,
+                sqft: 3600,
+                image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80",
+                tag: "Historic"
+            },
+            {
+                id: 4,
+                title: "Mountain Retreat",
+                location: "Aspen, CO",
+                price: 5600000,
+                beds: 6,
+                baths: 7,
+                sqft: 6200,
+                image: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=800&q=80",
+                tag: "Ski-in/Ski-out"
+            },
+            {
+                id: 5,
+                title: "Minimalist Loft",
+                location: "Los Angeles, CA",
+                price: 950000,
+                beds: 2,
+                baths: 2,
+                sqft: 1800,
+                image: "https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=800&q=80",
+                tag: "New Listing"
+            },
+            {
+                id: 6,
+                title: "Lakeside Cottage",
+                location: "Lake Tahoe, NV",
+                price: 2100000,
+                beds: 4,
+                baths: 3,
+                sqft: 2900,
+                image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=800&q=80",
+                tag: "Private Dock"
+            }
+        ];
+
+        // --- Formatting Helpers ---
+        const formatCurrency = (num) => {
+            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(num);
+        };
+
+        const formatNumber = (num) => {
+            return new Intl.NumberFormat('en-US').format(num);
+        };
+
+        // --- Render Listings ---
+        const grid = document.getElementById('listingsGrid');
+        const noResults = document.getElementById('no-results');
+        const resultsCount = document.getElementById('results-count');
+
+        function renderListings(data) {
+            grid.innerHTML = '';
+            
+            if (data.length === 0) {
+                noResults.style.display = 'block';
+                resultsCount.textContent = 'No properties found';
+                return;
+            }
+
+            noResults.style.display = 'none';
+            resultsCount.textContent = `Showing ${data.length} ${data.length === 1 ? 'property' : 'properties'}`;
+
+            data.forEach(item => {
+                const card = document.createElement('article');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-img-wrapper">
+                        <img src="${item.image}" alt="${item.title} in ${item.location}" class="card-img" width="400" height="300" loading="lazy">
+                        <span class="card-tag">${item.tag}</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-price tabular-nums">${formatCurrency(item.price)}</div>
+                        <h3 class="card-address">${item.title}</h3>
+                        <p class="card-location">${item.location}</p>
+                        <div class="card-stats tabular-nums">
+                            <div class="stat-item"><span>${item.beds}</span> Beds</div>
+                            <div class="stat-item"><span>${item.baths}</span> Baths</div>
+                            <div class="stat-item"><span>${formatNumber(item.sqft)}</span> SqFt</div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Initial Render
+        renderListings(properties);
+
+        // --- Filtering Logic ---
+        const searchForm = document.getElementById('searchForm');
+        
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const locVal = document.getElementById('loc-input').value.toLowerCase();
+            const priceVal = parseInt(document.getElementById('price-select').value);
+            const bedsVal = parseInt(document.getElementById('beds-select').value);
+
+            const filtered = properties.filter(p => {
+                const matchLoc = p.location.toLowerCase().includes(locVal) || p.title.toLowerCase().includes(locVal);
+                const matchPrice = p.price <= priceVal;
+                const matchBeds = p.beds >= bedsVal;
+                return matchLoc && matchPrice && matchBeds;
+            });
+
+            renderListings(filtered);
+            
+            // Smooth scroll to results
+            document.getElementById('listings').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        function resetFilters() {
+            document.getElementById('searchForm').reset();
+            renderListings(properties);
+        }
+
+        // --- Mortgage Calculator Logic ---
+        const amountInput = document.getElementById('loan-amount');
+        const rateInput = document.getElementById('interest-rate');
+        const termInput = document.getElementById('loan-term');
+        
+        const amountDisplay = document.getElementById('amount-display');
+        const rateDisplay = document.getElementById('rate-display');
+        const termDisplay = document.getElementById('term-display');
+        const monthlyDisplay = document.getElementById('monthly-payment');
+
+        function calculateMortgage() {
+            const principal = parseFloat(amountInput.value);
+            const rate = parseFloat(rateInput.value) / 100 / 12;
+            const term = parseFloat(termInput.value) * 12;
+
+            // M = P [ i(1 + i)^n ] / [ (1 + i)^n – 1 ]
+            const x = Math.pow(1 + rate, term);
+            const monthly = (principal * x * rate) / (x - 1);
+
+            // Update UI
+            amountDisplay.textContent = formatCurrency(principal);
+            rateDisplay.textContent = `${parseFloat(rateInput.value).toFixed(1)}%`;
+            termDisplay.textContent = `${termInput.value} Years`;
+            monthlyDisplay.textContent = formatCurrency(monthly);
+        }
+
+        [amountInput, rateInput, termInput].forEach(input => {
+            input.addEventListener('input', calculateMortgage);
+        });
+
+        // Initialize Calc
+        calculateMortgage();
+
+        // --- Scroll Reveal Animation ---
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // --- Mobile Menu Toggle (Simple Implementation) ---
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuBtn.addEventListener('click', () => {
+            const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+            menuBtn.setAttribute('aria-expanded', !isExpanded);
+            
+            if (!isExpanded) {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = 'var(--header-height)';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'white';
+                navLinks.style.padding = '2rem';
+                navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
+            } else {
+                navLinks.style.display = ''; // Reset to CSS default
+                navLinks.style.position = '';
+                navLinks.style.width = '';
+                navLinks.style.background = '';
+                navLinks.style.padding = '';
+                navLinks.style.boxShadow = '';
+                navLinks.style.flexDirection = '';
+            }
+        });
+
+        // Handle responsive spotlight grid
+        const spotlightGrid = document.querySelector('.spotlight-grid');
+        const mediaQuery = window.matchMedia('(max-width: 900px)');
+        
+        function handleSpotlightResize(e) {
+            if (e.matches) {
+                spotlightGrid.style.gridTemplateColumns = '1fr';
+                spotlightGrid.style.gap = '2rem';
+            } else {
+                spotlightGrid.style.gridTemplateColumns = '1.5fr 1fr';
+                spotlightGrid.style.gap = '4rem';
+            }
+        }
+        
+        mediaQuery.addListener(handleSpotlightResize);
+        handleSpotlightResize(mediaQuery);
+
+    </script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
