@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copperline Brewing Co. | Craft Beer & Taproom</title>
+    <meta name="description" content="Experience the rustic-industrial vibe of Copperline Brewing Co. Serving handcrafted ales, lagers, and stouts in a historic warehouse setting.">
+    <meta name="theme-color" content="#121212">
+    
+    <!-- Fonts: Oswald for stencil/headers, Inter for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --c-copper: #b87333;
+            --c-copper-light: #d49455;
+            --c-copper-dark: #8f5624;
+            --c-charcoal: #121212;
+            --c-charcoal-light: #1e1e1e;
+            --c-grey: #2a2a2a;
+            --c-text-main: #e0e0e0;
+            --c-text-muted: #a0a0a0;
+            
+            --font-display: 'Oswald', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 4rem;
+            --space-xl: 8rem;
+            
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            
+            --transition-fast: 0.2s ease-out;
+            --transition-med: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        html { scroll-behavior: smooth; color-scheme: dark; }
+        
+        body {
+            font-family: var(--font-body);
+            background-color: var(--c-charcoal);
+            color: var(--c-text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            line-height: 1.1;
+            text-wrap: balance;
+        }
+
+        h1 { font-size: clamp(3rem, 8vw, 6rem); font-weight: 700; color: var(--c-copper); }
+        h2 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: var(--space-md); }
+        h3 { font-size: 1.5rem; color: var(--c-copper-light); }
+        
+        p { margin-bottom: var(--space-sm); color: var(--c-text-muted); }
+        
+        .text-balance { text-wrap: balance; }
+        .tabular-nums { font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
+
+        /* --- UTILITIES --- */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-sm);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px; /* Touch target */
+            padding: 0.75rem 1.5rem;
+            font-family: var(--font-display);
+            font-weight: 500;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 2px solid var(--c-copper);
+            background: transparent;
+            color: var(--c-copper);
+            cursor: pointer;
+            transition: transform var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast);
+            touch-action: manipulation;
+        }
+
+        .btn:hover, .btn:focus-visible {
+            background: var(--c-copper);
+            color: var(--c-charcoal);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--c-copper);
+            color: var(--c-charcoal);
+        }
+        
+        .btn-primary:hover, .btn-primary:focus-visible {
+            background: var(--c-copper-light);
+            border-color: var(--c-c-copper-light);
+        }
+
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
+        }
+
+        /* Focus Styles */
+        :focus-visible {
+            outline: 2px solid var(--c-copper);
+            outline-offset: 4px;
+        }
+
+        /* --- ANIMATIONS --- */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity var(--transition-med), transform var(--transition-med);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+            background: rgba(18, 18, 18, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(184, 115, 51, 0.2);
+            padding: var(--space-sm) 0;
+        }
+
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--c-text-main);
+            text-decoration: none;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .logo span { color: var(--c-copper); }
+
+        .nav-links { display: flex; gap: var(--space-md); list-style: none; }
+        .nav-links a {
+            color: var(--c-text-main); text-decoration: none; font-size: 0.9rem;
+            text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+            background: var(--c-copper); transition: width var(--transition-fast);
+        }
+        .nav-links a:hover::after, .nav-links a:focus-visible::after { width: 100%; }
+
+        .mobile-menu-btn { display: none; background: none; border: none; color: var(--c-text-main); cursor: pointer; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; } /* Simplified mobile menu handling for single file */
+            .mobile-menu-btn { display: block; }
+        }
+
+        /* --- HERO --- */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: var(--space-xl) 0;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute; inset: 0; z-index: -1;
+            background-image: url('https://images.unsplash.com/photo-1575037614876-c38a4d44f5b8?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover; background-position: center;
+            filter: brightness(0.3);
+        }
+
+        .hero-content { max-width: 800px; padding: var(--space-sm); }
+        .hero-tagline {
+            font-size: 1.2rem; color: var(--c-copper-light); margin-bottom: var(--space-sm);
+            text-transform: uppercase; letter-spacing: 0.2em;
+        }
+
+        /* --- STORY SECTION --- */
+        .story { padding: var(--space-xl) 0; background: var(--c-charcoal); }
+        .story-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); align-items: center;
+        }
+        .story-img-wrapper { position: relative; }
+        .story-img {
+            width: 100%; height: auto; aspect-ratio: 4/5; object-fit: cover;
+            border-radius: var(--radius-sm); filter: sepia(0.3) contrast(1.1);
+        }
+        .story-accent {
+            position: absolute; top: -20px; right: -20px; width: 100px; height: 100px;
+            border-top: 4px solid var(--c-copper); border-right: 4px solid var(--c-copper);
+            z-index: 1;
+        }
+
+        /* --- BEERS GRID --- */
+        .beers { padding: var(--space-xl) 0; background: var(--c-charcoal-light); }
+        .section-header { text-align: center; margin-bottom: var(--space-lg); }
+        
+        .beer-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--space-md);
+        }
+
+        .beer-card {
+            background: var(--c-grey);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+            display: flex; flex-direction: column;
+        }
+        
+        .beer-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+
+        .beer-img-container {
+            height: 250px; overflow: hidden; position: relative;
+            background: #1a1a1a;
+        }
+        .beer-img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--transition-med); }
+        .beer-card:hover .beer-img { transform: scale(1.05); }
+
+        .beer-details { padding: var(--space-sm); flex-grow: 1; display: flex; flex-direction: column; }
+        .beer-meta {
+            display: flex; gap: var(--space-xs); margin-bottom: var(--space-xs);
+            font-size: 0.8rem; font-weight: 600; color: var(--c-copper);
+            font-family: var(--font-display);
+        }
+        .beer-title { font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--c-text-main); }
+        .beer-desc { font-size: 0.9rem; color: var(--c-text-muted); margin-bottom: var(--space-sm); flex-grow: 1; }
+        
+        .beer-stats {
+            display: flex; justify-content: space-between; padding-top: var(--space-sm);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.85rem; color: var(--c-text-muted);
+        }
+
+        /* --- TAPROOM INFO --- */
+        .taproom { padding: var(--space-xl) 0; position: relative; }
+        .taproom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); }
+        .hours-table { width: 100%; border-collapse: collapse; margin-top: var(--space-sm); }
+        .hours-table td { padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .hours-table tr:last-child td { border-bottom: none; }
+        .day { font-weight: 600; color: var(--c-text-main); }
+        .time { text-align: right; color: var(--c-copper); font-family: var(--font-display); }
+
+        .map-frame {
+            width: 100%; height: 400px; background: #222; border-radius: var(--radius-md);
+            overflow: hidden; position: relative;
+        }
+        .map-placeholder {
+            width: 100%; height: 100%; object-fit: cover; opacity: 0.6;
+        }
+
+        /* --- EVENTS --- */
+        .events { padding: var(--space-xl) 0; background: var(--c-charcoal-light); }
+        .event-list { display: flex; flex-direction: column; gap: var(--space-md); }
+        .event-item {
+            display: flex; gap: var(--space-md); align-items: flex-start;
+            background: var(--c-grey); padding: var(--space-md);
+            border-left: 4px solid var(--c-copper);
+        }
+        .event-date {
+            min-width: 80px; text-align: center;
+            font-family: var(--font-display); font-weight: 700;
+        }
+        .event-month { font-size: 1rem; color: var(--c-copper); text-transform: uppercase; }
+        .event-day { font-size: 2rem; line-height: 1; color: var(--c-text-main); }
+        .event-info h4 { font-size: 1.2rem; margin-bottom: 0.25rem; }
+
+        /* --- MERCH --- */
+        .merch { padding: var(--space-lg) 0; border-top: 1px solid rgba(255,255,255,0.05); }
+        .merch-strip {
+            display: flex; gap: var(--space-md); overflow-x: auto;
+            padding-bottom: var(--space-sm); scrollbar-width: thin; scrollbar-color: var(--c-copper) var(--c-grey);
+        }
+        .merch-item { min-width: 250px; flex-shrink: 0; }
+        .merch-img { width: 100%; height: 250px; object-fit: cover; border-radius: var(--radius-sm); margin-bottom: var(--space-xs); }
+        .merch-price { color: var(--c-copper); font-weight: 700; font-family: var(--font-display); }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #000; padding: var(--space-lg) 0 var(--space-md);
+            border-top: 4px solid var(--c-copper);
+        }
+        .footer-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-lg); margin-bottom: var(--space-lg);
+        }
+        .footer-col h5 { color: var(--c-text-main); margin-bottom: var(--space-sm); font-size: 1.1rem; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--c-text-muted); text-decoration: none; transition: color var(--transition-fast); }
+        .footer-links a:hover { color: var(--c-copper); }
+        .copyright { text-align: center; color: var(--c-text-muted); font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: var(--space-md); }
+
+        /* --- AGE GATE MODAL --- */
+        .age-gate {
+            position: fixed; inset: 0; z-index: 100;
+            background: rgba(0,0,0,0.95);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 1; visibility: visible;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .age-gate.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        
+        .age-gate-content {
+            background: var(--c-charcoal-light);
+            border: 1px solid var(--c-copper);
+            padding: var(--space-lg);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 0 50px rgba(184, 115, 51, 0.2);
+        }
+        .age-gate-logo { font-size: 2rem; color: var(--c-copper); margin-bottom: var(--space-md); font-family: var(--font-display); font-weight: 700; }
+        .age-gate-actions { display: flex; gap: var(--space-sm); justify-content: center; margin-top: var(--space-md); }
+
+        /* --- BEER DETAIL MODAL --- */
+        .modal-overlay {
+            position: fixed; inset: 0; z-index: 90;
+            background: rgba(0,0,0,0.8);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: var(--space-sm);
+        }
+        .modal-overlay.open { opacity: 1; visibility: visible; }
+        
+        .modal-content {
+            background: var(--c-charcoal-light);
+            max-width: 800px; width: 100%;
+            max-height: 90vh; overflow-y: auto;
+            display: grid; grid-template-columns: 1fr 1fr;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .modal-close {
+            position: absolute; top: 1rem; right: 1rem; z-index: 10;
+            background: rgba(0,0,0,0.5); border: none; color: white;
+            width: 44px; height: 44px; border-radius: 50%;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .modal-img { width: 100%; height: 100%; min-height: 300px; object-fit: cover; }
+        .modal-body { padding: var(--space-md); }
+        .modal-body h2 { font-size: 2rem; color: var(--c-copper); margin-bottom: 0.5rem; }
+        .modal-tags { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .tag { background: rgba(184, 115, 51, 0.2); color: var(--c-copper-light); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+        
+        @media (max-width: 768px) {
+            .modal-content { grid-template-columns: 1fr; }
+            .modal-img { height: 250px; }
+            .story-grid, .taproom-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; } /* In production would implement hamburger */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Skip Link -->
+    <a href="#main-content" class="sr-only" style="top:0;left:0;background:var(--c-copper);color:black;padding:1rem;z-index:100;position:absolute;">Skip to Content</a>
+
+    <!-- Age Gate Modal -->
+    <div id="age-gate" class="age-gate" role="dialog" aria-modal="true" aria-labelledby="age-gate-title">
+        <div class="age-gate-content">
+            <div class="age-gate-logo">COPPERLINE</div>
+            <h2 id="age-gate-title" style="font-size: 1.5rem; margin-bottom: 1rem;">Are You 21 or Older?</h2>
+            <p>You must be of legal drinking age to enter this site.</p>
+            <div class="age-gate-actions">
+                <button class="btn btn-primary" id="btn-yes">Yes, Enter</button>
+                <button class="btn" id="btn-no">No, Leave</button>
+            </div>
+            <p style="font-size: 0.7rem; margin-top: 1rem; opacity: 0.5;">Please Drink Responsibly.</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo" aria-label="Copperline Brewing Home">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+                    COPPER<span>LINE</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#our-story">Our Story</a></li>
+                    <li><a href="#beers">Tap List</a></li>
+                    <li><a href="#taproom">Taproom</a></li>
+                    <li><a href="#events">Events</a></li>
+                    <li><a href="#merch">Merch</a></li>
+                </ul>
+                <button class="mobile-menu-btn" aria-label="Open Menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-bg" role="img" aria-label="Brewery interior with copper tanks"></div>
+            <div class="hero-content reveal">
+                <p class="hero-tagline">Est. 2014 • Portland, OR</p>
+                <h1>Forged in Fire,<br>Brewed with Soul.</h1>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem;">Rustic ales crafted in a reclaimed industrial warehouse. Experience the raw essence of brewing.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="#beers" class="btn btn-primary">View Tap List</a>
+                    <a href="#taproom" class="btn">Visit Taproom</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Story -->
+        <section id="our-story" class="story">
+            <div class="container">
+                <div class="story-grid">
+                    <div class="story-img-wrapper reveal">
+                        <div class="story-accent" aria-hidden="true"></div>
+                        <img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&w=800&q=80" alt="Brewer inspecting hops" class="story-img" width="800" height="1000">
+                    </div>
+                    <div class="reveal">
+                        <h2>The Foundry of Flavor</h2>
+                        <p>Copperline began in a rusted-out machine shop on the edge of the industrial district. We didn't want a shiny new brewhouse; we wanted character. We kept the exposed brick, the steel beams, and the grit.</p>
+                        <p>Our philosophy is simple: respect the grain, honor the water, and never rush the process. Every batch is a tribute to the blue-collar roots of our city, brewed by hand for those who appreciate authenticity over perfection.</p>
+                        <p>Whether you're here for a pint after work or a tour on Saturday, you're part of the crew.</p>
+                        <img src="https://images.unsplash.com/photos/s/Signature_Monogram.png?auto=format&fit=crop&w=200&q=80" alt="" style="height: 60px; margin-top: 1rem; opacity: 0.7;" width="200" height="60">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Beers Grid -->
+        <section id="beers" class="beers">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>Current Tap List</h2>
+                    <p>Fresh pours from our cellar to your glass.</p>
+                </div>
+                
+                <div class="beer-grid" id="beer-grid-container">
+                    <!-- JS will populate this, but fallback static content below for robustness if JS fails visually -->
+                    
+                    <!-- Card 1 -->
+                    <article class="beer-card reveal" data-beer-id="1">
+                        <div class="beer-img-container">
+                            <img src="https://picsum.photos/seed/copperline-brew-248524639118/1600/900?auto=format&fit=crop&w=600&q=80" alt="Pint of golden IPA" class="beer-img" width="600" height="500">
+                        </div>
+                        <div class="beer-details">
+                            <div class="beer-meta">
+                                <span>IPA</span> • <span>WEST COAST</span>
+                            </div>
+                            <h3 class="beer-title">Anvil Drop</h3>
+                            <p class="beer-desc">A hammer-blow of citrus and pine. Bitter enough to wake you up, balanced enough to keep you staying.</p>
+                            <div class="beer-stats tabular-nums">
+                                <span>ABV: 6.8%</span>
+                                <span>IBU: 65</span>
+                            </div>
+                            <button class="btn" style="margin-top: 1rem; width: 100%;" onclick="openBeerModal(1)">View Details</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 2 -->
+                    <article class="beer-card reveal" data-beer-id="2">
+                        <div class="beer-img-container">
+                            <img src="https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?auto=format&fit=crop&w=600&q=80" alt="Dark stout beer in glass" class="beer-img" width="600" height="500">
+                        </div>
+                        <div class="beer-details">
+                            <div class="beer-meta">
+                                <span>STOUT</span> • <span>OATMEAL</span>
+                            </div>
+                            <h3 class="beer-title">Midnight Oil</h3>
+                            <p class="beer-desc">Velvet smooth with notes of espresso and dark chocolate. Perfect for those long nights.</p>
+                            <div class="beer-stats tabular-nums">
+                                <span>ABV: 5.4%</span>
+                                <span>IBU: 25</span>
+                            </div>
+                            <button class="btn" style="margin-top: 1rem; width: 100%;" onclick="openBeerModal(2)">View Details</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 3 -->
+                    <article class="beer-card reveal" data-beer-id="3">
+                        <div class="beer-img-container">
+                            <img src="https://images.unsplash.com/photo-1567696911980-2eed69a46042?auto=format&fit=crop&w=600&q=80" alt="Hazy pale ale" class="beer-img" width="600" height="500">
+                        </div>
+                        <div class="beer-details">
+                            <div class="beer-meta">
+                                <span>PALE ALE</span> • <span>HAZY</span>
+                            </div>
+                            <h3 class="beer-title">Rusty Spark</h3>
+                            <p class="beer-desc">Juicy tropical fruits meet a soft malt backbone. Unfiltered and unapologetic.</p>
+                            <div class="beer-stats tabular-nums">
+                                <span>ABV: 5.2%</span>
+                                <span>IBU: 30</span>
+                            </div>
+                            <button class="btn" style="margin-top: 1rem; width: 100%;" onclick="openBeerModal(3)">View Details</button>
+                        </div>
+                    </article>
+
+                     <!-- Card 4 -->
+                     <article class="beer-card reveal" data-beer-id="4">
+                        <div class="beer-img-container">
+                            <img src="https://picsum.photos/seed/copperline-brew-b021ee8872a3/1600/900?auto=format&fit=crop&w=600&q=80" alt="Amber lager" class="beer-img" width="600" height="500">
+                        </div>
+                        <div class="beer-details">
+                            <div class="beer-meta">
+                                <span>LAGER</span> • <span>AMBER</span>
+                            </div>
+                            <h3 class="beer-title">Foundry Red</h3>
+                            <p class="beer-desc">Crisp, clean, and copper-colored. The sessionable staple of our lineup.</p>
+                            <div class="beer-stats tabular-nums">
+                                <span>ABV: 4.8%</span>
+                                <span>IBU: 22</span>
+                            </div>
+                            <button class="btn" style="margin-top: 1rem; width: 100%;" onclick="openBeerModal(4)">View Details</button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Taproom Info -->
+        <section id="taproom" class="taproom">
+            <div class="container">
+                <div class="taproom-grid">
+                    <div class="reveal">
+                        <h2>Visit The Taproom</h2>
+                        <p>Come for the beer, stay for the atmosphere. Our taproom features 20 rotating taps, a dog-friendly patio, and food trucks daily.</p>
+                        
+                        <h3 style="margin-top: 2rem;">Hours of Operation</h3>
+                        <table class="hours-table tabular-nums">
+                            <tr>
+                                <td class="day">Monday - Thursday</td>
+                                <td class="time">3:00 PM – 10:00 PM</td>
+                            </tr>
+                            <tr>
+                                <td class="day">Friday</td>
+                                <td class="time">12:00 PM – 11:00 PM</td>
+                            </tr>
+                            <tr>
+                                <td class="day">Saturday</td>
+                                <td class="time">11:00 AM – 11:00 PM</td>
+                            </tr>
+                            <tr>
+                                <td class="day">Sunday</td>
+                                <td class="time">11:00 AM – 9:00 PM</td>
+                            </tr>
+                        </table>
+
+                        <div style="margin-top: 2rem;">
+                            <h3>Location</h3>
+                            <p>1842 Industrial Way<br>Portland, OR 97209</p>
+                            <a href="#" class="btn" style="margin-top: 1rem;">Get Directions</a>
+                        </div>
+                    </div>
+                    <div class="map-frame reveal">
+                        <!-- Using a stylized map image instead of iframe to avoid external dependency issues/bloat -->
+                        <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80" alt="Map showing location of brewery" class="map-placeholder" width="800" height="400">
+                        <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.4);">
+                            <span style="background: var(--c-copper); color: black; padding: 0.5rem 1rem; font-weight: bold; text-transform: uppercase;">Interactive Map Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events -->
+        <section id="events" class="events">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>Upcoming Events</h2>
+                </div>
+                <div class="event-list">
+                    <article class="event-item reveal">
+                        <div class="event-date">
+                            <div class="event-month">Oct</div>
+                            <div class="event-day">12</div>
+                        </div>
+                        <div class="event-info">
+                            <h4>Oktoberfest Block Party</h4>
+                            <p>Live oompah band, bratwurst specials, and the release of our Festbier Lager.</p>
+                        </div>
+                    </article>
+                    <article class="event-item reveal">
+                        <div class="event-date">
+                            <div class="event-month">Oct</div>
+                            <div class="event-day">24</div>
+                        </div>
+                        <div class="event-info">
+                            <h4>Pint & Paint Night</h4>
+                            <p>Bring your creativity. Canvas and supplies provided. First pint included with ticket.</p>
+                        </div>
+                    </article>
+                    <article class="event-item reveal">
+                        <div class="event-date">
+                            <div class="event-month">Nov</div>
+                            <div class="event-day">05</div>
+                        </div>
+                        <div class="event-info">
+                            <h4>Homebrewer Meetup</h4>
+                            <p>Swap tips, taste batches, and talk yeast strains with local enthusiasts.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Merch -->
+        <section id="merch" class="merch">
+            <div class="container">
+                <h2 class="reveal" style="margin-bottom: 2rem;">Wear The Brand</h2>
+                <div class="merch-strip reveal">
+                    <div class="merch-item">
+                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=400&q=80" alt="Grey t-shirt with logo" class="merch-img" width="400" height="400">
+                        <h4>Classic Logo Tee</h4>
+                        <div class="merch-price">$25.00</div>
+                    </div>
+                    <div class="merch-item">
+                        <img src="https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?auto=format&fit=crop&w=400&q=80" alt="Black baseball cap" class="merch-img" width="400" height="400">
+                        <h4>Trucker Hat</h4>
+                        <div class="merch-price">$20.00</div>
+                    </div>
+                    <div class="merch-item">
+                        <img src="https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=400&q=80" alt="Beer glass set" class="merch-img" width="400" height="400">
+                        <h4>Tulip Glass 2-Pack</h4>
+                        <div class="merch-price">$18.00</div>
+                    </div>
+                    <div class="merch-item">
+                        <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=400&q=80" alt="Hoodie" class="merch-img" width="400" height="400">
+                        <h4>Brewery Hoodie</h4>
+                        <div class="merch-price">$45.00</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h5>Copperline Brewing</h5>
+                    <p style="font-size: 0.9rem;">Crafting industrial strength flavor since 2014.</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Explore</h5>
+                    <ul class="footer-links">
+                        <li><a href="#our-story">Our Story</a></li>
+                        <li><a href="#beers">Beers</a></li>
+                        <li><a href="#taproom">Taproom</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Contact</h5>
+                    <ul class="footer-links">
+                        <li><a href="mailto:hello@copperline.com">hello@copperline.com</a></li>
+                        <li><a href="tel:+15035550199">(503) 555-0199</a></li>
+                        <li>Press Inquiries</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Social</h5>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="#" aria-label="Instagram">IG</a>
+                        <a href="#" aria-label="Facebook">FB</a>
+                        <a href="#" aria-label="Twitter">X</a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2024 Copperline Brewing Co. All rights reserved. Please Drink Responsibly.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Beer Detail Modal Structure -->
+    <div id="beer-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close modal" onclick="closeBeerModal()">&times;</button>
+            <img id="modal-img" src="" alt="" class="modal-img" width="400" height="400">
+            <div class="modal-body">
+                <h2 id="modal-title" style="color: var(--c-copper);">Beer Name</h2>
+                <div class="modal-tags" id="modal-tags">
+                    <!-- Tags injected via JS -->
+                </div>
+                <p id="modal-desc">Description goes here...</p>
+                <div style="margin-top: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 4px;">
+                    <div>
+                        <div style="font-size: 0.8rem; color: var(--c-text-muted);">ABV</div>
+                        <div id="modal-abv" class="tabular-nums" style="font-size: 1.5rem; font-family: var(--font-display);">0.0%</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.8rem; color: var(--c-text-muted);">IBU</div>
+                        <div id="modal-ibu" class="tabular-nums" style="font-size: 1.5rem; font-family: var(--font-display);">0</div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 2rem;">Order Online</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const beers = {
+            1: {
+                title: "Anvil Drop",
+                type: "West Coast IPA",
+                desc: "A hammer-blow of citrus and pine. We use Cascade and Centennial hops to create a bitter profile that wakes up the palate, finished with a dry hop addition for aromatic intensity.",
+                abv: "6.8%",
+                ibu: "65",
+                img: "https://picsum.photos/seed/copperline-brew-248524639118/1600/900?auto=format&fit=crop&w=800&q=80",
+                tags: ["Hoppy", "Citrus", "Bitter"]
+            },
+            2: {
+                title: "Midnight Oil",
+                type: "Oatmeal Stout",
+                desc: "Velvet smooth with notes of espresso and dark chocolate. Brewed with locally roasted coffee beans and rolled oats for a creamy mouthfeel that lasts.",
+                abv: "5.4%",
+                ibu: "25",
+                img: "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?auto=format&fit=crop&w=800&q=80",
+                tags: ["Roasty", "Coffee", "Smooth"]
+            },
+            3: {
+                title: "Rusty Spark",
+                type: "Hazy Pale Ale",
+                desc: "Juicy tropical fruits meet a soft malt backbone. Unfiltered and unapologetic, this ale bursts with mango and pineapple esters.",
+                abv: "5.2%",
+                ibu: "30",
+                img: "https://images.unsplash.com/photo-1567696911980-2eed69a46042?auto=format&fit=crop&w=800&q=80",
+                tags: ["Juicy", "Tropical", "Hazy"]
+            },
+            4: {
+                title: "Foundry Red",
+                type: "Amber Lager",
+                desc: "Crisp, clean, and copper-colored. The sessionable staple of our lineup. Malt-forward with a clean finish.",
+                abv: "4.8%",
+                ibu: "22",
+                img: "https://picsum.photos/seed/copperline-brew-b021ee8872a3/1600/900?auto=format&fit=crop&w=800&q=80",
+                tags: ["Malty", "Session", "Clean"]
+            }
+        };
+
+        // --- AGE GATE LOGIC ---
+        const ageGate = document.getElementById('age-gate');
+        const btnYes = document.getElementById('btn-yes');
+        const btnNo = document.getElementById('btn-no');
+
+        // Check session storage
+        if (sessionStorage.getItem('ageVerified') === 'true') {
+            ageGate.classList.add('hidden');
+        } else {
+            // Prevent scrolling when gate is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        btnYes.addEventListener('click', () => {
+            sessionStorage.setItem('ageVerified', 'true');
+            ageGate.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+
+        btnNo.addEventListener('click', () => {
+            window.location.href = "https://www.google.com"; // Redirect away
+        });
+
+        // --- MODAL LOGIC ---
+        const modal = document.getElementById('beer-modal');
+        const mTitle = document.getElementById('modal-title');
+        const mDesc = document.getElementById('modal-desc');
+        const mAbv = document.getElementById('modal-abv');
+        const mIbu = document.getElementById('modal-ibu');
+        const mImg = document.getElementById('modal-img');
+        const mTags = document.getElementById('modal-tags');
+
+        function openBeerModal(id) {
+            const beer = beers[id];
+            if (!beer) return;
+
+            mTitle.textContent = beer.title;
+            mDesc.textContent = beer.desc;
+            mAbv.textContent = beer.abv;
+            mIbu.textContent = beer.ibu;
+            mImg.src = beer.img;
+            mImg.alt = `Glass of ${beer.title}`;
+            
+            // Generate tags
+            mTags.innerHTML = beer.tags.map(tag => `<span class="tag">${tag}</span>`).join('') + `<span class="tag">${beer.type}</span>`;
+
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            
+            // Focus trap simplistic implementation
+            modal.querySelector('.modal-close').focus();
+        }
+
+        function closeBeerModal() {
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // Close on outside click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeBeerModal();
+        });
+
+        // Close on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('open')) {
+                closeBeerModal();
+            }
+        });
+
+        // --- SCROLL REVEAL ANIMATION ---
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    </script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
