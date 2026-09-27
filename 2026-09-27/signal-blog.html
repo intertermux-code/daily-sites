@@ -1,664 +1,775 @@
 <!DOCTYPE html>
-<html lang="en" style="color-scheme: light;">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signal — Independent Tech Publication</title>
-    <meta name="description" content="Deep dives into technology, culture, and the future of humanity.">
-    <meta name="theme-color" content="#ffffff">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signal — Independent Tech Publication</title>
+  <meta name="description" content="Signal is an independent tech publication covering AI, privacy, hardware, and the future of work.">
+  <meta name="theme-color" content="#ffffff">
+  
+  <!-- Fonts: Merriweather (Serif) & Inter (Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-bg: #fdfdfd;
+      --color-surface: #ffffff;
+      --color-text-main: #1a1a1a;
+      --color-text-muted: #555555;
+      --color-accent: #d9261c;
+      --color-border: #e5e5e5;
+      
+      --font-serif: 'Merriweather', serif;
+      --font-sans: 'Inter', sans-serif;
+      
+      --spacing-unit: 1rem;
+      --container-width: 1200px;
+      
+      --transition-fast: 0.2s ease;
+      --transition-med: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-    <style>
-        :root {
-            --c-bg: #fcfbf9; /* Paper white */
-            --c-text: #1a1a1a;
-            --c-text-muted: #555555;
-            --c-accent: #d9261c;
-            --c-border: #e5e5e5;
-            --c-border-dark: #1a1a1a;
-            
-            --f-serif: 'Lora', serif;
-            --f-sans: 'Inter', sans-serif;
-            
-            --space-xs: 0.5rem;
-            --space-sm: 1rem;
-            --space-md: 2rem;
-            --space-lg: 4rem;
-            --space-xl: 6rem;
-            
-            --container: 1200px;
-            --tap-target: 44px;
-        }
+    @media (prefers-color-scheme: dark) {
+      /* Optional: Dark mode support if requested, but prompt asked for "paper white". 
+         Sticking to light mode per specific style request "newspaper-modern, paper white". */
+    }
 
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --c-bg: #121212;
-                --c-text: #ececec;
-                --c-text-muted: #aaaaaa;
-                --c-border: #333333;
-                --c-border-dark: #ececec;
-            }
-            html { color-scheme: dark; }
-            body { background-color: var(--c-bg); color: var(--c-text); }
-        }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html { scroll-behavior: smooth; font-size: 100%; }
+    
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        html { scroll-behavior: smooth; }
-        
-        body {
-            font-family: var(--f-sans);
-            background-color: var(--c-bg);
-            color: var(--c-text);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            text-rendering: optimizeLegibility;
-        }
+    /* Accessibility Utilities */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 0;
+      background: var(--color-accent);
+      color: white;
+      padding: 1rem;
+      z-index: 1000;
+      transition: top var(--transition-fast);
+    }
+    .skip-link:focus { top: 0; }
+    
+    .visually-hidden {
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+      width: 1px;
+    }
 
-        /* Accessibility & Utilities */
-        .skip-link {
-            position: absolute;
-            top: -100%;
-            left: 0;
-            background: var(--c-accent);
-            color: white;
-            padding: var(--space-sm);
-            z-index: 1000;
-            transition: top 0.2s ease;
-        }
-        .skip-link:focus { top: 0; }
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-serif);
+      font-weight: 900;
+      line-height: 1.2;
+      text-wrap: balance;
+      letter-spacing: -0.02em;
+      color: var(--color-text-main);
+    }
 
-        .sr-only {
-            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-            overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
-        }
+    p { margin-bottom: 1.5em; color: var(--color-text-muted); }
+    
+    a { text-decoration: none; color: inherit; transition: color var(--transition-fast); }
+    a:hover { color: var(--color-accent); }
+    
+    /* Focus Styles */
+    :focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 4px;
+      border-radius: 2px;
+    }
 
-        :focus-visible {
-            outline: 2px solid var(--c-accent);
-            outline-offset: 4px;
-        }
+    /* Layout */
+    .container {
+      max-width: var(--container-width);
+      margin: 0 auto;
+      padding: 0 var(--spacing-unit);
+    }
 
-        a { color: inherit; text-decoration: none; transition: color 0.2s ease; }
-        a:hover { color: var(--c-accent); }
+    /* Header / Masthead */
+    header {
+      border-bottom: 1px solid var(--color-border);
+      padding: 2rem 0;
+      background: var(--color-surface);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-        img { max-width: 100%; height: auto; display: block; object-fit: cover; }
+    .masthead {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
 
-        /* Typography */
-        h1, h2, h3, h4, h5, h6 {
-            font-family: var(--f-serif);
-            font-weight: 700;
-            line-height: 1.2;
-            text-wrap: balance;
-            letter-spacing: -0.02em;
-        }
+    .logo {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      color: var(--color-text-main);
+      text-transform: uppercase;
+    }
+    
+    .logo span { color: var(--color-accent); }
 
-        .t-display { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; }
-        .t-h2 { font-size: clamp(1.75rem, 3vw, 2.25rem); }
-        .t-h3 { font-size: 1.5rem; }
-        .t-h4 { font-size: 1.25rem; }
-        .t-meta { 
-            font-family: var(--f-sans); 
-            font-size: 0.875rem; 
-            color: var(--c-text-muted); 
-            text-transform: uppercase; 
-            letter-spacing: 0.05em; 
-            font-feature-settings: "tnum";
-        }
-        .t-body { font-size: 1.125rem; line-height: 1.7; }
-        .t-small { font-size: 0.875rem; }
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
 
-        /* Layout */
-        .container {
-            width: 100%;
-            max-width: var(--container);
-            margin: 0 auto;
-            padding: 0 var(--space-sm);
-        }
+    .subscribe-btn {
+      background: var(--color-text-main);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      transition: transform var(--transition-fast), opacity var(--transition-fast);
+    }
+    .subscribe-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .subscribe-btn:active { transform: translateY(0); }
 
-        .grid-layout {
-            display: grid;
-            gap: var(--space-md);
-        }
+    /* Hero Section */
+    .hero {
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--color-border);
+    }
 
-        /* Components */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: var(--tap-target);
-            padding: 0 var(--space-md);
-            font-family: var(--f-sans);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-size: 0.875rem;
-            cursor: pointer;
-            border: 1px solid transparent;
-            transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
-            touch-action: manipulation;
-        }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
 
-        .btn-primary {
-            background-color: var(--c-accent);
-            color: white;
-        }
-        .btn-primary:hover { background-color: #b01e16; color: white; }
+    @media (min-width: 768px) {
+      .hero-grid { grid-template-columns: 1.5fr 1fr; align-items: start; }
+    }
 
-        .btn-outline {
-            border-color: var(--c-text);
-            background: transparent;
-            color: var(--c-text);
-        }
-        .btn-outline:hover { background: var(--c-text); color: var(--c-bg); }
+    .hero-image-wrapper {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 16/9;
+      background: #eee;
+    }
 
-        .divider {
-            border: none;
-            border-top: 1px solid var(--c-border);
-            margin: var(--space-md) 0;
-        }
-        .divider-thick { border-top: 4px solid var(--c-text); }
+    .hero-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-med);
+    }
+    
+    .hero-article:hover .hero-image-wrapper img { transform: scale(1.03); }
 
-        /* Header */
-        .masthead {
-            padding: var(--space-sm) 0;
-            border-bottom: 1px solid var(--c-border);
-            position: sticky;
-            top: 0;
-            background: var(--c-bg);
-            z-index: 100;
-        }
-        .masthead-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo {
-            font-family: var(--f-serif);
-            font-weight: 900;
-            font-size: 2rem;
-            letter-spacing: -0.03em;
-            text-transform: uppercase;
-        }
-        .nav-links { display: none; gap: var(--space-md); }
-        .nav-links a { font-weight: 500; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        
-        @media (min-width: 768px) {
-            .nav-links { display: flex; }
-            .mobile-menu-btn { display: none; }
-        }
+    .hero-content { display: flex; flex-direction: column; justify-content: center; }
+    
+    .category-tag {
+      color: var(--color-accent);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
 
-        /* Hero Section */
-        .hero { padding: var(--space-lg) 0; }
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: var(--space-md);
-        }
-        .hero-image-wrapper {
-            aspect-ratio: 16/9;
-            overflow: hidden;
-            background: #eee;
-        }
-        .hero-image-wrapper img {
-            width: 100%;
-            height: 100%;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .hero-card:hover .hero-image-wrapper img { transform: scale(1.03); }
-        
-        @media (min-width: 900px) {
-            .hero-grid { grid-template-columns: 1.5fr 1fr; align-items: center; }
-        }
+    .hero-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 1.5rem;
+    }
 
-        /* Article Grid */
-        .feed-section { padding: var(--space-lg) 0; }
-        .article-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: var(--space-lg) var(--space-md);
-        }
-        .article-card { display: flex; flex-direction: column; gap: var(--space-xs); }
-        .article-card-img {
-            aspect-ratio: 3/2;
-            overflow: hidden;
-            margin-bottom: var(--space-sm);
-        }
-        .article-card-img img { width: 100%; height: 100%; transition: transform 0.4s ease; }
-        .article-card:hover .article-card-img img { transform: scale(1.03); }
-        .category-tag {
-            color: var(--c-accent);
-            font-weight: 700;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.25rem;
-            display: inline-block;
-        }
+    .hero-excerpt {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: var(--color-text-main);
+      font-family: var(--font-serif);
+      font-weight: 300;
+    }
 
-        /* Sidebar / Trending */
-        .content-split {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: var(--space-lg);
-            padding: var(--space-lg) 0;
-            border-top: 1px solid var(--c-border);
-        }
-        @media (min-width: 900px) {
-            .content-split { grid-template-columns: 2fr 1fr; }
-        }
-        .trending-list { list-style: none; counter-reset: trend; }
-        .trending-item {
-            counter-increment: trend;
-            padding: var(--space-sm) 0;
-            border-bottom: 1px solid var(--c-border);
-            display: flex;
-            gap: var(--space-sm);
-            align-items: baseline;
-        }
-        .trending-item::before {
-            content: counter(trend);
-            font-family: var(--f-serif);
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--c-border);
-            line-height: 1;
-            min-width: 2rem;
-        }
-        .trending-item:hover::before { color: var(--c-accent); }
+    .meta {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--font-sans);
+    }
 
-        /* Newsletter */
-        .newsletter {
-            background: #f0efeb;
-            padding: var(--space-xl) 0;
-            text-align: center;
-        }
-        @media (prefers-color-scheme: dark) { .newsletter { background: #1a1a1a; } }
-        
-        .newsletter-form {
-            max-width: 500px;
-            margin: var(--space-md) auto 0;
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-sm);
-        }
-        @media (min-width: 600px) {
-            .newsletter-form { flex-direction: row; }
-        }
-        .input-group { flex: 1; position: relative; }
-        input[type="email"] {
-            width: 100%;
-            padding: 0 var(--space-sm);
-            height: var(--tap-target);
-            border: 1px solid var(--c-text);
-            background: var(--c-bg);
-            color: var(--c-text);
-            font-family: var(--f-sans);
-            font-size: 1rem;
-        }
-        .form-msg {
-            font-size: 0.875rem;
-            margin-top: 0.5rem;
-            min-height: 1.2em;
-        }
-        .form-msg.error { color: var(--c-accent); }
-        .form-msg.success { color: green; }
+    .author { font-weight: 600; color: var(--color-text-main); }
 
-        /* Footer */
-        footer {
-            padding: var(--space-lg) 0;
-            border-top: 4px solid var(--c-text);
-            font-size: 0.9rem;
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: var(--space-md);
-            margin-bottom: var(--space-lg);
-        }
-        .footer-col h5 { margin-bottom: var(--space-sm); font-family: var(--f-sans); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.8rem; }
-        .footer-col ul { list-style: none; }
-        .footer-col li { margin-bottom: 0.5rem; }
+    /* Main Content Grid */
+    .content-area {
+      padding: 4rem 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4rem;
+    }
 
-        /* Animation Classes */
-        .reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (min-width: 992px) {
+      .content-area { grid-template-columns: 2fr 1fr; }
+    }
 
-        @media (prefers-reduced-motion: reduce) {
-            .reveal { transition: none; opacity: 1; transform: none; }
-            .hero-image-wrapper img, .article-card-img img { transition: none; }
-            html { scroll-behavior: auto; }
-        }
-    </style>
+    /* Latest Articles */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid var(--color-text-main);
+      padding-bottom: 0.5rem;
+    }
+
+    .section-title { font-size: 1.5rem; margin: 0; }
+
+    .article-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .card-image {
+      aspect-ratio: 3/2;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+      background: #f0f0f0;
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-med);
+    }
+
+    .card:hover .card-image img { transform: scale(1.05); }
+
+    .card-title {
+      font-size: 1.35rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .card-excerpt {
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Sidebar / Trending */
+    .sidebar-widget { margin-bottom: 3rem; }
+    
+    .trending-list { list-style: none; counter-reset: trending; }
+    
+    .trending-item {
+      counter-increment: trending;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      gap: 1rem;
+      align-items: baseline;
+    }
+
+    .trending-item::before {
+      content: "0" counter(trending);
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--color-border);
+      line-height: 1;
+      min-width: 2.5rem;
+    }
+
+    .trending-item:hover::before { color: var(--color-accent); }
+
+    .trending-title {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    /* Newsletter */
+    .newsletter {
+      background: #f4f4f4;
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    .newsletter-inner { max-width: 600px; margin: 0 auto; }
+    
+    .newsletter h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+    
+    .newsletter-form {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      min-width: 250px;
+      padding: 1rem;
+      border: 1px solid var(--color-border);
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      background: white;
+    }
+
+    .newsletter-input:focus { border-color: var(--color-text-main); outline: none; }
+
+    .form-feedback {
+      width: 100%;
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      min-height: 1.5em;
+    }
+    .form-feedback.error { color: var(--color-accent); }
+    .form-feedback.success { color: green; }
+
+    /* Topics Cloud */
+    .topics-cloud {
+      padding: 3rem 0;
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+
+    .topic-pill {
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--color-border);
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all var(--transition-fast);
+    }
+
+    .topic-pill:hover {
+      border-color: var(--color-text-main);
+      background: var(--color-text-main);
+      color: white;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--color-text-main);
+      color: white;
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-col h3 {
+      color: white;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+      font-family: var(--font-sans);
+    }
+
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 0.75rem; }
+    .footer-links a { color: #aaa; font-size: 0.9rem; }
+    .footer-links a:hover { color: white; }
+
+    .copyright {
+      border-top: 1px solid #333;
+      padding-top: 2rem;
+      text-align: center;
+      color: #666;
+      font-size: 0.8rem;
+    }
+
+    /* Animations */
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Skip to content</a>
 
-    <header class="masthead">
-        <div class="container masthead-inner">
-            <a href="#" class="logo" aria-label="Signal Home">Signal.</a>
-            
-            <nav class="nav-links" aria-label="Main Navigation">
-                <a href="#tech">Technology</a>
-                <a href="#science">Science</a>
-                <a href="#culture">Culture</a>
-                <a href="#policy">Policy</a>
-                <a href="#reviews">Reviews</a>
-            </nav>
+  <a href="#main-content" class="skip-link">Skip to content</a>
 
-            <button class="btn btn-outline mobile-menu-btn" aria-label="Open Menu" aria-expanded="false">
-                Menu
-            </button>
+  <header role="banner">
+    <div class="container masthead">
+      <a href="/" class="logo" aria-label="Signal Home">Signal<span>.</span></a>
+      
+      <nav aria-label="Primary Navigation">
+        <ul>
+          <li><a href="#ai">AI & ML</a></li>
+          <li><a href="#privacy">Privacy</a></li>
+          <li><a href="#hardware">Hardware</a></li>
+          <li><a href="#culture">Culture</a></li>
+        </ul>
+      </nav>
+
+      <button class="subscribe-btn" onclick="document.getElementById('newsletter-email').focus()">Subscribe</button>
+    </div>
+  </header>
+
+  <main id="main-content">
+    
+    <!-- Hero Section -->
+    <section class="hero container reveal" aria-labelledby="hero-heading">
+      <div class="hero-grid">
+        <article class="hero-article">
+          <div class="hero-content">
+            <span class="category-tag">Artificial Intelligence</span>
+            <h1 id="hero-heading" class="hero-title">The Black Box Problem: Why Even Engineers Can’t Explain Modern AI</h1>
+            <p class="hero-excerpt">As models grow larger and more capable, our understanding of their internal decision-making processes diminishes. We entered the age of algorithmic intuition, and regulators are scrambling to catch up.</p>
+            <div class="meta">
+              <span class="author">By Sarah Chen</span>
+              <span aria-hidden="true">•</span>
+              <time datetime="2026-09-27">Sept 27, 2026</time>
+              <span aria-hidden="true">•</span>
+              <span>14 min read</span>
+            </div>
+          </div>
+        </article>
+        <div class="hero-image-wrapper">
+          <!-- Using a reliable Unsplash ID for abstract tech/server room -->
+          <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1600&q=80" 
+               alt="Abstract visualization of neural network connections in blue and red light" 
+               width="800" height="450" loading="eager">
         </div>
-    </header>
+      </div>
+    </section>
 
-    <main id="main-content">
-        <!-- Hero Section -->
-        <section class="hero container reveal">
-            <div class="hero-grid">
-                <article class="hero-card">
-                    <span class="category-tag">Artificial Intelligence</span>
-                    <h1 class="t-display"><a href="#">The Silence of the Algorithms: Why We Stopped Understanding Our Own Tools</a></h1>
-                    <p class="t-body" style="margin-top: var(--space-sm);">
-                        As models grow larger and more opaque, the engineers who built them are admitting they no longer know how they work. We entered the black box to find out what happens when intuition replaces explanation.
-                    </p>
-                    <div class="t-meta" style="margin-top: var(--space-sm);">
-                        By <strong>Elena Fisher</strong> · 12 min read
-                    </div>
-                </article>
-                <div class="hero-image-wrapper">
-                    <!-- Real Unsplash Image: Abstract Server/Tech -->
-                    <img src="https://picsum.photos/seed/signal-blog-ef526b0042a0/1600/900?auto=format&fit=crop&w=1600&q=80" 
-                         alt="Abstract visualization of fiber optic cables glowing in red and blue darkness" 
-                         width="800" height="450" loading="eager">
-                </div>
-            </div>
-        </section>
-
-        <hr class="divider container">
-
-        <!-- Latest Feed -->
-        <section class="feed-section container">
-            <div class="content-split">
-                <div>
-                    <h2 class="t-h3" style="margin-bottom: var(--space-md); border-bottom: 1px solid var(--c-border); padding-bottom: var(--space-xs);">Latest Stories</h2>
-                    
-                    <div class="article-grid">
-                        <!-- Article 1 -->
-                        <article class="article-card reveal">
-                            <div class="article-card-img">
-                                <img src="https://picsum.photos/seed/signal-blog-ef225377e09c/1600/900?auto=format&fit=crop&w=800&q=80" 
-                                     alt="Close up of a mechanical keyboard with custom keycaps" 
-                                     width="600" height="400" loading="lazy">
-                            </div>
-                            <span class="category-tag">Hardware</span>
-                            <h3 class="t-h4"><a href="#">The Return of Tactile: Why Gen Z Is Rejecting Touchscreens</a></h3>
-                            <p class="t-small t-muted" style="line-clamp: 3; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
-                                From flip phones to mechanical keyboards, the digital native generation is seeking physical feedback in an increasingly glass-dominated world.
-                            </p>
-                            <div class="t-meta">Marcus Chen · 6 min</div>
-                        </article>
-
-                        <!-- Article 2 -->
-                        <article class="article-card reveal">
-                            <div class="article-card-img">
-                                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80" 
-                                     alt="Digital map of global internet connections visualized as glowing nodes" 
-                                     width="600" height="400" loading="lazy">
-                            </div>
-                            <span class="category-tag">Infrastructure</span>
-                            <h3 class="t-h4"><a href="#">Splinternet: How Undersea Cables Became Geopolitical Weapons</a></h3>
-                            <p class="t-small t-muted" style="line-clamp: 3; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
-                                The physical backbone of the cloud is fragile, and nations are beginning to treat fiber optics like strategic reserves.
-                            </p>
-                            <div class="t-meta">Sarah Jenkins · 9 min</div>
-                        </article>
-
-                        <!-- Article 3 -->
-                        <article class="article-card reveal">
-                            <div class="article-card-img">
-                                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80" 
-                                     alt="Cybersecurity concept with binary code overlay on a silhouette" 
-                                     width="600" height="400" loading="lazy">
-                            </div>
-                            <span class="category-tag">Security</span>
-                            <h3 class="t-h4"><a href="#">Zero Trust Isn’t Enough Anymore</a></h3>
-                            <p class="t-small t-muted" style="line-clamp: 3; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
-                                Security architects argue that verifying every request assumes you can actually identify the requester. What happens when identity itself is compromised?
-                            </p>
-                            <div class="t-meta">David Okonjo · 11 min</div>
-                        </article>
-
-                        <!-- Article 4 -->
-                        <article class="article-card reveal">
-                            <div class="article-card-img">
-                                <img src="https://picsum.photos/seed/signal-blog-69c960c72abc/1600/900?auto=format&fit=crop&w=800&q=80" 
-                                     alt="Modern minimalist workspace with a single notebook and pen" 
-                                     width="600" height="400" loading="lazy">
-                            </div>
-                            <span class="category-tag">Productivity</span>
-                            <h3 class="t-h4"><a href="#">The Cult of “Deep Work” Is Burning Us Out</a></h3>
-                            <p class="t-small t-muted" style="line-clamp: 3; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
-                                Optimizing every minute for output ignores the biological necessity of boredom and drift. A case for shallow work.
-                            </p>
-                            <div class="t-meta">Priya Patel · 5 min</div>
-                        </article>
-                    </div>
-                </div>
-
-                <!-- Sidebar -->
-                <aside>
-                    <div class="reveal" style="position: sticky; top: 100px;">
-                        <h3 class="t-h4" style="margin-bottom: var(--space-sm);">Trending Now</h3>
-                        <ol class="trending-list">
-                            <li class="trending-item">
-                                <a href="#">
-                                    <span class="t-meta">Opinion</span>
-                                    <h4 class="t-body" style="font-size: 1.1rem; margin-top: 0.25rem;">Why I Sold My Smart Home and Bought a Dumb One</h4>
-                                </a>
-                            </li>
-                            <li class="trending-item">
-                                <a href="#">
-                                    <span class="t-meta">Science</span>
-                                    <h4 class="t-body" style="font-size: 1.1rem; margin-top: 0.25rem;">CRISPR’s Next Target: Aging Itself</h4>
-                                </a>
-                            </li>
-                            <li class="trending-item">
-                                <a href="#">
-                                    <span class="t-meta">Design</span>
-                                    <h4 class="t-body" style="font-size: 1.1rem; margin-top: 0.25rem;">The Homogenization of App Interfaces</h4>
-                                </a>
-                            </li>
-                            <li class="trending-item">
-                                <a href="#">
-                                    <span class="t-meta">Policy</span>
-                                    <h4 class="t-body" style="font-size: 1.1rem; margin-top: 0.25rem;">EU’s AI Act: First Year Review</h4>
-                                </a>
-                            </li>
-                            <li class="trending-item">
-                                <a href="#">
-                                    <span class="t-meta">Space</span>
-                                    <h4 class="t-body" style="font-size: 1.1rem; margin-top: 0.25rem;">Orbital Debris: The Kessler Syndrome Update</h4>
-                                </a>
-                            </li>
-                        </ol>
-
-                        <div style="margin-top: var(--space-lg);">
-                            <h3 class="t-h4" style="margin-bottom: var(--space-sm);">Topics</h3>
-                            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                                <a href="#" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.8rem; min-height: auto;">AI Ethics</a>
-                                <a href="#" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.8rem; min-height: auto;">Climate Tech</a>
-                                <a href="#" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.8rem; min-height: auto;">Web3</a>
-                                <a href="#" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.8rem; min-height: auto;">Privacy</a>
-                                <a href="#" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.8rem; min-height: auto;">Startups</a>
-                                <a href="#" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.8rem; min-height: auto;">Robotics</a>
-                            </div>
-                        </div>
-                    </div>
-                </aside>
-            </div>
-        </section>
-
-        <!-- Newsletter -->
-        <section class="newsletter reveal">
-            <div class="container">
-                <h2 class="t-h2">Cut Through the Noise</h2>
-                <p class="t-body" style="max-width: 600px; margin: var(--space-sm) auto;">
-                    Join 45,000+ readers receiving our weekly digest of essential tech analysis. No spam, just signal.
-                </p>
-                <form class="newsletter-form" id="newsletterForm" novalidate>
-                    <div class="input-group">
-                        <label for="email" class="sr-only">Email Address</label>
-                        <input type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Subscribe</button>
-                </form>
-                <div id="formMessage" class="form-msg" aria-live="polite"></div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h5>Sections</h5>
-                    <ul>
-                        <li><a href="#">Technology</a></li>
-                        <li><a href="#">Science</a></li>
-                        <li><a href="#">Culture</a></li>
-                        <li><a href="#">Business</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h5>Company</h5>
-                    <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Code of Ethics</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h5>Legal</h5>
-                    <ul>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Cookie Settings</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h5>Follow Signal</h5>
-                    <ul>
-                        <li><a href="#">Twitter / X</a></li>
-                        <li><a href="#">Mastodon</a></li>
-                        <li><a href="#">LinkedIn</a></li>
-                        <li><a href="#">RSS Feed</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-sm); padding-top: var(--space-md); border-top: 1px solid var(--c-border);">
-                <span>&copy; 2026 Signal Media Inc.</span>
-                <span class="t-meta">Independent since 2024</span>
-            </div>
+    <!-- Content Area -->
+    <div class="container content-area">
+      
+      <!-- Latest Articles -->
+      <section aria-labelledby="latest-heading">
+        <div class="section-header">
+          <h2 id="latest-heading" class="section-title">Latest Stories</h2>
+          <a href="#" style="font-weight: 600; font-size: 0.9rem;">View Archive →</a>
         </div>
-    </footer>
 
-    <script>
-        // Scroll Reveal Animation
-        document.addEventListener('DOMContentLoaded', () => {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
+        <div class="article-grid">
+          
+          <!-- Article 1 -->
+          <article class="card reveal">
+            <a href="#" class="card-image">
+              <img src="https://picsum.photos/seed/signal-blog-8f7856677741/1600/900?auto=format&fit=crop&w=800&q=80" 
+                   alt="Close up of a microchip on a circuit board" 
+                   width="600" height="400" loading="lazy">
+            </a>
+            <span class="category-tag">Hardware</span>
+            <h3 class="card-title"><a href="#">Silicon Valley’s New Obsession: Photonic Computing</a></h3>
+            <p class="card-excerpt">Electrons are hitting their physical limits. Startups are betting billions that photons are the key to breaking the exascale barrier without melting the planet.</p>
+            <div class="meta">
+              <span class="author">Marcus Reid</span>
+              <span>8 min read</span>
+            </div>
+          </article>
 
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
+          <!-- Article 2 -->
+          <article class="card reveal">
+            <a href="#" class="card-image">
+              <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80" 
+                   alt="Person typing on laptop with encrypted code overlay" 
+                   width="600" height="400" loading="lazy">
+            </a>
+            <span class="category-tag">Security</span>
+            <h3 class="card-title"><a href="#">Zero-Trust Architecture Is Failing Small Business</a></h3>
+            <p class="card-excerpt">The security paradigm promised safety for remote teams, but implementation costs and complexity are leaving mid-sized firms vulnerable to sophisticated ransomware.</p>
+            <div class="meta">
+              <span class="author">Elena Rodriguez</span>
+              <span>6 min read</span>
+            </div>
+          </article>
 
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+          <!-- Article 3 -->
+          <article class="card reveal">
+            <a href="#" class="card-image">
+              <img src="https://picsum.photos/seed/signal-blog-063472031ef9/1600/900?auto=format&fit=crop&w=800&q=80" 
+                   alt="Modern minimalist workspace with dual monitors" 
+                   width="600" height="400" loading="lazy">
+            </a>
+            <span class="category-tag">Future of Work</span>
+            <h3 class="card-title"><a href="#">The Four-Day Week: Data From the Global Pilot</a></h3>
+            <p class="card-excerpt">Results are in from the largest international trial. Productivity held steady, but retention skyrocketed. Why some CEOs are still saying “no.”</p>
+            <div class="meta">
+              <span class="author">David Park</span>
+              <span>11 min read</span>
+            </div>
+          </article>
 
-            // Newsletter Form Validation
-            const form = document.getElementById('newsletterForm');
-            const msg = document.getElementById('formMessage');
-            const emailInput = document.getElementById('email');
+          <!-- Article 4 -->
+          <article class="card reveal">
+            <a href="#" class="card-image">
+              <img src="https://images.unsplash.com/photo-1617802690992-15d93263d3a9?auto=format&fit=crop&w=800&q=80" 
+                   alt="Futuristic VR headset resting on a table" 
+                   width="600" height="400" loading="lazy">
+            </a>
+            <span class="category-tag">Consumer Tech</span>
+            <h3 class="card-title"><a href="#">Spatial Computing’s Identity Crisis</a></h3>
+            <p class="card-excerpt">Three years after the big launch, mixed reality headsets are searching for a killer app beyond enterprise training and niche gaming.</p>
+            <div class="meta">
+              <span class="author">Jessica Wu</span>
+              <span>9 min read</span>
+            </div>
+          </article>
 
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const email = emailInput.value.trim();
-                
-                // Simple regex for validation
-                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                
-                if (!email) {
-                    msg.textContent = 'Please enter your email address.';
-                    msg.className = 'form-msg error';
-                    return;
-                }
-                
-                if (!re.test(email)) {
-                    msg.textContent = 'Please enter a valid email address.';
-                    msg.className = 'form-msg error';
-                    return;
-                }
+           <!-- Article 5 -->
+           <article class="card reveal">
+            <a href="#" class="card-image">
+              <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80" 
+                   alt="Satellite view of earth at night showing connectivity" 
+                   width="600" height="400" loading="lazy">
+            </a>
+            <span class="category-tag">Infrastructure</span>
+            <h3 class="card-title"><a href="#">LEO Satellites and the Geopolitics of Bandwidth</a></h3>
+            <p class="card-excerpt">Who controls the orbital lanes controls the internet. How low-earth orbit constellations are reshaping national security strategies.</p>
+            <div class="meta">
+              <span class="author">Tom Baker</span>
+              <span>12 min read</span>
+            </div>
+          </article>
 
-                // Simulate success
-                msg.textContent = 'Welcome aboard! Check your inbox to confirm.';
-                msg.className = 'form-msg success';
-                emailInput.value = '';
-                
-                // Reset message after 5 seconds
-                setTimeout(() => {
-                    msg.textContent = '';
-                }, 5000);
-            });
+           <!-- Article 6 -->
+           <article class="card reveal">
+            <a href="#" class="card-image">
+              <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80" 
+                   alt="Retro gaming console next to modern controller" 
+                   width="600" height="400" loading="lazy">
+            </a>
+            <span class="category-tag">Culture</span>
+            <h3 class="card-title"><a href="#">Digital Preservation: Saving Games From Oblivion</a></h3>
+            <p class="card-excerpt">Server shutdowns and DRM are erasing history. Archivists are fighting legal battles to ensure the medium’s past survives its planned obsolescence.</p>
+            <div class="meta">
+              <span class="author">Alex Kim</span>
+              <span>7 min read</span>
+            </div>
+          </article>
 
-            // Mobile Menu Toggle (Simple implementation for demo)
-            const menuBtn = document.querySelector('.mobile-menu-btn');
-            const navLinks = document.querySelector('.nav-links');
-            
-            menuBtn.addEventListener('click', () => {
-                const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
-                menuBtn.setAttribute('aria-expanded', !expanded);
-                
-                // In a real app, we'd toggle a class to show/hide nav
-                // For this single-file demo, we'll just alert or log
-                if (!expanded) {
-                    navLinks.style.display = 'flex';
-                    navLinks.style.flexDirection = 'column';
-                    navLinks.style.position = 'absolute';
-                    navLinks.style.top = '100%';
-                    navLinks.style.left = '0';
-                    navLinks.style.right = '0';
-                    navLinks.style.background = 'var(--c-bg)';
-                    navLinks.style.padding = 'var(--space-md)';
-                    navLinks.style.borderBottom = '1px solid var(--c-border)';
-                } else {
-                    navLinks.style.display = '';
-                    navLinks.style.flexDirection = '';
-                    navLinks.style.position = '';
-                    navLinks.style.top = '';
-                    navLinks.style.left = '';
-                    navLinks.style.right = '';
-                    navLinks.style.background = '';
-                    navLinks.style.padding = '';
-                    navLinks.style.borderBottom = '';
-                }
-            });
-        });
-    </script>
+        </div>
+      </section>
+
+      <!-- Sidebar -->
+      <aside>
+        <div class="sidebar-widget reveal">
+          <div class="section-header">
+            <h2 class="section-title">Trending</h2>
+          </div>
+          <ol class="trending-list">
+            <li class="trending-item">
+              <a href="#" class="trending-title">Apple Announces M5 Ultra With Integrated Quantum Co-Processor</a>
+            </li>
+            <li class="trending-item">
+              <a href="#" class="trending-title">EU Passes Comprehensive Right-to-Repair Legislation</a>
+            </li>
+            <li class="trending-item">
+              <a href="#" class="trending-title">Why Rust Is Finally Replacing C++ in Critical Infrastructure</a>
+            </li>
+            <li class="trending-item">
+              <a href="#" class="trending-title">The Death of the Password: Passkeys Adoption Hits 60%</a>
+            </li>
+            <li class="trending-item">
+              <a href="#" class="trending-title">Open Source LLMs Outperform Proprietary Models on Benchmarks</a>
+            </li>
+          </ol>
+        </div>
+
+        <div class="sidebar-widget reveal">
+          <div class="section-header">
+            <h2 class="section-title">Editors' Picks</h2>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+             <a href="#" style="display: block;">
+               <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="Motherboard macro shot" width="400" height="250" style="width: 100%; height: auto; margin-bottom: 0.5rem;" loading="lazy">
+               <h4 style="font-size: 1.1rem; margin-bottom: 0.25rem;">The Chip Shortage Was a Warning</h4>
+               <span class="meta" style="font-size: 0.75rem;">Opinion • 5 min read</span>
+             </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+
+    <!-- Newsletter -->
+    <section class="newsletter reveal" aria-labelledby="newsletter-heading">
+      <div class="container newsletter-inner">
+        <span class="category-tag">Stay Informed</span>
+        <h2 id="newsletter-heading">Decode the Future</h2>
+        <p>Join 50,000+ technologists receiving our weekly deep dives. No spam, just signal.</p>
+        
+        <form class="newsletter-form" id="signup-form" novalidate>
+          <label for="newsletter-email" class="visually-hidden">Email Address</label>
+          <input type="email" id="newsletter-email" class="newsletter-input" placeholder="your@email.com" required autocomplete="email">
+          <button type="submit" class="subscribe-btn">Join Free</button>
+          <div class="form-feedback" id="form-feedback" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Topics Cloud -->
+    <div class="container topics-cloud reveal" role="navigation" aria-label="Topics">
+      <a href="#" class="topic-pill">Machine Learning</a>
+      <a href="#" class="topic-pill">Cybersecurity</a>
+      <a href="#" class="topic-pill">Blockchain</a>
+      <a href="#" class="topic-pill">SaaS</a>
+      <a href="#" class="topic-pill">Robotics</a>
+      <a href="#" class="topic-pill">Green Tech</a>
+      <a href="#" class="topic-pill">Startups</a>
+      <a href="#" class="topic-pill">Policy</a>
+      <a href="#" class="topic-pill">Space</a>
+      <a href="#" class="topic-pill">Biotech</a>
+    </div>
+
+  </main>
+
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="/" class="logo" style="color: white; margin-bottom: 1rem; display: block;">Signal<span>.</span></a>
+          <p style="color: #aaa; font-size: 0.9rem;">Independent journalism for the digital age. We investigate the technologies shaping tomorrow.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Sections</h3>
+          <ul class="footer-links">
+            <li><a href="#">Artificial Intelligence</a></li>
+            <li><a href="#">Cybersecurity</a></li>
+            <li><a href="#">Enterprise</a></li>
+            <li><a href="#">Consumer Tech</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Company</h3>
+          <ul class="footer-links">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Code of Ethics</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Legal</h3>
+          <ul class="footer-links">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Cookie Settings</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        &copy; 2026 Signal Media Inc. All rights reserved. Designed with precision.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Intersection Observer for Scroll Reveals
+    document.addEventListener('DOMContentLoaded', () => {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      
+      if (!prefersReducedMotion) {
+        const observerOptions = {
+          root: null,
+          rootMargin: '0px',
+          threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      } else {
+        // If reduced motion, just show everything
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+      }
+
+      // Newsletter Form Validation
+      const form = document.getElementById('signup-form');
+      const emailInput = document.getElementById('newsletter-email');
+      const feedback = document.getElementById('form-feedback');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = emailInput.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        feedback.className = 'form-feedback';
+        
+        if (!email) {
+          feedback.textContent = 'Please enter your email address.';
+          feedback.classList.add('error');
+          return;
+        }
+
+        if (!emailRegex.test(email)) {
+          feedback.textContent = 'Please enter a valid email address.';
+          feedback.classList.add('error');
+          return;
+        }
+
+        // Simulate success
+        feedback.textContent = 'Welcome aboard! Check your inbox for confirmation.';
+        feedback.classList.add('success');
+        emailInput.value = '';
+        
+        // Reset message after 5 seconds
+        setTimeout(() => {
+          feedback.textContent = '';
+          feedback.className = 'form-feedback';
+        }, 5000);
+      });
+    });
+  </script>
 <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
 </html>
