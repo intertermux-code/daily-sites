@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter & Verse | Independent Bookstore</title>
+    <meta name="description" content="Discover your next favorite read at Chapter & Verse. An independent bookstore featuring curated classics, staff picks, and community events.">
+    <meta name="theme-color" content="#7c2d3e">
+    
+    <!-- Fonts: Libre Baskerville (Serif) and Lato (Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS Variables & Reset --- */
+        :root {
+            --color-bg: #f7f1e5;
+            --color-text: #2c2424;
+            --color-accent: #7c2d3e;
+            --color-accent-hover: #5a1f2d;
+            --color-paper: #fffbf5;
+            --color-border: #e0d6c8;
+            
+            --font-serif: 'Libre Baskerville', serif;
+            --font-sans: 'Lato', sans-serif;
+            
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 8rem;
+            
+            --container-width: 1200px;
+            --radius: 4px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-serif);
+            font-weight: 700;
+            text-wrap: balance;
+            line-height: 1.2;
+            color: var(--color-accent);
+        }
+
+        a { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+        a:hover { color: var(--color-accent); }
+        
+        img { max-width: 100%; height: auto; display: block; object-fit: cover; }
+        
+        button {
+            font-family: var(--font-sans);
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        /* --- Accessibility --- */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--color-accent);
+            color: white;
+            padding: 8px;
+            z-index: 100;
+            transition: top 0.2s;
+        }
+        .skip-link:focus { top: 0; }
+
+        :focus-visible {
+            outline: 3px solid var(--color-accent);
+            outline-offset: 2px;
+        }
+
+        /* --- Layout Utilities --- */
+        .container {
+            width: 90%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-sm);
+        }
+
+        .section-padding { padding: var(--spacing-lg) 0; }
+        
+        .text-center { text-align: center; }
+        
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+        }
+
+        /* --- Header & Nav --- */
+        header {
+            background-color: var(--color-paper);
+            border-bottom: 1px solid var(--color-border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            letter-spacing: -0.5px;
+        }
+
+        nav ul { display: flex; gap: var(--spacing-md); list-style: none; }
+        
+        nav a {
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 0;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after, nav a:focus-visible::after { width: 100%; }
+
+        .mobile-menu-btn { display: none; font-size: 1.5rem; color: var(--color-accent); }
+
+        /* --- Hero Section --- */
+        .hero {
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(rgba(44, 36, 36, 0.6), rgba(44, 36, 36, 0.6)), url('https://picsum.photos/seed/chapter-and-verse-9e93c8aaf27c/1600/900?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--color-paper);
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: var(--spacing-md);
+            animation: fadeIn Up 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            color: var(--color-paper);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-md);
+            font-weight: 300;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--color-accent);
+            color: var(--color-paper);
+            padding: 1rem 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: var(--radius);
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            min-height: 44px; /* Touch target */
+        }
+
+        .btn:hover {
+            background-color: var(--color-accent-hover);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        /* --- Staff Picks Shelf --- */
+        .shelf-section { background-color: var(--color-bg); }
+        
+        .section-header {
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .section-header h2 { font-size: 2.5rem; margin-bottom: var(--spacing-xs); }
+        .section-header p { font-style: italic; color: #555; }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--color-accent);
+            border-radius: 50px;
+            color: var(--color-accent);
+            font-weight: 700;
+            transition: all 0.2s ease;
+            min-height: 44px;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--color-accent);
+            color: var(--color-paper);
+        }
+
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .book-card {
+            background: var(--color-paper);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .book-spine {
+            height: 12px;
+            background: var(--color-accent);
+            width: 100%;
+            opacity: 0.8;
+        }
+
+        .book-image-wrapper {
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+            background: #eee;
+        }
+
+        .book-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .book-card:hover .book-image-wrapper img { transform: scale(1.05); }
+
+        .book-details { padding: var(--spacing-sm); flex-grow: 1; display: flex; flex-direction: column; }
+        
+        .book-title { font-size: 1.25rem; margin-bottom: 0.25rem; color: var(--color-text); }
+        .book-author { font-style: italic; color: #666; margin-bottom: var(--spacing-sm); font-size: 0.9rem; }
+        .book-desc { 
+            font-size: 0.9rem; 
+            color: #444; 
+            margin-bottom: var(--spacing-sm); 
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .book-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: var(--spacing-sm);
+            border-top: 1px solid var(--color-border);
+            font-family: var(--font-sans);
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* --- Events Calendar --- */
+        .events-section { background-color: var(--color-paper); }
+
+        .event-list {
+            display: grid;
+            gap: var(--spacing-md);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .event-item {
+            display: flex;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            background: var(--color-bg);
+            align-items: center;
+        }
+
+        .event-date {
+            text-align: center;
+            min-width: 80px;
+            background: var(--color-accent);
+            color: white;
+            padding: var(--spacing-sm);
+            border-radius: var(--radius);
+        }
+
+        .event-day { font-size: 2rem; font-weight: 700; line-height: 1; display: block; }
+        .event-month { text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+
+        .event-info h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .event-time { font-weight: 700; color: var(--color-accent); margin-bottom: 0.5rem; display: block; }
+
+        /* --- Newsletter / Book Club --- */
+        .newsletter-section {
+            background-color: var(--color-accent);
+            color: var(--color-paper);
+            text-align: center;
+        }
+
+        .newsletter-section h2 { color: var(--color-paper); margin-bottom: var(--spacing-sm); }
+        .newsletter-section p { margin-bottom: var(--spacing-md); opacity: 0.9; }
+
+        .signup-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-group { position: relative; text-align: left; }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid transparent;
+            border-radius: var(--radius);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+        }
+
+        input[type="email"]:focus {
+            outline: none;
+            border-color: var(--color-bg);
+        }
+
+        .btn-secondary {
+            background-color: var(--color-bg);
+            color: var(--color-accent);
+            width: 100%;
+        }
+        
+        .btn-secondary:hover {
+            background-color: white;
+            color: var(--color-accent);
+        }
+
+        /* --- About Section --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+
+        .about-img {
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            aspect-ratio: 4/3;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: #2c2424;
+            color: #aaa;
+            padding: var(--spacing-lg) 0;
+            font-size: 0.9rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .footer-col h4 { color: var(--color-paper); margin-bottom: var(--spacing-sm); font-size: 1.1rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 0.5rem; }
+        .footer-col a:hover { color: var(--color-paper); }
+
+        .copyright {
+            text-align: center;
+            padding-top: var(--spacing-md);
+            border-top: 1px solid #444;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .nav-wrapper { position: relative; }
+            .mobile-menu-btn { display: block; }
+            
+            nav {
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: var(--color-paper);
+                border-bottom: 1px solid var(--color-border);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+
+            nav.open { max-height: 300px; }
+            nav ul { flex-direction: column; padding: var(--spacing-sm); gap: var(--spacing-sm); }
+            
+            .about-grid { grid-template-columns: 1fr; }
+            .event-item { flex-direction: column; text-align: center; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .reveal { opacity: 1; transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to Content</a>
+
+    <header>
+        <div class="container nav-wrapper">
+            <a href="#" class="logo" aria-label="Chapter & Verse Home">Chapter & Verse</a>
+            <button class="mobile-menu-btn" aria-label="Toggle Navigation Menu" aria-expanded="false" aria-controls="main-nav">
+                ☰
+            </button>
+            <nav id="main-nav" aria-label="Main Navigation">
+                <ul>
+                    <li><a href="#picks">Staff Picks</a></li>
+                    <li><a href="#events">Events</a></li>
+                    <li><a href="#club">Book Club</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Stories That Stay With You</h1>
+                <p>Curated classics, hidden gems, and a quiet corner for your imagination.</p>
+                <a href="#picks" class="btn">Browse Collection</a>
+            </div>
+        </section>
+
+        <!-- Staff Picks Section -->
+        <section id="picks" class="section-padding shelf-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>Staff Picks</h2>
+                    <p>Hand-selected favorites from our booksellers</p>
+                </div>
+
+                <div class="filters reveal" role="group" aria-label="Filter books by genre">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="classic">Classics</button>
+                    <button class="filter-btn" data-filter="fiction">Modern Fiction</button>
+                    <button class="filter-btn" data-filter="nonfiction">Non-Fiction</button>
+                </div>
+
+                <div class="book-grid" id="book-grid">
+                    <!-- Books injected via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section id="events" class="section-padding events-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>Upcoming Events</h2>
+                    <p>Join our community of readers</p>
+                </div>
+
+                <div class="event-list reveal">
+                    <article class="event-item">
+                        <div class="event-date" aria-hidden="true">
+                            <span class="event-day">12</span>
+                            <span class="event-month">Oct</span>
+                        </div>
+                        <div class="event-info">
+                            <h3>Author Talk: Elena Ferrante</h3>
+                            <span class="event-time">Saturday, 6:00 PM – 8:00 PM</span>
+                            <p>A discussion on the Neapolitan Novels and the anonymity of modern authorship. Wine and cheese provided.</p>
+                        </div>
+                    </article>
+
+                    <article class="event-item">
+                        <div class="event-date" aria-hidden="true">
+                            <span class="event-day">24</span>
+                            <span class="event-month">Oct</span>
+                        </div>
+                        <div class="event-info">
+                            <h3>Children’s Story Hour</h3>
+                            <span class="event-time">Sunday, 10:00 AM – 11:00 AM</span>
+                            <p>Interactive reading sessions for ages 4-8. This week featuring "The Very Hungry Caterpillar".</p>
+                        </div>
+                    </article>
+
+                    <article class="event-item">
+                        <div class="event-date" aria-hidden="true">
+                            <span class="event-day">05</span>
+                            <span class="event-month">Nov</span>
+                        </div>
+                        <div class="event-info">
+                            <h3>Poetry Slam Night</h3>
+                            <span class="event-time">Friday, 7:30 PM – 9:30 PM</span>
+                            <p>Open mic night for local poets. Sign up at the counter starting at 7:00 PM.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Book Club Signup -->
+        <section id="club" class="section-padding newsletter-section">
+            <div class="container reveal">
+                <h2>Join the Book Club</h2>
+                <p>Get monthly reading recommendations and exclusive invites to member-only discussions.</p>
+                <form class="signup-form" action="#" method="POST" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+                    <div class="form-group">
+                        <label for="email" class="form-label sr-only">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email address" required aria-required="true">
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Sign Up Now</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section-padding">
+            <div class="container">
+                <div class="about-grid reveal">
+                    <img src="https://images.unsplash.com/photo-1526243741027-444d633d7365?auto=format&fit=crop&w=1200&q=80" alt="Interior of a cozy bookstore with wooden shelves and warm lighting" class="about-img" width="600" height="450">
+                    <div>
+                        <h2>About Chapter & Verse</h2>
+                        <p style="margin-top: 1rem;">Established in 1984, Chapter & Verse has been a sanctuary for bibliophiles in the heart of the city. We believe that a bookstore is more than just a retail space—it’s a community hub where ideas are exchanged and imaginations are sparked.</p>
+                        <p style="margin-top: 1rem;">Our shelves are stocked not just with bestsellers, but with stories that challenge, comfort, and inspire. Whether you’re looking for a rare first edition or the latest Booker Prize winner, our knowledgeable staff is here to guide you to your next great read.</p>
+                        <p style="margin-top: 1rem;"><strong>Visit Us:</strong><br>123 Literary Lane<br>Booktown, BK 90210</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="#picks">New Arrivals</a></li>
+                        <li><a href="#picks">Bestsellers</a></li>
+                        <li><a href="#events">Events Calendar</a></li>
+                        <li><a href="#">Gift Cards</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Twitter / X</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Newsletter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Chapter & Verse Bookstore. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- Data: Real Classic & Modern Books ---
+        const books = [
+            {
+                title: "Pride and Prejudice",
+                author: "Jane Austen",
+                category: "classic",
+                price: "$14.99",
+                desc: "A witty comedy of manners exploring marriage, morality, and misconceptions in Regency-era England.",
+                image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                title: "1984",
+                author: "George Orwell",
+                category: "classic",
+                price: "$12.50",
+                desc: "A dystopian social science fiction novel and cautionary tale about the future of totalitarian regimes.",
+                image: "https://images.unsplash.com/photo-1535905557558-afc4877a26fc?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                title: "To Kill a Mockingbird",
+                author: "Harper Lee",
+                category: "classic",
+                price: "$16.00",
+                desc: "The unforgettable novel of a childhood in a sleepy Southern town and the crisis of conscience that rocked it.",
+                image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                title: "The Great Gatsby",
+                author: "F. Scott Fitzgerald",
+                category: "classic",
+                price: "$13.95",
+                desc: "A portrait of the Jazz Age in all of its decadence and excess, capturing the spirit of the Lost Generation.",
+                image: "https://picsum.photos/seed/chapter-and-verse-41c89ee00ca3/1600/900?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                title: "Normal People",
+                author: "Sally Rooney",
+                category: "fiction",
+                price: "$18.00",
+                desc: "An exquisite love story about how a person can change another person's life, following Connell and Marianne.",
+                image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                title: "Sapiens",
+                author: "Yuval Noah Harari",
+                category: "nonfiction",
+                price: "$22.00",
+                desc: "A brief history of humankind, exploring how biology and history have defined us and enhanced our understanding.",
+                image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                title: "The Alchemist",
+                author: "Paulo Coelho",
+                category: "fiction",
+                price: "$15.50",
+                desc: "A magical fable about following your dreams, centered on an Andalusian shepherd boy named Santiago.",
+                image: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                title: "Educated",
+                author: "Tara Westover",
+                category: "nonfiction",
+                price: "$19.99",
+                desc: "A memoir about a young girl who leaves her survivalist family and goes on to earn a PhD from Cambridge.",
+                image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80"
+            }
+        ];
+
+        // --- Render Books ---
+        const bookGrid = document.getElementById('book-grid');
+        
+        function renderBooks(filter = 'all') {
+            bookGrid.innerHTML = '';
+            
+            const filteredBooks = filter === 'all' 
+                ? books 
+                : books.filter(book => book.category === filter);
+
+            if (filteredBooks.length === 0) {
+                bookGrid.innerHTML = '<p class="text-center" style="grid-column: 1/-1;">No books found in this category.</p>';
+                return;
+            }
+
+            filteredBooks.forEach(book => {
+                const card = document.createElement('article');
+                card.className = 'book-card reveal';
+                card.innerHTML = `
+                    <div class="book-spine"></div>
+                    <div class="book-image-wrapper">
+                        <img src="${book.image}" alt="Cover of ${book.title} by ${book.author}" width="400" height="600" loading="lazy">
+                    </div>
+                    <div class="book-details">
+                        <h3 class="book-title">${book.title}</h3>
+                        <p class="book-author">${book.author}</p>
+                        <p class="book-desc">${book.desc}</p>
+                        <div class="book-meta">
+                            <span>${book.price}</span>
+                            <button class="btn" style="padding: 0.5rem 1rem; font-size: 0.8rem;" aria-label="Add ${book.title} to cart">Add to Cart</button>
+                        </div>
+                    </div>
+                `;
+                bookGrid.appendChild(card);
+            });
+            
+            // Re-trigger observer for new elements
+            observeElements();
+        }
+
+        // --- Filtering Logic ---
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active state
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Filter content
+                renderBooks(btn.dataset.filter);
+            });
+        });
+
+        // --- Mobile Menu ---
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.getElementById('main-nav');
+        
+        menuBtn.addEventListener('click', () => {
+            const isOpen = nav.classList.toggle('open');
+            menuBtn.setAttribute('aria-expanded', isOpen);
+            menuBtn.textContent = isOpen ? '✕' : '☰';
+        });
+
+        // Close menu when clicking a link
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('open');
+                menuBtn.setAttribute('aria-expanded', 'false');
+                menuBtn.textContent = '☰';
+            });
+        });
+
+        // --- Scroll Animation Observer ---
+        function observeElements() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderBooks();
+            observeElements();
+        });
+
+    </script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
