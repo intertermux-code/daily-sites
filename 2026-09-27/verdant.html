@@ -1,62 +1,63 @@
 <!DOCTYPE html>
-<html lang="en" style="color-scheme: light;">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verdant | Minimalist Skincare</title>
-    <meta name="theme-color" content="#5b7d5a">
-    <meta name="description" content="Clean, botanical skincare for a radiant complexion. Shop our minimalist collection.">
+    <title>Verdant | Clean Skincare</title>
+    <meta name="description" content="Minimalist, effective skincare for a radiant complexion.">
+    <meta name="theme-color" content="#f4f7f5">
     
-    <!-- Fonts: Cormorant Garamond (Serif) & Inter (Sans) -->
+    <!-- Fonts: Cormorant Garamond (Serif) & Outfit (Sans) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
         /* --- CSS VARIABLES & RESET --- */
         :root {
+            --color-bg: #f9fbf9;
+            --color-surface: #ffffff;
             --color-primary: #5b7d5a; /* Sage Green */
             --color-primary-dark: #466345;
-            --color-text: #1a1a1a;
-            --color-text-light: #666666;
-            --color-bg: #ffffff;
-            --color-bg-off: #f9f9f7; /* Creamy white */
-            --color-border: #e5e5e5;
+            --color-text-main: #1a2619;
+            --color-text-muted: #5c6b5b;
+            --color-border: #e0e6e0;
             
             --font-serif: 'Cormorant Garamond', serif;
-            --font-sans: 'Inter', sans-serif;
+            --font-sans: 'Outfit', sans-serif;
             
-            --spacing-container: 1.5rem;
-            --max-width: 1400px;
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 8rem;
+            
+            --container-width: 1280px;
             --header-height: 80px;
             
             --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+            --transition-fast: 0.3s var(--ease-out);
         }
 
-        @media (prefers-color-scheme: dark) {
-            /* Optional: Simple dark mode support if requested, sticking to light airy for now as per "airy" prompt */
-        }
-
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px;
-        }
-
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        html { scroll-behavior: smooth; color-scheme: light; }
+        
         body {
             font-family: var(--font-sans);
-            color: var(--color-text);
             background-color: var(--color-bg);
+            color: var(--color-text-main);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
 
+        img { max-width: 100%; height: auto; display: block; object-fit: cover; }
+        a { text-decoration: none; color: inherit; transition: color var(--transition-fast); }
+        button { font-family: inherit; cursor: pointer; border: none; background: none; }
+        ul { list-style: none; }
+
+        /* --- TYPOGRAPHY --- */
         h1, h2, h3, h4, h5, h6 {
             font-family: var(--font-serif);
             font-weight: 500;
@@ -64,116 +65,60 @@
             line-height: 1.1;
         }
 
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            object-fit: cover;
-        }
-
-        button {
-            font-family: inherit;
-            cursor: pointer;
-            border: none;
-            background: none;
-            font-size: inherit;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        ul { list-style: none; }
+        h1 { font-size: clamp(3rem, 5vw, 5rem); letter-spacing: -0.02em; }
+        h2 { font-size: clamp(2rem, 4vw, 3.5rem); margin-bottom: var(--spacing-md); }
+        h3 { font-size: 1.5rem; }
+        
+        .text-center { text-align: center; }
+        .tabular-nums { font-variant-numeric: tabular-nums; }
 
         /* --- UTILITIES --- */
         .container {
             width: 100%;
-            max-width: var(--max-width);
+            max-width: var(--container-width);
             margin: 0 auto;
-            padding: 0 var(--spacing-container);
+            padding: 0 var(--spacing-sm);
         }
 
         .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border-width: 0;
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
         }
 
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-flex; align-items: center; justify-content: center;
             padding: 1rem 2rem;
             background-color: var(--color-primary);
             color: white;
             font-weight: 500;
-            letter-spacing: 0.02em;
-            transition: transform 0.3s var(--ease-out), background-color 0.3s ease;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            transition: transform var(--transition-fast), background-color var(--transition-fast);
             min-height: 44px; /* Touch target */
         }
 
-        .btn:hover {
-            background-color: var(--color-primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .btn:focus-visible {
-            outline: 2px solid var(--color-primary);
-            outline-offset: 4px;
-        }
-
+        .btn:hover { background-color: var(--color-primary-dark); transform: translateY(-2px); }
+        .btn:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 4px; }
+        
         .btn-outline {
             background-color: transparent;
-            border: 1px solid var(--color-text);
-            color: var(--color-text);
+            border: 1px solid var(--color-text-main);
+            color: var(--color-text-main);
         }
-
-        .btn-outline:hover {
-            background-color: var(--color-text);
-            color: white;
-        }
-
-        .section-padding {
-            padding: 5rem 0;
-        }
-
-        .text-center { text-align: center; }
+        .btn-outline:hover { background-color: var(--color-text-main); color: white; }
 
         /* --- ANIMATIONS --- */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
         @media (prefers-reduced-motion: reduce) {
-            *, ::before, ::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-            .reveal { opacity: 1; transform: none; }
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
         }
 
-        /* --- HEADER & NAV --- */
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* --- COMPONENTS --- */
+        
+        /* Announcement Bar */
         .announcement-bar {
             background-color: var(--color-primary);
             color: white;
@@ -183,719 +128,413 @@
             letter-spacing: 0.05em;
         }
 
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background-color: rgba(255, 255, 255, 0.95);
+        /* Navigation */
+        .site-header {
+            position: sticky; top: 0; z-index: 100;
+            background-color: rgba(249, 251, 249, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--color-border);
             height: var(--header-height);
-            display: flex;
-            align-items: center;
+            display: flex; align-items: center;
         }
 
         .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
+            display: flex; justify-content: space-between; align-items: center; width: 100%;
         }
 
-        .logo {
-            font-family: var(--font-serif);
-            font-size: 1.75rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            color: var(--color-primary);
-        }
+        .logo { font-family: var(--font-serif); font-size: 1.75rem; font-weight: 600; letter-spacing: -0.02em; }
 
-        .desktop-nav {
-            display: none;
-            gap: 2rem;
-        }
-
-        .desktop-nav a {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            position: relative;
-        }
-
+        .desktop-nav { display: none; gap: 2rem; }
+        .desktop-nav a { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; position: relative; }
         .desktop-nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background-color: var(--color-primary);
-            transition: width 0.3s ease;
+            content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
+            background: currentColor; transition: width var(--transition-fast);
         }
-
         .desktop-nav a:hover::after { width: 100%; }
 
-        .nav-actions {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .icon-btn {
-            padding: 0.5rem;
-            position: relative;
-        }
-        
+        .nav-actions { display: flex; gap: 1rem; align-items: center; }
+        .icon-btn { padding: 0.5rem; position: relative; }
         .cart-count {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background-color: var(--color-primary);
-            color: white;
-            font-size: 0.7rem;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transform: scale(0.5);
-            transition: all 0.3s var(--ease-out);
+            position: absolute; top: 0; right: 0;
+            background: var(--color-primary); color: white;
+            font-size: 0.7rem; width: 18px; height: 18px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity var(--transition-fast);
         }
-        
-        .cart-count.active {
-            opacity: 1;
-            transform: scale(1);
-        }
+        .cart-count.has-items { opacity: 1; }
 
         @media (min-width: 768px) {
             .desktop-nav { display: flex; }
             .mobile-menu-btn { display: none; }
         }
 
-        /* --- HERO --- */
+        /* Hero Section */
         .hero {
             position: relative;
-            height: 85vh;
+            height: 90vh;
             min-height: 600px;
-            display: flex;
-            align-items: center;
+            display: flex; align-items: center;
             overflow: hidden;
-            background-color: var(--color-bg-off);
         }
-
         .hero-bg {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
+            position: absolute; inset: 0; z-index: -1;
+        }
+        .hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to right, rgba(249,251,249,0.9) 0%, rgba(249,251,249,0.4) 50%, transparent 100%);
+        }
+        .hero-content { max-width: 600px; padding-left: var(--spacing-md); }
+        .hero-subtitle {
+            text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-primary);
+            margin-bottom: var(--spacing-sm); font-weight: 500;
         }
 
-        .hero-bg img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.9;
+        /* Bestsellers Grid */
+        .products-section { padding: var(--spacing-xl) 0; }
+        .product-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem; margin-top: var(--spacing-lg);
         }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 600px;
-            padding: 2rem;
-            background: rgba(255,255,255,0.85);
-            backdrop-filter: blur(5px);
-            margin-left: 5%;
-            animation: fadeInUp 1s var(--ease-out);
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            margin-bottom: 1rem;
-            color: var(--color-primary-dark);
-        }
-
-        .hero p {
-            font-size: 1.125rem;
-            margin-bottom: 2rem;
-            color: var(--color-text);
-        }
-
-        /* --- BESTSELLERS --- */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .product-card {
-            group: product;
-            display: flex;
-            flex-direction: column;
-        }
-
+        .product-card { position: relative; group: ; }
         .product-image-wrapper {
-            position: relative;
-            aspect-ratio: 4/5;
-            overflow: hidden;
-            background-color: #f0f0f0;
-            margin-bottom: 1rem;
+            position: relative; aspect-ratio: 4/5; overflow: hidden;
+            background-color: #f0f2f0; margin-bottom: 1rem;
         }
-
         .product-image-wrapper img {
-            width: 100%;
-            height: 100%;
-            transition: transform 0.6s var(--ease-out);
+            width: 100%; height: 100%; transition: transform 0.6s ease;
         }
-
-        .product-card:hover .product-image-wrapper img {
-            transform: scale(1.05);
-        }
-
-        .quick-add {
-            position: absolute;
-            bottom: 1rem;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            opacity: 0;
-            width: 90%;
-            background: white;
-            color: var(--color-text);
-            padding: 0.75rem;
-            text-align: center;
-            font-weight: 500;
+        .product-card:hover .product-image-wrapper img { transform: scale(1.05); }
+        
+        .quick-add-btn {
+            position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%) translateY(20px);
+            width: calc(100% - 2rem); background: white; color: var(--color-text-main);
+            opacity: 0; transition: all var(--transition-fast);
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: all 0.3s var(--ease-out);
         }
+        .product-card:hover .quick-add-btn { opacity: 1; transform: translateX(-50%) translateY(0); }
+        
+        .product-info { text-align: center; }
+        .product-title { font-size: 1.1rem; margin-bottom: 0.25rem; font-family: var(--font-serif); }
+        .product-price { font-size: 0.9rem; color: var(--color-text-muted); }
 
-        .product-card:hover .quick-add,
-        .product-card:focus-within .quick-add {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .product-info h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .product-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.9rem;
-            color: var(--color-text-light);
-        }
-
-        .price {
-            font-feature-settings: "tnum";
-            font-weight: 500;
-            color: var(--color-text);
-        }
-
-        /* --- INGREDIENT STORY --- */
+        /* Ingredients Story */
         .story-section {
-            background-color: var(--color-bg-off);
+            padding: var(--spacing-xl) 0;
+            background-color: #eef2ee;
         }
-
         .story-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
-            align-items: center;
+            display: grid; grid-template-columns: 1fr; gap: var(--spacing-lg); align-items: center;
         }
+        .story-image { aspect-ratio: 1/1; overflow: hidden; }
+        .story-image img { width: 100%; height: 100%; }
+        .story-content p { margin-bottom: 1.5rem; color: var(--color-text-muted); font-size: 1.1rem; }
 
-        @media (min-width: 768px) {
+        @media (min-width: 900px) {
             .story-grid { grid-template-columns: 1fr 1fr; }
         }
 
-        .story-content h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            margin-bottom: 1.5rem;
-            color: var(--color-primary);
-        }
-
-        .story-content p {
-            margin-bottom: 1.5rem;
-            color: var(--color-text-light);
-        }
-
-        .story-image {
-            position: relative;
-        }
-        
-        .story-image img {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-        }
-
-        /* --- ROUTINE BUILDER --- */
-        .routine-builder {
-            background-color: white;
-            text-align: center;
-        }
-
+        /* Routine Builder */
+        .routine-builder { padding: var(--spacing-xl) 0; text-align: center; }
         .quiz-container {
-            max-width: 600px;
-            margin: 3rem auto 0;
-            min-height: 300px;
-            position: relative;
+            max-width: 600px; margin: 0 auto;
+            background: white; padding: 3rem; border: 1px solid var(--color-border);
+            min-height: 400px; display: flex; flex-direction: column; justify-content: center;
         }
-
-        .quiz-step {
-            display: none;
-            animation: fadeInUp 0.5s ease;
-        }
-
+        .quiz-step { display: none; animation: fadeIn 0.5s ease; }
         .quiz-step.active { display: block; }
-
-        .quiz-options {
-            display: grid;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
+        .quiz-options { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
         .quiz-option {
-            padding: 1.5rem;
-            border: 1px solid var(--color-border);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            padding: 1rem; border: 1px solid var(--color-border); cursor: pointer;
+            transition: all var(--transition-fast); text-align: left;
         }
-
-        .quiz-option:hover, .quiz-option:focus-visible {
-            border-color: var(--color-primary);
-            background-color: var(--color-bg-off);
+        .quiz-option:hover { border-color: var(--color-primary); background: #f4f7f5; }
+        .result-product {
+            display: flex; gap: 1rem; align-items: center; text-align: left;
+            margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--color-border);
         }
+        .result-img { width: 80px; height: 80px; object-fit: cover; }
 
-        .result-card {
-            border: 1px solid var(--color-border);
-            padding: 2rem;
-            margin-top: 2rem;
-            text-align: left;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- REVIEWS --- */
-        .reviews-section {
-            overflow: hidden;
-        }
-
+        /* Reviews */
+        .reviews-section { padding: var(--spacing-xl) 0; overflow: hidden; }
         .reviews-track {
-            display: flex;
-            gap: 2rem;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            padding: 2rem var(--spacing-container);
-            scrollbar-width: none; /* Firefox */
+            display: flex; gap: 2rem; overflow-x: auto; scroll-snap-type: x mandatory;
+            padding: 2rem var(--spacing-sm); scrollbar-width: none;
         }
-        
         .reviews-track::-webkit-scrollbar { display: none; }
-
         .review-card {
-            min-width: 300px;
-            max-width: 400px;
-            background: var(--color-bg-off);
-            padding: 2rem;
-            scroll-snap-align: center;
-            flex-shrink: 0;
+            min-width: 300px; max-width: 350px; scroll-snap-align: center;
+            background: white; padding: 2rem; border: 1px solid var(--color-border);
         }
+        .stars { color: var(--color-primary); margin-bottom: 1rem; }
+        .review-text { font-style: italic; margin-bottom: 1rem; font-family: var(--font-serif); font-size: 1.2rem; }
+        .reviewer { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); }
 
-        .stars { color: #d4a017; margin-bottom: 1rem; }
-        
-        .review-text {
-            font-family: var(--font-serif);
-            font-size: 1.25rem;
-            font-style: italic;
-            margin-bottom: 1rem;
-        }
-
-        /* --- NEWSLETTER --- */
+        /* Newsletter */
         .newsletter {
-            background-color: var(--color-primary);
-            color: white;
-            text-align: center;
+            padding: var(--spacing-xl) 0; text-align: center;
+            background-color: var(--color-primary); color: white;
         }
-
-        .newsletter h2 { color: white; margin-bottom: 1rem; }
-        .newsletter p { margin-bottom: 2rem; opacity: 0.9; }
-
+        .newsletter h2 { color: white; }
         .newsletter-form {
-            display: flex;
+            display: flex; gap: 0.5rem; max-width: 500px; margin: 2rem auto 0;
             flex-direction: column;
-            gap: 1rem;
-            max-width: 400px;
-            margin: 0 auto;
         }
-
-        @media (min-width: 480px) {
-            .newsletter-form { flex-direction: row; }
-        }
-
         .newsletter-input {
-            flex: 1;
-            padding: 1rem;
-            border: none;
-            font-family: inherit;
+            padding: 1rem; border: none; font-family: inherit; flex: 1;
         }
+        .newsletter-btn { background: var(--color-text-main); color: white; }
+        @media (min-width: 600px) { .newsletter-form { flex-direction: row; } }
 
-        .newsletter-btn {
-            background-color: var(--color-text);
-            color: white;
-            padding: 1rem 2rem;
-            font-weight: 600;
+        /* Footer */
+        .site-footer {
+            background-color: #1a2619; color: #aebfae; padding: var(--spacing-lg) 0 var(--spacing-md);
         }
-
-        /* --- FOOTER --- */
-        footer {
-            background-color: #111;
-            color: #888;
-            padding: 4rem 0 2rem;
-            font-size: 0.9rem;
-        }
-
         .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem;
             margin-bottom: 3rem;
         }
-
-        .footer-col h4 {
-            color: white;
-            margin-bottom: 1.5rem;
-            font-family: var(--font-sans);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-size: 0.8rem;
-        }
-
+        .footer-col h4 { color: white; margin-bottom: 1.5rem; font-size: 1.2rem; }
         .footer-col ul li { margin-bottom: 0.75rem; }
         .footer-col a:hover { color: white; }
+        .copyright { text-align: center; padding-top: 2rem; border-top: 1px solid #2f3d2e; font-size: 0.8rem; }
 
-        .copyright {
-            border-top: 1px solid #333;
-            padding-top: 2rem;
-            text-align: center;
-        }
-
-        /* --- CART DRAWER --- */
+        /* Cart Drawer */
         .cart-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 999;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease;
+            position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200;
+            opacity: 0; visibility: hidden; transition: opacity var(--transition-fast);
         }
-
-        .cart-overlay.open { opacity: 1; visibility: visible; }
-
         .cart-drawer {
-            position: fixed;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            width: 100%;
-            max-width: 400px;
-            background: white;
-            z-index: 1000;
-            transform: translateX(100%);
-            transition: transform 0.4s var(--ease-out);
-            display: flex;
-            flex-direction: column;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            position: fixed; top: 0; right: 0; bottom: 0; width: 100%; max-width: 450px;
+            background: white; z-index: 201; transform: translateX(100%);
+            transition: transform var(--transition-fast);
+            display: flex; flex-direction: column;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.05);
         }
-
-        .cart-drawer.open { transform: translateX(0); }
-
-        .cart-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--color-border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .cart-items {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1.5rem;
-        }
-
-        .cart-item {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .cart-item-img {
-            width: 80px;
-            height: 100px;
-            object-fit: cover;
-            background: #eee;
-        }
-
-        .cart-item-details { flex: 1; }
+        .cart-open .cart-overlay { opacity: 1; visibility: visible; }
+        .cart-open .cart-drawer { transform: translateX(0); }
         
-        .cart-item-title { font-weight: 500; margin-bottom: 0.25rem; }
-        .cart-item-price { color: var(--color-text-light); font-size: 0.9rem; }
-
-        .cart-footer {
-            padding: 1.5rem;
-            border-top: 1px solid var(--color-border);
-            background: var(--color-bg-off);
+        .cart-header {
+            padding: 1.5rem; border-bottom: 1px solid var(--color-border);
+            display: flex; justify-content: space-between; align-items: center;
         }
-
-        .cart-total {
-            display: flex;
-            justify-content: space-between;
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
-
-        .empty-cart-msg {
-            text-align: center;
-            margin-top: 3rem;
-            color: var(--color-text-light);
-        }
-
-        /* --- ICONS (SVG) --- */
-        .icon { width: 24px; height: 24px; stroke-width: 1.5; }
+        .cart-items { flex: 1; overflow-y: auto; padding: 1.5rem; }
+        .cart-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+        .cart-item-img { width: 80px; height: 100px; object-fit: cover; background: #eee; }
+        .cart-item-details { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .cart-item-actions { display: flex; align-items: center; gap: 0.5rem; }
+        .qty-btn { width: 24px; height: 24px; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; }
+        .cart-footer { padding: 1.5rem; border-top: 1px solid var(--color-border); background: #fafcfb; }
+        .cart-total { display: flex; justify-content: space-between; font-weight: 600; font-size: 1.2rem; margin-bottom: 1rem; }
+        .empty-cart-msg { text-align: center; margin-top: 3rem; color: var(--color-text-muted); }
 
     </style>
 </head>
 <body>
 
     <!-- Skip Link -->
-    <a href="#main-content" class="sr-only" style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; z-index:9999; background:white; padding:1rem; color:black; text-decoration:none;" onfocus="this.style.position='fixed'; this.style.left='1rem'; this.style.top='1rem'; this.style.width='auto'; this.style.height='auto';" onblur="this.style.position='absolute'; this.style.left='-9999px'; this.style.width='1px'; this.style.height='1px';">Skip to Content</a>
+    <a href="#main-content" class="sr-only" style="position:absolute; top:0; left:0; background:white; padding:1rem; z-index:300;">Skip to Content</a>
 
     <!-- Announcement Bar -->
     <div class="announcement-bar" role="region" aria-label="Announcements">
-        Free Shipping on Orders Over $75 • New Arrivals Now Live
+        Free shipping on all orders over $75 • New Arrivals are here
     </div>
 
     <!-- Header -->
-    <header>
+    <header class="site-header">
         <div class="container nav-container">
             <button class="icon-btn mobile-menu-btn" aria-label="Open Menu">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
             </button>
 
-            <a href="#" class="logo" aria-label="Verdant Home">VERDANT</a>
+            <a href="#" class="logo">Verdant.</a>
 
             <nav class="desktop-nav" aria-label="Main Navigation">
                 <a href="#shop">Shop</a>
                 <a href="#ingredients">Ingredients</a>
                 <a href="#routine">Routine Builder</a>
-                <a href="#about">About</a>
+                <a href="#reviews">Reviews</a>
             </nav>
 
             <div class="nav-actions">
                 <button class="icon-btn" aria-label="Search">
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                 </button>
                 <button class="icon-btn" id="cart-toggle" aria-label="Open Cart">
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                    <span class="cart-count" id="cart-count">0</span>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    <span class="cart-count tabular-nums" id="cart-count">0</span>
                 </button>
             </div>
         </div>
     </header>
 
     <main id="main-content">
+        
         <!-- Hero Section -->
-        <section class="hero" aria-labelledby="hero-heading">
+        <section class="hero">
             <div class="hero-bg">
                 <!-- Real Unsplash Image: Woman with clean skin/nature vibe -->
-                <img src="https://images.unsplash.com/photo-1556760544-74068565f05c?auto=format&fit=crop&w=1600&q=80" alt="Woman applying skincare in natural light" width="1600" height="1000">
+                <img src="https://images.unsplash.com/photo-1556760544-74068565f05c?auto=format&fit=crop&w=1600&q=80" alt="Woman applying skincare in natural light" width="1600" height="1200">
             </div>
-            <div class="container">
-                <div class="hero-content">
-                    <h1 id="hero-heading">Nature’s Potency,<br>Bottled for You.</h1>
-                    <p>Experience the transformative power of botanical ingredients. Clean, sustainable, and effective skincare designed for your daily ritual.</p>
-                    <a href="#shop" class="btn">Explore Collection</a>
-                </div>
+            <div class="hero-overlay"></div>
+            <div class="container hero-content reveal">
+                <p class="hero-subtitle">Botanical Science</p>
+                <h1>Reveal Your Natural Radiance</h1>
+                <p style="margin: 1.5rem 0 2.5rem; font-size: 1.1rem; color: var(--color-text-muted);">
+                    Minimalist formulations powered by potent plant actives. Experience skincare that breathes.
+                </p>
+                <a href="#shop" class="btn">Explore Collection</a>
             </div>
         </section>
 
         <!-- Bestsellers -->
-        <section id="shop" class="section-padding container reveal" aria-labelledby="bestsellers-heading">
-            <div class="text-center">
-                <h2 id="bestsellers-heading" style="font-size: 2.5rem; margin-bottom: 0.5rem;">Bestsellers</h2>
-                <p style="color: var(--color-text-light);">The essentials loved by our community.</p>
+        <section id="shop" class="products-section container">
+            <div class="text-center reveal">
+                <h2>Curated Essentials</h2>
+                <p style="color: var(--color-text-muted);">The daily rituals your skin craves.</p>
             </div>
-
-            <div class="products-grid" id="product-grid">
+            
+            <div class="product-grid" id="product-grid">
                 <!-- Products injected via JS -->
             </div>
         </section>
 
         <!-- Ingredient Story -->
-        <section id="ingredients" class="section-padding story-section reveal" aria-labelledby="story-heading">
-            <div class="container">
-                <div class="story-grid">
-                    <div class="story-image">
-                        <!-- Real Unsplash Image: Green leaves/Botanical texture -->
-                        <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=1000&q=80" alt="Fresh green fern leaves close up" width="1000" height="1200">
-                    </div>
-                    <div class="story-content">
-                        <h2 id="story-heading">Rooted in Science,<br>Inspired by Nature.</h2>
-                        <p>We believe that true radiance comes from healthy, nourished skin. Our formulas harness the bio-active compounds of adaptogens like Ashwagandha and Reishi mushroom to protect against environmental stressors.</p>
-                        <p>Sourced ethically and formulated without parabens, sulfates, or synthetic fragrances. Just pure, potent plant power.</p>
-                        <a href="#" class="btn btn-outline" style="margin-top: 1rem;">Read Our Philosophy</a>
-                    </div>
+        <section id="ingredients" class="story-section">
+            <div class="container story-grid">
+                <div class="story-image reveal">
+                    <!-- Real Unsplash Image: Green botanical texture/leaves -->
+                    <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=1000&q=80" alt="Close up of green fern leaves" width="1000" height="1000">
+                </div>
+                <div class="story-content reveal">
+                    <h2>Potent Botanicals,<br>Zero Compromise</h2>
+                    <p>We believe nature provides the most effective solutions. Our formulas harness the power of adaptogens, cold-pressed oils, and bio-ferments.</p>
+                    <p>Sourced ethically and processed minimally to preserve the integrity of every drop. No fillers, just active nourishment.</p>
+                    <a href="#" class="btn btn-outline" style="margin-top: 1rem;">Our Philosophy</a>
                 </div>
             </div>
         </section>
 
         <!-- Routine Builder -->
-        <section id="routine" class="section-padding routine-builder reveal" aria-labelledby="routine-heading">
-            <div class="container">
-                <h2 id="routine-heading" style="font-size: 2.5rem; margin-bottom: 1rem;">Build Your Routine</h2>
-                <p>Not sure where to start? Take our 3-step quiz to find your perfect match.</p>
+        <section id="routine" class="routine-builder container reveal">
+            <h2>Find Your Perfect Routine</h2>
+            <p style="margin-bottom: 2rem; color: var(--color-text-muted);">Answer 3 simple questions to get a personalized recommendation.</p>
+            
+            <div class="quiz-container">
+                <!-- Step 1 -->
+                <div class="quiz-step active" data-step="1">
+                    <h3>What is your primary skin concern?</h3>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="nextStep(2, 'dryness')">Dryness & Dehydration</button>
+                        <button class="quiz-option" onclick="nextStep(2, 'aging')">Fine Lines & Aging</button>
+                        <button class="quiz-option" onclick="nextStep(2, 'acne')">Blemishes & Oiliness</button>
+                    </div>
+                </div>
 
-                <div class="quiz-container" id="quiz-app">
-                    <!-- Step 1 -->
-                    <div class="quiz-step active" data-step="1">
-                        <h3>What is your primary skin concern?</h3>
-                        <div class="quiz-options">
-                            <button class="quiz-option" onclick="nextStep(2, 'dryness')">
-                                <span>Dryness & Dehydration</span>
-                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 18 6-6-6-6"/></svg>
-                            </button>
-                            <button class="quiz-option" onclick="nextStep(2, 'aging')">
-                                <span>Fine Lines & Aging</span>
-                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 18 6-6-6-6"/></svg>
-                            </button>
-                            <button class="quiz-option" onclick="nextStep(2, 'balance')">
-                                <span>Oiliness & Balance</span>
-                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 18 6-6-6-6"/></svg>
-                            </button>
+                <!-- Step 2 -->
+                <div class="quiz-step" data-step="2">
+                    <h3>How does your skin feel by midday?</h3>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="nextStep(3, 'tight')">Tight or parched</button>
+                        <button class="quiz-option" onclick="nextStep(3, 'oily')">Shiny or oily</button>
+                        <button class="quiz-option" onclick="nextStep(3, 'balanced')">Comfortable / Balanced</button>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="quiz-step" data-step="3">
+                    <h3>Preferred texture?</h3>
+                    <div class="quiz-options">
+                        <button class="quiz-option" onclick="showResult('rich')">Rich & Creamy</button>
+                        <button class="quiz-option" onclick="showResult('light')">Lightweight Gel</button>
+                        <button class="quiz-option" onclick="showResult('oil')">Facial Oil</button>
+                    </div>
+                </div>
+
+                <!-- Result -->
+                <div class="quiz-step" id="quiz-result">
+                    <h3>We Recommend</h3>
+                    <div class="result-product">
+                        <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=200&q=80" alt="Recommended Product" class="result-img" width="80" height="80">
+                        <div>
+                            <h4 id="rec-title">Hydrating Essence</h4>
+                            <p id="rec-desc" style="font-size: 0.9rem; color: var(--color-text-muted); margin: 0.5rem 0;">Perfect for restoring moisture barrier.</p>
+                            <button class="btn" style="padding: 0.5rem 1rem; font-size: 0.8rem;" onclick="addToCart(1)">Add to Cart — $48</button>
                         </div>
                     </div>
-
-                    <!-- Step 2 -->
-                    <div class="quiz-step" data-step="2">
-                        <h3>How does your skin feel by midday?</h3>
-                        <div class="quiz-options">
-                            <button class="quiz-option" onclick="nextStep(3, 'tight')">
-                                <span>Tight and Parched</span>
-                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 18 6-6-6-6"/></svg>
-                            </button>
-                            <button class="quiz-option" onclick="nextStep(3, 'shiny')">
-                                <span>Shiny and Greasy</span>
-                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 18 6-6-6-6"/></svg>
-                            </button>
-                            <button class="quiz-option" onclick="nextStep(3, 'comfortable')">
-                                <span>Comfortable / Normal</span>
-                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 18 6-6-6-6"/></svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="quiz-step" data-step="3">
-                        <h3>Pick a texture preference.</h3>
-                        <div class="quiz-options">
-                            <button class="quiz-option" onclick="finishQuiz('rich')">
-                                <span>Rich & Creamy</span>
-                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 18 6-6-6-6"/></svg>
-                            </button>
-                            <button class="quiz-option" onclick="finishQuiz('light')">
-                                <span>Lightweight & Gel-like</span>
-                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 18 6-6-6-6"/></svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Result -->
-                    <div class="quiz-step" id="quiz-result">
-                        <h3>Your Recommended Trio</h3>
-                        <div class="result-card" id="result-content">
-                            <!-- Dynamic Content -->
-                        </div>
-                        <button class="btn" style="margin-top: 1.5rem;" onclick="resetQuiz()">Retake Quiz</button>
-                    </div>
+                    <button class="btn-outline" style="margin-top: 2rem; width: 100%;" onclick="resetQuiz()">Retake Quiz</button>
                 </div>
             </div>
         </section>
 
         <!-- Reviews -->
-        <section class="section-padding reviews-section reveal" aria-labelledby="reviews-heading">
-            <div class="container text-center" style="margin-bottom: 2rem;">
-                <h2 id="reviews-heading" style="font-size: 2.5rem;">Real Results</h2>
+        <section id="reviews" class="reviews-section">
+            <div class="container text-center reveal">
+                <h2>Community Love</h2>
             </div>
             <div class="reviews-track">
                 <article class="review-card">
-                    <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-                    <p class="review-text">“I’ve never seen my skin look this glowing. The Daily Glow Serum is absolutely magic in a bottle.”</p>
-                    <cite>— Sarah M., Verified Buyer</cite>
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">“Finally, skincare that doesn't irritate my sensitive skin. The glow is real.”</p>
+                    <cite class="reviewer">Sarah J. • Verified Buyer</cite>
                 </article>
                 <article class="review-card">
-                    <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-                    <p class="review-text">“Finally, a moisturizer that hydrates without feeling heavy. My sensitive skin loves this stuff.”</p>
-                    <cite>— Elena R., Verified Buyer</cite>
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">“The packaging is beautiful and the serum absorbs instantly. My new holy grail.”</p>
+                    <cite class="reviewer">Elena R. • Verified Buyer</cite>
                 </article>
                 <article class="review-card">
-                    <div class="stars" aria-label="4 out of 5 stars">★★★★☆</div>
-                    <p class="review-text">“The packaging is beautiful and the scent is so calming. It makes my morning routine feel luxurious.”</p>
-                    <cite>— Jessica T., Verified Buyer</cite>
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">“I’ve tried everything for acne, and this is the only thing that calmed it down without drying me out.”</p>
+                    <cite class="reviewer">Marcus T. • Verified Buyer</cite>
                 </article>
                 <article class="review-card">
-                    <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-                    <p class="review-text">“Worth every penny. The texture of my skin has improved significantly in just two weeks.”</p>
-                    <cite>— Amanda L., Verified Buyer</cite>
+                    <div class="stars">★★★★☆</div>
+                    <p class="review-text">“Love the minimalist approach. Less steps, better results.”</p>
+                    <cite class="reviewer">Jessica L. • Verified Buyer</cite>
                 </article>
             </div>
         </section>
 
         <!-- Newsletter -->
-        <section class="section-padding newsletter reveal" aria-labelledby="newsletter-heading">
-            <div class="container">
-                <h2 id="newsletter-heading">Join the Inner Circle</h2>
-                <p>Subscribe for exclusive access to new launches, skincare tips, and 15% off your first order.</p>
-                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
-                    <label for="email-input" class="sr-only">Email Address</label>
-                    <input type="email" id="email-input" class="newsletter-input" placeholder="Enter your email address" required aria-required="true">
-                    <button type="submit" class="newsletter-btn">Subscribe</button>
+        <section class="newsletter">
+            <div class="container reveal">
+                <h2>Join the Inner Circle</h2>
+                <p>Receive 15% off your first order plus exclusive access to new launches.</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Welcome to Verdant! Check your inbox.');">
+                    <label for="email" class="sr-only">Email Address</label>
+                    <input type="email" id="email" class="newsletter-input" placeholder="Enter your email address" required>
+                    <button type="submit" class="btn newsletter-btn">Subscribe</button>
                 </form>
             </div>
         </section>
+
     </main>
 
     <!-- Footer -->
-    <footer>
+    <footer class="site-footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <a href="#" class="logo" style="color: white; display: block; margin-bottom: 1rem;">VERDANT</a>
-                    <p>Clean skincare for the modern minimalist. Designed in California.</p>
-                </div>
-                <div class="footer-col">
-                    <h4>Shop</h4>
+                    <h4>Verdant.</h4>
                     <ul>
-                        <li><a href="#">All Products</a></li>
-                        <li><a href="#">Bundles</a></li>
-                        <li><a href="#">Gift Cards</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Careers</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>Support</h4>
+                    <h4>Help</h4>
                     <ul>
-                        <li><a href="#">FAQ</a></li>
                         <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">FAQ</a></li>
                         <li><a href="#">Contact Us</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>Follow Us</h4>
+                    <h4>Social</h4>
                     <ul>
                         <li><a href="#">Instagram</a></li>
                         <li><a href="#">TikTok</a></li>
@@ -909,25 +548,24 @@
         </div>
     </footer>
 
-    <!-- Cart Drawer -->
-    <div class="cart-overlay" id="cart-overlay" aria-hidden="true"></div>
-    <aside class="cart-drawer" id="cart-drawer" aria-label="Shopping Cart" aria-hidden="true">
+    <!-- Cart Drawer Overlay -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <aside class="cart-drawer" id="cart-drawer" aria-hidden="true">
         <div class="cart-header">
-            <h2>Your Bag</h2>
-            <button class="icon-btn" id="cart-close" aria-label="Close Cart">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            <h3>Your Cart (<span id="cart-header-count" class="tabular-nums">0</span>)</h3>
+            <button class="icon-btn" id="close-cart" aria-label="Close Cart">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
             </button>
         </div>
         <div class="cart-items" id="cart-items-container">
-            <!-- Items injected here -->
-            <p class="empty-cart-msg">Your bag is currently empty.</p>
+            <p class="empty-cart-msg">Your cart is currently empty.</p>
         </div>
         <div class="cart-footer">
             <div class="cart-total">
                 <span>Subtotal</span>
-                <span id="cart-subtotal">$0.00</span>
+                <span id="cart-total-price" class="tabular-nums">$0.00</span>
             </div>
-            <button class="btn" style="width: 100%;" onclick="alert('Checkout functionality coming soon!')">Checkout</button>
+            <button class="btn" style="width: 100%;" onclick="alert('Checkout functionality would proceed here.')">Checkout</button>
         </div>
     </aside>
 
@@ -936,72 +574,57 @@
         const products = [
             {
                 id: 1,
-                name: "Daily Glow Serum",
-                price: 48.00,
-                image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80",
-                alt: "Amber glass dropper bottle of serum"
+                name: "Luminous Dew Serum",
+                price: 68,
+                image: "https://images.unsplash.com/photo-1629198688000-71f23e745b6e?auto=format&fit=crop&w=600&q=80",
+                alt: "Glass bottle of serum with dropper"
             },
             {
                 id: 2,
-                name: "Botanical Moisturizer",
-                price: 54.00,
+                name: "Velvet Night Cream",
+                price: 54,
                 image: "https://picsum.photos/seed/verdant-f99d160bfbc8/1600/900?auto=format&fit=crop&w=600&q=80",
-                alt: "White jar of face cream with green lid"
+                alt: "Jar of white face cream"
             },
             {
                 id: 3,
-                name: "Gentle Clay Cleanser",
-                price: 32.00,
-                image: "https://picsum.photos/seed/verdant-19de75258831/1600/900?auto=format&fit=crop&w=600&q=80",
-                alt: "Tube of clay cleanser"
+                name: "Botanical Cleansing Oil",
+                price: 38,
+                image: "https://picsum.photos/seed/verdant-19de75258835/1600/900?auto=format&fit=crop&w=600&q=80",
+                alt: "Amber bottle of cleansing oil"
             },
             {
                 id: 4,
-                name: "Overnight Recovery Oil",
-                price: 62.00,
-                image: "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=600&q=80",
-                alt: "Blue bottle of face oil"
+                name: "Resurfacing Tonic",
+                price: 42,
+                image: "https://picsum.photos/seed/verdant-9b3b7d5d7741/1600/900?auto=format&fit=crop&w=600&q=80",
+                alt: "Clear bottle of toner"
             }
         ];
 
         let cart = [];
 
-        // --- DOM ELEMENTS ---
-        const productGrid = document.getElementById('product-grid');
-        const cartDrawer = document.getElementById('cart-drawer');
-        const cartOverlay = document.getElementById('cart-overlay');
-        const cartItemsContainer = document.getElementById('cart-items-container');
-        const cartSubtotal = document.getElementById('cart-subtotal');
-        const cartCountBadge = document.getElementById('cart-count');
-        const cartToggle = document.getElementById('cart-toggle');
-        const cartClose = document.getElementById('cart-close');
-
-        // --- INITIALIZATION ---
-        function init() {
-            renderProducts();
-            setupIntersectionObserver();
-            setupCartListeners();
-        }
-
         // --- RENDER PRODUCTS ---
+        const productGrid = document.getElementById('product-grid');
+        
         function renderProducts() {
             productGrid.innerHTML = products.map(product => `
-                <article class="product-card">
+                <article class="product-card reveal">
                     <div class="product-image-wrapper">
                         <img src="${product.image}" alt="${product.alt}" width="600" height="750" loading="lazy">
-                        <button class="quick-add" onclick="addToCart(${product.id})" aria-label="Add ${product.name} to cart">
-                            Add to Bag — $${product.price.toFixed(2)}
+                        <button class="btn quick-add-btn" onclick="addToCart(${product.id})" aria-label="Add ${product.name} to cart">
+                            Add to Cart
                         </button>
                     </div>
                     <div class="product-info">
-                        <h3>${product.name}</h3>
-                        <div class="product-meta">
-                            <span>Skincare</span>
-                            <span class="price">$${product.price.toFixed(2)}</span>
-                        </div>
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-price tabular-nums">$${product.price}.00</p>
                     </div>
                 </article>
             `).join('');
+            
+            // Re-observe new elements for scroll animation
+            observeElements();
         }
 
         // --- CART LOGIC ---
@@ -1010,11 +633,11 @@
             const existingItem = cart.find(item => item.id === id);
 
             if (existingItem) {
-                existingItem.quantity += 1;
+                existingItem.qty++;
             } else {
-                cart.push({ ...product, quantity: 1 });
+                cart.push({ ...product, qty: 1 });
             }
-
+            
             updateCartUI();
             openCart();
         }
@@ -1024,122 +647,114 @@
             updateCartUI();
         }
 
-        function updateCartUI() {
-            // Update Badge
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            cartCountBadge.textContent = totalItems;
-            if (totalItems > 0) {
-                cartCountBadge.classList.add('active');
-            } else {
-                cartCountBadge.classList.remove('active');
+        function changeQty(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.qty += delta;
+                if (item.qty <= 0) removeFromCart(id);
+                else updateCartUI();
             }
+        }
 
-            // Update List
+        function updateCartUI() {
+            const container = document.getElementById('cart-items-container');
+            const countEl = document.getElementById('cart-count');
+            const headerCountEl = document.getElementById('cart-header-count');
+            const totalEl = document.getElementById('cart-total-price');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            countEl.textContent = totalItems;
+            headerCountEl.textContent = totalItems;
+            totalEl.textContent = `$${totalPrice.toFixed(2)}`;
+
+            if (totalItems > 0) countEl.classList.add('has-items');
+            else countEl.classList.remove('has-items');
+
             if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '<p class="empty-cart-msg">Your bag is currently empty.</p>';
-                cartSubtotal.textContent = '$0.00';
+                container.innerHTML = '<p class="empty-cart-msg">Your cart is currently empty.</p>';
                 return;
             }
 
-            let total = 0;
-            cartItemsContainer.innerHTML = cart.map(item => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-                return `
-                    <div class="cart-item">
-                        <img src="${item.image}" alt="" class="cart-item-img" width="80" height="100">
-                        <div class="cart-item-details">
-                            <div class="cart-item-title">${item.name}</div>
-                            <div class="cart-item-price">${item.quantity} x $${item.price.toFixed(2)}</div>
-                            <button onclick="removeFromCart(${item.id})" style="font-size: 0.8rem; text-decoration: underline; margin-top: 0.5rem; color: #666;" aria-label="Remove ${item.name}">Remove</button>
+            container.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-img" width="80" height="100">
+                    <div class="cart-item-details">
+                        <div>
+                            <h4 style="font-size: 1rem; margin-bottom: 0.25rem;">${item.name}</h4>
+                            <p class="tabular-nums" style="font-size: 0.9rem; color: var(--color-text-muted);">$${item.price}.00</p>
                         </div>
-                        <div class="price">$${itemTotal.toFixed(2)}</div>
+                        <div class="cart-item-actions">
+                            <button class="qty-btn" onclick="changeQty(${item.id}, -1)" aria-label="Decrease quantity">−</button>
+                            <span class="tabular-nums" style="font-size: 0.9rem; min-width: 20px; text-align: center;">${item.qty}</span>
+                            <button class="qty-btn" onclick="changeQty(${item.id}, 1)" aria-label="Increase quantity">+</button>
+                            <button onclick="removeFromCart(${item.id})" style="margin-left: auto; font-size: 0.8rem; text-decoration: underline; color: var(--color-text-muted);" aria-label="Remove ${item.name}">Remove</button>
+                        </div>
                     </div>
-                `;
-            }).join('');
-
-            cartSubtotal.textContent = `$${total.toFixed(2)}`;
+                </div>
+            `).join('');
         }
 
+        // --- CART DRAWER TOGGLE ---
+        const cartDrawer = document.getElementById('cart-drawer');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const cartToggle = document.getElementById('cart-toggle');
+        const closeCartBtn = document.getElementById('close-cart');
+
         function openCart() {
-            cartDrawer.classList.add('open');
-            cartOverlay.classList.add('open');
+            document.body.classList.add('cart-open');
             cartDrawer.setAttribute('aria-hidden', 'false');
-            cartOverlay.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
-            cartClose.focus();
+            closeCartBtn.focus();
         }
 
         function closeCart() {
-            cartDrawer.classList.remove('open');
-            cartOverlay.classList.remove('open');
+            document.body.classList.remove('cart-open');
             cartDrawer.setAttribute('aria-hidden', 'true');
-            cartOverlay.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
             cartToggle.focus();
         }
 
-        function setupCartListeners() {
-            cartToggle.addEventListener('click', openCart);
-            cartClose.addEventListener('click', closeCart);
-            cartOverlay.addEventListener('click', closeCart);
-            
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && cartDrawer.classList.contains('open')) {
-                    closeCart();
-                }
-            });
-        }
+        cartToggle.addEventListener('click', openCart);
+        closeCartBtn.addEventListener('click', closeCart);
+        cartOverlay.addEventListener('click', closeCart);
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.body.classList.contains('cart-open')) closeCart();
+        });
 
         // --- QUIZ LOGIC ---
-        window.nextStep = function(stepNum, answer) {
-            // Hide current
+        function nextStep(stepNum, answer) {
             document.querySelectorAll('.quiz-step').forEach(el => el.classList.remove('active'));
-            // Show next
-            const nextEl = document.querySelector(`.quiz-step[data-step="${stepNum}"]`);
-            if(nextEl) nextEl.classList.add('active');
-        };
+            document.querySelector(`.quiz-step[data-step="${stepNum}"]`).classList.add('active');
+        }
 
-        window.finishQuiz = function(pref) {
+        function showResult(type) {
             document.querySelectorAll('.quiz-step').forEach(el => el.classList.remove('active'));
-            const resultEl = document.getElementById('quiz-result');
-            resultEl.classList.add('active');
+            document.getElementById('quiz-result').classList.add('active');
             
-            const resultContent = document.getElementById('result-content');
-            // Simple logic mapping
-            let recTitle = "The Balancing Trio";
-            let recDesc = "Perfect for maintaining your skin's natural equilibrium.";
+            // Simple mock logic for demo
+            const recTitle = document.getElementById('rec-title');
+            const recDesc = document.getElementById('rec-desc');
             
-            if (pref === 'rich') {
-                recTitle = "The Hydration Heroes";
-                recDesc = "Deep moisture to restore your barrier and glow.";
-            } else if (pref === 'light') {
-                recTitle = "The Fresh Start Kit";
-                recDesc = "Lightweight hydration that absorbs instantly.";
+            if (type === 'rich') {
+                recTitle.textContent = "Velvet Night Cream";
+                recDesc.textContent = "Deep hydration for dry or mature skin types.";
+            } else if (type === 'light') {
+                recTitle.textContent = "Luminous Dew Serum";
+                recDesc.textContent = "Lightweight moisture boost for oily or combo skin.";
+            } else {
+                recTitle.textContent = "Botanical Cleansing Oil";
+                recDesc.textContent = "Gentle purification without stripping natural oils.";
             }
+        }
 
-            resultContent.innerHTML = `
-                <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--color-primary);">${recTitle}</h4>
-                <p style="margin-bottom: 1.5rem;">${recDesc}</p>
-                <div style="display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem;">
-                    ${products.slice(0,3).map(p => `
-                        <div style="min-width: 120px; text-align: center;">
-                            <img src="${p.image}" alt="${p.name}" style="width: 100px; height: 120px; object-fit: cover; margin: 0 auto 0.5rem;">
-                            <div style="font-size: 0.8rem; font-weight: 600;">${p.name}</div>
-                        </div>
-                    `).join('')}
-                </div>
-                <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;" onclick="products.slice(0,3).forEach(p => addToCart(p.id))">Add Bundle to Bag ($134.00)</button>
-            `;
-        };
-
-        window.resetQuiz = function() {
+        function resetQuiz() {
             document.querySelectorAll('.quiz-step').forEach(el => el.classList.remove('active'));
             document.querySelector('.quiz-step[data-step="1"]').classList.add('active');
-        };
+        }
 
         // --- SCROLL REVEAL ---
-        function setupIntersectionObserver() {
+        function observeElements() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1152,8 +767,11 @@
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
 
-        // Run
-        document.addEventListener('DOMContentLoaded', init);
+        // --- INIT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            observeElements();
+        });
 
     </script>
 <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
