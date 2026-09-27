@@ -4,46 +4,50 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Signal — Independent Tech Publication</title>
-  <meta name="description" content="Signal is an independent tech publication covering AI, privacy, hardware, and the future of work.">
+  <meta name="description" content="Signal is an independent tech publication covering AI, privacy, startups, and the future of work with depth and nuance.">
   <meta name="theme-color" content="#ffffff">
   
-  <!-- Fonts: Merriweather (Serif) & Inter (Sans) -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --color-bg: #fdfdfd;
-      --color-surface: #ffffff;
-      --color-text-main: #1a1a1a;
-      --color-text-muted: #555555;
-      --color-accent: #d9261c;
-      --color-border: #e5e5e5;
+      --c-bg: #ffffff;
+      --c-paper: #fcfcfc;
+      --c-text: #1a1a1a;
+      --c-text-muted: #555555;
+      --c-accent: #d9261c;
+      --c-border: #e5e5e5;
+      --c-border-strong: #1a1a1a;
       
-      --font-serif: 'Merriweather', serif;
-      --font-sans: 'Inter', sans-serif;
+      --f-serif: 'Merriweather', serif;
+      --f-sans: 'Libre Franklin', sans-serif;
       
-      --spacing-unit: 1rem;
-      --container-width: 1200px;
+      --space-xs: 0.5rem;
+      --space-sm: 1rem;
+      --space-md: 2rem;
+      --space-lg: 4rem;
+      --space-xl: 6rem;
       
-      --transition-fast: 0.2s ease;
-      --transition-med: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      --container: 1200px;
+      --header-height: 70px;
     }
 
     @media (prefers-color-scheme: dark) {
       /* Optional: Dark mode support if requested, but prompt asked for "paper white". 
-         Sticking to light mode per specific style request "newspaper-modern, paper white". */
+         Sticking to light theme as primary per "newspaper-modern, paper white" instruction. */
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     
-    html { scroll-behavior: smooth; font-size: 100%; }
+    html { scroll-behavior: smooth; }
     
     body {
-      background-color: var(--color-bg);
-      color: var(--color-text-main);
-      font-family: var(--font-sans);
+      font-family: var(--f-sans);
+      background-color: var(--c-bg);
+      color: var(--c-text);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
@@ -52,186 +56,147 @@
     /* Accessibility Utilities */
     .skip-link {
       position: absolute;
-      top: -100px;
+      top: -100%;
       left: 0;
-      background: var(--color-accent);
+      background: var(--c-accent);
       color: white;
-      padding: 1rem;
+      padding: var(--space-sm);
       z-index: 1000;
-      transition: top var(--transition-fast);
+      font-weight: bold;
+      text-decoration: none;
     }
     .skip-link:focus { top: 0; }
     
-    .visually-hidden {
-      clip: rect(0 0 0 0);
-      clip-path: inset(50%);
-      height: 1px;
-      overflow: hidden;
-      position: absolute;
-      white-space: nowrap;
-      width: 1px;
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
     }
 
     /* Typography */
     h1, h2, h3, h4, h5, h6 {
-      font-family: var(--font-serif);
+      font-family: var(--f-serif);
       font-weight: 900;
       line-height: 1.2;
       text-wrap: balance;
       letter-spacing: -0.02em;
-      color: var(--color-text-main);
     }
 
-    p { margin-bottom: 1.5em; color: var(--color-text-muted); }
+    h1 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: var(--space-sm); }
+    h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); margin-bottom: var(--space-sm); }
+    h3 { font-size: 1.5rem; margin-bottom: var(--space-xs); }
+    h4 { font-size: 1.25rem; margin-bottom: var(--space-xs); }
     
-    a { text-decoration: none; color: inherit; transition: color var(--transition-fast); }
-    a:hover { color: var(--color-accent); }
+    p { margin-bottom: 1em; font-size: 1.0625rem; color: var(--c-text); }
     
-    /* Focus Styles */
-    :focus-visible {
-      outline: 2px solid var(--color-accent);
-      outline-offset: 4px;
-      border-radius: 2px;
+    .meta {
+      font-family: var(--f-sans);
+      font-size: 0.875rem;
+      color: var(--c-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
+    
+    .accent-text { color: var(--c-accent); }
+    .tabular { font-variant-numeric: tabular-nums; }
 
     /* Layout */
     .container {
-      max-width: var(--container-width);
+      max-width: var(--container);
       margin: 0 auto;
-      padding: 0 var(--spacing-unit);
+      padding: 0 var(--space-sm);
     }
 
-    /* Header / Masthead */
+    /* Header */
     header {
-      border-bottom: 1px solid var(--color-border);
-      padding: 2rem 0;
-      background: var(--color-surface);
+      border-bottom: 1px solid var(--c-border-strong);
       position: sticky;
       top: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
       z-index: 100;
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
     }
 
-    .masthead {
+    .nav-inner {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      width: 100%;
     }
 
     .logo {
-      font-family: var(--font-serif);
-      font-size: 2rem;
+      font-family: var(--f-serif);
       font-weight: 900;
-      letter-spacing: -0.05em;
-      color: var(--color-text-main);
-      text-transform: uppercase;
+      font-size: 1.75rem;
+      text-decoration: none;
+      color: var(--c-text);
+      letter-spacing: -0.03em;
     }
-    
-    .logo span { color: var(--color-accent); }
+    .logo span { color: var(--c-accent); }
 
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 2rem;
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+    nav ul { display: flex; gap: var(--space-md); list-style: none; }
+    nav a {
+      text-decoration: none;
+      color: var(--c-text);
+      font-weight: 500;
+      font-size: 0.95rem;
+      position: relative;
     }
+    nav a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+      background: var(--c-accent); transition: width 0.3s ease;
+    }
+    nav a:hover::after, nav a:focus-visible::after { width: 100%; }
 
-    .subscribe-btn {
-      background: var(--color-text-main);
-      color: white;
-      padding: 0.75rem 1.5rem;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      font-family: var(--font-sans);
-      transition: transform var(--transition-fast), opacity var(--transition-fast);
-    }
-    .subscribe-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-    .subscribe-btn:active { transform: translateY(0); }
+    .mobile-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
 
     /* Hero Section */
     .hero {
-      padding: 4rem 0;
-      border-bottom: 1px solid var(--color-border);
+      padding: var(--space-lg) 0;
+      border-bottom: 1px solid var(--c-border);
     }
-
+    
     .hero-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 3rem;
+      grid-template-columns: 1.5fr 1fr;
+      gap: var(--space-lg);
+      align-items: start;
     }
 
-    @media (min-width: 768px) {
-      .hero-grid { grid-template-columns: 1.5fr 1fr; align-items: start; }
-    }
-
-    .hero-image-wrapper {
+    .hero-img-wrapper {
       position: relative;
       overflow: hidden;
       aspect-ratio: 16/9;
       background: #eee;
     }
-
-    .hero-image-wrapper img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform var(--transition-med);
+    
+    .hero-img-wrapper img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
     
-    .hero-article:hover .hero-image-wrapper img { transform: scale(1.03); }
-
-    .hero-content { display: flex; flex-direction: column; justify-content: center; }
-    
-    .category-tag {
-      color: var(--color-accent);
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      margin-bottom: 1rem;
-      display: inline-block;
-    }
-
-    .hero-title {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      margin-bottom: 1.5rem;
-    }
+    .hero-content:hover .hero-img-wrapper img { transform: scale(1.02); }
 
     .hero-excerpt {
       font-size: 1.25rem;
       line-height: 1.6;
-      margin-bottom: 2rem;
-      color: var(--color-text-main);
-      font-family: var(--font-serif);
-      font-weight: 300;
+      color: var(--c-text);
+      margin: var(--space-sm) 0 var(--space-md);
+      font-family: var(--f-serif);
     }
 
-    .meta {
-      font-size: 0.875rem;
-      color: var(--color-text-muted);
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      font-family: var(--font-sans);
-    }
-
-    .author { font-weight: 600; color: var(--color-text-main); }
-
-    /* Main Content Grid */
-    .content-area {
-      padding: 4rem 0;
+    /* Main Grid Layout */
+    .main-layout {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 4rem;
-    }
-
-    @media (min-width: 992px) {
-      .content-area { grid-template-columns: 2fr 1fr; }
+      grid-template-columns: 1fr 350px;
+      gap: var(--space-lg);
+      padding: var(--space-lg) 0;
     }
 
     /* Latest Articles */
@@ -239,535 +204,465 @@
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 2rem;
-      border-bottom: 2px solid var(--color-text-main);
-      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--c-text);
+      padding-bottom: var(--space-xs);
+      margin-bottom: var(--space-md);
     }
-
-    .section-title { font-size: 1.5rem; margin: 0; }
-
-    .article-grid {
+    
+    .article-card {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 2.5rem;
+      grid-template-columns: 1fr 2fr;
+      gap: var(--space-md);
+      padding-bottom: var(--space-md);
+      margin-bottom: var(--space-md);
+      border-bottom: 1px solid var(--c-border);
+      text-decoration: none;
+      color: inherit;
+      group: ;
     }
-
-    .card {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    .card-image {
+    
+    .article-card:last-child { border-bottom: none; }
+    
+    .card-img {
       aspect-ratio: 3/2;
       overflow: hidden;
-      margin-bottom: 1.25rem;
       background: #f0f0f0;
     }
-
-    .card-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform var(--transition-med);
+    .card-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.4s ease;
     }
-
-    .card:hover .card-image img { transform: scale(1.05); }
-
-    .card-title {
-      font-size: 1.35rem;
-      margin-bottom: 0.75rem;
-      line-height: 1.3;
-    }
-
-    .card-excerpt {
-      font-size: 0.95rem;
-      margin-bottom: 1.5rem;
-      flex-grow: 1;
+    .article-card:hover .card-img img { transform: scale(1.05); }
+    
+    .card-content h3 { transition: color 0.2s ease; }
+    .article-card:hover h3 { color: var(--c-accent); }
+    
+    .excerpt-clamp {
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      color: var(--c-text-muted);
+      font-size: 1rem;
     }
 
-    /* Sidebar / Trending */
-    .sidebar-widget { margin-bottom: 3rem; }
+    /* Sidebar */
+    aside { position: sticky; top: calc(var(--header-height) + var(--space-md)); align-self: start; }
     
-    .trending-list { list-style: none; counter-reset: trending; }
+    .sidebar-block { margin-bottom: var(--space-lg); }
     
+    .trending-list { list-style: none; counter-reset: trend; }
     .trending-item {
-      counter-increment: trending;
-      padding: 1.25rem 0;
-      border-bottom: 1px solid var(--color-border);
+      counter-increment: trend;
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--c-border);
       display: flex;
-      gap: 1rem;
+      gap: var(--space-sm);
       align-items: baseline;
     }
-
     .trending-item::before {
-      content: "0" counter(trending);
-      font-family: var(--font-serif);
+      content: counter(trend);
+      font-family: var(--f-serif);
       font-size: 2rem;
       font-weight: 900;
-      color: var(--color-border);
+      color: var(--c-border);
       line-height: 1;
-      min-width: 2.5rem;
+      min-width: 2rem;
     }
-
-    .trending-item:hover::before { color: var(--color-accent); }
-
-    .trending-title {
-      font-family: var(--font-serif);
-      font-size: 1.1rem;
-      font-weight: 700;
-      line-height: 1.4;
-    }
+    .trending-item:hover::before { color: var(--c-accent); }
+    .trending-link { text-decoration: none; color: var(--c-text); font-weight: 700; font-family: var(--f-serif); }
+    .trending-link:hover { text-decoration: underline; text-decoration-color: var(--c-accent); }
 
     /* Newsletter */
     .newsletter {
-      background: #f4f4f4;
-      padding: 4rem 0;
+      background: var(--c-paper);
+      border: 1px solid var(--c-border);
+      padding: var(--space-md);
       text-align: center;
     }
-
-    .newsletter-inner { max-width: 600px; margin: 0 auto; }
     
-    .newsletter h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+    .newsletter-form { display: flex; flex-direction: column; gap: var(--space-xs); margin-top: var(--space-sm); }
     
-    .newsletter-form {
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .newsletter-input {
-      flex: 1;
-      min-width: 250px;
-      padding: 1rem;
-      border: 1px solid var(--color-border);
-      font-family: var(--font-sans);
+    input[type="email"] {
+      padding: 0.8rem;
+      border: 1px solid var(--c-border-strong);
+      font-family: var(--f-sans);
       font-size: 1rem;
-      background: white;
-    }
-
-    .newsletter-input:focus { border-color: var(--color-text-main); outline: none; }
-
-    .form-feedback {
       width: 100%;
-      margin-top: 0.5rem;
-      font-size: 0.875rem;
-      min-height: 1.5em;
     }
-    .form-feedback.error { color: var(--color-accent); }
-    .form-feedback.success { color: green; }
+    
+    button.btn-primary {
+      background: var(--c-accent);
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: opacity 0.2s ease, transform 0.1s ease;
+      touch-action: manipulation;
+      min-height: 44px;
+    }
+    
+    button.btn-primary:hover { opacity: 0.9; }
+    button.btn-primary:active { transform: scale(0.98); }
+    button.btn-primary:focus-visible { outline: 2px solid var(--c-text); outline-offset: 2px; }
 
     /* Topics Cloud */
-    .topics-cloud {
-      padding: 3rem 0;
-      border-top: 1px solid var(--color-border);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      justify-content: center;
-    }
-
-    .topic-pill {
-      padding: 0.5rem 1.25rem;
-      border: 1px solid var(--color-border);
-      border-radius: 50px;
-      font-size: 0.875rem;
+    .topics-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .topic-tag {
+      padding: 0.4rem 0.8rem;
+      border: 1px solid var(--c-border-strong);
+      text-decoration: none;
+      color: var(--c-text);
+      font-size: 0.85rem;
       font-weight: 500;
-      transition: all var(--transition-fast);
+      transition: background 0.2s, color 0.2s;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
     }
-
-    .topic-pill:hover {
-      border-color: var(--color-text-main);
-      background: var(--color-text-main);
-      color: white;
-    }
+    .topic-tag:hover { background: var(--c-text); color: white; }
 
     /* Footer */
     footer {
-      background: var(--color-text-main);
-      color: white;
-      padding: 4rem 0 2rem;
+      border-top: 4px solid var(--c-text);
+      padding: var(--space-lg) 0;
+      margin-top: var(--space-lg);
+      background: var(--c-paper);
     }
-
+    
     .footer-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 3rem;
-      margin-bottom: 3rem;
+      gap: var(--space-md);
     }
-
-    .footer-col h3 {
-      color: white;
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 1.5rem;
-      font-family: var(--font-sans);
-    }
-
-    .footer-links { list-style: none; }
-    .footer-links li { margin-bottom: 0.75rem; }
-    .footer-links a { color: #aaa; font-size: 0.9rem; }
-    .footer-links a:hover { color: white; }
-
-    .copyright {
-      border-top: 1px solid #333;
-      padding-top: 2rem;
-      text-align: center;
-      color: #666;
-      font-size: 0.8rem;
-    }
+    
+    .footer-col h5 { font-size: 1rem; margin-bottom: var(--space-sm); text-transform: uppercase; letter-spacing: 0.05em; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 0.5rem; }
+    .footer-col a { text-decoration: none; color: var(--c-text-muted); }
+    .footer-col a:hover { color: var(--c-accent); }
 
     /* Animations */
     @media (prefers-reduced-motion: no-preference) {
-      .reveal {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-      }
+      .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
       .reveal.visible { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .main-layout { grid-template-columns: 1fr; }
+      aside { position: static; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+      .newsletter { grid-column: span 2; }
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; } /* Simplified mobile handling for single file constraint */
+      .mobile-menu-btn { display: block; }
+      .article-card { grid-template-columns: 1fr; }
+      aside { grid-template-columns: 1fr; }
+      .newsletter { grid-column: span 1; }
+      h1 { font-size: 2.25rem; }
     }
   </style>
 </head>
 <body>
 
-  <a href="#main-content" class="skip-link">Skip to content</a>
+  <a href="#main-content" class="skip-link">Skip to Content</a>
 
   <header role="banner">
-    <div class="container masthead">
+    <div class="container nav-inner">
       <a href="/" class="logo" aria-label="Signal Home">Signal<span>.</span></a>
       
-      <nav aria-label="Primary Navigation">
+      <nav role="navigation" aria-label="Main Navigation">
         <ul>
-          <li><a href="#ai">AI & ML</a></li>
-          <li><a href="#privacy">Privacy</a></li>
-          <li><a href="#hardware">Hardware</a></li>
-          <li><a href="#culture">Culture</a></li>
+          <li><a href="#ai">Artificial Intelligence</a></li>
+          <li><a href="#privacy">Privacy & Security</a></li>
+          <li><a href="#startups">Startups</a></li>
+          <li><a href="#culture">Digital Culture</a></li>
+          <li><a href="#subscribe" class="accent-text">Subscribe</a></li>
         </ul>
       </nav>
 
-      <button class="subscribe-btn" onclick="document.getElementById('newsletter-email').focus()">Subscribe</button>
+      <button class="mobile-menu-btn" aria-label="Open Menu" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
     </div>
   </header>
 
   <main id="main-content">
     
-    <!-- Hero Section -->
-    <section class="hero container reveal" aria-labelledby="hero-heading">
+    <!-- HERO SECTION -->
+    <section class="hero container reveal" aria-labelledby="hero-title">
       <div class="hero-grid">
-        <article class="hero-article">
-          <div class="hero-content">
-            <span class="category-tag">Artificial Intelligence</span>
-            <h1 id="hero-heading" class="hero-title">The Black Box Problem: Why Even Engineers Can’t Explain Modern AI</h1>
-            <p class="hero-excerpt">As models grow larger and more capable, our understanding of their internal decision-making processes diminishes. We entered the age of algorithmic intuition, and regulators are scrambling to catch up.</p>
-            <div class="meta">
-              <span class="author">By Sarah Chen</span>
-              <span aria-hidden="true">•</span>
-              <time datetime="2026-09-27">Sept 27, 2026</time>
-              <span aria-hidden="true">•</span>
-              <span>14 min read</span>
-            </div>
+        <div class="hero-content">
+          <div class="meta">
+            <span class="accent-text">Deep Dive</span>
+            <span aria-hidden="true">•</span>
+            <time datetime="2026-09-27">Sept 27, 2026</time>
+            <span aria-hidden="true">•</span>
+            <span class="tabular">14 min read</span>
           </div>
-        </article>
-        <div class="hero-image-wrapper">
-          <!-- Using a reliable Unsplash ID for abstract tech/server room -->
-          <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1600&q=80" 
-               alt="Abstract visualization of neural network connections in blue and red light" 
+          
+          <h1 id="hero-title">The Silicon Valley Consensus Is Breaking: Why General AI May Never Arrive</h1>
+          
+          <p class="hero-excerpt">
+            For a decade, scaling laws promised us godlike intelligence by 2028. But new research from Zurich suggests we’ve hit a fundamental thermodynamic wall. As venture capital pivots to “narrow utility,” the industry faces its first true existential winter.
+          </p>
+          
+          <div class="meta">
+            <span>By <strong>Elena Vance</strong></span>
+          </div>
+        </div>
+        
+        <div class="hero-img-wrapper">
+          <!-- Real Unsplash Image: Abstract Server/Tech -->
+          <img src="https://picsum.photos/seed/signal-blog-ef526b0042a0/1600/900?auto=format&fit=crop&w=1600&q=80" 
+               alt="Abstract visualization of neural network pathways in red and black tones" 
                width="800" height="450" loading="eager">
         </div>
       </div>
     </section>
 
-    <!-- Content Area -->
-    <div class="container content-area">
+    <!-- MAIN CONTENT GRID -->
+    <div class="container main-layout">
       
-      <!-- Latest Articles -->
+      <!-- LEFT COLUMN: LATEST ARTICLES -->
       <section aria-labelledby="latest-heading">
         <div class="section-header">
-          <h2 id="latest-heading" class="section-title">Latest Stories</h2>
-          <a href="#" style="font-weight: 600; font-size: 0.9rem;">View Archive →</a>
+          <h2 id="latest-heading">Latest Stories</h2>
+          <a href="/archive" style="font-size: 0.9rem; font-weight: 700; text-decoration: none;">View Archive →</a>
         </div>
 
-        <div class="article-grid">
-          
-          <!-- Article 1 -->
-          <article class="card reveal">
-            <a href="#" class="card-image">
-              <img src="https://picsum.photos/seed/signal-blog-8f7856677741/1600/900?auto=format&fit=crop&w=800&q=80" 
-                   alt="Close up of a microchip on a circuit board" 
-                   width="600" height="400" loading="lazy">
-            </a>
-            <span class="category-tag">Hardware</span>
-            <h3 class="card-title"><a href="#">Silicon Valley’s New Obsession: Photonic Computing</a></h3>
-            <p class="card-excerpt">Electrons are hitting their physical limits. Startups are betting billions that photons are the key to breaking the exascale barrier without melting the planet.</p>
-            <div class="meta">
-              <span class="author">Marcus Reid</span>
-              <span>8 min read</span>
-            </div>
-          </article>
+        <!-- Article 1 -->
+        <article class="article-card reveal">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80" 
+                 alt="Close up of encrypted hardware security module" 
+                 width="400" height="267" loading="lazy">
+          </div>
+          <div class="card-content">
+            <div class="meta"><span class="accent-text">Security</span> • <span class="tabular">6 min</span></div>
+            <h3><a href="#" class="stretched-link" tabindex="-1" aria-hidden="true"></a>The Post-Quantum Migration Has Already Failed</h3>
+            <p class="excerpt-clamp">Government agencies mandated new encryption standards last year, yet 80% of critical infrastructure remains vulnerable. A look at the bureaucratic bottlenecks threatening global finance.</p>
+            <div class="meta">By Marcus Chen</div>
+          </div>
+        </article>
 
-          <!-- Article 2 -->
-          <article class="card reveal">
-            <a href="#" class="card-image">
-              <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80" 
-                   alt="Person typing on laptop with encrypted code overlay" 
-                   width="600" height="400" loading="lazy">
-            </a>
-            <span class="category-tag">Security</span>
-            <h3 class="card-title"><a href="#">Zero-Trust Architecture Is Failing Small Business</a></h3>
-            <p class="card-excerpt">The security paradigm promised safety for remote teams, but implementation costs and complexity are leaving mid-sized firms vulnerable to sophisticated ransomware.</p>
-            <div class="meta">
-              <span class="author">Elena Rodriguez</span>
-              <span>6 min read</span>
-            </div>
-          </article>
+        <!-- Article 2 -->
+        <article class="article-card reveal">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80" 
+                 alt="Person working on laptop in dark room with code reflection" 
+                 width="400" height="267" loading="lazy">
+          </div>
+          <div class="card-content">
+            <div class="meta"><span class="accent-text">Labor</span> • <span class="tabular">9 min</span></div>
+            <h3><a href="#" class="stretched-link" tabindex="-1" aria-hidden="true"></a>Ghost Work: The Human Supply Chain Behind Autonomous Agents</h3>
+            <p class="excerpt-clamp">We toured the facilities in Nairobi and Manila where workers label edge cases for self-driving fleets. The pay has dropped 40% since the introduction of synthetic data generators.</p>
+            <div class="meta">By Sarah Okonjo</div>
+          </div>
+        </article>
 
-          <!-- Article 3 -->
-          <article class="card reveal">
-            <a href="#" class="card-image">
-              <img src="https://picsum.photos/seed/signal-blog-063472031ef9/1600/900?auto=format&fit=crop&w=800&q=80" 
-                   alt="Modern minimalist workspace with dual monitors" 
-                   width="600" height="400" loading="lazy">
-            </a>
-            <span class="category-tag">Future of Work</span>
-            <h3 class="card-title"><a href="#">The Four-Day Week: Data From the Global Pilot</a></h3>
-            <p class="card-excerpt">Results are in from the largest international trial. Productivity held steady, but retention skyrocketed. Why some CEOs are still saying “no.”</p>
-            <div class="meta">
-              <span class="author">David Park</span>
-              <span>11 min read</span>
-            </div>
-          </article>
+        <!-- Article 3 -->
+        <article class="article-card reveal">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80" 
+                 alt="Earth from space showing satellite connections" 
+                 width="400" height="267" loading="lazy">
+          </div>
+          <div class="card-content">
+            <div class="meta"><span class="accent-text">Space</span> • <span class="tabular">5 min</span></div>
+            <h3><a href="#" class="stretched-link" tabindex="-1" aria-hidden="true"></a>Kessler Syndrome Watch: Orbital Debris Hits Record Density</h3>
+            <p class="excerpt-clamp">Last week’s collision between two defunct Starlink satellites created a debris field that will render low-earth orbit unusable for astronomy within three years.</p>
+            <div class="meta">By Dr. Aris Thorne</div>
+          </div>
+        </article>
 
-          <!-- Article 4 -->
-          <article class="card reveal">
-            <a href="#" class="card-image">
-              <img src="https://images.unsplash.com/photo-1617802690992-15d93263d3a9?auto=format&fit=crop&w=800&q=80" 
-                   alt="Futuristic VR headset resting on a table" 
-                   width="600" height="400" loading="lazy">
-            </a>
-            <span class="category-tag">Consumer Tech</span>
-            <h3 class="card-title"><a href="#">Spatial Computing’s Identity Crisis</a></h3>
-            <p class="card-excerpt">Three years after the big launch, mixed reality headsets are searching for a killer app beyond enterprise training and niche gaming.</p>
-            <div class="meta">
-              <span class="author">Jessica Wu</span>
-              <span>9 min read</span>
-            </div>
-          </article>
+        <!-- Article 4 -->
+        <article class="article-card reveal">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80" 
+                 alt="Matrix style digital rain code" 
+                 width="400" height="267" loading="lazy">
+          </div>
+          <div class="card-content">
+            <div class="meta"><span class="accent-text">Opinion</span> • <span class="tabular">4 min</span></div>
+            <h3><a href="#" class="stretched-link" tabindex="-1" aria-hidden="true"></a>Stop Calling Everything “AI.” It’s Just Regression Analysis.</h3>
+            <p class="excerpt-clamp">The marketing dilution of technical terms is hurting actual innovation. When a toaster has a neural net, we’ve lost the plot.</p>
+            <div class="meta">By Julianne Vex</div>
+          </div>
+        </article>
 
-           <!-- Article 5 -->
-           <article class="card reveal">
-            <a href="#" class="card-image">
-              <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80" 
-                   alt="Satellite view of earth at night showing connectivity" 
-                   width="600" height="400" loading="lazy">
-            </a>
-            <span class="category-tag">Infrastructure</span>
-            <h3 class="card-title"><a href="#">LEO Satellites and the Geopolitics of Bandwidth</a></h3>
-            <p class="card-excerpt">Who controls the orbital lanes controls the internet. How low-earth orbit constellations are reshaping national security strategies.</p>
-            <div class="meta">
-              <span class="author">Tom Baker</span>
-              <span>12 min read</span>
-            </div>
-          </article>
-
-           <!-- Article 6 -->
-           <article class="card reveal">
-            <a href="#" class="card-image">
-              <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80" 
-                   alt="Retro gaming console next to modern controller" 
-                   width="600" height="400" loading="lazy">
-            </a>
-            <span class="category-tag">Culture</span>
-            <h3 class="card-title"><a href="#">Digital Preservation: Saving Games From Oblivion</a></h3>
-            <p class="card-excerpt">Server shutdowns and DRM are erasing history. Archivists are fighting legal battles to ensure the medium’s past survives its planned obsolescence.</p>
-            <div class="meta">
-              <span class="author">Alex Kim</span>
-              <span>7 min read</span>
-            </div>
-          </article>
-
-        </div>
       </section>
 
-      <!-- Sidebar -->
+      <!-- RIGHT COLUMN: SIDEBAR -->
       <aside>
-        <div class="sidebar-widget reveal">
-          <div class="section-header">
-            <h2 class="section-title">Trending</h2>
+        
+        <!-- Trending -->
+        <div class="sidebar-block reveal">
+          <div class="section-header" style="border-bottom-width: 1px;">
+            <h3>Trending Now</h3>
           </div>
           <ol class="trending-list">
             <li class="trending-item">
-              <a href="#" class="trending-title">Apple Announces M5 Ultra With Integrated Quantum Co-Processor</a>
+              <a href="#" class="trending-link">Apple’s AR Glasses Recall: What Went Wrong?</a>
             </li>
             <li class="trending-item">
-              <a href="#" class="trending-title">EU Passes Comprehensive Right-to-Repair Legislation</a>
+              <a href="#" class="trending-link">EU Passes Right-to-Repair Firmware Law</a>
             </li>
             <li class="trending-item">
-              <a href="#" class="trending-title">Why Rust Is Finally Replacing C++ in Critical Infrastructure</a>
+              <a href="#" class="trending-link">Interview: The Coder Who Deleted Her GitHub</a>
             </li>
             <li class="trending-item">
-              <a href="#" class="trending-title">The Death of the Password: Passkeys Adoption Hits 60%</a>
+              <a href="#" class="trending-link">Why YC Banned Crypto Startups This Batch</a>
             </li>
             <li class="trending-item">
-              <a href="#" class="trending-title">Open Source LLMs Outperform Proprietary Models on Benchmarks</a>
+              <a href="#" class="trending-link">Review: Framework Laptop 16 (2026 Edition)</a>
             </li>
           </ol>
         </div>
 
-        <div class="sidebar-widget reveal">
-          <div class="section-header">
-            <h2 class="section-title">Editors' Picks</h2>
+        <!-- Newsletter -->
+        <div class="sidebar-block newsletter reveal" id="subscribe">
+          <h3>The Daily Signal</h3>
+          <p style="font-size: 0.95rem;">Tech news without the hype. Delivered every morning at 7 AM EST.</p>
+          
+          <form class="newsletter-form" action="#" method="POST" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+            <label for="email-input" class="sr-only">Email Address</label>
+            <input type="email" id="email-input" placeholder="your@email.com" required autocomplete="email">
+            <button type="submit" class="btn-primary">Join 45,000+ Readers</button>
+          </form>
+          <p style="font-size: 0.75rem; margin-top: 0.5rem; color: var(--c-text-muted);">No spam. Unsubscribe anytime.</p>
+        </div>
+
+        <!-- Topics Cloud -->
+        <div class="sidebar-block reveal">
+          <div class="section-header" style="border-bottom-width: 1px;">
+            <h3>Explore Topics</h3>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-             <a href="#" style="display: block;">
-               <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="Motherboard macro shot" width="400" height="250" style="width: 100%; height: auto; margin-bottom: 0.5rem;" loading="lazy">
-               <h4 style="font-size: 1.1rem; margin-bottom: 0.25rem;">The Chip Shortage Was a Warning</h4>
-               <span class="meta" style="font-size: 0.75rem;">Opinion • 5 min read</span>
-             </a>
+          <div class="topics-cloud">
+            <a href="#" class="topic-tag">Machine Learning</a>
+            <a href="#" class="topic-tag">SaaS</a>
+            <a href="#" class="topic-tag">Biotech</a>
+            <a href="#" class="topic-tag">Regulation</a>
+            <a href="#" class="topic-tag">Climate Tech</a>
+            <a href="#" class="topic-tag">Semiconductors</a>
+            <a href="#" class="topic-tag">Web3</a>
+            <a href="#" class="topic-tag">Robotics</a>
+            <a href="#" class="topic-tag">VC Funding</a>
           </div>
         </div>
+
       </aside>
-
     </div>
-
-    <!-- Newsletter -->
-    <section class="newsletter reveal" aria-labelledby="newsletter-heading">
-      <div class="container newsletter-inner">
-        <span class="category-tag">Stay Informed</span>
-        <h2 id="newsletter-heading">Decode the Future</h2>
-        <p>Join 50,000+ technologists receiving our weekly deep dives. No spam, just signal.</p>
-        
-        <form class="newsletter-form" id="signup-form" novalidate>
-          <label for="newsletter-email" class="visually-hidden">Email Address</label>
-          <input type="email" id="newsletter-email" class="newsletter-input" placeholder="your@email.com" required autocomplete="email">
-          <button type="submit" class="subscribe-btn">Join Free</button>
-          <div class="form-feedback" id="form-feedback" aria-live="polite"></div>
-        </form>
-      </div>
-    </section>
-
-    <!-- Topics Cloud -->
-    <div class="container topics-cloud reveal" role="navigation" aria-label="Topics">
-      <a href="#" class="topic-pill">Machine Learning</a>
-      <a href="#" class="topic-pill">Cybersecurity</a>
-      <a href="#" class="topic-pill">Blockchain</a>
-      <a href="#" class="topic-pill">SaaS</a>
-      <a href="#" class="topic-pill">Robotics</a>
-      <a href="#" class="topic-pill">Green Tech</a>
-      <a href="#" class="topic-pill">Startups</a>
-      <a href="#" class="topic-pill">Policy</a>
-      <a href="#" class="topic-pill">Space</a>
-      <a href="#" class="topic-pill">Biotech</a>
-    </div>
-
   </main>
 
   <footer role="contentinfo">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <a href="/" class="logo" style="color: white; margin-bottom: 1rem; display: block;">Signal<span>.</span></a>
-          <p style="color: #aaa; font-size: 0.9rem;">Independent journalism for the digital age. We investigate the technologies shaping tomorrow.</p>
-        </div>
-        <div class="footer-col">
-          <h3>Sections</h3>
-          <ul class="footer-links">
-            <li><a href="#">Artificial Intelligence</a></li>
-            <li><a href="#">Cybersecurity</a></li>
-            <li><a href="#">Enterprise</a></li>
-            <li><a href="#">Consumer Tech</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h3>Company</h3>
-          <ul class="footer-links">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Code of Ethics</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h3>Legal</h3>
-          <ul class="footer-links">
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms of Service</a></li>
-            <li><a href="#">Cookie Settings</a></li>
-          </ul>
-        </div>
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <a href="/" class="logo" style="display:inline-block; margin-bottom:1rem;">Signal<span>.</span></a>
+        <p style="font-size: 0.9rem; color: var(--c-text-muted); max-width: 250px;">
+          Independent journalism for the digital age. Funded by readers, not advertisers.
+        </p>
       </div>
-      <div class="copyright">
-        &copy; 2026 Signal Media Inc. All rights reserved. Designed with precision.
+      
+      <div class="footer-col">
+        <h5>Sections</h5>
+        <ul>
+          <li><a href="#">Artificial Intelligence</a></li>
+          <li><a href="#">Cybersecurity</a></li>
+          <li><a href="#">Startup Ecosystem</a></li>
+          <li><a href="#">Policy & Law</a></li>
+        </ul>
       </div>
+      
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Code of Ethics</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Settings</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="container" style="margin-top: var(--space-lg); border-top: 1px solid var(--c-border); padding-top: var(--space-sm); display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--c-text-muted);">
+      <span>&copy; 2026 Signal Media Inc.</span>
+      <span>Designed for Clarity.</span>
     </div>
   </footer>
 
   <script>
-    // Intersection Observer for Scroll Reveals
+    // Simple Intersection Observer for scroll reveals
     document.addEventListener('DOMContentLoaded', () => {
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       
       if (!prefersReducedMotion) {
-        const observerOptions = {
-          root: null,
-          rootMargin: '0px',
-          threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries, obs) => {
+        const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
               entry.target.classList.add('visible');
-              obs.unobserve(entry.target);
+              observer.unobserve(entry.target);
             }
           });
-        }, observerOptions);
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
       } else {
-        // If reduced motion, just show everything
+        // If reduced motion, just show everything immediately
         document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
       }
 
-      // Newsletter Form Validation
-      const form = document.getElementById('signup-form');
-      const emailInput = document.getElementById('newsletter-email');
-      const feedback = document.getElementById('form-feedback');
-
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = emailInput.value.trim();
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        feedback.className = 'form-feedback';
+      // Mobile Menu Toggle Logic
+      const menuBtn = document.querySelector('.mobile-menu-btn');
+      const navUl = document.querySelector('nav ul');
+      
+      menuBtn.addEventListener('click', () => {
+        const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+        menuBtn.setAttribute('aria-expanded', !expanded);
         
-        if (!email) {
-          feedback.textContent = 'Please enter your email address.';
-          feedback.classList.add('error');
-          return;
+        // Simple toggle for demo purposes
+        if (!expanded) {
+          navUl.style.display = 'flex';
+          navUl.style.flexDirection = 'column';
+          navUl.style.position = 'absolute';
+          navUl.style.top = 'var(--header-height)';
+          navUl.style.left = '0';
+          navUl.style.right = '0';
+          navUl.style.background = 'white';
+          navUl.style.padding = 'var(--space-md)';
+          navUl.style.borderBottom = '1px solid var(--c-border)';
+          navUl.style.boxShadow = '0 4px 6px rgba(0,0,0,0.05)';
+        } else {
+          navUl.style.display = '';
+          navUl.style.flexDirection = '';
+          navUl.style.position = '';
+          navUl.style.top = '';
+          navUl.style.left = '';
+          navUl.style.right = '';
+          navUl.style.background = '';
+          navUl.style.padding = '';
+          navUl.style.borderBottom = '';
+          navUl.style.boxShadow = '';
         }
-
-        if (!emailRegex.test(email)) {
-          feedback.textContent = 'Please enter a valid email address.';
-          feedback.classList.add('error');
-          return;
-        }
-
-        // Simulate success
-        feedback.textContent = 'Welcome aboard! Check your inbox for confirmation.';
-        feedback.classList.add('success');
-        emailInput.value = '';
-        
-        // Reset message after 5 seconds
-        setTimeout(() => {
-          feedback.textContent = '';
-          feedback.className = 'form-feedback';
-        }, 5000);
       });
     });
   </script>
