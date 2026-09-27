@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en" style="color-scheme: light;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signal — Independent Tech Publication</title>
+    <meta name="description" content="Deep dives into technology, culture, and the future of humanity.">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --c-bg: #fcfbf9; /* Paper white */
+            --c-text: #1a1a1a;
+            --c-text-muted: #555555;
+            --c-accent: #d9261c;
+            --c-border: #e5e5e5;
+            --c-border-dark: #1a1a1a;
+            
+            --f-serif: 'Lora', serif;
+            --f-sans: 'Inter', sans-serif;
+            
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 4rem;
+            --space-xl: 6rem;
+            
+            --container: 1200px;
+            --tap-target: 44px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --c-bg: #121212;
+                --c-text: #ececec;
+                --c-text-muted: #aaaaaa;
+                --c-border: #333333;
+                --c-border-dark: #ececec;
+            }
+            html { color-scheme: dark; }
+            body { background-color: var(--c-bg); color: var(--c-text); }
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: var(--f-sans);
+            background-color: var(--c-bg);
+            color: var(--c-text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        /* Accessibility & Utilities */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 0;
+            background: var(--c-accent);
+            color: white;
+            padding: var(--space-sm);
+            z-index: 1000;
+            transition: top 0.2s ease;
+        }
+        .skip-link:focus { top: 0; }
+
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--c-accent);
+            outline-offset: 4px;
+        }
+
+        a { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+        a:hover { color: var(--c-accent); }
+
+        img { max-width: 100%; height: auto; display: block; object-fit: cover; }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--f-serif);
+            font-weight: 700;
+            line-height: 1.2;
+            text-wrap: balance;
+            letter-spacing: -0.02em;
+        }
+
+        .t-display { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; }
+        .t-h2 { font-size: clamp(1.75rem, 3vw, 2.25rem); }
+        .t-h3 { font-size: 1.5rem; }
+        .t-h4 { font-size: 1.25rem; }
+        .t-meta { 
+            font-family: var(--f-sans); 
+            font-size: 0.875rem; 
+            color: var(--c-text-muted); 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em; 
+            font-feature-settings: "tnum";
+        }
+        .t-body { font-size: 1.125rem; line-height: 1.7; }
+        .t-small { font-size: 0.875rem; }
+
+        /* Layout */
+        .container {
+            width: 100%;
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: 0 var(--space-sm);
+        }
+
+        .grid-layout {
+            display: grid;
+            gap: var(--space-md);
+        }
+
+        /* Components */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: var(--tap-target);
+            padding: 0 var(--space-md);
+            font-family: var(--f-sans);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.875rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
+            touch-action: manipulation;
+        }
+
+        .btn-primary {
+            background-color: var(--c-accent);
+            color: white;
+        }
+        .btn-primary:hover { background-color: #b01e16; color: white; }
+
+        .btn-outline {
+            border-color: var(--c-text);
+            background: transparent;
+            color: var(--c-text);
+        }
+        .btn-outline:hover { background: var(--c-text); color: var(--c-bg); }
+
+        .divider {
+            border: none;
+            border-top: 1px solid var(--c-border);
+            margin: var(--space-md) 0;
+        }
+        .divider-thick { border-top: 4px solid var(--c-text); }
+
+        /* Header */
+        .masthead {
+            padding: var(--space-sm) 0;
+            border-bottom: 1px solid var(--c-border);
+            position: sticky;
+            top: 0;
+            background: var(--c-bg);
+            z-index: 100;
+        }
+        .masthead-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-family: var(--f-serif);
+            font-weight: 900;
+            font-size: 2rem;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+        }
+        .nav-links { display: none; gap: var(--space-md); }
+        .nav-links a { font-weight: 500; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        
+        @media (min-width: 768px) {
+            .nav-links { display: flex; }
+            .mobile-menu-btn { display: none; }
+        }
+
+        /* Hero Section */
+        .hero { padding: var(--space-lg) 0; }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-md);
+        }
+        .hero-image-wrapper {
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            background: #eee;
+        }
+        .hero-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hero-card:hover .hero-image-wrapper img { transform: scale(1.03); }
+        
+        @media (min-width: 900px) {
+            .hero-grid { grid-template-columns: 1.5fr 1fr; align-items: center; }
+        }
+
+        /* Article Grid */
+        .feed-section { padding: var(--space-lg) 0; }
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--space-lg) var(--space-md);
+        }
+        .article-card { display: flex; flex-direction: column; gap: var(--space-xs); }
+        .article-card-img {
+            aspect-ratio: 3/2;
+            overflow: hidden;
+            margin-bottom: var(--space-sm);
+        }
+        .article-card-img img { width: 100%; height: 100%; transition: transform 0.4s ease; }
+        .article-card:hover .article-card-img img { transform: scale(1.03); }
+        .category-tag {
+            color: var(--c-accent);
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+            display: inline-block;
+        }
+
+        /* Sidebar / Trending */
+        .content-split {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-lg);
+            padding: var(--space-lg) 0;
+            border-top: 1px solid var(--c-border);
+        }
+        @media (min-width: 900px) {
+            .content-split { grid-template-columns: 2fr 1fr; }
+        }
+        .trending-list { list-style: none; counter-reset: trend; }
+        .trending-item {
+            counter-increment: trend;
+            padding: var(--space-sm) 0;
+            border-bottom: 1px solid var(--c-border);
+            display: flex;
+            gap: var(--space-sm);
+            align-items: baseline;
+        }
+        .trending-item::before {
+            content: counter(trend);
+            font-family: var(--f-serif);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--c-border);
+            line-height: 1;
+            min-width: 2rem;
+        }
+        .trending-item:hover::before { color: var(--c-accent); }
+
+        /* Newsletter */
+        .newsletter {
+            background: #f0efeb;
+            padding: var(--space-xl) 0;
+            text-align: center;
+        }
+        @media (prefers-color-scheme: dark) { .newsletter { background: #1a1a1a; } }
+        
+        .newsletter-form {
+            max-width: 500px;
+            margin: var(--space-md) auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+        @media (min-width: 600px) {
+            .newsletter-form { flex-direction: row; }
+        }
+        .input-group { flex: 1; position: relative; }
+        input[type="email"] {
+            width: 100%;
+            padding: 0 var(--space-sm);
+            height: var(--tap-target);
+            border: 1px solid var(--c-text);
+            background: var(--c-bg);
+            color: var(--c-text);
+            font-family: var(--f-sans);
+            font-size: 1rem;
+        }
+        .form-msg {
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            min-height: 1.2em;
+        }
+        .form-msg.error { color: var(--c-accent); }
+        .form-msg.success { color: green; }
+
+        /* Footer */
+        footer {
+            padding: var(--space-lg) 0;
+            border-top: 4px solid var(--c-text);
+            font-size: 0.9rem;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+        }
+        .footer-col h5 { margin-bottom: var(--space-sm); font-family: var(--f-sans); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.8rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 0.5rem; }
+
+        /* Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { transition: none; opacity: 1; transform: none; }
+            .hero-image-wrapper img, .article-card-img img { transition: none; }
+            html { scroll-behavior: auto; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <header class="masthead">
+        <div class="container masthead-inner">
+            <a href="#" class="logo" aria-label="Signal Home">Signal.</a>
+            
+            <nav class="nav-links" aria-label="Main Navigation">
+                <a href="#tech">Technology</a>
+                <a href="#science">Science</a>
+                <a href="#culture">Culture</a>
+                <a href="#policy">Policy</a>
+                <a href="#reviews">Reviews</a>
+            </nav>
+
+            <button class="btn btn-outline mobile-menu-btn" aria-label="Open Menu" aria-expanded="false">
+                Menu
+            </button>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero container reveal">
+            <div class="hero-grid">
+                <article class="hero-card">
+                    <span class="category-tag">Artificial Intelligence</span>
+                    <h1 class="t-display"><a href="#">The Silence of the Algorithms: Why We Stopped Understanding Our Own Tools</a></h1>
+                    <p class="t-body" style="margin-top: var(--space-sm);">
+                        As models grow larger and more opaque, the engineers who built them are admitting they no longer know how they work. We entered the black box to find out what happens when intuition replaces explanation.
+                    </p>
+                    <div class="t-meta" style="margin-top: var(--space-sm);">
+                        By <strong>Elena Fisher</strong> · 12 min read
+                    </div>
+                </article>
+                <div class="hero-image-wrapper">
+                    <!-- Real Unsplash Image: Abstract Server/Tech -->
+                    <img src="https://picsum.photos/seed/signal-blog-ef526b0042a0/1600/900?auto=format&fit=crop&w=1600&q=80" 
+                         alt="Abstract visualization of fiber optic cables glowing in red and blue darkness" 
+                         width="800" height="450" loading="eager">
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider container">
+
+        <!-- Latest Feed -->
+        <section class="feed-section container">
+            <div class="content-split">
+                <div>
+                    <h2 class="t-h3" style="margin-bottom: var(--space-md); border-bottom: 1px solid var(--c-border); padding-bottom: var(--space-xs);">Latest Stories</h2>
+                    
+                    <div class="article-grid">
+                        <!-- Article 1 -->
+                        <article class="article-card reveal">
+                            <div class="article-card-img">
+                                <img src="https://picsum.photos/seed/signal-blog-ef225377e09c/1600/900?auto=format&fit=crop&w=800&q=80" 
+                                     alt="Close up of a mechanical keyboard with custom keycaps" 
+                                     width="600" height="400" loading="lazy">
+                            </div>
+                            <span class="category-tag">Hardware</span>
+                            <h3 class="t-h4"><a href="#">The Return of Tactile: Why Gen Z Is Rejecting Touchscreens</a></h3>
+                            <p class="t-small t-muted" style="line-clamp: 3; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                                From flip phones to mechanical keyboards, the digital native generation is seeking physical feedback in an increasingly glass-dominated world.
+                            </p>
+                            <div class="t-meta">Marcus Chen · 6 min</div>
+                        </article>
+
+                        <!-- Article 2 -->
+                        <article class="article-card reveal">
+                            <div class="article-card-img">
+                                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80" 
+                                     alt="Digital map of global internet connections visualized as glowing nodes" 
+                                     width="600" height="400" loading="lazy">
+                            </div>
+                            <span class="category-tag">Infrastructure</span>
+                            <h3 class="t-h4"><a href="#">Splinternet: How Undersea Cables Became Geopolitical Weapons</a></h3>
+                            <p class="t-small t-muted" style="line-clamp: 3; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                                The physical backbone of the cloud is fragile, and nations are beginning to treat fiber optics like strategic reserves.
+                            </p>
+                            <div class="t-meta">Sarah Jenkins · 9 min</div>
+                        </article>
+
+                        <!-- Article 3 -->
+                        <article class="article-card reveal">
+                            <div class="article-card-img">
+                                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80" 
+                                     alt="Cybersecurity concept with binary code overlay on a silhouette" 
+                                     width="600" height="400" loading="lazy">
+                            </div>
+                            <span class="category-tag">Security</span>
+                            <h3 class="t-h4"><a href="#">Zero Trust Isn’t Enough Anymore</a></h3>
+                            <p class="t-small t-muted" style="line-clamp: 3; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                                Security architects argue that verifying every request assumes you can actually identify the requester. What happens when identity itself is compromised?
+                            </p>
+                            <div class="t-meta">David Okonjo · 11 min</div>
+                        </article>
+
+                        <!-- Article 4 -->
+                        <article class="article-card reveal">
+                            <div class="article-card-img">
+                                <img src="https://picsum.photos/seed/signal-blog-69c960c72abc/1600/900?auto=format&fit=crop&w=800&q=80" 
+                                     alt="Modern minimalist workspace with a single notebook and pen" 
+                                     width="600" height="400" loading="lazy">
+                            </div>
+                            <span class="category-tag">Productivity</span>
+                            <h3 class="t-h4"><a href="#">The Cult of “Deep Work” Is Burning Us Out</a></h3>
+                            <p class="t-small t-muted" style="line-clamp: 3; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                                Optimizing every minute for output ignores the biological necessity of boredom and drift. A case for shallow work.
+                            </p>
+                            <div class="t-meta">Priya Patel · 5 min</div>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside>
+                    <div class="reveal" style="position: sticky; top: 100px;">
+                        <h3 class="t-h4" style="margin-bottom: var(--space-sm);">Trending Now</h3>
+                        <ol class="trending-list">
+                            <li class="trending-item">
+                                <a href="#">
+                                    <span class="t-meta">Opinion</span>
+                                    <h4 class="t-body" style="font-size: 1.1rem; margin-top: 0.25rem;">Why I Sold My Smart Home and Bought a Dumb One</h4>
+                                </a>
+                            </li>
+                            <li class="trending-item">
+                                <a href="#">
+                                    <span class="t-meta">Science</span>
+                                    <h4 class="t-body" style="font-size: 1.1rem; margin-top: 0.25rem;">CRISPR’s Next Target: Aging Itself</h4>
+                                </a>
+                            </li>
+                            <li class="trending-item">
+                                <a href="#">
+                                    <span class="t-meta">Design</span>
+                                    <h4 class="t-body" style="font-size: 1.1rem; margin-top: 0.25rem;">The Homogenization of App Interfaces</h4>
+                                </a>
+                            </li>
+                            <li class="trending-item">
+                                <a href="#">
+                                    <span class="t-meta">Policy</span>
+                                    <h4 class="t-body" style="font-size: 1.1rem; margin-top: 0.25rem;">EU’s AI Act: First Year Review</h4>
+                                </a>
+                            </li>
+                            <li class="trending-item">
+                                <a href="#">
+                                    <span class="t-meta">Space</span>
+                                    <h4 class="t-body" style="font-size: 1.1rem; margin-top: 0.25rem;">Orbital Debris: The Kessler Syndrome Update</h4>
+                                </a>
+                            </li>
+                        </ol>
+
+                        <div style="margin-top: var(--space-lg);">
+                            <h3 class="t-h4" style="margin-bottom: var(--space-sm);">Topics</h3>
+                            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                <a href="#" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.8rem; min-height: auto;">AI Ethics</a>
+                                <a href="#" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.8rem; min-height: auto;">Climate Tech</a>
+                                <a href="#" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.8rem; min-height: auto;">Web3</a>
+                                <a href="#" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.8rem; min-height: auto;">Privacy</a>
+                                <a href="#" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.8rem; min-height: auto;">Startups</a>
+                                <a href="#" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.8rem; min-height: auto;">Robotics</a>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="newsletter reveal">
+            <div class="container">
+                <h2 class="t-h2">Cut Through the Noise</h2>
+                <p class="t-body" style="max-width: 600px; margin: var(--space-sm) auto;">
+                    Join 45,000+ readers receiving our weekly digest of essential tech analysis. No spam, just signal.
+                </p>
+                <form class="newsletter-form" id="newsletterForm" novalidate>
+                    <div class="input-group">
+                        <label for="email" class="sr-only">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+                <div id="formMessage" class="form-msg" aria-live="polite"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h5>Sections</h5>
+                    <ul>
+                        <li><a href="#">Technology</a></li>
+                        <li><a href="#">Science</a></li>
+                        <li><a href="#">Culture</a></li>
+                        <li><a href="#">Business</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Company</h5>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Code of Ethics</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Legal</h5>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Settings</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Follow Signal</h5>
+                    <ul>
+                        <li><a href="#">Twitter / X</a></li>
+                        <li><a href="#">Mastodon</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">RSS Feed</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-sm); padding-top: var(--space-md); border-top: 1px solid var(--c-border);">
+                <span>&copy; 2026 Signal Media Inc.</span>
+                <span class="t-meta">Independent since 2024</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Reveal Animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            // Newsletter Form Validation
+            const form = document.getElementById('newsletterForm');
+            const msg = document.getElementById('formMessage');
+            const emailInput = document.getElementById('email');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = emailInput.value.trim();
+                
+                // Simple regex for validation
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                
+                if (!email) {
+                    msg.textContent = 'Please enter your email address.';
+                    msg.className = 'form-msg error';
+                    return;
+                }
+                
+                if (!re.test(email)) {
+                    msg.textContent = 'Please enter a valid email address.';
+                    msg.className = 'form-msg error';
+                    return;
+                }
+
+                // Simulate success
+                msg.textContent = 'Welcome aboard! Check your inbox to confirm.';
+                msg.className = 'form-msg success';
+                emailInput.value = '';
+                
+                // Reset message after 5 seconds
+                setTimeout(() => {
+                    msg.textContent = '';
+                }, 5000);
+            });
+
+            // Mobile Menu Toggle (Simple implementation for demo)
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            menuBtn.addEventListener('click', () => {
+                const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+                menuBtn.setAttribute('aria-expanded', !expanded);
+                
+                // In a real app, we'd toggle a class to show/hide nav
+                // For this single-file demo, we'll just alert or log
+                if (!expanded) {
+                    navLinks.style.display = 'flex';
+                    navLinks.style.flexDirection = 'column';
+                    navLinks.style.position = 'absolute';
+                    navLinks.style.top = '100%';
+                    navLinks.style.left = '0';
+                    navLinks.style.right = '0';
+                    navLinks.style.background = 'var(--c-bg)';
+                    navLinks.style.padding = 'var(--space-md)';
+                    navLinks.style.borderBottom = '1px solid var(--c-border)';
+                } else {
+                    navLinks.style.display = '';
+                    navLinks.style.flexDirection = '';
+                    navLinks.style.position = '';
+                    navLinks.style.top = '';
+                    navLinks.style.left = '';
+                    navLinks.style.right = '';
+                    navLinks.style.background = '';
+                    navLinks.style.padding = '';
+                    navLinks.style.borderBottom = '';
+                }
+            });
+        });
+    </script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
