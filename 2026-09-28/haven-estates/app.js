@@ -1,86 +1,84 @@
 /**
- * Haven Estates - Main Application Logic
- * Handles navigation, filtering, calculations, and animations.
+ * Haven Estates - Shared Application Logic
+ * Handles navigation, filtering, calculator, and animations
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    initNavigation();
+    initMobileNav();
+    initScrollReveal();
     initListingsFilter();
     initMortgageCalculator();
-    initScrollAnimations();
     initContactForm();
+    initInteractiveRows();
 });
 
-/* --- NAVIGATION --- */
-function initNavigation() {
-    const toggleBtn = document.querySelector('.nav-toggle');
-    const navList = document.querySelector('.nav-list');
+/* --- MOBILE NAVIGATION --- */
+function initMobileNav() {
+    const toggle = document.querySelector('.nav-toggle');
+    const menu = document.querySelector('.nav-list');
+    
+    if (!toggle || !menu) return;
 
-    if (!toggleBtn || !navList) return;
-
-    toggleBtn.addEventListener('click', () => {
-        const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
-        toggleBtn.setAttribute('aria-expanded', !isExpanded);
-        navList.classList.toggle('active');
+    toggle.addEventListener('click', () => {
+        const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', !isOpen);
+        menu.classList.toggle('is-open');
     });
 
-    // Close mobile nav when clicking outside
+    // Close menu when clicking outside
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('.main-nav') && navList.classList.contains('active')) {
-            toggleBtn.setAttribute('aria-expanded', 'false');
-            navList.classList.remove('active');
-        }
-    });
-
-    // Close on escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && navList.classList.contains('active')) {
-            toggleBtn.setAttribute('aria-expanded', 'false');
-            navList.classList.remove('active');
-            toggleBtn.focus();
-        }
+        if (!menu.contains(e.target) && !toggle.contains(e.target) && menu.classList.contains('is-open')) {
+            toggle.setAttribute('aria-expanded', 'false');
+            menu.classList.remove('is-open
     });
 }
 
-/* --- LISTINGS FILTERING --- */
+/* --- SCROLL REVEAL ANIMATION --- */
+function initScrollReveal() {
+    const elements = document.querySelectorAll('.reveal-on-scroll');
+    if (!elements.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target); // Only animate once
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    elements.forEach(el => observer.observe(el));
+}
+
+/* --- LISTINGS FILTER LOGIC --- */
 function initListingsFilter() {
-    const filterForm = document.getElementById('listing-filters');
-    const cards = Array.from(document.querySelectorAll('.property-card'));
-    const countDisplay = document.getElementById('results-count');
-    const noResults = document.getElementById('no-results');
-    const clearBtns = document.querySelectorAll('#clear-filters, .reset-trigger');
-    const sortSelect = document.getElementById('sort-select');
     const grid = document.getElementById('listings-grid');
+    if (!grid) return;
 
-    if (!filterForm || cards.length === 0) return;
+    const cards = Array.from(grid.querySelectorAll('.listing-card'));
+    const noResults = document.getElementById('no-results');
+    const locationSelect = document.getElementById('filter-location');
+    const priceSelect = document.getElementById('filter-price');
+    const bedsSelect = document.getElementById('filter-beds');
+    const resetBtn = document.getElementById('reset-filters');
 
-    const filters = {
-        minPrice: document.getElementById('filter-price-min'),
-        maxPrice: document.getElementById('filter-price-max'),
-        beds: document.getElementById('filter-beds'),
-        baths: document.getElementById('filter-baths')
-    };
-
-    function applyFilters() {
-        const minPrice = parseInt(filters.minPrice.value) || 0;
-        const maxPrice = parseInt(filters.maxPrice.value) || Infinity;
-        const minBeds = parseInt(filters.beds.value) || 0;
-        const minBaths = parseFloat(filters.baths.value) || 0;
-
+    function filterListings() {
+        const locVal = locationSelect.value;
+        const priceVal = parseInt(priceSelect.value, 10);
+        const bedsVal = parseInt(bedsSelect.value, 10);
+        
         let visibleCount = 0;
 
         cards.forEach(card => {
-            const price = parseInt(card.dataset.price);
-            const beds = parseInt(card.dataset.beds);
-            const baths = parseFloat(card.dataset.baths);
+            const cardLoc = card.dataset.location;
+            const cardPrice = parseInt(card.dataset.price, 10);
+            const cardBeds = parseInt(card.dataset.beds, 10);
 
-            const matches = 
-                price >= minPrice && 
-                price <= maxPrice && 
-                beds >= minBeds && 
-                baths >= minBaths;
+            const matchLoc = locVal === 'all' || cardLoc === locVal;
+            const matchPrice = cardPrice <= priceVal;
+            const matchBeds = cardBeds >= bedsVal;
 
-            if (matches) {
+            if (matchLoc && matchPrice && matchBeds) {
                 card.classList.remove('hidden');
                 visibleCount++;
             } else {
@@ -88,144 +86,116 @@ function initListingsFilter() {
             }
         });
 
-        // Update UI state
-        if (countDisplay) countDisplay.textContent = `Showing ${visibleCount} propert${visibleCount === 1 ? 'y' : 'ies'}`;
-        
         if (visibleCount === 0) {
-            if (grid) grid.classList.add('hidden');
-            if (noResults) noResults.classList.remove('hidden');
+            noResults.classList.remove('hidden');
         } else {
-            if (grid) grid.classList.remove('hidden');
-            if (noResults) noResults.classList.add('hidden');
+            noResults.classList.add('hidden');
         }
-
-        applySorting();
     }
 
-    function applySorting() {
-        if (!sortSelect || !grid) return;
-        
-        const sortBy = sortSelect.value;
-        const visibleCards = Array.from(grid.querySelectorAll('.property-card:not(.hidden)'));
-        
-        visibleCards.sort((a, b) => {
-            const priceA = parseInt(a.dataset.price);
-            const priceB = parseInt(b.dataset.price);
-            
-            if (sortBy === 'price-high') return priceB - priceA;
-            if (sortBy === 'price-low') return priceA - priceB;
-            return 0; // newest/default relies on DOM order
-        });
+    [locationSelect, priceSelect, bedsSelect].forEach(el => {
+        if (el) el.addEventListener('change', filterListings);
+    });
 
-        // Re-append sorted elements
-        visibleCards.forEach(card => grid.appendChild(card));
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            locationSelect.value = 'all';
+            priceSelect.value = '99999999';
+            bedsSelect.value = '0';
+            filterListings();
+        });
     }
-
-    // Event listeners
-    Object.values(filters).forEach(input => {
-        if (input) input.addEventListener('change', applyFilters);
-    });
-
-    if (sortSelect) sortSelect.addEventListener('change', applySorting);
-
-    clearBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            Object.values(filters).forEach(input => {
-                if (input) input.selectedIndex = 0;
-            });
-            applyFilters();
-        });
-    });
-
-    // Initial check
-    applyFilters();
 }
 
 /* --- MORTGAGE CALCULATOR --- */
 function initMortgageCalculator() {
     const priceInput = document.getElementById('calc-price');
+    if (!priceInput) return;
+
     const downInput = document.getElementById('calc-down');
     const rateInput = document.getElementById('calc-rate');
     const yearsInput = document.getElementById('calc-years');
     const resultDisplay = document.getElementById('monthly-payment');
 
-    if (!priceInput || !resultDisplay) return;
-
     function calculate() {
         const principal = parseFloat(priceInput.value) * (1 - parseFloat(downInput.value) / 100);
-        const monthlyRate = parseFloat(rateInput.value) / 100 / 12;
-        const numPayments = parseFloat(yearsInput.value) * 12;
-
-        if (principal <= 0 || monthlyRate <= 0 || numPayments <= 0) {
+        const annualRate = parseFloat(rateInput.value) / 100;
+        const months = parseInt(yearsInput.value, 10) * 12;
+        
+        if (principal <= 0 || months <= 0) {
             resultDisplay.textContent = '$0';
             return;
         }
 
-        const payment = principal * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / (Math.pow(1 + monthlyRate, numPayments) - 1);
+        const monthlyRate = annualRate / 12;
+        const payment = principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
         
-        // Format as currency
-        resultDisplay.textContent = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-            maximumFractionDigits: 0
-        }).format(payment);
+        resultDisplay.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(payment);
     }
 
-    [priceInput, downInput, rateInput, yearsInput].forEach(input => {
-        if (input) input.addEventListener('input', calculate);
+    [priceInput, downInput, rateInput, yearsInput].forEach(el => {
+        el.addEventListener('input', calculate);
     });
 
     calculate(); // Initial calc
 }
 
-/* --- SCROLL ANIMATIONS --- */
-function initScrollAnimations() {
-    // Respect reduced motion preference
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-}
-
-/* --- CONTACT FORM --- */
+/* --- CONTACT FORM HANDLING --- */
 function initContactForm() {
     const form = document.getElementById('contact-form');
     if (!form) return;
 
+    const statusDiv = document.getElementById('form-status');
+
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         
-        const btn = form.querySelector('button[type="submit"]');
-        const originalText = btn.textContent;
+        // Basic validation
+        const name = form.querySelector('#name');
+        const email = form.querySelector('#email');
+        const message = form.querySelector('#message');
         
+        if (!name.value.trim() || !email.value.trim() || !message.value.trim()) {
+            statusDiv.textContent = 'Please fill in all required fields.';
+            statusDiv.className = 'form-status error';
+            return;
+        }
+
         // Simulate submission
-        btn.disabled = true;
-        btn.textContent = 'Sending...';
-        
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending…';
+        submitBtn.disabled = true;
+
         setTimeout(() => {
-            btn.textContent = 'Message Sent!';
-            btn.classList.replace('btn-gold', 'btn-primary');
+            statusDiv.textContent = 'Thank you. Your inquiry has been received. An agent will contact you within 24 hours.';
+            statusDiv.className = 'form-status success';
             form.reset();
-            
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.textContent = originalText;
-                btn.classList.replace('btn-primary', 'btn-gold');
-            }, 3000);
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
         }, 1500);
+    });
+}
+
+/* --- INTERACTIVE TABLE ROWS --- */
+function initInteractiveRows() {
+    const rows = document.querySelectorAll('.interactive-row');
+    rows.forEach(row => {
+        row.addEventListener('click', (e) => {
+            // Don't trigger if clicking the link itself
+            if (e.target.closest('a')) return;
+            const href = row.dataset.href;
+            if (href) window.location.href = href;
+        });
+        
+        // Keyboard accessibility
+        row.setAttribute('tabindex', '0');
+        row.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const href = row.dataset.href;
+                if (href) window.location.href = href;
+            }
+        });
     });
 }
