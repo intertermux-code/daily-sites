@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Calculator — Mintwise</title>
+    <meta name="description" content="Interactive savings rate calculator. Visualize your budget allocation instantly.">
+    <meta name="theme-color" content="#f0fdf4">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;500;700&family=Outfit:wght@300;500;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-calculator">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <header class="site-header glass-nav">
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="Mintwise Home"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#10b981"/><path d="M16 8V24M10 14L16 8L22 14" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Mintwise</span></a>
+            <nav class="main-nav" id="main-nav"><ul role="list"><li><a href="index.html">Home</a></li><li><a href="features.html">Features</a></li><li><a href="calculator.html" aria-current="page">Calculator</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="contact.html">Contact</a></li></ul></nav>
+            <div class="header-actions"><a href="pricing.html" class="btn btn-primary">Get Started</a><button class="mobile-menu-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Toggle navigation menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button></div>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section class="calc-section reveal-group">
+            <div class="container calc-layout">
+                <div class="calc-inputs glass-panel">
+                    <h1>Budget Simulator</h1>
+                    <p>Adjust the sliders to see how your income allocation affects your savings rate.</p>
+                    
+                    <form id="budget-form" class="input-group-stack">
+                        <div class="input-row">
+                            <label for="income">Monthly Income (Net)</label>
+                            <div class="currency-input">
+                                <span>$</span>
+                                <input type="number" id="income" value="5000" min="0" step="100">
+                            </div>
+                            <input type="range" id="income-range" min="1000" max="20000" step="100" value="5000" aria-label="Income slider">
+                        </div>
+
+                        <div class="input-row">
+                            <label for="housing">Housing & Utilities</label>
+                            <div class="currency-input">
+                                <span>$</span>
+                                <input type="number" id="housing" value="1500" min="0" step="50">
+                            </div>
+                            <input type="range" id="housing-range" min="0" max="10000" step="50" value="1500" aria-label="Housing slider">
+                        </div>
+
+                        <div class="input-row">
+                            <label for="food">Food & Groceries</label>
+                            <div class="currency-input">
+                                <span>$</span>
+                                <input type="number" id="food" value="600" min="0" step="50">
+                            </div>
+                            <input type="range" id="food-range" min="0" max="5000" step="50" value="600" aria-label="Food slider">
+                        </div>
+
+                        <div class="input-row">
+                            <label for="transport">Transportation</label>
+                            <div class="currency-input">
+                                <span>$</span>
+                                <input type="number" id="transport" value="400" min="0" step="50">
+                            </div>
+                            <input type="range" id="transport-range" min="0" max="3000" step="50" value="400" aria-label="Transport slider">
+                        </div>
+
+                        <div class="input-row">
+                            <label for="other">Other Expenses</label>
+                            <div class="currency-input">
+                                <span>$</span>
+                                <input type="number" id="other" value="500" min="0" step="50">
+                            </div>
+                            <input type="range" id="other-range" min="0" max="5000" step="50" value="500" aria-label="Other expenses slider">
+                        </div>
+                    </form>
+                </div>
+
+                <div class="calc-results glass-panel">
+                    <div class="donut-container">
+                        <svg viewBox="0 0 200 200" class="donut-svg">
+                            <!-- Background Circle -->
+                            <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(0,0,0,0.05)" stroke-width="25"/>
+                            
+                            <!-- Expense Segment -->
+                            <circle id="expense-segment" cx="100" cy="100" r="80" fill="none" stroke="#cbd5e1" stroke-width="25" stroke-dasharray="502" stroke-dashoffset="0" transform="rotate(-90 100 100)" stroke-linecap="round"/>
+                            
+                            <!-- Savings Segment -->
+                            <circle id="savings-segment" cx="100" cy="100" r="80" fill="none" stroke="#10b981" stroke-width="25" stroke-dasharray="502" stroke-dashoffset="502" transform="rotate(-90 100 100)" stroke-linecap="round"/>
+                        </svg>
+                        <div class="donut-center">
+                            <span class="label">Savings Rate</span>
+                            <span id="savings-rate-display" class="mono big">40%</span>
+                        </div>
+                    </div>
+
+                    <div class="breakdown-list">
+                        <div class="breakdown-item">
+                            <span class="dot mint"></span>
+                            <span>Savings</span>
+                            <span id="savings-amount" class="mono">$2,000</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="dot gray"></span>
+                            <span>Expenses</span>
+                            <span id="expenses-amount" class="mono">$3,000</span>
+                        </div>
+                        <div class="breakdown-total">
+                            <span>Remaining</span>
+                            <span id="remaining-amount" class="mono">$0</span>
+                        </div>
+                    </div>
+
+                    <div id="warning-msg" class="warning-box hidden" role="alert">
+                        ⚠️ Expenses exceed income
+                    </div>
+
+                    <a href="pricing.html" class="btn btn-primary full-width">Track This Budget Automatically</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand"><a href="index.html" class="logo" aria-label="Mintwise Home"><svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#10b981"/><path d="M16 8V24M10 14L16 8L22 14" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Mintwise</span></a></div>
+            <nav class="footer-links" aria-label="Footer Navigation"><div class="col"><h4>Product</h4><ul role="list"><li><a href="features.html">Features</a></li><li><a href="pricing.html">Pricing</a></li></ul></div><div class="col"><h4>Company</h4><ul role="list"><li><a href="contact.html">Support</a></li></ul></div></nav>
+        </div>
+        <div class="container copyright"><p>&copy; 2026 Mintwise Inc.</p></div>
+    </footer>
+    <script src="app.js" defer></script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
