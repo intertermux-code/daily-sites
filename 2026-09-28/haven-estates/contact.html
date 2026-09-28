@@ -3,60 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us | Haven Estates</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Contact & Calculator | Haven Estates</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
 </head>
-<body>
+<body class="page-contact">
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <header class="site-header">
         <div class="container header-inner">
             <a href="index.html" class="logo" aria-label="Haven Estates Home">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M20 2L2 14V38H14V26H26V38H38V14L20 2Z" stroke="currentColor" stroke-width="2"/>
+                    <rect x="17" y="16" width="6" height="6" fill="currentColor"/>
+                </svg>
                 <span class="logo-text">Haven<span class="accent">Estates</span></span>
             </a>
             <nav class="main-nav" aria-label="Main Navigation">
-                <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Toggle navigation menu">
+                <button class="nav-toggle" aria-expanded="false" aria-controls="primary-menu" aria-label="Toggle menu">
                     <span class="hamburger"></span>
                 </button>
-                <ul id="nav-list" class="nav-list">
+                <ul id="primary-menu" class="nav-list">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="listings.html">Listings</a></li>
-                    <li><a href="property.html">Featured Property</a></li>
-                    <li><a href="agents.html">Our Agents</a></li>
-                    <li><a href="contact.html" aria-current="page" class="btn btn-primary nav-cta">Contact Us</a></li>
+                    <li><a href="listings.html">Registry</a></li>
+                    <li><a href="property.html">Featured</a></li>
+                    <li><a href="agents.html">Agents</a></li>
+                    <li><a href="contact.html" aria-current="page" class="btn-nav">Inquire</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <main id="main-content">
+        <section class="page-intro">
+            <div class="container">
+                <h1>Begin the Conversation</h1>
+                <p>Whether you’re buying, selling, or simply curious about market value, our team is ready to assist with discretion and expertise.</p>
+            </div>
+        </section>
+
         <section class="section contact-section">
-            <div class="container layout-split">
-                <div class="contact-info">
-                    <h1>Get In Touch</h1>
-                    <p class="lead">Whether you're buying, selling, or just curious about the market, we'd love to hear from you.</p>
-                    
-                    <div class="info-block">
-                        <h3>Visit Our Office</h3>
-                        <p>100 Luxury Lane, Suite 500<br>Beverly Hills, CA 90210</p>
-                    </div>
-                    
-                    <div class="info-block">
-                        <h3>Direct Line</h3>
-                        <p><a href="tel:+13105550199">(310) 555-0199</a><br>Mon-Fri: 9am - 7pm PST</p>
-                    </div>
-
-                    <div class="info-block">
-                        <h3>Email</h3>
-                        <p><a href="mailto:hello@havenestates.com">hello@havenestates.com</a></p>
-                    </div>
-                </div>
-
-                <div class="contact-form-wrapper">
-                    <form id="contact-form" class="luxury-form">
+            <div class="container contact-grid">
+                <!-- Contact Form -->
+                <div class="form-wrapper reveal-on-scroll">
+                    <form id="contact-form" class="styled-form" novalidate>
                         <h2>Send an Inquiry</h2>
                         <div class="form-row">
                             <div class="form-group">
@@ -68,56 +58,69 @@
                                 <input type="email" id="email" name="email" required autocomplete="email">
                             </div>
                         </div>
-                        
                         <div class="form-group">
-                            <label for="interest">I'm interested in...</label>
+                            <label for="interest">I am interested in…</label>
                             <select id="interest" name="interest">
-                                <option value="buying">Buying a Home</option>
-                                <option value="selling">Selling a Home</option>
-                                <option value="renting">Renting</option>
-                                <option value="general">General Inquiry</option>
+                                <option value="buying">Buying a Property</option>
+                                <option value="selling">Selling My Property</option>
+                                <option value="valuation">Market Valuation</option>
+                                <option value="other">General Inquiry</option>
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label for="message">Message</label>
                             <textarea id="message" name="message" rows="5" required></textarea>
                         </div>
-
-                        <button type="submit" class="btn btn-gold full-width">Send Message</button>
+                        <button type="submit" class="btn-primary">Submit Inquiry</button>
+                        <div id="form-status" class="form-status" aria-live="polite"></div>
                     </form>
+                </div>
 
-                    <!-- Mortgage Calculator Widget -->
-                    <div class="calculator-widget">
-                        <h3>Mortgage Estimator</h3>
+                <!-- Mortgage Calculator Widget -->
+                <aside class="calculator-wrapper reveal-on-scroll delay-1">
+                    <div class="calc-card">
+                        <h2>Mortgage Estimator</h2>
+                        <p class="small mb-md">Estimate your monthly payment based on current average rates.</p>
+                        
                         <div class="calc-inputs">
-                            <div class="form-group compact">
+                            <div class="form-group">
                                 <label for="calc-price">Home Price ($)</label>
-                                <input type="number" id="calc-price" value="2000000" step="10000">
+                                <input type="number" id="calc-price" value="500000" min="0" step="1000">
                             </div>
-                            <div class="form-group compact">
+                            <div class="form-group">
                                 <label for="calc-down">Down Payment (%)</label>
-                                <input type="number" id="calc-down" value="20" min="0" max="100">
+                                <input type="number" id="calc-down" value="20" min="0" max="100" step="1">
                             </div>
-                            <div class="form-group compact">
+                            <div class="form-group">
                                 <label for="calc-rate">Interest Rate (%)</label>
-                                <input type="number" id="calc-rate" value="6.5" step="0.1">
+                                <input type="number" id="calc-rate" value="6.5" min="0" max="20" step="0.1">
                             </div>
-                            <div class="form-group compact">
-                                <label for="calc-years">Term (Years)</label>
+                            <div class="form-group">
+                                <label for="calc-years">Loan Term (Years)</label>
                                 <select id="calc-years">
-                                    <option value="15">15 Years</option>
-                                    <option value="20">20 Years</option>
                                     <option value="30" selected>30 Years</option>
+                                    <option value="20">20 Years</option>
+                                    <option value="15">15 Years</option>
                                 </select>
                             </div>
                         </div>
+
                         <div class="calc-result">
-                            <span>Estimated Monthly Payment:</span>
-                            <strong id="monthly-payment">$10,118</strong>
+                            <span class="result-label">Estimated Monthly Payment</span>
+                            <span id="monthly-payment" class="result-value mono">$0</span>
                         </div>
                     </div>
-                </div>
+                    
+                    <div class="office-info mt-lg">
+                        <h3>Main Office</h3>
+                        <address>
+                            1200 Market Street, Suite 400<br>
+                            Philadelphia, PA 19107<br>
+                            <a href="tel:+12155550199">(215) 555-0199</a>
+                        </address>
+                        <p class="mt-sm small">Open Mon–Fri: 9am – 6pm<br>Sat: By Appointment</p>
+                    </div>
+                </aside>
             </div>
         </section>
     </main>
@@ -126,30 +129,26 @@
         <div class="container footer-grid">
             <div class="footer-brand">
                 <span class="logo-text">Haven<span class="accent">Estates</span></span>
-                <p>Redefining luxury real estate since 2010.</p>
+                <p class="mt-sm">Curating exceptional living spaces since 2024.</p>
             </div>
             <div class="footer-links">
-                <h4>Explore</h4>
+                <h3>Explore</h3>
                 <ul>
-                    <li><a href="listings.html">All Listings</a></li>
-                    <li><a href="agents.html">Meet the Team</a></li>
-                    <li><a href="property.html">Featured Home</a></li>
+                    <li><a href="listings.html">Property Registry</a></li>
+                    <li><a href="agents.html">Our Agents</a></li>
+                    <li><a href="contact.html">Sell With Us</a></li>
                 </ul>
             </div>
             <div class="footer-contact">
-                <h4>Contact</h4>
-                <p>100 Luxury Lane, Suite 500<br>Beverly Hills, CA 90210</p>
-                <p><a href="mailto:hello@havenestates.com">hello@havenestates.com</a></p>
-                <p><a href="tel:+13105550199">(310) 555-0199</a></p>
+                <h3>Contact</h3>
+                <address>
+                    1200 Market Street, Suite 400<br>Philadelphia, PA 19107
+                </address>
             </div>
         </div>
-        <div class="copyright">
-            <div class="container">
-                <p>&copy; 2026 Haven Estates. All rights reserved.</p>
-            </div>
+        <div class="footer-bottom container">
+            <p>&copy; 2024 Haven Estates. All rights reserved.</p>
         </div>
     </footer>
-
-    <script src="app.js" defer></script>
 <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
 </html>
