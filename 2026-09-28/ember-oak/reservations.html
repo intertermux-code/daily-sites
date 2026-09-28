@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservations | Ember & Oak</title>
+    <meta name="description" content="Book your table at Ember & Oak. Secure your spot for an unforgettable wood-fire dining experience.">
+    <meta name="theme-color" content="#0a0a0c">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Manrope:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="Ember & Oak Home">
+                <span class="logo-text">Ember<span class="accent">&</span>Oak</span>
+            </a>
+            <nav class="main-nav" aria-label="Main Navigation">
+                <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Toggle Menu">
+                    <span class="hamburger"></span>
+                </button>
+                <ul id="nav-list" class="nav-list">
+                    <li><a href="index.html"><span class="nav-index">01</span> Home</a></li>
+                    <li><a href="menu.html"><span class="nav-index">02</span> Menu</a></li>
+                    <li><a href="gallery.html"><span class="nav-index">03</span> Gallery</a></li>
+                    <li><a href="visit.html"><span class="nav-index">04</span> Visit</a></li>
+                    <li><a href="reservations.html" aria-current="page" class="btn-nav">Book Table</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section class="reservation-section reveal-group">
+            <div class="container reservation-grid">
+                <div class="res-info">
+                    <span class="section-number margin-note">No. 05 — Reservations</span>
+                    <h1 class="display-xl">Join Us at the Table</h1>
+                    <p class="lead">We accept bookings up to 30 days in advance. For parties larger than 8, please contact us directly for private dining options.</p>
+                    
+                    <div class="info-block">
+                        <h3>Dining Hours</h3>
+                        <ul>
+                            <li>Tue–Thu: 5pm – 10pm</li>
+                            <li>Fri–Sat: 5pm – 11pm</li>
+                            <li>Sun: 5pm – 9pm</li>
+                            <li>Mon: Closed</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-block">
+                        <h3>Cancellation Policy</h3>
+                        <p>We kindly ask for 24 hours notice for cancellations. Late cancellations or no-shows may incur a $25 per person fee.</p>
+                    </div>
+                </div>
+
+                <div class="res-form-wrapper">
+                    <form id="booking-form" class="booking-form" novalidate>
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required autocomplete="name">
+                            <span class="error-msg" aria-live="polite"></span>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" required autocomplete="email">
+                                <span class="error-msg" aria-live="polite"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" required autocomplete="tel">
+                                <span class="error-msg" aria-live="polite"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input type="date" id="date" name="date" required>
+                                <span class="error-msg" aria-live="polite"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="time">Preferred Time</label>
+                                <select id="time" name="time" required>
+                                    <option value="">Select Time</option>
+                                    <option value="17:00">5:00 PM</option>
+                                    <option value="17:30">5:30 PM</option>
+                                    <option value="18:00">6:00 PM</option>
+                                    <option value="18:30">6:30 PM</option>
+                                    <option value="19:00">7:00 PM</option>
+                                    <option value="19:30">7:30 PM</option>
+                                    <option value="20:00">8:00 PM</option>
+                                    <option value="20:30">8:30 PM</option>
+                                    <option value="21:00">9:00 PM</option>
+                                </select>
+                                <span class="error-msg" aria-live="polite"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="guests">Party Size</label>
+                            <select id="guests" name="guests" required>
+                                <option value="">Select Guests</option>
+                                <option value="1">1 Person</option>
+                                <option value="2">2 People</option>
+                                <option value="3">3 People</option>
+                                <option value="4">4 People</option>
+                                <option value="5">5 People</option>
+                                <option value="6">6 People</option>
+                                <option value="7">7 People</option>
+                                <option value="8">8 People</option>
+                            </select>
+                            <span class="error-msg" aria-live="polite"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notes">Special Requests (Optional)</label>
+                            <textarea id="notes" name="notes" rows="3" placeholder="Allergies, anniversaries, seating preferences..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full">Confirm Reservation</button>
+                    </form>
+
+                    <!-- Success State -->
+                    <div id="booking-success" class="success-state" hidden>
+                        <div class="success-icon">✓</div>
+                        <h2>Reservation Confirmed</h2>
+                        <p>Thank you, <span id="conf-name"></span>. We have reserved a table for <span id="conf-guests"></span> on <span id="conf-date"></span> at <span id="conf-time"></span>.</p>
+                        <p>A confirmation email has been sent to <span id="conf-email"></span>.</p>
+                        <button class="btn btn-outline" onclick="location.reload()">Make Another Booking</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <span class="logo-text">Ember<span class="accent">&</span>Oak</span>
+                <p class="footer-tagline">Wood-fire dining for the soul.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Navigate</h4>
+                <ul>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="reservations.html">Reservations</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="visit.html">Visit Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; 2026 Ember & Oak Restaurant. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="app.js" defer></script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
