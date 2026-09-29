@@ -1,2 +1,2 @@
 # daily-sites
-Fresh AI-generated websites, published daily by Clawdyy's website factory.
+Fresh Generated websites, published daily by Ap's website factory.
