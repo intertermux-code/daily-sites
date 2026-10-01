@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f8f7ff">
+<meta name="description" content="Deep dive into Pulseboard: live streams, anomaly detection, query engine, alerting, and the command palette that binds them together.">
+<title>Features — Pulseboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    <a href="index.html" class="brand" aria-label="Pulseboard home">
+      <svg class="brand-mark" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="2" y="2" width="24" height="24" rx="7" stroke="currentColor" stroke-width="2"/>
+        <path d="M6 15 L11 15 L13 9 L16 20 L18 12 L21 15 L22 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="brand-name">Pulseboard</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="features.html" aria-current="page">Features</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta">
+      <a href="contact.html" class="chip-link">Book demo <kbd>↵</kbd></a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-nav" id="mobile-nav" hidden>
+    <ul>
+      <li><a href="index.html">Overview</a></li>
+      <li><a href="features.html" aria-current="page">Features</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero" aria-labelledby="features-title">
+    <div class="container page-hero-grid">
+      <div class="reveal">
+        <span class="mono kicker">/ FEATURES</span>
+        <h1 id="features-title" class="display-title">Five instruments.<br>One flight deck.</h1>
+      </div>
+      <p class="page-hero-aside reveal reveal-1">Every feature is a panel on the same console — shareable, addressable, and bound together by a single query language and a command palette.</p>
+    </div>
+  </section>
+
+  <!-- FEATURE 01: STREAMS -->
+  <section class="feature" id="streams" aria-labelledby="feat-streams-title">
+    <div class="container">
+      <div class="feature-head reveal">
+        <span class="mono kicker">01 / STREAMS</span>
+        <h2 id="feat-streams-title" class="display-title">Live telemetry, without the lag.</h2>
+      </div>
+
+      <div class="feature-spread">
+        <div class="feature-text reveal reveal-1">
+          <p>Ingest structured events at wire speed. Pulseboard's columnar stream holds 72 hours of raw data hot, with a tail latency under 300 ms from producer to pane. Backfill is a first-class operation — replay any window, re-derive any metric, rewind any incident.</p>
+          <ul class="feature-points">
+            <li><span class="mono">01</span> Schema-on-write with auto-detection</li>
+            <li><span class="mono">02</span> Tail, filter, fork — in the same keystroke</li>
+            <li><span class="mono">03</span> Cross-region fan-in, single pane of glass</li>
+          </ul>
+          <ul class="key-chips" aria-label="Keyboard shortcuts">
+            <li><kbd>⌘</kbd><kbd>E</kbd> explore</li>
+            <li><kbd>⌘</kbd><kbd>⇧</kbd><kbd>F</kbd> live tail</li>
+          </ul>
+        </div>
+
+        <figure class="feature-visual reveal reveal-image reveal-2" data-reveal-image>
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=80" alt="Close-up of server rack cabling suggesting high-throughput data infrastructure." width="1400" height="933" loading="lazy">
+          <figcaption class="feature-caption mono">Stream panel · region us-east-2 · 41.2k evt/s</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE 02: DETECT -->
+  <section class="feature feature-alt" id="detect" aria-labelledby="feat-detect-title">
+    <div class="container">
+      <div class="feature-head reveal">
+        <span class="mono kicker">02 / DETECT</span>
+        <h2 id="feat-detect-title" class="display-title">Alerts that arrive with receipts.</h2>
+      </div>
+
+      <div class="feature-spread feature-spread-reverse">
+        <figure class="feature-visual reveal reveal-image" data-reveal-image>
+          <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&w=1400&q=80" alt="Abstract anomaly detection visualization with highlighted outlier points in indigo." width="1400" height="933" loading="lazy">
+          <figcaption class="feature-caption mono">Anomaly panel · detected · checkout-svc.p95</figcaption>
+        </figure>
+
+        <div class="feature-text reveal reveal-1">
+          <p>Pulseboard couples static thresholds with learned baselines so you stop chasing noise. Every firing alert carries the query, the contributing series, the recent change set, and a one-click fork into an investigation workspace.</p>
+
+          <aside class="pullquote-inline" role="note">
+            <blockquote>
+              <p>“Our on-call engineers read alerts like stories now, not like riddles.”</p>
+            </blockquote>
+            <cite class="mono muted">— Naya Rhee, Eng Manager, Orbital</cite>
+          </aside>
+
+          <ul class="feature-points">
+            <li><span class="mono">A</span> Baseline learned per series, per day-of-week</li>
+            <li><span class="mono">B</span> Multi-signal correlation (logs ↔ traces ↔ metrics)</li>
+            <li><span class="mono">C</span> Severity auto-tuned from downstream impact</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE 03: QUERY -->
+  <section class="feature" id="query" aria-labelledby="feat-query-title">
+    <div class="container">
+      <div class="feature-head reveal">
+        <span class="mono kicker">03 / QUERY</span>
+        <h2 id="feat-query-title" class="display-title">Ask the board anything.<br>Get a typed answer.</h2>
+      </div>
+
+      <div class="feature-query-grid">
+        <div class="query-editor reveal reveal-1" aria-label="Sample Pulseboard query">
+          <div class="editor-bar mono">
+            <span class="dot dot-ok"></span> editor.pbq <span class="muted">· saved · 2m ago</span>
+          </div>
+<pre class="mono"><span class="ln">1</span> <span class="kw">from</span> events
+<span class="ln">2</span> <span class="kw">where</span> service = <span class="str">"checkout-svc"</span>
+<span class="ln">3</span>   <span class="kw">and</span> status <span class="op">>=</span> <span class="num">500</span>
+<span class="ln">4</span> <span class="kw">group by</span> 1m
+<span class="ln">5</span> <span class="kw">select</span>
+<span class="ln">6</span>   <span class="fn">count</span>() <span class="kw">as</span> errors,
+<span class="ln">7</span>   <span class="fn">percentile</span>(latency, <span class="num">0.95</span>) <span class="kw">as</span> p95
+<span class="ln">8</span> <span class="kw">order by</span> t <span class="kw">desc</span>
+<span class="ln">9</span> <span class="kw">limit</span> <span class="num">240</span></pre>
+        </div>
+
+        <div class="query-prose reveal reveal-2">
+          <p>A typed query language, purpose-built for observability. PBQ feels like SQL but understands traces, spans, and time buckets natively. Autocomplete is aware of your schema, your saved queries, and the shape of yesterday's incident.</p>
+          <ul class="feature-points">
+            <li><span class="mono">01</span> Autocomplete trained on your own schema</li>
+            <li><span class="mono">02</span> Joins across metrics, logs, and traces</li>
+            <li><span class="mono">03</span> Explain plan shows exactly which shards are hit</li>
+            <li><span class="mono">04</span> Export any query to Grafana, Terraform, Python</li>
+          </ul>
+          <ul class="key-chips" aria-label="Keyboard shortcuts">
+            <li><kbd>⌘</kbd><kbd>K</kbd> palette</li>
+            <li><kbd>⌘</kbd><kbd>↵</kbd> run</li>
+            <li><kbd>⌘</kbd><kbd>.</kbd> explain</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE 04: SLOs -->
+  <section class="feature feature-alt" id="slos" aria-labelledby="feat-slo-title">
+    <div class="container">
+      <div class="feature-head reveal">
+        <span class="mono kicker">04 / SLO</span>
+        <h2 id="feat-slo-title" class="display-title">Error budgets, not error reports.</h2>
+      </div>
+
+      <div class="feature-spread">
+        <div class="feature-text reveal reveal-1">
+          <p>Define SLOs in plain language — <span class="mono">“99.9% of checkout requests succeed in under 400ms”</span> — and Pulseboard computes the budget in real time. You see the burn rate, the forecasted exhaustion date, and the top three contributing services.</p>
+          <ul class="feature-points">
+            <li><span class="mono">A</span> Budget-aware alerting (not threshold-based)</li>
+            <li><span class="mono">B</span> Burn-rate forecasts with 14-day horizons</li>
+            <li><span class="mono">C</span> One-click contributor drill-down</li>
+          </ul>
+        </div>
+
+        <figure class="feature-visual reveal reveal-image reveal-2" data-reveal-image>
+          <img src="https://picsum.photos/seed/pulseboard-9c2a05aa236a/1600/900?auto=format&fit=crop&w=1400&q=80" alt="Abstract gauge-style graphic showing a dial with indigo progress arc." width="1400" height="933" loading="lazy">
+          <figcaption class="feature-caption mono">SLO gauge · checkout · 73% budget remaining</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE 05: PALETTE -->
+  <section class="feature" id="palette" aria-labelledby="feat-palette-title">
+    <div class="container">
+      <div class="feature-head reveal">
+        <span class="mono kicker">05 / PALETTE</span>
+        <h2 id="feat-palette-title" class="display-title">The command palette that binds it all.</h2>
+      </div>
+
+      <div class="palette-spread reveal">
+        <div class="palette-frame reveal reveal-1">
+          <div class="palette-bar mono">
+            <span class="chip chip-active">⌘ K</span>
+            <input class="palette-input" value="show me incidents from last night" readonly aria-label="Sample command palette query">
+          </div>
+          <ul class="palette-results">
+            <li class="palette-result">
+              <span class="chip chip-ghost">INC</span>
+              <div>
+                <div>Last night's incidents · 2 resolved</div>
+                <div class="mono muted">checkout-svc · latency · 02:14 UTC</div>
+              </div>
+              <kbd>↵</kbd>
+            </li>
+            <li class="palette-result">
+              <span class="chip chip-ghost">SLO</span>
+              <div>
+                <div>Checkout availability · last 24h</div>
+                <div class="mono muted">99.82% · 18 min of budget consumed</div>
+              </div>
+              <kbd>↵</kbd>
+            </li>
+            <li class="palette-result">
+              <span class="chip chip-ghost">QRY</span>
+              <div>
+                <div>Saved query · “5xx checkout last 12h”</div>
+                <div class="mono muted">last edited by you · 3d ago</div>
+              </div>
+              <kbd>↵</kbd>
+            </li>
+          </ul>
+        </div>
+
+        <div class="palette-prose reveal reveal-2">
+          <p>One keystroke opens a palette that searches across dashboards, queries, alerts, incidents, and your colleagues. Every result carries its context — who made it, when it last fired, how it relates to what you were just looking at.</p>
+          <ul class="key-chips" aria-label="Keyboard shortcuts">
+            <li><kbd>⌘</kbd><kbd>K</kbd> command palette</li>
+            <li><kbd>⌘</kbd><kbd>,</kbd> settings</li>
+            <li><kbd>⌘</kbd><kbd>⇧</kbd><kbd>P</kbd> share panel</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band" aria-labelledby="feat-cta-title">
+    <div class="container">
+      <div class="cta-frame">
+        <h2 id="feat-cta-title" class="reveal">See the console live.</h2>
+        <p class="reveal reveal-1">Bring a real incident. We'll walk through it together.</p>
+        <div class="cta-actions reveal reveal-2">
+          <a href="contact.html" class="btn btn-primary magnetic" data-magnetic><span>Book a live demo</span></a>
+          <a href="pricing.html" class="btn btn-outline magnetic" data-magnetic><span>See pricing</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="brand" aria-label="Pulseboard home">
+        <svg class="brand-mark" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <rect x="2" y="2" width="24" height="24" rx="7" stroke="currentColor" stroke-width="2"/>
+          <path d="M6 15 L11 15 L13 9 L16 20 L18 12 L21 15 L22 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="brand-name">Pulseboard</span>
+      </a>
+      <p class="mono muted footer-tag">Mission control for your product.</p>
+    </div>
+    <nav class="footer-col" aria-label="Product">
+      <h3 class="mono footer-title">Product</h3>
+      <ul>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="index.html">Changelog</a></li>
+        <li><a href="index.html">Status</a></li>
+      </ul>
+    </nav>
+    <nav class="footer-col" aria-label="Company">
+      <h3 class="mono footer-title">Company</h3>
+      <ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="index.html">Careers</a></li>
+        <li><a href="index.html">Press</a></li>
+      </ul>
+    </nav>
+    <div class="footer-col">
+      <h3 class="mono footer-title">Signal</h3>
+      <form class="footer-form" aria-label="Newsletter signup">
+        <label for="news-email-f" class="mono muted">Quarterly transmission.</label>
+        <div class="footer-input-row">
+          <input type="email" id="news-email-f" placeholder="you@domain.com" required>
+          <button type="submit" class="btn btn-ghost" aria-label="Subscribe"><span>Tune in</span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p class="mono muted">© 2026 Pulseboard Systems, Inc.</p>
+    <ul class="mono footer-legal">
+      <li><a href="index.html">Privacy</a></li>
+      <li><a href="index.html">Terms</a></li>
+      <li><a href="index.html">Security</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
