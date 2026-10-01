@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journeys | Wanderpost</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="skip-container">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+  </div>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span class="logo-text">Wanderpost</span>
+      </a>
+
+      <nav class="main-nav">
+        <ul class="nav-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="journeys.html" aria-current="page">Journeys</a></li>
+          <li><a href="destination.html">Destinations</a></li>
+          <li><a href="stories.html">Stories</a></li>
+          <li><a href="enquiry.html">Enquire</a></li>
+        </ul>
+      </nav>
+
+      <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+        <span class="hamburger"></span>
+        <span class="hamburger"></span>
+        <span class="hamburger"></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="hero-image" style="background-image: url('https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=1600&q=80');">
+        <div class="hero-overlay"></div>
+      </div>
+      
+      <div class="container hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">Curated Journeys</h1>
+          <p class="hero-subtitle">Immersive experiences designed for the mindful traveler</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="journeys-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Featured Journeys</h2>
+          <p class="section-description">Each journey is carefully crafted to honor the rhythm of the destination</p>
+        </div>
+
+        <div class="journeys-grid">
+          <article class="journey-card">
+            <div class="journey-image" style="background-image: url('https://picsum.photos/seed/wanderpost-f32ccc7efea5/1600/900?auto=format&fit=crop&w=1600&q=80');">
+              <div class="journey-overlay"></div>
+              <div class="journey-badge">Popular</div>
+            </div>
+            <div class="journey-content">
+              <h3 class="journey-title">Kyoto Heritage Walks</h3>
+              <p class="journey-location">Japan</p>
+              <p class="journey-duration">14 Days • Cultural Immersion</p>
+              <p class="journey-description">Experience the timeless beauty of Japan through traditional tea ceremonies, temple stays, and artisan workshops in Kyoto’s ancient neighborhoods.</p>
+              <button class="journey-details-btn" data-journey="kyoto">View Details</button>
+            </div>
+          </article>
+
+          <article class="journey-card">
+            <div class="journey-image" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1600&q=80');">
+              <div class="journey-overlay"></div>
+              <div class="journey-badge">New</div>
+            </div>
+            <div class="journey-content">
+              <h3 class="journey-title">Patagonia Trekking</h3>
+              <p class="journey-location">Argentina & Chile</p>
+              <p class="journey-duration">12 Days • Adventure</p>
+              <p class="journey-description">Traverse pristine wilderness landscapes, glaciers, and mountains with expert guides who know the land intimately.</p>
+              <button class="journey-details-btn" data-journey="patagonia">View Details</button>
+            </div>
+          </article>
+
+          <article class="journey-card">
+            <div class="journey-image" style="background-image: url('https://picsum.photos/seed/wanderpost-506eee1bdd39/1600/900?auto=format&fit=crop&w=1600&q=80');">
+              <div class="journey-overlay"></div>
+            </div>
+            <div class="journey-content">
+              <h3 class="journey-title">Marrakech Cultural Immersion</h3>
+              <p class="journey-location">Morocco</p>
+              <p class="journey-duration">10 Days • Cultural</p>
+              <p class="journey-description">Dive deep into Moroccan culture through cooking classes, artisan workshops, and stays in traditional riads.</p>
+              <button class="journey-details-btn" data-journey="marrakech">View Details</button>
+            </div>
+          </article>
+
+          <article class="journey-card">
+            <div class="journey-image" style="background-image: url('https://picsum.photos/seed/wanderpost-e03828ae0e19/1600/900?auto=format&fit=crop&w=1600&q=80');">
+              <div class="journey-overlay"></div>
+            </div>
+            <div class="journey-content">
+              <h3 class="journey-title">Lofoten Islands Retreat</h3>
+              <p class="journey-location">Norway</p>
+              <p class="journey-duration">8 Days • Wellness</p>
+              <p class="journey-description">Find serenity among Norway’s dramatic peaks and pristine fjords with mindfulness practices and sustainable living workshops.</p>
+              <button class="journey-details-btn" data-journey="lofoten">View Details</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Journey Detail Modals -->
+    <div class="modal-overlay" id="journey-modal">
+      <div class="modal-content" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+        <button class="modal-close" aria-label="Close modal">&times;</button>
+        <div class="modal-body">
+          <div class="modal-image" id="modal-image"></div>
+          <div class="modal-info">
+            <h2 id="modal-title" class="modal-title"></h2>
+            <p class="modal-location" id="modal-location"></p>
+            <p class="modal-duration" id="modal-duration"></p>
+            
+            <div class="itinerary-accordion">
+              <div class="accordion-item">
+                <button class="accordion-header" type="button">
+                  <span>Itinerary</span>
+                  <svg class="chevron-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6,9 12,15 18,9"></polyline>
+                  </svg>
+                </button>
+                <div class="accordion-panel">
+                  <div class="itinerary-content" id="modal-itinerary"></div>
+                </div>
+              </div>
+              
+              <div class="accordion-item">
+                <button class="accordion-header" type="button">
+                  <span>Included</span>
+                  <svg class="chevron-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6,9 12,15 18,9"></polyline>
+                  </svg>
+                </button>
+                <div class="accordion-panel">
+                  <ul class="included-list" id="modal-included"></ul>
+                </div>
+              </div>
+              
+              <div class="accordion-item">
+                <button class="accordion-header" type="button">
+                  <span>What to Expect</span>
+                  <svg class="chevron-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6,9 12,15 18,9"></polyline>
+                  </svg>
+                </button>
+                <div class="accordion-panel">
+                  <div class="expectations-content" id="modal-expectations"></div>
+                </div>
+              </div>
+            </div>
+            
+            <a href="enquiry.html" class="book-now-btn">Book This Journey</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3 class="logo">Wanderpost</h3>
+          <p>Slow travel experiences that connect you with the world.</p>
+        </div>
+
+        <div class="footer-links">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="journeys.html">Journeys</a></li>
+            <li><a href="destination.html">Destinations</a></li>
+            <li><a href="stories.html">Traveler Stories</a></li>
+            <li><a href="enquiry.html">Plan Your Trip</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-contact">
+          <h4>Contact</h4>
+          <address>
+            hello@wanderpost.com<br>
+            +1 (555) 123-4567
+          </address>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Wanderpost. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
