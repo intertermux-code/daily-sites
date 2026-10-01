@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — 3jS</title>
+    <meta name="description" content="Why 3jS exists, how the scene is built with three.js, and what it does with your data (nothing).">
+    <meta name="theme-color" content="#04060e">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <div id="sky" class="sky" aria-hidden="true"></div>
+    <div class="sky-fallback" aria-hidden="true"></div>
+    <div class="sky-veil" aria-hidden="true"></div>
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="3jS home">
+                <span class="logo__mark" aria-hidden="true"></span><span>3jS</span>
+            </a>
+            <nav class="main-nav" aria-label="Main">
+                <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Toggle menu">
+                    <span class="bar"></span><span class="bar"></span>
+                </button>
+                <ul id="nav-list" class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="day.html">Open the app</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="guide.html">Guide</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li class="nav-cta"><a href="day.html">Start today</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content" class="page">
+        <section class="container page-hero">
+            <p class="eyebrow reveal">About</p>
+            <h1 class="reveal">Three things, <span class="gradient-text">one sky.</span></h1>
+            <p class="lede reveal delay-1">
+                3jS started as a complaint: every to-do app had the same shape — an infinite list with a
+                small checkbox on the left. Infinite lists cannot be scanned. They can only be scrolled.
+            </p>
+        </section>
+
+        <section class="section section--tight">
+            <div class="container">
+                <div class="split">
+                    <div class="reveal">
+                        <p class="eyebrow">The problem</p>
+                        <h2>A day has a shape. Lists don't.</h2>
+                        <p style="margin-bottom:18px">
+                            Everyone knows roughly what their day looks like, and almost nobody can see it.
+                            The information is all there — it is just laid out in a straight line with no
+                            beginning, no end, and no sense of scale. Twenty items and two items look
+                            identical, so you cannot feel the weight of a day you have overfilled.
+                        </p>
+                        <p>
+                            A circle fixes that. Give the day a circumference, put the hours on it, and
+                            overcommitment becomes a visual fact instead of a vague dread. An hour with
+                            six things on it is visibly crowded from across the room.
+                        </p>
+                    </div>
+                    <div class="reveal delay-1">
+                        <p class="eyebrow">The idea</p>
+                        <h2>And then make it a place</h2>
+                        <p style="margin-bottom:18px">
+                            A day is not a list or a bar chart. It is a cycle — it comes back around every
+                            twenty-four hours, and things move through it. That is a solar system, not a
+                            spreadsheet. So the second decision was obvious: build it in three dimensions,
+                            in the browser, with the time of day driving the light.
+                        </p>
+                        <p>
+                            The result is an interface where the primary gesture is spatial. You do not
+                            open an editor to move a meeting; you pick the light up and slide it. The
+                            animation when you finish something exists because finishing something should
+                            feel like something.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section--tight" id="build">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div>
+                        <p class="eyebrow">How it's built</p>
+                        <h2>Five files and a vendored library</h2>
+                    </div>
+                    <p class="lede">No framework, no build step, no package manager. Open the folder in a
+                        browser and it runs.</p>
+                </div>
+
+                <div class="feature-grid">
+                    <article class="card reveal">
+                        <span class="feature__num">01</span>
+                        <h3><code>orbit.js</code></h3>
+                        <p>The renderer. Builds the starfield, the painted equirect backdrop, the
+                            fresnel corona, the shader-driven track, and one group per task. Owns the
+                            camera rig, the raycasting, the particle pool and the animation loop.</p>
+                    </article>
+                    <article class="card reveal delay-1">
+                        <span class="feature__num">02</span>
+                        <h3><code>app.js</code></h3>
+                        <p>The store and the panel. Reads and writes <code>localStorage</code>, renders
+                            the task list, the HUD and the ring progress, and bridges selection between
+                            a list row and a 3D node in both directions.</p>
+                    </article>
+                    <article class="card reveal delay-2">
+                        <span class="feature__num">03</span>
+                        <h3><code>styles.css</code></h3>
+                        <p>One token set: surfaces, ink, three accents and a type scale. Every page and
+                            the planner share it, including the reduced-motion block and the
+                            bottom-sheet layout under 940px.</p>
+                    </article>
+                    <article class="card reveal">
+                        <span class="feature__num">04</span>
+                        <h3><code>fonts.css</code></h3>
+                        <p>Space Grotesk, Inter and JetBrains Mono, self-hosted as six variable woff2
+                            files with unicode-range splits. No font CDN, no render-blocking third
+                            party, identical type on a plane.</p>
+                    </article>
+                    <article class="card reveal">
+                        <span class="feature__num">05</span>
+                        <h3><code>three.module.min.js</code></h3>
+                        <p>three.js r161, MIT licensed, sitting in the folder rather than on a CDN. The
+                            site renders its own sky from a local file, so it works on a plane, on a
+                            dead connection, and years from now.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section--tight" id="privacy">
+            <div class="container">
+                <div class="split split--reverse">
+                    <div class="reveal">
+                        <p class="eyebrow">Privacy</p>
+                        <h2>There is nowhere for it to go</h2>
+                        <p class="lede" style="margin-bottom:24px">
+                            The shortest possible version: 3jS is a folder of static files. There is no
+                            backend, no account system and no analytics script anywhere in it.
+                        </p>
+                        <ul class="checklist">
+                            <li><span><b>Your tasks</b> live in this browser's <code>localStorage</code>
+                                under <code>3js.v1</code>, and are read by nobody else.</span></li>
+                            <li><span><b>No network calls</b> are made by the page at all. Fonts,
+                                renderer and artwork are all served from this folder, so nothing
+                                phones home and nothing is left half-rendered on a bad connection.</span></li>
+                            <li><span><b>No cookies</b> are set, and nothing is fingerprinted.</span></li>
+                            <li><span><b>Clearing your data</b> means clearing site data in your browser.
+                                There is no copy on a server to worry about.</span></li>
+                        </ul>
+                    </div>
+                    <div class="moment-card reveal delay-1">
+                        <div class="row"><span>Backend</span><b>None</b></div>
+                        <div class="row"><span>Accounts</span><b>None</b></div>
+                        <div class="row"><span>Cookies</span><b>None</b></div>
+                        <div class="row"><span>Analytics</span><b>None</b></div>
+                        <div class="row"><span>Storage</span><b><code>localStorage</code></b></div>
+                        <div class="row"><span>License</span><b>MIT (three.js r161)</b></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section--tight">
+            <div class="container">
+                <div class="cta-band reveal">
+                    <p class="eyebrow" style="justify-content:center">That's the whole pitch</p>
+                    <h2>Open the sky</h2>
+                    <p>A sample orbit is already loaded and waiting to be dragged around.</p>
+                    <div class="cta-actions">
+                        <a href="day.html" class="btn btn--primary">Open the app <span class="btn__arrow">→</span></a>
+                        <a href="guide.html" class="btn btn--ghost">Read the guide</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <a href="index.html" class="logo" aria-label="3jS home">
+                    <span class="logo__mark" aria-hidden="true"></span><span>3jS</span>
+                </a>
+                <p style="margin-top:16px">A daily to-do list rendered as a small solar system. Real-time
+                    three.js, running entirely on your own machine.</p>
+                <p class="footer-tagline">Three things, one sky.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="day.html">Today's orbit</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="guide.html">Guide &amp; FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Learn</h4>
+                <ul>
+                    <li><a href="guide.html#controls">Controls</a></li>
+                    <li><a href="guide.html#faq">FAQ</a></li>
+                    <li><a href="about.html#build">How it's built</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Elsewhere</h4>
+                <ul>
+                    <li><a href="about.html">About 3jS</a></li>
+                    <li><a href="about.html#privacy">Privacy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container copyright">© 2026 3jS. Rendered with three.js r161.</div>
+    </footer>
+
+    <script id="orbit-config" type="application/json">{"mode":"attract","showLabels":true}</script>
+    <script src="app.js" defer></script>
+    <script type="module" src="orbit.js"></script>
+</body>
+</html>
