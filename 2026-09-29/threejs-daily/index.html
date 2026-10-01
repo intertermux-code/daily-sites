@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3jS — Your whole day, in one orbit</title>
+    <meta name="description" content="3jS is a daily to-do app rendered as a small solar system. Every task is a light on a 24-hour track you can drag, orbit and finish. Built on three.js.">
+    <meta name="theme-color" content="#04060e">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <!-- the live scene -->
+    <div id="sky" class="sky" aria-hidden="true"></div>
+    <div class="sky-fallback" aria-hidden="true"></div>
+    <div class="sky-veil" aria-hidden="true"></div>
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="3jS home">
+                <span class="logo__mark" aria-hidden="true"></span>
+                <span>3jS</span>
+            </a>
+            <nav class="main-nav" aria-label="Main">
+                <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Toggle menu">
+                    <span class="bar"></span><span class="bar"></span>
+                </button>
+                <ul id="nav-list" class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="day.html">Open the app</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="guide.html">Guide</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li class="nav-cta"><a href="day.html">Start today</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content" class="page">
+        <!-- ============================= HERO ============================= -->
+        <section class="hero">
+            <div class="container hero-inner">
+                <div class="hero-copy">
+                    <p class="hero__kicker">
+                        <span class="tag tag--live"><span class="tag__dot"></span>LIVE 3D</span>
+                        <span>Rendered in your browser with <b>three.js</b></span>
+                    </p>
+                    <h1>Your whole day,<br><span class="gradient-text">in one orbit.</span></h1>
+                    <p class="hero-sub">
+                        3jS is a daily to-do list that behaves like a small solar system. Every task is a
+                        light on a 24-hour track. Move one and the day rearranges itself around it.
+                        Finish one and it goes supernova.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="day.html" class="btn btn--primary">Open today's orbit <span class="btn__arrow">→</span></a>
+                        <a href="guide.html" class="btn btn--ghost">How it works</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="hero-stat"><strong data-stat="done">0</strong><span>Done today</span></div>
+                        <div class="hero-stat"><strong data-stat="streak">0</strong><span>Day streak</span></div>
+                        <div class="hero-stat"><strong data-stat="focus">0</strong><span>Deep tasks</span></div>
+                        <div class="hero-stat"><strong data-stat="planned">0h</strong><span>Planned</span></div>
+                    </div>
+                </div>
+
+                <aside class="instrument reveal" aria-label="Today's orbit at a glance">
+                    <div class="instrument__head">
+                        <span>Station 3jS · Local time</span>
+                        <span class="tag tag--new">Today</span>
+                    </div>
+                    <div class="instrument__clock" data-clock>--:--:--</div>
+                    <div class="instrument__date" data-clock-date>&nbsp;</div>
+                    <div class="instrument__bar"><i id="hero-bar"></i></div>
+                    <p id="hero-progress-text" style="margin:14px 0 0;font-size:.85rem">&nbsp;</p>
+                    <ul class="instrument__rows" id="hero-tasks"></ul>
+                </aside>
+            </div>
+            <p class="hint-chip" aria-hidden="true">Drag anywhere to orbit the camera</p>
+        </section>
+
+        <!-- ============================= TICKER ============================= -->
+        <div class="ticker" aria-hidden="true">
+            <div class="ticker__track">
+                <span>24-hour track</span><span>Drag to reschedule</span><span>Priority lanes</span>
+                <span>Offline-first</span><span>No account required</span><span>Built on three.js</span>
+                <span>24-hour track</span><span>Drag to reschedule</span><span>Priority lanes</span>
+                <span>Offline-first</span><span>No account required</span><span>Built on three.js</span>
+            </div>
+        </div>
+
+        <!-- ============================ FEATURES ============================ -->
+        <section class="section" id="features">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div>
+                        <p class="eyebrow">The system</p>
+                        <h2>One ring. Everything that matters today.</h2>
+                    </div>
+                    <p class="lede">
+                        Most planners are a list that scrolls forever. 3jS has a fixed circumference —
+                        twenty-four hours — so the shape of your day is something you can see at a glance.
+                    </p>
+                </div>
+
+                <div class="feature-grid">
+                    <article class="card reveal">
+                        <span class="feature__num">01</span>
+                        <div class="feature__icon" aria-hidden="true">◷</div>
+                        <h3>A clock, not a list</h3>
+                        <p>Time is the x-axis. Sunrise sits on the right, noon at the back, midnight in
+                            front. An overfull evening is visible before you promise anything.</p>
+                    </article>
+                    <article class="card reveal delay-1">
+                        <span class="feature__num">02</span>
+                        <div class="feature__icon" aria-hidden="true">✥</div>
+                        <h3>Drag to reschedule</h3>
+                        <p>Grab any light and slide it around the track. The time snaps to five-minute
+                            marks and the day rearranges in real time. No dialog, no re-entry.</p>
+                    </article>
+                    <article class="card reveal delay-2">
+                        <span class="feature__num">03</span>
+                        <div class="feature__icon" aria-hidden="true">◉</div>
+                        <h3>Priority as orbit lane</h3>
+                        <p>High priority pulls inward toward the sun. Low priority drifts to the outer rim.
+                            You read the shape of your day before you read a single word.</p>
+                    </article>
+                    <article class="card reveal">
+                        <span class="feature__num">04</span>
+                        <div class="feature__icon" aria-hidden="true">✷</div>
+                        <h3>Supernova on done</h3>
+                        <p>Completing a task detonates the node into particles and cools it to a spent
+                            orbit. Small, but it is the part your brain actually rewards.</p>
+                    </article>
+                    <article class="card reveal delay-1">
+                        <span class="feature__num">05</span>
+                        <div class="feature__icon" aria-hidden="true">☀</div>
+                        <h3>Light that follows the hour</h3>
+                        <p>The sun runs its own cycle against your real clock — cold and blue before dawn,
+                            amber at the edges, white at noon. Open it at 6am and it feels like 6am.</p>
+                    </article>
+                    <article class="card reveal delay-2">
+                        <span class="feature__num">06</span>
+                        <div class="feature__icon" aria-hidden="true">⌂</div>
+                        <h3>Stays on your device</h3>
+                        <p>Everything lives in this browser's local storage. No account, no sync service,
+                            no telemetry. Close the tab and tomorrow is still there.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================== STEPS ============================== -->
+        <section class="section section--tight" id="how">
+            <div class="container">
+                <div class="section-head section-head--center reveal">
+                    <p class="eyebrow">Three moves</p>
+                    <h2>From blank sky to full orbit in a minute</h2>
+                </div>
+                <div class="steps">
+                    <div class="step reveal">
+                        <h3>Name three things</h3>
+                        <p>Type a task, give it a time, pick a lane. It appears on the track the moment
+                            you press enter. Most people never need more than five or six lights.</p>
+                    </div>
+                    <div class="step reveal delay-1">
+                        <h3>Push them around</h3>
+                        <p>Drag a node to the hour it actually belongs in. Switch to top-down view when
+                            the afternoon gets crowded, and spread things out by hand.</p>
+                    </div>
+                    <div class="step reveal delay-2">
+                        <h3>Let them land</h3>
+                        <p>Tick a task off and watch the ring fill. When the arc closes, the day is done —
+                            and the streak keeps itself warm for you.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================= REVIEW ============================= -->
+        <section class="section" id="review">
+            <div class="container review">
+                <div class="reveal">
+                    <p class="eyebrow">Day in review</p>
+                    <h2>Your day leaves a shape behind.</h2>
+                    <p class="lede" style="margin-bottom:28px">
+                        3jS keeps a record of every orbit you fly. Finished tasks, kept promises, and the
+                        days you quietly did not show up for.
+                    </p>
+                    <div class="stat-grid">
+                        <div class="stat-tile stat-tile--cyan"><strong data-stat="done">0</strong><span>Tasks landed today</span></div>
+                        <div class="stat-tile stat-tile--amber"><strong data-stat="streak">0</strong><span>Consecutive days</span></div>
+                        <div class="stat-tile stat-tile--rose"><strong data-stat="focus">0</strong><span>Deep-work blocks</span></div>
+                        <div class="stat-tile stat-tile--violet"><strong data-stat="planned">0h</strong><span>Hours on the rail</span></div>
+                    </div>
+                </div>
+
+                <div class="moment-card reveal delay-1">
+                    <div class="row"><span>Orbit</span><b id="moment-day">Today</b></div>
+                    <div class="row is-done"><time>7:30 AM</time><b>Morning pages &amp; coffee</b></div>
+                    <div class="row"><time>10:30 AM</time><b>Ship the orbit renderer</b></div>
+                    <div class="row"><time>12:45 PM</time><b>Walk — no phone</b></div>
+                    <div class="row"><time>3:15 PM</time><b>Standup + retro</b></div>
+                    <div class="row"><time>5:00 PM</time><b>Deep work: drag-to-reschedule</b></div>
+                    <div class="row"><time>10:00 PM</time><b>Read twenty pages</b></div>
+                    <a href="day.html" class="btn btn--primary btn--wide" style="margin-top:8px">Open the real thing</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================= QUOTES ============================= -->
+        <section class="section section--tight">
+            <div class="container">
+                <div class="section-head section-head--center reveal">
+                    <p class="eyebrow">Early orbits</p>
+                    <h2>People stopped rewriting their lists</h2>
+                </div>
+                <div class="quotes">
+                    <blockquote class="quote reveal">
+                        <p>“I stopped planning the day and started placing it. Watching the ring fill is
+                            the only progress bar I've ever actually watched.”</p>
+                        <footer><span class="avatar" style="background:linear-gradient(120deg,#4fe3d0,#86ead9)">MR</span>
+                            <span>Mara Reyes · staff engineer</span></footer>
+                    </blockquote>
+                    <blockquote class="quote reveal delay-1">
+                        <p>“Dragging a task to a new hour instead of retyping it changed how honest my
+                            plans are. I move things now, so I actually mean the time I picked.”</p>
+                        <footer><span class="avatar" style="background:linear-gradient(120deg,#ffb454,#ffd9a0)">TO</span>
+                            <span>Tobi Oyelaran · illustrator</span></footer>
+                    </blockquote>
+                    <blockquote class="quote reveal delay-2">
+                        <p>“It runs on a plane, on my phone, and in a browser with the wifi off. Nothing to
+                            log into, nothing to lose.”</p>
+                        <footer><span class="avatar" style="background:linear-gradient(120deg,#ff6f9c,#ffb3c9)">DK</span>
+                            <span>Dev Kaur · field cartographer</span></footer>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================== CTA ============================== -->
+        <section class="section section--tight">
+            <div class="container">
+                <div class="cta-band reveal">
+                    <p class="eyebrow" style="justify-content:center">Tonight's shift starts now</p>
+                    <h2>The sky is clear. Put something in it.</h2>
+                    <p>Open today's orbit, drop in three tasks, and watch them take their places around
+                        the sun. It takes about a minute and needs no account.</p>
+                    <div class="cta-actions">
+                        <a href="day.html" class="btn btn--primary">Open the app <span class="btn__arrow">→</span></a>
+                        <a href="features.html" class="btn btn--ghost">Read every feature</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <a href="index.html" class="logo" aria-label="3jS home">
+                    <span class="logo__mark" aria-hidden="true"></span><span>3jS</span>
+                </a>
+                <p style="margin-top:16px">A daily to-do list rendered as a small solar system. Real-time
+                    three.js, running entirely on your own machine.</p>
+                <p class="footer-tagline">Three things, one sky.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="day.html">Today's orbit</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="guide.html">Guide &amp; FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Learn</h4>
+                <ul>
+                    <li><a href="guide.html#controls">Controls</a></li>
+                    <li><a href="guide.html#faq">FAQ</a></li>
+                    <li><a href="about.html#build">How it's built</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Elsewhere</h4>
+                <ul>
+                    <li><a href="about.html">About 3jS</a></li>
+                    <li><a href="about.html#privacy">Privacy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container copyright">© 2026 3jS. Rendered with three.js r161.</div>
+    </footer>
+
+    <script id="orbit-config" type="application/json">{"mode":"attract","showLabels":true}</script>
+    <script src="app.js" defer></script>
+    <script type="module" src="orbit.js"></script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Today's orbit — 3jS</title>
+    <meta name="description" content="Plan the day as a 24-hour orbit. Add tasks, drag them around the track, and watch the ring fill.">
+    <meta name="theme-color" content="#04060e">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="app-body">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <div id="sky" class="sky" aria-hidden="true"></div>
+    <div class="sky-fallback" aria-hidden="true"></div>
+    <div class="sky-veil" aria-hidden="true"></div>
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="Back to 3jS home">
+                <span class="logo__mark" aria-hidden="true"></span>
+                <span>3jS</span>
+            </a>
+            <nav class="main-nav" aria-label="Main">
+                <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Toggle menu">
+                    <span class="bar"></span><span class="bar"></span>
+                </button>
+                <ul id="nav-list" class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="guide.html">Guide</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li class="nav-cta"><a href="index.html">Back to site</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="app-shell" id="main-content">
+        <!-- ============================== HUD ============================== -->
+        <div class="hud">
+            <div class="hud-top">
+                <div class="hud-clock">
+                    <div class="hud-clock__time" data-clock>--:--:--</div>
+                    <div class="hud-clock__date" data-clock-date>&nbsp;</div>
+                </div>
+                <div class="hud-stats">
+                    <div class="hud-pill hud-pill--cyan"><b id="pill-done">0/0</b><span>Done</span></div>
+                    <div class="hud-pill"><b id="pill-streak">0</b><span>Streak</span></div>
+                    <div class="hud-pill hud-pill--amber"><b id="pill-focus">0</b><span>Deep</span></div>
+                </div>
+            </div>
+
+            <div class="hud-bottom">
+                <div class="legend" aria-hidden="true">
+                    <span><i class="p1"></i>High</span>
+                    <span><i class="p2"></i>Medium</span>
+                    <span><i class="p3"></i>Low</span>
+                    <span><i class="pd"></i>Done</span>
+                </div>
+                <div class="hud-tools">
+                    <button class="tool-btn" id="tool-view" type="button" aria-label="Switch to top-down view" title="Top-down view">◱</button>
+                    <button class="tool-btn" id="tool-zoom" type="button" aria-label="Zoom out" title="Zoom out">⤢</button>
+                    <button class="tool-btn" id="tool-help" type="button" aria-label="Controls" title="Controls" aria-expanded="false" aria-controls="controls">?</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================= PANEL ============================= -->
+        <aside class="panel" aria-label="Task list">
+            <button class="panel-toggle" id="panel-toggle" type="button" aria-label="Show tasks">☰</button>
+
+            <div class="panel-head">
+                <div class="panel-title">
+                    <h1>Orbit</h1>
+                    <div class="day-nav">
+                        <button id="day-prev" type="button" aria-label="Previous day">◀</button>
+                        <span class="day-nav__label" id="day-label">Today</span>
+                        <button id="day-next" type="button" aria-label="Next day">▶</button>
+                        <button class="btn btn--sm btn--ghost" id="day-today" type="button">Today</button>
+                    </div>
+                </div>
+                <div class="progress">
+                    <div class="progress__ring" id="progress-ring" style="--pct:0"><b id="progress-pct">0%</b></div>
+                    <p class="progress__meta" id="progress-text">&nbsp;</p>
+                </div>
+            </div>
+
+            <form class="composer" id="composer" autocomplete="off">
+                <div class="composer__row">
+                    <label class="visually-hidden" for="task-title">Task title</label>
+                    <input class="field" id="task-title" name="title" type="text" maxlength="80"
+                           placeholder="What needs doing?" aria-label="Task title" />
+                    <label class="visually-hidden" for="task-time">Time</label>
+                    <input class="field field--time" id="task-time" name="time" type="time" aria-label="Task time" />
+                </div>
+                <div class="composer__row">
+                    <div class="prio-group" role="group" aria-label="Priority">
+                        <button class="prio-btn" type="button" data-p="1" aria-pressed="false">High</button>
+                        <button class="prio-btn" type="button" data-p="2" aria-pressed="true">Med</button>
+                        <button class="prio-btn" type="button" data-p="3" aria-pressed="false">Low</button>
+                    </div>
+                    <button class="btn btn--primary btn--sm" type="submit" style="flex:none">Add</button>
+                </div>
+            </form>
+
+            <div class="filters" role="group" aria-label="Filter tasks">
+                <button class="chip" type="button" data-filter="all" aria-pressed="true">All</button>
+                <button class="chip" type="button" data-filter="open" aria-pressed="false">Open</button>
+                <button class="chip" type="button" data-filter="done" aria-pressed="false">Done</button>
+                <button class="chip" type="button" data-filter="high" aria-pressed="false">Deep</button>
+            </div>
+
+            <ul class="task-list" id="task-list"></ul>
+
+            <div class="panel-foot">
+                <span id="foot-count">0 tasks</span>
+                <span><kbd>N</kbd> new · <kbd>T</kbd> today · <kbd>Esc</kbd> deselect</span>
+                <button class="btn btn--sm btn--ghost" id="clear-day" type="button">Clear day</button>
+            </div>
+        </aside>
+    </main>
+
+    <!-- ============================ CONTROLS ============================ -->
+    <div class="controls" id="controls" hidden>
+        <div class="controls__scrim" data-controls-close></div>
+        <div class="controls__card" role="dialog" aria-labelledby="controls-title">
+            <div class="controls__head">
+                <h2 id="controls-title">Controls</h2>
+                <button class="controls__close" type="button" data-controls-close aria-label="Close controls">&#10005;</button>
+            </div>
+            <div class="controls__grid">
+                <section>
+                    <h3>Pointer</h3>
+                    <dl>
+                        <dt>Drag a light</dt><dd>Reschedule it, snapped to 5 minutes</dd>
+                        <dt>Click a light</dt><dd>Select it and reveal its title in 3D</dd>
+                        <dt>Drag the sky</dt><dd>Orbit the camera around the ring</dd>
+                        <dt>Scroll / pinch</dt><dd>Dolly between 8.5 and 34 units</dd>
+                    </dl>
+                </section>
+                <section>
+                    <h3>Keys &amp; tools</h3>
+                    <dl>
+                        <dt><kbd>N</kbd> or <kbd>/</kbd></dt><dd>Jump to the task field</dd>
+                        <dt><kbd>T</kbd></dt><dd>Snap back to today</dd>
+                        <dt><kbd>Esc</kbd></dt><dd>Deselect and close this</dd>
+                        <dt><kbd>Enter</kbd></dt><dd>Add the task, stay in the field</dd>
+                    </dl>
+                </section>
+            </div>
+            <p class="controls__foot">The <a href="guide.html">guide</a> walks through a full day, start to finish.</p>
+        </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script id="orbit-config" type="application/json">{"mode":"interactive","showLabels":true}</script>
+    <script src="app.js" defer></script>
+    <script type="module" src="orbit.js"></script>
+</body>
+</html>
