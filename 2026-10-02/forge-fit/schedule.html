@@ -1,305 +1,274 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="color-scheme: dark;">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class Schedule — Forge Strength & Conditioning</title>
-    <meta name="description" content="View the weekly class schedule at Forge. Filter by day to find your next powerlifting, HIIT, or mobility session.">
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0c">
+<title>Schedule — Forge // Weekly Timetable</title>
+<meta name="description" content="Forge's full weekly class schedule. Filter by day and see all Powerlifting, HIIT, and Mobility Lab sessions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Skip to Content</a>
+<a href="#main" class="skip-link">Skip to content</a>
 
-    <header class="site-header">
-        <div class="nav-container">
-            <a href="index.html" class="nav-logo" aria-label="Forge homepage">
-                <span class="nav-logo-mark" aria-hidden="true"></span>
-                FORGE
-            </a>
-            <nav aria-label="Main navigation">
-                <ul class="nav-links" role="list">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="programs.html">Programs</a></li>
-                    <li><a href="schedule.html" aria-current="page">Schedule</a></li>
-                    <li><a href="trainers.html">Coaches</a></li>
-                    <li><a href="membership.html">Join</a></li>
-                </ul>
-            </nav>
-            <a href="membership.html" class="nav-cta">Start Free Trial</a>
-            <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </header>
+<header class="site-header" data-component="header">
+  <div class="header-bar">
+    <div class="header-status">
+      <span class="status-dot status-dot--live"></span>
+      <span class="mono">SYS.ONLINE</span>
+    </div>
+    <div class="header-clock mono" id="liveClock">--:--:-- UTC</div>
+  </div>
+  <div class="header-main">
+    <a href="index.html" class="logo" aria-label="Forge home">
+      <span class="logo-mark">◆</span>
+      <span class="logo-text">FORGE</span>
+      <span class="logo-chip mono">v2.6</span>
+    </a>
+    <nav class="main-nav" aria-label="Primary">
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navList" aria-label="Open menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      <ul class="nav-list" id="navList">
+        <li><a href="index.html"><span class="nav-chip mono">01</span>Home</a></li>
+        <li><a href="programs.html"><span class="nav-chip mono">02</span>Programs</a></li>
+        <li><a href="schedule.html" aria-current="page"><span class="nav-chip mono">03</span>Schedule</a></li>
+        <li><a href="trainers.html"><span class="nav-chip mono">04</span>Trainers</a></li>
+        <li><a href="membership.html"><span class="nav-chip mono">05</span>Membership</a></li>
+      </ul>
+    </nav>
+    <a href="membership.html" class="btn btn--accent btn--cta">
+      <span class="btn-chip mono">⏎</span>
+      <span>Book a Trial</span>
+    </a>
+  </div>
+</header>
 
-    <main id="main-content">
-        <section class="page-header">
-            <span class="page-header-label">Weekly Schedule</span>
-            <h1>Plan Your <span style="color: var(--accent-volt);">Week</span></h1>
-            <p>Every class is coached, capped at 12 athletes, and built to fit into a real life. Filter by day to find your slot. Book through the member app or show up—spots are first-come, first-served for trial members.</p>
-        </section>
+<main id="main">
+  <section class="page-hero">
+    <div class="page-hero__eyebrow mono">
+      <span>[F3]</span>
+      <span>WEEKLY.TIMETABLE</span>
+      <span>·</span>
+      <span id="weekLabel">WEEK OF —</span>
+    </div>
+    <h1 class="page-hero__title">THE FLOOR, IN REAL TIME.</h1>
+    <p class="page-hero__lede">67 sessions a week. All bookable 7 days in advance. Filter by day, filter by discipline, or scan the full grid. Sessions fill — especially Thursday nights.</p>
+  </section>
 
-        <section class="section schedule-section" aria-label="Class schedule with day filters">
-            <div class="schedule-filters" role="group" aria-label="Filter schedule by day">
-                <button class="filter-btn active" data-day="all">All Days</button>
-                <button class="filter-btn" data-day="monday">Monday</button>
-                <button class="filter-btn" data-day="tuesday">Tuesday</button>
-                <button class="filter-btn" data-day="wednesday">Wednesday</button>
-                <button class="filter-btn" data-day="thursday">Thursday</button>
-                <button class="filter-btn" data-day="friday">Friday</button>
-                <button class="filter-btn" data-day="saturday">Saturday</button>
-                <button class="filter-btn" data-day="sunday">Sunday</button>
-            </div>
+  <section class="schedule-controls">
+    <div class="filter-group" role="group" aria-label="Filter schedule by day">
+      <button class="filter-btn filter-btn--active" data-filter="all">ALL DAYS</button>
+      <button class="filter-btn" data-filter="mon">MON</button>
+      <button class="filter-btn" data-filter="tue">TUE</button>
+      <button class="filter-btn" data-filter="wed">WED</button>
+      <button class="filter-btn" data-filter="thu">THU</button>
+      <button class="filter-btn" data-filter="fri">FRI</button>
+      <button class="filter-btn" data-filter="sat">SAT</button>
+      <button class="filter-btn" data-filter="sun">SUN</button>
+    </div>
+    <div class="filter-group" role="group" aria-label="Filter schedule by discipline">
+      <button class="filter-btn filter-btn--active" data-discipline="all">ALL</button>
+      <button class="filter-btn" data-discipline="pl">POWERLIFTING</button>
+      <button class="filter-btn" data-discipline="hiit">HIIT</button>
+      <button class="filter-btn" data-discipline="mob">MOBILITY</button>
+      <button class="filter-btn" data-discipline="open">OPEN</button>
+    </div>
+  </section>
 
-            <div class="schedule-grid">
-                <!-- Monday -->
-                <div class="schedule-day" data-day="monday">
-                    <div class="schedule-day-header">Monday</div>
-                    <div class="schedule-class">
-                        <div class="class-time">06:00 – 07:00</div>
-                        <div class="class-name">Powerlifting A</div>
-                        <div class="class-trainer">Coach Sarah K.</div>
-                    </div>
-                    <div class="schedule-class">
-                        <div class="class-time">12:00 – 12:45</div>
-                        <div class="class-name">HIIT Express</div>
-                        <div class="class-trainer">Coach Marcus T.</div>
-                    </div>
-                    <div class="schedule-class">
-                        <div class="class-time">18:00 – 19:30</div>
-                        <div class="class-name">Powerlifting B</div>
-                        <div class="class-trainer">Coach Sarah K.</div>
-                    </div>
-                    <div class="schedule-class">
-                        <div class="class-time">19:45 – 20:45</div>
-                        <div class="class-name">Mobility Flow</div>
-                        <div class="class-trainer">Coach Lina R.</div>
-                    </div>
-                </div>
+  <section class="schedule-table-wrap">
+    <div class="schedule-legend mono">
+      <span class="legend-item"><span class="legend-dot legend-dot--pl"></span>Powerlifting</span>
+      <span class="legend-item"><span class="legend-dot legend-dot--hiit"></span>HIIT Engine</span>
+      <span class="legend-item"><span class="legend-dot legend-dot--mob"></span>Mobility Lab</span>
+      <span class="legend-item"><span class="legend-dot legend-dot--open"></span>Open Floor</span>
+    </div>
 
-                <!-- Tuesday -->
-                <div class="schedule-day" data-day="tuesday">
-                    <div class="schedule-day-header">Tuesday</div>
-                    <div class="schedule-class">
-                        <div class="class-time">06:00 – 06:45</div>
-                        <div class="class-name">HIIT Circuit</div>
-                        <div class="class-trainer">Coach Marcus T.</div>
-                    </div>
-                    <div class="schedule-class">
-                        <div class="class-time">12:00 – 13:00</div>
-                        <div class="class-name">Mobility Flow</div>
-                        <div class="class-trainer">Coach Lina R.</div>
-                    </div>
-                    <div class="schedule-class">
-                        <div class="class-time">18:00 – 19:00</div>
-                        <div class="class-name">Conditioning Lab</div>
-                        <div class="class-trainer">Coach Marcus T.</div>
-                    </div>
-                    <div class="schedule-class">
-                        <div class="class-time">19:30 – 21:00</div>
-                        <div class="class-name">Open Gym (Coached)</div>
-                        <div class="class-trainer">Coach Sarah K.</div>
-                    </div>
-                </div>
+    <table class="schedule-table" aria-label="Weekly class schedule">
+      <thead>
+        <tr>
+          <th scope="col">TIME</th>
+          <th scope="col" data-day="mon">MON</th>
+          <th scope="col" data-day="tue">TUE</th>
+          <th scope="col" data-day="wed">WED</th>
+          <th scope="col" data-day="thu">THU</th>
+          <th scope="col" data-day="fri">FRI</th>
+          <th scope="col" data-day="sat">SAT</th>
+          <th scope="col" data-day="sun">SUN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-time="0600">
+          <th scope="row" class="mono">06:00</th>
+          <td data-day="mon" data-discipline="pl"><span class="cell cell--pl">PL.Open</span><br><span class="cell-coach mono">Marcus</span></td>
+          <td data-day="tue" data-discipline="pl"><span class="cell cell--pl">PL.Upper</span><br><span class="cell-coach mono">Elena</span></td>
+          <td data-day="wed" data-discipline="pl"><span class="cell cell--pl">PL.Open</span><br><span class="cell-coach mono">Marcus</span></td>
+          <td data-day="thu" data-discipline="pl"><span class="cell cell--pl">PL.Lower</span><br><span class="cell-coach mono">Marcus</span></td>
+          <td data-day="fri" data-discipline="pl"><span class="cell cell--pl">PL.Heavy</span><br><span class="cell-coach mono">Marcus</span></td>
+          <td data-day="sat" data-discipline="open">—</td>
+          <td data-day="sun" data-discipline="open">—</td>
+        </tr>
+        <tr data-time="0900">
+          <th scope="row" class="mono">09:00</th>
+          <td data-day="mon" data-discipline="mob"><span class="cell cell--mob">MOB.Ankle</span><br><span class="cell-coach mono">Jules</span></td>
+          <td data-day="tue" data-discipline="open">—</td>
+          <td data-day="wed" data-discipline="mob"><span class="cell cell--mob">MOB.Hip</span><br><span class="cell-coach mono">Jules</span></td>
+          <td data-day="thu" data-discipline="open">—</td>
+          <td data-day="fri" data-discipline="mob"><span class="cell cell--mob">MOB.T-Spine</span><br><span class="cell-coach mono">Jules</span></td>
+          <td data-day="sat" data-discipline="pl"><span class="cell cell--pl">Team PL</span><br><span class="cell-coach mono">Marcus</span></td>
+          <td data-day="sun" data-discipline="open"><span class="cell cell--open">Open Floor</span><br><span class="cell-coach mono">Staff</span></td>
+        </tr>
+        <tr data-time="1200">
+          <th scope="row" class="mono">12:00</th>
+          <td data-day="mon" data-discipline="open">—</td>
+          <td data-day="tue" data-discipline="hiit"><span class="cell cell--hiit">HIIT.B</span><br><span class="cell-coach mono">Dante</span></td>
+          <td data-day="wed" data-discipline="open">—</td>
+          <td data-day="thu" data-discipline="hiit"><span class="cell cell--hiit">HIIT.A</span><br><span class="cell-coach mono">Dante</span></td>
+          <td data-day="fri" data-discipline="open">—</td>
+          <td data-day="sat" data-discipline="mob"><span class="cell cell--mob">MOB.Flow</span><br><span class="cell-coach mono">Jules</span></td>
+          <td data-day="sun" data-discipline="mob"><span class="cell cell--mob">MOB.Flow</span><br><span class="cell-coach mono">Jules</span></td>
+        </tr>
+        <tr data-time="1830">
+          <th scope="row" class="mono">18:30</th>
+          <td data-day="mon" data-discipline="hiit"><span class="cell cell--hiit">HIIT.A</span><br><span class="cell-coach mono">Dante</span></td>
+          <td data-day="tue" data-discipline="open">—</td>
+          <td data-day="wed" data-discipline="hiit"><span class="cell cell--hiit">HIIT.C</span><br><span class="cell-coach mono">Dante</span></td>
+          <td data-day="thu" data-discipline="open">—</td>
+          <td data-day="fri" data-day="fri" data-discipline="hiit"><span class="cell cell--hiit">HIIT.B</span><br><span class="cell-coach mono">Dante</span></td>
+          <td data-day="sat" data-discipline</td>
+          <td data-day="sun" data-discipline="open">—</td>
+        </tr>
+        <tr data-time="1930">
+          <th scope="row" class=":30</th>
+          <td data-day="mon" data-discipline="open">—</td<td data-day="tue" data-discipline="mob"><span class="cell cell--mob">MOB.T-Spine</span><br><span class="cell-coach mono">Jules</span></td>
+          <td data-day="wed" data-discipline="pl"><span class="cell cell--pl">PL.Technique</span><br><span class="cell-coach mono">Elena</span></td>
+          <td data-day="thu" data-discipline="mob"><span class="cell cell--mob">MOB.Ankle</span><br><span class="cell-coach mono">Jules</span></td>
+          <td data-day="fri" data-discipline="open">—</td>
+          <td data-day="sat" data-discipline="hiit"><span class="cell cell--hiit">Metcon</span><br><span class="cell-coach mono">Dante</span></td>
+          <td data-day="sun" data-discipline="open">—</td>
+        </tr>
+        <tr data-time="2000">
+          <th scope="row" class="mono">20:00</th>
+          <td data-day="mon" data-discipline="mob"><span class="cell cell--mob">MOB.Hip</span><br><span class="cell-coach mono">Jules</span></td>
+          <td data-day="tue" data-discipline="open">—</td>
+          <td data-day="wed" data-discipline="open">—</td>
+          <td data-day="thu" data-discipline="pl"><span class="cell cell--pl">PL.Heavy</span><br><span class="cell-coach mono">Marcus</span></td>
+          <td data-day="fri" data-discipline="open"><span class="cell cell--open">Open Floor</span><br><span class="cell-coach mono">Staff</span></td>
+          <td data-day="sat" data-discipline="mob"><span class="cell cell--mob">MOB.Full</span><br><span class="cell-coach mono">Jules</span></td>
+          <td data-day="sun" data-discipline="open">—</td>
+        </tr>
+      </tbody>
+    </table>
 
-                <!-- Wednesday -->
-                <div class="schedule-day" data-day="wednesday">
-                    <div class="schedule-day-header">Wednesday</div>
-                    <div class="schedule-class">
-                        <div class="class-time">06:00 – 07:00</div>
-                        <div class="class-name">Powerlifting A</div>
-                        <div class="class-trainer">Coach Sarah K.</div>
-                    </div>
-                    <div class="schedule-class">
-                        <div class="class-time">12:00 – 12:45</div>
-                        <div class="class-name">HIIT Express</div>
-                        <div class="class-trainer">Coach Marcus T.</div>
-                    </div>
-                    <div class="schedule-class">
-                        <div class="class-time">18:00 – 19:30</div>
-                        <div class="class-name">Powerlifting B</div>
-                        <div class="class-trainer">Coach Sarah K.</div>
-                    </div>
-                </div>
+    <div class="schedule-empty" id="scheduleEmpty" hidden>
+      <div class="empty-icon" aria-hidden="true">◌</div>
+      <p class="empty-title">NO MATCHING SESSIONS</p>
+      <p class="empty-body mono">Try widening your day or discipline filter.</p>
+      <button class="btn btn--ghost" id="resetFilters">
+        <span class="btn-chip mono">R</span>
+        <span>Reset filters</span>
+      </button>
+    </div>
+  </section>
 
-                <!-- Thursday -->
-                <div class="schedule-day" data-day="thursday">
-                    <div class="schedule-day-header">Thursday</div>
-                    <div class="schedule-class">
-                        <div class="class-time">06:00 – 06:45</div>
-                        <div class="class-name">HIIT Circuit</div>
-                        <div class="class-trainer">Coach Marcus T.</div>
-                    </div>
-                    <div class="schedule-class">
-                        <div class="class-time">12:00 – 13:00</div>
-                        <div class="class-name">Mobility Flow</div>
-                        <div class="class-trainer">Coach Lina R.</div>
-                    </div>
-                    <div class="schedule-class">
-                        <div class="class-time">18:00 – 19:00</div>
-                        <div class="class-name">Conditioning Lab</div>
-                        <div class="class-trainer">Coach Marcus T.</div>
-                    </div>
-                    <div class="schedule-class">
-                        <div class="class-time">19:30 – 20:30</div>
-                        <div class="class-name">Strong(her)</div>
-                        <div class="class-trainer">Coach Lina R.</div>
-                    </div>
-                </div>
+  <section class="schedule-notes">
+    <div class="section-header">
+      <span class="mono section-tag">[HOUSE.RULES]</span>
+      <h2 class="section-title">READ BEFORE BOOKING</h2>
+    </div>
+    <div class="notes-grid">
+      <article class="note">
+        <div class="mono note__tag">[01]</div>
+        <h3 class="note__title">ARRIVE EARLY</h3>
+        <p class="note__body">Sessions start on the dot. Arrive 10 minutes early to warm up, sign in, and claim your station. Late arrivals forfeit their spot after 5 minutes.</p>
+      </article>
+      <article class="note">
+        <div class="mono note__tag">[02]</div>
+        <h3 class="note__title">CANCEL POLICY</h3>
+        <p class="note__body">Cancel at least 4 hours before class or you'll receive a late-cancel strike. Three strikes in 30 days = 7-day booking freeze. Life happens — just give us the heads-up.</p>
+      </article>
+      <article class="note">
+        <div class="mono note__tag">[03]</div>
+        <h3 class="note__title">CAPACITY</h3>
+        <p class="note__body">HIIT classes cap at 12. Powerlifting caps at 8 (two per rack). Mobility Lab caps at 16. When a class shows FULL, join the waitlist — 38% of no-shows are released 1 hour before start.</p>
+      </article>
+      <article class="note">
+        <div class="mono note__tag">[04]</div>
+        <h3 class="note__title">SUBSTITUTIONS</h3>
+        <p class="note__body">Coaches substitute for illness or emergency only. If your coach is out, the session still runs with a qualified substitute — no refunds, no reschedules.</p>
+      </article>
+    </div>
+  </section>
 
-                <!-- Friday -->
-                <div class="schedule-day" data-day="friday">
-                    <div class="schedule-day-header">Friday</div>
-                    <div class="schedule-class">
-                        <div class="class-time">06:00 – 07:00</div>
-                        <div class="class-name">Powerlifting A</div>
-                        <div class="class-trainer">Coach Sarah K.</div>
-                    </div>
-                    <div class="schedule-class">
-                        <div class="class-time">12:00 – 12:45</div>
-                        <div class="class-name">HIIT Express</div>
-                        <div class="class-trainer">Coach Marcus T.</div>
-                    </div>
-                    <div class="schedule-class">
-                        <div class="class-time">17:30 – 19:00</div>
-                        <div class="class-name">Team WOD</div>
-                        <div class="class-trainer">All Coaches</div>
-                    </div>
-                </div>
+  <section class="final-cta">
+    <div class="final-cta__inner">
+      <div class="mono final-cta__tag">[TRANSMISSION.OUTBOUND]</div>
+      <h2 class="final-cta__title">PICK A TIME. SHOW UP.</h2>
+      <p class="final-cta__body">Seven days, any class, any time slot. Your trial starts the minute you walk in the door.</p>
+      <a href="membership.html" class="btn btn--accent btn--lg">
+        <span class="btn-chip mono">⏎</span>
+        <span>Book Your First Class</span>
+      </a>
+    </div>
+  </section>
+</main>
 
-                <!-- Saturday -->
-                <div class="schedule-day" data-day="saturday">
-                    <div class="schedule-day-header">Saturday</div>
-                    <div class="schedule-class">
-                        <div class="class-time">08:00 – 09:30</div>
-                        <div class="class-name">Powerlifting Club</div>
-                        <div class="class-trainer">Coach Sarah K.</div>
-                    </div>
-                    <div class="schedule-class">
-                        <div class="class-time">10:00 – 11:00</div>
-                        <div class="class-name">HIIT Circuit</div>
-                        <div class="class-trainer">Coach Marcus T.</div>
-                    </div>
-                    <div class="schedule-class">
-                        <div class="class-time">11:30 – 12:30</div>
-                        <div class="class-name">Mobility Deep</div>
-                        <div class="class-trainer">Coach Lina R.</div>
-                    </div>
-                </div>
+<footer class="site-footer" data-component="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">
+        <span class="logo-mark">◆</span>
+        <span class="logo-text">FORGE</span>
+      </div>
+      <p class="footer-tagline mono">Strength & Conditioning Facility // Brooklyn, NY // EST. 2019</p>
+      <div class="footer-status mono">
+        <div><span class="status-dot status-dot--live"></span> SYS.ONLINE</div>
+        <div>FLR.LOAD: 64%</div>
+        <div>LAST.SYNC: 2min ago</div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4 class="mono footer-heading">[NAVIGATE]</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="programs.html">Programs</a></li>
+        <li><a href="schedule.html">Schedule</a></li>
+        <li><a href="trainers.html">Trainers</a></li>
+        <li><a href="membership.html">Membership</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 class="mono footer-heading">[FACILITY]</h4>
+      <ul>
+        <li>442 Ironworks Ave</li>
+        <li>Brooklyn, NY 11222</li>
+        <li>Staffed: 04:00–23:00</li>
+        <li>Elite 24/7: Always</li>
+        <li><a href="tel:+17185550142">+1 (718) 555-0142</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 class="mono footer-heading">[SIGNALS]</h4>
+      <ul>
+        <li><a href="#" aria-label="Forge on Instagram">Instagram</a></li>
+        <li><a href="#" aria-label="Forge on YouTube">YouTube</a></li>
+        <li><a href="#" aria-label="Forge Discord">Discord</a></li>
+        <li><a href="#" aria-label="Forge Newsletter">Newsletter</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-legal mono">
+    <span>© 2026 Forge Strength Systems LLC</span>
+    <span>Terms · Privacy · Waivers</span>
+    <span>BUILD.2026.10.02 // SHA.9a4f2c</span>
+  </div>
+</footer>
 
-                <!-- Sunday -->
-                <div class="schedule-day" data-day="sunday">
-                    <div class="schedule-day-header">Sunday</div>
-                    <div class="schedule-class">
-                        <div class="class-time">09:00 – 10:30</div>
-                        <div class="class-name">Open Gym (Coached)</div>
-                        <div class="class-trainer">Coach Sarah K.</div>
-                    </div>
-                    <div class="schedule-class">
-                        <div class="class-time">11:00 – 12:00</div>
-                        <div class="class-name">Recovery & Mobility</div>
-                        <div class="class-trainer">Coach Lina R.</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Pull Quote -->
-        <section class="pull-quote-section" aria-label="Schedule philosophy">
-            <div class="pull-quote">
-                <blockquote>
-                    <p>"Consistency beats intensity. Our schedule is built for people with jobs, families, and lives outside the gym."</p>
-                    <cite>— Operations Lead, James Park</cite>
-                </blockquote>
-                <div class="pull-quote-visual">
-                    <img src="https://picsum.photos/seed/forge-fit-7c8a399c16cc/1600/900?auto=format&fit=crop&w=800&q=80" alt="Group fitness class in session with athletes working on rowing machines" class="pull-quote-img" width="800" height="600">
-                    <div class="pull-quote-img-clip" aria-hidden="true"></div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" style="padding: var(--space-16) var(--space-6);" aria-label="Schedule information">
-            <div class="features-grid">
-                <div class="feature-item">
-                    <span class="feature-number">01</span>
-                    <h4>Class Caps</h4>
-                    <p>Maximum 12 athletes per class. Every member gets coached, every session.</p>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-number">02</span>
-                    <h4>Cancellation</h4>
-                    <p>Cancel up to 2 hours before class. Three no-shows in a month trigger a review.</p>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-number">03</span>
-                    <h4>Sub List</h4>
-                    <p>Missed a spot? Join the sub list and get notified when a slot opens.</p>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-number">04</span>
-                    <h4>Guest Passes</h4>
-                    <p>Bring a friend twice a month. They train free—you spot them on the bench.</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="site-footer">
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <a href="index.html" class="nav-logo" aria-label="Forge homepage">
-                    <span class="nav-logo-mark" aria-hidden="true"></span>
-                    FORGE
-                </a>
-                <p>Strength and conditioning for those who take their training seriously. Built in 2018. Forged every day since.</p>
-            </div>
-            <div>
-                <h3 class="footer-heading">Navigate</h3>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="programs.html">Programs</a></li>
-                    <li><a href="schedule.html">Schedule</a></li>
-                    <li><a href="trainers.html">Coaches</a></li>
-                    <li><a href="membership.html">Membership</a></li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="footer-heading">Hours</h3>
-                <ul class="footer-links">
-                    <li>Mon–Fri: 05:00–23:00</li>
-                    <li>Saturday: 07:00–20:00</li>
-                    <li>Sunday: 08:00–18:00</li>
-                    <li>Elite: 24/7 Access</li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="footer-heading">Contact</h3>
-                <ul class="footer-links">
-                    <li>47 Industrial Way</li>
-                    <li>Brooklyn, NY 11222</li>
-                    <li>hello@forge-gym.com</li>
-                    <li>(718) 555-0142</li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <span>© 2026 Forge Strength & Conditioning. All rights reserved.</span>
-            <div class="footer-socials">
-                <a href="#" aria-label="Follow Forge on Instagram">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
-                </a>
-                <a href="#" aria-label="Follow Forge on YouTube">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><path d="M9.75 15.02l5.75-3.27-5.75-3.27v6.54z"/></svg>
-                </a>
-                <a href="#" aria-label="Follow Forge on X">
-                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                </a>
-            </div>
-        </div>
-    </footer>
-
-    <script src="app.js" defer></script>
+<script src="app.js" defer></script>
 <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
 </html>
