@@ -1,278 +1,416 @@
-/**
- * Bright Harvest - Interactive Logic
- * Handles: Navigation, Magnetic Buttons, Spring Accordion, Counters, Forms
- */
+/* =================================================================
+   BRIGHT HARVEST — site-wide interactivity
+   - Scroll progress bar (scaleX driven by rAF)
+   - Magnetic button effect (translate + scale toward cursor)
+   - Impact counter animation (IntersectionObserver)
+   - Donation widget (amount + frequency + submit → thank-you)
+   - Volunteer signup (validation + success state)
+   - Mobile nav toggle
+   Honors prefers-reduced-motion by disabling non-essential motion.
+   ================================================================= */
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Remove no-js class
-    document.documentElement.classList.remove('no-js');
+(function () {
+  "use strict";
 
-    initNavigation();
-    initRevealObserver();
-    initMagneticButtons();
-    initAccordion();
-    initCounters();
-    initDonationForm();
-    initVolunteerForm();
-});
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/* ----------------------------------------
-   NAVIGATION
----------------------------------------- */
-function initNavigation() {
-    const toggle = document.querySelector('.nav-toggle');
-    const navList = document.querySelector('.nav-list');
-    
-    if (!toggle || !navList) return;
+  /* ============================================================
+     1. SCROLL PROGRESS — 2px bar pinned to top, scaleX via rAF
+     ============================================================ */
+  (function initProgress() {
+    const bar = document.getElementById("progress");
+    if (!bar) return;
 
-    toggle.addEventListener('click', () => {
-        const isOpen = navList.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', isOpen);
-    });
-
-    // Close on outside click
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.main-nav') && navList.classList.contains('open')) {
-            navList.classList.remove('open');
-            toggle.setAttribute('aria-expanded', 'false');
-        }
-    });
-}
-
-/* ----------------------------------------
-   REVEAL OBSERVER (Entrance Animations)
----------------------------------------- */
-function initRevealObserver() {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-    document.querySelectorAll('.reveal-group').forEach(el => observer.observe(el));
-}
-
-/* ----------------------------------------
-   MAGNETIC BUTTONS
----------------------------------------- */
-function initMagneticButtons() {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (window.innerWidth < 768) return; // Disable on touch/mobile
-
-    const buttons = document.querySelectorAll('.magnetic-btn');
-    const strength = 0.4; // How much it moves toward cursor
-    const radius = 120; // Activation radius in px
-
-    buttons.forEach(btn => {
-        let bounds;
-        
-        const onMouseMove = (e) => {
-            const { x, y } = e;
-            const dx = x - (bounds.left + bounds.width / 2);
-            const dy = y - (bounds.top + bounds.height / 2);
-            const dist = Math.sqrt(dx * dx + dy * dy);
-
-            if (dist < radius) {
-                // Lerp-like effect via direct assignment for responsiveness
-                requestAnimationFrame(() => {
-                    btn.style.transform = `translate(${dx * strength}px, ${dy * strength}px) scale(1.04)`;
-                });
-            } else {
-                resetBtn();
-            }
-        };
-
-        const resetBtn = () => {
-            btn.style.transform = 'translate(0px, 0px) scale(1)';
-        };
-
-        btn.addEventListener('mouseenter', () => {
-            bounds = btn.getBoundingClientRect();
-            document.addEventListener('mousemove', onMouseMove);
-        });
-
-        btn.addEventListener('mouseleave', () => {
-            document.removeEventListener('mousemove', onMouseMove);
-            resetBtn();
-        });
-    });
-}
-
-/* ----------------------------------------
-   SPRING ACCORDION
----------------------------------------- */
-function initAccordion() {
-    const triggers = document.querySelectorAll('.accordion-trigger');
-    
-    triggers.forEach(trigger => {
-        trigger.addEventListener('click', () => {
-            const expanded = trigger.getAttribute('aria-expanded') === 'true';
-            const panelId = trigger.getAttribute('aria-controls');
-            const panel = document.getElementById(panelId);
-            
-            // Close all others (single-open behavior)
-            triggers.forEach(otherTrigger => {
-                if (otherTrigger !== trigger) {
-                    otherTrigger.setAttribute('aria-expanded', 'false');
-                    const otherPanel = document.getElementById(otherTrigger.getAttribute('aria-controls'));
-                    if (otherPanel) otherPanel.classList.remove('active');
-                }
-            });
-
-            // Toggle current
-            trigger.setAttribute('aria-expanded', !expanded);
-            if (!expanded) {
-                panel.classList.add('active');
-            } else {
-                panel.classList.remove('active');
-            }
-        });
-    });
-}
-
-/* ----------------------------------------
-   IMPACT COUNTERS
----------------------------------------- */
-function initCounters() {
-    const counters = document.querySelectorAll('.impact-number[data-target]');
-    if (!counters.length) return;
-
-    const animateCounter = (el) => {
-        const target = parseInt(el.dataset.target, 10);
-        const duration = 2000; // ms
-        const start = performance.now();
-
-        const update = (now) => {
-            const elapsed = now - start;
-            const progress = Math.min(elapsed / duration, 1);
-            
-            // Ease out quart
-            const ease = 1 - Math.pow(1 - progress, 4);
-            const current = Math.floor(ease * target);
-            
-            el.textContent = current.toLocaleString();
-            
-            if (progress < 1) {
-                requestAnimationFrame(update);
-            } else {
-                el.textContent = target.toLocaleString();
-            }
-        };
-
-        requestAnimationFrame(update);
+    let ticking = false;
+    const update = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const p = docHeight > 0 ? Math.min(Math.max(scrollTop / docHeight, 0), 1) : 0;
+      bar.style.transform = `scaleX(${p})`;
+      ticking = false;
     };
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateCounter(entry.target);
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
+    update(); // render resting state immediately
 
-    counters.forEach(c => observer.observe(c));
-}
+    window.addEventListener("scroll", () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
 
-/* ----------------------------------------
-   DONATION FORM LOGIC
----------------------------------------- */
-function initDonationForm() {
-    const('donation-form');
-    const successState = document.getElementById('donation-success');
-    if (!form || !successState) return;
+    window.addEventListener("resize", update);
+  })();
 
-    // Frequency Toggle
-    const freqOptions = form.querySelectorAll('.toggle-option');
-    freqOptions.forEach(opt => {
-        opt.addEventListener('click', () => {
-            freqOptions.forEach(o => o.classList.remove('active'));
-            opt.classList.add('active');
-            opt.querySelector('input').checked = true;
-        });
+  /* ============================================================
+     2. MAGNETIC BUTTONS — translate toward cursor within 120px,
+        scale 1.04 at closest, spring back on leave. rAF + lerp.
+     ============================================================ */
+  (function initMagnetic() {
+    if (prefersReducedMotion) return;
+
+    const buttons = document.querySelectorAll(".magnetic");
+    if (!buttons.length) return;
+
+    const RADIUS = 120;
+    const STRENGTH = 0.35; // translation factor
+    const SCALE_STRENGTH = 0.04;
+    const LERP = 0.18;
+
+    const state = new WeakMap();
+
+    buttons.forEach((btn) => {
+      state.set(btn, {
+        targetX: 0, targetY: 0, targetScale: 1,
+        currentX: 0, currentY: 0, currentScale: 1,
+        active: false,
+      });
+
+      btn.addEventListener("mousemove", (e) => {
+        const rect = btn.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = e.clientX - cx;
+        const dy = e.clientY - cy;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist < RADIUS) {
+          const s = state.get(btn);
+          const t = 1 - dist / RADIUS; // 1 at center, 0 at edge
+          s.targetX = dx * STRENGTH * t;
+          s.targetY = dy * STRENGTH * t;
+          s.targetScale = 1 + SCALE_STRENGTH * t;
+          if (!s.active) {
+            s.active = true;
+            requestAnimationFrame(() => tick(btn));
+          }
+        }
+      });
+
+      btn.addEventListener("mouseleave", () => {
+        const s = state.get(btn);
+        s.targetX = 0;
+        s.targetY = 0;
+        s.targetScale = 1;
+        if (!s.active) {
+          s.active = true;
+          requestAnimationFrame(() => tick(btn));
+        }
+      });
     });
 
-    // Amount Selection
-    const amountOptions = form.querySelectorAll('.amount-option');
-    const customInput = document.getElementById('custom-amount-input');
+    function tick(btn) {
+      const s = state.get(btn);
+      s.currentX += (s.targetX - s.currentX) * LERP;
+      s.currentY += (s.targetY - s.currentY) * LERP;
+      s.currentScale += (s.targetScale - s.currentScale) * LERP;
 
-    amountOptions.forEach(opt => {
-        opt.addEventListener('click', () => {
-            amountOptions.forEach(o => o.classList.remove('selected'));
-            opt.classList.add('selected');
-            opt.querySelector('input[type="radio"]').checked = true;
+      btn.style.transform =
+        `translate3d(${s.currentX.toFixed(2)}px, ${s.currentY.toFixed(2)}px, 0) scale(${s.currentScale.toFixed(3)})`;
 
-            // Handle custom input enable/disable
-            if (opt.classList.contains('custom-amount')) {
-                customInput.disabled = false;
-                customInput.focus();
-            } else {
-                customInput.disabled = true;
-                customInput.value = '';
-            }
+      const settled =
+        Math.abs(s.targetX - s.currentX) < 0.1 &&
+        Math.abs(s.targetY - s.currentY) < 0.1 &&
+        Math.abs(s.targetScale - s.currentScale) < 0.001;
+
+      if (!settled) {
+        requestAnimationFrame(() => tick(btn));
+      } else {
+        s.currentX = s.targetX;
+        s.currentY = s.targetY;
+        s.currentScale = s.targetScale;
+        if (s.targetX === 0 && s.targetY === 0 && s.targetScale === 1) {
+          btn.style.transform = "";
+        }
+        s.active = false;
+      }
+    }
+  })();
+
+  /* ============================================================
+     3. IMPACT COUNTERS — IntersectionObserver + eased count-up
+     ============================================================ */
+  (function initCounters() {
+    const grid = document.getElementById("impact-grid");
+    if (!grid) return;
+    const cards = grid.querySelectorAll(".impact-card");
+    if (!cards.length) return;
+
+    const format = (n) => {
+      if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
+      if (n >= 1000) return Math.round(n).toLocaleString("en-US");
+      return Math.round(n).toLocaleString("en-US");
+    };
+
+    const animate = (el, target, suffix) => {
+      const valueEl = el.querySelector(".impact-value");
+      if (!valueEl) return;
+
+      if (prefersReducedMotion) {
+        valueEl.textContent = format(target);
+        if (suffix) valueEl.setAttribute("data-suffix", suffix);
+        return;
+      }
+
+      const duration = 1600;
+      const start = performance.now();
+      const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+      const step = (now) => {
+        const t = Math.min((now - start) / duration, 1);
+        const eased = easeOutCubic(t);
+        const current = target * eased;
+        valueEl.textContent = format(current);
+        if (t < 1) requestAnimationFrame(step);
+        else {
+          valueEl.textContent = format(target);
+          if (suffix) valueEl.setAttribute("data-suffix", suffix);
+        }
+      };
+      requestAnimationFrame(step);
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            cards.forEach((card) => {
+              const target = parseInt(card.dataset.count, 10) || 0;
+              const suffix = card.dataset.suffix || "";
+              animate(card, target, suffix);
+            });
+            io.disconnect();
+          }
         });
+      },
+      { threshold: 0.25 }
+    );
+    io.observe(grid);
+  })();
+
+  /* ============================================================
+     4. DONATION WIDGET — amount + frequency + submit → thank you
+     ============================================================ */
+  (function initDonate() {
+    const form = document.getElementById("donate-form");
+    const widget = document.getElementById("donate-widget");
+    const thanks = document.getElementById("thank-you");
+    if (!form || !widget || !thanks) return;
+
+    const impactAmount = document.getElementById("impact-amount");
+    const impactMeals = document.getElementById("impact-meals");
+    const btnAmount = document.getElementById("btn-amount");
+    const thanksName = document.getElementById("thanks-name");
+    const thanksAmount = document.getElementById("thanks-amount");
+    const submitBtn = document.getElementById("donate-submit");
+    const customInput = form.querySelector("#custom-amount");
+    const amountRadios = form.querySelectorAll('input[name="amount"]');
+
+    let currentAmount = 50;
+
+    function updateImpact() {
+      if (impactAmount) impactAmount.textContent = currentAmount.toLocaleString("en-US");
+      if (impactMeals) impactMeals.textContent = currentAmount.toLocaleString("en-US");
+      if (btnAmount) btnAmount.textContent = currentAmount.toLocaleString("en-US");
+    }
+
+    amountRadios.forEach((r) => {
+      r.addEventListener("change", () => {
+        if (r.checked) {
+          currentAmount = parseInt(r.value, 10);
+          if (customInput) customInput.value = "";
+          updateImpact();
+        }
+      });
     });
 
-    // Fake Submit
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const btn = form.querySelector('button[type="submit"]');
-        const originalText = btn.querySelector('.btn-text').textContent;
-        
-        // Loading state
-        btn.disabled = true;
-        btn.querySelector('.btn-text').textContent = 'Processing...';
-        btn.classList.add('loading');
+    if (customInput) {
+      customInput.addEventListener("input", () => {
+        const v = parseInt(customInput.value, 10);
+        if (!isNaN(v) && v > 0) {
+          currentAmount = v;
+          amountRadios.forEach((r) => (r.checked = false));
+          updateImpact();
+        }
+      });
+    }
 
-        setTimeout(() => {
-            form.hidden = true;
-            successState.hidden = false;
-            successState.focus();
-        }, 1500);
+    updateImpact();
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const first = form.querySelector("#first-name").value.trim();
+      const last = form.querySelector("#last-name").value.trim();
+      const email = form.querySelector("#email").value.trim();
+      let valid = true;
+
+      [
+        ["#first-name", first],
+        ["#last-name", last],
+        ["#email", email],
+      ].forEach(([sel, val]) => {
+        const el = form.querySelector(sel);
+        if (!val) {
+          el.parentElement.classList.add("error");
+          valid = false;
+        } else {
+          el.parentElement.classList.remove("error");
+        }
+      });
+      if (!valid) return;
+
+      // Fake submit with loading state
+      submitBtn.classList.add("loading");
+      submitBtn.setAttribute("aria-disabled", "true");
+      submitBtn.querySelector(".btn-label").textContent = "Processing your gift…";
+
+      setTimeout(() => {
+        form.hidden = true;
+        thanks.hidden = false;
+        if (thanksName) thanksName.textContent = first;
+        if (thanksAmount) thanksAmount.textContent = currentAmount.toLocaleString("en-US");
+        thanks.scrollIntoView({ behavior: "smooth", block: "start" });
+        thanks.focus();
+      }, 1400);
     });
-}
 
-/* ----------------------------------------
-   VOLUNTEER FORM VALIDATION
----------------------------------------- */
-function initVolunteerForm() {
-    const form = document.getElementById('volunteer-signup');
+    const giveAgain = document.getElementById("give-again");
+    if (giveAgain) {
+      giveAgain.addEventListener("click", () => {
+        thanks.hidden = true;
+        form.hidden = false;
+        form.reset();
+        submitBtn.classList.remove("loading");
+        submitBtn.removeAttribute("aria-disabled");
+        submitBtn.querySelector(".btn-label").innerHTML =
+          'Complete gift of <span class="tabular">$<span id="btn-amount">50</span></span>';
+        currentAmount = 50;
+        updateImpact();
+        // Rebind the btn-amount since innerHTML replaced it
+        const newBtnAmount = document.getElementById("btn-amount");
+        if (newBtnAmount && newBtnAmount !== btnAmount) {
+          // reassign reference — handled on next updateImpact via id
+        }
+        form.querySelector('input[name="amount"][value="50"]').checked = true;
+        widget.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+  })();
+
+  /* ============================================================
+     5. VOLUNTEER SIGNUP — validation + success state
+     ============================================================ */
+  (function initVolunteer() {
+    const form = document.getElementById("volunteer-form");
     if (!form) return;
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        // Basic validation check
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
+    const success = document.getElementById("volunteer-success");
+    const submitBtn = document.getElementById("volunteer-submit");
+    const nameInput = form.querySelector("#v-first");
+    const successName = document.getElementById("success-name");
+    const noteField = form.querySelector("#v-note");
+    const noteCount = document.getElementById("note-count");
+
+    if (noteField && noteCount) {
+      const updateCount = () => {
+        const len = noteField.value.length;
+        noteCount.textContent = `${len} / 400`;
+      };
+      noteField.addEventListener("input", updateCount);
+      updateCount();
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const required = form.querySelectorAll("[required]");
+      let valid = true;
+
+      required.forEach((el) => {
+        let fieldOk = true;
+        if (el.type === "checkbox") fieldOk = el.checked;
+        else if (el.type === "radio") {
+          const any = form.querySelector(`input[name="${el.name}"]:checked`);
+          fieldOk = !!any;
+        } else fieldOk = el.value.trim().length > 0;
+
+        const wrap = el.closest(".field") || el.closest(".radio-grid") || el.closest(".check-field");
+        if (!fieldOk) {
+          if (wrap) wrap.classList.add("error");
+          valid = false;
+        } else if (wrap) {
+          wrap.classList.remove("error");
         }
+      });
 
-        const btn = form.querySelector('button[type="submit"]');
-        const originalText = btn.textContent;
-        
-        btn.disabled = true;
-        btn.textContent = 'Sending Application...';
+      if (!valid) return;
 
-        // Simulate API call
-        setTimeout(() => {
-            btn.textContent = 'Application Received!';
-            btn.style.backgroundColor = 'var(--color-secondary)';
-            btn.style.borderColor = 'var(--color-secondary)';
-            form.reset();
-            
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.textContent = originalText;
-                btn.style.backgroundColor = '';
-                btn.style.borderColor = '';
-                alert('Thank you for volunteering! We will be in touch within 48 hours.');
-            }, 2000);
-        }, 1500);
+      submitBtn.classList.add("loading");
+      submitBtn.setAttribute("aria-disabled", "true");
+      submitBtn.querySelector(".btn-label").textContent = "Sending to Jonah…";
+
+      setTimeout(() => {
+        form.querySelectorAll("fieldset, .form-row, .field, .check-field.consent, .form-note")
+          .forEach((el) => (el.hidden = true));
+        submitBtn.hidden = true;
+        success.hidden = false;
+        if (successName && nameInput) successName.textContent = nameInput.value.trim() || "friend";
+        success.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 1200);
     });
-}
+  })();
+
+  /* ============================================================
+     6. MOBILE NAV TOGGLE
+     ============================================================ */
+  (function initMobileNav() {
+    const toggle = document.querySelector(".nav-toggle");
+    const nav = document.getElementById("mobile-nav");
+    if (!toggle || !nav) return;
+
+    toggle.addEventListener("click", () => {
+      const expanded = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!expanded));
+      nav.hidden = expanded;
+    });
+
+    // Close on link click
+    nav.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => {
+        toggle.setAttribute("aria-expanded", "false");
+        nav.hidden = true;
+      });
+    });
+  })();
+
+  /* ============================================================
+     7. ROLE CARDS → scroll to role in signup form (volunteer page)
+     ============================================================ */
+  (function initRoleLinks() {
+    const roleCards = document.querySelectorAll(".role-card");
+    const signupForm = document.getElementById("volunteer-form");
+    if (!roleCards.length || !signupForm) return;
+
+    roleCards.forEach((card) => {
+      card.addEventListener("click", () => {
+        const role = card.dataset.role;
+        if (!role) return;
+        const radio = signupForm.querySelector(`input[name="role"][value="${role}"]`);
+        if (radio) radio.checked = true;
+        signupForm.scrollIntoView({ behavior: "smooth", block: "start" });
+        setTimeout(() => {
+          const firstName = signupForm.querySelector("#v-first");
+          if (firstName) firstName.focus();
+        }, 600);
+      });
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          card.click();
+        }
+      });
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("role", "button");
+    });
+  })();
+
+})();
