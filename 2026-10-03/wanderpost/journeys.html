@@ -1,240 +1,226 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Journeys — Wanderpost</title>
-    <meta name="description" content="Browse our curated collection of slow-travel journeys across four continents.">
-    <meta name="theme-color" content="#0a0a0c">
+    <title>Curated Journeys — Wanderpost</title>
+    <meta name="description" content="Browse our collection of slow travel journeys: Kyoto, Patagonia, Marrakech, and Lofoten.">
+    <meta name="theme-color" content="#f4f1ea">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;400;500&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;400;500&family=Fraunces:opsz,wght@9..144,300;400;600;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
-    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <div class="marquee-container" aria-hidden="true">
+        <div class="marquee-track">
+            <span>SLOW TRAVEL • DEEP CONNECTION • WANDERPOST • CURATED JOURNEYS • SLOW TRAVEL • DEEP CONNECTION • WANDERPOST • CURATED JOURNEYS • </span>
+            <span>SLOW TRAVEL • DEEP CONNECTION • WANDERPOST • CURATED JOURNEYS • SLOW TRAVEL • DEEP CONNECTION • WANDERPOST • CURATED JOURNEYS • </span>
+        </div>
+    </div>
 
     <header class="site-header">
-        <div class="container header-grid">
+        <div class="container header-inner">
             <a href="index.html" class="logo" aria-label="Wanderpost Home">
-                <span class="logo-mark">W.</span>
-                <span class="logo-text">Wanderpost</span>
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16 2L2 9L16 16L30 9L16 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M2 23L16 30L30 23" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M2 16L16 23L30 16" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                <span>Wanderpost</span>
             </a>
-            <nav class="main-nav" aria-label="Main Navigation">
-                <ul class="nav-list">
-                    <li><a href="index.html">Index</a></li>
+            <nav class="main-nav" id="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="journeys.html" aria-current="page">Journeys</a></li>
                     <li><a href="destination.html">Destinations</a></li>
                     <li><a href="stories.html">Stories</a></li>
-                    <li><a href="enquiry.html" class="nav-cta">Enquire</a></li>
+                    <li><a href="enquiry.html" class="btn btn--nav">Plan Your Trip</a></li>
                 </ul>
             </nav>
-            <button class="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Toggle Menu">
+            <button class="menu-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Toggle menu">
                 <span class="bar"></span><span class="bar"></span>
             </button>
-        </div>
-        <div id="mobile-nav" class="mobile-nav-drawer" hidden>
-            <ul class="mobile-nav-list">
-                <li><a href="index.html">Index</a></li>
-                <li><a href="journeys.html" aria-current="page">Journeys</a></li>
-                <li><a href="destination.html">Destinations</a></li>
-                <li><a href="stories.html">Stories</a></li>
-                <li><a href="enquiry.html">Start a Journey</a></li>
-            </ul>
         </div>
     </header>
 
     <main id="main-content">
-        <section class="page-hero module-border">
-            <div class="module-label"><span class="mono">01</span> — Catalogue</div>
-            <h1 class="display-headline">Curated<br><em>Geographies</em></h1>
-            <p class="page-intro">Four distinct regions. Four paces of life. Each journey is an instrument tuned to the local rhythm.</p>
+        <section class="page-intro">
+            <div class="container">
+                <h1>Our Journeys</h1>
+                <p class="lead">Four corners of the world, one philosophy of slowness.</p>
+            </div>
         </section>
 
-        <section class="journeys-grid-section module-border">
-            <div class="module-label"><span class="mono">02</span> — Inventory</div>
-            
-            <div class="filter-bar">
-                <button class="filter-btn active" data-filter="all">All Regions</button>
-                <button class="filter-btn" data-filter="asia">Asia</button>
-                <button class="filter-btn" data-filter="south-america">S. America</button>
-                <button class="filter-btn" data-filter="africa">Africa</button>
-                <button class="filter-btn" data-filter="europe">Europe</button>
-            </div>
+        <section class="section journeys-grid-section">
+            <div class="container">
+                <div class="journey-grid">
+                    <!-- Card 1: Kyoto -->
+                    <article class="journey-card" data-journey="kyoto">
+                        <div class="card-image">
+                            <img src="https://picsum.photos/seed/wanderpost-13d9b152cace/1600/900?auto=format&fit=crop&w=800&q=80" alt="Traditional wooden street in Kyoto" width="400" height="500" loading="lazy">
+                            <span class="card-tag">Japan</span>
+                        </div>
+                        <div class="card-body">
+                            <h2>Kyoto: The Moss & Timber Edit</h2>
+                            <p>10 Days • Cultural Immersion</p>
+                            <button class="btn btn--text" data-modal-target="modal-kyoto">Read the Itinerary</button>
+                        </div>
+                    </article>
 
-            <div class="journeys-dashboard">
-                <!-- KYOTO -->
-                <article class="journey-instrument" data-region="asia" data-id="kyoto">
-                    <div class="instrument-img">
-                        <img src="https://picsum.photos/seed/wanderpost-13d9b152cace/1600/900?q=80&w=800&auto=format&fit=crop" alt="Bamboo forest path in Arashiyama Kyoto" width="600" height="400" loading="lazy">
-                    </div>
-                    <div class="instrument-data">
-                        <h2 class="journey-title">Kyoto Stillness</h2>
-                        <dl class="data-grid mono">
-                            <div><dt>DUR</dt><dd>24 Days</dd></div>
-                            <div><dt>PACE</dt><dd>Glacial</dd></div>
-                            <div><dt>COST</dt><dd>CHF 8,400</dd></div>
-                        </dl>
-                        <button class="btn-magnetic btn-outline open-modal" data-target="modal-kyoto" data-magnetic>View Dossier</button>
-                    </div>
-                </article>
+                    <!-- Card 2: Patagonia -->
+                    <article class="journey-card" data-journey="patagonia">
+                        <div class="card-image">
+                            <img src="https://picsum.photos/seed/wanderpost-b27a3a411ce7/1600/900?auto=format&fit=crop&w=800&q=80" alt="Torres del Paine mountains in Patagonia" width="400" height="500" loading="lazy">
+                            <span class="card-tag">Chile</span>
+                        </div>
+                        <div class="card-body">
+                            <h2>Patagonia: Silence & Stone</h2>
+                            <p>14 Days • Wilderness Trek</p>
+                            <button class="btn btn--text" data-modal-target="modal-patagonia">Read the Itinerary</button>
+                        </div>
+                    </article>
 
-                <!-- PATAGONIA -->
-                <article class="journey-instrument" data-region="south-america" data-id="patagonia">
-                    <div class="instrument-img">
-                        <img src="https://picsum.photos/seed/wanderpost-12f81d87b47c/1600/900?q=80&w=800&auto=format&fit=crop" alt="Torres del Paine granite peaks reflection" width="600" height="400" loading="lazy">
-                    </div>
-                    <div class="instrument-data">
-                        <h2 class="journey-title">Patagonian Wind</h2>
-                        <dl class="data-grid mono">
-                            <div><dt>DUR</dt><dd>19 Days</dd></div>
-                            <div><dt>PACE</dt><dd>Rhythmic</dd></div>
-                            <div><dt>COST</dt><dd>CHF 9,200</dd></div>
-                        </dl>
-                        <button class="btn-magnetic btn-outline open-modal" data-target="modal-patagonia" data-magnetic>View Dossier</button>
-                    </div>
-                </article>
+                    <!-- Card 3: Marrakech -->
+                    <article class="journey-card" data-journey="marrakech">
+                        <div class="card-image">
+                            <img src="https://picsum.photos/seed/wanderpost-446c13c3096e/1600/900?auto=format&fit=crop&w=800&q=80" alt="Colorful spices in Marrakech market" width="400" height="500" loading="lazy">
+                            <span class="card-tag">Morocco</span>
+                        </div>
+                        <div class="card-body">
+                            <h2>Marrakech: Saffron & Clay</h2>
+                            <p>7 Days • Sensory Retreat</p>
+                            <button class="btn btn--text" data-modal-target="modal-marrakech">Read the Itinerary</button>
+                        </div>
+                    </article>
 
-                <!-- MARRAKECH -->
-                <article class="journey-instrument" data-region="africa" data-id="marrakech">
-                    <div class="instrument-img">
-                        <img src="https://images.unsplash.com/photo-1539020140153-e479b8c22e70?q=80&w=800&auto=format&fit=crop" alt="Intricate zellige tilework in Marrakech riad" width="600" height="400" loading="lazy">
-                    </div>
-                    <div class="instrument-data">
-                        <h2 class="journey-title">Atlas & Medina</h2>
-                        <dl class="data-grid mono">
-                            <div><dt>DUR</dt><dd>14 Days</dd></div>
-                            <div><dt>PACE</dt><dd>Sensory</dd></div>
-                            <div><dt>COST</dt><dd>CHF 5,800</dd></div>
-                        </dl>
-                        <button class="btn-magnetic btn-outline open-modal" data-target="modal-marrakech" data-magnetic>View Dossier</button>
-                    </div>
-                </article>
-
-                <!-- LOFOTEN -->
-                <article class="journey-instrument" data-region="europe" data-id="lofoten">
-                    <div class="instrument-img">
-                        <img src="https://images.unsplash.com/photo-1516961642265-531546e84af2?q=80&w=800&auto=format&fit=crop" alt="Red fishing cabins on stilts in Lofoten harbor" width="600" height="400" loading="lazy">
-                    </div>
-                    <div class="instrument-data">
-                        <h2 class="journey-title">Arctic Silence</h2>
-                        <dl class="data-grid mono">
-                            <div><dt>DUR</dt><dd>16 Days</dd></div>
-                            <div><dt>PACE</dt><dd>Ethereal</dd></div>
-                            <div><dt>COST</dt><dd>CHF 7,600</dd></div>
-                        </dl>
-                        <button class="btn-magnetic btn-outline open-modal" data-target="modal-lofoten" data-magnetic>View Dossier</button>
-                    </div>
-                </article>
+                    <!-- Card 4: Lofoten -->
+                    <article class="journey-card" data-journey="lofoten">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1516961642265-531546e84af2?auto=format&fit=crop&w=800&q=80" alt="Red fishing cabins in Lofoten islands Norway" width="400" height="500" loading="lazy">
+                            <span class="card-tag">Norway</span>
+                        </div>
+                        <div class="card-body">
+                            <h2>Lofoten: Arctic Light</h2>
+                            <p>12 Days • Nordic Solitude</p>
+                            <button class="btn btn--text" data-modal-target="modal-lofoten">Read the Itinerary</button>
+                        </div>
+                    </article>
+                </div>
             </div>
         </section>
     </main>
 
-    <!-- MODALS -->
-    <dialog id="modal-kyoto" class="journey-modal">
-        <div class="modal-content">
-            <button class="close-modal" aria-label="Close modal">✕</button>
-            <div class="modal-body">
-                <h2>Kyoto Stillness</h2>
-                <p class="mono">JAPAN / 24 DAYS / AUTUMN OR SPRING</p>
-                <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=1200&auto=format&fit=crop" alt="Kyoto temple garden" width="1200" height="600">
-                <div class="modal-text">
-                    <p>Bypass the tourist trails of Gion and immerse yourself in the monastic rhythms of Kibune and Kurama. This journey focuses on <em>Ma</em> (negative space) — scheduling long, unstructured afternoons in private gardens, tea ceremonies with third-generation masters, and stays in heritage Machiya townhouses where silence is the primary amenity.</p>
-                    <ul>
-                        <li>Private Zen meditation instruction</li>
-                        <li>Kaiseki dining experiences</li>
-                        <li>Artisan pottery workshop in Shigaraki</li>
-                    </ul>
+    <!-- Modals Container -->
+    <div id="modals-root">
+        <!-- Kyoto Modal -->
+        <dialog id="modal-kyoto" class="journey-modal" aria-labelledby="modal-kyoto-title">
+            <div class="modal-content">
+                <button class="modal-close" aria-label="Close dialog">&times;</button>
+                <div class="modal-split">
+                    <div class="modal-img">
+                        <img src="https://picsum.photos/seed/wanderpost-13d9b152cace/1600/900?auto=format&fit=crop&w=1200&q=80" alt="Kyoto Temple" width="600" height="800">
+                    </div>
+                    <div class="modal-text">
+                        <span class="tag">Japan • 10 Days</span>
+                        <h2 id="modal-kyoto-title">Kyoto: The Moss & Timber Edit</h2>
+                        <p>Escape the neon rush. This journey focuses on the quiet hours of Kyoto—dawn temple visits, private tea ceremonies with third-generation masters, and stays in restored Machiya townhouses.</p>
+                        <ul class="detail-list">
+                            <li><strong>Pace:</strong> Meditative</li>
+                            <li><strong>Stay:</strong> Heritage Machiya & Onsen Ryokan</li>
+                            <li><strong>Highlight:</strong> Private Zazen meditation at Daitoku-ji</li>
+                        </ul>
+                        <div class="modal-actions">
+                            <a href="enquiry.html?trip=kyoto" class="btn btn--primary">Enquire About This Journey</a>
+                        </div>
+                    </div>
                 </div>
-                <a href="enquiry.html?trip=kyoto" class="btn-magnetic btn-primary" data-magnetic>Request Itinerary</a>
             </div>
-        </div>
-    </dialog>
+        </dialog>
 
-    <dialog id="modal-patagonia" class="journey-modal">
-        <div class="modal-content">
-            <button class="close-modal" aria-label="Close modal">✕</button>
-            <div class="modal-body">
-                <h2>Patagonian Wind</h2>
-                <p class="mono">CHILE & ARGENTINA / 19 DAYS / NOV-MAR</p>
-                <img src="https://images.unsplash.com/photo-1478827536114-da961b7f86d2?q=80&w=1200&auto=format&fit=crop" alt="Patagonia glacier" width="1200" height="600">
-                <div class="modal-text">
-                    <p>A traverse of the southern Andes that prioritizes isolation over landmarks. Stay in remote estancias, trek with gauchos through lenga forests, and witness the Perito Moreno glacier from private vantage points far removed from the public walkways. The pace is dictated by weather and wind.</p>
-                    <ul>
-                        <li>Horseback traversals</li>
-                        <li>Glaciology lectures</li>
-                        <li>Estancia lamb asado traditions</li>
-                    </ul>
+        <!-- Patagonia Modal -->
+        <dialog id="modal-patagonia" class="journey-modal" aria-labelledby="modal-pat-title">
+            <div class="modal-content">
+                <button class="modal-close" aria-label="Close dialog">&times;</button>
+                <div class="modal-split">
+                    <div class="modal-img">
+                        <img src="https://picsum.photos/seed/wanderpost-b27a3a411ce7/1600/900?auto=format&fit=crop&w=1200&q=80" alt="Patagonia Mountains" width="600" height="800">
+                    </div>
+                    <div class="modal-text">
+                        <span class="tag">Chile • 14 Days</span>
+                        <h2 id="modal-pat-title">Patagonia: Silence & Stone</h2>
+                        <p>A pilgrimage to the end of the world. Traverse the W-Trek without the crowds via exclusive campsite access, ending with estancia living and gaucho culture.</p>
+                        <ul class="detail-list">
+                            <li><strong>Pace:</strong> Active / Reflective</li>
+                            <li><strong>Stay:</strong> Eco-Domes & Historic Estancias</li>
+                            <li><strong>Highlight:</strong> Sunrise at Las Torres base</li>
+                        </ul>
+                        <div class="modal-actions">
+                            <a href="enquiry.html?trip=patagonia" class="btn btn--primary">Enquire About This Journey</a>
+                        </div>
+                    </div>
                 </div>
-                <a href="enquiry.html?trip=patagonia" class="btn-magnetic btn-primary" data-magnetic>Request Itinerary</a>
             </div>
-        </div>
-    </dialog>
+        </dialog>
 
-    <dialog id="modal-marrakech" class="journey-modal">
-        <div class="modal-content">
-            <button class="close-modal" aria-label="Close modal">✕</button>
-            <div class="modal-body">
-                <h2>Atlas & Medina</h2>
-                <p class="mono">MOROCCO / 14 DAYS / OCT-APR</p>
-                <img src="https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?q=80&w=1200&auto=format&fit=crop" alt="Moroccan desert landscape" width="1200" height="600">
-                <div class="modal-text">
-                    <p>From the sensory overload of the Jemaa el-Fnaa to the absolute silence of the High Atlas. This journey balances the two extremes of Moroccan life. Sleep in restored kasbahs, hike Berber trails with local guides, and learn the mathematics of Zellige tilework from master craftsmen in Fez.</p>
-                    <ul>
-                        <li>Berber village homestay</li>
-                        <li>Sahara camel trekking (ethical)</li>
-                        <li>Traditional Hammam rituals</li>
-                    </ul>
+         <!-- Marrakech Modal -->
+         <dialog id="modal-marrakech" class="journey-modal" aria-labelledby="modal-marra-title">
+            <div class="modal-content">
+                <button class="modal-close" aria-label="Close dialog">&times;</button>
+                <div class="modal-split">
+                    <div class="modal-img">
+                        <img src="https://picsum.photos/seed/wanderpost-446c13c3096e/1600/900?auto=format&fit=crop&w=1200&q=80" alt="Marrakech Architecture" width="600" height="800">
+                    </div>
+                    <div class="modal-text">
+                        <span class="tag">Morocco • 7 Days</span>
+                        <h2 id="modal-marra-title">Marrakech: Saffron & Clay</h2>
+                        <p>Beyond the souks. Learn zellige tile-making from artisans, cook tagine in a family home, and sleep under the stars in the Agafay desert.</p>
+                        <ul class="detail-list">
+                            <li><strong>Pace:</strong> Sensory / Creative</li>
+                            <li><strong>Stay:</strong> Boutique Riad & Desert Camp</li>
+                            <li><strong>Highlight:</strong> Private hammam ritual</li>
+                        </ul>
+                        <div class="modal-actions">
+                            <a href="enquiry.html?trip=marrakech" class="btn btn--primary">Enquire About This Journey</a>
+                        </div>
+                    </div>
                 </div>
-                <a href="enquiry.html?trip=marrakech" class="btn-magnetic btn-primary" data-magnetic>Request Itinerary</a>
             </div>
-        </div>
-    </dialog>
+        </dialog>
 
-    <dialog id="modal-lofoten" class="journey-modal">
-        <div class="modal-content">
-            <button class="close-modal" aria-label="Close modal">✕</button>
-            <div class="modal-body">
-                <h2>Arctic Silence</h2>
-                <p class="mono">NORWAY / 16 DAYS / JUN-AUG OR JAN-MAR</p>
-                <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1200&auto=format&fit=crop" alt="Lofoten aurora borealis" width="1200" height="600">
-                <div class="modal-text">
-                    <p>Experience the dramatic verticality of the Lofoten archipelago. Whether under the midnight sun or the northern lights, this journey connects you with the raw elemental forces of the Arctic. Stay in converted rorbuer fishing cabins, join sustainable cod fisheries, and kayak through fjords untouched by cruise ships.</p>
-                    <ul>
-                        <li>Fjord kayaking expeditions</li>
-                        <li>Viking history immersion</li>
-                        <li>Nordic cuisine foraging</li>
-                    </ul>
+        <!-- Lofoten Modal -->
+        <dialog id="modal-lofoten" class="journey-modal" aria-labelledby="modal-lofo-title">
+            <div class="modal-content">
+                <button class="modal-close" aria-label="Close dialog">&times;</button>
+                <div class="modal-split">
+                    <div class="modal-img">
+                        <img src="https://images.unsplash.com/photo-1516961642265-531546e84af2?auto=format&fit=crop&w=1200&q=80" alt="Lofoten Landscape" width="600" height="800">
+                    </div>
+                    <div class="modal-text">
+                        <span class="tag">Norway • 12 Days</span>
+                        <h2 id="modal-lofo-title">Lofoten: Arctic Light</h2>
+                        <p>Chase the midnight sun or northern lights in a converted fisherman’s cabin. Kayak fjords, forage seaweed, and embrace the Nordic concept of 'friluftsliv'.</p>
+                        <ul class="detail-list">
+                            <li><strong>Pace:</strong> Rugged / Restorative</li>
+                            <li><strong>Stay:</strong> Rorbuer Cabins</li>
+                            <li><strong>Highlight:</strong> Sea eagle safari by electric boat</li>
+                        </ul>
+                        <div class="modal-actions">
+                            <a href="enquiry.html?trip=lofoten" class="btn btn--primary">Enquire About This Journey</a>
+                        </div>
+                    </div>
                 </div>
-                <a href="enquiry.html?trip=lofoten" class="btn-magnetic btn-primary" data-magnetic>Request Itinerary</a>
             </div>
-        </div>
-    </dialog>
+        </dialog>
+    </div>
 
-    <footer class="site-footer module-border">
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <span class="logo-mark">W.</span>
-                <p>Wanderpost © 2026.<br>Slow travel, deliberately designed.</p>
-            </div>
-            <div class="footer-links">
-                <h4 class="mono">Navigate</h4>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="journeys.html">Journeys</a></li>
-                    <li><a href="destination.html">Guide</a></li>
-                    <li><a href="enquiry.html">Enquire</a></li>
-                </ul>
-            </div>
-            <div class="footer-contact">
-                <h4 class="mono">Connect</h4>
-                <p>hello@wanderpost.agency</p>
-                <p>+41 44 000 00 00</p>
-            </div>
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand"><h3>Wanderpost</h3><p>Slow travel for the modern soul.</p></div>
+            <div class="footer-links"><h4>Explore</h4><ul><li><a href="journeys.html">All Journeys</a></li><li><a href="destination.html">Destination Guides</a></li><li><a href="stories.html">Traveler Stories</a></li></ul></div>
+            <div class="footer-links"><h4>Company</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Sustainability</a></li><li><a href="enquiry.html">Contact</a></li></ul></div>
+            <div class="footer-newsletter"><h4>Postcards</h4><p>Monthly inspiration, no spam.</p><form class="newsletter-form"><label for="email-foot2" class="visually-hidden">Email</label><input type="email" id="email-foot2" placeholder="Your email" required><button type="submit" class="btn btn--outline">Join</button></form></div>
         </div>
+        <div class="container footer-bottom"><p>&copy; 2024 Wanderpost Agency.</p></div>
     </footer>
-
-    <script src="app.js" defer></script>
 <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
 </html>
