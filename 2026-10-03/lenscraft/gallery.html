@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gallery | Lenscraft</title>
-    <meta name="description" content="Browse our complete wedding photography archive filtered by portraits, ceremonies, and details.">
+    <title>Gallery — Lenscraft</title>
+    <meta name="description" content="Browse our complete wedding photography portfolio. Filter by portraits, ceremony, details, and reception.">
     <meta name="theme-color" content="#faf8f4">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;400;500&family=JetBrains+Mono:wght@300;400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400&family=Outfit:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
@@ -18,90 +19,108 @@
     <header class="site-header">
         <div class="container header-inner">
             <a href="index.html" class="logo" aria-label="Lenscraft Home">LENSCRAFT<span class="accent">.</span></a>
-            <nav class="main-nav" aria-label="Main Navigation">
-                <ul>
+            <nav class="main-nav" aria-label="Primary Navigation">
+                <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Toggle Menu">
+                    <span class="bar"></span><span class="bar"></span>
+                </button>
+                <ul id="nav-list" class="nav-list">
                     <li><a href="index.html">Work</a></li>
                     <li><a href="gallery.html" aria-current="page">Gallery</a></li>
-                    <li><a href="about.html">Story</a></li>
+                    <li><a href="about.html">About</a></li>
                     <li><a href="pricing.html">Investment</a></li>
-                    <li><a href="contact.html" class="btn-magnetic nav-cta">Book</a></li>
+                    <li><a href="contact.html" class="btn-nav">Book Now</a></li>
                 </ul>
             </nav>
-            <button class="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
-                <span></span><span></span>
-            </button>
         </div>
     </header>
 
     <main id="main-content">
-        <section class="chapter gallery-chapter">
+        <section class="page-header">
             <div class="container">
-                <div class="page-intro">
-                    <span class="mono-label">Archive</span>
-                    <h1 class="display-title">The Collection</h1>
-                </div>
+                <span class="mono-label">Portfolio Archive</span>
+                <h1 class="display-heading">The Collection</h1>
+            </div>
+        </section>
 
-                <div class="filter-bar" role="tablist" aria-label="Filter gallery images">
-                    <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All</button>
-                    <button class="filter-btn" data-filter="portrait" role="tab" aria-selected="false">Portraits</button>
+        <section class="gallery-section">
+            <div class="container">
+                <!-- Filter Controls -->
+                <div class="gallery-filters" role="tablist" aria-label="Filter Gallery">
+                    <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All Work</button>
+                    <button class="filter-btn" data-filter="portraits" role="tab" aria-selected="false">Portraits</button>
                     <button class="filter-btn" data-filter="ceremony" role="tab" aria-selected="false">Ceremony</button>
                     <button class="filter-btn" data-filter="details" role="tab" aria-selected="false">Details</button>
+                    <button class="filter-btn" data-filter="reception" role="tab" aria-selected="false">Reception</button>
                 </div>
 
-                <div class="masonry-grid">
-                    <div class="gallery-item" data-category="portrait">
-                        <button class="gallery-trigger" aria-label="View full size image of couple on bridge">
-                            <img src="https://picsum.photos/seed/lenscraft-1645062cd958/1600/900?auto=format&fit=crop&w=800&q=80" alt="Couple embracing on stone bridge at sunset" width="600" height="800" loading="lazy">
+                <!-- Masonry Grid -->
+                <div class="gallery-grid">
+                    <figure class="gallery-item" data-category="portraits">
+                        <button class="gallery-trigger" aria-label="View full size image of couple in rain">
+                            <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800&q=80" alt="Couple embracing under umbrella" width="800" height="1000" loading="lazy">
                         </button>
-                    </div>
-                    <div class="gallery-item" data-category="details">
-                        <button class="gallery-trigger" aria-label="View full size image of table setting">
-                            <img src="https://picsum.photos/seed/lenscraft-715cb0202128/1600/900?auto=format&fit=crop&w=800&q=80" alt="Elegant table setting with crystal glasses and linen napkins" width="600" height="600" loading="lazy">
+                    </figure>
+                    <figure class="gallery-item" data-category="details">
+                        <button class="gallery-trigger" aria-label="View full size image of invitation suite">
+                            <img src="https://picsum.photos/seed/lenscraft-1645062cd495/1600/900?auto=format&fit=crop&w=800&q=80" alt="Wedding invitation stationery" width="800" height="800" loading="lazy">
                         </button>
-                    </div>
-                    <div class="gallery-item" data-category="ceremony">
+                    </figure>
+                    <figure class="gallery-item" data-category="ceremony">
+                        <button class="gallery-trigger" aria-label="View full size image of aisle walk">
+                            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" alt="Bride walking down aisle" width="800" height="1200" loading="lazy">
+                        </button>
+                    </figure>
+                    <figure class="gallery-item" data-category="reception">
+                        <button class="gallery-trigger" aria-label="View full size image of first dance">
+                            <img src="https://picsum.photos/seed/lenscraft-1356c11d4606/1600/900?auto=format&fit=crop&w=800&q=80" alt="Couple dancing surrounded by sparklers" width="800" height="600" loading="lazy">
+                        </button>
+                    </figure>
+                    <figure class="gallery-item" data-category="portraits">
+                        <button class="gallery-trigger" aria-label="View full size image of bridal party">
+                            <img src="https://picsum.photos/seed/lenscraft-17451cc330e7/1600/900?auto=format&fit=crop&w=800&q=80" alt="Bridesmaids laughing together" width="800" height="1000" loading="lazy">
+                        </button>
+                    </figure>
+                    <figure class="gallery-item" data-category="details">
+                        <button class="gallery-trigger" aria-label="View full size image of cake">
+                            <img src="https://images.unsplash.com/photo-1535295972055-1c762f4483e5?auto=format&fit=crop&w=800&q=80" alt="Minimalist wedding cake" width="800" height="1100" loading="lazy">
+                        </button>
+                    </figure>
+                     <figure class="gallery-item" data-category="ceremony">
                         <button class="gallery-trigger" aria-label="View full size image of ring exchange">
-                            <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800&q=80" alt="Close up of hands exchanging rings during ceremony" width="600" height="900" loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=800&q=80" alt="Hands exchanging rings" width="800" height="900" loading="lazy">
                         </button>
-                    </div>
-                    <div class="gallery-item" data-category="portrait">
-                        <button class="gallery-trigger" aria-label="View full size image of solo bride portrait">
-                            <img src="https://picsum.photos/seed/lenscraft-565652f58de6/1600/900?auto=format&fit=crop&w=800&q=80" alt="Bride looking out window with soft natural light" width="600" height="800" loading="lazy">
+                    </figure>
+                    <figure class="gallery-item" data-category="reception">
+                        <button class="gallery-trigger" aria-label="View full size image of toast">
+                            <img src="https://picsum.photos/seed/lenscraft-14a56c20bc9d/1600/900?auto=format&fit=crop&w=800&q=80" alt="Best man giving speech" width="800" height="800" loading="lazy">
                         </button>
-                    </div>
-                    <div class="gallery-item" data-category="ceremony">
-                        <button class="gallery-trigger" aria-label="View full size image of first kiss">
-                            <img src="https://images.unsplash.com/photo-1525258946800-98cfd641d0de?auto=format&fit=crop&w=800&q=80" alt="Silhouette of couple kissing against bright sky" width="600" height="700" loading="lazy">
-                        </button>
-                    </div>
-                    <div class="gallery-item" data-category="details">
-                        <button class="gallery-trigger" aria-label="View full size image of shoes and flowers">
-                            <img src="https://picsum.photos/seed/lenscraft-9ef6368bef14/1600/900?auto=format&fit=crop&w=800&q=80" alt="Wedding shoes placed beside wildflower bouquet" width="600" height="600" loading="lazy">
-                        </button>
-                    </div>
+                    </figure>
+                </div>
+                
+                <div class="empty-state" hidden>
+                    <p>No images found in this category.</p>
                 </div>
             </div>
         </section>
     </main>
 
     <!-- Lightbox Modal -->
-    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Image viewer">
-        <button class="lightbox-close" aria-label="Close image viewer">&times;</button>
-        <button class="lightbox-prev" aria-label="Previous image">&#8592;</button>
+    <dialog id="lightbox" class="lightbox-modal" aria-label="Image Viewer">
         <div class="lightbox-content">
-            <img src="" alt="" id="lightbox-img">
+            <button class="lightbox-close" aria-label="Close viewer">&times;</button>
+            <img src="" alt="" class="lightbox-img">
+            <div class="lightbox-caption mono-label"></div>
         </div>
-        <button class="lightbox-next" aria-label="Next image">&#8594;</button>
-    </div>
+    </dialog>
 
     <footer class="site-footer">
-        <div class="container footer-inner">
-            <div class="footer-brand"><span class="logo">LENSCRAFT<span class="accent">.</span></span><p class="mono-label">Est. 2018 • Zurich / NYC</p></div>
-            <div class="footer-links"><a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a><a href="mailto:hello@lenscraft.studio">Email</a><a href="contact.html">Inquire</a></div>
-            <p class="copyright mono-label">&copy; 2026 Lenscraft Studio. All rights reserved.</p>
+        <div class="container footer-grid">
+            <div class="footer-brand"><span class="logo">LENSCRAFT<span class="accent">.</span></span></div>
+            <div class="footer-links">
+                <ul><li><a href="index.html">Home</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li></ul>
+            </div>
         </div>
+        <div class="container copyright"><p>&copy; 2026 Lenscraft Photography.</p></div>
     </footer>
-
-    <script src="app.js" defer></script>
 <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
 </html>
