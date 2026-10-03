@@ -1,122 +1,315 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en" style="color-scheme: light;">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donate | Bright Harvest</title>
-    <meta name="description" content="Support Bright Harvest with a tax-deductible donation. Your contribution provides meals for families in need.">
-    <meta name="theme-color" content="#f59e0b">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Source+Serif+4:opsz,wght@8..60,300;400;600&family=Zilla+Slab:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <script src="app.js" defer></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#fbfaf6" />
+<meta name="description" content="Give a month of meals to your neighbors. One dollar becomes one hot plate at Bright Harvest." />
+<title>Give a Month of Meals — Bright Harvest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-    <div class="grain-overlay" aria-hidden="true"></div>
+<body class="page-donate">
+<a href="#main" class="skip">Skip to content</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
 
-    <header class="site-header">
-        <div class="container header-inner">
-            <a href="index.html" class="logo" aria-label="Bright Harvest Home">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="2"/><path d="M20 8C20 8 12 16 12 24C12 28.4183 15.5817 32 20 32C24.4183 32 28 28.4183 28 24C28 16 20 8 20 8Z" fill="currentColor"/></svg>
-                <span class="logo-text">Bright Harvest</span>
-            </a>
-            <nav class="main-nav" aria-label="Main Navigation">
-                <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Toggle menu"><span class="hamburger" aria-hidden="true"></span></button>
-                <ul id="nav-list" class="nav-list">
-                    <li><a href="index.html">01. Home</a></li>
-                    <li><a href="programs.html">02. Programs</a></li>
-                    <li><a href="stories.html">03. Stories</a></li>
-                    <li><a href="volunteer.html">04. Volunteer</a></li>
-                    <li><a href="donate.html" aria-current="page" class="btn btn-primary magnetic-btn">Donate Now</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+<header class="site-header" role="banner">
+  <div class="shell header-grid">
+    <a href="index.html" class="brand" aria-label="Bright Harvest home">
+      <span class="brand-mark" aria-hidden="true">✳</span>
+      <span class="brand-name">Bright Harvest</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <ul class="nav-list">
+        <li><a href="index.html">Index</a></li>
+        <li><a href="programs.html">Programs</a></li>
+        <li><a href="stories.html">Stories</a></li>
+        <li><a href="volunteer.html">Volunteer</a></li>
+      </ul>
+    </nav>
+    <a href="donate.html" class="btn btn-primary magnetic" aria-current="page">
+      <span>Donate</span>
+      <span class="arrow" aria-hidden="true">→</span>
+    </a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobile-nav" hidden>
+    <ul>
+      <li><a href="index.html">Index</a></li>
+      <li><a href="programs.html">Programs</a></li>
+      <li><a href="stories.html">Stories</a></li>
+      <li><a href="volunteer.html">Volunteer</a></li>
+      <li><a href="donate.html" aria-current="page">Donate</a></li>
+    </ul>
+  </div>
+</header>
 
-    <main id="main-content">
-        <section class="donate-section section-indexed" data-index="05">
-            <div class="marginalia" aria-hidden="true">Tax Deductible<br>EIN: 45-1234567</div>
-            <div class="container donate-layout">
-                <div class="donate-info reveal-group">
-                    <span class="section-label">Support Our Work</span>
-                    <h1>Your Gift Feeds Families</h1>
-                    <p>Every dollar donated translates directly into meals on tables. We operate with low overhead thanks to our volunteers, ensuring your impact is maximized.</p>
-                    
-                    <div class="impact-examples">
-                        <div class="example-item">
-                            <strong>$25</strong>
-                            <span>Provides groceries for a family of four for one week</span>
-                        </div>
-                        <div class="example-item">
-                            <strong>$100</strong>
-                            <span>Stocks our mobile pantry truck for a rural route</span>
-                        </div>
-                        <div class="example-item">
-                            <strong>$500</strong>
-                            <span>Funds a summer lunch program site for a month</span>
-                        </div>
-                    </div>
-                </div>
+<main id="main">
 
-                <div class="donate-widget reveal-group delay-1">
-                    <form id="donation-form" class="donation-form" novalidate>
-                        <!-- Frequency Toggle -->
-                        <fieldset class="frequency-toggle">
-                            <legend class="visually-hidden">Donation Frequency</legend>
-                            <label class="toggle-option active">
-                                <input type="radio" name="frequency" value="once" checked>
-                                <span>One-Time</span>
-                            </label>
-                            <label class="toggle-option">
-                                <input type="radio" name="frequency" value="monthly">
-                                <span>Monthly</span>
-                            </label>
-                        </fieldset>
+<section class="hero hero-compact" aria-labelledby="hero-title">
+  <div class="shell hero-grid">
+    <div class="hero-meta marginalia" aria-hidden="true">
+      <div class="mono">§ 00 — THE GIFT</div>
+      <div class="mono small">Every dollar becomes a meal.</div>
+    </div>
+    <div class="hero-content">
+      <p class="eyebrow">
+        <span class="rule-dot" aria-hidden="true">◆</span>
+        A monthly gift, a monthly promise
+      </p>
+      <h1 id="hero-title" class="display">
+        A dollar<br>
+        is a plate.<br>
+        A plate is<br>
+        a Tuesday.
+      </h1>
+      <p class="lede">Ninety-two cents of every dollar you give goes directly to food. Not overhead, not campaigns, not executive titles — a bag of apples, a quart of milk, a hot dinner.</p>
+    </div>
+    <figure class="hero-visual">
+      <img src="https://picsum.photos/seed/bright-harvest-3b4a772aef77/1600/900?auto=format&fit=crop&w=1600&q=80" alt="Hands holding two loaves of fresh bread, still warm from the Holloway Bakery partner oven" width="1200" height="1500" loading="eager">
+      <figcaption class="hero-caption">
+        <span class="mono">Fig. 01</span>
+        This week’s bread, baked by Holloway Bakery, donated in full.
+      </figcaption>
+    </figure>
+  </div>
+</section>
 
-                        <!-- Amount Selection -->
-                        <fieldset class="amount-grid">
-                            <legend class="visually-hidden">Select Amount</legend>
-                            <label class="amount-option"><input type="radio" name="amount" value="25"><span>$25</span></label>
-                            <label class="amount-option selected"><input type="radio" name="amount" value="50" checked><span>$50</span></label>
-                            <label class="amount-option"><input type="radio" name="amount" value="100"><span>$100</span></label>
-                            <label class="amount-option"><input type="radio" name="amount" value="250"><span>$250</span></label>
-                            <label class="amount-option custom-amount">
-                                <input type="radio" name="amount" value="custom">
-                                <span class="visually-hidden">Custom Amount</span>
-                                <div class="custom-input-wrapper">
-                                    <span>$</span>
-                                    <input type="number" id="custom-amount-input" placeholder="Other" min="1" disabled aria-label="Enter custom amount">
-                                </div>
-                            </label>
-                        </fieldset>
+<section class="section donate-section" aria-labelledby="donate-title">
+  <div class="shell section-grid">
+    <div class="section-marker">
+      <span class="mono">§ 01</span>
+      <h2 id="donate-title" class="display-sm">Choose your<br>harvest.</h2>
+      <p class="aside-note marginalia-note">
+        Gifts are tax-deductible. You’ll receive a receipt by email within one minute.
+      </p>
+    </div>
 
-                        <button type="submit" class="btn btn-primary btn-full magnetic-btn">
-                            <span class="btn-text">Complete Donation</span>
-                            <span class="btn-loader" aria-hidden="true"></span>
-                        </button>
-                    </form>
+    <div class="donate-widget" id="donate-widget">
+      <form class="donate-form" id="donate-form" novalidate>
+        <fieldset class="frequency-field">
+          <legend class="mono">Frequency</legend>
+          <div class="frequency-toggle" role="radiogroup" aria-label="Donation frequency">
+            <label class="toggle-option">
+              <input type="radio" name="frequency" value="once" checked>
+              <span>Once</span>
+            </label>
+            <label class="toggle-option">
+              <input type="radio" name="frequency" value="monthly">
+              <span>Monthly <span class="mono tiny">(most impact)</span></span>
+            </label>
+          </div>
+        </fieldset>
 
-                    <!-- Success State (Hidden by default) -->
-                    <div id="donation-success" class="success-state" hidden>
-                        <div class="success-icon" aria-hidden="true">✓</div>
-                        <h2>Thank You!</h2>
-                        <p>Your generosity makes our work possible. A receipt has been sent to your email.</p>
-                        <button class="btn btn-outline magnetic-btn" onclick="location.reload()">Make Another Gift</button>
-                    </div>
-                </div>
+        <fieldset class="amount-field">
+          <legend class="mono">Amount</legend>
+          <div class="amount-buttons" role="radiogroup" aria-label="Donation amount">
+            <label class="amount-option">
+              <input type="radio" name="amount" value="25">
+              <span class="amount-value tabular">$25</span>
+              <span class="amount-desc">25 meals</span>
+            </label>
+            <label class="amount-option">
+              <input type="radio" name="amount" value="50" checked>
+              <span class="amount-value tabular">$50</span>
+              <span class="amount-desc">1 month for a family</span>
+            </label>
+            <label class="amount-option">
+              <input type="radio" name="amount" value="100">
+              <span class="amount-value tabular">$100</span>
+              <span class="amount-desc">Full pantry for 4</span>
+            </label>
+            <label class="amount-option">
+              <input type="radio" name="amount" value="250">
+              <span class="amount-value tabular">$250</span>
+              <span class="amount-desc">A teaching garden bed</span>
+            </label>
+          </div>
+          <div class="amount-custom">
+            <label for="custom-amount" class="mono">Or, enter your own</label>
+            <div class="custom-input-wrap">
+              <span class="dollar" aria-hidden="true">$</span>
+              <input type="number" id="custom-amount" name="custom" min="1" step="1" inputmode="numeric" placeholder="Other" aria-label="Custom donation amount in dollars">
             </div>
-        </section>
-    </main>
+          </div>
+        </fieldset>
 
-    <footer class="site-footer">
-        <div class="container footer-grid">
-            <div class="footer-brand"><span class="logo-text">Bright Harvest</span><p class="footer-tagline">Nourishing bodies, strengthening community.</p><div class="footer-stamp" aria-hidden="true">Non-Profit<br>501(c)(3)</div></div>
-            <div class="footer-links"><h3>Sitemap</h3><ul><li><a href="index.html">Home</a></li><li><a href="programs.html">Programs</a></li><li><a href="stories.html">Stories</a></li><li><a href="volunteer.html">Volunteer</a></li><li><a href="donate.html">Donate</a></li></ul></div>
-            <div class="footer-contact"><h3>Visit Us</h3><address>1200 Harvest Way<br>Springfield, IL 62704<br><a href="tel:+15551234567">(555) 123-4567</a><br><a href="mailto:hello@brightharvest.org">hello@brightharvest.org</a></address></div>
+        <fieldset class="impact-field" aria-hidden="true">
+          <div class="impact-line" id="impact-line">
+            Your gift of <strong class="tabular">$<span id="impact-amount">50</span></strong> provides <strong class="tabular" id="impact-meals">50</strong> meals for neighbors this month.
+          </div>
+        </fieldset>
+
+        <fieldset class="info-field">
+          <legend class="mono">Your details</legend>
+          <div class="form-row">
+            <div class="field">
+              <label for="first-name" class="mono small">First name</label>
+              <input type="text" id="first-name" name="first" required autocomplete="given-name">
+            </div>
+            <div class="field">
+              <label for="last-name" class="mono small">Last name</label>
+              <input type="text" id="last-name" name="last" required autocomplete="family-name">
+            </div>
+          </div>
+          <div class="field">
+            <label for="email" class="mono small">Email (for your receipt)</label>
+            <input type="email" id="email" name="email" required autocomplete="email">
+          </div>
+          <label class="check-field">
+            <input type="checkbox" name="newsletter" checked>
+            <span>Send me the monthly harvest letter — what we grew, who we fed, where the food came from.</span>
+          </label>
+        </fieldset>
+
+        <button type="submit" class="btn btn-primary btn-block magnetic" id="donate-submit">
+          <span class="btn-label">Complete gift of <span class="tabular">$<span id="btn-amount">50</span></span></span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </button>
+        <p class="form-note mono small">Secure, 256-bit encrypted. You can cancel monthly gifts at any time.</p>
+      </form>
+
+      <div class="thank-you" id="thank-you" hidden aria-live="polite">
+        <div class="thank-you-mark" aria-hidden="true">✳</div>
+        <h2 class="display-sm">Thank you,<br><span id="thanks-name">friend</span>.</h2>
+        <p class="lede">Your gift of <strong class="tabular">$<span id="thanks-amount">50</span></strong> is already on its way to the River Ward pantry. A receipt is on its way to your inbox.</p>
+        <div class="thanks-next">
+          <h3 class="mono">What happens next</h3>
+          <ol>
+            <li>A tax receipt arrives by email within one minute.</li>
+            <li>By Friday, your gift has become fresh produce for a family of four.</li>
+            <li>Next month, we’ll write to tell you exactly where it went.</li>
+          </ol>
         </div>
-        <div class="footer-bottom container"><p>&copy; 2026 Bright Harvest Food Bank. All rights reserved.</p></div>
-    </footer>
+        <div class="thanks-actions">
+          <button type="button" class="btn btn-outline magnetic" id="give-again">
+            <span>Give again</span>
+          </button>
+          <a href="stories.html" class="btn btn-ghost">
+            <span>Read a story your gift made possible</span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section where" aria-labelledby="where-title">
+  <div class="shell section-grid">
+    <div class="section-marker">
+      <span class="mono">§ 02</span>
+      <h2 id="where-title" class="display-sm">Where your<br>gift goes.</h2>
+    </div>
+    <div class="where-content">
+      <div class="where-breakdown">
+        <div class="where-row">
+          <span class="mono">i.</span>
+          <div>
+            <h3>Ninety-two cents</h3>
+            <p>becomes food — produce from Orchard Hill, bread from Holloway, milk from Northbank Dairy.</p>
+          </div>
+        </div>
+        <div class="where-row">
+          <span class="mono">ii.</span>
+          <div>
+            <h3>Six cents</h3>
+            <p>keeps the refrigerator trucks cold and the pantry lights on.</p>
+          </div>
+        </div>
+        <div class="where-row">
+          <span class="mono">iii.</span>
+          <div>
+            <h3>Two cents</h3>
+            <p>pays for the person who answers the phone when you call asking how to volunteer.</p>
+          </div>
+        </div>
+      </div>
+      <figure class="where-figure">
+        <img src="https://picsum.photos/seed/bright-harvest-ae79c1c3ff96/1600/900?auto=format&fit=crop&w=1400&q=80" alt="Stacked crates of donated apples and leafy greens being sorted at the Bright Harvest warehouse" width="1400" height="1000" loading="lazy">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="section other-ways" aria-labelledby="other-title">
+  <div class="shell section-grid">
+    <div class="section-marker">
+      <span class="mono">§ 03</span>
+      <h2 id="other-title" class="display-sm">Other ways<br>to give.</h2>
+    </div>
+    <div class="other-grid">
+      <article class="other-card">
+        <span class="mono">A.</span>
+        <h3>Host a food drive</h3>
+        <p>We provide the bins, the list, and the truck. You provide the classroom, the office, or the congregation.</p>
+        <a href="mailto:drives@brightharvest.org" class="read-link">Plan a drive <span aria-hidden="true">→</span></a>
+      </article>
+      <article class="other-card">
+        <span class="mono">B.</span>
+        <h3>Give stock or land</h3>
+        <p>Appreciated assets are often the most tax-efficient gift you can make. Our planned giving officer, Ada, will walk you through it.</p>
+        <a href="mailto:ada@brightharvest.org" class="read-link">Email Ada <span aria-hidden="true">→</span></a>
+      </article>
+      <article class="other-card">
+        <span class="mono">C.</span>
+        <h3>Leave a bequest</h3>
+        <p>A line in your will can keep Bright Harvest going for another fifty years. We’ll send you the language.</p>
+        <a href="mailto:legacy@brightharvest.org" class="read-link">Request the kit <span aria-hidden="true">→</span></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="shell footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="brand" aria-label="Bright Harvest home">
+        <span class="brand-mark" aria-hidden="true">✳</span>
+        <span class="brand-name">Bright Harvest</span>
+      </a>
+      <p class="mono small">A 501(c)(3) food bank.<br>Est. 2014 · EIN 82-4019953</p>
+    </div>
+    <nav class="footer-nav" aria-label="Footer">
+      <div>
+        <h3 class="mono small">Visit</h3>
+        <ul>
+          <li><a href="programs.html">Programs</a></li>
+          <li><a href="stories.html">Stories</a></li>
+          <li><a href="volunteer.html">Volunteer</a></li>
+          <li><a href="donate.html">Donate</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="mono small">Contact</h3>
+        <ul>
+          <li>412 River Road<br>East Hollow, VT 05671</li>
+          <li><a href="tel:+18025550144">(802) 555-0144</a></li>
+          <li><a href="mailto:hello@brightharvest.org">hello@brightharvest.org</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="mono small">Hours</h3>
+        <ul>
+          <li>Pantry · Mon–Sat 9–5</li>
+          <li>Kitchen · Mon–Fri 5–7pm</li>
+          <li>Office · Mon–Fri 9–5</li>
+        </ul>
+      </div>
+    </nav>
+    <div class="footer-bottom">
+      <p class="mono small">© 2026 Bright Harvest Food Bank. All rights, and all food, shared freely.</p>
+      <p class="mono small">Site designed with care. Read our <a href="#">transparency report</a>.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
 <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
 </html>
