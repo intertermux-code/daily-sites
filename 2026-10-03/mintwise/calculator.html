@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budget Calculator — Mintwise</title>
+  <meta name="description" content="Interactive budget calculator. Enter your income and expenses, see your savings rate visualized.">
+  <meta name="theme-color" content="#10b981">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  
+  <header class="site-header" role="banner">
+    <div class="container">
+      <a href="index.html" class="logo" aria-label="Mintwise home">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span class="logo-text">mintwise</span>
+        <span class="logo-version" aria-hidden="true">v4.2</span>
+      </a>
+      
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Toggle menu">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="calculator.html" aria-current="page">Calculator</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="contact.html">Support</a></li>
+        </ul>
+      </nav>
+      
+      <a href="pricing.html" class="btn btn-primary nav-cta">Start free trial</a>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero page-hero-compact">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">Calculator</span>
+        </nav>
+        
+        <div class="chip-group" aria-hidden="true">
+          <span class="chip chip-mono">TOOL:BUDGET_CALC</span>
+          <span class="chip chip-status">
+            <span class="status-dot" aria-hidden="true"></span>
+            LIVE PREVIEW
+          </span>
+        </div>
+        
+        <h1>Calculate your savings <em>rate.</em></h1>
+        <p class="page-hero-lead">Enter your monthly income and expenses. We'll show you where you stand and how to optimize.</p>
+      </div>
+    </section>
+
+    <section class="calculator-section">
+      <div class="container">
+        <div class="calculator-panel">
+          <div class="calc-header">
+            <span class="chip chip-mono">INPUT // MONTHLY</span>
+            <h2 class="calc-title">Budget <em>worksheet.</em></h2>
+          </div>
+          
+          <form class="calc-form" id="budget-form" aria-label="Budget calculator form">
+            <div class="calc-inputs">
+              <fieldset class="calc-fieldset">
+                <legend class="fs-legend">
+                  <span class="fs-label">INCOME</span>
+                  <span class="fs-badge badge-positive">+</span>
+                </legend>
+                
+                <div class="calc-field">
+                  <label for="income-primary">Primary salary (after tax)</label>
+                  <div class="input-group">
+                    <span class="input-prefix" aria-hidden="true">$</span>
+                    <input type="number" id="income-primary" name="income-primary" value="5000" min="0" step="100" inputmode="numeric">
+                  </div>
+                </div>
+                
+                <div class="calc-field">
+                  <label for="income-secondary">Side income / freelance</label>
+                  <div class="input-group">
+                    <span class="input-prefix" aria-hidden="true">$</span>
+                    <input type="number" id="income-secondary" name="income-secondary" value="500" min="0" step="50" inputmode="numeric">
+                  </div>
+                </div>
+                
+                <div class="calc-field">
+                  <label for="income-other">Other income</label>
+                  <div class="input-group">
+                    <span class="input-prefix" aria-hidden="true">$</span>
+                    <input type="number" id="income-other" name="income-other" value="0" min="0" step="50" inputmode="numeric">
+                  </div>
+                </div>
+              </fieldset>
+              
+              <fieldset class="calc-fieldset fieldset-expenses">
+                <legend class="fs-legend">
+                  <span class="fs-label">FIXED EXPENSES</span>
+                  <span class="fs-badge badge-negative">−</span>
+                </legend>
+                
+                <div class="calc-field">
+                  <label for="expense-rent">Rent / mortgage</label>
+                  <div class="input-group">
+                    <span class="input-prefix" aria-hidden="true">$</span>
+                    <input type="number" id="expense-rent" name="expense-rent" value="1800" min="0" step="50" inputmode="numeric">
+                  </div>
+                </div>
+                
+                <div class="calc-field">
+                  <label for="expense-utilities">Utilities & internet</label>
+                  <div class="input-group">
+                    <span class="input-prefix" aria-hidden="true">$</span>
+                    <input type="number" id="expense-utilities" name="expense-utilities" value="250" min="0" step="10" inputmode="numeric">
+                  </div>
+                </div>
+                
+                <div class="calc-field">
+                  <label for="expense-insurance">Insurance</label>
+                  <div class="input-group">
+                    <span class="input-prefix" aria-hidden="true">$</span>
+                    <input type="number" id="expense-insurance" name="expense-insurance" value="200" min="0" step="10" inputmode="numeric">
+                  </div>
+                </div>
+                
+                <div class="calc-field">
+                  <label for="expense-subscriptions">Subscriptions</label>
+                  <div class="input-group">
+                    <span class="input-prefix" aria-hidden="true">$</span>
+                    <input type="number" id="expense-subscriptions" name="expense-subscriptions" value="75" min="0" step="5" inputmode="numeric">
+                  </div>
+                </div>
+              </fieldset>
+              
+              <fieldset class="calc-fieldset fieldset-variable">
+                <legend class="fs-legend">
+                  <span class="fs-label">VARIABLE EXPENSES</span>
+                  <span class="fs-badge badge-negative">−</span>
+                </legend>
+                
+                <div class="calc-field">
+                  <label for="expense-food">Groceries & dining</label>
+                  <div class="input-group">
+                    <span class="input-prefix" aria-hidden="true">$</span>
+                    <input type="number" id="expense-food" name="expense-food" value="600" min="0" step="25" inputmode="numeric">
+                  </div>
+                </div>
+                
+                <div class="calc-field">
+                  <label for="expense-transport">Transportation</label>
+                  <div class="input-group">
+                    <span class="input-prefix" aria-hidden="true">$</span>
+                    <input type="number" id="expense-transport" name="expense-transport" value="300" min="0" step="10" inputmode="numeric">
+                  </div>
+                </div>
+                
+                <div class="calc-field">
+                  <label for="expense-personal">Personal & entertainment</label>
+                  <div class="input-group">
+                    <span class="input-prefix" aria-hidden="true">$</span>
+                    <input type="number" id="expense-personal" name="expense-personal" value="250" min="0" step="10" inputmode="numeric">
+                  </div>
+                </div>
+                
+                <div class="calc-field">
+                  <label for="expense-other">Other expenses</label>
+                  <div class="input-group">
+                    <span class="input-prefix" aria-hidden="true">$</span>
+                    <input type="number" id="expense-other" name="expense-other" value="150" min="0" step="10" inputmode="numeric">
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+            
+            <div class="calc-actions">
+              <button type="reset" class="btn btn-ghost">Reset all</button>
+              <button type="button" class="btn btn-primary" id="btn-sample">Load sample data</button>
+            </div>
+          </form>
+        </div>
+        
+        <div class="calculator-results">
+          <div class="results-header">
+            <span class="chip chip-mono">OUTPUT // ANALYSIS</span>
+            <h2 class="results-title">Your financial <em>telemetry.</em></h2>
+          </div>
+          
+          <div class="results-summary">
+            <div class="rs-card rs-income">
+              <span class="rs-label">Total Income</span>
+              <span class="rs-value" id="total-income">$5,500</span>
+            </div>
+            <div class="rs-card rs-expenses">
+              <span class="rs-label">Total Expenses</span>
+              <span class="rs-value" id="total-expenses">$3,625</span>
+            </div>
+            <div class="rs-card rs-savings">
+              <span class="rs-label">Monthly Savings</span>
+              <span class="rs-value" id="monthly-savings">$1,875</span>
+            </div>
+          </div>
+          
+          <div class="results-donut-wrapper">
+            <div class="results-donut" aria-label="Savings rate visualization">
+              <svg viewBox="0 0 200 200" class="donut-svg">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#eefbf4" stroke-width="24"/>
+                <circle id="donut-expenses" cx="100" cy="100" r="80" fill="none" stroke="#fde68a" stroke-width="24" stroke-dasharray="502.65" stroke-dashoffset="0" transform="rotate(-90 100 100)" stroke-linecap="round"/>
+                <circle id="donut-savings" cx="100" cy="100" r="80" fill="none" stroke="#10b981" stroke-width="24" stroke-dasharray="502.65" stroke-dashoffset="0" transform="rotate(-90 100 100)" stroke-linecap="round"/>
+              </svg>
+              <div class="donut-center">
+                <span class="donut-percent" id="savings-percent">34%</span>
+                <span class="donut-label">Savings Rate</span>
+              </div>
+            </div>
+            
+            <div class="donut-legend">
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #fde68a;" aria-hidden="true"></span>
+                <span class="legend-label">Expenses</span>
+                <span class="legend-value" id="legend-expenses">66%</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #10b981;" aria-hidden="true"></span>
+                <span class="legend-label">Savings</span>
+                <span class="legend-value" id="legend-savings">34%</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="results-projections">
+            <h3 class="rp-title">Annual projections</h3>
+            <div class="rp-grid">
+              <div class="rp-item">
+                <span class="rp-label">Annual savings</span>
+                <span class="rp-value" id="annual-savings">$22,500</span>
+              </div>
+              <div class="rp-item">
+                <span class="rp-label">5-year projection</span>
+                <span class="rp-value" id="five-year">$112,500</span>
+              </div>
+              <div class="rp-item">
+                <span class="rp-label">Emergency fund (6mo)</span>
+                <span class="rp-value" id="emergency-fund">$21,750</span>
+              </div>
+              <div class="rp-item">
+                <span class="rp-label">Time to emergency fund</span>
+                <span class="rp-value" id="time-to-ef">12 months</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="results-insights" id="insights">
+            <h3 class="ri-title">
+              <span class="chip chip-mono">INSIGHTS</span>
+            </h3>
+            <div class="ri-content" id="insight-content">
+              <p><strong>Your savings rate is solid.</strong> At 34%, you're saving well above the national average of 4.3%. Keep this pace and you'll build a 6-month emergency fund in just under a year.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="calculator-tips">
+      <div class="container">
+        <div class="section-head">
+          <span class="chip chip-mono">OPTIMIZATION</span>
+          <h2>Savings rate <em>benchmarks.</em></h2>
+        </div>
+        
+        <div class="tips-grid reveal">
+          <article class="tip-card">
+            <div class="tip-header">
+              <span class="tip-range">&lt; 10%</span>
+              <span class="tip-status status-concern">Needs attention</span>
+            </div>
+            <h3>Below average</h3>
+            <p>You're saving less than most Americans. Focus on one expense category to cut—subscriptions are often the easiest win.</p>
+          </article>
+          
+          <article class="tip-card">
+            <div class="tip-header">
+              <span class="tip-range">10–20%</span>
+              <span class="tip-status status-okay">On track</span>
+            </div>
+            <h3>National average</h3>
+            <p>You're saving at a healthy pace. Consider increasing by 1% each quarter to accelerate your financial goals.</p>
+          </article>
+          
+          <article class="tip-card tip-highlight">
+            <div class="tip-header">
+              <span class="tip-range">20–35%</span>
+              <span class="tip-status status-good">Strong</span>
+            </div>
+            <h3>Above average</h3>
+            <p>Excellent discipline. You're in the top quartile of savers. Consider tax-advantaged accounts to optimize further.</p>
+          </article>
+          
+          <article class="tip-card">
+            <div class="tip-header">
+              <span class="tip-range">35–50%</span>
+              <span class="tip-status status-excellent">Aggressive</span>
+            </div>
+            <h3>Financial independence track</h3>
+            <p>You're on the FIRE path. At this rate, you could achieve financial independence in 15–20 years.</p>
+          </article>
+          
+          <article class="tip-card">
+            <div class="tip-header">
+              <span class="tip-range">&gt; 50%</span>
+              <span class="tip-status status-exceptional">Exceptional</span>
+            </div>
+            <h3>Elite saver</h3>
+            <p>Rare discipline. You're in the top 1% of savers. Consider working with a financial advisor to optimize tax strategy.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-card reveal">
+          <div class="cta-content">
+            <span class="chip chip-mono">AUTOMATE THIS</span>
+            <h2>Track it all <em>automatically.</em></h2>
+            <p>Mintwise imports your transactions, categorizes them, and updates these numbers in real-time. No manual entry required.</p>
+            <div class="cta-actions">
+              <a href="pricing.html" class="btn btn-primary btn-lg">Start free trial</a>
+              <a href="features.html" class="btn btn-ghost btn-lg">See all features</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo" aria-label="Mintwise home">
+            <span class="logo-mark" aria-hidden="true"></span>
+            <span class="logo-text">mintwise</span>
+          </a>
+          <p>Personal finance, instrumented. Built for humans who want clarity without complexity.</p>
+          <div class="footer-social" aria-label="Social media links">
+            <a href="#" aria-label="Twitter">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="#" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.82 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            </a>
+          </div>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Product</h3>
+          <ul>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="calculator.html">Budget Calculator</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="#">Integrations</a></li>
+            <li><a href="#">Changelog</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Company</h3>
+          <ul>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press kit</a></li>
+            <li><a href="#">Security</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Help center</a></li>
+            <li><a href="#">Community</a></li>
+            <li><a href="#">API docs</a></li>
+            <li><a href="#">Status page</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2026 Mintwise Inc. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Settings</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
