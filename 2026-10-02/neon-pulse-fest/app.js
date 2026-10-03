@@ -1,327 +1,194 @@
-// Neon Pulse — app.js
-// Page-specific logic, guarded by element existence checks.
-
-(function () {
+(function() {
   'use strict';
 
-  // =========================================
-  // Mobile menu toggle
-  // =========================================
-  const menuToggle = document.querySelector('.menu-toggle');
-  const mobileNav = document.getElementById('mobile-nav');
-  if (menuToggle && mobileNav) {
-    menuToggle.addEventListener('click', () => {
-      const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
-      menuToggle.setAttribute('aria-expanded', String(!expanded));
-      mobileNav.classList.toggle('open');
-    });
-    // Close on escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && mobileNav.classList.contains('open')) {
-        mobileNav.classList.remove('open');
-        menuToggle.setAttribute('aria-expanded', 'false');
-        menuToggle.focus();
-      }
-    });
-    // Close when clicking a link
-    mobileNav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileNav.classList.remove('open');
-        menuToggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-  }
+  /* ============ COUNTDOWN ============ */
+  const target = new Date('2026-12-18T16:00:00Z').getTime();
+  const daysEl = document.getElementById('cd-days');
+  const hoursEl = document.getElementById('cd-hours');
+  const minsEl = document.getElementById('cd-mins');
+  const secsEl = document.getElementById('cd-secs');
 
-  // =========================================
-  // Countdown to 2026-12-18T18:00:00 PST
-  // =========================================
-  const cdDays = document.getElementById('cd-days');
-  const cdHours = document.getElementById('cd-hours');
-  const cdMins = document.getElementById('cd-mins');
-  const cdSecs = document.getElementById('cd-secs');
-
-  if (cdDays && cdHours && cdMins && cdSecs) {
-    const target = new Date('2026-12-18T18:00:00-08:00').getTime();
-
+  if (daysEl && hoursEl && minsEl && secsEl) {
     const pad = (n) => String(n).padStart(2, '0');
-
-    const updateCountdown = () => {
+    const tick = () => {
       const now = Date.now();
-      const diff = target - now;
-      if (diff <= 0) {
-        cdDays.textContent = '00';
-        cdHours.textContent = '00';
-        cdMins.textContent = '00';
-        cdSecs.textContent = '00';
-        return;
-      }
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const mins = Math.floor((diff / (1000 * 60)) % 60);
-      const secs = Math.floor((diff / 1000) % 60);
-
-      cdDays.textContent = pad(days);
-      cdHours.textContent = pad(hours);
-      cdMins.textContent = pad(mins);
-      cdSecs.textContent = pad(secs);
+      const diff = Math.max(0, target - now);
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      daysEl.textContent = pad(d);
+      hoursEl.textContent = pad(h);
+      minsEl.textContent = pad(m);
+      secsEl.textContent = pad(s);
     };
-
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    tick();
+    setInterval(tick, 1000);
   }
 
-  // =========================================
-  // Word-Stagger Headline (signature motion #2)
-  // =========================================
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* ============ SCROLL PROGRESS ============ */
+  const progressBar = document.querySelector('.progress');
+  if (progressBar) {
+    let ticking = false;
+    const updateProgress = () => {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? Math.min(window.scrollY / docHeight, 1) : 0;
+      progressBar.style.transform = `scaleX(${pct})`;
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateProgress);
+        ticking = true;
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    updateProgress();
+  }
 
-  document.querySelectorAll('.stagger-word').forEach(el => {
-    const text = el.textContent.trim();
-    if (!text) return;
-    el.textContent = '';
-    const words = text.split(/\s+/);
-    words.forEach((word, i) => {
-      const span = document.createElement('span');
-      span.textContent = word;
-      if (!prefersReduced) {
-        span.style.animationDelay = `${i * 60}ms`;
-      }
-      el.appendChild(span);
-      if (i < words.length - 1) {
-        // Preserve visual space but keep words separate
-        // (padding-right in CSS handles word gap)
-      }
+  /* ============ MOBILE NAV ============ */
+  const navToggle = document.querySelector('.nav-toggle');
+  const navMenu = document.getElementById('primary-nav');
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', () => {
+      const open = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute('aria-expanded', String(!open));
+      navToggle.setAttribute('aria-label', open ? 'Open navigation' : 'Close navigation');
+      navMenu.classList.toggle('open', !open);
     });
-  });
-
-  // =========================================
-  // Clip-Path Image Reveal (signature motion #1)
-  // =========================================
-  if ('IntersectionObserver' in window && !prefersReduced) {
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry, idx) => {
-        if (entry.isIntersecting) {
-          // Slight stagger based on entry order within viewport
-          const delay = Math.min(idx * 30, 300);
-          setTimeout(() => {
-            entry.target.classList.add('revealed');
-          }, delay);
-          revealObserver.unobserve(entry.target);
+    // Close on link click
+    navMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        if (navMenu.classList.contains('open')) {
+          navToggle.setAttribute('aria-expanded', 'false');
+          navMenu.classList.remove('open');
         }
       });
-    }, {
-      threshold: 0.15,
-      rootMargin: '0px 0px -40px 0px'
-    });
-
-    document.querySelectorAll('.clip-reveal').forEach(el => {
-      revealObserver.observe(el);
-    });
-  } else {
-    // Reduced motion or no IO: show all immediately
-    document.querySelectorAll('.clip-reveal').forEach(el => {
-      el.classList.add('revealed');
     });
   }
 
-  // =========================================
-  // Lineup Filter
-  // =========================================
+  /* ============ LINEUP FILTER ============ */
   const filterBtns = document.querySelectorAll('.filter-btn');
   const lineupGrid = document.getElementById('lineup-grid');
-  const lineupEmpty = document.querySelector('.lineup-empty');
+  const countEl = document.getElementById('artist-count');
 
   if (filterBtns.length && lineupGrid) {
+    const state = { day: 'all', stage: 'all' };
+
+    const applyFilter = () => {
+      const cards = lineupGrid.querySelectorAll('.artist-card');
+      let visible = 0;
+      cards.forEach(card => {
+        const dayMatch = state.day === 'all' || card.dataset.day === state.day;
+        const stageMatch = state.stage === 'all' || card.dataset.stage === state.stage;
+        if (dayMatch && stageMatch) {
+          card.hidden = false;
+          visible++;
+        } else {
+          card.hidden = true;
+        }
+      });
+      if (countEl) countEl.textContent = visible;
+    };
+
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
-        const filter = btn.dataset.filter;
-        filterBtns.forEach(b => b.setAttribute('aria-selected', 'false'));
-        btn.setAttribute('aria-selected', 'true');
+        const group = btn.dataset.filter;
+        const value = btn.dataset.value;
+        state[group] = value;
 
-        const cards = lineupGrid.querySelectorAll('.lineup-card');
-        let visibleCount = 0;
-        cards.forEach(card => {
-          const match = filter === 'all' ||
-                        card.dataset.night === filter ||
-                        card.dataset.stage === filter;
-          if (match) {
-            card.hidden = false;
-            card.removeAttribute('hidden');
-            visibleCount++;
-          } else {
-            card.hidden = true;
-            card.setAttribute('hidden', '');
+        // Update aria-pressed within the same filter group
+        document.querySelectorAll(`.filter-btn[data-filter="${group}"]`).forEach(b => {
+          const isActive = b === btn;
+          b.classList.toggle('active', isActive);
+          b.setAttribute('aria-pressed', String(isActive));
+        });
+
+        applyFilter();
+      });
+    });
+  }
+
+  /* ============ SPRING ACCORDION (FAQ) ============ */
+  const faqItems = document.querySelectorAll('.faq-item');
+  if (faqItems.length) {
+    faqItems.forEach(item => {
+      const toggle = item.querySelector('.faq-toggle');
+      const panel = item.querySelector('.faq-panel');
+      if (!toggle || !panel) return;
+
+      toggle.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+
+        // Close all others (only one panel open at a time)
+        faqItems.forEach(other => {
+          if (other !== item && other.classList.contains('open')) {
+            other.classList.remove('open');
+            const otherToggle = other.querySelector('.faq-toggle');
+            if (otherToggle) {
+              otherToggle.setAttribute('aria-expanded', 'false');
+            }
           }
         });
 
-        if (lineupEmpty) {
-          lineupEmpty.hidden = visibleCount > 0;
-        }
-      });
-    });
-
-    // Keyboard navigation within filter bar
-    filterBtns.forEach((btn, idx) => {
-      btn.addEventListener('keydown', (e) => {
-        let target = null;
-        if (e.key === 'ArrowRight') {
-          target = filterBtns[(idx + 1) % filterBtns.length];
-        } else if (e.key === 'ArrowLeft') {
-          target = filterBtns[(idx - 1 + filterBtns.length) % filterBtns.length];
-        }
-        if (target) {
-          e.preventDefault();
-          target.focus();
-          target.click();
+        if (isOpen) {
+          item.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        } else {
+          item.classList.add('open');
+          toggle.setAttribute('aria-expanded', 'true');
         }
       });
     });
   }
 
-  // =========================================
-  // FAQ Accordion
-  // =========================================
-  const faqItems = document.querySelectorAll('.faq-item');
-  faqItems.forEach(item => {
-    const trigger = item.querySelector('.faq-question');
-    const content = item.querySelector('.faq-answer');
-    if (!trigger || !content) return;
+  /* ============ LIGHTBOX (GALLERY) ============ */
+  const lightbox = document.querySelector('.lightbox');
+  const lbImg = lightbox?.querySelector('.lightbox-img');
+  const lbMeta = lightbox?.querySelector('.lightbox-meta');
+  const lbClose = lightbox?.querySelector('.lightbox-close');
+  const photoBtns = document.querySelectorAll('.photo');
 
-    trigger.addEventListener('click', () => {
-      const open = item.classList.contains('open');
-      // Close all others in same group
-      const group = item.parentElement;
-      group.querySelectorAll('.faq-item.open').forEach(other => {
-        if (other !== item) {
-          other.classList.remove('open');
-          const otherTrigger = other.querySelector('.faq-question');
-          const otherContent = other.querySelector('.faq-answer');
-          if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
-          if (otherContent) otherContent.hidden = true;
-        }
-      });
-      item.classList.toggle('open', !open);
-      trigger.setAttribute('aria-expanded', String(!open));
-      content.hidden = open;
+  if (lightbox && lbImg && lbMeta && lbClose && photoBtns.length) {
+    let lastFocused = null;
+
+    const openLB = (btn) => {
+      const img = btn.querySelector('img');
+      if (!img) return;
+      lastFocused = document.activeElement;
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      const meta = btn.querySelector('.photo-meta');
+      lbMeta.textContent = meta ? meta.textContent : '';
+      lightbox.hidden = false;
+      document.body.style.overflow = 'hidden';
+      lbClose.focus();
+    };
+
+    const closeLB = () => {
+      lightbox.hidden = true;
+      document.body.style.overflow = '';
+      if (lastFocused) lastFocused.focus();
+    };
+
+    photoBtns.forEach(btn => {
+      btn.addEventListener('click', () => openLB(btn));
     });
-  });
-
-  // =========================================
-  // Ticket tier selection
-  // =========================================
-  const tierButtons = document.querySelectorAll('.ticket-tier .btn');
-  tierButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const tier = btn.dataset.tier;
-      const soldOut = btn.dataset.soldOut === 'true';
-      if (soldOut) {
-        const ok = confirm(`${tier} is currently sold out. Would you like to be added to the waitlist?`);
-        if (ok) {
-          alert(`You've been added to the ${tier} waitlist. We'll email you if a pass opens.`);
-        }
-        return;
-      }
-      const confirmed = confirm(`Secure a ${tier} pass? You will be redirected to our checkout.`);
-      if (confirmed) {
-        // In production, redirect to checkout
-        alert(`Initiating secure checkout for ${tier} pass… (demo)`);
-      }
-    });
-  });
-
-  // =========================================
-  // Gallery Lightbox
-  // =========================================
-  const galleryItems = document.querySelectorAll('.gallery-item');
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = lightbox ? lightbox.querySelector('.lightbox-img') : null;
-  const lightboxClose = lightbox ? lightbox.querySelector('.lightbox-close') : null;
-  let lastFocused = null;
-
-  const openLightbox = (img) => {
-    if (!lightbox || !lightboxImg) return;
-    lastFocused = document.activeElement;
-    // Swap in higher-res variant
-    const hiRes = img.src.replace(/w=\d+/, 'w=2000');
-    lightboxImg.src = hiRes;
-    lightboxImg.alt = img.alt;
-    lightbox.classList.add('open');
-    lightbox.setAttribute('aria-hidden', 'false');
-    if (lightboxClose) {
-      setTimeout(() => lightboxClose.focus(), 100);
-    }
-  };
-
-  const closeLightbox = () => {
-    if (!lightbox) return;
-    lightbox.classList.remove('open');
-    lightbox.setAttribute('aria-hidden', 'true');
-    if (lastFocused && lastFocused.focus) {
-      lastFocused.focus();
-    }
-  };
-
-  if (galleryItems.length && lightbox) {
-    galleryItems.forEach(item => {
-      item.addEventListener('click', () => {
-        const img = item.querySelector('img');
-        if (img) openLightbox(img);
-      });
-    });
-
-    if (lightboxClose) {
-      lightboxClose.addEventListener('click', closeLightbox);
-    }
+    lbClose.addEventListener('click', closeLB);
     lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) closeLightbox();
+      if (e.target === lightbox) closeLB();
     });
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && lightbox.classList.contains('open')) {
-        closeLightbox();
-      }
+      if (e.key === 'Escape' && !lightbox.hidden) closeLB();
     });
   }
 
-  // =========================================
-  // Newsletter form
-  // =========================================
-  document.querySelectorAll('.newsletter').forEach(form => {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const input = form.querySelector('input[type="email"]');
-      const btn = form.querySelector('button[type="submit"]');
-      if (!input || !btn || !input.value) return;
-
-      const originalText = btn.textContent;
-      const originalBg = btn.style.background;
-      btn.textContent = '✓';
-      btn.style.background = 'var(--cyan)';
-      btn.disabled = true;
-
-      setTimeout(() => {
-        input.value = '';
-        btn.textContent = originalText;
-        btn.style.background = originalBg;
-        btn.disabled = false;
-      }, 2400);
-    });
-  });
-
-  // =========================================
-  // Smooth anchor scroll offset for fixed header
-  // =========================================
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      const href = this.getAttribute('href');
-      if (href.length > 1) {
-        const target = document.querySelector(href);
-        if (target) {
-          e.preventDefault();
-          const offset = 90;
-          const top = target.getBoundingClientRect().top + window.scrollY - offset;
-          window.scrollTo({ top, behavior: 'smooth' });
-        }
-      }
+  /* ============ TICKET BUTTONS ============ */
+  document.querySelectorAll('[data-ticket]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.disabled) return;
+      const tier = btn.dataset.ticket;
+      alert(`Signal received: ${tier.toUpperCase()} tier added to checkout. (Demo — connect to your ticketing provider.)`);
     });
   });
 
