@@ -1,281 +1,190 @@
 /**
- * LENSCRAFT INTERACTIVE MODULE
- * Handles Magnetic Buttons, 3D Tilt Cards, Gallery Filtering, Lightbox, Mobile Menu
+ * LENSCRAFT INTERACTION LAYER
+ * Handles Parallax, Spring Accordions, Gallery Filtering, Lightbox, and Forms
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    initMobileMenu();
-    initMagneticButtons();
-    initTiltCards();
+    initNav();
+    initParallax();
+    initAccordions();
     initGallery();
     initContactForm();
 });
 
-/* =========================================
-   MOBILE MENU
-   ========================================= */
-function initMobileMenu() {
-    const toggle = document.querySelector('.mobile-menu-toggle');
-    const nav = document.querySelector('.main-nav');
-    if (!toggle || !nav) return;
+/* --- NAVIGATION --- */
+function initNav() {
+    const toggle = document.querySelector('.nav-toggle');
+    const navList = document.querySelector('.nav-list');
+    
+    if (!toggle || !navList) return;
 
     toggle.addEventListener('click', () => {
-        const isOpen = toggle.getAttribute('aria-expanded') === 'true';
-        toggle.setAttribute('aria-expanded', String(!isOpen));
-        nav.classList.toggle('open', !isOpen);
-        document.body.style.overflow = !isOpen ? 'hidden' : '';
+        const isOpen = navList.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', isOpen);
+        
+        // Animate hamburger bars
+        const bars = toggle.querySelectorAll('.bar');
+        if (isOpen) {
+            bars[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+            bars[1].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+        } else {
+            bars[0].style.transform = 'none';
+            bars[1].style.transform = 'none';
+        }
     });
 
-    // Close on link click
-    nav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            toggle.setAttribute('aria-expanded', 'false');
-            nav.classList.remove('open');
-            document.body.style.overflow = '';
-        });
-    });
-}
-
-/* =========================================
-   MAGNETIC BUTTONS (Primary Signature Motion)
-   Uses rAF lerp for smooth spring-back effect
-   ========================================= */
-function initMagneticButtons() {
-    const buttons = document.querySelectorAll('.btn-magnetic');
-    if (!buttons.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const RADIUS = 120;
-    const STRENGTH = 0.3;
-    const LERP_FACTOR = 0.15;
-
-    buttons.forEach(btn => {
-        let currentX = 0, currentY = 0;
-        let targetX = 0, targetY = 0;
-        let isHovering = false;
-        let rafId = null;
-
-        const update = () => {
-            // Linear interpolation for smooth return
-            currentX += (targetX - currentX) * LERP_FACTOR;
-            currentY += (targetY - currentY) * LERP_FACTOR;
-
-            // Only apply transform if significant movement
-            if (Math.abs(currentX) > 0.1 || Math.abs(currentY) > 0.1 || isHovering) {
-                const scale = isHovering ? 1.04 : 1;
-                btn.style.transform = `translate(${currentX}px, ${currentY}px) scale(${scale})`;
-                rafId = requestAnimationFrame(update);
-            } else {
-                btn.style.transform = '';
-                rafId = null;
-            }
-        };
-
-        btn.addEventListener('mousemove', (e) => {
-            const rect = btn.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            
-            const distX = e.clientX - centerX;
-            const distY = e.clientY - centerY;
-            const dist = Math.sqrt(distX * distX + distY * distY);
-
-            if (dist < RADIUS) {
-                isHovering = true;
-                targetX = distX * STRENGTH;
-                targetY = distY * STRENGTH;
-            } else {
-                isHovering = false;
-                targetX = 0;
-                targetY = 0;
-            }
-
-            if (!rafId) rafId = requestAnimationFrame(update);
-        });
-
-        btn.addEventListener('mouseleave', () => {
-            isHovering = false;
-            targetX = 0;
-            targetY = 0;
-            if (!rafId) rafId = requestAnimationFrame(update);
-        });
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navList.classList.contains('open')) {
+            toggle.click();
+        }
     });
 }
 
-/* =========================================
-   3D TILT CARDS (Secondary Signature Motion)
-   Perspective rotation + glare follow
-   ========================================= */
-function initTiltCards() {
-    const cards = document.querySelectorAll('.tilt-card');
-    if (!cards.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+/* --- PARALLAX ENGINE --- */
+function initParallax() {
+    // Respect reduced motion preference
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const MAX_ROTATION = 8;
-    const LERP_FACTOR = 0.1;
+    const layers = document.querySelectorAll('.parallax-layer');
+    if (layers.length === 0) return;
 
-    cards.forEach(card => {
-        let currentRotX = 0, currentRotY = 0;
-        let targetRotX = 0, targetRotY = 0;
-        let glareX = 50, glareY = 50;
-        let isHovering = false;
-        let rafId = null;
+    let ticking = false;
 
-        const glareEl = card.querySelector('.card-glare');
-
-        const update = () => {
-            currentRotX += (targetRotX - currentRotX) * LERP_FACTOR;
-            currentRotY += (targetRotY - currentRotY) * LERP_FACTOR;
-
-            if (Math.abs(currentRotX) > 0.05 || Math.abs(currentRotY) > 0.05 || isHovering) {
-                card.style.transform = `perspective(1000px) rotateX(${currentRotX}deg) rotateY(${currentRotY}deg)`;
-                if (glareEl) {
-                    glareEl.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.4), transparent 60%)`;
-                }
-                rafId = requestAnimationFrame(update);
-            } else {
-                card.style.transform = '';
-                rafId = null;
-            }
-        };
-
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            // Normalize to -1 to 1
-            const normX = (x / rect.width) * 2 - 1;
-            const normY = (y / rect.height) * 2 - 1;
-
-            isHovering = true;
-            targetRotY = normX * MAX_ROTATION;
-            targetRotX = -normY * MAX_ROTATION; // Invert X axis for natural tilt
-            
-            glareX = (x / rect.width) * 100;
-            glareY = (y / rect.height) * 100;
-
-            if (!rafId) rafId = requestAnimationFrame(update);
-        });
-
-        card.addEventListener('mouseleave', () => {
-            isHovering = false;
-            targetRotX = 0;
-            targetRotY = 0;
-            if (!rafId) rafId = requestAnimationFrame(update);
-        });
-    });
-}
-
-/* =========================================
-   GALLERY FILTERING & LIGHTBOX
-   ========================================= */
-function initGallery() {
-    // Filtering
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const items = document.querySelectorAll('.gallery-item');
-    
-    if (filterBtns.length && items.length) {
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Update active state
-                filterBtns.forEach(b => {
-                    b.classList.remove('active');
-                    b.setAttribute('aria-selected', 'false');
-                });
-                btn.classList.add('active');
-                btn.setAttribute('aria-selected', 'true');
-
-                const filter = btn.dataset.filter;
-
-                items.forEach(item => {
-                    const show = filter === 'all' || item.dataset.category === filter;
-                    item.style.display = show ? 'block' : 'none';
-                });
+    function updateParallax() {
+        const scrollY = window.scrollY;
+        const heroHeight = document.querySelector('.hero').offsetHeight;
+        
+        // Only animate when hero is visible
+        if (scrollY <= heroHeight * 1.5) {
+            layers.forEach(layer => {
+                const speed = parseFloat(layer.dataset.speed) || 0;
+                const yPos = -(scrollY * speed);
+                layer.style.transform = `translate3d(0, ${yPos}px, 0)`;
             });
-        });
+        }
+        ticking = false;
     }
 
-    // Lightbox
-    const lightbox = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lightbox-img');
-    const triggers = document.querySelectorAll('.gallery-trigger');
-    const closeBtn = document.querySelector('.lightbox-close');
-    const prevBtn = document.querySelector('.lightbox-prev');
-    const nextBtn = document.querySelector('.lightbox-next');
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(updateParallax);
+            ticking = true;
+        }
+    }, { passive: true });
+}
 
-    if (!lightbox || !triggers.length) return;
-
-    let currentIndex = 0;
-    let visibleItems = [];
-
-    const getVisibleItems = () => {
-        return Array.from(document.querySelectorAll('.gallery-item')).filter(
-            el => el.style.display !== 'none'
-        );
-    };
-
-    const openLightbox = (index) => {
-        visibleItems = getVisibleItems();
-        currentIndex = index;
-        updateLightboxImage();
-        lightbox.classList.add('active');
-        lightbox.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-        closeBtn.focus();
-    };
-
-    const closeLightbox = () => {
-        lightbox.classList.remove('active');
-        lightbox.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-    };
-
-    const updateLightboxImage = () => {
-        const item = visibleItems[currentIndex];
-        if (!item) return;
-        const img = item.querySelector('img');
-        // Load higher res version by replacing w=800 with w=1600
-        const highResSrc = img.src.replace('w=800', 'w=1600');
-        lbImg.src = highResSrc;
-        lbImg.alt = img.alt;
-    };
-
-    const navigate = (dir) => {
-        currentIndex = (currentIndex + dir + visibleItems.length) % visibleItems.length;
-        updateLightboxImage();
-    };
-
-    triggers.forEach((trigger, i) => {
+/* --- SPRING ACCORDION --- */
+function initAccordions() {
+    const triggers = document.querySelectorAll('.accordion-trigger');
+    
+    triggers.forEach(trigger => {
         trigger.addEventListener('click', () => {
-            // Find actual index among visible items
-            const parentItem = trigger.closest('.gallery-item');
-            const visItems = getVisibleItems();
-            const idx = visItems.indexOf(parentItem);
-            openLightbox(idx >= 0 ? idx : 0);
+            const expanded = trigger.getAttribute('aria-expanded') === 'true';
+            const panel = trigger.closest('.accordion-item').querySelector('.accordion-panel');
+            
+            // Close all others (optional: remove this block for multi-open)
+            triggers.forEach(otherTrigger => {
+                if (otherTrigger !== trigger) {
+                    otherTrigger.setAttribute('aria-expanded', 'false');
+                    const otherPanel = otherTrigger.closest('.accordion-item').querySelector('.accordion-panel');
+                    otherPanel.setAttribute('hidden', '');
+                }
+            });
+
+            // Toggle current
+            if (expanded) {
+                trigger.setAttribute('aria-expanded', 'false');
+                panel.setAttribute('hidden', '');
+            } else {
+                trigger.setAttribute('aria-expanded', 'true');
+                panel.removeAttribute('hidden');
+            }
         });
-    });
-
-    closeBtn?.addEventListener('click', closeLightbox);
-    prevBtn?.addEventListener('click', () => navigate(-1));
-    nextBtn?.addEventListener('click', () => navigate(1));
-
-    // Keyboard navigation
-    lightbox.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeLightbox();
-        if (e.key === 'ArrowLeft') navigate(-1);
-        if (e.key === 'ArrowRight') navigate(1);
-    });
-
-    // Click outside to close
-    lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) closeLightbox();
     });
 }
 
-/* =========================================
-   CONTACT FORM HANDLING
-   ========================================= */
+/* --- GALLERY FILTER & LIGHTBOX --- */
+function initGallery() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.gallery-item');
+    const emptyState = document.querySelector('.empty-state');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = lightbox?.querySelector('.lightbox-img');
+    const lightboxCaption = lightbox?.querySelector('.lightbox-caption');
+    const closeBtn = lightbox?.querySelector('.lightbox-close');
+
+    // Filtering Logic
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Update active state
+            filterBtns.forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
+            });
+            btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
+
+            const filter = btn.dataset.filter;
+            let visibleCount = 0;
+
+            items.forEach(item => {
+                if (filter === 'all' || item.dataset.category === filter) {
+                    item.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+
+            // Handle empty state
+            if (emptyState) {
+                emptyState.hidden = visibleCount > 0;
+            }
+        });
+    });
+
+    // Lightbox Logic
+    const triggers = document.querySelectorAll('.gallery-trigger');
+    triggers.forEach(trigger => {
+        trigger.addEventListener('click', () => {
+            const img = trigger.querySelector('img');
+            if (!img || !lightbox) return;
+
+            // Use higher res version for lightbox (replace w=800 with w=1600)
+            const highResSrc = img.src.replace('w=800', 'w=1600');
+            lightboxImg.src = highResSrc;
+            lightboxImg.alt = img.alt;
+            lightboxCaption.textContent = img.alt;
+            
+            lightbox.showModal();
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    function closeLightbox() {
+        if (lightbox) {
+            lightbox.close();
+            document.body.style.overflow = '';
+            setTimeout(() => { lightboxImg.src = ''; }, 300); // Clear after transition
+        }
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+    if (lightbox) {
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+        lightbox.addEventListener('cancel', (e) => {
+            e.preventDefault(); // Prevent default ESC behavior to handle cleanup
+            closeLightbox();
+        });
+    }
+}
+
+/* --- CONTACT FORM HANDLING --- */
 function initContactForm() {
-    const form = document.getElementById('bookingForm');
+    const form = document.getElementById('booking-form');
     if (!form) return;
 
     // Pre-select package from URL param
@@ -286,42 +195,39 @@ function initContactForm() {
         if (select) select.value = pkg;
     }
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        const statusEl = form.querySelector('.form-status');
+        const submitBtn = form.querySelector('button[type="submit"]');
         
-        const btn = form.querySelector('button[type="submit"]');
-        const originalText = btn.textContent;
-        
-        // Simple validation visual feedback
-        const requiredFields = form.querySelectorAll('[required]');
-        let isValid = true;
-        requiredFields.forEach(field => {
-            if (!field.value.trim()) {
-                field.style.borderColor = 'var(--accent)';
-                isValid = false;
-            } else {
-                field.style.borderColor = '';
-            }
-        });
+        // Basic validation
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
 
-        if (!isValid) return;
+        // Loading State
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+        statusEl.textContent = '';
+        statusEl.className = 'form-status';
 
-        // Simulate submission
-        btn.disabled = true;
-        btn.textContent = 'Sending...';
-        
-        setTimeout(() => {
-            btn.textContent = 'Inquiry Sent ✓';
-            btn.style.background = '#2d6a4f';
-            btn.style.borderColor = '#2d6a4f';
-            form.reset();
+        // Simulate network request
+        try {
+            await new Promise(resolve => setTimeout(resolve, 1500));
             
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.textContent = originalText;
-                btn.style.background = '';
-                btn.style.borderColor = '';
-            }, 3000);
-        }, 1500);
+            // Success State
+            statusEl.textContent = '✓ Inquiry received. We\'ll be in touch within 48 hours.';
+            statusEl.classList.add('success');
+            form.reset();
+        } catch (err) {
+            // Error State
+            statusEl.textContent = 'Something went wrong. Please email us directly at hello@lenscraft.com';
+            statusEl.classList.add('error');
+        } finally {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
     });
 }
