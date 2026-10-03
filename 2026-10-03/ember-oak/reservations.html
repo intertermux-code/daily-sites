@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservations | Ember & Oak</title>
+    <meta name="description" content="Book your table at Ember & Oak. Reserve online for an unforgettable wood-fire dining experience.">
+    <meta name="theme-color" content="#0a0a0c">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;400;500&family=JetBrains+Mono:wght@400&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="Ember & Oak Home"><span class="logo-text">EMBER<span class="accent">&</span>OAK</span></a>
+            <nav class="main-nav" aria-label="Main Navigation">
+                <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Toggle menu"><span></span><span></span></button>
+                <ul id="nav-list" class="nav-list">
+                    <li><a href="index.html">01. Home</a></li>
+                    <li><a href="menu.html">02. Menu</a></li>
+                    <li><a href="gallery.html">03. Gallery</a></li>
+                    <li><a href="reservations.html" aria-current="page">04. Reservations</a></li>
+                    <li><a href="visit.html">05. Visit</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section class="page-hero mini-hero">
+            <div class="container">
+                <span class="mono-label">SECURE YOUR TABLE</span>
+                <h1 class="display-title">RESERVATIONS</h1>
+            </div>
+        </section>
+
+        <section class="section reservation-section">
+            <div class="container">
+                <div class="reservation-layout">
+                    <div class="res-info card-deck">
+                        <div class="content-card">
+                            <span class="card-number mono-label">NOTE</span>
+                            <h2 class="card-title">DINING POLICY</h2>
+                            <div class="card-body">
+                                <p>We hold tables for 15 minutes past reservation time. Parties larger than 8 please contact us directly at <a href="tel:+15035550198">(503) 555-0198</a>.</p>
+                                <p class="mt-sm">For dietary restrictions or special occasions, please include details in the notes field below.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="booking-form" class="booking-form" novalidate>
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required autocomplete="name" placeholder="Jane Doe">
+                            <span class="error-msg" aria-live="polite"></span>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="(503) 555-0198">
+                                <span class="error-msg" aria-live="polite"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" required autocomplete="email" placeholder="jane@example.com">
+                                <span class="error-msg" aria-live="polite"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input type="date" id="date" name="date" required>
+                                <span class="error-msg" aria-live="polite"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="time">Preferred Time</label>
+                                <select id="time" name="time" required>
+                                    <option value="">Select time...</option>
+                                    <option value="17:00">5:00 PM</option>
+                                    <option value="17:30">5:30 PM</option>
+                                    <option value="18:00">6:00 PM</option>
+                                    <option value="18:30">6:30 PM</option>
+                                    <option value="19:00">7:00 PM</option>
+                                    <option value="19:30">7:30 PM</option>
+                                    <option value="20:00">8:00 PM</option>
+                                    <option value="20:30">8:30 PM</option>
+                                    <option value="21:00">9:00 PM</option>
+                                </select>
+                                <span class="error-msg" aria-live="polite"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="guests">Party Size</label>
+                            <select id="guests" name="guests" required>
+                                <option value="">Select party size...</option>
+                                <option value="1">1 Guest</option>
+                                <option value="2">2 Guests</option>
+                                <option value="3">3 Guests</option>
+                                <option value="4">4 Guests</option>
+                                <option value="5">5 Guests</option>
+                                <option value="6">6 Guests</option>
+                                <option value="7">7 Guests</option>
+                                <option value="8">8 Guests</option>
+                            </select>
+                            <span class="error-msg" aria-live="polite"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notes">Special Requests (Optional)</label>
+                            <textarea id="notes" name="notes" rows="3" placeholder="Allergies, celebrations, seating preferences..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full">Confirm Reservation</button>
+                        
+                        <div id="form-status" class="form-status" aria-live="polite"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-col"><span class="logo-text">EMBER<span class="accent">&</span>OAK</span><p class="mono-label mt-sm">WOOD-FIRE DINING</p></div>
+            <div class="footer-col"><h4 class="mono-label">HOURS</h4><p>Tue–Thu: 5pm – 10pm</p><p>Fri–Sat: 5pm – 11pm</p><p>Sun: 5pm – 9pm</p></div>
+            <div class="footer-col"><h4 class="mono-label">CONTACT</h4><p>128 Burnside Ave<br>Portland, OR 97209</p><p><a href="tel:+15035550198">(503) 555-0198</a></p></div>
+            <div class="footer-col"><h4 class="mono-label">SOCIAL</h4><ul class="social-links"><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li></ul></div>
+        </div>
+        <div class="container footer-bottom"><p>&copy; 2026 Ember & Oak. All rights reserved.</p></div>
+    </footer>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
