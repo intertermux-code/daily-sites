@@ -4,103 +4,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gallery | Lenscraft</title>
+    <meta name="description" content="Browse the complete archive of editorial wedding photography. Filter by portraits, ceremony, and details.">
+    <meta name="theme-color" content="#faf8f4">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=IBM+Plex+Mono:wght@300;400&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Playfair+Display:wght@700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <script src="app.js" defer></script>
 </head>
 <body>
-    <div class="skip-link">
-        <a href="#main-content">Skip to main content</a>
-    </div>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <div class="grain-overlay" aria-hidden="true"></div>
 
     <header class="site-header">
-        <nav class="navigation" aria-label="Main">
-            <a href="index.html" class="logo" aria-label="Lenscraft Home">Lenscraft</a>
-            <ul class="nav-list">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="gallery.html" aria-current="page">Gallery</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="pricing.html">Pricing</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="Lenscraft Home">
+                <span class="logo-text">LENSCRAFT</span>
+                <span class="logo-jp" aria-hidden="true">レンズ</span>
+            </a>
+            <nav class="main-nav" aria-label="Primary Navigation">
+                <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Toggle Menu">
+                    <span class="hamburger"></span>
+                </button>
+                <ul id="nav-list" class="nav-list">
+                    <li><a href="index.html">Work</a></li>
+                    <li><a href="gallery.html" aria-current="page">Gallery</a></li>
+                    <li><a href="about.html">Philosophy</a></li>
+                    <li><a href="pricing.html">Investment</a></li>
+                    <li><a href="contact.html" class="btn-nav">Inquire</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <main id="main-content">
-        <section class="gallery-page">
-            <h1>Our Wedding Gallery</h1>
-            <p>Explore our collection of intimate moments and timeless captures from recent celebrations.</p>
-            
-            <div class="filter-controls">
-                <button class="filter-btn active" data-category="all">All</button>
-                <button class="filter-btn" data-category="portraits">Portraits</button>
-                <button class="filter-btn" data-category="ceremony">Ceremony</button>
-                <button class="filter-btn" data-category="details">Details</button>
+        <section class="page-hero module reveal-group">
+            <div class="module-border">
+                <div class="module-label"><span class="mono">03</span> — ARCHIVE</div>
+                <h1>The Collection</h1>
+                <p>A curated selection of moments frozen in time.</p>
             </div>
-            
-            <div class="gallery-grid">
-                <div class="gallery-item" data-category="portraits">
-                    <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80"
-                         alt="Bride getting ready with bridesmaids"
-                         width="600"
-                         height="400">
+        </section>
+
+        <section class="gallery-section container reveal-group">
+            <div class="filter-bar" role="toolbar" aria-label="Filter Gallery">
+                <button class="filter-btn active" data-filter="all" aria-pressed="true">All Works</button>
+                <button class="filter-btn" data-filter="portrait" aria-pressed="false">Portraits</button>
+                <button class="filter-btn" data-filter="ceremony" aria-pressed="false">Ceremony</button>
+                <button class="filter-btn" data-filter="details" aria-pressed="false">Details</button>
+            </div>
+
+            <div class="masonry-grid">
+                <!-- Item 1 -->
+                <div class="gallery-item tilt-card reveal-item" data-category="portrait">
+                    <button class="gallery-trigger" aria-label="View full size image of couple silhouette">
+                        <img src="https://picsum.photos/seed/lenscraft-1645062cd495/1600/900?auto=format&fit=crop&w=800&q=80" alt="Silhouette of couple against golden hour sky" width="800" height="1200" loading="lazy">
+                    </button>
                 </div>
-                <div class="gallery-item" data-category="ceremony">
-                    <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80"
-                         alt="Couple exchanging vows during ceremony"
-                         width="600"
-                         height="400">
+                <!-- Item 2 -->
+                <div class="gallery-item tilt-card reveal-item" data-category="details">
+                    <button class="gallery-trigger" aria-label="View full size image of floral arrangement">
+                        <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=800&q=80" alt="Minimalist white wedding bouquet on wooden table" width="800" height="800" loading="lazy">
+                    </button>
                 </div>
-                <div class="gallery-item" data-category="portraits">
-                    <img src="https://images.unsplash.com/photo-1593118247619-e2d6f056869e?auto=format&fit=crop&w=800&q=80"
-                         alt="Couple dancing at wedding reception"
-                         width="600"
-                         height="400">
+                <!-- Item 3 -->
+                <div class="gallery-item tilt-card reveal-item" data-category="ceremony">
+                    <button class="gallery-trigger" aria-label="View full size image of ring exchange">
+                        <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800&q=80" alt="Hands exchanging rings during outdoor ceremony" width="800" height="1000" loading="lazy">
+                    </button>
                 </div>
-                <div class="gallery-item" data-category="details">
-                    <img src="https://images.unsplash.com/photo-1595675024853-0f3ec9098ac7?auto=format&fit=crop&w=800&q=80"
-                         alt="Detailed shot of wedding rings on flower petals"
-                         width="600"
-                         height="400">
+                <!-- Item 4 -->
+                <div class="gallery-item tilt-card reveal-item" data-category="portrait">
+                    <button class="gallery-trigger" aria-label="View full size image of groom portrait">
+                        <img src="https://images.unsplash.com/photo-1507646227500-4d389b0012be?auto=format&fit=crop&w=800&q=80" alt="Groom adjusting cufflinks in mirror reflection" width="800" height="1100" loading="lazy">
+                    </button>
                 </div>
-                <div class="gallery-item" data-category="ceremony">
-                    <img src="https://picsum.photos/seed/lenscraft-08840eee1df6/1600/900?auto=format&fit=crop&w=800&q=80"
-                         alt="Wedding ceremony aisle with floral arrangements"
-                         width="600"
-                         height="400">
+                <!-- Item 5 -->
+                <div class="gallery-item tilt-card reveal-item" data-category="details">
+                    <button class="gallery-trigger" aria-label="View full size image of table setting">
+                        <img src="https://picsum.photos/seed/lenscraft-715cb0202128/1600/900?auto=format&fit=crop&w=800&q=80" alt="Elegant table setting with candles and linen napkins" width="800" height="800" loading="lazy">
+                    </button>
                 </div>
-                <div class="gallery-item" data-category="portraits">
-                    <img src="https://picsum.photos/seed/lenscraft-58d2ab8ffdb5/1600/900?auto=format&fit=crop&w=800&q=80"
-                         alt="Groom adjusting tie with best man"
-                         width="600"
-                         height="400">
-                </div>
-                <div class="gallery-item" data-category="details">
-                    <img src="https://picsum.photos/seed/lenscraft-a5fc87047e84/1600/900?auto=format&fit=crop&w=800&q=80"
-                         alt="Beautiful wedding cake with elegant decorations"
-                         width="600"
-                         height="400">
-                </div>
-                <div class="gallery-item" data-category="ceremony">
-                    <img src="https://picsum.photos/seed/lenscraft-f8a0e693a085/1600/900?auto=format&fit=crop&w=800&q=80"
-                         alt="Bride walking down the aisle"
-                         width="600"
-                         height="400">
+                <!-- Item 6 -->
+                <div class="gallery-item tilt-card reveal-item" data-category="ceremony">
+                    <button class="gallery-trigger" aria-label="View full size image of aisle walk">
+                        <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80" alt="Couple walking down aisle surrounded by guests" width="800" height="1200" loading="lazy">
+                    </button>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Image Viewer">
+        <div class="lightbox-backdrop" data-close></div>
+        <div class="lightbox-content">
+            <button class="lightbox-close" data-close aria-label="Close viewer">×</button>
+            <img src="" alt="" id="lightbox-img">
+            <div class="lightbox-caption mono" id="lightbox-caption"></div>
+        </div>
+    </div>
+
     <footer class="site-footer">
-        <div class="footer-content">
-            <p>&copy; 2023 Lenscraft. All rights reserved.</p>
-            <div class="social-links">
-                <a href="#" aria-label="Instagram">Instagram</a>
-                <a href="#" aria-label="Facebook">Facebook</a>
-                <a href="#" aria-label="Pinterest">Pinterest</a>
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <span class="logo-text">LENSCRAFT</span>
+                <p class="mono">© 2026 All Rights Reserved.</p>
             </div>
+            <div class="footer-links">
+                <a href="contact.html">Book Consultation</a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+                <a href="mailto:hello@lenscraft.com">hello@lenscraft.com</a>
+            </div>
+            <div class="footer-vertical" aria-hidden="true">レンズクラフト</div>
         </div>
     </footer>
-
-    <script src="app.js" defer></script>
 <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
 </html>
