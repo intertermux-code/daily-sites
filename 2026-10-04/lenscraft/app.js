@@ -1,170 +1,169 @@
-// Magnetic button functionality
-document.addEventListener('DOMContentLoaded', () => {
-  const magneticButtons = document.querySelectorAll('.magnetic-btn');
+// Editorial Swiss x Card Deck Design System JavaScript
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize all components that exist on the current page
+
+  // Initialize clip-path image reveals
+  initClipPathReveals();
+
+  // Initialize blur-fade ascend animations
+  initBlurFadeAscend();
+
+  // Initialize gallery filtering if on gallery page
+  if (document.querySelector('.gallery-grid')) {
+    initGalleryFilter();
+  }
+
+  // Initialize lightbox if gallery exists
+  if (document.querySelector('#lightbox')) {
+    initLightbox();
+  }
+
+  // Initialize form submission if on contact page
+  if (document.querySelector('#booking-form')) {
+    initFormSubmission();
+  }
+});
+
+// Clip-Path Image Reveal functionality
+function initClipPathReveals() {
+  const images = document.querySelectorAll('img');
   
-  magneticButtons.forEach(button => {
-    const moveFactor = 0.1;
-    const maxMove = 12;
-    
-    button.addEventListener('mousemove', (e) => {
-      const rect = button.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      
-      const distance = Math.sqrt(
-        Math.pow(e.clientX - centerX, 2) + 
-        Math.pow(e.clientY - centerY, 2)
-      );
-      
-      if (distance < 120) {
-        const moveX = (e.clientX - centerX) * moveFactor;
-        const moveY = (e.clientY - centerY) * moveFactor;
-        
-        // Limit the movement to maxMove pixels
-        const limitedMoveX = Math.max(Math.min(moveX, maxMove), -maxMove);
-        const limitedMoveY = Math.max(Math.min(moveY, maxMove), -maxMove);
-        
-        button.style.transform = `translate(${limitedMoveX}px, ${limitedMoveY}px)`;
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
+
+  const imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
       }
     });
+  }, observerOptions);
+
+  images.forEach(img => {
+    img.classList.add('clip-path-reveal');
+    imageObserver.observe(img);
+  });
+}
+
+// Blur-Fade Ascend functionality
+function initBlurFadeAscend() {
+  const sections = document.querySelectorAll('section, .work-card, .testimonial-card, .package-card, .skill-card, .add-on-card, .step, .gallery-item');
+  
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
+
+  const sectionObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(section => {
+    section.classList.add('blur-fade-ascend');
+    sectionObserver.observe(section);
+  });
+}
+
+// Gallery filtering functionality
+function initGalleryFilter() {
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Remove active class from all buttons
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      
+      // Add active class to clicked button
+      button.classList.add('active');
+      
+      const filterValue = button.getAttribute('data-filter');
+      
+      galleryItems.forEach(item => {
+        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    });
+  });
+}
+
+// Lightbox functionality
+function initLightbox() {
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.querySelector('.lightbox-img');
+  const lightboxCaption = document.querySelector('.lightbox-caption');
+  const closeBtn = document.querySelector('.close-lightbox');
+
+  galleryItems.forEach(item => {
+    const img = item.querySelector('img');
+    const caption = item.querySelector('figcaption');
     
-    button.addEventListener('mouseleave', () => {
-      button.style.transform = 'translate(0, 0)';
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightboxCaption.textContent = caption.textContent;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
     });
   });
 
-  // Gallery filtering functionality
-  if (document.querySelector('.gallery-grid')) {
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const galleryItems = document.querySelectorAll('.gallery-item');
+  closeBtn.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  });
 
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        // Remove active class from all buttons
-        filterBtns.forEach(b => b.classList.remove('active'));
-        // Add active class to clicked button
-        btn.classList.add('active');
-
-        const filterValue = btn.getAttribute('data-filter');
-
-        galleryItems.forEach(item => {
-          if (filterValue === 'all' || item.classList.contains(filterValue)) {
-            item.style.display = 'block';
-          } else {
-            item.style.display = 'none';
-          }
-        });
-      });
-    });
-  }
-
-  // Lightbox functionality
-  if (document.getElementById('lightbox')) {
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.querySelector('.lightbox-image');
-    const closeBtn = document.querySelector('.lightbox-close');
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    let currentIndex = 0;
-
-    // Open lightbox when gallery image is clicked
-    galleryItems.forEach((item, index) => {
-      item.addEventListener('click', () => {
-        const img = item.querySelector('img');
-        lightboxImg.src = img.src;
-        lightboxImg.alt = img.alt;
-        lightbox.classList.add('active');
-        currentIndex = index;
-        document.body.style.overflow = 'hidden'; // Prevent scrolling when lightbox is open
-      });
-    });
-
-    // Close lightbox
-    closeBtn.addEventListener('click', () => {
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
       lightbox.classList.remove('active');
-      document.body.style.overflow = ''; // Re-enable scrolling
-    });
-
-    // Close lightbox when clicking outside the image
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) {
-        lightbox.classList.remove('active');
-        document.body.style.overflow = ''; // Re-enable scrolling
-      }
-    });
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (!lightbox.classList.contains('active')) return;
-
-      if (e.key === 'Escape') {
-        lightbox.classList.remove('active');
-        document.body.style.overflow = ''; // Re-enable scrolling
-      } else if (e.key === 'ArrowLeft') {
-        showPrevImage();
-      } else if (e.key === 'ArrowRight') {
-        showNextImage();
-      }
-    });
-
-    // Navigation buttons
-    const prevBtn = document.querySelector('.lightbox-nav.prev');
-    const nextBtn = document.querySelector('.lightbox-nav.next');
-
-    prevBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      showPrevImage();
-    });
-
-    nextBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      showNextImage();
-    });
-
-    function showPrevImage() {
-      const visibleItems = Array.from(galleryItems).filter(item => 
-        item.style.display !== 'none'
-      );
-      currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length;
-      const img = visibleItems[currentIndex].querySelector('img');
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt;
+      document.body.style.overflow = '';
     }
+  });
 
-    function showNextImage() {
-      const visibleItems = Array.from(galleryItems).filter(item => 
-        item.style.display !== 'none'
-      );
-      currentIndex = (currentIndex + 1) % visibleItems.length;
-      const img = visibleItems[currentIndex].querySelector('img');
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt;
+  // Close with Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
     }
-  }
+  });
+}
 
-  // Form submission handling
-  const bookingForm = document.getElementById('bookingForm');
-  if (bookingForm) {
-    bookingForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      // Get form values
-      const formData = new FormData(bookingForm);
-      const formObject = Object.fromEntries(formData.entries());
-      
-      // Basic validation
-      if (!formObject.fullName || !formObject.email) {
-        alert('Please fill in all required fields.');
-        return;
-      }
-      
-      // In a real application, you would send the form data to a server here
-      console.log('Form submitted:', formObject);
-      
-      // Show success message
-      alert('Thank you for your inquiry! We will contact you shortly to discuss your special day.');
-      
-      // Reset form
-      bookingForm.reset();
-    });
-  }
-});
+// Form submission functionality
+function initFormSubmission() {
+  const form = document.getElementById('booking-form');
+  
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Get form data
+    const formData = new FormData(form);
+    const formObject = Object.fromEntries(formData);
+    
+    // Basic validation
+    if (!formObject.fullName || !formObject.email || !formObject.venueLocation) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+    
+    // Show success message
+    alert('Thank you for your inquiry! We will contact you shortly to discuss your wedding photography needs.');
+    
+    // Reset form
+    form.reset();
+  });
+}
