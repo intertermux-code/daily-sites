@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservations | Ember & Oak</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Code+Pro:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header">
+        <div class="container">
+            <h1 class="logo">
+                <span class="logo-ember">Ember</span> & <span class="logo-oak">Oak</span>
+            </h1>
+
+            <nav class="main-nav" aria-label="Main navigation">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="reservations.html" aria-current="page">Reservations</a></li>
+                    <li><a href="visit.html">Visit</a></li>
+                </ul>
+            </nav>
+
+            <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Reservations Section -->
+        <section class="reservations-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-number">05</h2>
+                    <h2 class="section-title">Make a Reservation</h2>
+                </div>
+
+                <div class="reservation-container">
+                    <form class="reservation-form" id="reservationForm">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                            <span class="error-message" id="nameError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required>
+                            <span class="error-message" id="phoneError"></span>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input type="date" id="date" name="date" required>
+                                <span class="error-message" id="dateError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="time">Time</label>
+                                <select id="time" name="time" required>
+                                    <option value="">Select Time</option>
+                                    <option value="17:00">5:00 PM</option>
+                                    <option value="17:30">5:30 PM</option>
+                                    <option value="18:00">6:00 PM</option>
+                                    <option value="18:30">6:30 PM</option>
+                                    <option value="19:00">7:00 PM</option>
+                                    <option value="19:30">7:30 PM</option>
+                                    <option value="20:00">8:00 PM</option>
+                                    <option value="20:30">8:30 PM</option>
+                                    <option value="21:00">9:00 PM</option>
+                                    <option value="21:30">9:30 PM</option>
+                                    <option value="22:00">10:00 PM</option>
+                                </select>
+                                <span class="error-message" id="timeError"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="partySize">Party Size</label>
+                            <select id="partySize" name="partySize" required>
+                                <option value="">Select Party Size</option>
+                                <option value="1">1 Person</option>
+                                <option value="2">2 People</option>
+                                <option value="3">3 People</option>
+                                <option value="4">4 People</option>
+                                <option value="5">5 People</option>
+                                <option value="6">6 People</option>
+                                <option value="7">7 People</option>
+                                <option value="8">8 People</option>
+                                <option value="9+">9+ People</option>
+                            </select>
+                            <span class="error-message" id="partySizeError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="specialRequests">Special Requests (Optional)</label>
+                            <textarea id="specialRequests" name="specialRequests" rows="4"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Confirm Reservation</button>
+                    </form>
+
+                    <div class="reservation-confirmation" id="reservationConfirmation" style="display: none;">
+                        <h3>Your Reservation is Confirmed!</h3>
+                        <p>Thank you for choosing Ember & Oak. We've sent a confirmation to your phone number with reservation details.</p>
+                        <p>We look forward to serving you.</p>
+                        <button type="button" class="btn btn-secondary" id="newReservationBtn">Make Another Reservation</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Ember & Oak</h3>
+                    <p>Wood-fired cuisine crafted with passion</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <address>
+                        123 Culinary Avenue<br>
+                        Food District, CA 90210<br>
+                        (555) 123-4567
+                    </address>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Hours</h4>
+                    <p>Mon-Thu: 5pm - 10pm<br>
+                    Fri-Sat: 5pm - 11pm<br>
+                    Sun: 4pm - 9pm</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Ember & Oak. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js" defer></script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
