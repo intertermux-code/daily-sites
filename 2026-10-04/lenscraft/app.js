@@ -1,100 +1,131 @@
-// Editorial Swiss x Card Deck Design System JavaScript
+// Lenscraft Wedding Photography Portfolio - JavaScript
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Initialize all components that exist on the current page
-
-  // Initialize clip-path image reveals
-  initClipPathReveals();
-
-  // Initialize blur-fade ascend animations
-  initBlurFadeAscend();
-
-  // Initialize gallery filtering if on gallery page
-  if (document.querySelector('.gallery-grid')) {
-    initGalleryFilter();
+// Magnetic Button Effect
+class MagneticButton {
+  constructor(element) {
+    this.element = element;
+    this.originalX = 0;
+    this.originalY = 0;
+    this.strength = 0.15;
+    
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    
+    this.element.addEventListener('mousemove', this.handleMouseMove);
+    this.element.addEventListener('mouseleave', this.handleMouseLeave);
   }
-
-  // Initialize lightbox if gallery exists
-  if (document.querySelector('#lightbox')) {
-    initLightbox();
-  }
-
-  // Initialize form submission if on contact page
-  if (document.querySelector('#booking-form')) {
-    initFormSubmission();
-  }
-});
-
-// Clip-Path Image Reveal functionality
-function initClipPathReveals() {
-  const images = document.querySelectorAll('img');
   
-  const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.1
-  };
-
-  const imageObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
+  handleMouseMove(e) {
+    const rect = this.element.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const deltaX = x - centerX;
+    const deltaY = y - centerY;
+    
+    // Calculate distance from center (for scaling effect)
+    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    const maxDistance = Math.sqrt(centerX * centerX + centerY * centerY);
+    const proximity = Math.min(distance / maxDistance, 1);
+    
+    // Apply magnetic effect if within 120px radius
+    if (distance <= 120) {
+      const moveX = deltaX * this.strength;
+      const moveY = deltaY * this.strength;
+      
+      this.element.style.transform = `translate(${moveX}px, ${moveY}px)`;
+      
+      // Add subtle scale when very close
+      if (proximity < 0.3) {
+        this.element.style.transform += ' scale(1.04)';
       }
-    });
-  }, observerOptions);
+    }
+  }
+  
+  handleMouseLeave() {
+    this.element.style.transform = 'translate(0, 0) scale(1)';
+  }
+}
 
-  images.forEach(img => {
-    img.classList.add('clip-path-reveal');
-    imageObserver.observe(img);
+// Initialize magnetic buttons
+function initMagneticButtons() {
+  const buttons = document.querySelectorAll('.btn-primary');
+  buttons.forEach(button => {
+    new MagneticButton(button);
   });
 }
 
-// Blur-Fade Ascend functionality
-function initBlurFadeAscend() {
-  const sections = document.querySelectorAll('section, .work-card, .testimonial-card, .package-card, .skill-card, .add-on-card, .step, .gallery-item');
+// Cursor Spotlight Effect
+function initCursorSpotlight() {
+  const heroBg = document.getElementById('hero-bg');
+  if (!heroBg) return;
   
-  const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.1
-  };
-
-  const sectionObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, observerOptions);
-
-  sections.forEach(section => {
-    section.classList.add('blur-fade-ascend');
-    sectionObserver.observe(section);
-  });
+  const spotlight = document.createElement('div');
+  spotlight.className = 'cursor-spotlight';
+  heroBg.appendChild(spotlight);
+  
+  let mouseX = 0;
+  let mouseY = 0;
+  let isVisible = false;
+  
+  // Throttle mouse movement for performance
+  let ticking = false;
+  
+  function updateSpotlight() {
+    spotlight.style.background = `radial-gradient(circle, rgba(141,125,119,0.15) 0%, transparent 70%)`;
+    spotlight.style.left = `${mouseX - 150}px`;
+    spotlight.style.top = `${mouseY - 150}px`;
+    ticking = false;
+  }
+  
+  function onMouseMove(e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    
+    if (!ticking) {
+      requestAnimationFrame(updateSpotlight);
+      ticking = true;
+    }
+    
+    if (!isVisible) {
+      spotlight.style.opacity = '1';
+      isVisible = true;
+    }
+  }
+  
+  function onMouseLeave() {
+    spotlight.style.opacity = '0';
+    isVisible = false;
+  }
+  
+  heroBg.addEventListener('mousemove', onMouseMove);
+  heroBg.addEventListener('mouseleave', onMouseLeave);
 }
 
-// Gallery filtering functionality
+// Gallery Filtering
 function initGalleryFilter() {
   const filterButtons = document.querySelectorAll('.filter-btn');
   const galleryItems = document.querySelectorAll('.gallery-item');
-
+  
+  if (!filterButtons.length || !galleryItems.length) return;
+  
   filterButtons.forEach(button => {
     button.addEventListener('click', () => {
-      // Remove active class from all buttons
+      // Update active button
       filterButtons.forEach(btn => btn.classList.remove('active'));
-      
-      // Add active class to clicked button
       button.classList.add('active');
       
       const filterValue = button.getAttribute('data-filter');
       
+      // Show/hide items based on filter
       galleryItems.forEach(item => {
         if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-          item.classList.remove('hidden');
+          item.style.display = 'block';
         } else {
-          item.classList.add('hidden');
+          item.style.display = 'none';
         }
       });
     });
@@ -103,67 +134,123 @@ function initGalleryFilter() {
 
 // Lightbox functionality
 function initLightbox() {
-  const galleryItems = document.querySelectorAll('.gallery-item');
   const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.querySelector('.lightbox-img');
-  const lightboxCaption = document.querySelector('.lightbox-caption');
-  const closeBtn = document.querySelector('.close-lightbox');
-
-  galleryItems.forEach(item => {
-    const img = item.querySelector('img');
-    const caption = item.querySelector('figcaption');
-    
-    img.addEventListener('click', () => {
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt;
-      lightboxCaption.textContent = caption.textContent;
+  if (!lightbox) return;
+  
+  const lightboxImg = lightbox.querySelector('.lightbox-img');
+  const lightboxClose = lightbox.querySelector('.lightbox-close');
+  const lightboxPrev = lightbox.querySelector('.lightbox-nav.prev');
+  const lightboxNext = lightbox.querySelector('.lightbox-nav.next');
+  
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  let currentIndex = 0;
+  
+  // Open lightbox
+  galleryItems.forEach((item, index) => {
+    item.addEventListener('click', () => {
+      currentIndex = index;
+      updateLightboxImage();
       lightbox.classList.add('active');
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden'; // Prevent scrolling when lightbox is open
     });
   });
-
-  closeBtn.addEventListener('click', () => {
-    lightbox.classList.remove('active');
-    document.body.style.overflow = '';
-  });
-
+  
+  // Close lightbox
+  lightboxClose.addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox) {
-      lightbox.classList.remove('active');
-      document.body.style.overflow = '';
+      closeLightbox();
     }
   });
-
-  // Close with Escape key
+  
+  // Navigation
+  lightboxPrev.addEventListener('click', (e) => {
+    e.stopPropagation();
+    currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+    updateLightboxImage();
+  });
+  
+  lightboxNext.addEventListener('click', (e) => {
+    e.stopPropagation();
+    currentIndex = (currentIndex + 1) % galleryItems.length;
+    updateLightboxImage();
+  });
+  
+  // Keyboard navigation
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-      lightbox.classList.remove('active');
-      document.body.style.overflow = '';
+    if (!lightbox.classList.contains('active')) return;
+    
+    if (e.key === 'Escape') {
+      closeLightbox();
+    } else if (e.key === 'ArrowLeft') {
+      currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+      updateLightboxImage();
+    } else if (e.key === 'ArrowRight') {
+      currentIndex = (currentIndex + 1) % galleryItems.length;
+      updateLightboxImage();
     }
   });
+  
+  function updateLightboxImage() {
+    const img = galleryItems[currentIndex].querySelector('img');
+    lightboxImg.src = img.src.replace('w=800', 'w=1200').replace('w=600', 'w=1200');
+    lightboxImg.alt = img.alt;
+  }
+  
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = ''; // Re-enable scrolling
+  }
 }
 
-// Form submission functionality
-function initFormSubmission() {
-  const form = document.getElementById('booking-form');
+// Form submission handling
+function initFormHandling() {
+  const bookingForm = document.getElementById('booking-form');
+  if (!bookingForm) return;
   
-  form.addEventListener('submit', function(e) {
+  bookingForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
     // Get form data
-    const formData = new FormData(form);
-    const formObject = Object.fromEntries(formData);
+    const formData = new FormData(bookingForm);
+    const data = Object.fromEntries(formData);
     
-    // Basic validation
-    if (!formObject.fullName || !formObject.email || !formObject.venueLocation) {
+    // Simple validation
+    if (!data.name || !data.email) {
       alert('Please fill in all required fields.');
       return;
     }
     
+    // In a real application, you would send this data to a server
+    console.log('Booking inquiry submitted:', data);
+    
     // Show success message
-    alert('Thank you for your inquiry! We will contact you shortly to discuss your wedding photography needs.');
+    alert('Thank you for your inquiry! I will contact you shortly to discuss your special day.');
     
     // Reset form
-    form.reset();
+    bookingForm.reset();
   });
 }
+
+// Initialize all features when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  initMagneticButtons();
+  initCursorSpotlight();
+  initGalleryFilter();
+  initLightbox();
+  initFormHandling();
+});
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
