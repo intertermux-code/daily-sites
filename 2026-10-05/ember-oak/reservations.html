@@ -1,107 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reservations | Ember & Oak</title>
-  <meta name="description" content="Book your table at Ember & Oak. Limited seating nightly for an intimate wood-fire dining experience.">
+  <meta name="description" content="Book your table at Ember & Oak. Reservations recommended for dinner service. Parties of 8+ please call directly.">
   <meta name="theme-color" content="#0a0a0c">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;400;500&family=JetBrains+Mono:wght@400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
 </head>
-<body class="theme-dark">
+<body>
   <a href="#main-content" class="skip-link">Skip to content</a>
   <div class="grain-overlay" aria-hidden="true"></div>
 
   <header class="site-header">
     <div class="container header-inner">
-      <a href="index.html" class="logo" aria-label="Ember & Oak Home"><span class="logo-text">Ember <span class="amp">&</span> Oak</span></a>
-      <nav class="main-nav" aria-label="Primary">
-        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Toggle menu"><span class="bar"></span><span class="bar"></span></button>
+      <a href="index.html" class="logo" aria-label="Ember & Oak Home">EMBER<span class="accent">&</span>OAK</a>
+      <nav class="main-nav" aria-label="Primary Navigation">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Toggle Menu">
+          <span></span><span></span>
+        </button>
         <ul id="nav-list" class="nav-list">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="menu.html">Menu</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="visit.html">Visit</a></li>
-          <li><a href="reservations.html" aria-current="page" class="btn-nav">Book a Table</a></li>
+          <li><a href="index.html">01. Home</a></li>
+          <li><a href="menu.html">02. Menu</a></li>
+          <li><a href="gallery.html">03. Gallery</a></li>
+          <li><a href="reservations.html" aria-current="page">04. Reservations</a></li>
+          <li><a href="visit.html">05. Visit</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <main id="main-content">
-    <section class="reservation-section">
-      <div class="container reservation-layout">
-        <div class="reservation-info pinned-side">
-          <p class="eyebrow mono">Join Us</p>
-          <h1 class="display-md serif">Secure Your Seat by the Fire</h1>
-          <p class="text-balance">We accept reservations up to 30 days in advance. For parties larger than 8, please contact us directly for private dining options.</p>
-          
-          <div class="info-card card-tilt-wrapper">
-             <div class="card-tilt glare-card info-card-inner">
-                <h3 class="h4 mono">Cancellation Policy</h3>
-                <p class="small">We hold tables for 15 minutes past reservation time. Cancellations within 24 hours incur a $25/person fee. We understand life happens—please call if you’re running late.</p>
-             </div>
-          </div>
+    <section class="page-hero">
+      <div class="container">
+        <span class="mono-label">Secure Your Seat</span>
+        <h1>Reservations</h1>
+        <p class="lead">We hold tables for 15 minutes past reservation time. For parties of 8 or more, private events, or special requests, please call us directly at (503) 555-0198.</p>
+      </div>
+    </section>
 
-          <div class="contact-direct">
-            <p class="mono small">Prefer to speak with someone?</p>
-            <a href="tel:+15035550198" class="link-arrow">(503) 555-0198</a>
+    <section class="section reservation-section">
+      <div class="container reservation-layout">
+        <div class="reservation-info reveal-on-scroll">
+          <h2>Before You Book</h2>
+          <ul class="info-list">
+            <li>
+              <strong>Dinner Service:</strong> Tue–Sun, 5:00 PM – 10:00 PM
+            </li>
+            <li>
+              <strong>Bar Seating:</strong> First-come, first-served. Full menu available.
+            </li>
+            <li>
+              <strong>Cancellation Policy:</strong> Please cancel by noon on the day of your reservation to avoid a $25/person fee.
+            </li>
+            <li>
+              <strong>Allergies:</strong> Note dietary restrictions in the form below. We accommodate most needs but cannot guarantee nut-free environments.
+            </li>
+          </ul>
+          <div class="glass-panel info-card">
+            <p class="mono-label">Peak Hours</p>
+            <p>Fri & Sat evenings book 2–3 weeks in advance. Midweek availability is typically open 3–5 days out.</p>
           </div>
         </div>
 
-        <div class="reservation-form-wrapper">
-          <form id="booking-form" class="booking-form" novalidate>
+        <form class="reservation-form reveal-on-scroll" id="booking-form" novalidate>
+          <div class="form-group">
+            <label for="guest-name">Full Name</label>
+            <input type="text" id="guest-name" name="name" required autocomplete="name" placeholder="Jane Doe">
+            <span class="error-msg" aria-live="polite"></span>
+          </div>
+
+          <div class="form-row">
             <div class="form-group">
-              <label for="guest-name" class="form-label">Full Name</label>
-              <input type="text" id="guest-name" name="name" required autocomplete="name" placeholder="Jane Doe">
+              <label for="guest-phone">Phone Number</label>
+              <input type="tel" id="guest-phone" name="phone" required autocomplete="tel" placeholder="(503) 555-0123">
               <span class="error-msg" aria-live="polite"></span>
             </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="guest-email" class="form-label">Email</label>
-                <input type="email" id="guest-email" name="email" required autocomplete="email" placeholder="jane@example.com">
-                <span class="error-msg" aria-live="polite"></span>
-              </div>
-              <div class="form-group">
-                <label for="guest-phone" class="form-label">Phone</label>
-                <input type="tel" id="guest-phone" name="phone" required autocomplete="tel" placeholder="(503) 555-0198">
-                <span class="error-msg" aria-live="polite"></span>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="res-date" class="form-label">Date</label>
-                <input type="date" id="res-date" name="date" required>
-                <span class="error-msg" aria-live="polite"></span>
-              </div>
-              <div class="form-group">
-                <label for="res-time" class="form-label">Preferred Time</label>
-                <select id="res-time" name="time" required>
-                  <option value="">Select time...</option>
-                  <option value="17:00">5:00 PM</option>
-                  <option value="17:30">5:30 PM</option>
-                  <option value="18:00">6:00 PM</option>
-                  <option value="18:30">6:30 PM</option>
-                  <option value="19:00">7:00 PM</option>
-                  <option value="19:30">7:30 PM</option>
-                  <option value="20:00">8:00 PM</option>
-                  <option value="20:30">8:30 PM</option>
-                  <option value="21:00">9:00 PM</option>
-                </select>
-                <span class="error-msg" aria-live="polite"></span>
-              </div>
-            </div>
-
             <div class="form-group">
-              <label for="party-size" class="form-label">Party Size</label>
+              <label for="party-size">Party Size</label>
               <select id="party-size" name="size" required>
-                <option value="">Number of guests...</option>
+                <option value="">Select…</option>
                 <option value="1">1 Guest</option>
                 <option value="2">2 Guests</option>
                 <option value="3">3 Guests</option>
@@ -109,30 +90,53 @@
                 <option value="5">5 Guests</option>
                 <option value="6">6 Guests</option>
                 <option value="7">7 Guests</option>
-                <option value="8">8 Guests</option>
               </select>
               <span class="error-msg" aria-live="polite"></span>
             </div>
-
-            <div class="form-group">
-              <label for="special-req" class="form-label">Special Requests <span class="optional">(Optional)</span></label>
-              <textarea id="special-req" name="notes" rows="3" placeholder="Allergies, celebrations, seating preferences..."></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-block" id="submit-btn">
-              <span class="btn-text">Confirm Reservation</span>
-              <span class="btn-loader" aria-hidden="true"></span>
-            </button>
-          </form>
-
-          <!-- Success State (Hidden by default) -->
-          <div id="booking-success" class="success-state" hidden>
-            <div class="success-icon" aria-hidden="true">✓</div>
-            <h2 class="h3 serif">Table Reserved</h2>
-            <p>Thank you, <span id="confirm-name"></span>. We’ve confirmed your table for <strong id="confirm-details"></strong>.</p>
-            <p class="small muted">A confirmation email has been sent to <span id="confirm-email"></span>. See you soon.</p>
-            <button class="btn btn-outline" onclick="location.reload()">Make Another Reservation</button>
           </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="res-date">Date</label>
+              <input type="date" id="res-date" name="date" required>
+              <span class="error-msg" aria-live="polite"></span>
+            </div>
+            <div class="form-group">
+              <label for="res-time">Preferred Time</label>
+              <select id="res-time" name="time" required>
+                <option value="">Select…</option>
+                <option value="17:00">5:00 PM</option>
+                <option value="17:30">5:30 PM</option>
+                <option value="18:00">6:00 PM</option>
+                <option value="18:30">6:30 PM</option>
+                <option value="19:00">7:00 PM</option>
+                <option value="19:30">7:30 PM</option>
+                <option value="20:00">8:00 PM</option>
+                <option value="20:30">8:30 PM</option>
+                <option value="21:00">9:00 PM</option>
+              </select>
+              <span class="error-msg" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="special-requests">Special Requests or Dietary Notes</label>
+            <textarea id="special-requests" name="notes" rows="3" placeholder="Anniversary celebration, gluten-free, high chair needed…"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full">Confirm Reservation</button>
+          
+          <div class="form-status" aria-live="polite" role="status"></div>
+        </form>
+
+        <!-- Success State (hidden by default) -->
+        <div class="reservation-success glass-panel" id="success-message" hidden>
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          <h2>Reservation Confirmed</h2>
+          <p>Thank you, <span id="confirm-name"></span>. We’ve reserved a table for <span id="confirm-details"></span>.</p>
+          <p class="mono-label">A confirmation text has been sent to <span id="confirm-phone"></span>.</p>
+          <p>We look forward to welcoming you. Remember, we hold tables for 15 minutes past your reservation time.</p>
+          <button class="btn btn-outline" id="book-another">Book Another Table</button>
         </div>
       </div>
     </section>
@@ -140,12 +144,34 @@
 
   <footer class="site-footer">
     <div class="container footer-grid">
-      <div class="footer-brand"><span class="logo-text serif">Ember <span class="amp">&</span> Oak</span><p class="mono small">Wood-Fire Dining • Portland OR</p></div>
-      <div class="footer-links"><h4 class="mono label">Navigate</h4><ul><li><a href="index.html">Home</a></li><li><a href="menu.html">Menu</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="reservations.html">Reservations</a></li></ul></div>
-      <div class="footer-contact"><h4 class="mono label">Contact</h4><address>742 Burnside Ave<br>Portland, OR 97209<br><a href="tel:+15035550198">(503) 555-0198</a><br><a href="mailto:hello@emberandoak.com">hello@emberandoak.com</a></address></div>
-      <div class="footer-hours"><h4 class="mono label">Hours</h4><p>Tue–Thu: 5pm – 10pm</p><p>Fri–Sat: 5pm – 11pm</p><p>Sun: 5pm – 9:30pm</p><p class="small muted">Closed Mon</p></div>
+      <div class="footer-brand">
+        <span class="logo">EMBER<span class="accent">&</span>OAK</span>
+        <p class="mono-label">Wood-Fire Dining Since 2019</p>
+      </div>
+      <div class="footer-links">
+        <h3>Navigate</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="reservations.html">Reservations</a></li>
+          <li><a href="visit.html">Visit Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h3>Contact</h3>
+        <address>
+          742 Burnside Ave<br>Portland, OR 97209<br>
+          <a href="tel:+15035550198">(503) 555-0198</a><br>
+          <a href="mailto:hello@emberandoak.com">hello@emberandoak.com</a>
+        </address>
+      </div>
+      <div class="footer-legal">
+        <p>&copy; 2026 Ember & Oak. All rights reserved.</p>
+      </div>
     </div>
-    <div class="container footer-bottom"><p class="small muted">&copy; 2026 Ember & Oak. All rights reserved.</p></div>
   </footer>
+
+  <script src="app.js" defer></script>
 <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
 </html>
