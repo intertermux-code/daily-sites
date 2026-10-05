@@ -1,344 +1,247 @@
 /**
- * WANDERPOST — SHARED APPLICATION LOGIC
- * Vanilla JS, No Dependencies
- * Guards all page-specific functionality via element existence checks
+ * Wanderpost Core Scripts
+ * Handles: Nav, Spotlight, Parallax, Ledger Accordion, Tabs, Slider, Form
  */
 
-(function() {
-    'use strict';
+document.documentElement.classList.remove('no-js');
 
-    // =====================
-    // UTILITIES
-    // =====================
-    const qs = (selector, parent = document) => parent.querySelector(selector);
-    const qsa = (selector, parent = document) => [...parent.querySelectorAll(selector)];
+// Utility: Throttle for performance
+const throttle = (fn, wait) => {
+    let lastTime = 0;
+    return (...args) => {
+        const now = Date.now();
+        if (now - lastTime >= wait) {
+            lastTime = now;
+            fn.apply(null, args);
+        }
+    };
+};
+
+// 1. Mobile Navigation
+const initNav = () => {
+    const toggle = document.querySelector('.nav-toggle');
+    const list = document.querySelector('.nav-list');
+    if (!toggle || !list) return;
+
+    toggle.addEventListener('click', () => {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', !expanded);
+        list.classList.toggle('open');
+    });
+
+    // Close on escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && list.classList.contains('open')) {
+            toggle.setAttribute('aria-expanded', 'false');
+            list.classList.remove('open');
+            toggle.focus();
+        }
+    });
+};
+
+// 2. Cursor Spotlight (Hero Only)
+const initSpotlight = () => {
+    const hero = document.querySelector('.hero');
+    if (!hero || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const spotlight = hero.querySelector('.hero-spotlight');
     
-    const prefersReducedMotion = () => 
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const updatePos = (e) => {
+        const rect = hero.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        spotlight.style.setProperty('--x', `${x}%`);
+        spotlight.style.setProperty('--y', `${y}%`);
+    };
 
-    // =====================
-    // MOBILE NAVIGATION
-    // =====================
-    function initMobileNav() {
-        const toggle = qs('.nav-toggle');
-        const navList = qs('.nav-list');
-        
-        if (!toggle || !navList) return;
+    hero.addEventListener('pointermove', throttle(updatePos, 16)); // ~60fps cap
+};
 
-        toggle.addEventListener('click', () => {
-            const expanded = toggle.getAttribute('aria-expanded') === 'true';
-            toggle.setAttribute('aria-expanded', String(!expanded));
-            navList.classList.toggle('open');
-            
-            // Prevent body scroll when menu open
-            document.body.style.overflow = expanded ? '' : 'hidden';
+// 3. Parallax Layers (Hero Only)
+const initParallax = () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    
+    const layers = document.querySelectorAll('[data-speed]');
+    if (!layers.length) return;
+
+    let ticking = false;
+    
+    const updateLayers = () => {
+        const scrollY = window.scrollY;
+        layers.forEach(layer => {
+            const speed = parseFloat(layer.dataset.speed);
+            const offset = scrollY * speed;
+            layer.style.transform = `translate3d(0, ${offset}px, 0)`;
         });
+        ticking = false;
+    };
 
-        // Close on escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && navList.classList.contains('open')) {
-                toggle.setAttribute('aria-expanded', 'false');
-                navList.classList.remove('open');
-                document.body.style.overflow = '';
-                toggle.focus();
-            }
-        });
-
-        // Close when clicking nav links
-        qsa('a', navList).forEach(link => {
-            link.addEventListener('click', () => {
-                toggle.setAttribute('aria-expanded', 'false');
-                navList.classList.remove('open');
-                document.body.style.overflow = '';
-            });
-        });
-    }
-
-    // =====================
-    // PARALLAX EFFECT (INDEX HERO)
-    // =====================
-    function initParallax() {
-        if (prefersReducedMotion()) return;
-        
-        const layers = qsa('.parallax-layer[data-speed]');
-        if (layers.length === 0) return;
-
-        let ticking = false;
-
-        function updateParallax() {
-            const scrollY = window.scrollY;
-            const heroHeight = qs('.hero-section')?.offsetHeight || 0;
-            
-            // Only animate when hero is visible
-            if (scrollY > heroHeight) {
-                ticking = false;
-                return;
-            }
-
-            layers.forEach(layer => {
-                const speed = parseFloat(layer.dataset.speed);
-                const yOffset = scrollY * speed;
-                layer.style.transform = `translate3d(0, ${yOffset}px, 0)`;
-            });
-
-            ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(updateLayers);
+            ticking = true;
         }
+    }, { passive: true });
+};
 
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(updateParallax);
-                ticking = true;
-            }
-        }, { passive: true });
-    }
+// 4. Ledger Accordion (Journeys Page)
+const initLedger = () => {
+    const summaries = document.querySelectorAll('.row-summary');
+    if (!summaries.length) return;
 
-    // =====================
-    // JOURNEY ACCORDION (JOURNEYS PAGE)
-    // =====================
-    function initJourneyAccordion() {
-        const expandButtons = qsa('.expand-btn');
-        if (expandButtons.length === 0) return;
-
-        expandButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const targetId = btn.getAttribute('aria-controls');
-                const targetPanel = qs(`#${targetId}`);
-                const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-
-                // Close all others (optional: remove this block for multi-open)
-                expandButtons.forEach(otherBtn => {
-                    if (otherBtn !== btn) {
-                        otherBtn.setAttribute('aria-expanded', 'false');
-                        const otherId = otherBtn.getAttribute('aria-controls');
-                        const otherPanel = qs(`#${otherId}`);
-                        if (otherPanel) otherPanel.hidden = true;
-                    }
-                });
-
-                // Toggle current
-                btn.setAttribute('aria-expanded', String(!isExpanded));
-                targetPanel.hidden = isExpanded;
-
-                // Smooth scroll into view if opening
-                if (!isExpanded) {
-                    setTimeout(() => {
-                        targetPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    }, 100);
+    summaries.forEach(summary => {
+        summary.addEventListener('click', () => {
+            const expanded = summary.getAttribute('aria-expanded') === 'true';
+            const detailId = summary.getAttribute('aria-controls');
+            const detail = document.getElementById(detailId);
+            
+            // Optional: Close others for accordion behavior
+            summaries.forEach(s => {
+                if (s !== summary) {
+                    s.setAttribute('aria-expanded', 'false');
+                    const otherId = s.getAttribute('aria-controls');
+                    const otherDetail = document.getElementById(otherId);
+                    if (otherDetail) otherDetail.hidden = true;
                 }
             });
-        });
 
-        // Handle URL hash for direct linking to specific journey
-        const hash = window.location.hash.slice(1);
-        if (hash) {
-            const targetBtn = qs(`[aria-controls="detail-${hash}"]`);
-            if (targetBtn) {
-                targetBtn.click();
-            }
-        }
-    }
-
-    // =====================
-    // MONTH PICKER (DESTINATION PAGE)
-    // =====================
-    function initMonthPicker() {
-        const tabs = qsa('.month-tab');
-        const panels = qsa('.month-panel');
-        
-        if (tabs.length === 0 || panels.length === 0) return;
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const month = tab.dataset.month;
-
-                // Update tabs
-                tabs.forEach(t => {
-                    t.classList.remove('active');
-                    t.setAttribute('aria-selected', 'false');
-                });
-                tab.classList.add('active');
-                tab.setAttribute('aria-selected', 'true');
-
-                // Update panels
-                panels.forEach(panel => {
-                    panel.classList.remove('active');
-                    if (panel.dataset.panel === month) {
-                        panel.classList.add('active');
-                    }
-                });
-            });
-        });
-
-        // Keyboard navigation for tabs
-        const tabList = qs('[role="tablist"]');
-        if (tabList) {
-            tabList.addEventListener('keydown', (e) => {
-                const currentIndex = tabs.indexOf(document.activeElement);
-                let newIndex;
-
-                if (e.key === 'ArrowRight') {
-                    newIndex = (currentIndex + 1) % tabs.length;
-                } else if (e.key === 'ArrowLeft') {
-                    newIndex = (currentIndex - 1 + tabs.length) % tabs.length;
-                } else if (e.key === 'Home') {
-                    newIndex = 0;
-                } else if (e.key === 'End') {
-                    newIndex = tabs.length - 1;
-                } else {
-                    return;
-                }
-
-                e.preventDefault();
-                tabs[newIndex].focus();
-                tabs[newIndex].click();
-            });
-        }
-    }
-
-    // =====================
-    // STORIES SLIDER (STORIES PAGE)
-    // =====================
-    function initStoriesSlider() {
-        const slides = qsa('.story-slide');
-        const prevBtn = qs('.slider-btn.prev');
-        const nextBtn = qs('.slider-btn.next');
-        const counter = qs('.slider-counter');
-
-        if (slides.length === 0 || !prevBtn || !nextBtn) return;
-
-        let currentIndex = 0;
-        const totalSlides = slides.length;
-
-        function updateSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.toggle('active', i === index);
-            });
-            if (counter) {
-                counter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(totalSlides).padStart(2, '0')}`;
-            }
-        }
-
-        prevBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-            updateSlide(currentIndex);
-        });
-
-        nextBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % totalSlides;
-            updateSlide(currentIndex);
+            summary.setAttribute('aria-expanded', !expanded);
+            detail.hidden = expanded;
         });
 
         // Keyboard support
-        document.addEventListener('keydown', (e) => {
-            if (!qs('.stories-slider-section')?.contains(document.activeElement)) return;
-            if (e.key === 'ArrowLeft') prevBtn.click();
-            if (e.key === 'ArrowRight') nextBtn.click();
+        summary.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                summary.click();
+            }
         });
+    });
+};
+
+// 5. Month Picker Tabs (Destination Page)
+const initTabs = () => {
+    const tabs = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.panel');
+    if (!tabs.length) return;
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Deactivate all
+            tabs.forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
+            panels.forEach(p => {
+                p.hidden = true;
+                p.classList.remove('active');
+            });
+
+            // Activate clicked
+            tab.classList.add('active');
+            tab.setAttribute('aria-selected', 'true');
+            const panelId = tab.getAttribute('aria-controls');
+            const panel = document.getElementById(panelId);
+            panel.hidden = false;
+            panel.classList.add('active');
+        });
+    });
+};
+
+// 6. Stories Slider
+const initSlider = () => {
+    const slides = document.querySelectorAll('.story-slide');
+    const prevBtn = document.querySelector('.slider-prev');
+    const nextBtn = document.querySelector('.slider-next');
+    const counter = document.querySelector('.counter');
+    if (!slides.length || !prevBtn || !nextBtn) return;
+
+    let current = 0;
+    const total = slides.length;
+
+    const updateSlide = () => {
+        slides.forEach((slide, idx) => {
+            slide.classList.toggle('active', idx === current);
+            slide.hidden = idx !== current;
+        });
+        if (counter) counter.textContent = `0${current + 1} / 0${total}`;
+    };
+
+    nextBtn.addEventListener('click', () => {
+        current = (current + 1) % total;
+        updateSlide();
+    });
+
+    prevBtn.addEventListener('click', () => {
+        current = (current - 1 + total) % total;
+        updateSlide();
+    });
+
+    // Initialize state
+    updateSlide();
+};
+
+// 7. Enquiry Form Handling
+const initForm = () => {
+    const form = document.querySelector('.enquiry-form');
+    if (!form) return;
+
+    // Pre-fill journey from URL param
+    const params = new URLSearchParams(window.location.search);
+    const journeyParam = params.get('journey');
+    if (journeyParam) {
+        const select = form.querySelector('#journey-select');
+        if (select) select.value = journeyParam;
     }
 
-    // =====================
-    // ENQUIRY FORM VALIDATION (ENQUIRY PAGE)
-    // =====================
-    function initEnquiryForm() {
-        const form = qs('#trip-enquiry-form');
-        if (!form) return;
-
-        // Pre-fill destination from URL param
-        const params = new URLSearchParams(window.location.search);
-        const ref = params.get('ref');
-        if (ref) {
-            const destSelect = qs('#destination', form);
-            if (destSelect) destSelect.value = ref;
-        }
-
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            let isValid = true;
-
-            // Clear previous errors
-            qsa('.error-msg', form).forEach(el => el.textContent = '');
-
-            // Validate required fields
-            const name = qs('#name', form);
-            const email = qs('#email', form);
-            const consent = qs('#consent', form);
-
-            if (!name.value.trim()) {
-                showError(name, 'Please enter your name');
-                isValid = false;
-            }
-
-            if (!email.value.trim() || !isValidEmail(email.value)) {
-                showError(email, 'Please enter a valid email address');
-                isValid = false;
-            }
-
-            if (!consent.checked) {
-                showError(consent, 'Consent is required to proceed');
-                isValid = false;
-            }
-
-            if (isValid) {
-                // Simulate submission
-                const submitBtn = qs('button[type="submit"]', form);
-                const originalText = submitBtn.textContent;
-                
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Sending…';
-                submitBtn.style.opacity = '0.7';
-
-                setTimeout(() => {
-                    submitBtn.textContent = 'Enquiry Received ✓';
-                    submitBtn.style.background = '#4a8c6f';
-                    submitBtn.style.opacity = '1';
-                    
-                    // Reset after delay
-                    setTimeout(() => {
-                        form.reset();
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = originalText;
-                        submitBtn.style.background = '';
-                    }, 3000);
-                }, 1500);
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const btn = form.querySelector('.btn-submit');
+        const loader = btn.querySelector('.btn-loader');
+        const text = btn.querySelector('.btn-text');
+        const status = form.querySelector('.form-status');
+        
+        // Basic validation
+        let valid = true;
+        form.querySelectorAll('[required]').forEach(input => {
+            const errSpan = input.parentElement.querySelector('.error-msg');
+            if (!input.value.trim()) {
+                valid = false;
+                if (errSpan) errSpan.textContent = 'This field is required';
+                input.style.borderBottomColor = '#b03030';
             } else {
-                // Focus first invalid field
-                const firstError = qs('.error-msg:not(:empty)', form);
-                if (firstError) {
-                    const input = firstError.previousElementSibling?.tagName === 'LABEL' 
-                        ? firstError.previousElementSibling.previousElementSibling 
-                        : firstError.previousElementSibling;
-                    input?.focus();
-                }
+                if (errSpan) errSpan.textContent = '';
+                input.style.borderBottomColor = '';
             }
         });
 
-        function showError(input, message) {
-            const errorEl = input.closest('.form-group, .checkbox-group')?.querySelector('.error-msg');
-            if (errorEl) errorEl.textContent = message;
-        }
+        if (!valid) return;
 
-        function isValidEmail(email) {
-            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-        }
-    }
+        // Simulate submission
+        btn.disabled = true;
+        text.style.opacity = '0';
+        loader.style.display = 'block';
+        status.textContent = '';
 
-    // =====================
-    // INITIALIZATION
-    // =====================
-    function init() {
-        initMobileNav();
-        initParallax();
-        initJourneyAccordion();
-        initMonthPicker();
-        initStoriesSlider();
-        initEnquiryForm();
-    }
+        await new Promise(r => setTimeout(r, 1500));
 
-    // Run on DOM ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
+        loader.style.display = 'none';
+        text.style.opacity = '1';
+        btn.disabled = false;
+        status.textContent = 'Enquiry received. We will be in touch within 48 hours.';
+        status.className = 'form-status success';
+        form.reset();
+    });
+};
 
-})();
+// Initialize all modules
+document.addEventListener('DOMContentLoaded', () => {
+    initNav();
+    initSpotlight();
+    initParallax();
+    initLedger();
+    initTabs();
+    initSlider();
+    initForm();
+});
