@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings Calculator — Mintwise</title>
+    <meta name="description" content="Interactive budget calculator to visualize your savings rate and potential growth.">
+    <meta name="theme-color" content="#f4f7f6">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="Mintwise Home">
+                <span class="logo-mark"></span>
+                Mintwise
+            </a>
+            <nav class="main-nav" aria-label="Primary Navigation">
+                <ul>
+                    <li><a href="index.html">Overview</a></li>
+                    <li><a href="features.html">Capabilities</a></li>
+                    <li><a href="calculator.html" aria-current="page">Calculator</a></li>
+                    <li><a href="pricing.html">Membership</a></li>
+                    <li><a href="contact.html">Support</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+                <span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section class="page-hero compact">
+            <div class="container">
+                <h1 class="display-xl">Savings Rate Calculator</h1>
+                <p class="lead">Visualize how small adjustments in spending impact your long-term freedom.</p>
+            </div>
+        </section>
+
+        <section class="calculator-section">
+            <div class="container calculator-layout">
+                <form class="calc-inputs" id="budget-form" aria-label="Budget parameters">
+                    <div class="input-group">
+                        <label for="monthly-income">Monthly Income (After Tax)</label>
+                        <div class="input-wrapper">
+                            <span class="currency-symbol">$</span>
+                            <input type="number" id="monthly-income" name="income" min="0" step="100" value="5000" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="fixed-expenses">Fixed Expenses (Rent, Utilities)</label>
+                        <div class="input-wrapper">
+                            <span class="currency-symbol">$</span>
+                            <input type="number" id="fixed-expenses" name="fixed" min="0" step="50" value="2000" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="variable-expenses">Variable Spending (Food, Fun)</label>
+                        <div class="input-wrapper">
+                            <span class="currency-symbol">$</span>
+                            <input type="number" id="variable-expenses" name="variable" min="0" step="50" value="1500" required>
+                        </div>
+                    </div>
+
+                    <div class="calc-summary">
+                        <div class="summary-row">
+                            <span>Total Expenses</span>
+                            <strong id="total-expenses-display">$3,500</strong>
+                        </div>
+                        <div class="summary-row highlight">
+                            <span>Monthly Savings</span>
+                            <strong id="monthly-savings-display">$1,500</strong>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="calc-visual">
+                    <div class="donut-chart-container">
+                        <svg viewBox="0 0 200 200" class="donut-svg" aria-labelledby="chart-title">
+                            <title id="chart-title">Savings Rate Donut Chart</title>
+                            <!-- Background Circle -->
+                            <circle cx="100" cy="100" r="80" fill="none" stroke="#e5e7eb" stroke-width="24" />
+                            <!-- Expense Segment -->
+                            <circle cx="100" cy="100" r="80" fill="none" stroke="#9ca3af" stroke-width="24" 
+                                    stroke-dasharray="502.65" stroke-dashoffset="0" 
+                                    transform="rotate(-90 100 100)" class="donut-segment expense-segment" />
+                            <!-- Savings Segment -->
+                            <circle cx="100" cy="100" r="80" fill="none" stroke="#10b981" stroke-width="24" 
+                                    stroke-dasharray="502.65" stroke-dashoffset="351.86" 
+                                    transform="rotate(-90 100 100)" class="donut-segment savings-segment" />
+                        </svg>
+                        <div class="donut-center-text">
+                            <span class="mono-label">Savings Rate</span>
+                            <span class="display-lg" id="savings-rate-display">30%</span>
+                        </div>
+                    </div>
+                    <p class="chart-caption">Your current savings rate puts you in the top 40% of earners nationally. Increasing variable spending discipline by 10% could boost this to 35%.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <span class="logo-mark"></span>
+                <p>&copy; 2026 Mintwise Inc.</p>
+            </div>
+            <nav class="footer-nav" aria-label="Footer Navigation">
+                <a href="index.html">Home</a>
+                <a href="features.html">Features</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <div class="footer-legal">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
