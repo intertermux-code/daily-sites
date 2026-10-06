@@ -3,262 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Routine Builder | Verdant</title>
+    <title>Routine Quiz | Verdant</title>
+    <meta name="description" content="Find your perfect skincare ritual with our 3-step diagnostic quiz.">
+    <meta name="theme-color" content="#f4f5f2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;400;600&family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="app.js" defer></script>
 </head>
-<body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+<body class="page-routine">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <div class="marquee-container" aria-hidden="true"><div class="marquee-track"><span class="marquee-item">Free Shipping on Orders Over $75 • New Batch Arrived • Sustainably Sourced • Handcrafted in Small Batches • </span><span class="marquee-item">Free Shipping on Orders Over $75 • New Batch Arrived • Sustainably Sourced • Handcrafted in Small Batches • </span></div></div>
 
     <header class="site-header">
-        <div class="container">
-            <div class="nav-wrapper">
-                <a href="index.html" class="logo">Verdant</a>
-
-                <nav class="main-nav" role="navigation" aria-label="Main navigation">
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="shop.html">Shop</a></li>
-                        <li><a href="our-story.html">Our Story</a></li>
-                        <li><a href="routine.html" aria-current="page">Routine</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </nav>
-
-                <div class="nav-actions">
-                    <button class="cart-btn" aria-label="Shopping cart">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span class="cart-count">0</span>
-                    </button>
-
-                    <button class="mobile-menu-btn" aria-label="Toggle mobile menu">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                </div>
-            </div>
+        <div class="container header-inner">
+            <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+            <a href="index.html" class="logo" aria-label="Verdant Home">VERDANT</a>
+            <nav id="primary-nav" class="primary-nav"><ul><li><a href="index.html">Home</a></li><li><a href="shop.html">Shop</a></li><li><a href="our-story.html">Our Story</a></li><li><a href="routine.html" aria-current="page">Routine Quiz</a></li><li><a href="contact.html">Contact</a></li></ul></nav>
+            <div class="header-actions"><button class="cart-toggle" aria-label="Open cart"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg><span class="cart-count" data-cart-count>0</span></button></div>
         </div>
     </header>
 
     <main id="main-content">
-        <section class="page-header">
-            <div class="container">
-                <h1>Build Your Routine</h1>
-                <p>Answer a few questions to discover products tailored to your skin needs</p>
-            </div>
-        </section>
-
-        <section class="quiz-section">
-            <div class="container">
-                <div class="quiz-container">
-                    <div class="quiz-progress">
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="progressFill"></div>
-                        </div>
-                        <div class="progress-text">Question <span id="currentQuestion">1</span> of <span id="totalQuestions">3</span></div>
+        <section class="quiz-container section">
+            <div class="quiz-wrapper reveal-on-scroll">
+                <div class="quiz-progress">
+                    <div class="progress-bar" style="width: 33%"></div>
+                </div>
+                
+                <!-- Step 1 -->
+                <div class="quiz-step active" data-step="1">
+                    <h2 class="display-heading">What is your primary skin concern?</h2>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-value="dryness">Dryness & Dehydration</button>
+                        <button class="quiz-option" data-value="aging">Fine Lines & Elasticity</button>
+                        <button class="quiz-option" data-value="balance">Oiliness & Balance</button>
+                        <button class="quiz-option" data-value="sensitivity">Sensitivity & Redness</button>
                     </div>
+                </div>
 
-                    <form id="routineQuiz" class="quiz-form">
-                        <!-- Question 1 -->
-                        <div class="question active" data-question="1">
-                            <h2>What best describes your skin type?</h2>
-                            <div class="options-grid">
-                                <label class="option-card">
-                                    <input type="radio" name="skin-type" value="oily" required>
-                                    <div class="option-content">
-                                        <h3>Oily</h3>
-                                        <p>Pores appear large, frequent shine, prone to blemishes</p>
-                                    </div>
-                                </label>
-                                
-                                <label class="option-card">
-                                    <input type="radio" name="skin-type" value="dry" required>
-                                    <div class="option-content">
-                                        <h3>Dry</h3>
-                                        <p>Feels tight, flaky, rough texture, often itchy</p>
-                                    </div>
-                                </label>
-                                
-                                <label class="option-card">
-                                    <input type="radio" name="skin-type" value="combination" required>
-                                    <div class="option-content">
-                                        <h3>Combination</h3>
-                                        <p>T-zone is oily, cheeks are dry or normal</p>
-                                    </div>
-                                </label>
-                                
-                                <label class="option-card">
-                                    <input type="radio" name="skin-type" value="sensitive" required>
-                                    <div class="option-content">
-                                        <h3>Sensitive</h3>
-                                        <p>Easily irritated, redness, reacts to products</p>
-                                    </div>
-                                </label>
+                <!-- Step 2 -->
+                <div class="quiz-step" data-step="2">
+                    <h2 class="display-heading">How does your skin feel by midday?</h2>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-value="tight">Tight and uncomfortable</button>
+                        <button class="quiz-option" data-value="shiny">Shiny in T-zone</button>
+                        <button class="quiz-option" data-value="balanced">Comfortable, no issues</button>
+                        <button class="quiz-option" data-value="reactive">Irritated or flushed</button>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="quiz-step" data-step="3">
+                    <h2 class="display-heading">What texture do you prefer?</h2>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-value="light">Lightweight Gel</button>
+                        <button class="quiz-option" data-value="rich">Rich Cream</button>
+                        <button class="quiz-option" data-value="oil">Nourishing Oil</button>
+                        <button class="quiz-option" data-value="mist">Refreshing Mist</button>
+                    </div>
+                </div>
+
+                <!-- Result -->
+                <div class="quiz-result" data-step="result">
+                    <span class="mono-label accent-text">YOUR RECOMMENDED RITUAL</span>
+                    <h2 class="display-heading">The Hydration Balance Protocol</h2>
+                    <p>Based on your responses, we recommend a routine focused on barrier repair and lightweight moisture retention.</p>
+                    
+                    <div class="recommended-products">
+                        <div class="rec-product">
+                            <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=400&q=80" alt="Rice Essence" width="200" height="250">
+                            <div class="rec-info">
+                                <h3>Fermented Rice Essence</h3>
+                                <p class="mono-num">$42.00</p>
                             </div>
                         </div>
-
-                        <!-- Question 2 -->
-                        <div class="question" data-question="2">
-                            <h2>What is your main skin concern?</h2>
-                            <div class="options-grid">
-                                <label class="option-card">
-                                    <input type="radio" name="concern" value="aging" required>
-                                    <div class="option-content">
-                                        <h3>Aging</h3>
-                                        <p>Fine lines, wrinkles, loss of firmness</p>
-                                    </div>
-                                </label>
-                                
-                                <label class="option-card">
-                                    <input type="radio" name="concern" value="hydration" required>
-                                    <div class="option-content">
-                                        <h3>Dehydration</h3>
-                                        <p>Dullness, tightness, lack of moisture</p>
-                                    </div>
-                                </label>
-                                
-                                <label class="option-card">
-                                    <input type="radio" name="concern" value="texture" required>
-                                    <div class="option-content">
-                                        <h3>Texture</h3>
-                                        <p>Uneven skin tone, rough surface, enlarged pores</p>
-                                    </div>
-                                </label>
-                                
-                                <label class="option-card">
-                                    <input type="radio" name="concern" value="blemishes" required>
-                                    <div class="option-content">
-                                        <h3>Blemishes</h3>
-                                        <p>Breakouts, acne, post-acne marks</p>
-                                    </div>
-                                </label>
+                        <div class="rec-product">
+                            <img src="https://picsum.photos/seed/verdant-f99d160bfbc8/1600/900?auto=format&fit=crop&w=400&q=80" alt="Barrier Cream" width="200" height="250">
+                            <div class="rec-info">
+                                <h3>Barrier Repair Cream</h3>
+                                <p class="mono-num">$54.00</p>
                             </div>
                         </div>
-
-                        <!-- Question 3 -->
-                        <div class="question" data-question="3">
-                            <h2>How much time do you spend on skincare daily?</h2>
-                            <div class="options-grid">
-                                <label class="option-card">
-                                    <input type="radio" name="time" value="quick" required>
-                                    <div class="option-content">
-                                        <h3>Quick</h3>
-                                        <p>Under 5 minutes morning and night</p>
-                                    </div>
-                                </label>
-                                
-                                <label class="option-card">
-                                    <input type="radio" name="time" value="moderate" required>
-                                    <div class="option-content">
-                                        <h3>Moderate</h3>
-                                        <p>5-10 minutes morning and night</p>
-                                    </div>
-                                </label>
-                                
-                                <label class="option-card">
-                                    <input type="radio" name="time" value="thorough" required>
-                                    <div class="option-content">
-                                        <h3>Thorough</h3>
-                                        <p>10+ minutes morning and night</p>
-                                    </div>
-                                </label>
-                                
-                                <label class="option-card">
-                                    <input type="radio" name="time" value="weekend" required>
-                                    <div class="option-content">
-                                        <h3>Weekend Focus</h3>
-                                        <p>Short routines during week, longer on weekends</p>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Results Section -->
-                        <div class="results-section" id="resultsSection" style="display: none;">
-                            <h2>Your Personalized Routine</h2>
-                            <div class="results-content">
-                                <div class="recommended-products">
-                                    <h3>We Recommend:</h3>
-                                    <div class="products-grid" id="recommendedProducts">
-                                        <!-- Products will be dynamically added here -->
-                                    </div>
-                                </div>
-                                <div class="routine-summary">
-                                    <h3>Your Routine:</h3>
-                                    <ul id="routineSummary">
-                                        <!-- Routine steps will be dynamically added here -->
-                                    </ul>
-                                    <button type="button" class="btn btn-primary" id="addToCartAll">Add All to Cart</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="quiz-navigation">
-                            <button type="button" class="btn btn-secondary" id="prevBtn">Previous</button>
-                            <button type="submit" class="btn btn-primary" id="nextBtn">Next</button>
-                            <button type="button" class="btn btn-primary" id="showResults" style="display: none;">See Results</button>
-                        </div>
-                    </form>
+                    </div>
+                    
+                    <button class="btn btn-primary btn-lg add-routine-btn">Add Routine to Cart — $96.00</button>
                 </div>
             </div>
         </section>
     </main>
 
     <footer class="site-footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Verdant</h3>
-                    <p>Minimalist skincare crafted with nature’s finest ingredients.</p>
-                </div>
-
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="shop.html">Shop</a></li>
-                        <li><a href="our-story.html">Our Story</a></li>
-                        <li><a href="routine.html">Routine</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h4>Contact</h4>
-                    <p>Email: hello@verdant.com</p>
-                    <p>Phone: (555) 123-4567</p>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2023 Verdant. All rights reserved.</p>
-            </div>
+        <div class="container footer-grid">
+            <div class="footer-brand"><span class="logo-text">VERDANT</span><p class="footer-tagline">Botanical skincare for the modern ritualist.</p></div>
+            <div class="footer-links"><h4>Shop</h4><ul><li><a href="shop.html">All Products</a></li><li><a href="#">Cleansers</a></li><li><a href="#">Treatments</a></li></ul></div>
+            <div class="footer-links"><h4>Company</h4><ul><li><a href="our-story.html">Our Story</a></li><li><a href="routine.html">Routine Quiz</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
+            <div class="footer-newsletter"><h4>Stay Grounded</h4><form class="newsletter-form"><label for="r-email" class="visually-hidden">Email</label><input type="email" id="r-email" placeholder="Email address" required><button type="submit" class="btn-icon" aria-label="Subscribe">→</button></form></div>
         </div>
+        <div class="container footer-bottom"><p>&copy; 2024 Verdant Skincare.</p></div>
     </footer>
 
-    <!-- Cart Drawer -->
-    <div class="cart-drawer" id="cartDrawer">
-        <div class="cart-header">
-            <h2>Your Cart</h2>
-            <button class="close-cart" aria-label="Close cart">×</button>
+    <div class="cart-drawer" id="cart-drawer" aria-hidden="true" role="dialog" aria-label="Shopping Cart">
+        <div class="cart-overlay" data-cart-close></div>
+        <div class="cart-panel">
+            <div class="cart-header"><h2>Your Ritual (<span data-cart-count>0</span>)</h2><button class="close-btn" data-cart-close aria-label="Close cart">✕</button></div>
+            <div class="cart-items" data-cart-items><div class="cart-empty-state"><p>Your cart is empty.</p><a href="shop.html" class="btn btn-text">Start Shopping</a></div></div>
+            <div class="cart-footer"><div class="cart-total"><span>Total</span><span class="mono-num" data-cart-total>$0.00</span></div><button class="btn btn-primary btn-full">Checkout</button></div>
         </div>
-
-        <div class="cart-items">
-            <!-- Cart items will be dynamically added here -->
-        </div>
-
-        <div class="cart-total">
-            <p>Total: <span class="total-price">$0.00</span></p>
-        </div>
-
-        <button class="checkout-btn">Checkout</button>
     </div>
-
-    <script src="app.js" defer></script>
 <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
 </html>
