@@ -1,434 +1,220 @@
-// Cart functionality
-let cart = [];
-const cartDrawer = document.getElementById('cartDrawer');
-const closeCart = document.querySelector('.close-cart');
-const cartItemsContainer = document.querySelector('.cart-items');
-const cartTotalElement = document.querySelector('.total-price');
-const cartCountElement = document.querySelector('.cart-count');
-const overlay = document.createElement('div');
-overlay.classList.add('overlay');
-document.body.appendChild(overlay);
+/**
+ * VERDANT SKINCARE - Main Application Logic
+ * Handles: Cart, Quiz, Animations, Mobile Nav
+ */
 
-// Product data
-const products = {
-  'cleansing-oil': {
-    id: 'cleansing-oil',
-    name: 'Gentle Cleansing Oil',
-    price: 42.00,
-    image: 'https://images.unsplash.com/photo-1600857062241-98c0a9ed8f6d?auto=format&fit=crop&w=600&q=80'
-  },
-  'hydrating-serum': {
-    id: 'hydrating-serum',
-    name: 'Hydrating Serum',
-    price: 58.00,
-    image: 'https://images.unsplash.com/photo-1591862713051-5e0d9dec0e6b?auto=format&fit=crop&w=600&q=80'
-  },
-  'moisturizer': {
-    id: 'moisturizer',
-    name: 'Nourishing Moisturizer',
-    price: 48.00,
-    image: 'https://images.unsplash.com/photo-1600857062241-98c0a9ed8f6d?auto=format&fit=crop&w=600&q=80'
-  },
-  'eye-cream': {
-    id: 'eye-cream',
-    name: 'Brightening Eye Cream',
-    price: 45.00,
-    image: 'https://images.unsplash.com/photo-1600857062241-98c0a9ed8f6d?auto=format&fit=crop&w=600&q=80'
-  },
-  'toner': {
-    id: 'toner',
-    name: 'Exfoliating Toner',
-    price: 38.00,
-    image: 'https://images.unsplash.com/photo-1591862713051-5e0d9dec0e6b?auto=format&fit=crop&w=600&q=80'
-  },
-  'night-oil': {
-    id: 'night-oil',
-    name: 'Restorative Night Oil',
-    price: 62.00,
-    image: 'https://images.unsplash.com/photo-1600857062241-98c0a9ed8f6d?auto=format&fit=crop&w=600&q=80'
-  }
-};
-
-// Add to cart functionality
-document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-  button.addEventListener('click', () => {
-    const productId = button.dataset.productId;
-    addToCart(productId);
-    updateCartUI();
-    openCart();
-  });
+document.addEventListener('DOMContentLoaded', () => {
+    initAnimations();
+    initCart();
+    initMobileNav();
+    initQuiz();
 });
 
-function addToCart(productId) {
-  const existingItem = cart.find(item => item.id === productId);
-  
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    cart.push({
-      id: productId,
-      name: products[productId].name,
-      price: products[productId].price,
-      image: products[productId].image,
-      quantity: 1
-    });
-  }
+/* --- ANIMATIONS (Blur-Fade Ascend) --- */
+function initAnimations() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in');
+                observer.unobserve(entry.target); // Only animate once
+            }
+        });
+    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal-on-scroll, .reveal-group').forEach(el => observer.observe(el));
 }
 
-function removeFromCart(productId) {
-  cart = cart.filter(item => item.id !== productId);
-  updateCartUI();
+/* --- MOBILE NAV --- */
+function initMobileNav() {
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.primary-nav');
+    
+    if (!toggle || !nav) return;
+
+    toggle.addEventListener('click', () => {
+        const isOpen = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
 }
 
-function updateQuantity(productId, newQuantity) {
-  if (newQuantity <= 0) {
-    removeFromCart(productId);
-    return;
-  }
-  
-  const item = cart.find(item => item.id === productId);
-  if (item) {
-    item.quantity = newQuantity;
-    updateCartUI();
-  }
-}
+/* --- CART SYSTEM --- */
+function initCart() {
+    const state = {
+        items: JSON.parse(localStorage.getItem('verdant_cart') || '[]'),
+        isOpen: false
+    };
 
-function updateCartUI() {
-  // Update cart items
-  cartItemsContainer.innerHTML = '';
-  
-  cart.forEach(item => {
-    const cartItemElement = document.createElement('div');
-    cartItemElement.classList.add('cart-item');
-    cartItemElement.innerHTML = `
-      <div class="cart-item-image">
-        <img src="${item.image}" alt="${item.name}" width="80" height="80">
-      </div>
-      <div class="cart-item-details">
-        <h3 class="cart-item-name">${item.name}</h3>
-        <p class="cart-item-price">$${item.price.toFixed(2)}</p>
-        <div class="cart-item-controls">
-          <button class="quantity-btn minus" data-product-id="${item.id}">-</button>
-          <span class="quantity-value">${item.quantity}</span>
-          <button class="quantity-btn plus" data-product-id="${item.id}">+</button>
-          <button class="remove-item" data-product-id="${item.id}">Remove</button>
-        </div>
-      </div>
-    `;
-    cartItemsContainer.appendChild(cartItemElement);
-  });
-  
-  // Add event listeners to quantity buttons
-  document.querySelectorAll('.quantity-btn.minus').forEach(button => {
-    button.addEventListener('click', () => {
-      const productId = button.dataset.productId;
-      updateQuantity(productId, cart.find(item => item.id === productId).quantity - 1);
-    });
-  });
-  
-  document.querySelectorAll('.quantity-btn.plus').forEach(button => {
-    button.addEventListener('click', () => {
-      const productId = button.dataset.productId;
-      updateQuantity(productId, cart.find(item => item.id === productId).quantity + 1);
-    });
-  });
-  
-  document.querySelectorAll('.remove-item').forEach(button => {
-    button.addEventListener('click', () => {
-      const productId = button.dataset.productId;
-      removeFromCart(productId);
-    });
-  });
-  
-  // Update total
-  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  cartTotalElement.textContent = `$${total.toFixed(2)}`;
-  
-  // Update cart count
-  const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-  cartCountElement.textContent = totalCount;
-}
+    const els = {
+        drawer: document.getElementById('cart-drawer'),
+        toggles: document.querySelectorAll('.cart-toggle'),
+        closeBtns: document.querySelectorAll('[data-cart-close]'),
+        counts: document.querySelectorAll('[data-cart-count]'),
+        itemsContainer: document.querySelector('[data-cart-items]'),
+        total: document.querySelector('[data-cart-total]'),
+        quickAdds: document.querySelectorAll('.quick-add-btn')
+    };
 
-// Cart drawer functionality
-document.querySelector('.cart-btn').addEventListener('click', openCart);
-closeCart.addEventListener('click', closeCartDrawer);
-overlay.addEventListener('click', closeCartDrawer);
+    // Render initial state
+    render();
 
-function openCart() {
-  cartDrawer.classList.add('open');
-  overlay.classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeCartDrawer() {
-  cartDrawer.classList.remove('open');
-  overlay.classList.remove('active');
-  document.body.style.overflow = '';
-}
-
-// Quiz functionality
-if (document.getElementById('routineQuiz')) {
-  const quizForm = document.getElementById('routineQuiz');
-  const questions = document.querySelectorAll('.question');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  const showResultsBtn = document.getElementById('showResults');
-  const progressFill = document.getElementById('progressFill');
-  const currentQuestionEl = document.getElementById('currentQuestion');
-  const totalQuestionsEl = document.getElementById('totalQuestions');
-  const resultsSection = document.getElementById('resultsSection');
-  const recommendedProductsEl = document.getElementById('recommendedProducts');
-  const routineSummaryEl = document.getElementById('routineSummary');
-  const addToCartAllBtn = document.getElementById('addToCartAll');
-
-  let currentQuestionIndex = 0;
-  const totalQuestions = questions.length;
-
-  totalQuestionsEl.textContent = totalQuestions;
-
-  function showQuestion(index) {
-    questions.forEach((question, i) => {
-      if (i === index) {
-        question.classList.add('active');
-      } else {
-        question.classList.remove('active');
-      }
+    // Event Listeners
+    els.toggles.forEach(btn => btn.addEventListener('click', () => open()));
+    els.closeBtns.forEach(btn => btn.addEventListener('click', () => close()));
+    
+    // Quick Add Buttons
+    els.quickAdds.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const card = e.target.closest('.product-card');
+            if (!card) return;
+            
+            const product = {
+                id: card.dataset.productId,
+                name: card.dataset.productName || card.querySelector('.product-title').textContent,
+                price: parseFloat(card.dataset.productPrice || card.querySelector('.mono-num').textContent.replace('$','')),
+                image: card.dataset.productImg || card.querySelector('img').src
+            };
+            
+            addItem(product);
+            open();
+        });
     });
 
-    currentQuestionEl.textContent = index + 1;
-    
-    // Update progress
-    const progress = ((index + 1) / totalQuestions) * 100;
-    progressFill.style.width = `${progress}%`;
-    
-    // Show/hide buttons based on current question
-    prevBtn.style.display = index === 0 ? 'none' : 'block';
-    nextBtn.style.display = index === totalQuestions - 1 ? 'none' : 'block';
-    showResultsBtn.style.display = index === totalQuestions - 1 ? 'block' : 'none';
-  }
-
-  function navigateToQuestion(direction) {
-    const currentInputs = questions[currentQuestionIndex].querySelectorAll('input[type="radio"]');
-    let isValid = true;
-    
-    // Check if all inputs in current question are filled
-    currentInputs.forEach(input => {
-      if (!input.checked) {
-        isValid = false;
-      }
-    });
-    
-    if (!isValid && direction === 1) {
-      alert('Please select an option before continuing.');
-      return;
-    }
-    
-    currentQuestionIndex += direction;
-    
-    if (currentQuestionIndex < 0) currentQuestionIndex = 0;
-    if (currentQuestionIndex >= totalQuestions) currentQuestionIndex = totalQuestions - 1;
-    
-    showQuestion(currentQuestionIndex);
-  }
-
-  prevBtn.addEventListener('click', () => navigateToQuestion(-1));
-  nextBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    navigateToQuestion(1);
-  });
-  
-  showResultsBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    showResults();
-  });
-
-  function showResults() {
-    // Get answers
-    const skinType = document.querySelector('input[name="skin-type"]:checked')?.value || '';
-    const concern = document.querySelector('input[name="concern"]:checked')?.value || '';
-    const time = document.querySelector('input[name="time"]:checked')?.value || '';
-
-    // Generate recommendations based on answers
-    const recommendations = generateRecommendations(skinType, concern, time);
-    
-    // Display recommended products
-    recommendedProductsEl.innerHTML = '';
-    recommendations.products.forEach(product => {
-      const productCard = document.createElement('div');
-      productCard.classList.add('product-card');
-      productCard.innerHTML = `
-        <div class="product-image">
-          <img src="${product.image}" alt="${product.name}" width="280" height="280">
-        </div>
-        <div class="product-info">
-          <h3>${product.name}</h3>
-          <p class="price">$${product.price.toFixed(2)}</p>
-          <button class="add-to-cart-btn" data-product-id="${product.id}">Add to Cart</button>
-        </div>
-      `;
-      recommendedProductsEl.appendChild(productCard);
-    });
-    
-    // Add event listeners to new "Add to Cart" buttons
-    recommendedProductsEl.querySelectorAll('.add-to-cart-btn').forEach(button => {
-      button.addEventListener('click', () => {
-        const productId = button.dataset.productId;
-        addToCart(productId);
-        updateCartUI();
-        openCart();
-      });
-    });
-    
-    // Display routine summary
-    routineSummaryEl.innerHTML = '';
-    recommendations.routine.forEach(step => {
-      const li = document.createElement('li');
-      li.innerHTML = `<strong>${step.title}:</strong> ${step.description}`;
-      routineSummaryEl.appendChild(li);
-    });
-    
-    // Show results section
-    resultsSection.style.display = 'block';
-    
-    // Scroll to results
-    resultsSection.scrollIntoView({ behavior: 'smooth' });
-  }
-
-  function generateRecommendations(skinType, concern, time) {
-    // Define recommendations based on answers
-    let productRecs = [];
-    let routine = [];
-
-    // Skin type determines base products
-    if (skinType === 'oily') {
-      productRecs.push(products['cleansing-oil'], products['toner']);
-    } else if (skinType === 'dry') {
-      productRecs.push(products['moisturizer'], products['night-oil']);
-    } else if (skinType === 'combination') {
-      productRecs.push(products['cleansing-oil'], products['moisturizer']);
-    } else if (skinType === 'sensitive') {
-      productRecs.push(products['cleansing-oil'], products['moisturizer']);
+    // Routine Add Button
+    const routineBtn = document.querySelector('.add-routine-btn');
+    if (routineBtn) {
+        routineBtn.addEventListener('click', () => {
+            // Simplified: adds both recommended items
+            addItem({ id: 'p3', name: 'Fermented Rice Essence', price: 42, image: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=400&q=80' });
+            addItem({ id: 'p2', name: 'Barrier Repair Cream', price: 54, image: 'https://images.unsplash.com/photo-1608248597279-f99d160bfbc8?auto=format&fit=crop&w=400&q=80' });
+            open();
+        });
     }
 
-    // Concern determines additional products
-    if (concern === 'aging') {
-      productRecs.push(products['hydrating-serum'], products['night-oil']);
-      routine = [
-        { title: "Morning", description: "Cleanse, apply serum, moisturize with SPF" },
-        { title: "Evening", description: "Double cleanse, apply serum, nourish with night oil" }
-      ];
-    } else if (concern === 'hydration') {
-      productRecs.push(products['hydrating-serum'], products['moisturizer']);
-      routine = [
-        { title: "Morning", description: "Cleanse, apply hydrating serum, moisturize" },
-        { title: "Evening", description: "Cleanse, apply serum, moisturize deeply" }
-      ];
-    } else if (concern === 'texture') {
-      productRecs.push(products['toner'], products['hydrating-serum']);
-      routine = [
-        { title: "Morning", description: "Cleanse, tone, apply serum, moisturize" },
-        { title: "Evening", description: "Double cleanse, tone, apply serum, moisturize" }
-      ];
-    } else if (concern === 'blemishes') {
-      productRecs.push(products['cleansing-oil'], products['toner']);
-      routine = [
-        { title: "Morning", description: "Gentle cleanse, tone, moisturize with SPF" },
-        { title: "Evening", description: "Double cleanse, tone, treat with targeted products, moisturize" }
-      ];
+    function open() {
+        state.isOpen = true;
+        els.drawer.classList.add('open');
+        els.drawer.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
     }
 
-    // Time affects complexity of routine
-    if (time === 'quick') {
-      routine = [
-        { title: "Daily", description: "Cleanser, moisturizer, sunscreen (AM)" }
-      ];
-    } else if (time === 'thorough') {
-      routine = [
-        { title: "Morning", description: "Double cleanse, tone, serum, eye cream, moisturizer, SPF" },
-        { title: "Evening", description: "Double cleanse, exfoliate 2x/week, serum, eye cream, moisturizer, facial oil" }
-      ];
+    function close() {
+        state.isOpen = false;
+        els.drawer.classList.remove('open');
+        els.drawer.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
     }
 
-    // Ensure we have at least 2 products
-    if (productRecs.length < 2) {
-      productRecs = [products['cleansing-oil'], products['moisturizer']];
+    function addItem(product) {
+        const existing = state.items.find(i => i.id === product.id);
+        if (existing) {
+            existing.qty++;
+        } else {
+            state.items.push({ ...product, qty: 1 });
+        }
+        save();
+        render();
     }
 
-    // Remove duplicates
-    const seen = new Set();
-    productRecs = productRecs.filter(item => {
-      if (item && seen.has(item.id)) {
-        return false;
-      }
-      if (item) seen.add(item.id);
-      return !!item;
-    });
+    function removeItem(id) {
+        state.items = state.items.filter(i => i.id !== id);
+        save();
+        render();
+    }
 
-    return { products: productRecs, routine };
-  }
+    function updateQty(id, delta) {
+        const item = state.items.find(i => i.id === id);
+        if (item) {
+            item.qty += delta;
+            if (item.qty <= 0) removeItem(id);
+            else { save(); render(); }
+        }
+    }
 
-  // Initialize quiz
-  showQuestion(currentQuestionIndex);
+    function save() {
+        localStorage.setItem('verdant_cart', JSON.stringify(state.items));
+    }
 
-  // Add to cart all functionality
-  addToCartAllBtn?.addEventListener('click', () => {
-    recommendedProductsEl.querySelectorAll('.add-to-cart-btn').forEach(button => {
-      const productId = button.dataset.productId;
-      addToCart(productId);
-    });
-    updateCartUI();
-    openCart();
-  });
+    function render() {
+        // Update Counts
+        const count = state.items.reduce((sum, i) => sum + i.qty, 0);
+        els.counts.forEach(el => el.textContent = count);
+
+        // Update Total
+        const total = state.items.reduce((sum, i) => sum + (i.price * i.qty), 0);
+        if (els.total) els.total.textContent = `$${total.toFixed(2)}`;
+
+        // Render Items
+        if (!els.itemsContainer) return;
+        
+        if (state.items.length === 0) {
+            els.itemsContainer.innerHTML = `
+                <div class="cart-empty-state">
+                    <p>Your cart is empty.</p>
+                    <a href="shop.html" class="btn btn-text">Start Shopping</a>
+                </div>`;
+            return;
+        }
+
+        els.itemsContainer.innerHTML = state.items.map(item => `
+            <div class="cart-item">
+                <img src="${item.image}" alt="${item.name}" width="80" height="100">
+                <div class="cart-item-info">
+                    <div class="cart-item-header">
+                        <span class="cart-item-title">${item.name}</span>
+                        <span class="mono-num">$${(item.price * item.qty).toFixed(2)}</span>
+                    </div>
+                    <div class="cart-item-qty">
+                        <button class="qty-btn" onclick="window.verdantCart.update('${item.id}', -1)" aria-label="Decrease quantity">−</button>
+                        <span>${item.qty}</span>
+                        <button class="qty-btn" onclick="window.verdantCart.update('${item.id}', 1)" aria-label="Increase quantity">+</button>
+                    </div>
+                    <button class="cart-item-remove" onclick="window.verdantCart.remove('${item.id}')">Remove</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Expose for inline handlers (simple approach for vanilla JS without bundler)
+    window.verdantCart = { update: updateQty, remove: removeItem };
 }
 
-// Accordion functionality for FAQ section
-if (document.querySelector('.accordion')) {
-  const accordionHeaders = document.querySelectorAll('.accordion-header');
-  
-  accordionHeaders.forEach(header => {
-    header.addEventListener('click', () => {
-      const expanded = header.getAttribute('aria-expanded') === 'true';
-      
-      // Close all accordions
-      accordionHeaders.forEach(h => {
-        h.setAttribute('aria-expanded', 'false');
-        const content = h.nextElementSibling;
-        content.classList.remove('expanded');
-        content.style.gridTemplateRows = '0fr';
-      });
-      
-      // Open clicked accordion if it wasn't already open
-      if (!expanded) {
-        header.setAttribute('aria-expanded', 'true');
-        const content = header.nextElementSibling;
-        content.classList.add('expanded');
-        content.style.gridTemplateRows = '1fr';
-      }
-    });
-  });
-}
-
-// Parallax effect for hero section (disabled if reduced motion is preferred)
-if ('matchMedia' in window && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  // Skip parallax if reduced motion is preferred
-} else {
-  if (document.querySelector('.hero-layers')) {
-    const heroLayers = document.querySelectorAll('.hero-layer');
+/* --- ROUTINE QUIZ --- */
+function initQuiz() {
+    const steps = document.querySelectorAll('.quiz-step');
+    const result = document.querySelector('.quiz-result');
+    const progressBar = document.querySelector('.progress-bar');
     
-    window.addEventListener('scroll', () => {
-      const scrolled = window.pageYOffset;
-      
-      heroLayers.forEach(layer => {
-        const speed = layer.getAttribute('data-speed');
-        const yPos = -(scrolled * speed);
-        layer.style.transform = `translate3d(0, ${yPos}px, 0)`;
-      });
-    });
-  }
-}
+    if (steps.length === 0) return;
 
-// Mobile menu toggle
-document.querySelector('.mobile-menu-btn')?.addEventListener('click', function() {
-  const nav = document.querySelector('.main-nav ul');
-  nav.classList.toggle('show');
-});
+    let currentStep = 1;
+
+    document.querySelectorAll('.quiz-option').forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Simple logic: just advance step regardless of answer for this demo
+            // In production, collect data-value attributes
+            nextStep();
+        });
+    });
+
+    function nextStep() {
+        const currentEl = document.querySelector(`.quiz-step[data-step="${currentStep}"]`);
+        if (currentEl) currentEl.classList.remove('active');
+
+        currentStep++;
+        
+        const nextEl = document.querySelector(`.quiz-step[data-step="${currentStep}"]`);
+        if (nextEl) {
+            nextEl.classList.add('active');
+            if (progressBar) progressBar.style.width = `${(currentStep / 3) * 100}%`;
+        } else {
+            // Show Result
+            if (result) {
+                result.style.display = 'block';
+                if (progressBar) progressBar.style.width = '100%';
+            }
+        }
+    }
+}
