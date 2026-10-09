@@ -1,163 +1,129 @@
-// Magnetic Buttons Implementation
-class MagneticButton {
-  constructor(button) {
-    this.button = button;
-    this.originalX = 0;
-    this.originalY = 0;
-    
-    // Store original transform to combine with magnetic effect
-    this.originalTransform = this.button.style.transform || '';
-    
-    this.handleMouseMove = this.handleMouseMove.bind(this);
-    this.handleMouseLeave = this.handleMouseLeave.bind(this);
-    
-    this.button.addEventListener('mousemove', this.handleMouseMove);
-    this.button.addEventListener('mouseleave', this.handleMouseLeave);
-  }
-  
-  handleMouseMove(e) {
-    const rect = this.button.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    
-    const distance = Math.sqrt(
-      Math.pow(e.clientX - centerX, 2) + 
-      Math.pow(e.clientY - centerY, 2)
-    );
-    
-    if (distance < 120) {
-      const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
-      const moveDistance = Math.min(10, (120 - distance) / 10);
-      
-      const moveX = Math.cos(angle) * moveDistance;
-      const moveY = Math.sin(angle) * moveDistance;
-      
-      this.button.style.transform = `${this.originalTransform} translate(${moveX}px, ${moveY}px) scale(1.04)`;
-    }
-  }
-  
-  handleMouseLeave() {
-    this.button.style.transform = this.originalTransform;
-  }
-}
+// Chapter & Verse Bookstore - JavaScript
 
-// Initialize magnetic buttons
+// Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-  const buttons = document.querySelectorAll('.btn-primary');
-  buttons.forEach(button => new MagneticButton(button));
+  // Initialize all interactive components
+  initBookShelfFilter();
+  initCardTiltEffect();
+  initFormHandlers();
 });
 
-// 3D Card Tilt Implementation
-class TiltCard {
-  constructor(card) {
-    this.card = card;
-    this.originalX = 0;
-    this.originalY = 0;
-    this.currentX = 0;
-    this.currentY = 0;
-    
-    this.handleMouseMove = this.handleMouseMove.bind(this);
-    this.handleMouseLeave = this.handleMouseLeave.bind(this);
-    this.animate = this.animate.bind(this);
-    
-    this.card.addEventListener('mousemove', this.handleMouseMove);
-    this.card.addEventListener('mouseleave', this.handleMouseLeave);
-    
-    this.rafId = requestAnimationFrame(this.animate);
-  }
-  
-  handleMouseMove(e) {
-    const rect = this.card.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    
-    const x = (e.clientX - centerX) / (rect.width / 2);
-    const y = (e.clientY - centerY) / (rect.height / 2);
-    
-    this.targetX = x * 8; // Max 8 degrees
-    this.targetY = -y * 8; // Invert Y for natural feel
-  }
-  
-  handleMouseLeave() {
-    this.targetX = 0;
-    this.targetY = 0;
-  }
-  
-  animate() {
-    this.currentX += (this.targetX - this.currentX) * 0.1;
-    this.currentY += (this.targetY - this.currentY) * 0.1;
-    
-    this.card.style.transform = `perspective(1000px) rotateX(${this.currentY}deg) rotateY(${this.currentX}deg)`;
-    
-    this.rafId = requestAnimationFrame(this.animate);
-  }
-  
-  destroy() {
-    cancelAnimationFrame(this.rafId);
-  }
-}
+// Book Shelf Filter functionality
+function initBookShelfFilter() {
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const bookSpines = document.querySelectorAll('.book-spine');
+  const bookDetailCards = document.querySelectorAll('.book-detail-card');
 
-// Initialize tilt cards
-document.addEventListener('DOMContentLoaded', () => {
-  const cards = document.querySelectorAll('.card');
-  cards.forEach(card => new TiltCard(card));
-});
+  if (!filterButtons.length) return;
 
-// Book filtering functionality
-if (document.querySelector('.genre-filter')) {
-  const filterButtons = document.querySelectorAll('.genre-btn');
-  const books = document.querySelectorAll('.book');
-
+  // Add click event listeners to filter buttons
   filterButtons.forEach(button => {
     button.addEventListener('click', () => {
-      // Remove active class from all buttons
+      const genre = button.getAttribute('data-genre');
+
+      // Update active button
       filterButtons.forEach(btn => btn.classList.remove('active'));
-      // Add active class to clicked button
       button.classList.add('active');
-      
-      const selectedGenre = button.getAttribute('data-genre');
-      
-      books.forEach(book => {
-        if (selectedGenre === 'all' || book.classList.contains(selectedGenre)) {
-          book.style.display = 'block';
+
+      // Filter book spines
+      bookSpines.forEach(spine => {
+        if (genre === 'all' || spine.getAttribute('data-genre') === genre) {
+          spine.style.display = 'block';
         } else {
-          book.style.display = 'none';
+          spine.style.display = 'none';
         }
       });
+
+      // Show corresponding book details if on books page
+      if (window.location.pathname.includes('books.html')) {
+        bookDetailCards.forEach(card => {
+          card.classList.remove('active');
+          if (genre === 'all') {
+            // Show first card by default when 'all' is selected
+            if (card === bookDetailCards[0]) {
+              card.classList.add('active');
+            }
+          } else {
+            // This would require mapping between spine and detail card
+            // For simplicity in this implementation, we'll just remove active class
+            // Real implementation would have data attributes to map them
+          }
+        });
+      }
     });
   });
 }
 
-// Form submission handling
-if (document.getElementById('bookClubForm')) {
-  const form = document.getElementById('bookClubForm');
-  
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    // Get form values
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
-    
-    // Show success message
-    alert(`Thank you, ${data.fullName}! Your application to join the book club has been received. We'll contact you shortly.`);
-    
-    // Reset form
-    form.reset();
+// 3D Card Tilt Effect
+function initCardTiltEffect() {
+  const cards = document.querySelectorAll('.book-card');
+
+  if (!cards.length) return;
+
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return;
+      }
+
+      const cardRect = card.getBoundingClientRect();
+      const x = e.clientX - cardRect.left;
+      const y = e.clientY - cardRect.top;
+      
+      const centerX = cardRect.width / 2;
+      const centerY = cardRect.height / 2;
+      
+      const rotateY = ((x - centerX) / centerX) * 8; // Max 8 degrees
+      const rotateX = ((centerY - y) / centerY) * 8; // Max 8 degrees
+      
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+    });
   });
 }
 
-// Smooth scrolling for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    e.preventDefault();
-    
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      target.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
-  });
-});
+// Form handlers
+function initFormHandlers() {
+  const signupForm = document.querySelector('.signup-form');
+  
+  if (signupForm) {
+    signupForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Get form data
+      const formData = new FormData(signupForm);
+      
+      // Simple validation
+      const name = formData.get('name');
+      const email = formData.get('email');
+      
+      if (!name || !email) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+      
+      // In a real application, you would send the data to a server here
+      // For this example, we'll just show a success message
+      alert(`Thank you, ${name}! Your application to join our book club has been received. We'll contact you at ${email}.`);
+      
+      // Reset form
+      signupForm.reset();
+    });
+  }
+}
+
+// Utility function to debounce expensive functions
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
