@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Calculator - Mintwise</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
+</head>
+<body>
+    <div class="skip-link">
+        <a href="#main-content" aria-label="Skip to main content">Skip to content</a>
+    </div>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="logo-nav-wrapper">
+                <a href="index.html" class="logo-link">
+                    <span class="logo">Mintwise</span>
+                </a>
+
+                <nav class="main-nav" role="navigation" aria-label="Main navigation">
+                    <ul class="nav-list">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="calculator.html" aria-current="page">Calculator</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section class="page-header">
+            <div class="container">
+                <h1>Interactive Budget Calculator</h1>
+                <p>Calculate your savings rate and visualize your financial health with our easy-to-use tool</p>
+            </div>
+        </section>
+
+        <section class="calculator-section">
+            <div class="container">
+                <div class="calculator-container">
+                    <div class="input-section">
+                        <h2>Enter Your Monthly Finances</h2>
+                        
+                        <div class="input-group">
+                            <label for="income">Monthly Income ($)</label>
+                            <input type="number" id="income" placeholder="e.g. 5000" min="0" step="100">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="housing">Housing ($)</label>
+                            <input type="number" id="housing" placeholder="e.g. 1200" min="0" step="10">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="food">Food & Dining ($)</label>
+                            <input type="number" id="food" placeholder="e.g. 400" min="0" step="10">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="transportation">Transportation ($)</label>
+                            <input type="number" id="transportation" placeholder="e.g. 300" min="0" step="10">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="utilities">Utilities ($)</label>
+                            <input type="number" id="utilities" placeholder="e.g. 200" min="0" step="10">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="entertainment">Entertainment ($)</label>
+                            <input type="number" id="entertainment" placeholder="e.g. 150" min="0" step="10">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="other">Other Expenses ($)</label>
+                            <input type="number" id="other" placeholder="e.g. 300" min="0" step="10">
+                        </div>
+                        
+                        <button id="calculate-btn" class="btn btn-primary">Calculate Savings Rate</button>
+                    </div>
+                    
+                    <div class="results-section">
+                        <h2>Your Financial Summary</h2>
+                        
+                        <div class="summary-cards">
+                            <div class="summary-card">
+                                <h3>Total Income</h3>
+                                <p class="amount">$<span id="total-income">0</span></p>
+                            </div>
+                            
+                            <div class="summary-card">
+                                <h3>Total Expenses</h3>
+                                <p class="amount">$<span id="total-expenses">0</span></p>
+                            </div>
+                            
+                            <div class="summary-card">
+                                <h3>Monthly Savings</h3>
+                                <p class="amount">$<span id="monthly-savings">0</span></p>
+                            </div>
+                            
+                            <div class="summary-card">
+                                <h3>Savings Rate</h3>
+                                <p class="amount"><span id="savings-rate">0</span>%</p>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <h3>Your Savings Visualization</h3>
+                            <div class="donut-chart">
+                                <svg viewBox="0 0 100 100" class="savings-donut">
+                                    <!-- Background circle -->
+                                    <circle cx="50" cy="50" r="40" fill="none" stroke="#e5e7eb" stroke-width="10"></circle>
+                                    <!-- Savings arc -->
+                                    <circle cx="50" cy="50" r="40" fill="none" stroke="#10b981" stroke-width="10" 
+                                            stroke-dasharray="0 251.2" 
+                                            stroke-dashoffset="0"
+                                            transform="rotate(-90 50 50)"
+                                            id="savings-arc"></circle>
+                                    <!-- Spent arc -->
+                                    <circle cx="50" cy="50" r="40" fill="none" stroke="#d1d5db" stroke-width="10" 
+                                            stroke-dasharray="251.2 251.2" 
+                                            stroke-dashoffset="0"
+                                            transform="rotate(-90 50 50)"
+                                            id="spent-arc"></circle>
+                                </svg>
+                                
+                                <div class="chart-center">
+                                    <div class="center-value"><span id="chart-savings-rate">0</span>%</div>
+                                    <div class="center-label">Savings</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="recommendation">
+                            <h3>Financial Health Assessment</h3>
+                            <p id="assessment-text">Enter your financial information to receive a personalized assessment.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Mintwise</h4>
+                    <p>Smart financial management for everyone.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Mintwise. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js" defer></script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
