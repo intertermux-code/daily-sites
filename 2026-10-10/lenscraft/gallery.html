@@ -1,151 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gallery | Lenscraft</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;600;700&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#faf8f4">
+  <meta name="description" content="Explore Lenscraft's gallery of portraits, wedding ceremonies, intimate details, and fine art editorial work.">
+  <title>Gallery — Lenscraft Photography</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+  <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+  <link href="[https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap](https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap)" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
 </head>
 <body>
-    <div class="skip-container">
-        <a href="#main-content" class="skip-link">Skip to content</a>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+  <div class="scroll-progress-bar" id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- Shared Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="index.html" class="brand-logo" aria-label="Lenscraft Home">
+        <span class="logo-kanji" aria-hidden="true">光 影</span>
+        <span class="logo-text">LENSCRAFT</span>
+      </a>
+
+      <button class="mobile-menu-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation menu">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <nav id="primary-nav" class="primary-nav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="gallery.html" class="nav-link" aria-current="page">Gallery</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="pricing.html" class="nav-link">Investment</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
     </div>
+  </header>
 
-    <header class="site-header">
-        <nav class="navigation">
-            <div class="nav-brand">
-                <a href="index.html" aria-label="Lenscraft Home">Lenscraft</a>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="gallery.html" aria-current="page">Gallery</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="pricing.html">Pricing</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-            <button class="menu-toggle" aria-label="Toggle navigation menu">
-                <span></span>
-                <span></span>
-                <span></span>
+  <!-- Split Dialogue Layout Container -->
+  <main id="main-content" class="split-dialogue-wrapper">
+    
+    <!-- Sticky Visual Pane Left -->
+    <aside class="sticky-pane" aria-label="Selected Gallery Feature">
+      <div class="sticky-pane-inner">
+        <div class="parallax-frame">
+          <img 
+            src="[https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1600&q=80](https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1600&q=80)" 
+            alt="Intimate bridal silhouette illuminated by gentle ambient window light" 
+            class="parallax-img gallery-featured-img"
+            id="gallery-sticky-img"
+            data-speed="-0.1"
+            width="1200"
+            height="1600"
+          >
+          <div class="vertical-kanji-accent" aria-hidden="true">
+            <span>美</span>
+            <span>影</span>
+            <span>形</span>
+          </div>
+          <div class="pane-caption">
+            <span class="mono-tag" id="gallery-sticky-tag">SELECTED EXHIBIT</span>
+            <p class="caption-text" id="gallery-sticky-desc">Click any work to view in high resolution focus.</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Flowing Content Pane Right -->
+    <div class="flowing-pane">
+      
+      <section class="gallery-hero">
+        <span class="mono-sub">// ARCHIVE & MONOGRAPHS</span>
+        <h1 class="page-title">Curated Imagery</h1>
+        <p class="hero-lead">
+          Each monograph is organized into thematic moments. Filter by atmosphere to observe how light, emotion, and detail intersect.
+        </p>
+        
+        <!-- Filter Bar -->
+        <div class="filter-wrapper" role="region" aria-label="Gallery Filter Category">
+          <ul class="filter-controls" role="tablist">
+            <li role="presentation">
+              <button class="filter-btn active" role="tab" aria-selected="true" data-filter="all">All Works</button>
+            </li>
+            <li role="presentation">
+              <button class="filter-btn" role="tab" aria-selected="false" data-filter="portraits">Portraits</button>
+            </li>
+            <li role="presentation">
+              <button class="filter-btn" role="tab" aria-selected="false" data-filter="ceremony">Ceremony</button>
+            </li>
+            <li role="presentation">
+              <button class="filter-btn" role="tab" aria-selected="false" data-filter="details">Details &amp; Ma</button>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Gallery Masonry Grid -->
+      <section class="content-block gallery-grid-section">
+        <div class="gallery-grid" id="gallery-grid">
+          
+          <!-- Item 1 -->
+          <article class="gallery-item" data-category="portraits">
+            <button class="gallery-thumb-btn" aria-label="Open photo: Bride portrait with veil in morning light">
+              <img 
+                src="[https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80](https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80)" 
+                alt="Bride portrait with veil illuminated by soft morning light"
+                width="600"
+                height="800"
+                loading="lazy"
+                data-full="[https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1600&q=80](https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1600&q=80)"
+                data-caption="Veiled Reflection — Kyoto Studio, 2025"
+              >
+              <div class="item-overlay">
+                <span class="mono-tag">PORTRAITS</span>
+                <h3>Veiled Reflection</h3>
+              </div>
             </button>
-        </nav>
-    </header>
+          </article>
 
-    <main id="main-content">
-        <section class="gallery-hero">
-            <div class="container">
-                <h1>Photography Gallery</h1>
-                <p>Explore our collection of timeless wedding moments</p>
-            </div>
-        </section>
+          <!-- Item 2 -->
+          <article class="gallery-item" data-category="ceremony">
+            <button class="gallery-thumb-btn" aria-label="Open photo: Couple holding hands during outdoor vows">
+              <img 
+                src="[https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80](https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80)" 
+                alt="Couple holding hands during solemn outdoor ceremony"
+                width="600"
+                height="800"
+                loading="lazy"
+                data-full="[https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80](https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80)"
+                data-caption="Sacred Promise — Hakone Sanctuary, 2025"
+              >
+              <div class="item-overlay">
+                <span class="mono-tag">CEREMONY</span>
+                <h3>Sacred Promise</h3>
+              </div>
+            </button>
+          </article>
 
-        <section class="gallery-filters">
-            <div class="container">
-                <div class="filter-buttons">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="portraits">Portraits</button>
-                    <button class="filter-btn" data-filter="ceremony">Ceremony</button>
-                    <button class="filter-btn" data-filter="details">Details</button>
-                </div>
-            </div>
-        </section>
+          <!-- Item 3 -->
+          <article class="gallery-item" data-category="details">
+            <button class="gallery-thumb-btn" aria-label="Open photo: Fine silk dress and handwritten vows on textured paper">
+              <img 
+                src="[https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80](https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80)" 
+                alt="Detail shot of handwritten wedding vows and silk fabric"
+                width="600"
+                height="800"
+                loading="lazy"
+                data-full="[https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1600&q=80](https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1600&q=80)"
+                data-caption="Paper & Silk — Minimalist Still Life, 2025"
+              >
+              <div class="item-overlay">
+                <span class="mono-tag">DETAILS</span>
+                <h3>Paper &amp; Silk</h3>
+              </div>
+            </button>
+          </article>
 
-        <section class="gallery-content">
-            <div class="container">
-                <div class="mosaic-grid" id="gallery-grid">
-                    <!-- Portraits -->
-                    <div class="mosaic-item large filter-portraits" data-category="portraits">
-                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=80"
-                             alt="Bride and groom embracing during ceremony"
-                             width="600" height="800">
-                    </div>
-                    <div class="mosaic-item medium filter-portraits" data-category="portraits">
-                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1200&q=80"
-                             alt="Bridal party portraits"
-                             width="500" height="600">
-                    </div>
-                    <div class="mosaic-item small filter-portraits" data-category="portraits">
-                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80"
-                             alt="Intimate couple portrait"
-                             width="400" height="400">
-                    </div>
-                    
-                    <!-- Ceremony -->
-                    <div class="mosaic-item large filter-ceremony" data-category="ceremony">
-                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1600&q=80"
-                             alt="Ceremony aisle with flower petals"
-                             width="600" height="800">
-                    </div>
-                    <div class="mosaic-item medium filter-ceremony" data-category="ceremony">
-                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=80"
-                             alt="Exchange of vows"
-                             width="500" height="600">
-                    </div>
-                    <div class="mosaic-item small filter-ceremony" data-category="ceremony">
-                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80"
-                             alt="Ring bearer with flowers"
-                             width="400" height="400">
-                    </div>
-                    
-                    <!-- Details -->
-                    <div class="mosaic-item medium filter-details" data-category="details">
-                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=80"
-                             alt="Wedding ring detail"
-                             width="500" height="600">
-                    </div>
-                    <div class="mosaic-item small filter-details" data-category="details">
-                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80"
-                             alt="Flower bouquet close-up"
-                             width="400" height="400">
-                    </div>
-                    <div class="mosaic-item large filter-details" data-category="details">
-                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=80"
-                             alt="Table setting with elegant decor"
-                             width="600" height="800">
-                    </div>
-                    
-                    <!-- Mixed -->
-                    <div class="mosaic-item small filter-portraits" data-category="portraits">
-                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80"
-                             alt="Groom adjusting tie"
-                             width="400" height="400">
-                    </div>
-                    <div class="mosaic-item medium filter-ceremony" data-category="ceremony">
-                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=80"
-                             alt="First dance"
-                             width="500" height="600">
-                    </div>
-                    <div class="mosaic-item small filter-details" data-category="details">
-                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80"
-                             alt="Cake cutting moment"
-                             width="400" height="400">
-                    </div>
-                </div>
-            </div>
-        </section>
+          <!-- Item 4 -->
+          <article class="gallery-item" data-category="portraits">
+            <button class="gallery-thumb-btn" aria-label="Open photo: Groom looking out arched window in black tux">
+              <img 
+                src="[https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=80](https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=80)" 
+                alt="Groom in classic black tuxedo looking out arch window"
+                width="600"
+                height="800"
+                loading="lazy"
+                data-full="[https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1600&q=80](https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1600&q=80)"
+                data-caption="Contemplation — Tokyo Villa, 2025"
+              >
+              <div class="item-overlay">
+                <span class="mono-tag">PORTRAITS</span>
+                <h3>Contemplation</h3>
+              </div>
+            </button>
+          </article>
 
-        <!-- Lightbox -->
-        <div class="lightbox" id="lightbox">
-            <div class="lightbox-content">
-                <span class="lightbox-close">&times;</span>
-                <img class="lightbox-img" id="lightbox-img" src="" alt="">
-                <div class="lightbox-caption" id="lightbox-caption"></div>
-            </div>
+          <!-- Item 5 -->
+          <article class="gallery-item" data-category="ceremony">
+            <button class="gallery-thumb-btn" aria-label="Open photo: Flower petals falling over newly wed couple">
+              <img 
+                src="[https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80](https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80)" 
+                alt="Newlyweds walking down aisle as petals fall in light"
+                width="600"
+                height="800"
+                loading="lazy"
+                data-full="[https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1600&q=80](https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1600&q=80)"
+                data-caption="First Steps — Amalfi Villa, 2025"
+              >
+              <div class="item-overlay">
+                <span class="mono-tag">CEREMONY</span>
+                <h3>First Steps</h3>
+              </div>
+            </button>
+          </article>
+
+          <!-- Item 6 -->
+          <article class="gallery-item" data-category="details">
+            <button class="gallery-thumb-btn" aria-label="Open photo: Solitary botanical arrangement in ceramic vase">
+              <img 
+                src="[https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=80](https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=80)" 
+                alt="Minimalist ikebana flower arrangement on wooden table"
+                width="600"
+                height="800"
+                loading="lazy"
+                data-full="[https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1600&q=80](https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1600&q=80)"
+                data-caption="Wabi Arrangement — Kyoto Reception, 2025"
+              >
+              <div class="item-overlay">
+                <span class="mono-tag">DETAILS</span>
+                <h3>Wabi Arrangement</h3>
+              </div>
+            </button>
+          </article>
+
         </div>
-    </main>
+      </section>
 
-    <footer class="site-footer">
-        <div class="container">
-            <p>&copy; 2026 Lenscraft. Capturing life’s most precious moments.</p>
-            <div class="social-links">
-                <a href="#" aria-label="Instagram">IG</a>
-                <a href="#" aria-label="Facebook">FB</a>
-                <a href="#" aria-label="Twitter">TW</a>
-            </div>
+    </div>
+  </main>
+
+  <!-- Lightbox Modal Component -->
+  <div id="lightbox" class="lightbox-modal" aria-hidden="true" role="dialog" aria-label="Image Modal Viewer">
+    <div class="lightbox-overlay" id="lightbox-overlay"></div>
+    <div class="lightbox-container">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close image viewer">&times;</button>
+      <div class="lightbox-content">
+        <img id="lightbox-img" src="" alt="" width="1600" height="1200">
+        <div id="lightbox-caption" class="lightbox-caption"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <span class="logo-kanji" aria-hidden="true">光 影</span>
+        <span class="footer-title">LENSCRAFT</span>
+        <p>Fine Art & Editorial Wedding Photography based in Kyoto & Tokyo. Available worldwide.</p>
+      </div>
+
+      <div class="footer-nav">
+        <div class="footer-col">
+          <span class="footer-col-title">Navigation</span>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="pricing.html">Investment</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
         </div>
-    </footer>
-
-    <script src="app.js" defer></script>
+        <div class="footer-col">
+          <span class="footer-col-title">Locations</span>
+          <ul>
+            <li>Kyoto Studio (Gion)</li>
+            <li>Tokyo Studio (Aoyama)</li>
+            <li>Worldwide Destinations</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Lenscraft Photography. All rights reserved.</p>
+      <span class="tabular-nums">35.0116° N, 135.7681° E</span>
+    </div>
+  </footer>
 <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
 </html>
