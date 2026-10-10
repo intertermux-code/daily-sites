@@ -1,493 +1,465 @@
 // Verdant Skincare - JavaScript
 
-// Cart functionality
-let cart = [];
-const cartCount = document.querySelector('.cart-count');
-const cartDrawer = document.getElementById('cartDrawer');
-const overlay = document.getElementById('overlay');
-const closeCart = document.querySelector('.close-cart');
-const cartItemsContainer = document.querySelector('.cart-items');
-const totalPriceElement = document.querySelector('.total-price');
-const checkoutBtn = document.querySelector('.checkout-btn');
-
-// Open cart drawer
-function openCart() {
-    cartDrawer.classList.add('active');
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    updateCartDisplay();
-}
-
-// Close cart drawer
-function closeCartDrawer() {
-    cartDrawer.classList.remove('active');
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-// Update cart count display
-function updateCartCount() {
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    cartCount.textContent = totalItems;
-}
-
-// Update cart items display
-function updateCartDisplay() {
-    cartItemsContainer.innerHTML = '';
-
-    if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '<p class="empty-cart-message">Your cart is empty</p>';
-        totalPriceElement.textContent = '$0.00';
-        checkoutBtn.disabled = true;
-        return;
+// Parallax effect for hero section
+class ParallaxHandler {
+  constructor() {
+    this.layers = document.querySelectorAll('.parallax-layer');
+    this.container = document.querySelector('.parallax-container');
+    
+    // Check if user prefers reduced motion
+    const motionOkay = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    if (motionOkay && this.layers.length > 0) {
+      this.init();
     }
+  }
 
-    let total = 0;
-
-    cart.forEach(item => {
-        const itemTotal = parseFloat(item.price.replace('$', '')) * item.quantity;
-        total += itemTotal;
-
-        const cartItemElement = document.createElement('div');
-        cartItemElement.className = 'cart-item';
-        cartItemElement.innerHTML = `
-            <img src="${item.image}" alt="${item.name}" class="cart-item-image">
-            <div class="cart-item-details">
-                <div class="cart-item-name">${item.name}</div>
-                <div class="cart-item-price">$${itemTotal.toFixed(2)}</div>
-                <div class="cart-item-controls">
-                    <button class="quantity-btn minus" data-id="${item.id}">-</button>
-                    <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-id="${item.id}">
-                    <button class="quantity-btn plus" data-id="${item.id}">+</button>
-                    <button class="remove-item" data-id="${item.id}">✕</button>
-                </div>
-            </div>
-        `;
-        cartItemsContainer.appendChild(cartItemElement);
+  init() {
+    window.addEventListener('scroll', () => {
+      this.updateParallax();
     });
+  }
 
-    totalPriceElement.textContent = `$${total.toFixed(2)}`;
-    checkoutBtn.disabled = false;
-
-    // Add event listeners to quantity buttons and remove buttons
-    document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
-        btn.addEventListener('click', () => adjustQuantity(btn.dataset.id, -1));
+  updateParallax() {
+    const scrollTop = window.pageYOffset;
+    
+    this.layers.forEach(layer => {
+      const speed = parseFloat(layer.getAttribute('data-speed')) || 0.5;
+      const yPos = -(scrollTop * speed);
+      
+      layer.style.transform = `translate3d(0, ${yPos}px, 0)`;
     });
-
-    document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
-        btn.addEventListener('click', () => adjustQuantity(btn.dataset.id, 1));
-    });
-
-    document.querySelectorAll('.quantity-input').forEach(input => {
-        input.addEventListener('change', (e) => {
-            const newQuantity = parseInt(e.target.value);
-            if (newQuantity > 0) {
-                updateQuantity(e.target.dataset.id, newQuantity);
-            } else {
-                updateQuantity(e.target.dataset.id, 1);
-            }
-        });
-    });
-
-    document.querySelectorAll('.remove-item').forEach(btn => {
-        btn.addEventListener('click', () => removeFromCart(btn.dataset.id));
-    });
+  }
 }
 
-// Add to cart function
-function addToCart(product) {
-    // Check if product is already in cart
-    const existingItem = cart.find(item => item.id === product.id);
+// 3D Card Tilt effect
+class CardTilt {
+  constructor() {
+    this.cards = document.querySelectorAll('.product-card');
+    this.init();
+  }
 
+  init() {
+    this.cards.forEach(card => {
+      card.addEventListener('mousemove', (e) => this.handleMouseMove(e, card));
+      card.addEventListener('mouseleave', (e) => this.handleMouseLeave(e, card));
+    });
+  }
+
+  handleMouseMove(e, card) {
+    const cardRect = card.getBoundingClientRect();
+    const x = e.clientX - cardRect.left;
+    const y = e.clientY - cardRect.top;
+    
+    const centerX = cardRect.width / 2;
+    const centerY = cardRect.height / 2;
+    
+    const rotateY = ((x - centerX) / centerX) * 8; // Max 8 degrees
+    const rotateX = ((centerY - y) / centerY) * 8; // Max 8 degrees
+    
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+    
+    // Add glare effect
+    const glare = card.querySelector('.card-glare') || this.createGlare(card);
+    glare.style.opacity = '0.5';
+    glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.8), transparent 70%)`;
+  }
+
+  handleMouseLeave(e, card) {
+    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+    const glare = card.querySelector('.card-glare');
+    if (glare) {
+      glare.style.opacity = '0';
+    }
+  }
+
+  createGlare(card) {
+    const glare = document.createElement('div');
+    glare.className = 'card-glare';
+    glare.style.position = 'absolute';
+    glare.style.top = '0';
+    glare.style.left = '0';
+    glare.style.right = '0';
+    glare.style.bottom = '0';
+    glare.style.borderRadius = 'var(--radius-lg)';
+    glare.style.pointerEvents = 'none';
+    glare.style.zIndex = '1';
+    glare.style.opacity = '0';
+    glare.style.transition = 'opacity 0.3s ease';
+    
+    card.style.position = 'relative';
+    card.appendChild(glare);
+    
+    return glare;
+  }
+}
+
+// Shopping Cart functionality
+class ShoppingCart {
+  constructor() {
+    this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+    this.cartCountElement = document.querySelector('.cart-count');
+    this.cartDrawer = document.getElementById('cart-drawer');
+    this.cartOverlay = document.getElementById('cart-overlay');
+    this.cartItemsContainer = document.querySelector('.cart-items');
+    this.cartTotalElement = document.querySelector('.cart-total');
+    
+    this.init();
+  }
+
+  init() {
+    this.updateCartCount();
+    
+    // Add to cart buttons
+    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const productCard = e.target.closest('.product-card');
+        const productId = productCard.dataset.productId;
+        const productName = productCard.querySelector('.product-name').textContent;
+        const productPrice = parseFloat(productCard.querySelector('.product-price').textContent.replace('$', ''));
+        const productImage = productCard.querySelector('img').src;
+        
+        this.addToCart({
+          id: productId,
+          name: productName,
+          price: productPrice,
+          image: productImage,
+          quantity: 1
+        });
+      });
+    });
+    
+    // Cart toggle
+    const cartToggle = document.getElementById('cart-toggle');
+    if (cartToggle) {
+      cartToggle.addEventListener('click', () => {
+        this.toggleCart();
+      });
+    }
+    
+    // Close cart
+    document.querySelector('.close-cart').addEventListener('click', () => {
+      this.closeCart();
+    });
+    
+    // Close cart when clicking overlay
+    this.cartOverlay.addEventListener('click', () => {
+      this.closeCart();
+    });
+    
+    // Update cart UI
+    this.renderCart();
+  }
+
+  addToCart(item) {
+    const existingItem = this.cart.find(cartItem => cartItem.id === item.id);
+    
     if (existingItem) {
-        existingItem.quantity += 1;
+      existingItem.quantity += 1;
     } else {
-        cart.push({...product, quantity: 1});
+      this.cart.push(item);
     }
+    
+    this.saveCart();
+    this.updateCartCount();
+    this.renderCart();
+    
+    // Show feedback
+    this.showAddedToCartFeedback();
+  }
 
-    updateCartCount();
-    updateCartDisplay();
+  removeFromCart(productId) {
+    this.cart = this.cart.filter(item => item.id !== productId);
+    this.saveCart();
+    this.updateCartCount();
+    this.renderCart();
+  }
 
-    // Show confirmation
-    const confirmMsg = document.createElement('div');
-    confirmMsg.className = 'cart-confirmation';
-    confirmMsg.textContent = `${product.name} added to cart`;
-    confirmMsg.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: var(--clr-primary);
-        color: white;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        z-index: 1000;
-        box-shadow: var(--shadow-lg);
-    `;
-    document.body.appendChild(confirmMsg);
+  updateQuantity(productId, quantity) {
+    if (quantity <= 0) {
+      this.removeFromCart(productId);
+      return;
+    }
+    
+    const item = this.cart.find(item => item.id === productId);
+    if (item) {
+      item.quantity = quantity;
+      this.saveCart();
+      this.renderCart();
+    }
+  }
 
+  saveCart() {
+    localStorage.setItem('cart', JSON.stringify(this.cart));
+  }
+
+  updateCartCount() {
+    const count = this.cart.reduce((total, item) => total + item.quantity, 0);
+    if (this.cartCountElement) {
+      this.cartCountElement.textContent = count;
+    }
+  }
+
+  renderCart() {
+    this.cartItemsContainer.innerHTML = '';
+    
+    if (this.cart.length === 0) {
+      this.cartItemsContainer.innerHTML = '<p class="empty-cart-message">Your cart is empty</p>';
+      this.cartTotalElement.textContent = '$0.00';
+      return;
+    }
+    
+    let total = 0;
+    
+    this.cart.forEach(item => {
+      const itemTotal = item.price * item.quantity;
+      total += itemTotal;
+      
+      const cartItemElement = document.createElement('div');
+      cartItemElement.className = 'cart-item';
+      cartItemElement.innerHTML = `
+        <img src="${item.image}" alt="${item.name}" class="cart-item-image" width="80" height="80">
+        <div class="cart-item-details">
+          <h3 class="cart-item-name">${item.name}</h3>
+          <p class="cart-item-price">$${item.price.toFixed(2)}</p>
+          <div class="cart-item-controls">
+            <button class="quantity-btn minus" data-id="${item.id}">-</button>
+            <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-id="${item.id}">
+            <button class="quantity-btn plus" data-id="${item.id}">+</button>
+            <button class="remove-item" data-id="${item.id}">Remove</button>
+          </div>
+        </div>
+      `;
+      
+      this.cartItemsContainer.appendChild(cartItemElement);
+    });
+    
+    this.cartTotalElement.textContent = `$${total.toFixed(2)}`;
+    
+    // Add event listeners to quantity controls
+    this.cartItemsContainer.querySelectorAll('.quantity-btn.minus').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const id = e.currentTarget.dataset.id;
+        const item = this.cart.find(item => item.id === id);
+        this.updateQuantity(id, item.quantity - 1);
+      });
+    });
+    
+    this.cartItemsContainer.querySelectorAll('.quantity-btn.plus').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const id = e.currentTarget.dataset.id;
+        const item = this.cart.find(item => item.id === id);
+        this.updateQuantity(id, item.quantity + 1);
+      });
+    });
+    
+    this.cartItemsContainer.querySelectorAll('.quantity-input').forEach(input => {
+      input.addEventListener('change', (e) => {
+        const id = e.currentTarget.dataset.id;
+        const quantity = parseInt(e.currentTarget.value);
+        this.updateQuantity(id, quantity);
+      });
+    });
+    
+    this.cartItemsContainer.querySelectorAll('.remove-item').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const id = e.currentTarget.dataset.id;
+        this.removeFromCart(id);
+      });
+    });
+  }
+
+  toggleCart() {
+    this.cartDrawer.classList.toggle('open');
+    this.cartOverlay.classList.toggle('active');
+    
+    if (this.cartDrawer.classList.contains('open')) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+
+  closeCart() {
+    this.cartDrawer.classList.remove('open');
+    this.cartOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  showAddedToCartFeedback() {
+    // Create feedback element
+    const feedback = document.createElement('div');
+    feedback.textContent = 'Added to cart!';
+    feedback.style.position = 'fixed';
+    feedback.style.bottom = '20px';
+    feedback.style.left = '50%';
+    feedback.style.transform = 'translateX(-50%)';
+    feedback.style.backgroundColor = '#5b7d5a';
+    feedback.style.color = 'white';
+    feedback.style.padding = '10px 20px';
+    feedback.style.borderRadius = '4px';
+    feedback.style.zIndex = '9999';
+    feedback.style.opacity = '0';
+    feedback.style.transition = 'opacity 0.3s ease';
+    
+    document.body.appendChild(feedback);
+    
+    // Animate in
     setTimeout(() => {
-        confirmMsg.remove();
+      feedback.style.opacity = '1';
+    }, 10);
+    
+    // Remove after delay
+    setTimeout(() => {
+      feedback.style.opacity = '0';
+      setTimeout(() => {
+        document.body.removeChild(feedback);
+      }, 300);
     }, 2000);
+  }
 }
 
-// Adjust quantity function
-function adjustQuantity(id, change) {
-    const item = cart.find(item => item.id === id);
-    if (item) {
-        item.quantity += change;
-        if (item.quantity <= 0) {
-            removeFromCart(id);
-        } else {
-            updateCartCount();
-            updateCartDisplay();
-        }
-    }
-}
-
-// Update quantity function
-function updateQuantity(id, newQuantity) {
-    const item = cart.find(item => item.id === id);
-    if (item) {
-        item.quantity = newQuantity;
-        if (item.quantity <= 0) {
-            removeFromCart(id);
-        } else {
-            updateCartCount();
-            updateCartDisplay();
-        }
-    }
-}
-
-// Remove from cart function
-function removeFromCart(id) {
-    cart = cart.filter(item => item.id !== id);
-    updateCartCount();
-    updateCartDisplay();
-}
-
-// Initialize cart from localStorage if available
-function initCart() {
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-        cart = JSON.parse(savedCart);
-    }
-    updateCartCount();
-    updateCartDisplay();
-}
-
-// Save cart to localStorage
-function saveCart() {
-    localStorage.setItem('cart', JSON.stringify(cart));
-}
-
-// Event listeners for cart
-document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        const productCard = button.closest('.product-card');
-        const product = {
-            id: productCard.dataset.productId,
-            name: productCard.querySelector('h3').textContent,
-            price: productCard.querySelector('.price').textContent,
-            image: productCard.querySelector('.product-image').style.backgroundImage.match(/url\("(.+)"\)/)[1]
-        };
-        
-        addToCart(product);
-    });
-});
-
-document.querySelector('.cart-btn').addEventListener('click', openCart);
-closeCart.addEventListener('click', closeCartDrawer);
-overlay.addEventListener('click', closeCartDrawer);
-
-// Close cart with Escape key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && cartDrawer.classList.contains('active')) {
-        closeCartDrawer();
-    }
-});
-
-// Quiz functionality
-if (document.getElementById('routineQuiz')) {
-    const quizForm = document.getElementById('routineQuiz');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const submitBtn = document.getElementById('submitBtn');
-    const restartQuiz = document.getElementById('restartQuiz');
-    const resultsSection = document.getElementById('resultsSection');
-    const progressFill = document.getElementById('progressFill');
-    const currentQuestionSpan = document.getElementById('currentQuestion');
-    const totalQuestionsSpan = document.getElementById('totalQuestions');
+// Routine Builder Quiz
+class RoutineQuiz {
+  constructor() {
+    this.quizForm = document.getElementById('routine-quiz');
+    this.quizSteps = document.querySelectorAll('.quiz-step');
+    this.stepIndicators = document.querySelectorAll('.step');
+    this.progressFill = document.getElementById('progress-fill');
+    this.resultsSection = document.getElementById('results-section');
+    this.restartButton = document.querySelector('.restart-quiz');
     
-    let currentStep = 1;
-    const totalSteps = 3;
+    this.currentStep = 1;
+    this.totalSteps = this.quizSteps.length;
     
-    // Update progress
-    function updateProgress() {
-        const progressPercentage = (currentStep / totalSteps) * 100;
-        progressFill.style.width = `${progressPercentage}%`;
-        currentQuestionSpan.textContent = currentStep;
-        totalQuestionsSpan.textContent = totalSteps;
-    }
-    
-    // Show current question
-    function showCurrentQuestion() {
-        document.querySelectorAll('.question-group').forEach((group, index) => {
-            if (index + 1 === currentStep) {
-                group.classList.remove('hidden');
-            } else {
-                group.classList.add('hidden');
-            }
-        });
-        
-        // Update button visibility
-        prevBtn.disabled = currentStep === 1;
-        nextBtn.disabled = currentStep === totalSteps;
-        
-        if (currentStep === totalSteps) {
-            nextBtn.classList.add('hidden');
-            submitBtn.classList.remove('hidden');
-        } else {
-            nextBtn.classList.remove('hidden');
-            submitBtn.classList.add('hidden');
-        }
-        
-        updateProgress();
-    }
-    
-    // Navigation
-    nextBtn.addEventListener('click', () => {
-        if (validateCurrentStep()) {
-            currentStep++;
-            showCurrentQuestion();
-        }
+    this.init();
+  }
+
+  init() {
+    // Next step buttons
+    document.querySelectorAll('.next-step').forEach(button => {
+      button.addEventListener('click', () => {
+        this.nextStep();
+      });
     });
     
-    prevBtn.addEventListener('click', () => {
-        currentStep--;
-        showCurrentQuestion();
+    // Previous step buttons
+    document.querySelectorAll('.prev-step').forEach(button => {
+      button.addEventListener('click', () => {
+        this.prevStep();
+      });
     });
     
-    // Validate current step
-    function validateCurrentStep() {
-        const currentGroup = document.getElementById(`question${currentStep}`);
-        const requiredInputs = currentGroup.querySelectorAll('input[required]');
-        
-        for (const input of requiredInputs) {
-            if (!input.checked) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
-    // Submit quiz
-    quizForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        // Get answers
-        const skinType = document.querySelector('input[name="skinType"]:checked').value;
-        const concern = document.querySelector('input[name="concern"]:checked').value;
-        const time = document.querySelector('input[name="time"]:checked').value;
-        
-        // Generate recommendations based on answers
-        generateRecommendations(skinType, concern, time);
-        
-        // Show results
-        resultsSection.classList.remove('hidden');
-        quizForm.scrollIntoView({ behavior: 'smooth' });
+    // Form submission
+    this.quizForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.calculateResults();
     });
-    
-    // Generate recommendations
-    function generateRecommendations(skinType, concern, time) {
-        // Morning routine recommendations
-        const morningProducts = document.getElementById('morningProducts');
-        morningProducts.innerHTML = '';
-        
-        // Cleanser recommendation
-        const cleanser = document.createElement('div');
-        cleanser.className = 'recommended-product';
-        cleanser.innerHTML = `
-            <h4>Botanical Cleanser</h4>
-            <p>Gentle daily cleanser for ${skinType} skin</p>
-            <button class="add-to-cart-btn small-btn" data-product-id="1">Add to Cart</button>
-        `;
-        morningProducts.appendChild(cleanser);
-        
-        // Treatment recommendation based on concern
-        const treatment = document.createElement('div');
-        treatment.className = 'recommended-product';
-        let treatmentName = '';
-        let treatmentDesc = '';
-        
-        switch(concern) {
-            case 'hydration':
-                treatmentName = 'Hydrating Serum';
-                treatmentDesc = 'Intensive moisture boost for dehydrated skin';
-                break;
-            case 'aging':
-                treatmentName = 'Anti-Aging Serum';
-                treatmentDesc = 'Targeted formula for fine lines and firmness';
-                break;
-            case 'texture':
-                treatmentName = 'Refining Toner';
-                treatmentDesc = 'Gentle exfoliation for smoother texture';
-                break;
-            case 'brightness':
-                treatmentName = 'Brightening Essence';
-                treatmentDesc = 'Even tone and luminous glow';
-                break;
-        }
-        
-        treatment.innerHTML = `
-            <h4>${treatmentName}</h4>
-            <p>${treatmentDesc}</p>
-            <button class="add-to-cart-btn small-btn" data-product-id="2">Add to Cart</button>
-        `;
-        morningProducts.appendChild(treatment);
-        
-        // Moisturizer recommendation
-        const moisturizer = document.createElement('div');
-        moisturizer.className = 'recommended-product';
-        moisturizer.innerHTML = `
-            <h4>Nourishing Moisturizer</h4>
-            <p>Daily hydration for ${skinType} skin</p>
-            <button class="add-to-cart-btn small-btn" data-product-id="3">Add to Cart</button>
-        `;
-        morningProducts.appendChild(moisturizer);
-        
-        // Evening routine recommendations
-        const eveningProducts = document.getElementById('eveningProducts');
-        eveningProducts.innerHTML = '';
-        
-        // Evening cleanser
-        const eveningCleanser = document.createElement('div');
-        eveningCleanser.className = 'recommended-product';
-        eveningCleanser.innerHTML = `
-            <h4>Deep Cleanse Balm</h4>
-            <p>Removes makeup and impurities for ${skinType} skin</p>
-            <button class="add-to-cart-btn small-btn" data-product-id="4">Add to Cart</button>
-        `;
-        eveningProducts.appendChild(eveningCleanser);
-        
-        // Night treatment
-        const nightTreatment = document.createElement('div');
-        nightTreatment.className = 'recommended-product';
-        nightTreatment.innerHTML = `
-            <h4>Restorative Night Cream</h4>
-            <p>Overnight repair for ${skinType} skin</p>
-            <button class="add-to-cart-btn small-btn" data-product-id="5">Add to Cart</button>
-        `;
-        eveningProducts.appendChild(nightTreatment);
-        
-        // Weekly treatments
-        const weeklyProducts = document.getElementById('weeklyProducts');
-        weeklyProducts.innerHTML = '';
-        
-        const mask = document.createElement('div');
-        mask.className = 'recommended-product';
-        mask.innerHTML = `
-            <h4>Rejuvenating Mask</h4>
-            <p>Weekly treatment for ${concern} concerns</p>
-            <button class="add-to-cart-btn small-btn" data-product-id="6">Add to Cart</button>
-        `;
-        weeklyProducts.appendChild(mask);
-        
-        // Add event listeners to new add-to-cart buttons
-        document.querySelectorAll('.recommended-product .add-to-cart-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const productId = e.currentTarget.dataset.productId;
-                const productCard = document.querySelector(`[data-product-id="${productId}"]`);
-                
-                if (productCard) {
-                    const product = {
-                        id: productCard.dataset.productId,
-                        name: productCard.querySelector('h3').textContent,
-                        price: productCard.querySelector('.price').textContent,
-                        image: productCard.querySelector('.product-image').style.backgroundImage.match(/url\("(.+)"\)/)[1]
-                    };
-                    
-                    addToCart(product);
-                }
-            });
-        });
-    }
     
     // Restart quiz
-    restartQuiz.addEventListener('click', () => {
-        quizForm.reset();
-        currentStep = 1;
-        resultsSection.classList.add('hidden');
-        showCurrentQuestion();
+    if (this.restartButton) {
+      this.restartButton.addEventListener('click', () => {
+        this.restartQuiz();
+      });
+    }
+    
+    this.updateProgress();
+  }
+
+  nextStep() {
+    if (this.validateCurrentStep()) {
+      if (this.currentStep < this.totalSteps) {
+        this.currentStep++;
+        this.updateUI();
+      }
+    }
+  }
+
+  prevStep() {
+    if (this.currentStep > 1) {
+      this.currentStep--;
+      this.updateUI();
+    }
+  }
+
+  validateCurrentStep() {
+    const currentStepElement = document.querySelector(`#step-${this.currentStep}`);
+    const requiredFields = currentStepElement.querySelectorAll('[required]');
+    
+    let isValid = true;
+    
+    requiredFields.forEach(field => {
+      if (!field.validity.valid) {
+        isValid = false;
+      }
     });
     
-    // Initialize quiz
-    updateProgress();
-}
-
-// Contact form submission
-if (document.getElementById('contactForm')) {
-    const contactForm = document.getElementById('contactForm');
+    // Special validation for multi-select (at least one checked)
+    if (currentStepElement.querySelector('.multi-select')) {
+      const checkedOptions = currentStepElement.querySelectorAll('input[type="checkbox"]:checked');
+      if (checkedOptions.length === 0) {
+        isValid = false;
+      }
+    }
     
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        // Get form values
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const subject = document.getElementById('subject').value;
-        const message = document.getElementById('message').value;
-        
-        // In a real implementation, you would send this data to a server
-        // For now, just show a success message
-        alert(`Thank you, ${name}! Your message has been sent. We'll get back to you soon.`);
-        
-        // Reset form
-        contactForm.reset();
-    });
-}
+    return isValid;
+  }
 
-// Cursor spotlight effect for hero section
-if (document.querySelector('.hero')) {
-    const hero = document.querySelector('.hero');
+  updateUI() {
+    // Hide all steps
+    this.quizSteps.forEach(step => step.classList.remove('active'));
+    this.stepIndicators.forEach(indicator => indicator.classList.remove('active'));
     
-    hero.addEventListener('mousemove', (e) => {
-        const rect = hero.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        hero.style.setProperty('--mouse-x', `${x}px`);
-        hero.style.setProperty('--mouse-y', `${y}px`);
-    });
-}
-
-// Card tilt effect
-if (document.querySelectorAll('.product-card')) {
-    const cards = document.querySelectorAll('.product-card');
+    // Show current step
+    document.querySelector(`#step-${this.currentStep}`).classList.add('active');
+    document.querySelector(`[data-step="${this.currentStep}"]`).classList.add('active');
     
-    cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            // Calculate rotation based on mouse position
-            const rotateY = ((x - rect.width / 2) / rect.width) * 10; // Max 5 degrees
-            const rotateX = ((rect.height / 2 - y) / rect.height) * 10; // Max 5 degrees
-            
-            // Apply rotation
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(0px)`;
-            
-            // Update glare position
-            card.style.setProperty('--glare-x', `${x}px`);
-            card.style.setProperty('--glare-y', `${y}px`);
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            // Reset rotation
-            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
-        });
-    });
+    this.updateProgress();
+  }
+
+  updateProgress() {
+    const progressPercent = ((this.currentStep - 1) / (this.totalSteps - 1)) * 100;
+    this.progressFill.style.width = `${progressPercent}%`;
+  }
+
+  calculateResults() {
+    // In a real implementation, this would calculate personalized recommendations
+    // For now, we'll just show the results section
+    this.resultsSection.classList.remove('hidden');
+    this.quizForm.parentElement.style.display = 'none';
+  }
+
+  restartQuiz() {
+    this.currentStep = 1;
+    this.quizForm.reset();
+    this.resultsSection.classList.add('hidden');
+    this.quizForm.parentElement.style.display = 'block';
+    this.updateUI();
+  }
 }
 
-// Initialize cart on page load
-document.addEventListener('DOMContentLoaded', initCart);
+// Initialize components when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  new ParallaxHandler();
+  new CardTilt();
+  
+  // Initialize shopping cart if cart elements exist
+  if (document.querySelector('.cart-icon')) {
+    new ShoppingCart();
+  }
+  
+  // Initialize routine quiz if quiz exists
+  if (document.getElementById('routine-quiz')) {
+    new RoutineQuiz();
+  }
+  
+  // Mobile menu toggle
+  const menuToggle = document.querySelector('.menu-toggle');
+  const mainNav = document.querySelector('.main-nav');
+  
+  if (menuToggle && mainNav) {
+    menuToggle.addEventListener('click', () => {
+      mainNav.classList.toggle('active');
+    });
+  }
+});
