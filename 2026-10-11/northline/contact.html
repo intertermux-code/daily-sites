@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0b10">
+  <title>Initiate Brief — NORTHLINE Project Inquiry</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+  <style>
+    .form-group {
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    label {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-main);
+    }
+    input, select, textarea {
+      background: var(--bg-card);
+      border: 1px solid var(--surface-border);
+      color: var(--white);
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      transition: border-color 0.2s ease;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--electric-blue);
+      outline: none;
+    }
+    .budget-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+    }
+    .budget-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--surface-border);
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    .budget-btn:hover, input[type="radio"]:checked + .budget-btn {
+      border-color: var(--electric-blue);
+      color: var(--white);
+      background: rgba(43, 75, 255, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="index.html" class="logo">NORTHLINE<span class="logo-dot"></span></a>
+      <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="work.html">Work</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html" aria-current="page">Contact</a></li>
+        </ul>
+      </nav>
+      <a href="contact.html" class="btn btn-primary" style="display: none; @media(min-width:768px){display:inline-flex}">Start Project</a>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="section" style="padding-top: 80px;">
+      <div class="container">
+        <div class="magazine-grid">
+          <div style="grid-column: span 5;" class="reveal">
+            <span class="mono-tag">Initiate Contact</span>
+            <h1 style="font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 20px 0;">LET’S BUILD SOMETHING ICONIC.</h1>
+            <p style="margin-bottom: 32px;">
+              Ready to start your next web architecture build or identity overhaul? Fill out the project questionnaire and our team will get back to you within 24 hours.
+            </p>
+
+            <div style="background: var(--bg-card); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--surface-border);">
+              <h3 style="font-size: 1.1rem; margin-bottom: 12px; font-family: var(--font-mono);">DIRECT CONTACT</h3>
+              <p style="margin-bottom: 8px;"><strong>Email:</strong> <a href="mailto:hello@northline.design" style="color: var(--electric-blue);">hello@northline.design</a></p>
+              <p style="margin-bottom: 8px;"><strong>Phone:</strong> +1 (212) 555-0198</p>
+              <p><strong>Studio:</strong> 404 Spectrum Tower, NY</p>
+            </div>
+          </div>
+
+          <div style="grid-column: span 7;" class="reveal">
+            <form id="enquiry-form" style="background: var(--bg-card); padding: 40px; border-radius: var(--radius-md); border: 1px solid var(--surface-border);">
+              <div class="form-group">
+                <label for="full-name">Your Name *</label>
+                <input type="text" id="full-name" required placeholder="e.g. Alex Morgan">
+              </div>
+
+              <div class="form-group">
+                <label for="email-address">Corporate Email *</label>
+                <input type="email" id="email-address" required placeholder="alex@company.com">
+              </div>
+
+              <div class="form-group">
+                <label for="company-name">Company / Organization</label>
+                <input type="text" id="company-name" placeholder="e.g. Aether Capital">
+              </div>
+
+              <div class="form-group">
+                <label for="service-needed">Primary Discipline Required *</label>
+                <select id="service-needed" required style="cursor: pointer;">
+                  <option value="" disabled selected>Select a service...</option>
+                  <option value="web-architecture">Web Architecture & Engineering</option>
+                  <option value="brand-identity">Brand Identity System</option>
+                  <option value="ui-ux">UI/UX & Product Design</option>
+                  <option value="full-stack">Full Creative Retainer</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Estimated Project Investment *</label>
+                <div class="budget-options">
+                  <label><input type="radio" name="budget" value="25k-50k" required style="display:none;"><div class="budget-btn">$25k – $50k</div></label>
+                  <label><input type="radio" name="budget" value="50k-100k" style="display:none;"><div class="budget-btn">$50k – $100k</div></label>
+                  <label><input type="radio" name="budget" value="100k+" style="display:none;"><div class="budget-btn">$100k+</div></label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="project-details">Project Summary & Timeline *</label>
+                <textarea id="project-details" rows="5" required placeholder="Tell us about the goals, scope, and key deliverables..."></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 16px;">
+                Submit Project Brief ⚡
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">NORTHLINE<span class="logo-dot"></span></a>
+          <p>Avant-garde digital studio shaping the future of web architecture and visual identity.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="work.html">Work</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Capabilities</h4>
+          <ul>
+            <li><a href="services.html">Web Development</a></li>
+            <li><a href="services.html">Brand Identity</a></li>
+            <li><a href="services.html">Motion Systems</a></li>
+            <li><a href="services.html">UI/UX Architecture</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>HQ / Studio</h4>
+          <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.8;">
+            404 Spectrum Tower<br>
+            Creative District, NY 10012<br>
+            <a href="mailto:hello@northline.design" style="color: var(--electric-blue);">hello@northline.design</a>
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2026 NORTHLINE Studio Inc. All rights reserved.</div>
+        <div>Designed with Playful Memphis Precision.</div>
+      </div>
+    </div>
+  </footer>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
