@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0b0d">
+  <title>SCHEDULE // FORGE Class Timetable</title>
+  <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+  <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+  <link href="[https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=JetBrains+Mono:wght@400;500;700;800&family=Oswald:wght@500;700&display=swap](https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=JetBrains+Mono:wght@400;500;700;800&family=Oswald:wght@500;700&display=swap)" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">SKIP_TO_SYSTEM_CORE [ALT+1]</a>
+  <div class="crt-overlay" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="header-container">
+      <a href="index.html" class="brand-logo" aria-label="FORGE Home">
+        <span class="logo-terminal">&gt;_</span>FORGE<span class="logo-blink">█</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation system">
+        <span class="nav-toggle-box">
+          <span class="nav-toggle-inner"></span>
+        </span>
+        <span class="nav-toggle-text">SYS_MENU</span>
+      </button>
+      <nav id="primary-nav" class="primary-nav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="index.html" class="nav-link"><span class="nav-num">01.</span>INDEX</a></li>
+          <li class="nav-item"><a href="programs.html" class="nav-link"><span class="nav-num">02.</span>PROGRAMS</a></li>
+          <li class="nav-item"><a href="schedule.html" class="nav-link" aria-current="page"><span class="nav-num">03.</span>SCHEDULE</a></li>
+          <li class="nav-item"><a href="trainers.html" class="nav-link"><span class="nav-num">04.</span>TRAINERS</a></li>
+          <li class="nav-item"><a href="membership.html" class="nav-link"><span class="nav-num">05.</span>MEMBERSHIP</a></li>
+        </ul>
+      </nav>
+      <div class="sys-status-badge d-none-mobile">
+        <span class="status-dot"></span> SYS_ONLINE // 24.0C
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-banner">
+      <div class="banner-content">
+        <div class="terminal-tag"><span class="tag-num">[03.00]</span> DISPATCH_MATRIX</div>
+        <h1 class="page-title">WEEKLY SCHEDULE</h1>
+        <p class="page-lead">Filter training sessions by day or program module. Reservation mandatory prior to entry.</p>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <!-- SCHEDULE FILTERS -->
+      <div class="filter-controls" aria-label="Filter schedule">
+        <div class="filter-group">
+          <span class="filter-label">FILTER_DAY:</span>
+          <button class="filter-btn active" data-filter-day="all">ALL_DAYS</button>
+          <button class="filter-btn" data-filter-day="mon">MON</button>
+          <button class="filter-btn" data-filter-day="tue">TUE</button>
+          <button class="filter-btn" data-filter-day="wed">WED</button>
+          <button class="filter-btn" data-filter-day="thu">THU</button>
+          <button class="filter-btn" data-filter-day="fri">FRI</button>
+          <button class="filter-btn" data-filter-day="sat">SAT</button>
+        </div>
+
+        <div class="filter-group margin-top-sm">
+          <span class="filter-label">FILTER_PROGRAM:</span>
+          <button class="filter-btn active" data-filter-prog="all">ALL_PROGRAMS</button>
+          <button class="filter-btn" data-filter-prog="Powerlifting">POWERLIFTING</button>
+          <button class="filter-btn" data-filter-prog="HIIT">HIIT</button>
+          <button class="filter-btn" data-filter-prog="Mobility">MOBILITY</button>
+        </div>
+      </div>
+
+      <!-- TIMETABLE TABLE -->
+      <div class="table-responsive margin-top-md">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th scope="col">TIME_SLOT</th>
+              <th scope="col">DAY</th>
+              <th scope="col">PROGRAM</th>
+              <th scope="col">INSTRUCTOR</th>
+              <th scope="col">CAPACITY</th>
+              <th scope="col">ACTION</th>
+            </tr>
+          </thead>
+          <tbody id="schedule-body">
+            <!-- Row 1 -->
+            <tr data-day="mon" data-prog="Powerlifting">
+              <td class="time-cell">06:00 - 07:30</td>
+              <td><span class="day-badge">MON</span></td>
+              <td><span class="prog-tag powerlifting">Powerlifting</span> Heavy Squat Focus</td>
+              <td>Marcus Vance</td>
+              <td class="tabular-nums">12 / 12 (FULL)</td>
+              <td><a href="membership.html" class="btn btn-sm btn-disabled">WAITLIST</a></td>
+            </tr>
+            <!-- Row 2 -->
+            <tr data-day="mon" data-prog="HIIT">
+              <td class="time-cell">08:00 - 09:00</td>
+              <td><span class="day-badge">MON</span></td>
+              <td><span class="prog-tag hiit">HIIT</span> Engine Builder</td>
+              <td>Elena Rostova</td>
+              <td class="tabular-nums">14 / 20</td>
+              <td><a href="membership.html" class="btn btn-sm btn-primary">RESERVE</a></td>
+            </tr>
+            <!-- Row 3 -->
+            <tr data-day="mon" data-prog="Mobility">
+              <td class="time-cell">17:30 - 18:30</td>
+              <td><span class="day-badge">MON</span></td>
+              <td><span class="prog-tag mobility">Mobility</span> Joint Capsular Mobility</td>
+              <td>Sarah Chen</td>
+              <td class="tabular-nums">08 / 15</td>
+              <td><a href="membership.html" class="btn btn-sm btn-primary">RESERVE</a></td>
+            </tr>
+
+            <!-- Row 4 -->
+            <tr data-day="tue" data-prog="HIIT">
+              <td class="time-cell">06:00 - 07:00</td>
+              <td><span class="day-badge">TUE</span></td>
+              <td><span class="prog-tag hiit">HIIT</span> Tactical Conditioning</td>
+              <td>Elena Rostova</td>
+              <td class="tabular-nums">18 / 20</td>
+              <td><a href="membership.html" class="btn btn-sm btn-primary">RESERVE</a></td>
+            </tr>
+            <!-- Row 5 -->
+            <tr data-day="tue" data-prog="Powerlifting">
+              <td class="time-cell">17:00 - 18:30</td>
+              <td><span class="day-badge">TUE</span></td>
+              <td><span class="prog-tag powerlifting">Powerlifting</span> Bench Press &amp; Upper</td>
+              <td>Marcus Vance</td>
+              <td class="tabular-nums">10 / 12</td>
+              <td><a href="membership.html" class="btn btn-sm btn-primary">RESERVE</a></td>
+            </tr>
+
+            <!-- Row 6 -->
+            <tr data-day="wed" data-prog="Powerlifting">
+              <td class="time-cell">06:00 - 07:30</td>
+              <td><span class="day-badge">WED</span></td>
+              <td><span class="prog-tag powerlifting">Powerlifting</span> Deadlift &amp; Posterior</td>
+              <td>Marcus Vance</td>
+              <td class="tabular-nums">11 / 12</td>
+              <td><a href="membership.html" class="btn btn-sm btn-primary">RESERVE</a></td>
+            </tr>
+            <!-- Row 7 -->
+            <tr data-day="wed" data-prog="Mobility">
+              <td class="time-cell">12:00 - 13:00</td>
+              <td><span class="day-badge">WED</span></td>
+              <td><span class="prog-tag mobility">Mobility</span> Spine &amp; Hips Regen</td>
+              <td>Sarah Chen</td>
+              <td class="tabular-nums">05 / 15</td>
+              <td><a href="membership.html" class="btn btn-sm btn-primary">RESERVE</a></td>
+            </tr>
+
+            <!-- Row 8 -->
+            <tr data-day="thu" data-prog="HIIT">
+              <td class="time-cell">07:00 - 08:00</td>
+              <td><span class="day-badge">THU</span></td>
+              <td><span class="prog-tag hiit">HIIT</span> Anaerobic Lactic Threshold</td>
+              <td>Elena Rostova</td>
+              <td class="tabular-nums">15 / 20</td>
+              <td><a href="membership.html" class="btn btn-sm btn-primary">RESERVE</a></td>
+            </tr>
+            <!-- Row 9 -->
+            <tr data-day="thu" data-prog="Powerlifting">
+              <td class="time-cell">18:00 - 19:30</td>
+              <td><span class="day-badge">THU</span></td>
+              <td><span class="prog-tag powerlifting">Powerlifting</span> Overhead &amp; Accessories</td>
+              <td>Marcus Vance</td>
+              <td class="tabular-nums">09 / 12</td>
+              <td><a href="membership.html" class="btn btn-sm btn-primary">RESERVE</a></td>
+            </tr>
+
+            <!-- Row 10 -->
+            <tr data-day="fri" data-prog="HIIT">
+              <td class="time-cell">06:00 - 07:00</td>
+              <td><span class="day-badge">FRI</span></td>
+              <td><span class="prog-tag hiit">HIIT</span> Friday Sled &amp; Sprint Protocol</td>
+              <td>Elena Rostova</td>
+              <td class="tabular-nums">19 / 20</td>
+              <td><a href="membership.html" class="btn btn-sm btn-primary">RESERVE</a></td>
+            </tr>
+            <!-- Row 11 -->
+            <tr data-day="fri" data-prog="Mobility">
+              <td class="time-cell">17:00 - 18:00</td>
+              <td><span class="day-badge">FRI</span></td>
+              <td><span class="prog-tag mobility">Mobility</span> Full Body Recovery Flow</td>
+              <td>Sarah Chen</td>
+              <td class="tabular-nums">04 / 15</td>
+              <td><a href="membership.html" class="btn btn-sm btn-primary">RESERVE</a></td>
+            </tr>
+
+            <!-- Row 12 -->
+            <tr data-day="sat" data-prog="Powerlifting">
+              <td class="time-cell">09:00 - 11:00</td>
+              <td><span class="day-badge">SAT</span></td>
+              <td><span class="prog-tag powerlifting">Powerlifting</span> Open Heavy Barbell Lab</td>
+              <td>Marcus Vance</td>
+              <td class="tabular-nums">08 / 15</td>
+              <td><a href="membership.html" class="btn btn-sm btn-primary">RESERVE</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="no-schedule-results" class="empty-state d-none">
+        <p>&gt;_ NO MATCHING TRAINING SLOTS FOUND FOR SELECTED CRITERIA.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-col branding">
+        <div class="footer-logo">&gt;_FORGE_SYSTEMS</div>
+        <p class="footer-desc">High-Performance Strength &amp; Conditioning Facility. Built on science, discipline, and iron.</p>
+        <div class="sys-time-code">LOC_TIME: <span id="clock-display">00:00:00 UTC</span></div>
+      </div>
+      <div class="footer-col links">
+        <span class="footer-heading">[INDEX_DIRECTORY]</span>
+        <ul>
+          <li><a href="index.html">01. HOME INDEX</a></li>
+          <li><a href="programs.html">02. CORE PROGRAMS</a></li>
+          <li><a href="schedule.html">03. CLASS SCHEDULE</a></li>
+          <li><a href="trainers.html">04. COACH DOSSIERS</a></li>
+          <li><a href="membership.html">05. MEMBERSHIP PASS</a></li>
+        </ul>
+      </div>
+      <div class="footer-col contact">
+        <span class="footer-heading">[FACILITY_NODE]</span>
+        <address class="footer-address">
+          FORGE HQ — BUILDING 07<br>
+          1048 INDUSTRIAL PARKWAY<br>
+          AUSTIN, TX 78745<br>
+          TEL: (512) 555-0199<br>
+          MAIL: OPS@FORGESTRENGTH.IO
+        </address>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="copyright">&copy; 2026 FORGE HEAVY INDUSTRIES LLC. ALL RIGHTS RESERVED.</div>
+      <div class="terminal-status">SYS_BUILD_VER: 4.8.2 // CRT_EMULATION_ACTIVE</div>
+    </div>
+  </footer>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
