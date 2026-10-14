@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0c">
+  <title>Reserve a Table — Ember & Oak</title>
+  <meta name="description" content="Book your dining experience or Omakase counter seat at Ember & Oak wood-fire hearth. Instant online confirmation.">
+  <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+  <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+  <link href="[https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=JetBrains+Mono:wght@400;500&display=swap](https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=JetBrains+Mono:wght@400;500&display=swap)" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to primary content</a>
+  <div class="bg-grain" aria-hidden="true"></div>
+
+  <header class="site-header" id="site-header">
+    <div class="header-container">
+      <a href="index.html" class="brand-logo" aria-label="Ember and Oak Homepage">
+        <span class="logo-mark" aria-hidden="true">火</span>
+        <span class="logo-text">EMBER <span class="amp">&amp;</span> OAK</span>
+      </a>
+
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Toggle navigation menu">
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+      </button>
+
+      <nav class="primary-nav" id="primary-navigation" aria-label="Main menu">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Hearth</a></li>
+          <li><a href="menu.html" class="nav-link">Menu</a></li>
+          <li><a href="gallery.html" class="nav-link">Atmosphere</a></li>
+          <li><a href="reservations.html" class="nav-link" aria-current="page">Reservations</a></li>
+          <li><a href="visit.html" class="nav-link">Location &amp; Hours</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <div class="flow-container">
+      
+      <section class="page-header-section">
+        <span class="mono-tag" data-reveal>TABLE RESERVATIONS</span>
+        <h1 class="page-title" data-reveal>Reserve Your Seat</h1>
+        <p class="body-text" data-reveal>
+          Reservations open 30 days in advance. For parties over 6 guests or private dining inquiries, please contact our concierge team directly.
+        </p>
+      </section>
+
+      <section class="reservation-form-section">
+        <form id="booking-form" class="booking-form" novalidate>
+          <div class="form-group" data-reveal>
+            <label for="full-name" class="form-label">Full Name <span class="req">*</span></label>
+            <input type="text" id="full-name" name="fullName" class="form-input" placeholder="e.g. Eleanor Vance" required aria-required="true">
+            <span class="error-msg" id="err-fullName">Please enter your full name.</span>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group" data-reveal>
+              <label for="phone-number" class="form-label">Phone Number <span class="req">*</span></label>
+              <input type="tel" id="phone-number" name="phone" class="form-input" placeholder="(206) 555-0123" required aria-required="true">
+              <span class="error-msg" id="err-phone">Please enter a valid telephone number.</span>
+            </div>
+
+            <div class="form-group" data-reveal>
+              <label for="email-address" class="form-label">Email Address <span class="req">*</span></label>
+              <input type="email" id="email-address" name="email" class="form-input" placeholder="eleanor@example.com" required aria-required="true">
+              <span class="error-msg" id="err-email">Please enter a valid email address.</span>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group" data-reveal>
+              <label for="res-date" class="form-label">Date <span class="req">*</span></label>
+              <input type="date" id="res-date" name="date" class="form-input" required aria-required="true">
+              <span class="error-msg" id="err-date">Please select a valid future date.</span>
+            </div>
+
+            <div class="form-group" data-reveal>
+              <label for="party-size" class="form-label">Party Size <span class="req">*</span></label>
+              <select id="party-size" name="partySize" class="form-select" required aria-required="true">
+                <option value="">Select Guests</option>
+                <option value="1">1 Guest — Chef Counter</option>
+                <option value="2">2 Guests — Standard Table</option>
+                <option value="3">3 Guests — Standard Table</option>
+                <option value="4">4 Guests — Standard Table</option>
+                <option value="5">5 Guests — Hearth Alcove</option>
+                <option value="6">6 Guests — Hearth Alcove</option>
+              </select>
+              <span class="error-msg" id="err-partySize">Please select party size.</span>
+            </div>
+          </div>
+
+          <div class="form-group" data-reveal>
+            <label for="seating-area" class="form-label">Seating Preference</label>
+            <select id="seating-area" name="seating" class="form-select">
+              <option value="main">Main Dining Room (Ambient Hearth View)</option>
+              <option value="omakase">Chef's Omakase Counter (Live Fire Grill)</option>
+              <option value="alcove">Private Cedar Alcove</option>
+            </select>
+          </div>
+
+          <div class="form-group" data-reveal>
+            <label for="special-requests" class="form-label">Dietary Restrictions or Special Notes</label>
+            <textarea id="special-requests" name="notes" class="form-textarea" rows="4" placeholder="Let us know about allergies, anniversaries, or preferences..."></textarea>
+          </div>
+
+          <div class="form-action" data-reveal>
+            <button type="submit" id="submit-booking-btn" class="btn btn-primary magnetic-btn full-width">
+              <span>Confirm Reservation</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- SUCCESS CONFIRMATION STATE -->
+        <div id="booking-success" class="booking-success-card hidden" role="alert" aria-live="polite">
+          <div class="success-icon" aria-hidden="true">✓</div>
+          <span class="mono-tag">RESERVATION CONFIRMED</span>
+          <h2 class="section-heading">We Look Forward to Welcoming You</h2>
+          <p class="body-text">
+            Thank you, <strong id="conf-name">Guest</strong>. A confirmation SMS &amp; email have been dispatched with your reservation code <strong id="conf-code" class="mono-code">#EO-8924</strong>.
+          </p>
+
+          <div class="confirmation-details">
+            <div class="conf-row">
+              <span class="conf-lbl">Date &amp; Time:</span>
+              <span id="conf-date-time" class="conf-val">October 28, 2026 at 7:30 PM</span>
+            </div>
+            <div class="conf-row">
+              <span class="conf-lbl">Guests:</span>
+              <span id="conf-guests" class="conf-val">2 Guests</span>
+            </div>
+            <div class="conf-row">
+              <span class="conf-lbl">Seating:</span>
+              <span id="conf-seating" class="conf-val">Chef's Omakase Counter</span>
+            </div>
+          </div>
+
+          <div class="text-center" style="margin-top: 2rem;">
+            <button type="button" id="reset-booking-btn" class="btn btn-secondary magnetic-btn">
+              <span>Make Another Reservation</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="brand-logo">
+          <span class="logo-mark" aria-hidden="true">火</span>
+          <span class="logo-text">EMBER <span class="amp">&amp;</span> OAK</span>
+        </a>
+        <p class="footer-tagline">Primal Fire. Restrained Modernism.</p>
+      </div>
+
+      <div class="footer-info">
+        <p>482 Hearthstone Way, Culinary District, Seattle, WA 98101</p>
+        <p>Reservations: <a href="tel:2065550198">(206) 555-0198</a> — <a href="mailto:hearth@emberandoak.com">hearth@emberandoak.com</a></p>
+      </div>
+
+      <div class="footer-legal">
+        <p>&copy; 2026 Ember &amp; Oak Restaurant Group. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
