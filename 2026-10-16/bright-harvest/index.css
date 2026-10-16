@@ -1,0 +1,508 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════
+   BRIGHT HARVEST — Editorial Swiss Design System
+   ═══════════════════════════════════════════════════════════ */
+
+@theme {
+  --color-harvest: #f59e0b;
+  --color-harvest-light: #fbbf24;
+  --color-harvest-dark: #d97706;
+  --color-forest: #166534;
+  --color-forest-light: #22c55e;
+  --color-forest-dark: #14532d;
+  --color-cream: #faf9f6;
+  --color-cream-dark: #f0ede6;
+  --color-ink: #0a0a0c;
+  --color-ink-light: #1a1a1f;
+  --color-muted: #6b7280;
+  --color-rule: #d4d0c8;
+  --font-display: "Archivo", sans-serif;
+  --font-body: "Work Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+/* ─── Base Reset ─── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background-color: var(--color-cream);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  line-height: 1.6;
+  position: relative;
+}
+
+/* ─── Grain Texture Overlay ─── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ─── Typography ─── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  text-wrap: balance;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+h1 {
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 900;
+}
+
+h2 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 900;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 700;
+}
+
+p {
+  max-width: 60ch;
+  line-height: 1.7;
+}
+
+/* ─── Focus Styles ─── */
+:focus-visible {
+  outline: 3px solid var(--color-harvest);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ─── Skip Link ─── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 10000;
+  padding: 12px 24px;
+  background: var(--color-ink);
+  color: var(--color-cream);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  text-decoration: none;
+  border-radius: 0 0 4px 4px;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ─── Section Number ─── */
+.section-number {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-number::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-rule);
+}
+
+/* ─── Hairline Rules ─── */
+.hairline {
+  height: 1px;
+  background: var(--color-rule);
+  border: none;
+  margin: 0;
+}
+
+.hairline-thick {
+  height: 2px;
+  background: var(--color-ink);
+  border: none;
+  margin: 0;
+}
+
+/* ─── Word Stagger Animation ─── */
+.word-stagger {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.word-stagger .word {
+  display: inline-block;
+  transform: translateY(0.6em) rotate(2deg);
+  opacity: 0;
+  animation: wordRise 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes wordRise {
+  to {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word-stagger .word {
+    transform: none;
+    opacity: 1;
+    animation: none;
+  }
+}
+
+/* ─── Magnetic Button ─── */
+.magnetic-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 32px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  border: 2px solid var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-cream);
+  border-radius: 0;
+  cursor: pointer;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.2s ease,
+              color 0.2s ease;
+  touch-action: manipulation;
+  min-height: 44px;
+  min-width: 44px;
+  will-change: transform;
+}
+
+.magnetic-btn:hover {
+  background: var(--color-harvest);
+  border-color: var(--color-harvest);
+  color: var(--color-ink);
+}
+
+.magnetic-btn:active {
+  transform: scale(0.97) !important;
+}
+
+.magnetic-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.magnetic-btn--outline {
+  background: transparent;
+  color: var(--color-ink);
+}
+
+.magnetic-btn--outline:hover {
+  background: var(--color-ink);
+  color: var(--color-cream);
+}
+
+.magnetic-btn--harvest {
+  background: var(--color-harvest);
+  border-color: var(--color-harvest);
+  color: var(--color-ink);
+}
+
+.magnetic-btn--harvest:hover {
+  background: var(--color-harvest-dark);
+  border-color: var(--color-harvest-dark);
+}
+
+.magnetic-btn--forest {
+  background: var(--color-forest);
+  border-color: var(--color-forest);
+  color: var(--color-cream);
+}
+
+.magnetic-btn--forest:hover {
+  background: var(--color-forest-dark);
+  border-color: var(--color-forest-dark);
+}
+
+/* ─── Counter Animation ─── */
+.counter-value {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--color-forest);
+}
+
+/* ─── Form Elements ─── */
+input, textarea, select {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 14px 16px;
+  border: 1px solid var(--color-rule);
+  background: white;
+  color: var(--color-ink);
+  border-radius: 0;
+  width: 100%;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  min-height: 44px;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--color-forest);
+  box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.12);
+}
+
+label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 8px;
+}
+
+/* ─── Navigation ─── */
+.nav-link {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: var(--color-ink);
+  padding: 8px 0;
+  position: relative;
+  transition: color 0.2s ease;
+  touch-action: manipulation;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-harvest);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link:hover::after,
+.nav-link[aria-current="page"]::after {
+  width: 100%;
+}
+
+.nav-link[aria-current="page"] {
+  color: var(--color-forest);
+  font-weight: 600;
+}
+
+/* ─── Card Styles ─── */
+.card {
+  background: white;
+  border: 1px solid var(--color-rule);
+  padding: 32px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(10, 10, 12, 0.06);
+}
+
+/* ─── Image Styles ─── */
+.img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ─── Donation Amount Buttons ─── */
+.amount-btn {
+  padding: 16px 24px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  border: 2px solid var(--color-rule);
+  background: white;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  touch-action: manipulation;
+  min-height: 44px;
+  min-width: 44px;
+  font-variant-numeric: tabular-nums;
+}
+
+.amount-btn:hover {
+  border-color: var(--color-harvest);
+  background: #fffbeb;
+}
+
+.amount-btn.active {
+  border-color: var(--color-harvest);
+  background: var(--color-harvest);
+  color: var(--color-ink);
+}
+
+.amount-btn:focus-visible {
+  outline: 3px solid var(--color-harvest);
+  outline-offset: 2px;
+}
+
+/* ─── Frequency Toggle ─── */
+.freq-toggle {
+  display: inline-flex;
+  border: 1px solid var(--color-rule);
+  background: white;
+}
+
+.freq-toggle button {
+  padding: 12px 24px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: none;
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  touch-action: manipulation;
+  min-height: 44px;
+}
+
+.freq-toggle button.active {
+  background: var(--color-forest);
+  color: white;
+}
+
+.freq-toggle button:hover:not(.active) {
+  background: var(--color-cream-dark);
+  color: var(--color-ink);
+}
+
+/* ─── Thank You State ─── */
+.thank-you-state {
+  animation: thankYouIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes thankYouIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ─── Partners Strip ─── */
+.partner-logo {
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+  filter: grayscale(100%);
+}
+
+.partner-logo:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+/* ─── Story Card ─── */
+.story-card {
+  border: 1px solid var(--color-rule);
+  background: white;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease;
+}
+
+.story-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(10, 10, 12, 0.08);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .magnetic-btn {
+    padding: 14px 24px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ─── Reading Column ─── */
+.reading-column {
+  max-width: 680px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.reading-column--wide {
+  max-width: 960px;
+}
+
+.reading-column--full {
+  max-width: 1200px;
+}
+
+/* ─── Utility ─── */
+.text-balance {
+  text-wrap: balance;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
