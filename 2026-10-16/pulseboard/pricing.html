@@ -1,151 +1,591 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pulseboard // Transparent Engineering Pricing</title>
-  <meta name="description" content="Predictable telemetry pricing based on ingested gigabytes. No per-seat penalties. Monthly or annual billing options.">
-  <meta name="theme-color" content="#f8fafc">
-  <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
-  <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
-  <link href="[https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap](https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap)" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pricing — Pulseboard plans, billed monthly or yearly</title>
+<meta name="description" content="Three Pulseboard plans priced by workspace, not by dashboard. Compare Starter, Team and Growth, switch between monthly and yearly billing, and read the full feature ledger.">
+<meta name="theme-color" content="#f4f6fd">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234f46e5'/%3E%3Cpath d='M4 19h5l3.5-11 4.5 17 3-6h7' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
 </head>
 <body>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
+<a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.html" class="brand-logo" aria-label="Pulseboard Homepage">
-        <span class="logo-mark" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-        </span>
-        <span class="logo-text">PULSEBOARD<span class="version-tag">v4.2.0</span></span>
-      </a>
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="index.html" aria-label="Pulseboard — home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 14h4l2.6-8 3.6 13.4L15.6 14H22"/></svg>
+      </span>
+      <span class="brand__word">Pulseboard<i class="brand__dot" aria-hidden="true"></i></span>
+    </a>
 
-      <nav class="main-nav" aria-label="Main Navigation">
-        <ul class="nav-list">
-          <li><a href="index.html" class="nav-link">01 // HOME</a></li>
-          <li><a href="features.html" class="nav-link">02 // FEATURES</a></li>
-          <li><a href="pricing.html" aria-current="page" class="nav-link">03 // PRICING</a></li>
-          <li><a href="about.html" class="nav-link">04 // ABOUT</a></li>
-          <li><a href="contact.html" class="nav-link">05 // DEMO</a></li>
+    <nav id="primary-nav" class="primary-nav" aria-label="Primary">
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="pricing.html" aria-current="page">Pricing</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <a class="btn btn--primary nav-cta" href="contact.html">Request a demo</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="btn btn--primary btn--sm" href="contact.html" data-magnetic="0.22">Request a demo</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open main menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="page-hero">
+    <div class="shell page-hero__inner">
+      <p class="eyebrow"><span class="eyebrow__ref">Vol. III</span> Price schedule</p>
+      <h1>Priced by workspace. Not by how many charts you feel like drawing.</h1>
+      <p class="lede">Readers never pay. You pay for governed metrics, query compute and the people who keep both honest — so publishing a board for 400 readers costs exactly the same as publishing one for four.</p>
+    </div>
+  </section>
+
+  <!-- ============ BILLING TOGGLE + PLANS ============ -->
+  <section class="section section--tight" id="plans" data-pricing data-billing="monthly" aria-labelledby="plans-h">
+    <div class="shell">
+      <h2 id="plans-h" class="sr-only">Pulseboard plans</h2>
+
+      <div class="billing mt-0 reveal" role="group" aria-labelledby="billing-legend">
+        <p class="billing__label" id="billing-legend">Billing cycle</p>
+        <div class="seg">
+          <span class="seg__thumb" aria-hidden="true"></span>
+          <button type="button" data-cycle="monthly" aria-pressed="true">Monthly</button>
+          <button type="button" data-cycle="yearly" aria-pressed="false">Yearly</button>
+        </div>
+        <p class="save-pill">Yearly saves 20%</p>
+      </div>
+
+      <p class="billing__note mt-1" data-yearly-note style="text-align:center;font-size:.84rem;color:var(--muted-2)">Monthly billing is charged on the 1st of each month.</p>
+
+      <div class="plans mt-4">
+
+        <article class="plan reveal">
+          <div>
+            <h3 class="plan__name">Starter</h3>
+            <p class="plan__for">One department, one warehouse, one truth to establish.</p>
+          </div>
+          <p class="plan__price">
+            <span class="cur">$</span>
+            <span class="amt" data-monthly="490" data-yearly="392">490</span>
+            <span class="per">/month</span>
+          </p>
+          <p class="plan__billed">per workspace · unlimited readers</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Up to 6 data sources and 250 governed metrics</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Unlimited readers and boards</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Anomaly watch on 40 metrics</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Scheduled digests and comment threads</span></li>
+            <li class="is-off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg><span>Embedded boards and open API</span></li>
+            <li class="is-off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg><span>Warehouse cost guardrails</span></li>
+          </ul>
+          <a class="btn btn--ghost btn--block" href="contact.html">Start with Starter</a>
+        </article>
+
+        <article class="plan plan--featured reveal">
+          <p class="plan__badge">Most teams choose this</p>
+          <div>
+            <h3 class="plan__name">Team</h3>
+            <p class="plan__for">Several departments sharing a warehouse and arguing less.</p>
+          </div>
+          <p class="plan__price">
+            <span class="cur">$</span>
+            <span class="amt" data-monthly="1,280" data-yearly="1,024">1,280</span>
+            <span class="per">/month</span>
+          </p>
+          <p class="plan__billed">per workspace · unlimited readers</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Everything in Starter, plus:</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Up to 20 sources and 2,000 governed metrics</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Board history with two-date comparison</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Warehouse cost guardrails per reader group</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Open API, webhooks and TypeScript / Python SDKs</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>SSO, SCIM provisioning and shared definition review</span></li>
+          </ul>
+          <a class="btn btn--primary btn--block" href="contact.html" data-magnetic>Start with Team</a>
+        </article>
+
+        <article class="plan reveal">
+          <div>
+            <h3 class="plan__name">Growth</h3>
+            <p class="plan__for">Company-wide registry, regulated reporting, customers included.</p>
+          </div>
+          <p class="plan__price">
+            <span class="cur">$</span>
+            <span class="amt" data-monthly="2,650" data-yearly="2,120">2,650</span>
+            <span class="per">/month</span>
+          </p>
+          <p class="plan__billed">per workspace · unlimited readers</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Everything in Team, plus:</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Unlimited sources and governed metrics</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Embedded boards with per-tenant row scoping</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Seven-year snapshot retention and immutable read log</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Named analyst, quarterly definition audit</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>EU / US / APAC data residency choice</span></li>
+          </ul>
+          <a class="btn btn--ghost btn--block" href="contact.html">Start with Growth</a>
+        </article>
+      </div>
+
+      <h2 class="mt-4" id="addons-h" style="font-size:1.5rem">Add-ons, priced the same way</h2>
+      <div class="addons mt-2">
+        <div class="addon reveal">
+          <h3>Migration import</h3>
+          <p style="font-size:.9rem;color:var(--muted)">We extract your LookML, Tableau or spreadsheet logic, reconcile the values and hand you a conflict report.</p>
+          <p class="addon__price">$4,800 one-off · ~3.5 days</p>
+        </div>
+        <div class="addon reveal">
+          <h3>Registry steward</h3>
+          <p style="font-size:.9rem;color:var(--muted)">A part-time Pulseboard analyst who attends your definition reviews and keeps the ledger tidy.</p>
+          <p class="addon__price">$1,150 / month</p>
+        </div>
+        <div class="addon reveal">
+          <h3>Extra query capacity</h3>
+          <p style="font-size:.9rem;color:var(--muted)">Burst allowance for quarter-end and board-heavy weeks, pooled across the workspace.</p>
+          <p class="addon__price">$0.42 per 1,000 queries</p>
+        </div>
+      </div>
+
+      <p class="mt-3 measure" style="font-size:.86rem;color:var(--muted-2)">All prices in USD, exclusive of sales tax. Non-profit and academic workspaces receive 40% off any plan. Month-to-month contracts may be cancelled at any cycle boundary.</p>
+    </div>
+  </section>
+
+  <!-- ============ COMPARISON TABLE ============ -->
+  <section class="section" id="compare" aria-labelledby="compare-h">
+    <div class="shell">
+      <div class="section-head">
+        <p class="eyebrow"><span class="eyebrow__ref">Appx. A</span> Line by line</p>
+        <h2 id="compare-h">The full comparison, in one table.</h2>
+      </div>
+
+      <div class="table-wrap reveal">
+        <div class="table-scroll">
+          <table>
+            <caption>Pulseboard plan comparison — all figures are per workspace unless noted</caption>
+            <thead>
+              <tr>
+                <th scope="col">Capability</th>
+                <th scope="col">Starter</th>
+                <th scope="col">Team</th>
+                <th scope="col">Growth</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="cat-row"><th colspan="4" scope="colgroup">Registry</th></tr>
+              <tr>
+                <th scope="row">Data sources</th>
+                <td>6</td><td>20</td><td>Unlimited</td>
+              </tr>
+              <tr>
+                <th scope="row">Governed metrics</th>
+                <td>250</td><td>2,000</td><td>Unlimited</td>
+              </tr>
+              <tr>
+                <th scope="row">Definition review workflow</th>
+                <td>Single approver</td><td>Two approvers</td><td>Committee + audit log</td>
+              </tr>
+              <tr>
+                <th scope="row">Duplicate detection</th>
+                <td class="is-yes">Yes</td><td class="is-yes">Yes</td><td class="is-yes">Yes</td>
+              </tr>
+              <tr>
+                <th scope="row">Column-level lineage</th>
+                <td class="is-no">Not included</td><td class="is-yes">Yes</td><td class="is-yes">Yes</td>
+              </tr>
+
+              <tr class="cat-row"><th colspan="4" scope="colgroup">Boards and readers</th></tr>
+              <tr>
+                <th scope="row">Reader seats</th>
+                <td>Unlimited</td><td>Unlimited</td><td>Unlimited</td>
+              </tr>
+              <tr>
+                <th scope="row">Author seats</th>
+                <td>5</td><td>25</td><td>Unlimited</td>
+              </tr>
+              <tr>
+                <th scope="row">Board history retention</th>
+                <td>90 days</td><td>18 months</td><td>7 years</td>
+              </tr>
+              <tr>
+                <th scope="row">Scheduled digests</th>
+                <td>Weekly</td><td>Any cadence</td><td>Any cadence + per-reader</td>
+              </tr>
+              <tr>
+                <th scope="row">Mobile board layout</th>
+                <td class="is-yes">Yes</td><td class="is-yes">Yes</td><td class="is-yes">Yes</td>
+              </tr>
+
+              <tr class="cat-row"><th colspan="4" scope="colgroup">Watch layer</th></tr>
+              <tr>
+                <th scope="row">Metrics under anomaly watch</th>
+                <td>40</td><td>500</td><td>Unlimited</td>
+              </tr>
+              <tr>
+                <th scope="row">Contribution breakdown on alerts</th>
+                <td class="is-no">Not included</td><td class="is-yes">Yes</td><td class="is-yes">Yes</td>
+              </tr>
+              <tr>
+                <th scope="row">Pager and escalation routing</th>
+                <td class="is-no">Not included</td><td class="is-yes">Yes</td><td class="is-yes">Yes</td>
+              </tr>
+
+              <tr class="cat-row"><th colspan="4" scope="colgroup">Platform</th></tr>
+              <tr>
+                <th scope="row">Open API and webhooks</th>
+                <td class="is-no">Not included</td><td class="is-yes">Yes</td><td class="is-yes">Yes</td>
+              </tr>
+              <tr>
+                <th scope="row">Embedded customer boards</th>
+                <td class="is-no">Not included</td><td class="is-no">Not included</td><td class="is-yes">Yes</td>
+              </tr>
+              <tr>
+                <th scope="row">Warehouse cost guardrails</th>
+                <td class="is-no">Not included</td><td class="is-yes">Yes</td><td class="is-yes">Yes</td>
+              </tr>
+              <tr>
+                <th scope="row">SSO and SCIM</th>
+                <td>SSO</td><td>SSO + SCIM</td><td>SSO + SCIM + groups</td>
+              </tr>
+              <tr>
+                <th scope="row">Data residency</th>
+                <td>US</td><td>US · EU</td><td>US · EU · APAC</td>
+              </tr>
+              <tr>
+                <th scope="row">Support response, business hours</th>
+                <td>Next day</td><td>4 hours</td><td>1 hour + named analyst</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="mt-2" style="font-size:.84rem;color:var(--muted-2)">Tables scroll sideways on narrow screens. Every plan includes WCAG 2.2 AA boards, and readers are never metered on any tier.</p>
+    </div>
+  </section>
+
+  <!-- ============ PROOF ============ -->
+  <section class="section" id="proof" aria-labelledby="proof-h">
+    <div class="shell">
+      <div class="section-head">
+        <p class="eyebrow"><span class="eyebrow__ref">Appx. B</span> Worked example</p>
+        <h2 id="proof-h">The invoice you retire is usually larger than the one you sign.</h2>
+        <p class="lede">Halcyon Freight ran three BI seats, two spreadsheet licences and a quarterly consulting retainer to keep numbers defensible. Pulseboard replaced all of it on the Scale plan. Here is the line-by-line, taken from their own cost sheet.</p>
+      </div>
+
+      <div class="split">
+        <div class="split__copy">
+          <p class="split__ref">B-01 · Cost record, twelve months</p>
+          <dl class="ledger__spec">
+            <div><dt>Previous analytics stack</dt><dd>$71,400</dd></div>
+            <div><dt>Contracted reporting support</dt><dd>$38,000</dd></div>
+            <div><dt>Manual reconciliation hours</dt><dd>1,860 hr</dd></div>
+            <div><dt>Pulseboard, Scale annual</dt><dd>$25,440</dd></div>
+            <div><dt>Migration, one-off</dt><dd>$6,200</dd></div>
+            <div><dt>Net first-year change</dt><dd>&minus;$77,760</dd></div>
+          </dl>
+          <ul class="bullets">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Migration cost was fixed in the order form, not discovered mid-project.</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Reconciliation hours fell because definitions now resolve from one registry rather than six copies.</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Reader seats stayed unmetered, so the finance team grew from 11 to 74 viewers at no cost.</span></li>
+          </ul>
+          <a class="btn btn--ghost" href="contact.html">Price your own stack with us</a>
+        </div>
+        <div class="split__media">
+          <figure class="media-frame">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="A laptop open on a glass table showing an analytics dashboard of trend charts and figures." width="1200" height="960" loading="lazy" decoding="async">
+            <figcaption class="media-frame__tag"><i aria-hidden="true"></i>Verified against the customer’s own ledger</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="split split--flip">
+        <div class="split__copy">
+          <p class="split__ref">B-02 · What the retainer bought</p>
+          <h3>You stop paying for the same question twice.</h3>
+          <p>Most of Halcyon’s consulting spend was not analysis. It was re-deriving a number a stakeholder had already challenged, then producing a written audit trail that the answer was right. Because Pulseboard keeps the compiled SQL beside every figure and stores each metric definition under version control, that work became a five-minute read instead of a billable engagement.</p>
+          <dl class="ledger__spec">
+            <div><dt>Board rebuilt from registry</dt><dd>14 of 19</dd></div>
+            <div><dt>Queries answered without an analyst</dt><dd>63%</dd></div>
+            <div><dt>Average time to a defensible figure</dt><dd>9 min</dd></div>
+            <div><dt>Consulting retainer, year two</dt><dd>$0</dd></div>
+          </dl>
+        </div>
+        <div class="split__media">
+          <figure class="media-frame">
+            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="A finance team reading one report together around a shared laptop." width="1200" height="960" loading="lazy" decoding="async">
+            <figcaption class="media-frame__tag"><i aria-hidden="true"></i>Halcyon Freight · 74 readers, 6 seats</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section" id="faq" aria-labelledby="faq-h">
+    <div class="shell">
+      <div class="section-head">
+        <p class="eyebrow"><span class="eyebrow__ref">Appx. C</span> Billing questions</p>
+        <h2 id="faq-h">What people ask before they sign.</h2>
+      </div>
+
+      <div class="ledger ledger--rows" data-ledger>
+        <div class="ledger__head" aria-hidden="true">
+          <span>Ref</span><span>Question</span><span>Area</span><span></span>
+        </div>
+
+        <div class="ledger__row is-open">
+          <button class="ledger__row-toggle" type="button">
+            <span class="ledger__ref">C-01</span>
+            <span class="ledger__title">Do you charge per user?<span class="ledger__sub">Because that is what makes old BI tools expensive.</span></span>
+            <span class="ledger__meta">Billing</span>
+            <span class="ledger__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="ledger__panel" id="panel-d01">
+            <div class="ledger__panel-inner">
+              <div class="ledger__detail">
+                <div>
+                  <p>No. Readers are free and unlimited on every plan, including external readers on embedded boards at Growth tier. You pay for author seats, governed metrics and query compute — the things that actually consume resources.</p>
+                  <p class="mt-1">We would rather 400 people look at the board than 40 of them share a screenshot because adding users costs money.</p>
+                </div>
+                <div class="ledger__fig">
+                  <dl class="ledger__spec">
+                    <div><dt>Reader cost</dt><dd>$0</dd></div>
+                    <div><dt>Author seats</dt><dd>Plan-capped</dd></div>
+                    <div><dt>Overage</dt><dd>None on metrics</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ledger__row">
+          <button class="ledger__row-toggle" type="button">
+            <span class="ledger__ref">C-02</span>
+            <span class="ledger__title">What happens if I switch to yearly mid-term?</span>
+            <span class="ledger__meta">Billing</span>
+            <span class="ledger__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="ledger__panel" id="panel-d02">
+            <div class="ledger__panel-inner">
+              <div class="ledger__detail">
+                <div>
+                  <p>We credit the unused portion of your current month against the annual invoice and start the new year on the first of the following month. The 20% discount applies from day one of the annual term. Downgrading back to monthly takes effect at the next renewal, never mid-term.</p>
+                </div>
+                <div class="ledger__fig">
+                  <dl class="ledger__spec">
+                    <div><dt>Switch effective</dt><dd>Next cycle</dd></div>
+                    <div><dt>Proration</dt><dd>Daily, credited</dd></div>
+                    <div><dt>Discount</dt><dd>20% annual</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ledger__row">
+          <button class="ledger__row-toggle" type="button">
+            <span class="ledger__ref">C-03</span>
+            <span class="ledger__title">Will Pulseboard inflate my warehouse bill?</span>
+            <span class="ledger__meta">Compute</span>
+            <span class="ledger__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="ledger__panel" id="panel-d03">
+            <div class="ledger__panel-inner">
+              <div class="ledger__detail">
+                <div>
+                  <p>Usually the opposite. Every query is cost-estimated before it runs, identical sub-plans reuse results, and Team and Growth plans carry a hard ceiling per reader group. Across workspaces over six months old, BI query spend falls by around a third once duplicate dashboard logic is retired into the registry.</p>
+                </div>
+                <div class="ledger__fig">
+                  <dl class="ledger__spec">
+                    <div><dt>Pre-flight estimate</dt><dd>&lt; 40 ms</dd></div>
+                    <div><dt>Typical spend change</dt><dd>−32%</dd></div>
+                    <div><dt>Hard ceiling</dt><dd>Team and up</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ledger__row">
+          <button class="ledger__row-toggle" type="button">
+            <span class="ledger__ref">C-04</span>
+            <span class="ledger__title">Is there a trial, or do I have to talk to sales first?</span>
+            <span class="ledger__meta">Getting started</span>
+            <span class="ledger__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="ledger__panel" id="panel-d04">
+            <div class="ledger__panel-inner">
+              <div class="ledger__detail">
+                <div>
+                  <p>Starter and Team both run a 30-day trial against a live warehouse, no card required. Growth requires an intro call because residency, embedded scoping and audit retention need to be configured with someone who has done it before.</p>
+                  <ul class="bullets mt-2">
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Full product during trial — no disabled features.</span></li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Registry and boards you build are kept if you convert.</span></li>
+                  </ul>
+                </div>
+                <div class="ledger__fig">
+                  <dl class="ledger__spec">
+                    <div><dt>Trial length</dt><dd>30 days</dd></div>
+                    <div><dt>Card required</dt><dd>No</dd></div>
+                    <div><dt>Onboarding call</dt><dd>Optional</dd></div>
+                    <div><dt>Data deleted if idle</dt><dd>60 days</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ledger__row">
+          <button class="ledger__row-toggle" type="button">
+            <span class="ledger__ref">C-05</span>
+            <span class="ledger__title">How do you handle procurement and security review?</span>
+            <span class="ledger__meta">Legal</span>
+            <span class="ledger__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="ledger__panel" id="panel-d05">
+            <div class="ledger__panel-inner">
+              <div class="ledger__detail">
+                <div>
+                  <p>SOC 2 Type II report, pen-test summary, DPA and subprocessor list are available under NDA the same day you ask. Security questionnaires in CAIQ or SIG format are answered within three business days, and we will join a call with your controller to walk lineage rather than describe it in a form.</p>
+                </div>
+                <div class="ledger__fig">
+                  <dl class="ledger__spec">
+                    <div><dt>SOC 2 Type II</dt><dd>Current</dd></div>
+                    <div><dt>GDPR DPA</dt><dd>Standard + custom</dd></div>
+                    <div><dt>Subprocessors</dt><dd>Published list</dd></div>
+                    <div><dt>Pen test</dt><dd>Annual, third party</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ledger__row">
+          <button class="ledger__row-toggle" type="button">
+            <span class="ledger__ref">C-06</span>
+            <span class="ledger__title">Can we leave without losing the definitions?</span>
+            <span class="ledger__meta">Exit</span>
+            <span class="ledger__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="ledger__panel" id="panel-d06">
+            <div class="ledger__panel-inner">
+              <div class="ledger__detail">
+                <div>
+                  <p>Yes, and this is deliberate. The entire registry exports as plain SQL and YAML, boards export as definitions plus data, and the read log is CSV. Nothing you wrote is locked in a proprietary format that only we can read.</p>
+                </div>
+                <div class="ledger__fig">
+                  <dl class="ledger__spec">
+                    <div><dt>Registry export</dt><dd>SQL + YAML</dd></div>
+                    <div><dt>Board export</dt><dd>JSON + CSV</dd></div>
+                    <div><dt>Export cost</dt><dd>Free, any time</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="section section--tight" aria-labelledby="price-cta-h">
+    <div class="shell">
+      <div class="cta-band">
+        <div class="cta-band__inner">
+          <div>
+            <h2 id="price-cta-h">Send us your current BI invoice and we will price against it.</h2>
+            <p class="mt-2">If Pulseboard does not come out cheaper and clearer, we say so on the call and you keep your existing tool. That has happened eleven times, and we still have the same twelve customers.</p>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn--primary" href="contact.html" data-magnetic>Request a demo</a>
+            <a class="btn btn--ghost" href="features.html">Review the features</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="shell">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="Pulseboard — home">
+          <span class="brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 14h4l2.6-8 3.6 13.4L15.6 14H22"/></svg>
+          </span>
+          <span class="brand__word">Pulseboard<i class="brand__dot" aria-hidden="true"></i></span>
+        </a>
+        <p>The analytics registry for operating teams. Define once, publish everywhere, and keep the audit trail while you do it.</p>
+        <p class="footer-status"><i aria-hidden="true"></i>All query regions nominal · 99.98%</p>
+      </div>
+
+      <nav class="footer-col" aria-label="Product">
+        <h3 class="footer-col__title">Product</h3>
+        <ul>
+          <li><a href="features.html">Feature index</a></li>
+          <li><a href="index.html#registry">How it works</a></li>
+          <li><a href="features.html#query">Query engine</a></li>
+          <li><a href="features.html#alerting">Anomaly watch</a></li>
+          <li><a href="features.html#governance">Governance</a></li>
         </ul>
       </nav>
 
-      <div class="header-actions">
-        <a href="contact.html" class="btn btn-primary btn-sm">Request Access</a>
-      </div>
-    </div>
-  </header>
-
-  <main id="main-content">
-    <section class="page-hero bg-subtle border-bottom">
-      <div class="container text-center">
-        <div class="marginalia-tag">[PRICING MATRIX]</div>
-        <h1 class="page-title">Pay For Ingested Data, Not User Seats</h1>
-        <p class="page-lead">All plans include unlimited team seats, eBPF tracing probes, and standard support.</p>
-
-        <!-- INTERACTIVE MONTHLY / YEARLY TOGGLE -->
-        <div class="billing-toggle-container">
-          <span class="toggle-label" id="monthly-label">Monthly Billing</span>
-          <button type="button" class="billing-toggle-btn" role="switch" aria-checked="false" id="billing-switch" aria-labelledby="monthly-label yearly-label">
-            <span class="toggle-thumb"></span>
-          </button>
-          <span class="toggle-label" id="yearly-label">Annual Billing <span class="badge badge-accent">SAVE 20%</span></span>
-        </div>
-      </div>
-    </section>
-
-    <section class="section-block">
-      <div class="container">
-        <div class="grid-3 pricing-grid">
-          <!-- DEVELOPER PLAN -->
-          <div class="pricing-card tilt-card">
-            <div class="marginalia-tag">TIER_01 // STARTER</div>
-            <h3>Developer</h3>
-            <p class="plan-desc">For early stage applications & personal infra projects.</p>
-            <div class="price-display">
-              <span class="currency">$</span><span class="price-val" data-monthly="49" data-yearly="39">49</span><span class="period">/mo</span>
-            </div>
-            <ul class="plan-features">
-              <li><strong>100 GB</strong> Data Ingestion / mo</li>
-              <li>7-Day Log Retention</li>
-              <li>Up to 5 Cluster Nodes</li>
-              <li>Community Discord Support</li>
-            </ul>
-            <a href="contact.html" class="btn btn-secondary w-full">Deploy Tier</a>
-          </div>
-
-          <!-- PRO PLAN -->
-          <div class="pricing-card featured tilt-card">
-            <div class="featured-badge">MOST POPULAR</div>
-            <div class="marginalia-tag">TIER_02 // SCALE</div>
-            <h3>Growth Engine</h3>
-            <p class="plan-desc">For high-growth SaaS scaling microservices clusters.</p>
-            <div class="price-display">
-              <span class="currency">$</span><span class="price-val" data-monthly="199" data-yearly="159">199</span><span class="period">/mo</span>
-            </div>
-            <ul class="plan-features">
-              <li><strong>1 TB</strong> Data Ingestion / mo</li>
-              <li>30-Day Retention</li>
-              <li>Unlimited Cluster Nodes</li>
-              <li>eBPF Deep Packet Tracing</li>
-              <li>1-Hour SLA Support</li>
-            </ul>
-            <a href="contact.html" class="btn btn-primary w-full">Deploy Tier</a>
-          </div>
-
-          <!-- ENTERPRISE PLAN -->
-          <div class="pricing-card tilt-card">
-            <div class="marginalia-tag">TIER_03 // CUSTOM</div>
-            <h3>Mission Critical</h3>
-            <p class="plan-desc">For custom retention, VPC deployments, and dedicated specs.</p>
-            <div class="price-display">
-              <span class="price-custom">CUSTOM</span>
-            </div>
-            <ul class="plan-features">
-              <li><strong>Unlimited</strong> Data Ingestion</li>
-              <li>Custom Retention (Up to 7 Yrs)</li>
-              <li>Dedicated Private Cloud / On-Prem</li>
-              <li>SOC2 Type II & HIPAA Compliance</li>
-              <li>24/7 Dedicated TAM</li>
-            </ul>
-            <a href="contact.html" class="btn btn-secondary w-full">Contact Architect</a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer border-top">
-    <div class="container footer-grid">
-      <div class="footer-brand">
-        <a href="index.html" class="brand-logo"><span class="logo-text">PULSEBOARD</span></a>
-        <p class="footer-tagline">High-Density Telemetry & System Diagnostics Platform.</p>
-        <p class="copyright">© 2026 Pulseboard Inc. All rights reserved.</p>
-      </div>
-
-      <div class="footer-nav-col">
-        <span class="footer-heading">NAVIGATION</span>
+      <nav class="footer-col" aria-label="Company">
+        <h3 class="footer-col__title">Company</h3>
         <ul>
-          <li><a href="index.html">01 // Home</a></li>
-          <li><a href="features.html">02 // Features</a></li>
-          <li><a href="pricing.html">03 // Pricing</a></li>
-          <li><a href="about.html">04 // About</a></li>
-          <li><a href="contact.html">05 // Demo</a></li>
+          <li><a href="about.html">About Pulseboard</a></li>
+          <li><a href="about.html#story">Our story</a></li>
+          <li><a href="about.html#team">The team</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
-      </div>
+      </nav>
 
-      <div class="footer-nav-col">
-        <span class="footer-heading">SYSTEM STATUS</span>
-        <ul class="mono-list">
-          <li>US-EAST: <span class="text-green">ONLINE</span></li>
-          <li>EU-CENTRAL: <span class="text-green">ONLINE</span></li>
+      <nav class="footer-col" aria-label="Purchase and account">
+        <h3 class="footer-col__title">Plans</h3>
+        <ul>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="pricing.html#compare">Compare plans</a></li>
+          <li><a href="pricing.html#faq">Billing questions</a></li>
+          <li><a href="contact.html#support">Talk to support</a></li>
         </ul>
-      </div>
+      </nav>
     </div>
-  </footer>
+
+    <div class="footer-bottom">
+      <p class="mt-0"><span class="num">© <span data-year>2026</span> Pulseboard Systems Inc.</span> · Portland, Oregon · SOC 2 Type II audited · Registry build 4.11.</p>
+      <nav aria-label="Footer legal">
+        <ul>
+          <li><a href="about.html#values">Principles</a></li>
+          <li><a href="features.html#governance">Security</a></li>
+          <li><a href="contact.html#support">Status</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</footer>
+
 <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
 </html>
