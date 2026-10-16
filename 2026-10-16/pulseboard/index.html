@@ -1,17 +1,293 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pulseboard — Analytics That Think Ahead</title>
-    <meta name="description" content="Pulseboard is the analytics platform that turns raw data into strategic clarity. Real-time dashboards, predictive insights, and team collaboration." />
-    <meta name="theme-color" content="#faf9f7" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulseboard // Telemetry & Real-Time Analytics Engine</title>
+  <meta name="description" content="Mission Control for modern engineering teams. High-density telemetry, log streaming, and sub-second metrics aggregation.">
+  <meta name="theme-color" content="#f8fafc">
+  <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+  <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+  <link href="[https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap](https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap)" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main telemetry stream</a>
+
+  <!-- GLOBAL CONTROL HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo" aria-label="Pulseboard Homepage">
+        <span class="logo-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </span>
+        <span class="logo-text">PULSEBOARD<span class="version-tag">v4.2.0</span></span>
+      </a>
+
+      <nav class="main-nav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" aria-current="page" class="nav-link">01 // HOME</a></li>
+          <li><a href="features.html" class="nav-link">02 // FEATURES</a></li>
+          <li><a href="pricing.html" class="nav-link">03 // PRICING</a></li>
+          <li><a href="about.html" class="nav-link">04 // ABOUT</a></li>
+          <li><a href="contact.html" class="nav-link">05 // DEMO</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <span class="status-indicator online" title="Telemetry Ingestion Active">
+          <span class="pulse-dot"></span> 99.999% UP
+        </span>
+        <a href="contact.html" class="btn btn-primary btn-sm">Request Access <kbd class="kbd">⌘K</kbd></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- HERO SECTION WITH CURSOR SPOTLIGHT -->
+    <section class="hero-section spotlight-container">
+      <div class="spotlight-glow" aria-hidden="true"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="marginalia-tag">[SEC. 00-01] TELEMETRY INSTRUMENTATION ENGINE</div>
+          <h1 class="hero-title">Mission Control for High-Throughput Infrastructure</h1>
+          <p class="hero-lead">
+            Pulseboard aggregates millions of trace spans, custom metrics, and system logs into a unified, high-density telemetry console with sub-50ms query latency.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="contact.html" class="btn btn-primary btn-lg">Deploy Instance</a>
+            <a href="features.html" class="btn btn-secondary btn-lg">Explore Specs</a>
+          </div>
+
+          <div class="key-telemetry-chips">
+            <span class="tech-chip"><kbd>eBPF</kbd> Zero-Overhead</span>
+            <span class="tech-chip"><kbd>OTel</kbd> Native Standard</span>
+            <span class="tech-chip"><kbd>ClickHouse</kbd> Powered</span>
+          </div>
+        </div>
+
+        <!-- CSS INSTRUMENT DASHBOARD MOCKUP -->
+        <div class="hero-visual">
+          <div class="instrument-panel tilt-card">
+            <div class="panel-header">
+              <div class="window-controls">
+                <span class="control red"></span>
+                <span class="control yellow"></span>
+                <span class="control green"></span>
+              </div>
+              <div class="panel-title">SYS_CLUSTER_US_EAST_01 // TELEMETRY_STREAM</div>
+              <div class="panel-meta"><span class="badge badge-mono">LIVE 120 FPS</span></div>
+            </div>
+
+            <div class="panel-body grid-instrument">
+              <div class="tile tile-stat">
+                <span class="tile-label">INGRESS THROUGHPUT</span>
+                <span class="tile-value highlight"><span class="counter" data-target="2450800">0</span> <small>req/sec</small></span>
+                <div class="mini-sparkline" aria-hidden="true">
+                  <div class="bar" style="--h: 40%"></div><div class="bar" style="--h: 65%"></div>
+                  <div class="bar" style="--h: 80%"></div><div class="bar" style="--h: 55%"></div>
+                  <div class="bar" style="--h: 95%"></div><div class="bar" style="--h: 85%"></div>
+                </div>
+              </div>
+
+              <div class="tile tile-stat">
+                <span class="tile-label">P99 LATENCY</span>
+                <span class="tile-value"><span class="counter" data-target="4.2">0</span> <small>ms</small></span>
+                <div class="status-bar green" style="width: 88%;"></div>
+              </div>
+
+              <div class="tile tile-stat">
+                <span class="tile-label">MEMORY CONSUMPTION</span>
+                <span class="tile-value"><span class="counter" data-target="64.8">0</span> <small>%</small></span>
+                <div class="status-bar indigo" style="width: 64.8%;"></div>
+              </div>
+
+              <div class="tile tile-chart">
+                <div class="tile-header">
+                  <span>CLUSTER_LOAD_INDEX</span>
+                  <span class="mono-dim">INTERVAL: 1s</span>
+                </div>
+                <div class="telemetry-chart-mock">
+                  <svg viewBox="0 0 400 120" class="chart-svg" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#4f46e5" stop-opacity="0.4"/>
+                        <stop offset="100%" stop-color="#4f46e5" stop-opacity="0.0"/>
+                      </linearGradient>
+                    </defs>
+                    <path d="M0,80 Q50,20 100,60 T200,30 T300,90 T400,20 L400,120 L0,120 Z" fill="url(#chartGrad)"/>
+                    <path d="M0,80 Q50,20 100,60 T200,30 T300,90 T400,20" fill="none" stroke="#4f46e5" stroke-width="2.5"/>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="tile tile-logs">
+                <div class="tile-header">
+                  <span>REALTIME_EVENT_LOG</span>
+                  <span class="live-pulse"></span>
+                </div>
+                <div class="log-stream">
+                  <div class="log-line"><span class="t">15:59:02.102</span> <span class="tag info">INFO</span> k8s-node-88 auto-scaled +4 pods</div>
+                  <div class="log-line"><span class="t">15:59:02.341</span> <span class="tag warn">WARN</span> DB pool utilization > 82%</div>
+                  <div class="log-line"><span class="t">15:59:02.889</span> <span class="tag info">INFO</span> TLS cert renewal verified</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INDEX MANUSCRIPT SECTION 01 // TRUSTED INFRASTRUCTURE -->
+    <section class="section-block border-top">
+      <div class="container">
+        <div class="index-header">
+          <span class="index-num">01.0</span>
+          <div class="index-title-group">
+            <span class="marginalia-note">// PROVEN AT SCALE</span>
+            <h2>Ingesting Telemetry for Engineering Leaders</h2>
+          </div>
+        </div>
+
+        <div class="logo-grid">
+          <div class="logo-card"><strong>DATACORP</strong></div>
+          <div class="logo-card"><strong>HYPERSCALE</strong></div>
+          <div class="logo-card"><strong>NEXUS_IO</strong></div>
+          <div class="logo-card"><strong>QUANTUM_NET</strong></div>
+          <div class="logo-card"><strong>SYNAPSE_AI</strong></div>
+          <div class="logo-card"><strong>CLOUDFLOW</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INDEX MANUSCRIPT SECTION 02 // METRICS COUNTER BAND -->
+    <section class="section-block bg-subtle border-top border-bottom">
+      <div class="container">
+        <div class="index-header">
+          <span class="index-num">02.0</span>
+          <div class="index-title-group">
+            <span class="marginalia-note">// GLOBAL BENCHMARKS</span>
+            <h2>Sub-Second Telemetry Operations</h2>
+          </div>
+        </div>
+
+        <div class="grid-3 metrics-band">
+          <div class="tile tilt-card">
+            <div class="marginalia-tag">METRIC_01</div>
+            <div class="metric-huge"><span class="counter" data-target="10">0</span>B+</div>
+            <p class="metric-desc">Daily events processed across global edge clusters with zero dropped logs.</p>
+          </div>
+
+          <div class="tile tilt-card">
+            <div class="marginalia-tag">METRIC_02</div>
+            <div class="metric-huge">&lt;<span class="counter" data-target="12">0</span>ms</div>
+            <p class="metric-desc">Median time-to-insight from packet egress to index search visualization.</p>
+          </div>
+
+          <div class="tile tilt-card">
+            <div class="marginalia-tag">METRIC_03</div>
+            <div class="metric-huge"><span class="counter" data-target="99.99">0</span>%</div>
+            <p class="metric-desc">SLA uptime guarantee backed by multi-region active-active clusters.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INDEX MANUSCRIPT SECTION 03 // ARCHITECTURE ARCHIVE -->
+    <section class="section-block">
+      <div class="container">
+        <div class="index-header">
+          <span class="index-num">03.0</span>
+          <div class="index-title-group">
+            <span class="marginalia-note">// SYSTEM ARCHITECTURE</span>
+            <h2>Built For High-Density Telemetry Triage</h2>
+          </div>
+        </div>
+
+        <div class="grid-2 gap-lg">
+          <div class="media-card tilt-card">
+            <img src="[https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=80](https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=80)" width="800" height="600" alt="Server room with blue high-density infrastructure lighting" loading="lazy">
+            <div class="media-card-body">
+              <span class="badge">INFRASTRUCTURE</span>
+              <h3>Distributed eBPF Collector Agents</h3>
+              <p>Kernel-level observability without bytecode injection or high sidecar latency overhead.</p>
+            </div>
+          </div>
+
+          <div class="media-card tilt-card">
+            <img src="[https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80](https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80)" width="800" height="600" alt="Data analytics visualization dashboard on modern monitor display" loading="lazy">
+            <div class="media-card-body">
+              <span class="badge">VISUALIZATION</span>
+              <h3>Real-Time Correlation & Alert Matrix</h3>
+              <p>Correlate trace anomalies directly to log lines and host metrics in a single unified view.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIAL PANEL -->
+    <section class="section-block bg-dark text-light border-top">
+      <div class="container">
+        <div class="index-header dark">
+          <span class="index-num">04.0</span>
+          <div class="index-title-group">
+            <span class="marginalia-note">// FIELD REPORTS</span>
+            <h2>What Lead Engineers Say</h2>
+          </div>
+        </div>
+
+        <div class="testimonial-box tilt-card">
+          <blockquote class="testimonial-quote">
+            “Pulseboard replaced four separate monitoring tools for us. During our recent peak event, the eBPF kernel tracing caught a memory leakage bug in under 90 seconds. It paid for itself in one morning.”
+          </blockquote>
+          <div class="testimonial-meta">
+            <div class="avatar">
+              <img src="[https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80](https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80)" width="60" height="60" alt="Elena Rostova">
+            </div>
+            <div>
+              <div class="author-name">Elena Rostova</div>
+              <div class="author-title">VP of Infrastructure // HyperScale Global</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer border-top">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand-logo">
+          <span class="logo-text">PULSEBOARD</span>
+        </a>
+        <p class="footer-tagline">High-Density Telemetry & System Diagnostics Platform.</p>
+        <p class="copyright">© 2026 Pulseboard Inc. All rights reserved.</p>
+      </div>
+
+      <div class="footer-nav-col">
+        <span class="footer-heading">NAVIGATION</span>
+        <ul>
+          <li><a href="index.html">01 // Home</a></li>
+          <li><a href="features.html">02 // Features</a></li>
+          <li><a href="pricing.html">03 // Pricing</a></li>
+          <li><a href="about.html">04 // About</a></li>
+          <li><a href="contact.html">05 // Demo</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-nav-col">
+        <span class="footer-heading">SYSTEM STATUS</span>
+        <ul class="mono-list">
+          <li>US-EAST: <span class="text-green">ONLINE</span></li>
+          <li>EU-CENTRAL: <span class="text-green">ONLINE</span></li>
+          <li>AP-NORTHEAST: <span class="text-green">ONLINE</span></li>
+          <li>LATENCY: <span class="text-indigo">1.2ms</span></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
 </html>
