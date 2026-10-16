@@ -1,154 +1,564 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pulseboard // System Features & Technical Specs</title>
-  <meta name="description" content="Explore Pulseboard telemetry capabilities: eBPF automatic tracing, ClickHouse vector indexing, and real-time incident automation.">
-  <meta name="theme-color" content="#f8fafc">
-  <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
-  <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
-  <link href="[https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap](https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap)" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Features — Pulseboard query engine, registry, watch layer and governance</title>
+<meta name="description" content="A deep look at the four layers of Pulseboard: the live query engine, the metric registry, the anomaly watch layer, and governance that keeps every figure accountable.">
+<meta name="theme-color" content="#f4f6fd">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234f46e5'/%3E%3Cpath d='M4 19h5l3.5-11 4.5 17 3-6h7' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
 </head>
 <body>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
+<a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.html" class="brand-logo" aria-label="Pulseboard Homepage">
-        <span class="logo-mark" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-        </span>
-        <span class="logo-text">PULSEBOARD<span class="version-tag">v4.2.0</span></span>
-      </a>
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="index.html" aria-label="Pulseboard — home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 14h4l2.6-8 3.6 13.4L15.6 14H22"/></svg>
+      </span>
+      <span class="brand__word">Pulseboard<i class="brand__dot" aria-hidden="true"></i></span>
+    </a>
 
-      <nav class="main-nav" aria-label="Main Navigation">
-        <ul class="nav-list">
-          <li><a href="index.html" class="nav-link">01 // HOME</a></li>
-          <li><a href="features.html" aria-current="page" class="nav-link">02 // FEATURES</a></li>
-          <li><a href="pricing.html" class="nav-link">03 // PRICING</a></li>
-          <li><a href="about.html" class="nav-link">04 // ABOUT</a></li>
-          <li><a href="contact.html" class="nav-link">05 // DEMO</a></li>
+    <nav id="primary-nav" class="primary-nav" aria-label="Primary">
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="features.html" aria-current="page">Features</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <a class="btn btn--primary nav-cta" href="contact.html">Request a demo</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="btn btn--primary btn--sm" href="contact.html" data-magnetic="0.22">Request a demo</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open main menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ PAGE HERO ============ -->
+  <section class="page-hero">
+    <div class="shell page-hero__inner">
+      <p class="eyebrow"><span class="eyebrow__ref">Vol. II</span> Feature index</p>
+      <h1>Four layers, filed in the order you will meet them.</h1>
+      <p class="lede">Pulseboard is not a chart library with a login screen. It is a query engine, a registry, a watch layer and a set of controls — each one built so that a number on a page can be defended a year later by someone who never wrote it.</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="contact.html" data-magnetic>Request a demo</a>
+        <a class="btn btn--ghost" href="pricing.html">See what it costs<span class="btn__arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SPLIT DIALOGUE — sticky stage, flowing copy ============ -->
+  <section class="section dialogue-section" aria-labelledby="layers-h">
+    <div class="shell">
+      <h2 id="layers-h" class="sr-only">The four layers of the platform</h2>
+
+      <div class="dialogue" data-dialogue>
+        <div class="dialogue__stage">
+          <div class="stage">
+            <div class="stage__frame">
+              <figure class="stage__fig is-on" data-stage="0">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Charts and figures open on a laptop screen in a modern workspace." width="1200" height="960" loading="eager" decoding="async">
+                <figcaption class="media-frame__tag"><i aria-hidden="true"></i>412 ms p95 · 34 sources</figcaption>
+              </figure>
+              <figure class="stage__fig" data-stage="1">
+                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Two colleagues reviewing a shared document at a desk, discussing a definition." width="1200" height="960" loading="lazy" decoding="async">
+                <figcaption class="media-frame__tag"><i aria-hidden="true"></i>Definition review · 3 approvals</figcaption>
+              </figure>
+              <figure class="stage__fig" data-stage="2">
+                <img src="https://images.unsplash.com/photo-1531973576160-7125cd663d86?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Two people leaning in to read the same monitor as an alert comes through." width="1200" height="960" loading="lazy" decoding="async">
+                <figcaption class="media-frame__tag"><i aria-hidden="true"></i>Drift detected · 9 min after source</figcaption>
+              </figure>
+              <figure class="stage__fig" data-stage="3">
+                <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="An orderly office interior with daylight, empty desks and records in place." width="1200" height="960" loading="lazy" decoding="async">
+                <figcaption class="media-frame__tag"><i aria-hidden="true"></i>SOC 2 Type II · EU residency</figcaption>
+              </figure>
+            </div>
+
+            <nav class="stage__index" aria-label="Platform layers">
+              <a href="#query" class="is-on" data-stage-link="0"><span class="num">A-01</span> Query engine</a>
+              <a href="#registry" data-stage-link="1"><span class="num">A-02</span> Metric registry</a>
+              <a href="#alerting" data-stage-link="2"><span class="num">A-03</span> Watch layer</a>
+              <a href="#governance" data-stage-link="3"><span class="num">A-04</span> Governance</a>
+            </nav>
+          </div>
+        </div>
+
+        <div class="dialogue__flow">
+
+          <article class="chapter" id="query" data-chapter="0">
+            <div class="chapter__inner">
+              <p class="split__ref">A-01 · Query engine</p>
+              <h2>Ask a question in plain English and get the same answer your warehouse would give.</h2>
+              <p class="lede">The planner compiles each natural-language request into SQL against your registered models, runs it in your warehouse, and returns a governed result — never a guess stitched from a cached screenshot.</p>
+              <ul class="bullets">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Compiled SQL is shown beside every answer, so a skeptic can read the exact predicate.</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Two-pass caching keeps a p95 of 412 ms on boards with 40+ tiles.</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Unregistered questions are refused and routed to an owner instead of invented.</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Comparisons, cohort pins and period shifts are all one click, no formula editing.</span></li>
+              </ul>
+              <a class="btn btn--ghost" href="contact.html">See it answer a real question</a>
+            </div>
+          </article>
+
+          <article class="chapter" id="registry" data-chapter="1">
+            <div class="chapter__inner">
+              <p class="split__ref">A-02 · Metric registry</p>
+              <h2>One definition, one owner, one place to look it up.</h2>
+              <p class="lede">The registry is the heart of the product. Every metric is a versioned entry with SQL, a business description, an accountable owner and a list of every board that depends on it. Change a definition and the dependency graph tells you who needs to hear about it before you press publish.</p>
+              <ul class="bullets">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Column-level lineage from raw table to the tile on the exec board.</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Review history with diffs — read what changed and who signed it off.</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Near-duplicate detection warns you when “GRR” and “Gross rev” already exist.</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Time-travel on any figure: read the number as it stood on any past date.</span></li>
+              </ul>
+              <div class="chip-row">
+                <span class="chip">18,400 metrics governed</span>
+                <span class="chip">Median 2.1 owners per metric</span>
+                <span class="chip">Unlimited revert window</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="chapter" id="alerting" data-chapter="2">
+            <div class="chapter__inner">
+              <p class="split__ref">A-03 · Watch layer</p>
+              <h2>Noise is a design failure, not an expected cost of monitoring.</h2>
+              <p class="lede">The watch layer learns the shape of each metric — weekday dips, month-end spikes, seasonal troughs — and only interrupts a human when the movement is genuinely unusual. Every alert arrives with the largest contributors already ranked underneath it.</p>
+              <ul class="bullets">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Seasonality-aware bands, tuned automatically from 90 days of history.</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Contribution breakdown attached to the message: region, plan, channel, cohort.</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Upstream staleness raises a data-quality page before a wrong figure is ever shown.</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Escalation paths with severity ceilings per recipient and per timezone quiet hours.</span></li>
+              </ul>
+              <div class="chip-row">
+                <span class="chip">91% alert precision</span>
+                <span class="chip">6 min median detection</span>
+                <span class="chip">9 fewer pages per analyst per week</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="chapter" id="governance" data-chapter="3">
+            <div class="chapter__inner">
+              <p class="split__ref">A-04 · Governance</p>
+              <h2>Compliance that is a by-product of building a board, not a separate chore.</h2>
+              <p class="lede">Access is granted to roles, not to individual copies of a spreadsheet. Every read is logged, every definition change is attributable, and every board can state on request who saw it and when. That is the difference between a company that can answer an auditor and one that has to reconstruct an answer.</p>
+              <ul class="bullets">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Row- and column-level policies inherited from your warehouse grants.</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>SSO, SCIM provisioning and per-region data residency controls.</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Immutable read log exportable for SOC 2 and internal audit cycles.</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>PII classification prompts before a sensitive column can reach a public board.</span></li>
+              </ul>
+              <a class="btn btn--ghost" href="contact.html#support">Ask about a specific framework</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CAPABILITY REGISTRY (accordion) ============ -->
+  <section class="section" id="capabilities" aria-labelledby="caps-h">
+    <div class="shell">
+      <div class="section-head section-head--split">
+        <div>
+          <p class="eyebrow"><span class="eyebrow__ref">Appx. B</span> Capability index</p>
+          <h2 id="caps-h" class="mt-2">The rest of the ledger. Open any line for the full entry.</h2>
+        </div>
+        <p class="lede">Nine capabilities that do not usually earn a headline but decide whether an analytics rollout survives its second quarter.</p>
+      </div>
+
+      <div class="ledger ledger--rows" data-ledger>
+        <div class="ledger__head" aria-hidden="true">
+          <span>Ref</span><span>Capability</span><span>Available from</span><span></span>
+        </div>
+
+        <div class="ledger__row is-open">
+          <button class="ledger__row-toggle" type="button">
+            <span class="ledger__ref">B-01</span>
+            <span class="ledger__title">Board history<span class="ledger__sub">Read any tile exactly as it looked on a chosen past date.</span></span>
+            <span class="ledger__meta">Team and up</span>
+            <span class="ledger__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="ledger__panel" id="panel-b01">
+            <div class="ledger__panel-inner">
+              <div class="ledger__detail">
+                <div>
+                  <p>Every board keeps a versioned snapshot of its figures, definitions and layout. Scrub back to the quarter-end version that leadership actually saw, then compare it against what the same board reads today. Useful for a post-mortem; indispensable for a restated forecast.</p>
+                  <dl class="ledger__spec mt-2">
+                    <div><dt>Retention</dt><dd>7 years (Growth)</dd></div>
+                    <div><dt>Compare mode</dt><dd>Two dates, side by side</dd></div>
+                    <div><dt>Restore</dt><dd>One click, new version</dd></div>
+                  </dl>
+                </div>
+                <div class="ledger__fig">
+                  <div class="ledger__img">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="A laptop open on a desk showing trend lines, as a board history review would appear." width="900" height="600" loading="lazy" decoding="async">
+                  </div>
+                  <p style="font-size:.84rem;color:var(--muted)">Snapshot diffs are stored as data, not screenshots, so historical figures stay queryable.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ledger__row">
+          <button class="ledger__row-toggle" type="button">
+            <span class="ledger__ref">B-02</span>
+            <span class="ledger__title">Scheduled digests<span class="ledger__sub">A board that emails itself, with the movement summarised at the top.</span></span>
+            <span class="ledger__meta">Starter and up</span>
+            <span class="ledger__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="ledger__panel" id="panel-b02">
+            <div class="ledger__panel-inner">
+              <div class="ledger__detail">
+                <div>
+                  <p>Daily, weekly or monthly delivery to a named list or a channel. Each message opens with what changed since the last issue, then the tiles themselves rendered as live queries at send time — never a stale image from a template.</p>
+                  <dl class="ledger__spec mt-2">
+                    <div><dt>Frequencies</dt><dd>Daily · Weekly · Monthly</dd></div>
+                    <div><dt>Formats</dt><dd>Email · Slack · Teams</dd></div>
+                    <div><dt>Per-recipient</dt><dd>Own row-level grants</dd></div>
+                  </dl>
+                </div>
+                <div class="ledger__fig">
+                  <div class="ledger__img">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="A small team gathered around a table reading the same report together." width="900" height="600" loading="lazy" decoding="async">
+                  </div>
+                  <p style="font-size:.84rem;color:var(--muted)">Digests are resolved per reader, so one schedule serves finance and regional managers without leaking either view.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ledger__row">
+          <button class="ledger__row-toggle" type="button">
+            <span class="ledger__ref">B-03</span>
+            <span class="ledger__title">Comment threads<span class="ledger__sub">Put the discussion where the number is, not in a forwarded chain.</span></span>
+            <span class="ledger__meta">Starter and up</span>
+            <span class="ledger__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="ledger__panel" id="panel-b03">
+            <div class="ledger__panel-inner">
+              <div class="ledger__detail">
+                <div>
+                  <p>Annotate any tile, mention a colleague, resolve a thread. Comments are attached to the metric version they describe, so an explanation written in March is still visible beside the same figure in November — with its date.</p>
+                  <ul class="bullets mt-2">
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Resolve and reopen, with a record of who closed it.</span></li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Thread summaries appear inside the scheduled digest automatically.</span></li>
+                  </ul>
+                </div>
+                <div class="ledger__fig">
+                  <dl class="ledger__spec">
+                    <div><dt>Anchor</dt><dd>Metric version</dd></div>
+                    <div><dt>Mentions</dt><dd>Notify by email or chat</dd></div>
+                    <div><dt>Search</dt><dd>Full-text across threads</dd></div>
+                    <div><dt>Export</dt><dd>CSV with board snapshot</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ledger__row">
+          <button class="ledger__row-toggle" type="button">
+            <span class="ledger__ref">B-04</span>
+            <span class="ledger__title">Embedded boards<span class="ledger__sub">Serve a governed board inside your own customer portal.</span></span>
+            <span class="ledger__meta">Growth</span>
+            <span class="ledger__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="ledger__panel" id="panel-b04">
+            <div class="ledger__panel-inner">
+              <div class="ledger__detail">
+                <div>
+                  <p>Ship the same registry to customers. Signed embed tokens scope an external reader to one tenant’s rows, inherit your branding, and still respect the metric definitions your own analysts rely on — so the number a client sees is the number you quoted them.</p>
+                  <dl class="ledger__spec mt-2">
+                    <div><dt>Auth</dt><dd>Signed embed token</dd></div>
+                    <div><dt>Theming</dt><dd>CSS variables</dd></div>
+                    <div><dt>Row scoping</dt><dd>Per tenant ID</dd></div>
+                    <div><dt>Rate limit</dt><dd>600 req/min</dd></div>
+                  </dl>
+                </div>
+                <div class="ledger__fig">
+                  <div class="ledger__img">
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Macro view of a circuit board, evoking an embedded integration surface." width="900" height="600" loading="lazy" decoding="async">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ledger__row">
+          <button class="ledger__row-toggle" type="button">
+            <span class="ledger__ref">B-05</span>
+            <span class="ledger__title">Warehouse cost guardrails<span class="ledger__sub">Cap the compute a board may spend, per reader group.</span></span>
+            <span class="ledger__meta">Team and up</span>
+            <span class="ledger__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="ledger__panel" id="panel-b05">
+            <div class="ledger__panel-inner">
+              <div class="ledger__detail">
+                <div>
+                  <p>An open board should not become a surprise warehouse invoice. Pulseboard estimates query cost before it runs, refuses plans above your ceiling, and shows which tile is spending what. Teams typically cut warehouse spend on BI queries by roughly a third in the first month.</p>
+                  <ul class="bullets mt-2">
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Pre-flight cost estimates with a hard reject threshold.</span></li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Per-group budgets and a monthly spend report by department.</span></li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Automatic result reuse for identical sub-plans.</span></li>
+                  </ul>
+                </div>
+                <div class="ledger__fig">
+                  <dl class="ledger__spec">
+                    <div><dt>Avg. spend cut</dt><dd>32%</dd></div>
+                    <div><dt>Estimate latency</dt><dd>&lt; 40 ms</dd></div>
+                    <div><dt>Budget scope</dt><dd>Group · board · tenant</dd></div>
+                    <div><dt>Reporting</dt><dd>Monthly CSV</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ledger__row">
+          <button class="ledger__row-toggle" type="button">
+            <span class="ledger__ref">B-06</span>
+            <span class="ledger__title">Mobile boards<span class="ledger__sub">The same registry, laid out for a phone in a corridor.</span></span>
+            <span class="ledger__meta">Starter and up</span>
+            <span class="ledger__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="ledger__panel" id="panel-b06">
+            <div class="ledger__panel-inner">
+              <div class="ledger__detail">
+                <div>
+                  <p>Board authors set an explicit mobile order rather than letting a grid collapse unpredictably. Store managers and field engineers get three figures that matter, each tappable to its lineage, sized for a gloved thumb.</p>
+                  <dl class="ledger__spec mt-2">
+                    <div><dt>Layout</dt><dd>Author-defined order</dd></div>
+                    <div><dt>Tap targets</dt><dd>≥ 44 px</dd></div>
+                    <div><dt>Offline</dt><dd>Last snapshot, marked</dd></div>
+                    <div><dt>Push</dt><dd>Alert-only, opt-in</dd></div>
+                  </dl>
+                </div>
+                <div class="ledger__fig">
+                  <div class="ledger__img">
+                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="A team standing around a table in discussion, reviewing results together." width="900" height="600" loading="lazy" decoding="async">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ledger__row">
+          <button class="ledger__row-toggle" type="button">
+            <span class="ledger__ref">B-07</span>
+            <span class="ledger__title">Migration import<span class="ledger__sub">Move existing Looker, Tableau and spreadsheet logic in, not from scratch.</span></span>
+            <span class="ledger__meta">All plans</span>
+            <span class="ledger__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="ledger__panel" id="panel-b07">
+            <div class="ledger__panel-inner">
+              <div class="ledger__detail">
+                <div>
+                  <p>Point the importer at a LookML project, a Tableau workbook or a folder of reporting spreadsheets. It extracts the queries, proposes registry entries, flags the definitions that disagree with each other, and leaves you a reconciliation report rather than a pile of work.</p>
+                  <ul class="bullets mt-2">
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Conflict report lists every metric that currently has two answers.</span></li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Value reconciliation runs old logic and new against the same date range.</span></li>
+                  </ul>
+                </div>
+                <div class="ledger__fig">
+                  <dl class="ledger__spec">
+                    <div><dt>Sources read</dt><dd>LookML · TWBX · XLSX</dd></div>
+                    <div><dt>Median import</dt><dd>3.5 days</dd></div>
+                    <div><dt>Confidence</dt><dd>Scored per entry</dd></div>
+                    <div><dt>Rollback</dt><dd>Full, pre-import state</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ledger__row">
+          <button class="ledger__row-toggle" type="button">
+            <span class="ledger__ref">B-08</span>
+            <span class="ledger__title">Open API<span class="ledger__sub">Read the registry programmatically and treat metrics as infrastructure.</span></span>
+            <span class="ledger__meta">Team and up</span>
+            <span class="ledger__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="ledger__panel" id="panel-b08">
+            <div class="ledger__panel-inner">
+              <div class="ledger__detail">
+                <div>
+                  <p>A REST and GraphQL surface over definitions, values, lineage and alerts. Teams use it to inject a governed figure into a pricing service, a partner report, or their own internal tool — with the same ownership metadata the board carries.</p>
+                  <dl class="ledger__spec mt-2">
+                    <div><dt>Surfaces</dt><dd>REST · GraphQL · Webhooks</dd></div>
+                    <div><dt>SDKs</dt><dd>TS · Python · Go</dd></div>
+                    <div><dt>Webhooks</dt><dd>Alert · definition change</dd></div>
+                    <div><dt>Limits</dt><dd>Per token, published</dd></div>
+                  </dl>
+                </div>
+                <div class="ledger__fig">
+                  <div class="ledger__img">
+                    <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="An engineer working at a keyboard with code visible on the display." width="900" height="600" loading="lazy" decoding="async">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ledger__row">
+          <button class="ledger__row-toggle" type="button">
+            <span class="ledger__ref">B-09</span>
+            <span class="ledger__title">Accessibility commitments<span class="ledger__sub">Keyboard-first authoring and WCAG 2.2 AA on every published board.</span></span>
+            <span class="ledger__meta">All plans</span>
+            <span class="ledger__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="ledger__panel" id="panel-b09">
+            <div class="ledger__panel-inner">
+              <div class="ledger__detail">
+                <div>
+                  <p>Charts ship with a text summary, a data-table alternative and pattern-encoded series so meaning never depends on colour alone. Every published board is audited against WCAG 2.2 AA before it can be marked organisational.</p>
+                  <ul class="bullets mt-2">
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Focus order and labelled controls on all interactive tiles.</span></li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Reduced-motion respected across every transition, including this page’s.</span></li>
+                  </ul>
+                </div>
+                <div class="ledger__fig">
+                  <dl class="ledger__spec">
+                    <div><dt>Standard</dt><dd>WCAG 2.2 AA</dd></div>
+                    <div><dt>Audit cadence</dt><dd>Quarterly</dd></div>
+                    <div><dt>Alt formats</dt><dd>Table · summary · CSV</dd></div>
+                    <div><dt>Reported defects</dt><dd>Fix within 14 days</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INTEGRATIONS ============ -->
+  <section class="section section--tight" id="integrations" aria-labelledby="integ-h">
+    <div class="shell">
+      <div class="section-head">
+        <p class="eyebrow"><span class="eyebrow__ref">Appx. C</span> Connections</p>
+        <h2 id="integ-h">Thirty-four sources, and the six you already own.</h2>
+      </div>
+      <div class="stack-grid reveal">
+        <p class="stack-item"><i aria-hidden="true"></i>Snowflake</p>
+        <p class="stack-item"><i aria-hidden="true"></i>BigQuery</p>
+        <p class="stack-item"><i aria-hidden="true"></i>Redshift</p>
+        <p class="stack-item"><i aria-hidden="true"></i>Databricks</p>
+        <p class="stack-item"><i aria-hidden="true"></i>Postgres</p>
+        <p class="stack-item"><i aria-hidden="true"></i>Stripe</p>
+        <p class="stack-item"><i aria-hidden="true"></i>Salesforce</p>
+        <p class="stack-item"><i aria-hidden="true"></i>HubSpot</p>
+        <p class="stack-item"><i aria-hidden="true"></i>NetSuite</p>
+        <p class="stack-item"><i aria-hidden="true"></i>Segment</p>
+        <p class="stack-item"><i aria-hidden="true"></i>dbt models</p>
+        <p class="stack-item"><i aria-hidden="true"></i>Slack</p>
+      </div>
+      <p class="mt-3 measure">Missing one? The open API and a CSV drop-folder cover the rest, and our team ships a connector request in about three weeks when more than four customers ask for it.</p>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="section section--tight" aria-labelledby="feat-cta-h">
+    <div class="shell">
+      <div class="cta-band">
+        <div class="cta-band__inner">
+          <div>
+            <h2 id="feat-cta-h">Pick the layer that hurts most and start there.</h2>
+            <p class="mt-2">Most teams open with the registry because that is where the arguments live. Whichever you begin with, the other three fall into place within a month.</p>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn--primary" href="contact.html" data-magnetic>Request a demo</a>
+            <a class="btn btn--ghost" href="pricing.html">Compare plans</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="shell">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="Pulseboard — home">
+          <span class="brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 14h4l2.6-8 3.6 13.4L15.6 14H22"/></svg>
+          </span>
+          <span class="brand__word">Pulseboard<i class="brand__dot" aria-hidden="true"></i></span>
+        </a>
+        <p>The analytics registry for operating teams. Define once, publish everywhere, and keep the audit trail while you do it.</p>
+        <p class="footer-status"><i aria-hidden="true"></i>All query regions nominal · 99.98%</p>
+      </div>
+
+      <nav class="footer-col" aria-label="Product">
+        <h3 class="footer-col__title">Product</h3>
+        <ul>
+          <li><a href="features.html">Feature index</a></li>
+          <li><a href="index.html#registry">How it works</a></li>
+          <li><a href="features.html#query">Query engine</a></li>
+          <li><a href="features.html#alerting">Anomaly watch</a></li>
+          <li><a href="features.html#governance">Governance</a></li>
         </ul>
       </nav>
 
-      <div class="header-actions">
-        <a href="contact.html" class="btn btn-primary btn-sm">Request Access</a>
-      </div>
-    </div>
-  </header>
-
-  <main id="main-content">
-    <section class="page-hero bg-subtle border-bottom">
-      <div class="container">
-        <div class="marginalia-tag">[INSTRUMENT SPECS]</div>
-        <h1 class="page-title">Deep System Telemetry Capability Matrix</h1>
-        <p class="page-lead">Engineered to isolate microsecond bottlenecks across multi-cloud distributed Kubernetes deployments.</p>
-      </div>
-    </section>
-
-    <!-- FEATURE 01 -->
-    <section class="section-block border-bottom">
-      <div class="container grid-2 align-center">
-        <div>
-          <div class="index-header">
-            <span class="index-num">01.0</span>
-            <div class="index-title-group">
-              <span class="marginalia-note">// KERNEL OBSERVABILITY</span>
-              <h2>eBPF Zero-Overhead Instrumentation</h2>
-            </div>
-          </div>
-          <p class="mb-md">Bypass manual code instrumentation. Pulseboard attaches eBPF probes directly into the Linux kernel to trace all HTTP, gRPC, and database socket connections automatically.</p>
-          <ul class="spec-list">
-            <li><kbd>PROBE</kbd> Automatic TCP/UDP connection socket tracking</li>
-            <li><kbd>LATENCY</kbd> &lt; 0.5% CPU overhead on host hypervisors</li>
-            <li><kbd>SECURITY</kbd> Cryptographic payload inspection in memory space</li>
-          </ul>
-        </div>
-        <div class="tilt-card">
-          <img src="[https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80](https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80)" width="600" height="400" alt="Matrix style digital green security data stream" class="rounded-img" loading="lazy">
-        </div>
-      </div>
-    </section>
-
-    <!-- FEATURE 02 -->
-    <section class="section-block border-bottom bg-subtle">
-      <div class="container grid-2 align-center reverse-mobile">
-        <div class="tilt-card">
-          <img src="[https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1200&q=80](https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1200&q=80)" width="600" height="400" alt="Financial telemetry charts on tablet display" class="rounded-img" loading="lazy">
-        </div>
-        <div>
-          <div class="index-header">
-            <span class="index-num">02.0</span>
-            <div class="index-title-group">
-              <span class="marginalia-note">// HIGH-THROUGHPUT ENGINE</span>
-              <h2>ClickHouse Columnar Storage Engine</h2>
-            </div>
-          </div>
-          <p class="mb-md">Query billions of unstructured log events and trace spans using standard SQL with sub-second execution speeds across petabytes of raw data.</p>
-          <ul class="spec-list">
-            <li><kbd>SQL</kbd> Native ANSI SQL support with vector extension functions</li>
-            <li><kbd>RATIO</kbd> 10:1 lossless compression ratio on JSON payload logs</li>
-            <li><kbd>INDEX</kbd> Real-time bloom filter indexing on custom span tags</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- FEATURE 03 -->
-    <section class="section-block">
-      <div class="container grid-2 align-center">
-        <div>
-          <div class="index-header">
-            <span class="index-num">03.0</span>
-            <div class="index-title-group">
-              <span class="marginalia-note">// INCIDENT TRIAGE</span>
-              <h2>Automated Root-Cause Correlation</h2>
-            </div>
-          </div>
-          <p class="mb-md">When an alert triggers, Pulseboard automatically cross-correlates anomalous latency spikes with deployment commits, memory leaks, and upstream dependency failures.</p>
-          <ul class="spec-list">
-            <li><kbd>GIT</kbd> Integration with GitHub/GitLab deployment webhooks</li>
-            <li><kbd>ALERT</kbd> PagerDuty, Slack, Opsgenie, and Webhook destinations</li>
-            <li><kbd>AI</kbd> Machine-learning noise suppression cuts alert fatigue by 70%</li>
-          </ul>
-        </div>
-        <div class="tilt-card">
-          <img src="[https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80](https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80)" width="600" height="400" alt="Team reviewing data metrics on interactive display" class="rounded-img" loading="lazy">
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer border-top">
-    <div class="container footer-grid">
-      <div class="footer-brand">
-        <a href="index.html" class="brand-logo"><span class="logo-text">PULSEBOARD</span></a>
-        <p class="footer-tagline">High-Density Telemetry & System Diagnostics Platform.</p>
-        <p class="copyright">© 2026 Pulseboard Inc. All rights reserved.</p>
-      </div>
-
-      <div class="footer-nav-col">
-        <span class="footer-heading">NAVIGATION</span>
+      <nav class="footer-col" aria-label="Company">
+        <h3 class="footer-col__title">Company</h3>
         <ul>
-          <li><a href="index.html">01 // Home</a></li>
-          <li><a href="features.html">02 // Features</a></li>
-          <li><a href="pricing.html">03 // Pricing</a></li>
-          <li><a href="about.html">04 // About</a></li>
-          <li><a href="contact.html">05 // Demo</a></li>
+          <li><a href="about.html">About Pulseboard</a></li>
+          <li><a href="about.html#story">Our story</a></li>
+          <li><a href="about.html#team">The team</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
-      </div>
+      </nav>
 
-      <div class="footer-nav-col">
-        <span class="footer-heading">SYSTEM STATUS</span>
-        <ul class="mono-list">
-          <li>US-EAST: <span class="text-green">ONLINE</span></li>
-          <li>EU-CENTRAL: <span class="text-green">ONLINE</span></li>
+      <nav class="footer-col" aria-label="Purchase and account">
+        <h3 class="footer-col__title">Plans</h3>
+        <ul>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="pricing.html#compare">Compare plans</a></li>
+          <li><a href="pricing.html#faq">Billing questions</a></li>
+          <li><a href="contact.html#support">Talk to support</a></li>
         </ul>
-      </div>
+      </nav>
     </div>
-  </footer>
+
+    <div class="footer-bottom">
+      <p class="mt-0"><span class="num">© <span data-year>2026</span> Pulseboard Systems Inc.</span> · Portland, Oregon · SOC 2 Type II audited · Registry build 4.11.</p>
+      <nav aria-label="Footer legal">
+        <ul>
+          <li><a href="about.html#values">Principles</a></li>
+          <li><a href="features.html#governance">Security</a></li>
+          <li><a href="contact.html#support">Status</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</footer>
+
 <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
 </html>
