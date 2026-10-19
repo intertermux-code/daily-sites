@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Current Residences — Haven Estates</title>
+  <meta name="description" content="Filter Haven Estates' current portfolio by neighbourhood, price, bedrooms, bathrooms, and interior square feet. Waterfront, hillside, and vineyard homes on the north coast.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap wrap--wide header-bar">
+      <a class="brand" href="index.html" aria-label="Haven Estates — home">
+        <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <rect x="6.5" y="6.5" width="27" height="27" transform="rotate(45 20 20)" fill="none" stroke="#c9a227" stroke-width="1.4"></rect>
+          <path d="M15 14.5v11M25 14.5v11M15 20h10" fill="none" stroke="#0f2a43" stroke-width="2.1"></path>
+        </svg>
+        <span>
+          <span class="brand__name">Haven Estates</span>
+          <span class="brand__sub">Boutique Homes · Est. 1998</span>
+        </span>
+      </a>
+
+      <button class="menu-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav" aria-label="Open main menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <a class="site-nav__link" href="index.html">Home</a>
+        <a class="site-nav__link" href="listings.html" aria-current="page">Residences</a>
+        <a class="site-nav__link" href="property.html">Featured Residence</a>
+        <a class="site-nav__link" href="agents.html">Advisors</a>
+        <a class="site-nav__link" href="contact.html">Contact</a>
+        <a class="btn btn--gold nav-cta-mobile" href="contact.html">Book a Viewing</a>
+      </nav>
+
+      <a class="btn btn--ghost header-cta" href="contact.html">Book a Viewing</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============ Page banner ============ -->
+    <section class="page-banner">
+      <div class="page-banner__media">
+        <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1920&h=1080&q=80" width="1920" height="1080" alt="A white modernist residence at blue hour, its windows warm against tall hedges">
+      </div>
+      <div class="page-banner__scrim" aria-hidden="true"></div>
+      <div class="wrap page-banner__inner">
+        <p class="eyebrow eyebrow--light">The Current Portfolio</p>
+        <h1>Nine Houses We Are <em>Happy to Open</em></h1>
+        <p>Every residence below is held by a single Haven advisor and shown in person. Filter the wall, then tell us which door you would like opened first.</p>
+      </div>
+    </section>
+
+    <!-- ============ Filter bar ============ -->
+    <div class="filterbar">
+      <div class="wrap">
+        <form id="filter-form" class="filterbar__form" aria-label="Filter residences">
+          <div class="field">
+            <label for="f-location">Neighbourhood</label>
+            <select id="f-location" name="location">
+              <option value="any">Anywhere on the Coast</option>
+              <option value="harborview">Harborview</option>
+              <option value="lantern-hill">Lantern Hill</option>
+              <option value="old-vineyard">Old Vineyard</option>
+              <option value="cedar-hollow">Cedar Hollow</option>
+              <option value="the-bluffs">The Bluffs</option>
+              <option value="merrow-bay">Merrow Bay</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-price">Minimum Price</label>
+            <select id="f-price" name="price">
+              <option value="0">No Minimum</option>
+              <option value="1500000">$1.5M</option>
+              <option value="3000000">$3M</option>
+              <option value="5000000">$5M</option>
+              <option value="7000000">$7M</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-beds">Bedrooms</label>
+            <select id="f-beds" name="beds">
+              <option value="0">Any</option>
+              <option value="2">2+</option>
+              <option value="3">3+</option>
+              <option value="4">4+</option>
+              <option value="5">5+</option>
+              <option value="6">6</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-baths">Bathrooms</label>
+            <select id="f-baths" name="baths">
+              <option value="0">Any</option>
+              <option value="2">2+</option>
+              <option value="3">3+</option>
+              <option value="4">4+</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-sqft">Interior Size</label>
+            <select id="f-sqft" name="sqft">
+              <option value="0">Any Size</option>
+              <option value="1500">1,500 ft²+</option>
+              <option value="3000">3,000 ft²+</option>
+              <option value="4500">4,500 ft²+</option>
+              <option value="6000">6,000 ft²+</option>
+            </select>
+          </div>
+          <div class="filterbar__actions">
+            <button class="btn btn--gold" type="submit">Apply</button>
+            <button class="btn--clear" type="button" id="filter-reset">Clear</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ============ Listings grid ============ -->
+    <section class="section--tight" aria-labelledby="listings-title">
+      <div class="wrap">
+        <h2 id="listings-title" class="visually-hidden">Current residences for sale</h2>
+        <div class="results-line">
+          <p class="results-line__count" aria-live="polite">
+            Showing <b id="result-count">9</b> of <span id="result-total">9</span> Residences
+          </p>
+          <p class="results-line__note">Prices in USD · Square feet measured to interior wall</p>
+        </div>
+
+        <div class="card-grid" style="padding-top:1.5rem">
+          <a class="prop-card" href="property.html" data-listing data-location="lantern-hill" data-price="6850000" data-beds="5" data-baths="4" data-sqft="6210">
+            <div class="prop-card__media">
+              <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1200&h=800&q=80" width="1200" height="800" loading="lazy" alt="Marlowe House at dusk, glass walls glowing over a lit terrace pool">
+              <p class="prop-card__status">Featured</p>
+            </div>
+            <div class="prop-card__body">
+              <p class="prop-card__price">$6,850,000</p>
+              <h3 class="prop-card__name">Marlowe House</h3>
+              <p class="prop-card__addr">42 Lantern Hill Road, Lantern Hill</p>
+            </div>
+            <dl class="prop-card__stats">
+              <div><dt>Beds</dt><dd>5</dd></div>
+              <div><dt>Baths</dt><dd>4</dd></div>
+              <div><dt>Sq Ft</dt><dd>6,210</dd></div>
+            </dl>
+          </a>
+
+          <a class="prop-card" href="listings.html" data-listing data-location="harborview" data-price="4275000" data-beds="4" data-baths="3" data-sqft="4480">
+            <div class="prop-card__media">
+              <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&h=800&q=80" width="1200" height="800" loading="lazy" alt="The Cypress Residence — a low modern house behind tall hedges at golden hour">
+              <p class="prop-card__status">New</p>
+            </div>
+            <div class="prop-card__body">
+              <p class="prop-card__price">$4,275,000</p>
+              <h3 class="prop-card__name">The Cypress Residence</h3>
+              <p class="prop-card__addr">118 Harborview Terrace, Harborview</p>
+            </div>
+            <dl class="prop-card__stats">
+              <div><dt>Beds</dt><dd>4</dd></div>
+              <div><dt>Baths</dt><dd>3</dd></div>
+              <div><dt>Sq Ft</dt><dd>4,480</dd></div>
+            </dl>
+          </a>
+
+          <a class="prop-card" href="listings.html" data-listing data-location="the-bluffs" data-price="9200000" data-beds="6" data-baths="5" data-sqft="7840">
+            <div class="prop-card__media">
+              <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&h=800&q=80" width="1200" height="800" loading="lazy" alt="Bluff House — a broad-gabled residence overlooking the treeline at The Bluffs">
+              <p class="prop-card__status prop-card__status--member">Under Offer</p>
+            </div>
+            <div class="prop-card__body">
+              <p class="prop-card__price">$9,200,000</p>
+              <h3 class="prop-card__name">Bluff House</h3>
+              <p class="prop-card__addr">7 Cliffline Walk, The Bluffs</p>
+            </div>
+            <dl class="prop-card__stats">
+              <div><dt>Beds</dt><dd>6</dd></div>
+              <div><dt>Baths</dt><dd>5</dd></div>
+              <div><dt>Sq Ft</dt><dd>7,840</dd></div>
+            </dl>
+          </a>
+
+          <a class="prop-card" href="listings.html" data-listing data-location="old-vineyard" data-price="1850000" data-beds="2" data-baths="2" data-sqft="1640">
+            <div class="prop-card__media">
+              <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=1200&h=800&q=80" width="1200" height="800" loading="lazy" alt="Vineyard Loft No. 4 — an open loft with arched industrial windows and warm timber floors">
+              <p class="prop-card__status">New</p>
+            </div>
+            <div class="prop-card__body">
+              <p class="prop-card__price">$1,850,000</p>
+              <h3 class="prop-card__name">Vineyard Loft No. 4</h3>
+              <p class="prop-card__addr">240 Old Vineyard Lane, Old Vineyard</p>
+            </div>
+            <dl class="prop-card__stats">
+              <div><dt>Beds</dt><dd>2</dd></div>
+              <div><dt>Baths</dt><dd>2</dd></div>
+              <div><dt>Sq Ft</dt><dd>1,640</dd></div>
+            </dl>
+          </a>
+
+          <a class="prop-card" href="listings.html" data-listing data-location="cedar-hollow" data-price="2480000" data-beds="3" data-baths="2" data-sqft="2310">
+            <div class="prop-card__media">
+              <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&h=800&q=80" width="1200" height="800" loading="lazy" alt="Cedar Hollow Cottage — a shingle-and-stone cottage under mature cedars">
+              <p class="prop-card__status prop-card__status--member">Off-Market</p>
+            </div>
+            <div class="prop-card__body">
+              <p class="prop-card__price">$2,480,000</p>
+              <h3 class="prop-card__name">Cedar Hollow Cottage</h3>
+              <p class="prop-card__addr">15 Cedar Hollow, Cedar Hollow</p>
+            </div>
+            <dl class="prop-card__stats">
+              <div><dt>Beds</dt><dd>3</dd></div>
+              <div><dt>Baths</dt><dd>2</dd></div>
+              <div><dt>Sq Ft</dt><dd>2,310</dd></div>
+            </dl>
+          </a>
+
+          <a class="prop-card" href="listings.html" data-listing data-location="harborview" data-price="5600000" data-beds="3" data-baths="3" data-sqft="3950">
+            <div class="prop-card__media">
+              <img src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=1200&h=800&q=80" width="1200" height="800" loading="lazy" alt="Harborview Penthouse — a corner living room wrapped in glass above the bay">
+              <p class="prop-card__status">New</p>
+            </div>
+            <div class="prop-card__body">
+              <p class="prop-card__price">$5,600,000</p>
+              <h3 class="prop-card__name">Harborview Penthouse</h3>
+              <p class="prop-card__addr">1 Harborview Plaza, Harborview</p>
+            </div>
+            <dl class="prop-card__stats">
+              <div><dt>Beds</dt><dd>3</dd></div>
+              <div><dt>Baths</dt><dd>3</dd></div>
+              <div><dt>Sq Ft</dt><dd>3,950</dd></div>
+            </dl>
+          </a>
+
+          <a class="prop-card" href="listings.html" data-listing data-location="merrow-bay" data-price="3150000" data-beds="3" data-baths="2" data-sqft="2780">
+            <div class="prop-card__media">
+              <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1200&h=800&q=80" width="1200" height="800" loading="lazy" alt="Saltgrass Boathouse — a crisp white house on the quay with a deep shaded porch">
+              <p class="prop-card__status">Featured</p>
+            </div>
+            <div class="prop-card__body">
+              <p class="prop-card__price">$3,150,000</p>
+              <h3 class="prop-card__name">Saltgrass Boathouse</h3>
+              <p class="prop-card__addr">3 Quarendon Quay, Merrow Bay</p>
+            </div>
+            <dl class="prop-card__stats">
+              <div><dt>Beds</dt><dd>3</dd></div>
+              <div><dt>Baths</dt><dd>2</dd></div>
+              <div><dt>Sq Ft</dt><dd>2,780</dd></div>
+            </dl>
+          </a>
+
+          <a class="prop-card" href="listings.html" data-listing data-location="merrow-bay" data-price="7400000" data-beds="5" data-baths="4" data-sqft="5620">
+            <div class="prop-card__media">
+              <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1200&h=800&q=80" width="1200" height="800" loading="lazy" alt="Merrow Bay Retreat — a pool terrace stepping toward the water beneath a flat roofline">
+              <p class="prop-card__status">New</p>
+            </div>
+            <div class="prop-card__body">
+              <p class="prop-card__price">$7,400,000</p>
+              <h3 class="prop-card__name">Merrow Bay Retreat</h3>
+              <p class="prop-card__addr">88 Foreshore Drive, Merrow Bay</p>
+            </div>
+            <dl class="prop-card__stats">
+              <div><dt>Beds</dt><dd>5</dd></div>
+              <div><dt>Baths</dt><dd>4</dd></div>
+              <div><dt>Sq Ft</dt><dd>5,620</dd></div>
+            </dl>
+          </a>
+
+          <a class="prop-card" href="listings.html" data-listing data-location="old-vineyard" data-price="1495000" data-beds="1" data-baths="1" data-sqft="1080">
+            <div class="prop-card__media">
+              <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&h=800&q=80" width="1200" height="800" loading="lazy" alt="Old Vineyard Garden Flat — a calm minimal room in pale oak and plaster">
+              <p class="prop-card__status">New</p>
+            </div>
+            <div class="prop-card__body">
+              <p class="prop-card__price">$1,495,000</p>
+              <h3 class="prop-card__name">Old Vineyard Garden Flat</h3>
+              <p class="prop-card__addr">240B Old Vineyard Lane, Old Vineyard</p>
+            </div>
+            <dl class="prop-card__stats">
+              <div><dt>Beds</dt><dd>1</dd></div>
+              <div><dt>Baths</dt><dd>1</dd></div>
+              <div><dt>Sq Ft</dt><dd>1,080</dd></div>
+            </dl>
+          </a>
+
+          <div class="no-results" id="no-results">
+            <h3>No Residence Matches That Shape — Yet</h3>
+            <p class="lede" style="margin-inline:auto">Widen a filter, or register for the off-market list: two of every five Haven closings never reach this page.</p>
+            <p style="margin-top:1.5rem"><a class="btn btn--ghost" href="contact.html">Join the Off-Market List</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA band ============ -->
+    <section class="cta-band" aria-labelledby="listings-cta-title">
+      <div class="cta-band__bg">
+        <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1920&h=900&q=80" width="1920" height="900" loading="lazy" alt="A kitchen island in honed stone under a long bronze pendant, lit for an evening gathering">
+      </div>
+      <div class="wrap cta-band__inner reveal">
+        <p class="eyebrow eyebrow--light">Two Doors Down</p>
+        <h2 id="listings-cta-title">Ask for the <em>Second Look</em></h2>
+        <p>Every viewing includes a second, unaccompanied walk at whatever hour suits you — morning light and dusk, before you decide.</p>
+        <p class="cta-band__actions">
+          <a class="btn btn--gold" href="contact.html" data-magnetic>
+            Request a Viewing
+            <svg class="btn__arrow" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M3 10h13m0 0-5-5m5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.7"></path></svg>
+          </a>
+          <a class="btn btn--ghost" href="agents.html">Meet Your Advisor</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__grid">
+      <div class="footer__brand">
+        <a class="brand" href="index.html" aria-label="Haven Estates — home">
+          <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+            <rect x="6.5" y="6.5" width="27" height="27" transform="rotate(45 20 20)" fill="none" stroke="#c9a227" stroke-width="1.4"></rect>
+            <path d="M15 14.5v11M25 14.5v11M15 20h10" fill="none" stroke="#e6cf8f" stroke-width="2.1"></path>
+          </svg>
+          <span>
+            <span class="brand__name" style="color:#e6cf8f">Haven Estates</span>
+            <span class="brand__sub">Boutique Homes · Est. 1998</span>
+          </span>
+        </a>
+        <p>A six-person brokerage holding a deliberate portfolio of waterfront, hillside, and vineyard homes along the north coast.</p>
+      </div>
+
+      <nav aria-label="Footer — pages">
+        <h3>Explore</h3>
+        <ul class="footer__list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="listings.html">Residences</a></li>
+          <li><a href="property.html">Featured Residence</a></li>
+          <li><a href="agents.html">Advisors</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <h3>The Office</h3>
+        <ul class="footer__list">
+          <li><a href="contact.html">16 Harborview Esplanade</a></li>
+          <li><a href="contact.html">Harborview, CA 95466</a></li>
+          <li><a href="tel:+17075550142">(707) 555-0142</a></li>
+          <li><a href="mailto:office@haven-estates.com">office@haven-estates.com</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Hours</h3>
+        <ul class="footer__list">
+          <li><a href="contact.html">Tuesday–Saturday, 9–6</a></li>
+          <li><a href="contact.html">Viewings by appointment</a></li>
+          <li><a href="contact.html">Thursday off-market previews</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap footer__fine">
+      <p>© <span data-year>2026</span> Haven Estates. CA DRE #01998877. Equal Housing Opportunity.</p>
+      <p>Photography represents previously listed Haven residences.</p>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
