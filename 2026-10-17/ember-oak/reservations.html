@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reservations — Ember &amp; Oak, Wood-Fire Restaurant</title>
+<meta name="description" content="Book a table at Ember &amp; Oak. Tables release thirty days ahead at 10:00 am Pacific, Wednesday through Sunday, in the hearth room, at the twelve-seat fire counter, or in the cellar.">
+<meta name="theme-color" content="#0b0a09">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&family=Archivo:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header__inner">
+    <a class="brand" href="index.html">Ember <span class="amp">&amp;</span> Oak <small>PDX</small></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open the main menu"><span></span><span></span></button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <ul class="nav__list">
+        <li class="nav__item"><a class="nav__link" href="index.html"><span>Home</span><span class="idx" aria-hidden="true">01</span></a></li>
+        <li class="nav__item"><a class="nav__link" href="menu.html"><span>Menu</span><span class="idx" aria-hidden="true">02</span></a></li>
+        <li class="nav__item"><a class="nav__link" href="gallery.html"><span>Gallery</span><span class="idx" aria-hidden="true">03</span></a></li>
+        <li class="nav__item"><a class="nav__link" href="reservations.html" aria-current="page"><span>Reservations</span><span class="idx" aria-hidden="true">04</span></a></li>
+        <li class="nav__item"><a class="nav__link" href="visit.html"><span>Visit</span><span class="idx" aria-hidden="true">05</span></a></li>
+      </ul>
+      <div class="nav__cta"><a class="btn" href="reservations.html">Reserve a table</a></div>
+    </nav>
+    <div class="header__cta"><a class="btn" href="reservations.html">Reserve a table</a></div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+  <section class="page-head" data-spotlight>
+    <div class="page-head__bg">
+      <img src="https://images.unsplash.com/photo-1622121568130-8c24a579472c?auto=format&fit=crop&w=1600&h=900&q=80"
+           width="1600" height="900" loading="eager" decoding="async"
+           alt="A single tongue of orange flame rising against a black background.">
+    </div>
+    <div class="spotlight" aria-hidden="true"></div>
+    <div class="wrap page-head__inner">
+      <p class="eyebrow"><span class="num">04</span> Reservations · One seating a night</p>
+      <h1 class="page-head__title">Hold a place at the <em>oak bench</em>.</h1>
+      <div class="page-head__cols">
+        <p class="lede">Tables release thirty days ahead at 10:00 am Pacific and the Friday counter goes
+          in about eleven minutes. Fill this in and we will confirm by email within the hour.</p>
+        <p class="page-head__note">Parties of seven or more: email
+          <a href="mailto:tables@emberandoak.com">tables@emberandoak.com</a> — the form will not take you.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--flush" aria-labelledby="book-form-h">
+    <div class="wrap">
+      <h2 class="eyebrow" id="book-form-h"><span class="num">01</span> Request a table</h2>
+
+      <div class="form-grid">
+
+        <!-- ================= FORM ================= -->
+        <div class="form-card">
+          <form id="booking-form" novalidate>
+            <p class="form-lead">We keep the fire going for whoever turns up, so a reservation is really a
+              promise between us. Tell us who is coming and what the evening is for.</p>
+
+            <div class="field">
+              <label for="bk-name">Name on the table <span class="req" aria-hidden="true">*</span></label>
+              <input class="input" id="bk-name" name="name" type="text" placeholder="First and last"
+                     autocomplete="name" required aria-required="true">
+              <p class="err" id="err-name" role="alert" aria-live="polite"></p>
+            </div>
+
+            <div class="field__row">
+              <div class="field">
+                <label for="bk-phone">Phone <span class="req" aria-hidden="true">*</span></label>
+                <input class="input" id="bk-phone" name="phone" type="tel" inputmode="tel"
+                       placeholder="(503) 555-0142" autocomplete="tel" required aria-required="true">
+                <p class="hint">We only call this number if the fire dies or a table falls through.</p>
+                <p class="err" id="err-phone" role="alert" aria-live="polite"></p>
+              </div>
+
+              <div class="field">
+                <label for="bk-email">Email <span class="req" aria-hidden="true">*</span></label>
+                <input class="input" id="bk-email" name="email" type="email" placeholder="you@example.com"
+                       autocomplete="email" required aria-required="true">
+                <p class="err" id="err-email" role="alert" aria-live="polite"></p>
+              </div>
+            </div>
+
+            <div class="field">
+              <span class="lbl" id="party-label">Party size <span class="req" aria-hidden="true">*</span></span>
+              <div class="party" role="radiogroup" aria-labelledby="party-label">
+                <span class="party__opt">
+                  <input type="radio" id="p1" name="party" value="1" required>
+                  <label for="p1">1</label>
+                </span>
+                <span class="party__opt">
+                  <input type="radio" id="p2" name="party" value="2">
+                  <label for="p2">2</label>
+                </span>
+                <span class="party__opt">
+                  <input type="radio" id="p3" name="party" value="3">
+                  <label for="p3">3</label>
+                </span>
+                <span class="party__opt">
+                  <input type="radio" id="p4" name="party" value="4">
+                  <label for="p4">4</label>
+                </span>
+                <span class="party__opt">
+                  <input type="radio" id="p5" name="party" value="5">
+                  <label for="p5">5</label>
+                </span>
+                <span class="party__opt">
+                  <input type="radio" id="p6" name="party" value="6">
+                  <label for="p6">6</label>
+                </span>
+                <span class="party__opt">
+                  <input type="radio" id="p7" name="party" value="7 or more">
+                  <label for="p7">7+</label>
+                </span>
+              </div>
+              <p class="err" id="err-party" role="alert" aria-live="polite"></p>
+            </div>
+
+            <div class="field__row">
+              <div class="field">
+                <label for="bk-date">Date <span class="req" aria-hidden="true">*</span></label>
+                <input class="input" id="bk-date" name="date" type="date" required aria-required="true">
+                <p class="hint">We are closed Mondays and Tuesdays.</p>
+                <p class="err" id="err-date" role="alert" aria-live="polite"></p>
+              </div>
+
+              <div class="field">
+                <label for="bk-time">Seating time <span class="req" aria-hidden="true">*</span></label>
+                <select class="select" id="bk-time" name="time" required aria-required="true">
+                  <option value="">Choose a seating</option>
+                  <option value="17:00">5:00 pm — first seating</option>
+                  <option value="17:30">5:30 pm</option>
+                  <option value="18:00">6:00 pm</option>
+                  <option value="18:30">6:30 pm</option>
+                  <option value="19:00">7:00 pm — usually the last to go</option>
+                  <option value="19:30">7:30 pm</option>
+                  <option value="20:00">8:00 pm</option>
+                  <option value="20:30">8:30 pm</option>
+                  <option value="21:00">9:00 pm — late counter</option>
+                </select>
+                <p class="err" id="err-time" role="alert" aria-live="polite"></p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="bk-room">Where you would like to sit</label>
+              <select class="select" id="bk-room" name="room">
+                <option value="no preference">No preference — seat us wherever</option>
+                <option value="Fire counter">The fire counter (12 stools, facing the coals)</option>
+                <option value="Hearth room">The hearth room (main floor, oak benches)</option>
+                <option value="Window banquette">The window banquette (Kiln Street side)</option>
+                <option value="Cellar table">The cellar table (eight seats, private)</option>
+              </select>
+              <p class="hint">A preference, not a guarantee. The counter is first come, first served on the night.</p>
+            </div>
+
+            <div class="field">
+              <label for="bk-occasion">Occasion</label>
+              <select class="select" id="bk-occasion" name="occasion">
+                <option value="">Not special — just dinner</option>
+                <option value="Birthday">Birthday</option>
+                <option value="Anniversary">Anniversary</option>
+                <option value="First visit">First time in Portland</option>
+                <option value="Business">Business dinner</option>
+                <option value="Celebration">Something worth celebrating</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="bk-notes">Allergies, dietary needs, anything else</label>
+              <textarea class="textarea" id="bk-notes" name="notes" rows="4"
+                placeholder="Two vegetarians, one shellfish allergy, and we would like the whole ribeye if it is available."></textarea>
+              <p class="hint">The kitchen reads this at 3:00 pm the day of your booking, so please be specific.</p>
+            </div>
+
+            <div class="form-foot">
+              <button class="btn" type="submit">Request this table</button>
+              <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+            </div>
+
+            <p class="small mono" style="margin-top:1.2rem">By sending this you agree to our 24-hour
+              cancellation policy. No card is taken for parties of six or fewer.</p>
+          </form>
+
+          <!-- ================= CONFIRMATION ================= -->
+          <div class="confirm" id="booking-confirm" hidden>
+            <div class="confirm__mark" aria-hidden="true">&#10003;</div>
+            <h3>Table requested, <span data-out-name>friend</span>. We have you.</h3>
+            <p class="small mono">Quote this reference if you call or need to change anything.</p>
+            <span class="confirm__ref" data-out-ref>EO-0000-0000</span>
+            <dl class="confirm__list">
+              <div><dt>Date</dt><dd data-out-date>—</dd></div>
+              <div><dt>Seating</dt><dd data-out-time>—</dd></div>
+              <div><dt>Party</dt><dd data-out-party>—</dd></div>
+              <div><dt>Phone</dt><dd data-out-phone>—</dd></div>
+              <div><dt>Email</dt><dd data-out-email>—</dd></div>
+              <div><dt>Notes for the kitchen</dt><dd data-out-notes>—</dd></div>
+            </dl>
+            <p>Front of house will confirm by email inside the hour. If you do not hear from us before
+              4:00 pm on the day, call the front of house on <a href="tel:+15035550142">(503) 555-0142</a>
+              and ask for Nadia.</p>
+            <p style="margin-top:1.4rem">
+              <button class="btn btn--ghost" type="button" data-book-again>Book another table</button>
+              <a class="btn btn--ghost" href="menu.html">Read the menu while you wait</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- ================= ASIDE ================= -->
+        <aside class="form-aside" aria-label="Booking policies and help">
+          <div class="info-block">
+            <h3>How booking works</h3>
+            <ul>
+              <li><span>Release</span><b>30 days out</b></li>
+              <li><span>Daily at</span><b>10:00 am PT</b></li>
+              <li><span>Walk-ins</span><b>Counter, 5 pm</b></li>
+              <li><span>Hold time</span><b>15 minutes</b></li>
+              <li><span>Cancellations</span><b>24 hours</b></li>
+            </ul>
+          </div>
+
+          <div class="info-block">
+            <h3>Late &amp; no-show policy</h3>
+            <p>We hold your table fifteen minutes. After that the fire keeps cooking and the seat goes to
+              whoever is at the bar. Call us and we will almost always find you something —
+              we just cannot promise the same table.</p>
+          </div>
+
+          <div class="info-block">
+            <h3>Large parties</h3>
+            <p>Seven and eight go to the long table on Wednesdays and Sundays, one eight-course
+              family service, $78 a head. Email
+              <a href="mailto:tables@emberandoak.com">tables@emberandoak.com</a>
+              with a date and we will send the whole thing back the same day.</p>
+          </div>
+
+          <div class="info-block">
+            <h3>Gift of a dinner</h3>
+            <p>Gift cards are issued in $50, $100 and $200 amounts, never expire, and can be collected at
+              the bar. Ask for one on any visit or email the front of house.</p>
+          </div>
+
+          <div class="info-block" style="border-bottom:1px solid var(--rule);padding-bottom:1.4rem">
+            <h3>Talk to a person</h3>
+            <p><a href="tel:+15035550142">(503) 555-0142</a><br>
+              Front of house answers from noon, Wednesday to Sunday.<br><br>
+              <a href="mailto:hello@emberandoak.com">hello@emberandoak.com</a></p>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-band" data-spotlight aria-labelledby="seating-h">
+    <div class="spotlight" aria-hidden="true"></div>
+    <div class="wrap">
+      <h2 class="eyebrow"><span class="num">02</span> Choosing where to sit</h2>
+      <h3 class="cta-band__title" id="seating-h">Three rooms, one fire, <em>very different evenings</em>.</h3>
+      <div class="rooms" style="margin-top:clamp(2rem,4vw,3rem)">
+        <div class="room">
+          <span class="no">A</span>
+          <h3>The fire counter</h3>
+          <p>Twelve stools an arm&rsquo;s length from the coals. You will be cooked for directly,
+            and you will get the pan juices on a piece of bread. Loud in the best way.</p>
+          <dl>
+            <dt>Seats</dt><dd>12</dd>
+            <dt>Best for</dt><dd>Two, or one</dd>
+            <dt>Noise</dt><dd>High</dd>
+          </dl>
+        </div>
+        <div class="room">
+          <span class="no">B</span>
+          <h3>The hearth room</h3>
+          <p>Oak benches along the wall, tables for two to six, and the whole room lit by the grate.
+            This is where most people book, and where the room settles after eight.</p>
+          <dl>
+            <dt>Seats</dt><dd>26</dd>
+            <dt>Best for</dt><dd>Two to six</dd>
+            <dt>Noise</dt><dd>Moderate</dd>
+          </dl>
+        </div>
+        <div class="room">
+          <span class="no">C</span>
+          <h3>The cellar table</h3>
+          <p>One table for eight below the dining room, surrounded by the bottles that will be opened
+            for you that night. Booked as a single party, set menu only.</p>
+          <dl>
+            <dt>Seats</dt><dd>8</dd>
+            <dt>Best for</dt><dd>Exactly eight</dd>
+            <dt>Noise</dt><dd>Quiet</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <span class="word">Ember <span class="amp">&amp;</span> Oak</span>
+        <p>A wood-fire restaurant in a former kiln warehouse in Old Town Portland, Oregon.
+          Opened 2016. One service a night.</p>
+      </div>
+
+      <nav class="footer__col" aria-label="Pages">
+        <h2>Pages</h2>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="reservations.html" aria-current="page">Reservations</a></li>
+          <li><a href="visit.html">Visit</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer__col">
+        <h2>Find us</h2>
+        <p>212 Kiln Street<br>Old Town<br>Portland, Oregon 97209</p>
+        <p><a href="tel:+15035550142">(503) 555-0142</a><br>
+          <a href="mailto:hello@emberandoak.com">hello@emberandoak.com</a></p>
+      </div>
+
+      <div class="footer__col">
+        <h2>Hours</h2>
+        <p>Wed&ndash;Thu &nbsp;5:00&ndash;10:00 pm<br>
+          Fri &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5:00&ndash;11:00 pm<br>
+          Sat &nbsp;&nbsp;&nbsp;&nbsp;4:00&ndash;11:00 pm<br>
+          Sun &nbsp;&nbsp;&nbsp;&nbsp;4:00&ndash;9:00 pm<br>
+          Mon&ndash;Tue &nbsp;Closed</p>
+      </div>
+
+      <div class="footer__col footer__col--wide">
+        <h2>The fire letter</h2>
+        <p>One email a month: what the fire is doing, who we bought from, and which dates
+          still have room.</p>
+        <form class="newsletter" data-newsletter novalidate>
+          <label class="vh" for="news-email">Email address</label>
+          <input id="news-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          <button type="submit">Join</button>
+        </form>
+        <p class="newsletter__msg" data-news-msg role="status" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>&copy; <span data-year>2026</span> Ember &amp; Oak. All rights reserved.</span>
+      <span>Wood-fired in Old Town since 2016</span>
+      <span><a href="visit.html">Accessibility &amp; dietary needs</a></span>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" type="button" aria-label="Back to the top of the page">&uarr;</button>
+
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
