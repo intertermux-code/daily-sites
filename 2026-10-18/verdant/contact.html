@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact the Studio — Verdant</title>
+    <meta
+      name="description"
+      content="Write to the Verdant studio in Copenhagen about orders, ingredient questions, refills, press and stockists. Real answers from formulators within two working days."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Newsreader:ital,wght@0,300;0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="progress" aria-hidden="true">
+      <span class="progress__bar" id="scrollProgressBar"></span>
+    </div>
+
+    <div class="announce">
+      <p>
+        Carbon-neutral delivery over $60 · Refills now ship for every serum —
+        <a href="our-story.html">Read how it works</a>
+      </p>
+    </div>
+
+    <header class="masthead">
+      <div class="masthead__inner">
+        <a class="wordmark" href="index.html">Verdant<sup>®</sup></a>
+        <nav class="primary-nav" aria-label="Primary">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="our-story.html">Our Story</a></li>
+            <li><a href="routine.html">Find Your Routine</a></li>
+            <li>
+              <a href="contact.html" aria-current="page">Contact</a>
+            </li>
+          </ul>
+        </nav>
+        <div class="masthead__actions">
+          <button
+            type="button"
+            class="icon-button"
+            data-cart-open
+            aria-controls="cartDrawer"
+            aria-label="Open cart, 0 items"
+          >
+            Cart<span class="cart-count" data-cart-count>0</span>
+          </button>
+          <button
+            type="button"
+            class="nav-toggle"
+            id="navToggle"
+            aria-expanded="false"
+            aria-controls="navPanel"
+          >
+            <span class="bars" aria-hidden="true"></span>Menu
+          </button>
+        </div>
+      </div>
+      <div class="nav-panel" id="navPanel" data-open="false">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="our-story.html">Our Story</a></li>
+          <li><a href="routine.html">Find Your Routine</a></li>
+          <li>
+            <a href="contact.html" aria-current="page">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero frame section--flush" aria-labelledby="contactTitle">
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">Contact</span>
+        </nav>
+        <h1 id="contactTitle">Write to the <em>Studio</em></h1>
+        <p class="lede">
+          Four people read this inbox: two formulators, the person who runs the
+          panel, and Ida. Ask about a percentage, a reaction, a missing parcel,
+          or why something costs what it costs.
+        </p>
+      </section>
+
+      <!-- ================= FORM ================= -->
+      <section class="section frame section--flush" aria-labelledby="formTitle">
+        <div class="rule-label">
+          <span class="rule-label__index">01</span>
+          <p class="rule-label__text">Send a message</p>
+        </div>
+
+        <div class="split split--40">
+          <div>
+            <h2 id="formTitle">We Reply Within Two Working Days</h2>
+            <p>
+              If you have a reaction you are worried about, stop using the
+              product and photograph the area in daylight before you write — it
+              saves everyone a round trip of questions.
+            </p>
+            <p>
+              Include your order number if the question is about a parcel. It
+              starts with <strong>VA-</strong> and appears in your confirmation
+              email.
+            </p>
+            <hr style="margin: 2.5rem 0" />
+            <h3 style="font-size: 1.0625rem; margin-bottom: 0.75rem">
+              Prefer to write directly?
+            </h3>
+            <p>
+              <a href="mailto:studio@verdant.example">studio@verdant.example</a>
+              for anything at all.<br />
+              <a href="mailto:press@verdant.example">press@verdant.example</a>
+              for samples, data and founder interviews.<br />
+              <a href="mailto:trade@verdant.example">trade@verdant.example</a>
+              for stockists and refill points.
+            </p>
+            <p>
+              Telephone: <a href="tel:+4532140088">+45 32 14 00 88</a>, weekdays
+              09:00–15:00 CET.
+            </p>
+          </div>
+
+          <div>
+            <div class="form-success" id="formSuccess" role="status" hidden>
+              <h3>Thank you, <span id="formSuccessName">friend</span>.</h3>
+              <p>
+                Your message is with the studio. Expect a reply from a person
+                within two working days — sooner if it is about a reaction.
+              </p>
+            </div>
+
+            <p
+              class="form-error-summary"
+              id="formErrorSummary"
+              role="alert"
+              hidden
+            ></p>
+
+            <form id="contactForm" novalidate>
+              <div class="field">
+                <label for="name">Your name <span class="req">*</span></label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  autocomplete="name"
+                  required
+                />
+                <p class="field__error" id="nameError"></p>
+              </div>
+
+              <div class="field">
+                <label for="email">Email address <span class="req">*</span></label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  autocomplete="email"
+                  required
+                />
+                <p class="field__hint">
+                  We use it only to answer this message.
+                </p>
+                <p class="field__error" id="emailError"></p>
+              </div>
+
+              <div class="field">
+                <label for="phone">Phone number</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  autocomplete="tel"
+                />
+                <p class="field__hint">
+                  Optional. Only needed if we have to call about a delivery.
+                </p>
+              </div>
+
+              <div class="field">
+                <label for="topic">What is it about? <span class="req">*</span></label>
+                <select id="topic" name="topic" required>
+                  <option value="">Choose a topic</option>
+                  <option value="order">An order or delivery</option>
+                  <option value="reaction">A reaction or sensitivity</option>
+                  <option value="ingredients">Ingredients and percentages</option>
+                  <option value="refill">Refills and returns</option>
+                  <option value="routine">Routine advice</option>
+                  <option value="trade">Stocking Verdant</option>
+                  <option value="press">Press</option>
+                </select>
+                <p class="field__error" id="topicError"></p>
+              </div>
+
+              <div class="field">
+                <label for="message">Message <span class="req">*</span></label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="6"
+                  required
+                  aria-describedby="messageHint"
+                ></textarea>
+                <p class="field__hint" id="messageHint">
+                  At least 20 characters. Tell us what you have already tried.
+                </p>
+                <p class="field__error" id="messageError"></p>
+              </div>
+
+              <div class="field">
+                <label class="checkbox" for="consent">
+                  <input type="checkbox" id="consent" name="consent" />
+                  <span>
+                    Send me the Dispatch as well. One letter a month, no
+                    selling, unsubscribe in one click.
+                  </span>
+                </label>
+              </div>
+
+              <p style="margin-bottom: 1.5rem">
+                <button type="submit" class="btn btn--sage">
+                  Send to the studio
+                </button>
+              </p>
+              <p class="field__hint">
+                Fields marked <span class="req">*</span> are required.
+              </p>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= VISIT ================= -->
+      <section class="section frame" aria-labelledby="visitTitle">
+        <div class="rule-label">
+          <span class="rule-label__index">02</span>
+          <p class="rule-label__text">Where we are</p>
+        </div>
+        <h2 id="visitTitle" style="margin-bottom: 2.5rem">Two Rooms, One Workshop</h2>
+
+        <div class="grid-3">
+          <article class="ingredient">
+            <div class="ingredient__media ratio-land">
+              <img
+                class="reveal"
+                src="https://images.pexels.com/photos/3736398/pexels-photo-3736398.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200"
+                width="1200"
+                height="800"
+                loading="lazy"
+                alt="Rows of clear and amber bottles lined along a bright windowsill shelf in a treatment room."
+              />
+            </div>
+            <h3>Copenhagen Studio</h3>
+            <p>
+              Refsnavn 14, 1457 København K. Counter service, patch testing and
+              the treatment room. Walk-ins welcome on Saturdays.
+            </p>
+            <p>
+              <strong>Mon–Fri</strong> 09:00–18:00 · <strong>Sat</strong>
+              10:00–16:00 · <strong>Sun</strong> Closed
+            </p>
+          </article>
+
+          <article class="ingredient">
+            <div class="ingredient__media ratio-land">
+              <img
+                class="reveal"
+                src="https://images.pexels.com/photos/531260/pexels-photo-531260.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200"
+                width="1200"
+                height="906"
+                loading="lazy"
+                alt="Fresh peppermint sprigs filling a white ceramic teapot against a dark background."
+              />
+            </div>
+            <h3>The Mint Counter</h3>
+            <p>
+              The small café at the front of the workshop pours peppermint from
+              the same harvest that goes into our cleanser. Sit down, ask
+              questions, take your time.
+            </p>
+            <p>
+              <strong>Daily</strong> 08:00–15:00 · No bookings, twelve seats
+            </p>
+          </article>
+
+          <article class="ingredient">
+            <div class="ingredient__media ratio-land">
+              <img
+                class="reveal"
+                src="https://images.pexels.com/photos/18785072/pexels-photo-18785072.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200"
+                width="1200"
+                height="1800"
+                loading="lazy"
+                alt="Green leaves laid in loose rows on white cloth with soft dappled shadows."
+              />
+            </div>
+            <h3>Kyoto Sourcing Office</h3>
+            <p>
+              A single desk near the valley road, staffed by two people from
+              March to October. Email rather than call — the post runs once a
+              day.
+            </p>
+            <p>
+              <strong>Email</strong> kyoto@verdant.example · Replies within a
+              week
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ================= FAQ ================= -->
+      <section class="section frame" aria-labelledby="faqTitle">
+        <div class="rule-label">
+          <span class="rule-label__index">03</span>
+          <p class="rule-label__text">Common questions</p>
+        </div>
+        <h2 id="faqTitle" style="margin-bottom: 2.5rem">Before You Write</h2>
+
+        <div class="faq">
+          <div class="faq__item">
+            <h3 style="margin: 0">
+              <button
+                type="button"
+                class="faq__button"
+                aria-expanded="true"
+                aria-controls="faq1"
+                id="faq1btn"
+              >
+                How do I know which percentage is right for me?
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="faq__panel" id="faq1" role="region" aria-labelledby="faq1btn">
+              <p>
+                You usually do not need to choose. We publish the one
+                concentration our panel data supports, and it is the same for
+                everyone. If a stronger version would genuinely help you, we
+                would have made it — the reason our niacinamide is five per cent
+                rather than ten is that eleven per cent of our panel flushed at
+                six and there is no evidence the extra works harder.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <h3 style="margin: 0">
+              <button
+                type="button"
+                class="faq__button"
+                aria-expanded="false"
+                aria-controls="faq2"
+                id="faq2btn"
+              >
+                My skin stung on the first application. What should I do?
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="faq__panel" id="faq2" role="region" aria-labelledby="faq2btn" hidden>
+              <p>
+                Stop for three days, then reintroduce twice a week over damp
+                skin. If it still stings after a fortnight, it is the wrong
+                formula for you and we will refund it under the thirty-day skin
+                promise — write to the studio with the batch code printed on the
+                base of the bottle.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <h3 style="margin: 0">
+              <button
+                type="button"
+                class="faq__button"
+                aria-expanded="false"
+                aria-controls="faq3"
+                id="faq3btn"
+              >
+                Can I use Verdant alongside prescription tretinoin?
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="faq__panel" id="faq3" role="region" aria-labelledby="faq3btn" hidden>
+              <p>
+                Yes to the cleanser, moisturiser and sunscreen — most people on
+                retinoids live on those three. Hold your treatment serum until
+                your prescriber says your skin has settled, and skip the Enzyme
+                Reset Polish entirely while you are on a prescription strength.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <h3 style="margin: 0">
+              <button
+                type="button"
+                class="faq__button"
+                aria-expanded="false"
+                aria-controls="faq4"
+                id="faq4btn"
+              >
+                How exactly does the refill programme work?
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="faq__panel" id="faq4" role="region" aria-labelledby="faq4btn" hidden>
+              <p>
+                Rinse two empty glass bottles, put them in the prepaid sack from
+                your last order, and post them. Three refilled pouches arrive for
+                a third less than three new bottles. Keep your pump and cap —
+                they are rated for at least three refills. There is no
+                subscription; you order a refill when you run out.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <h3 style="margin: 0">
+              <button
+                type="button"
+                class="faq__button"
+                aria-expanded="false"
+                aria-controls="faq5"
+                id="faq5btn"
+              >
+                Do you ship outside Europe, and why is SPF restricted?
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="faq__panel" id="faq5" role="region" aria-labelledby="faq5btn" hidden>
+              <p>
+                We ship to forty-one countries. Sun Veil travels to most of them,
+                but filters are regulated as drugs in a handful of markets and we
+                will not register in a country that requires animal testing to do
+                it. If your address rejects SPF at checkout, the reason is
+                regulatory, not technical — and we are happy to tell you which.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <h3 style="margin: 0">
+              <button
+                type="button"
+                class="faq__button"
+                aria-expanded="false"
+                aria-controls="faq6"
+                id="faq6btn"
+              >
+                What is your returns policy on an opened bottle?
+                <span class="sign" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="faq__panel" id="faq6" role="region" aria-labelledby="faq6btn" hidden>
+              <p>
+                Opened, used, thirty days in — return it and we refund the full
+                amount and compost the contents. We ask only that you tell us
+                what went wrong, because that note is what changes the next
+                batch. Return postage inside the EU and UK is on us.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TRADE ================= -->
+      <section class="section frame" aria-labelledby="tradeTitle">
+        <div class="rule-label">
+          <span class="rule-label__index">04</span>
+          <p class="rule-label__text">Trade &amp; press</p>
+        </div>
+        <div class="split split--50">
+          <div>
+            <h2 id="tradeTitle">Stocking Verdant</h2>
+            <p>
+              We supply twenty-six independent pharmacies, clinics and concept
+              stores across Europe. Minimum opening order is twelve units across
+              at least three formulas, and we ask that you keep the front-label
+              deck visible rather than stacked face-down.
+            </p>
+            <p>
+              We do not wholesale to marketplaces, and we do not sell in any
+              country whose regulations would require us to test on animals.
+            </p>
+          </div>
+          <div>
+            <h2 style="margin-bottom: 1.15rem">Press Kit</h2>
+            <p>
+              Founder portraits, workshop photography, full INCI lists with
+              percentages, and our published panel results including drop-out
+              rates. Samples ship to named writers, not to inboxes that ask for
+              a “collab.”
+            </p>
+            <p style="margin-top: 2rem">
+              <a class="link-arrow" href="mailto:press@verdant.example"
+                >Request the press kit →</a
+              >
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SIGNUP ================= -->
+      <section class="signup" aria-labelledby="signupTitle">
+        <div class="frame">
+          <div class="rule-label" style="border-color: rgba(238, 242, 236, 0.28)">
+            <span class="rule-label__index" style="color: #a9c6a6">05</span>
+            <p class="rule-label__text" style="color: rgba(238, 242, 236, 0.6)">
+              The Dispatch
+            </p>
+          </div>
+          <h2 id="signupTitle">One Letter a Month. No Selling.</h2>
+          <p>
+            Formulator notes, harvest reports from the farms, and the occasional
+            correction when we get something wrong.
+          </p>
+          <form class="signup__form" data-signup novalidate>
+            <div class="field">
+              <label for="signupEmail">Email address</label>
+              <input
+                type="email"
+                id="signupEmail"
+                name="email"
+                autocomplete="email"
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+            <button type="submit" class="btn">Subscribe</button>
+          </form>
+          <p class="signup__error" role="alert">
+            That email address does not look right. Check it and try again.
+          </p>
+          <p class="signup__ok" role="status"></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="frame">
+        <div class="footer__top">
+          <div>
+            <p class="footer__brand">Verdant<sup>®</sup></p>
+            <p class="footer__blurb">
+              Short-ingredient skincare blended in Copenhagen and sourced from
+              two farms we visit twice a year. Eleven formulas, one method.
+            </p>
+          </div>
+          <div>
+            <h2>Shop</h2>
+            <ul>
+              <li><a href="shop.html">All formulas</a></li>
+              <li><a href="shop.html">Cleansers</a></li>
+              <li><a href="shop.html">Serums &amp; treatments</a></li>
+              <li><a href="shop.html">Moisturisers &amp; oils</a></li>
+              <li><a href="shop.html">Body &amp; hands</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>Learn</h2>
+            <ul>
+              <li><a href="our-story.html">Our story</a></li>
+              <li><a href="our-story.html">Ingredient index</a></li>
+              <li><a href="routine.html">Find your routine</a></li>
+              <li><a href="routine.html">The three-step method</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>Support</h2>
+            <ul>
+              <li><a href="contact.html">Contact the studio</a></li>
+              <li><a href="contact.html">Delivery &amp; returns</a></li>
+              <li><a href="contact.html">Refill programme</a></li>
+              <li><a href="contact.html">Press &amp; stockists</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__bottom">
+          <p>
+            © <span data-year>2026</span> Verdant Apothek ApS · Refsnavn 14,
+            1457 København K
+          </p>
+          <div class="footer__legal">
+            <a href="contact.html">Contact</a>
+            <a href="our-story.html">Standards</a>
+            <a href="shop.html">Shop</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div class="scrim" id="cartScrim" tabindex="-1"></div>
+
+    <aside
+      class="drawer"
+      id="cartDrawer"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="cartDrawerTitle"
+      aria-hidden="true"
+    >
+      <header class="drawer__head">
+        <h2 class="drawer__title" id="cartDrawerTitle">Your cart</h2>
+        <button
+          type="button"
+          class="drawer__close"
+          data-cart-close
+          aria-label="Close cart"
+        >
+          ✕
+        </button>
+      </header>
+      <div class="drawer__body" id="cartLines"></div>
+      <footer class="drawer__foot" id="cartFoot" hidden></footer>
+    </aside>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">
+      <span data-toast-text></span>
+      <button type="button" data-toast-close aria-label="Dismiss message">
+        Close
+      </button>
+    </div>
+  <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
