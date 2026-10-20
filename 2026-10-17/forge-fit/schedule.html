@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Schedule — Weekly Class Grid at Forge</title>
+<meta name="description" content="The full Forge weekly class grid: coached powerlifting, HIIT and engine, mobility and repair, youth skills and open platform times. Filter by day and book a guest pass.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0b08'/%3E%3Crect x='4' y='13' width='24' height='6' fill='%23d4ff3f'/%3E%3Crect x='2' y='9' width='4' height='14' fill='%23d4ff3f'/%3E%3Crect x='26' y='9' width='4' height='14' fill='%23d4ff3f'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"><i id="progress-bar"></i></div>
+
+<header class="masthead">
+  <div class="status-bar">
+    <div class="wrap">
+      <p><span class="dot" aria-hidden="true"></span>Unit 7 Foundry Lane, Northside · Est. 2014</p>
+      <p>Floor open <b>05:30–21:30</b> · 412 athletes on the roster</p>
+    </div>
+  </div>
+  <nav class="primary" aria-label="Primary">
+    <div class="wrap">
+      <a class="brand" href="index.html"><span class="prompt" aria-hidden="true">&gt;</span>Forge<span class="caret" aria-hidden="true"></span></a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <ul class="nav-list" id="site-nav">
+        <li><a href="index.html"><span class="num">01</span>Index</a></li>
+        <li><a href="programs.html"><span class="num">02</span>Programs</a></li>
+        <li><a href="schedule.html" aria-current="page"><span class="num">03</span>Schedule</a></li>
+        <li><a href="trainers.html"><span class="num">04</span>Coaches</a></li>
+        <li><a href="membership.html"><span class="num">05</span>Membership</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section class="pagehead" aria-labelledby="page-title">
+    <div class="wrap">
+      <p class="pagehead__path">~/forge/schedule.md</p>
+      <h1 id="page-title">The Weekly<span style="color:var(--volt)">Floor Grid</span></h1>
+      <p class="lead">Thirty-seven coached classes, twelve platforms, one grid. Filter it by day or by program, then book a guest pass if a Tuesday at 06:00 is realistic for you.</p>
+      <div class="pagehead__meta">
+        <span>Classes this week · <b>37</b></span>
+        <span>Booking · <b>Opens 7 days ahead, 05:00</b></span>
+        <span>Late policy · <b>10 minutes, then wait outside</b></span>
+        <span>Drop-in · <b>$19 per coached class</b></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--flush" aria-labelledby="grid-h">
+    <div class="wrap">
+      <div class="index-head">
+        <p class="no" id="grid-h">§ 01<small>Class Grid</small></p>
+        <div class="index-body">
+          <h2>Filter the Week</h2>
+          <p class="lead">Choose a single day to see only that day&rsquo;s classes, or filter by program to see where a lane runs across the week. Space counts are live from the booking system at the time of the morning board update.</p>
+
+          <fieldset class="filters" style="border:0;padding:0">
+            <legend class="vh">Filter classes by day</legend>
+            <button class="chip is-active" type="button" data-day-filter="all" aria-pressed="true">All Days</button>
+            <button class="chip" type="button" data-day-filter="mon" aria-pressed="false">Monday</button>
+            <button class="chip" type="button" data-day-filter="tue" aria-pressed="false">Tuesday</button>
+            <button class="chip" type="button" data-day-filter="wed" aria-pressed="false">Wednesday</button>
+            <button class="chip" type="button" data-day-filter="thu" aria-pressed="false">Thursday</button>
+            <button class="chip" type="button" data-day-filter="fri" aria-pressed="false">Friday</button>
+            <button class="chip" type="button" data-day-filter="sat" aria-pressed="false">Saturday</button>
+            <button class="chip" type="button" data-day-filter="sun" aria-pressed="false">Sunday</button>
+          </fieldset>
+
+          <fieldset class="filters" style="border:0;padding:0;margin-top:0">
+            <legend class="vh">Filter classes by program</legend>
+            <button class="chip is-active" type="button" data-type-filter="all" aria-pressed="true">All Programs</button>
+            <button class="chip" type="button" data-type-filter="powerlifting" aria-pressed="false">Powerlifting</button>
+            <button class="chip" type="button" data-type-filter="hiit" aria-pressed="false">HIIT &amp; Engine</button>
+            <button class="chip" type="button" data-type-filter="mobility" aria-pressed="false">Mobility</button>
+            <button class="chip" type="button" data-type-filter="open" aria-pressed="false">Open Platform</button>
+            <button class="chip" type="button" data-type-filter="youth" aria-pressed="false">Youth</button>
+          </fieldset>
+
+          <p class="tag" id="class-count" role="status" aria-live="polite">37 classes in the full week</p>
+
+          <div class="table-scroll" style="margin-top:1.5rem">
+            <table id="schedule">
+              <caption>Forge weekly class grid — coached sessions and open platform blocks</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Day</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">Class</th>
+                  <th scope="col">Coach</th>
+                  <th scope="col">Room</th>
+                  <th scope="col">Spaces</th>
+                  <th scope="col">Scale</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-day="mon" data-type="powerlifting"><td>Mon</td><td>06:00</td><td><b>Powerlifting — Lower Intensity</b></td><td class="coach">Marcus Vane</td><td>Platform A</td><td>3 left</td><td><span class="scale scale--3">Advanced</span></td></tr>
+                <tr data-day="mon" data-type="hiit"><td>Mon</td><td>07:15</td><td><b>Engine Intervals — Sled</b></td><td class="coach">Priya Raman</td><td>Sled Lane</td><td>8 left</td><td><span class="scale scale--1">All levels</span></td></tr>
+                <tr data-day="mon" data-type="mobility"><td>Mon</td><td>12:15</td><td><b>Mobility Reset (Express)</b></td><td class="coach">Nadia Kerr</td><td>Studio B</td><td>5 left</td><td><span class="scale scale--1">All levels</span></td></tr>
+                <tr data-day="mon" data-type="powerlifting"><td>Mon</td><td>17:30</td><td><b>Powerlifting — Upper Volume</b></td><td class="coach">Nadia Kerr</td><td>Platform B</td><td>6 left</td><td><span class="scale scale--1">Intermediate</span></td></tr>
+                <tr data-day="mon" data-type="powerlifting"><td>Mon</td><td>18:00</td><td><b>On-Ramp — Technique Track</b></td><td class="coach">Owen Blake</td><td>Platform C</td><td>2 left</td><td><span class="scale scale--1">Beginner</span></td></tr>
+                <tr data-day="mon" data-type="open"><td>Mon</td><td>20:00</td><td><b>Open Platform</b></td><td class="coach">Floor coach on duty</td><td>Platform A–C</td><td>Walk-in</td><td><span class="scale scale--1">All levels</span></td></tr>
+
+                <tr data-day="tue" data-type="hiit"><td>Tue</td><td>06:00</td><td><b>HIIT 45 — Erg Circuit</b></td><td class="coach">Priya Raman</td><td>Main Floor</td><td>4 left</td><td><span class="scale scale--1">All levels</span></td></tr>
+                <tr data-day="tue" data-type="powerlifting"><td>Tue</td><td>07:15</td><td><b>Powerlifting — Upper Volume</b></td><td class="coach">Marcus Vane</td><td>Platform B</td><td>1 left</td><td><span class="scale scale--3">Advanced</span></td></tr>
+                <tr data-day="tue" data-type="mobility"><td>Tue</td><td>12:30</td><td><b>Mobility &amp; Repair</b></td><td class="coach">Dr. Tomás Reyes</td><td>Studio B</td><td>7 left</td><td><span class="scale scale--1">All levels</span></td></tr>
+                <tr data-day="tue" data-type="hiit"><td>Tue</td><td>17:30</td><td><b>Engine Builder — Kettlebell</b></td><td class="coach">Owen Blake</td><td>Kettlebell Rack</td><td>9 left</td><td><span class="scale scale--1">All levels</span></td></tr>
+                <tr data-day="tue" data-type="mobility"><td>Tue</td><td>18:45</td><td><b>Mobility &amp; Repair (Evening)</b></td><td class="coach">Dr. Tomás Reyes</td><td>Studio B</td><td>3 left</td><td><span class="scale scale--1">All levels</span></td></tr>
+                <tr data-day="tue" data-type="open"><td>Tue</td><td>20:00</td><td><b>Open Platform</b></td><td class="coach">Floor coach on duty</td><td>Platform A–C</td><td>Walk-in</td><td><span class="scale scale--1">All levels</span></td></tr>
+
+                <tr data-day="wed" data-type="powerlifting"><td>Wed</td><td>06:00</td><td><b>Powerlifting — Lower Volume</b></td><td class="coach">Marcus Vane</td><td>Platform A</td><td>2 left</td><td><span class="scale scale--3">Advanced</span></td></tr>
+                <tr data-day="wed" data-type="hiit"><td>Wed</td><td>07:15</td><td><b>HIIT 45 — Row &amp; Ski</b></td><td class="coach">Priya Raman</td><td>Erg Line</td><td>6 left</td><td><span class="scale scale--1">All levels</span></td></tr>
+                <tr data-day="wed" data-type="mobility"><td>Wed</td><td>12:15</td><td><b>Mobility Reset (Express)</b></td><td class="coach">Nadia Kerr</td><td>Studio B</td><td>4 left</td><td><span class="scale scale--1">All levels</span></td></tr>
+                <tr data-day="wed" data-type="powerlifting"><td>Wed</td><td>18:00</td><td><b>On-Ramp — Technique Track</b></td><td class="coach">Owen Blake</td><td>Platform C</td><td>5 left</td><td><span class="scale scale--1">Beginner</span></td></tr>
+                <tr data-day="wed" data-type="hiit"><td>Wed</td><td>19:15</td><td><b>Engine Intervals — Sled</b></td><td class="coach">Priya Raman</td><td>Sled Lane</td><td>7 left</td><td><span class="scale scale--1">All levels</span></td></tr>
+                <tr data-day="wed" data-type="open"><td>Wed</td><td>20:30</td><td><b>Open Platform</b></td><td class="coach">Floor coach on duty</td><td>Platform A–C</td><td>Walk-in</td><td><span class="scale scale--1">All levels</span></td></tr>
+
+                <tr data-day="thu" data-type="powerlifting"><td>Thu</td><td>06:00</td><td><b>Powerlifting — Deadlift Focus</b></td><td class="coach">Marcus Vane</td><td>Platform A</td><td>1 left</td><td><span class="scale scale--3">Advanced</span></td></tr>
+                <tr data-day="thu" data-type="hiit"><td>Thu</td><td>07:15</td><td><b>HIIT 45 — Bike Intervals</b></td><td class="coach">Owen Blake</td><td>Bike Bank</td><td>10 left</td><td><span class="scale scale--1">All levels</span></td></tr>
+                <tr data-day="thu" data-type="mobility"><td>Thu</td><td>12:30</td><td><b>Mobility &amp; Repair</b></td><td class="coach">Dr. Tomás Reyes</td><td>Studio B</td><td>6 left</td><td><span class="scale scale--1">All levels</span></td></tr>
+                <tr data-day="thu" data-type="powerlifting"><td>Thu</td><td>17:30</td><td><b>Powerlifting — Upper Intensity</b></td><td class="coach">Nadia Kerr</td><td>Platform B</td><td>4 left</td><td><span class="scale scale--1">Intermediate</span></td></tr>
+                <tr data-day="thu" data-type="open"><td>Thu</td><td>19:00</td><td><b>Open Platform — Squat Clinic</b></td><td class="coach">Marcus Vane</td><td>Platform A</td><td>Drop-in</td><td><span class="scale scale--1">All levels</span></td></tr>
+                <tr data-day="thu" data-type="open"><td>Thu</td><td>20:30</td><td><b>Open Floor</b></td><td class="coach">Floor coach on duty</td><td>All rooms</td><td>Walk-in</td><td><span class="scale scale--1">All levels</span></td></tr>
+
+                <tr data-day="fri" data-type="powerlifting"><td>Fri</td><td>06:00</td><td><b>Powerlifting — Lower Intensity</b></td><td class="coach">Marcus Vane</td><td>Platform A</td><td>3 left</td><td><span class="scale scale--3">Advanced</span></td></tr>
+                <tr data-day="fri" data-type="hiit"><td>Fri</td><td>07:15</td><td><b>Friday Fetch — Team Intervals</b></td><td class="coach">Priya Raman</td><td>Main Floor</td><td>8 left</td><td><span class="scale scale--1">All levels</span></td></tr>
+                <tr data-day="fri" data-type="mobility"><td>Fri</td><td>12:15</td><td><b>Mobility Reset + Weekly Screen</b></td><td class="coach">Dr. Tomás Reyes</td><td>Studio B</td><td>5 left</td><td><span class="scale scale--1">All levels</span></td></tr>
+                <tr data-day="fri" data-type="powerlifting"><td>Fri</td><td>17:30</td><td><b>Powerlifting — Volume Finisher</b></td><td class="coach">Nadia Kerr</td><td>Platform B</td><td>7 left</td><td><span class="scale scale--1">Intermediate</span></td></tr>
+                <tr data-day="fri" data-type="open"><td>Fri</td><td>19:00</td><td><b>Open Platform</b></td><td class="coach">Floor coach on duty</td><td>Platform A–C</td><td>Walk-in</td><td><span class="scale scale--1">All levels</span></td></tr>
+
+                <tr data-day="sat" data-type="powerlifting"><td>Sat</td><td>08:30</td><td><b>Saturday Strength Clinic</b></td><td class="coach">Marcus Vane</td><td>Platform A–B</td><td>2 left</td><td><span class="scale scale--3">Advanced</span></td></tr>
+                <tr data-day="sat" data-type="hiit"><td>Sat</td><td>09:30</td><td><b>Long Engine — 40 Min Row</b></td><td class="coach">Priya Raman</td><td>Erg Line</td><td>11 left</td><td><span class="scale scale--1">All levels</span></td></tr>
+                <tr data-day="sat" data-type="youth"><td>Sat</td><td>11:00</td><td><b>Youth Skills (14–17)</b></td><td class="coach">Owen Blake</td><td>Platform C</td><td>4 left</td><td><span class="scale scale--1">Beginner</span></td></tr>
+                <tr data-day="sat" data-type="mobility"><td>Sat</td><td>13:00</td><td><b>Mobility &amp; Repair (Weekend)</b></td><td class="coach">Nadia Kerr</td><td>Studio B</td><td>9 left</td><td><span class="scale scale--1">All levels</span></td></tr>
+                <tr data-day="sat" data-type="open"><td>Sat</td><td>14:30</td><td><b>Open Floor + Pull Bench</b></td><td class="coach">Floor coach on duty</td><td>All rooms</td><td>Walk-in</td><td><span class="scale scale--1">All levels</span></td></tr>
+
+                <tr data-day="sun" data-type="hiit"><td>Sun</td><td>09:30</td><td><b>Sunday Steady State</b></td><td class="coach">Priya Raman</td><td>Bike Bank</td><td>12 left</td><td><span class="scale scale--1">All levels</span></td></tr>
+                <tr data-day="sun" data-type="mobility"><td>Sun</td><td>11:00</td><td><b>Restoration Flow</b></td><td class="coach">Dr. Tomás Reyes</td><td>Studio B</td><td>10 left</td><td><span class="scale scale--1">All levels</span></td></tr>
+                <tr data-day="sun" data-type="open"><td>Sun</td><td>12:30</td><td><b>Open Platform (Coach on Floor)</b></td><td class="coach">Marcus Vane</td><td>Platform A</td><td>Drop-in</td><td><span class="scale scale--1">All levels</span></td></tr>
+
+                <tr class="empty-row" hidden><td colspan="7">No classes match this filter — try another day or program.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="marginal" style="margin-top:1.5rem"><b>Reading the grid.</b> Coached classes cap at twelve athletes so every lifter gets cueing inside a set. Open platform blocks need no booking; drop-in sessions are listed as <em>Drop-in</em> and cost $19 on the day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="guest-pass" aria-labelledby="guest-h">
+    <div class="wrap">
+      <div class="index-head">
+        <p class="no" id="guest-h">§ 02<small>Guest Pass</small></p>
+        <div class="index-body">
+          <h2>Book a Session Before You Commit</h2>
+          <p class="lead">One coached class, no payment, no card details. Pick a session that fits your week, tell us who you are, and a coach will meet you at the door with a loaner belt and a tour of the floor.</p>
+
+          <div class="split">
+            <form class="block" data-validate="true" data-result="#guest-result" novalidate>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="guest-name">Your Name</label>
+                  <input id="guest-name" name="name" type="text" autocomplete="name" data-rule="name" aria-describedby="guest-name-err" placeholder="Alex Moore">
+                  <p class="err" id="guest-name-err" data-err-for="guest-name"></p>
+                </div>
+                <div class="field">
+                  <label for="guest-email">Email Address</label>
+                  <input id="guest-email" name="email" type="email" autocomplete="email" data-rule="email" aria-describedby="guest-email-err" placeholder="you@example.com">
+                  <p class="err" id="guest-email-err" data-err-for="guest-email"></p>
+                </div>
+                <div class="field">
+                  <label for="guest-phone">Mobile Number</label>
+                  <input id="guest-phone" name="phone" type="tel" autocomplete="tel" data-rule="phone" aria-describedby="guest-phone-err" placeholder="07700 900123">
+                  <p class="err" id="guest-phone-err" data-err-for="guest-phone"></p>
+                  <p class="hint">Used only to text you if the class fills or moves rooms.</p>
+                </div>
+                <div class="field">
+                  <label for="guest-class">Class to Attend</label>
+                  <select id="guest-class" name="class" data-rule="select" aria-describedby="guest-class-err">
+                    <option value="">Choose a class…</option>
+                    <option value="Mon 06:00 Powerlifting Lower Intensity">Mon 06:00 · Powerlifting Lower Intensity</option>
+                    <option value="Tue 06:00 HIIT 45 Erg Circuit">Tue 06:00 · HIIT 45 Erg Circuit</option>
+                    <option value="Wed 07:15 HIIT 45 Row and Ski">Wed 07:15 · HIIT 45 Row &amp; Ski</option>
+                    <option value="Thu 12:30 Mobility and Repair">Thu 12:30 · Mobility &amp; Repair</option>
+                    <option value="Sat 08:30 Saturday Strength Clinic">Sat 08:30 · Saturday Strength Clinic</option>
+                    <option value="Sun 11:00 Restoration Flow">Sun 11:00 · Restoration Flow</option>
+                  </select>
+                  <p class="err" id="guest-class-err" data-err-for="guest-class"></p>
+                </div>
+                <div class="field">
+                  <label for="guest-date">Preferred Date</label>
+                  <input id="guest-date" name="date" type="date" data-rule="date" aria-describedby="guest-date-err">
+                  <p class="err" id="guest-date-err" data-err-for="guest-date"></p>
+                </div>
+                <div class="field">
+                  <label for="guest-notes">Anything the Coach Should Know</label>
+                  <input id="guest-notes" name="notes" type="text" placeholder="Injuries, lifting history, goals">
+                  <p class="hint">Optional. One line is plenty.</p>
+                </div>
+                <div class="field field--full">
+                  <label class="check" for="guest-consent">
+                    <input id="guest-consent" name="consent" type="checkbox" data-rule="consent" aria-describedby="guest-consent-err">
+                    <span>I understand guest sessions are supervised training and I will arrive ten minutes early for the floor briefing.</span>
+                  </label>
+                  <p class="err" id="guest-consent-err" data-err-for="guest-consent"></p>
+                </div>
+              </div>
+              <div class="hero__actions" style="margin-top:1.5rem">
+                <button class="btn" type="submit">Reserve My Guest Session</button>
+                <a class="btn btn--ghost" href="membership.html">Read Membership Instead</a>
+              </div>
+            </form>
+
+            <div>
+              <div class="msg" id="guest-result" tabindex="-1" role="status" aria-live="polite" hidden>
+                <b>Guest pass reserved.</b> <span data-out-name>Athlete</span>, a coach will confirm your session by email within two working hours and text the room the night before.
+              </div>
+              <figure class="ph-wrap" style="margin-top:1.5rem">
+                <img class="ph" src="img/ergs-row.jpg" alt="A row of indoor rowing machines lined up along the wall of a gym hall." width="1200" height="986" loading="lazy">
+                <figcaption>The erg line, set up for the 07:15 Wednesday class.</figcaption>
+              </figure>
+              <ul class="rules" style="margin-top:1.5rem">
+                <li><span class="k">Arrive</span><span>Ten minutes early. First-timers get a floor tour and a loaner belt.</span></li>
+                <li><span class="k">Bring</span><span>Flat-soled shoes, a water bottle, a towel. Nothing else.</span></li>
+                <li><span class="k">Cancel</span><span>Text the floor line and the space goes to the waitlist — no hard feelings, no charge.</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="open-floor" aria-labelledby="open-h">
+    <div class="wrap">
+      <div class="index-head">
+        <p class="no" id="open-h">§ 03<small>Open Floor</small></p>
+        <div class="index-body">
+          <h2>Train Unscripted, With a Coach in the Building</h2>
+          <p class="lead">Solo programming? The floor is yours on your own plan. One coach is on duty during every open block — free to ask a question about a setup, never hovering.</p>
+          <div class="grid grid--2">
+            <article class="plate">
+              <div class="plate__no"><span>03.1</span><span>Mon–Thu</span></div>
+              <h3>Evening Platforms</h3>
+              <p>20:00 to 21:30, all three platform bays plus the dumbbell rack and bands. Busiest block of the week; booking ahead is unnecessary, but arrive before 20:30 if you want the rack with the cameras.</p>
+              <div class="plate__foot"><span>Included with all tiers</span><a href="membership.html#tiers">See tiers</a></div>
+            </article>
+            <article class="plate">
+              <div class="plate__no"><span>03.2</span><span>Weekends</span></div>
+              <h3>Saturday &amp; Sunday Blocks</h3>
+              <p>Saturday 14:30 for pull-bench work and accessories; Sunday 12:30 with Marcus on the floor, the quietest hour in the building and the best one for filming a squat.</p>
+              <div class="plate__foot"><span>$19 drop-in for non-members</span><a href="#guest-pass">Book a guest pass</a></div>
+            </article>
+          </div>
+          <figure class="ph-wrap" style="margin:2.5rem 0 0">
+            <img class="ph" src="img/rower-erg.jpg" alt="Indoor rowing machines with stacked water tanks lined up in a training room." width="1200" height="800" loading="lazy">
+            <figcaption>The bike bank and erg line, reset between the 07:15 class and the 20:00 open block.</figcaption>
+          </figure>
+          <div class="band">
+            <div>
+              <h3>Peak-Hour Etiquette, Written Down</h3>
+              <p>One bench, one rack, twenty minutes between heavy sets during 17:30–19:00. Clip your plates to the rack, chalk the bar only on the platforms, and put every weight back before you leave the floor.</p>
+            </div>
+            <a class="btn" href="trainers.html">Meet the Floor Coaches</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h4>Forge Strength &amp; Conditioning</h4>
+        <p>Unit 7 Foundry Lane<br>Northside, NS4 2TP<br>United Kingdom</p>
+        <p><a href="tel:+441632960114">+44 1632 960 114</a><br><a href="mailto:floor@forge.example">floor@forge.example</a></p>
+      </div>
+      <div>
+        <h4>Sitemap</h4>
+        <ul>
+          <li><a href="index.html">01 · Index</a></li>
+          <li><a href="programs.html">02 · Programs</a></li>
+          <li><a href="schedule.html">03 · Schedule</a></li>
+          <li><a href="trainers.html">04 · Coaches</a></li>
+          <li><a href="membership.html">05 · Membership</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Floor Hours</h4>
+        <ul>
+          <li>Mon–Thu · 05:30–21:30</li>
+          <li>Friday · 05:30–20:00</li>
+          <li>Saturday · 08:00–16:00</li>
+          <li>Sunday · 09:00–14:00</li>
+        </ul>
+        <p>Coached classes run 361 days a year; the floor closes only on 25–26 December.</p>
+      </div>
+      <div>
+        <h4>Training Notes</h4>
+        <ul class="log">
+          <li><time>In-house meet</time><span>Sunday 22 November — nine lifters from Forge on the platform.</span></li>
+          <li><time>New block</time><span>Powerlifting Block 3 opens Monday; deload week is 14 December.</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>&copy; <span id="year">2026</span> Forge Strength &amp; Conditioning. All rights reserved.</p>
+      <p>Photography by Wikimedia Commons contributors, CC-licensed · Prices in USD</p>
+    </div>
+  </div>
+</footer>
+
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
