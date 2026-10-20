@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Find Your Routine — Verdant Three-Step Method</title>
+    <meta
+      name="description"
+      content="Answer three questions about your skin and Verdant will assemble the shortest honest routine that fits, with the exact steps and the order they go in."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Newsreader:ital,wght@0,300;0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="progress" aria-hidden="true">
+      <span class="progress__bar" id="scrollProgressBar"></span>
+    </div>
+
+    <div class="announce">
+      <p>
+        Carbon-neutral delivery over $60 · Refills now ship for every serum —
+        <a href="our-story.html">Read how it works</a>
+      </p>
+    </div>
+
+    <header class="masthead">
+      <div class="masthead__inner">
+        <a class="wordmark" href="index.html">Verdant<sup>®</sup></a>
+        <nav class="primary-nav" aria-label="Primary">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="our-story.html">Our Story</a></li>
+            <li>
+              <a href="routine.html" aria-current="page">Find Your Routine</a>
+            </li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="masthead__actions">
+          <button
+            type="button"
+            class="icon-button"
+            data-cart-open
+            aria-controls="cartDrawer"
+            aria-label="Open cart, 0 items"
+          >
+            Cart<span class="cart-count" data-cart-count>0</span>
+          </button>
+          <button
+            type="button"
+            class="nav-toggle"
+            id="navToggle"
+            aria-expanded="false"
+            aria-controls="navPanel"
+          >
+            <span class="bars" aria-hidden="true"></span>Menu
+          </button>
+        </div>
+      </div>
+      <div class="nav-panel" id="navPanel" data-open="false">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="our-story.html">Our Story</a></li>
+          <li>
+            <a href="routine.html" aria-current="page">Find Your Routine</a>
+          </li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero frame section--flush" aria-labelledby="quizTitle">
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">Find Your Routine</span>
+        </nav>
+        <h1 id="quizTitle">Three Questions, <em>Then</em> the Shortest Honest Routine</h1>
+        <p class="lede">
+          No selfie analysis, no purchase history, no quiz that takes nine
+          minutes. Tell us how your skin feels, what you are working on, and how
+          long you will actually stay at the basin.
+        </p>
+      </section>
+
+      <!-- ================= QUIZ ================= -->
+      <section class="section frame section--flush" aria-labelledby="quizHead">
+        <div class="rule-label">
+          <span class="rule-label__index">01</span>
+          <p class="rule-label__text">The quiz</p>
+        </div>
+        <h2 id="quizHead" class="visually-hidden">Routine quiz</h2>
+
+        <div class="quiz" id="routineQuiz">
+          <div class="quiz__progress">
+            <span id="quizStepLabel">Question 1 of 3</span>
+            <span class="quiz__dots" aria-hidden="true">
+              <span class="quiz__dot" data-state="current"></span>
+              <span class="quiz__dot" data-state="upcoming"></span>
+              <span class="quiz__dot" data-state="upcoming"></span>
+            </span>
+          </div>
+
+          <!-- Step 1 -->
+          <fieldset class="quiz__step" data-step="1">
+            <legend class="visually-hidden">How does your skin feel</legend>
+            <h3 class="quiz__q">How does your skin feel by mid-afternoon?</h3>
+            <p class="quiz__help">
+              Choose the sentence that is closest on a normal day, not the one
+              you wish were true.
+            </p>
+            <ul class="options">
+              <li class="option">
+                <input type="radio" name="skin" id="skin-dry" value="dry" />
+                <label class="option__face" for="skin-dry">
+                  <strong>Tight and thirsty</strong>
+                  <span>
+                    Flaking around the mouth, makeup clings to dry patches, and
+                    I need cream within an hour of washing.
+                  </span>
+                </label>
+              </li>
+              <li class="option">
+                <input type="radio" name="skin" id="skin-oily" value="oily" />
+                <label class="option__face" for="skin-oily">
+                  <strong>Shiny by lunchtime</strong>
+                  <span>
+                    Oil across the forehead and nose, enlarged pores, and heavy
+                    creams make it worse rather than better.
+                  </span>
+                </label>
+              </li>
+              <li class="option">
+                <input type="radio" name="skin" id="skin-combination" value="combination" />
+                <label class="option__face" for="skin-combination">
+                  <strong>Two different skins</strong>
+                  <span>
+                    Oily through the T-zone, dry along the cheeks and jaw, and no
+                    single product suits the whole face.
+                  </span>
+                </label>
+              </li>
+              <li class="option">
+                <input type="radio" name="skin" id="skin-sensitive" value="sensitive" />
+                <label class="option__face" for="skin-sensitive">
+                  <strong>Quick to flush</strong>
+                  <span>
+                    Stings when I try something new, goes red with heat or
+                    exercise, and takes days to settle down.
+                  </span>
+                </label>
+              </li>
+            </ul>
+            <p class="quiz__error" role="alert"></p>
+            <div class="quiz__nav">
+              <button type="button" class="btn btn--sage" data-quiz-next>
+                Continue to question 2
+              </button>
+            </div>
+          </fieldset>
+
+          <!-- Step 2 -->
+          <fieldset class="quiz__step" data-step="2" hidden>
+            <legend class="visually-hidden">What you are working on</legend>
+            <h3 class="quiz__q">What would you change first if you could change one thing?</h3>
+            <p class="quiz__help">
+              One concern only. Treating everything at once is how barriers get
+              damaged.
+            </p>
+            <ul class="options">
+              <li class="option">
+                <input type="radio" name="concern" id="c-dullness" value="dullness" />
+                <label class="option__face" for="c-dullness">
+                  <strong>Tone and glow</strong>
+                  <span>
+                    Dull, uneven, and a scattering of marks left over from old
+                    spots that refuse to fade.
+                  </span>
+                </label>
+              </li>
+              <li class="option">
+                <input type="radio" name="concern" id="c-congestion" value="congestion" />
+                <label class="option__face" for="c-congestion">
+                  <strong>Pores and spots</strong>
+                  <span>
+                    Congestion around the nose and chin, blocked pores, and the
+                    occasional deep one before a period.
+                  </span>
+                </label>
+              </li>
+              <li class="option">
+                <input type="radio" name="concern" id="c-redness" value="redness" />
+                <label class="option__face" for="c-redness">
+                  <strong>Redness and comfort</strong>
+                  <span>
+                    Visible flushing, a tight feeling after cleansing, and skin
+                    that reacts to almost everything.
+                  </span>
+                </label>
+              </li>
+              <li class="option">
+                <input type="radio" name="concern" id="c-lines" value="lines" />
+                <label class="option__face" for="c-lines">
+                  <strong>Fine lines and firmness</strong>
+                  <span>
+                    Lines that stay visible after I stop smiling, and skin that
+                    has lost the bounce it used to have.
+                  </span>
+                </label>
+              </li>
+            </ul>
+            <p class="quiz__error" role="alert"></p>
+            <div class="quiz__nav">
+              <button type="button" class="btn btn--ghost" data-quiz-back>
+                Back
+              </button>
+              <button type="button" class="btn btn--sage" data-quiz-next>
+                Continue to question 3
+              </button>
+            </div>
+          </fieldset>
+
+          <!-- Step 3 -->
+          <fieldset class="quiz__step" data-step="3" hidden>
+            <legend class="visually-hidden">How long your routine will be</legend>
+            <h3 class="quiz__q">How long will you honestly stay at the basin?</h3>
+            <p class="quiz__help">
+              The best routine is the one you still do on a Tuesday in February.
+            </p>
+            <ul class="options">
+              <li class="option">
+                <input type="radio" name="length" id="l-short" value="short" />
+                <label class="option__face" for="l-short">
+                  <strong>Three minutes</strong>
+                  <span>
+                    Cleanse, treat, moisturise. Nothing that needs waiting time
+                    or a second step.
+                  </span>
+                </label>
+              </li>
+              <li class="option">
+                <input type="radio" name="length" id="l-medium" value="medium" />
+                <label class="option__face" for="l-medium">
+                  <strong>Seven minutes</strong>
+                  <span>
+                    I will layer a serum and an oil, and I can hold two evenings
+                    a week for a polish.
+                  </span>
+                </label>
+              </li>
+              <li class="option">
+                <input type="radio" name="length" id="l-full" value="full" />
+                <label class="option__face" for="l-full">
+                  <strong>The full ritual</strong>
+                  <span>
+                    Morning and night, SPF, hands and body included. I enjoy it
+                    and I will keep it up.
+                  </span>
+                </label>
+              </li>
+            </ul>
+            <p class="quiz__error" role="alert"></p>
+            <div class="quiz__nav">
+              <button type="button" class="btn btn--ghost" data-quiz-back>
+                Back
+              </button>
+              <button type="button" class="btn btn--sage" data-quiz-next>
+                Show my routine
+              </button>
+            </div>
+          </fieldset>
+
+          <div class="result" id="quizResult" hidden aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- ================= BAND ================= -->
+      <section class="band" aria-label="The method at a glance">
+        <div class="band__inner frame">
+          <div class="band__item">
+            <span class="band__num">1×</span>
+            <span class="band__label">Cleanse, at night</span>
+          </div>
+          <div class="band__item">
+            <span class="band__num">2 drops</span>
+            <span class="band__label">Is a full serum dose</span>
+          </div>
+          <div class="band__item">
+            <span class="band__num">2 fingers</span>
+            <span class="band__label">Of SPF, every morning</span>
+          </div>
+          <div class="band__item">
+            <span class="band__num">6 weeks</span>
+            <span class="band__label">Before you judge it</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= METHOD ================= -->
+      <section class="section frame" aria-labelledby="methodTitle">
+        <div class="rule-label">
+          <span class="rule-label__index">02</span>
+          <p class="rule-label__text">The method</p>
+        </div>
+        <div class="split split--40">
+          <h2 id="methodTitle">Why Three Steps Beats Ten</h2>
+          <div>
+            <p>
+              A skin barrier is a wall of cells held together by lipids. Every
+              extra product adds surfactants, solvents and fragrance load that
+              the wall has to process. Most persistent irritation in our clinic
+              inbox traces back to a routine with too many moving parts, not to
+              one bad product.
+            </p>
+            <p>
+              Three steps are enough to clean the surface, deliver one active
+              that does measurable work, and replace the water and lipids you
+              lost. Everything else is preference — which is fine, as long as you
+              know which is which.
+            </p>
+          </div>
+        </div>
+
+        <div class="rows" style="margin-top: 3rem">
+          <article class="row">
+            <span class="row__num">01</span>
+            <div>
+              <h3>Cleanse Once, at Night, for Sixty Seconds</h3>
+              <p>
+                Lukewarm water, a hazelnut of gel, and a full minute of gentle
+                circles. Morning skin does not need cleansing again — a splash of
+                water is enough and saves your barrier.
+              </p>
+            </div>
+          </article>
+          <article class="row">
+            <span class="row__num">02</span>
+            <div>
+              <h3>Treat on the Days Your Skin Asks For It</h3>
+              <p>
+                Two drops pressed into damp skin, not rubbed. If your face stings
+                it, skip it for three days. Actives are a habit, not a challenge.
+              </p>
+            </div>
+          </article>
+          <article class="row">
+            <span class="row__num">03</span>
+            <div>
+              <h3>Hydrate and Protect Before You Leave</h3>
+              <p>
+                Moisturiser locks in the serum, sunscreen locks in everything.
+                Wait two minutes between them and you will not get pills under
+                makeup.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ================= WEEK BY WEEK ================= -->
+      <section class="section frame" aria-labelledby="weekTitle">
+        <div class="rule-label">
+          <span class="rule-label__index">03</span>
+          <p class="rule-label__text">Expectation</p>
+        </div>
+        <h2 id="weekTitle" style="margin-bottom: 2.5rem">
+          What Six Weeks Actually Looks Like
+        </h2>
+        <div class="grid-3">
+          <article class="ingredient">
+            <div class="ingredient__media ratio-land">
+              <img
+                class="reveal"
+                src="https://images.pexels.com/photos/9038626/pexels-photo-9038626.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200"
+                width="1200"
+                height="1800"
+                loading="lazy"
+                alt="Close portrait of a person smoothing a white cream along the jawline in soft daylight."
+              />
+            </div>
+            <h3>Weeks 1–2</h3>
+            <p>
+              Nothing dramatic. Expect the tight feeling after washing to fade
+              first, usually around day five, as the barrier stops losing water
+              every time you cleanse.
+            </p>
+            <p>Some people see a small purge in week two. It settles. If it has
+            not settled by day twelve, stop the treatment and write to us.</p>
+          </article>
+
+          <article class="ingredient">
+            <div class="ingredient__media ratio-land">
+              <img
+                class="reveal"
+                src="https://images.pexels.com/photos/7010954/pexels-photo-7010954.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200"
+                width="1200"
+                height="800"
+                loading="lazy"
+                alt="A smiling person dabbing cream onto the cheek with fingertips in a bright bathroom."
+              />
+            </div>
+            <h3>Weeks 3–4</h3>
+            <p>
+              Tone starts to read as more even because the surface is holding
+              water evenly. This is the point where most people photograph
+              themselves and think nothing has changed. It has.
+            </p>
+            <p>Do not add a fourth product here. That is the week routines
+            break.</p>
+          </article>
+
+          <article class="ingredient">
+            <div class="ingredient__media ratio-land">
+              <img
+                class="reveal"
+                src="https://images.pexels.com/photos/4943440/pexels-photo-4943440.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200"
+                width="1200"
+                height="800"
+                loading="lazy"
+                alt="Macro photograph of a vivid green mint leaf showing fine veins and surface texture."
+              />
+            </div>
+            <h3>Weeks 5–6</h3>
+            <p>
+              One full cell cycle. Marks from old spots visibly lighter, redness
+              less reactive, and the morning face looks rested rather than
+              processed. Now judge it — and change one thing at a time if you
+              change anything.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ================= HONEST NOTE ================= -->
+      <section class="section frame" aria-labelledby="noteTitle">
+        <div class="rule-label">
+          <span class="rule-label__index">04</span>
+          <p class="rule-label__text">Before you buy</p>
+        </div>
+        <div class="split split--50">
+          <h2 id="noteTitle">When Not to Buy Anything From Us</h2>
+          <div>
+            <p>
+              If you have eczema that weeps, a rash that appeared overnight, or
+              an unwelcome change in a mole, a cosmetic will not help and delay
+              will cost you. See a dermatologist first — we say this roughly
+              twice a week in the studio inbox and we mean it.
+            </p>
+            <p>
+              If you are mid-prescription — tretinoin, isotretinoin, anything
+              that thins the barrier — bring the routine down to cleanse,
+              moisturise, protect, and add nothing else without asking whoever
+              prescribed it.
+            </p>
+            <p>
+              And if your current three-step routine has been working for a year,
+              keep it. We would rather you spend the money on a good hat than on
+              a bottle you do not need.
+            </p>
+            <p style="margin-top: 2rem">
+              <a class="link-arrow" href="contact.html">Ask a formulator directly →</a>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SIGNUP ================= -->
+      <section class="signup" aria-labelledby="signupTitle">
+        <div class="frame">
+          <div class="rule-label" style="border-color: rgba(238, 242, 236, 0.28)">
+            <span class="rule-label__index" style="color: #a9c6a6">05</span>
+            <p class="rule-label__text" style="color: rgba(238, 242, 236, 0.6)">
+              The Dispatch
+            </p>
+          </div>
+          <h2 id="signupTitle">One Letter a Month. No Selling.</h2>
+          <p>
+            Formulator notes, harvest reports from the farms, and the occasional
+            correction when we get something wrong.
+          </p>
+          <form class="signup__form" data-signup novalidate>
+            <div class="field">
+              <label for="signupEmail">Email address</label>
+              <input
+                type="email"
+                id="signupEmail"
+                name="email"
+                autocomplete="email"
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+            <button type="submit" class="btn">Subscribe</button>
+          </form>
+          <p class="signup__error" role="alert">
+            That email address does not look right. Check it and try again.
+          </p>
+          <p class="signup__ok" role="status"></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="frame">
+        <div class="footer__top">
+          <div>
+            <p class="footer__brand">Verdant<sup>®</sup></p>
+            <p class="footer__blurb">
+              Short-ingredient skincare blended in Copenhagen and sourced from
+              two farms we visit twice a year. Eleven formulas, one method.
+            </p>
+          </div>
+          <div>
+            <h2>Shop</h2>
+            <ul>
+              <li><a href="shop.html">All formulas</a></li>
+              <li><a href="shop.html">Cleansers</a></li>
+              <li><a href="shop.html">Serums &amp; treatments</a></li>
+              <li><a href="shop.html">Moisturisers &amp; oils</a></li>
+              <li><a href="shop.html">Body &amp; hands</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>Learn</h2>
+            <ul>
+              <li><a href="our-story.html">Our story</a></li>
+              <li><a href="our-story.html">Ingredient index</a></li>
+              <li><a href="routine.html">Find your routine</a></li>
+              <li><a href="routine.html">The three-step method</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>Support</h2>
+            <ul>
+              <li><a href="contact.html">Contact the studio</a></li>
+              <li><a href="contact.html">Delivery &amp; returns</a></li>
+              <li><a href="contact.html">Refill programme</a></li>
+              <li><a href="contact.html">Press &amp; stockists</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__bottom">
+          <p>
+            © <span data-year>2026</span> Verdant Apothek ApS · Refsnavn 14,
+            1457 København K
+          </p>
+          <div class="footer__legal">
+            <a href="contact.html">Contact</a>
+            <a href="our-story.html">Standards</a>
+            <a href="shop.html">Shop</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div class="scrim" id="cartScrim" tabindex="-1"></div>
+
+    <aside
+      class="drawer"
+      id="cartDrawer"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="cartDrawerTitle"
+      aria-hidden="true"
+    >
+      <header class="drawer__head">
+        <h2 class="drawer__title" id="cartDrawerTitle">Your cart</h2>
+        <button
+          type="button"
+          class="drawer__close"
+          data-cart-close
+          aria-label="Close cart"
+        >
+          ✕
+        </button>
+      </header>
+      <div class="drawer__body" id="cartLines"></div>
+      <footer class="drawer__foot" id="cartFoot" hidden></footer>
+    </aside>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">
+      <span data-toast-text></span>
+      <button type="button" data-toast-close aria-label="Dismiss message">
+        Close
+      </button>
+    </div>
+  <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
