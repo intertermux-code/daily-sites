@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mintwise — Mission Control for Your Personal Finance</title>
+<meta name="description" content="Mintwise links every account, categorises each transaction in seconds, and shows the one number that matters: how much of every paycheck you keep.">
+<meta name="theme-color" content="#10b981">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============ STATUS STRIP ============ -->
+<div class="statusbar">
+  <div class="wrap statusbar__inner">
+    <span class="statusbar__item"><span class="led" aria-hidden="true"></span> All systems nominal</span>
+    <span class="statusbar__item statusbar__hide-sm">Accounts linked <strong>12.4M</strong></span>
+    <span class="statusbar__item statusbar__hide-sm">Sync uptime <strong>99.98%</strong></span>
+    <span class="statusbar__right">
+      <span class="statusbar__item" data-clock>--:--:-- UTC</span>
+      <span class="statusbar__item statusbar__hide-sm">Build <strong>2.4.1</strong></span>
+    </span>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-8 4 5"/><path d="M3 21h18"/></svg>
+      </span>
+      Mintwise
+      <span class="brand__sup">v2.4</span>
+    </a>
+
+    <nav class="nav" id="primary-nav" data-nav aria-label="Primary">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="index.html" aria-current="page">Overview <span class="kbd">01</span></a></li>
+        <li><a class="nav__link" href="features.html">Features <span class="kbd">02</span></a></li>
+        <li><a class="nav__link" href="calculator.html">Calculator <span class="kbd">03</span></a></li>
+        <li><a class="nav__link" href="pricing.html">Pricing <span class="kbd">04</span></a></li>
+        <li><a class="nav__link" href="contact.html">Support <span class="kbd">05</span></a></li>
+      </ul>
+      <div class="nav__cta"><a class="btn btn--primary" href="pricing.html">Start 30 Free Days</a></div>
+    </nav>
+
+    <button class="cmd-chip" type="button" data-palette-open>Jump to station <span class="kbd">⌘</span><span class="kbd">K</span></button>
+
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation">
+      <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div class="scroll-line" aria-hidden="true"><div class="scroll-line__bar" data-scroll-line></div></div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO: SPLIT DIALOGUE ============ -->
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="split split--even">
+      <div>
+        <p class="eyebrow">Personal finance · console view</p>
+        <h1 id="hero-title" data-stagger>Command Your Money From One Calm Console</h1>
+        <p class="hero__sub">Mintwise reads every account, labels each transaction within seconds, and puts the only number that matters in front of you: how much of every paycheck you actually keep.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="pricing.html">Start 30 Free Days
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="calculator.html">Run the Savings Calculator</a>
+        </div>
+        <ul class="telemetry hero__meta">
+          <li><span class="t-key">Median user savings rate</span><span class="t-dots" aria-hidden="true"></span><span class="t-val t-val--mint">18.4%</span></li>
+          <li><span class="t-key">Sync latency</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">1.2 s</span></li>
+          <li><span class="t-key">Categorisation accuracy</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">98.6%</span></li>
+          <li><span class="t-key">Median first reply</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">2 h 14 m</span></li>
+        </ul>
+        <p class="hero__rating">
+          <span class="stars" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6.5 7 .9-5 4.8 1.3 7-6.3-3.4L5.7 21 7 14.2 2 9.4l7-.9z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6.5 7 .9-5 4.8 1.3 7-6.3-3.4L5.7 21 7 14.2 2 9.4l7-.9z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6.5 7 .9-5 4.8 1.3 7-6.3-3.4L5.7 21 7 14.2 2 9.4l7-.9z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6.5 7 .9-5 4.8 1.3 7-6.3-3.4L5.7 21 7 14.2 2 9.4l7-.9z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6.5 7 .9-5 4.8 1.3 7-6.3-3.4L5.7 21 7 14.2 2 9.4l7-.9z"/></svg>
+          </span>
+          <span><strong>4.8</strong> from 12,418 verified reviews on the App Store and Google Play</span>
+        </p>
+      </div>
+
+      <div class="hero__aside">
+        <div class="device-stage">
+          <div class="device" role="img" aria-label="The Mintwise app screen: monthly balance of $4,820 with a $1,480 surplus, a 32 percent savings ring, three recent transactions, a 30-day bill preview, and a six-month spending chart.">
+            <div class="device__screen" aria-hidden="true">
+              <div class="app-bar"><span>Mintwise</span><span>Tue 09:41</span></div>
+              <div class="app-hero">
+                <p class="app-hero__label">Kept this month</p>
+                <p class="app-hero__amt">$4,820</p>
+                <p class="app-hero__delta">▲ $1,480 vs. plan</p>
+              </div>
+              <div class="app-ring">
+                <svg viewBox="0 0 48 48">
+                  <circle cx="24" cy="24" r="19" fill="none" stroke="#cdf0e0" stroke-width="7"/>
+                  <circle cx="24" cy="24" r="19" fill="none" stroke="#10b981" stroke-width="7" stroke-linecap="round" stroke-dasharray="47.7 125.7" transform="rotate(-90 24 24)"/>
+                  <text x="24" y="28" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#047857">32%</text>
+                </svg>
+                <div>
+                  <p class="app-ring__t">Savings rate on track</p>
+                  <p class="app-ring__s">Goal 30% · 11 days left</p>
+                </div>
+              </div>
+              <div class="app-rows">
+                <div class="app-row">
+                  <span class="app-row__i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9h18M3 15h18"/></svg></span>
+                  <span><span class="app-row__n">Rent · Unit 14</span><br><span class="app-row__m">Housing · 1st</span></span>
+                  <span class="app-row__v">−$1,450</span>
+                </div>
+                <div class="app-row">
+                  <span class="app-row__i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 3v18M18 3v18M6 8h12M6 16h12"/></svg></span>
+                  <span><span class="app-row__n">Greenline Grocers</span><br><span class="app-row__m">Food · 3rd</span></span>
+                  <span class="app-row__v">−$86.40</span>
+                </div>
+                <div class="app-row">
+                  <span class="app-row__i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></span>
+                  <span><span class="app-row__n">Thrust Transfer</span><br><span class="app-row__m">Savings · 5th</span></span>
+                  <span class="app-row__v">+$520</span>
+                </div>
+              </div>
+              <div class="app-mini" aria-hidden="true">
+                <p class="app-mini__h">Next 30 days</p>
+                <ul>
+                  <li><span class="app-mini__d">14 Oct</span><span>Electric — Creston</span><span class="app-mini__v">−$92.10</span></li>
+                  <li><span class="app-mini__d">18 Oct</span><span>Spotify Family</span><span class="app-mini__v">−$17.99</span></li>
+                  <li><span class="app-mini__d">26 Oct</span><span>Payday thrust</span><span class="app-mini__v app-mini__v--in">+$520.00</span></li>
+                </ul>
+              </div>
+              <div class="app-bars">
+                <i style="height:44%"></i><i style="height:62%"></i><i style="height:38%"></i><i style="height:74%"></i><i style="height:52%"></i><i style="height:88%"></i>
+              </div>
+              <div class="app-tabbar" aria-hidden="true">
+                <span class="is-on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 17l5-6 4 3 5-8 4 5"/></svg>Panel</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>Rules</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>Goals</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 20V10M12 20V4M18 20v-6"/></svg>Reports</span>
+              </div>
+            </div>
+          </div>
+          <div class="float-card float-card--a"><span>Burn rate</span><strong>−6.2%</strong><span>vs. last month</span></div>
+          <div class="float-card float-card--b"><span>Bills ahead</span><strong>3 in 9 days</strong><span>$412 total</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECURITY BAND ============ -->
+  <section class="section section--band section--tight" aria-labelledby="security-title">
+    <div class="wrap">
+      <h2 id="security-title" class="sr-only">Security and data handling</h2>
+      <p class="eyebrow">Read-only · encrypted · audited</p>
+      <div class="badge-band">
+        <div class="badge">
+          <span class="badge__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.2-2.9 7.7-7 9-4.1-1.3-7-4.8-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+          <span><span class="badge__t">SOC 2 Type II</span><br><span class="badge__s">Audited yearly</span></span>
+        </div>
+        <div class="badge">
+          <span class="badge__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="3"/><path d="M8 10V7a4 4 0 018 0v3"/></svg></span>
+          <span><span class="badge__t">AES-256 at rest</span><br><span class="badge__s">TLS 1.3 in transit</span></span>
+        </div>
+        <div class="badge">
+          <span class="badge__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg></span>
+          <span><span class="badge__t">FDIC-insured partners</span><br><span class="badge__s">Deposits up to $250k</span></span>
+        </div>
+        <div class="badge">
+          <span class="badge__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11a4 4 0 014 4v1"/><path d="M8 15a4 4 0 018 0"/><path d="M12 3a8 8 0 00-8 8"/><path d="M12 7a4 4 0 00-4 4"/></svg></span>
+          <span><span class="badge__t">Biometric unlock</span><br><span class="badge__s">Face ID, Touch ID</span></span>
+        </div>
+        <div class="badge">
+          <span class="badge__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M10.6 5.1A9.4 9.4 0 0112 5c5 0 9 4.5 10 7-.5 1.3-1.8 3.2-3.8 4.6"/><path d="M6.3 7.5C4.4 9 3.2 11.2 2 12c1 2.5 5 7 10 7 1.5 0 2.9-.4 4.2-1"/></svg></span>
+          <span><span class="badge__t">Read-only access</span><br><span class="badge__s">Mintwise cannot move money</span></span>
+        </div>
+        <div class="badge">
+          <span class="badge__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16v12H4z"/><path d="M8 7V5a4 4 0 018 0v2"/><path d="M9 13l6 0"/></svg></span>
+          <span><span class="badge__t">No ad network</span><br><span class="badge__s">We never sell your data</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FLIGHT PLAN: SPLIT + RAIL ============ -->
+  <section class="section" aria-labelledby="flightplan-title">
+    <div class="wrap">
+      <div class="split">
+        <div class="split__sticky">
+          <div class="panel panel--tick">
+            <div class="panel__head"><span>Console · flight plan</span><span class="led" aria-hidden="true"></span></div>
+            <div class="panel__body station-panel">
+              <p class="eyebrow" style="margin-bottom:0.75rem">Four stations to liftoff</p>
+              <p class="station-panel__name" data-station-name>Connect</p>
+              <p class="station-panel__desc" data-station-desc>Link checking, credit, savings, and brokerage accounts with read-only keys.</p>
+              <p class="form-note" data-station-index>Station 01 / 04</p>
+              <ul class="rail" data-rail>
+                <li class="is-active"><button type="button"><span class="rail__idx">01</span> Connect</button></li>
+                <li><button type="button"><span class="rail__idx">02</span> Classify</button></li>
+                <li><button type="button"><span class="rail__idx">03</span> Automate</button></li>
+                <li><button type="button"><span class="rail__idx">04</span> Launch</button></li>
+              </ul>
+              <a class="link-arrow" href="features.html">See every system
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="split__flow">
+          <article class="block" data-station data-station-name="Connect" data-station-desc="Link checking, credit, savings, and brokerage accounts with read-only keys.">
+            <span class="block__num">Station 01</span>
+            <h2 id="flightplan-title">Connect the whole picture in under four minutes</h2>
+            <p>Pick your bank from 12,400 supported institutions, approve the read-only handshake, and Mintwise pulls 24 months of history. Nothing you enter is shared with your bank, and no payment ever moves through us.</p>
+            <ul class="telemetry">
+              <li><span class="t-key">Median setup time</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">3 m 52 s</span></li>
+              <li><span class="t-key">Institutions supported</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">12,400</span></li>
+              <li><span class="t-key">History imported</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">24 months</span></li>
+            </ul>
+          </article>
+
+          <article class="block" data-station data-station-name="Classify" data-station-desc="A model trained on 1.4 billion labelled transactions sorts spending into the categories you actually use.">
+            <span class="block__num">Station 02</span>
+            <h2>Classify every dollar without a spreadsheet</h2>
+            <p>Mintwise labels 98.6% of transactions correctly on the first pass and learns from the corrections you make. Subscriptions, transfers, reimbursements, and split charges are handled as their own objects, so your numbers stop lying to you.</p>
+            <p>One tap on any line opens the full lineage: merchant, rule that fired, and the three previous matches, so you can see exactly why a charge landed where it did.</p>
+          </article>
+
+          <article class="block" data-station data-station-name="Automate" data-station-desc="Envelope rules, bill radar, and payday transfers run while you sleep.">
+            <figure class="figure">
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&h=750&q=80" width="1200" height="750" alt="A laptop on a wooden desk displaying a financial dashboard with line and bar charts." loading="lazy" decoding="async">
+              <figcaption>Coverage view · six months of category burn with bill markers</figcaption>
+            </figure>
+            <span class="block__num">Station 03</span>
+            <h2>Automate the transfer you keep meaning to make</h2>
+            <p>Set a rule once — “every payday, move 12% to Emergency, then round the rest into Japan” — and Mintwise queues it for you to approve at your bank. Bill Radar watches the next 30 days and warns you two days early when an envelope will not cover what is coming.</p>
+          </article>
+
+          <article class="block" data-station data-station-name="Launch" data-station-desc="Goals get a date, a number, and the monthly thrust required to hit them.">
+            <span class="block__num">Station 04</span>
+            <h2>Launch goals with a date, not a wish</h2>
+            <p>Every goal shows the monthly thrust required to land on time, and the console recalculates the moment your spending shifts. Miss two months and Mintwise tells you plainly whether to extend the date or trim a category — with the three cuts that would close the gap.</p>
+            <div class="cluster" style="margin-top:1.25rem">
+              <span class="tag tag--mint"><span class="led" aria-hidden="true"></span> 4 goals average per household</span>
+              <span class="tag">Emergency fund · 6 months</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LIVE NUMBERS (console) ============ -->
+  <section class="section section--console section--tight" aria-labelledby="numbers-title">
+    <div class="wrap">
+      <div class="split split--reverse">
+        <div class="split__visual split__sticky">
+          <figure class="figure">
+            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1000&h=1000&q=80" width="1000" height="1000" alt="Earth at night seen from orbit, city lights tracing the coastlines below." loading="lazy" decoding="async" style="border-radius:var(--r-lg)">
+            <figcaption style="color:var(--ink-inv-2)">Telemetry from 12.4 million linked accounts</figcaption>
+          </figure>
+        </div>
+        <div class="split__flow">
+          <p class="eyebrow">Live numbers · 30-day window</p>
+          <h2 id="numbers-title">What the Fleet Is Actually Doing</h2>
+          <p>These are aggregate, anonymised readings from Mintwise households that have been flying for at least six months. Nobody opts in to being measured, and nobody is identified.</p>
+          <ul class="telemetry" style="margin-top:1.5rem">
+            <li><span class="t-key">Median savings rate after 6 months</span><span class="t-dots" aria-hidden="true"></span><span class="t-val t-val--mint">18.4%</span></li>
+            <li><span class="t-key">Average category burn reduction</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">$214 / month</span></li>
+            <li><span class="t-key">Subscriptions cancelled per household</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">4.1 / year</span></li>
+            <li><span class="t-key">Households with 3 months of runway</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">62%</span></li>
+            <li><span class="t-key">Accounts opened for goal savings</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">2.8M</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SYSTEMS GRID ============ -->
+  <section class="section" aria-labelledby="systems-title">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow">Six systems on the panel</p>
+        <h2 id="systems-title">Every Instrument You Need, None You Do Not</h2>
+        <p>Mintwise is deliberately narrow. It reads where your money went, shows what you kept, and warns you before the next thirty days bite.</p>
+      </div>
+      <div class="cards">
+        <a class="card" href="features.html#auto-categorization">
+          <span class="card__idx">01</span>
+          <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h13"/><circle cx="19" cy="15" r="3"/></svg></span>
+          <h3>Auto-Categorization</h3>
+          <p>98.6% of transactions sorted on arrival, with the rule that fired shown on every line.</p>
+          <span class="card__foot">Open system <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a class="card" href="features.html#bill-radar">
+          <span class="card__idx">02</span>
+          <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 100-18 9 9 0 000 18z"/><path d="M12 7v5l3 2"/></svg></span>
+          <h3>Bill Radar</h3>
+          <p>A 30-day runway view of every recurring charge, with two-day warnings before a shortfall.</p>
+          <span class="card__foot">Open system <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a class="card" href="features.html#goal-thrusters">
+          <span class="card__idx">03</span>
+          <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-6 4-13 12-14 1 8-3 14-9 14"/><path d="M8 16l-3 3M13 12a3 3 0 100-6"/></svg></span>
+          <h3>Goal Thrusters</h3>
+          <p>Each goal carries a date and the exact monthly thrust needed to hit it on time.</p>
+          <span class="card__foot">Open system <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a class="card" href="features.html#forecasting">
+          <span class="card__idx">04</span>
+          <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l5-7 4 3 5-9"/><path d="M17 5h4v4"/></svg></span>
+          <h3>Cash-Flow Forecast</h3>
+          <p>Sixty days projected forward from your real cadence, not a generic monthly average.</p>
+          <span class="card__foot">Open system <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a class="card" href="features.html#security">
+          <span class="card__idx">05</span>
+          <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.2-2.9 7.7-7 9-4.1-1.3-7-4.8-7-9V6z"/></svg></span>
+          <h3>Security &amp; Access</h3>
+          <p>Hardware keys, session pinning, and an audit log you can export in one tap.</p>
+          <span class="card__foot">Open system <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a class="card" href="features.html#insights">
+          <span class="card__idx">06</span>
+          <span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
+          <h3>Insights &amp; Reports</h3>
+          <p>Monthly PDF and CSV packets built for tax season, a landlord, or a partner meeting.</p>
+          <span class="card__foot">Open system <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="section section--band" aria-labelledby="crew-title">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow">Flight reports</p>
+        <h2 id="crew-title">Three Years of Logbooks From the Crew</h2>
+      </div>
+      <div class="quotes">
+        <figure class="quote">
+          <span class="quote__mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 7H6a3 3 0 00-3 3v7h7v-7H6c0-1 .5-1.8 4-2.2zm11 0h-4a3 3 0 00-3 3v7h7v-7h-4c0-1 .5-1.8 4-2.2z"/></svg></span>
+          <blockquote>I had four budgeting apps in a drawer and no savings. Mintwise showed me the 22 subscriptions I forgot, and my rate went from 4% to 19% in two quarters.</blockquote>
+          <figcaption>
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&h=120&q=80" width="48" height="48" alt="Portrait of Dana Whitfield, product designer." loading="lazy" decoding="async">
+            <span><span class="quote__n">Dana Whitfield</span><br><span class="quote__r">Product designer · Portland</span></span>
+          </figcaption>
+        </figure>
+        <figure class="quote">
+          <span class="quote__mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 7H6a3 3 0 00-3 3v7h7v-7H6c0-1 .5-1.8 4-2.2zm11 0h-4a3 3 0 00-3 3v7h7v-7h-4c0-1 .5-1.8 4-2.2z"/></svg></span>
+          <blockquote>Freelance income is a sawtooth. The 60-day forecast is the only thing that has kept me from over-committing in a good month — it plans for the trough, not the peak.</blockquote>
+          <figcaption>
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120&q=80" width="48" height="48" alt="Portrait of Marcus Adeyemi, freelance video editor." loading="lazy" decoding="async">
+            <span><span class="quote__n">Marcus Adeyemi</span><br><span class="quote__r">Video editor · Atlanta</span></span>
+          </figcaption>
+        </figure>
+        <figure class="quote">
+          <span class="quote__mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 7H6a3 3 0 00-3 3v7h7v-7H6c0-1 .5-1.8 4-2.2zm11 0h-4a3 3 0 00-3 3v7h7v-7h-4c0-1 .5-1.8 4-2.2z"/></svg></span>
+          <blockquote>We merged finances mid-pandemic and needed one honest view. The shared plan keeps both of us reading the same instrument instead of negotiating from screenshots.</blockquote>
+          <figcaption>
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&h=120&q=80" width="48" height="48" alt="Portrait of Priya Raghunathan, hospital administrator." loading="lazy" decoding="async">
+            <span><span class="quote__n">Priya Raghunathan</span><br><span class="quote__r">Hospital administrator · Columbus</span></span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GOALS SPLIT ============ -->
+  <section class="section" aria-labelledby="goals-title">
+    <div class="wrap">
+      <div class="split split--reverse">
+        <div class="split__visual split__sticky">
+          <figure class="figure">
+            <img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=1100&h=1300&q=80" width="1100" height="1300" alt="A still alpine lake mirroring snow-dusted mountains at sunset." loading="lazy" decoding="async" style="border-radius:var(--r-lg)">
+            <figcaption>Moraine Lake, Alberta · the destination on Priya’s 14-month goal</figcaption>
+          </figure>
+        </div>
+        <div class="split__flow">
+          <p class="eyebrow">Instrument, not sermon</p>
+          <h2 id="goals-title">Guilt Does Not Fit in a Console</h2>
+          <p>Mintwise never lectures. It reports. A red line on coffee is not a character flaw — it is a reading, and readings are the only thing you can steer with.</p>
+          <div class="block">
+            <h3>What changes in month three</h3>
+            <ul>
+              <li>You stop opening four banking apps and start reading one panel.</li>
+              <li>You know the exact number that lands you in a safe month versus a tight one.</li>
+              <li>You approve purchases before they happen instead of discovering them on the statement.</li>
+              <li>Your partner and you finally argue from the same data.</li>
+            </ul>
+          </div>
+          <div class="block">
+            <h3>What we deliberately left out</h3>
+            <p>No stock tips, no crypto price alerts, no “investor ideas” inbox, no credit-score bait. Mintwise is a measuring instrument; the decisions stay yours.</p>
+          </div>
+          <div class="block">
+            <a class="btn btn--ink" href="calculator.html">Model your own savings rate</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section section--band" aria-labelledby="faq-title">
+    <div class="wrap wrap--narrow" style="max-width:880px">
+      <p class="eyebrow">Pre-flight questions</p>
+      <h2 id="faq-title">Answers Before You Link Anything</h2>
+      <div class="acc acc--boxed" style="margin-top:2rem">
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="true"><span class="acc__idx">01</span><span class="acc__title">Can Mintwise move my money?</span><span class="acc__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button></h3>
+          <div class="acc__panel"><div class="acc__inner"><div class="acc__content">
+            <p>No. Every connection is read-only through our aggregation partner. Transfer rules build a queued instruction that you approve at your own bank — we never hold funds, issue payment credentials, or initiate a debit.</p>
+          </div></div></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false"><span class="acc__idx">02</span><span class="acc__title">What happens to my data if I cancel?</span><span class="acc__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button></h3>
+          <div class="acc__panel"><div class="acc__inner"><div class="acc__content">
+            <p>You can export everything as CSV or JSON from Settings → Data, then revoke access with one button. Revocation deletes your transaction history from our systems within 30 days and is confirmed by email with a dated audit receipt.</p>
+          </div></div></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false"><span class="acc__idx">03</span><span class="acc__title">Does it work if my bank is not supported?</span><span class="acc__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button></h3>
+          <div class="acc__panel"><div class="acc__inner"><div class="acc__content">
+            <p>Yes. Import OFX, QFX, or CSV files from any institution on the same day your statement closes, or forward receipts to inboxes@mintwise.app. Manual accounts appear in the console exactly like linked ones, with a “last synced” stamp so you always know their age.</p>
+          </div></div></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false"><span class="acc__idx">04</span><span class="acc__title">Is there a free plan, or only a trial?</span><span class="acc__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button></h3>
+          <div class="acc__panel"><div class="acc__inner"><div class="acc__content">
+            <p>Grounded is free forever: two linked accounts, manual budgets, and the savings calculator. Navigator and Flight Deck add forecasting, Bill Radar, goal thrusters, and household sharing. <a href="pricing.html">Compare the plans</a> side by side.</p>
+          </div></div></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false"><span class="acc__idx">05</span><span class="acc__title">How is this different from my bank’s spending tool?</span><span class="acc__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button></h3>
+          <div class="acc__panel"><div class="acc__inner"><div class="acc__content">
+            <p>Your bank sees one institution and optimises for engagement. Mintwise sees the whole fleet — checking, credit, savings, brokerage, and the joint account you share — and reports a single savings rate. It also runs 60 days forward instead of 30 days back.</p>
+          </div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="cta">
+        <div>
+          <p class="eyebrow">Ready when you are</p>
+          <h2>Thirty Days, Full Console, No Card</h2>
+          <p>Link one account and watch your savings rate move. If Mintwise does not change a number for you in a month, walk away and keep the export.</p>
+        </div>
+        <div class="cta__actions">
+          <a class="btn btn--primary" href="pricing.html">Start 30 Free Days</a>
+          <a class="btn btn--onDark" href="contact.html">Talk to Support</a>
+        </div>
+        <ul class="telemetry" style="max-width:34rem">
+          <li><span class="t-key">Card required</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">No</span></li>
+          <li><span class="t-key">Setup time</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">Under 4 minutes</span></li>
+          <li><span class="t-key">Cancellation</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">One button, no call</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand">
+        <a class="brand" href="index.html">
+          <span class="brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-8 4 5"/><path d="M3 21h18"/></svg>
+          </span>
+          Mintwise
+        </a>
+        <p>A personal finance console for people who would rather measure than guess. Built in Denver by a crew of eleven.</p>
+        <p class="statusbar__item" style="text-transform:uppercase;letter-spacing:0.1em;font-family:var(--f-mono);font-size:0.75rem"><span class="led" aria-hidden="true"></span> All systems nominal</p>
+      </div>
+      <div class="footer-col">
+        <h2>Product</h2>
+        <ul>
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="calculator.html">Savings Calculator</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Mission</h2>
+        <ul>
+          <li><a href="index.html#flightplan-title">The flight plan</a></li>
+          <li><a href="index.html#systems-title">Six systems</a></li>
+          <li><a href="features.html#security">Security model</a></li>
+          <li><a href="features.html#roadmap-title">Launch schedule</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Support</h2>
+        <ul>
+          <li><a href="contact.html">Talk to Mission Control</a></li>
+          <li><a href="contact.html#faq">Common questions</a></li>
+          <li><a href="contact.html#channels">Response times</a></li>
+          <li><a href="mailto:security@mintwise.app">Report a vulnerability</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Mintwise Labs, Inc.</span>
+      <span class="statusbar__hide-sm">Mintwise is a software product, not a bank, broker, or advisor</span>
+      <span style="margin-left:auto">Made for calm hands <span class="kbd">⌘</span><span class="kbd">K</span></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ COMMAND PALETTE ============ -->
+<div class="palette" data-palette hidden>
+  <div class="palette__box" role="dialog" aria-modal="true" aria-labelledby="palette-title">
+    <div class="palette__head">
+      <span class="led" aria-hidden="true"></span>
+      <span id="palette-title">Jump to station</span>
+    </div>
+    <div class="palette__search">
+      <label class="sr-only" for="palette-input">Filter pages</label>
+      <input id="palette-input" type="search" data-palette-input placeholder="Type a page name…" autocomplete="off">
+    </div>
+    <ul class="palette__list" data-palette-list>
+      <li><a id="p-1" href="index.html"><span class="kbd">01</span> Overview <span class="palette__desc">Hero, flight plan, fleet numbers</span></a></li>
+      <li><a id="p-2" href="features.html"><span class="kbd">02</span> Features <span class="palette__desc">Six systems in depth</span></a></li>
+      <li><a id="p-3" href="calculator.html"><span class="kbd">03</span> Calculator <span class="palette__desc">Savings-rate model</span></a></li>
+      <li><a id="p-4" href="pricing.html"><span class="kbd">04</span> Pricing <span class="palette__desc">Plans and comparison</span></a></li>
+      <li><a id="p-5" href="contact.html"><span class="kbd">05</span> Support <span class="palette__desc">Contact form and FAQ</span></a></li>
+    </ul>
+    <div class="palette__foot">
+      <span><span class="kbd">↑</span><span class="kbd">↓</span> move</span>
+      <span><span class="kbd">↵</span> open</span>
+      <span><span class="kbd">Esc</span> close</span>
+    </div>
+  </div>
+</div>
+
+<script src="app.js" defer></script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
