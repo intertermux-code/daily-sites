@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subscribe — The Thursday Edition · Signal</title>
+<meta name="description" content="Sign up for Signal's free Thursday Edition, choose the beats you read, and open the 288-story archive with membership. No advertising, no sponsored copy, cancel in one click.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="scroll-progress" data-scroll-progress role="progressbar" aria-label="Page scroll progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+
+<header class="site-header">
+  <div class="masthead-top">
+    <div class="wrap">
+      <p class="strip">
+        <span>Monday, 19 October 2026</span>
+        <span class="dot" aria-hidden="true">&#9670;</span>
+        <span>Issue No. 412</span>
+        <span class="dot" aria-hidden="true">&#9670;</span>
+        <span>Set in Brooklyn &amp; Berlin</span>
+        <span class="strip__spacer"></span>
+        <a href="subscribe.html">Subscribe</a>
+        <a href="about.html">The Masthead</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="masthead">
+    <div class="wrap">
+      <div class="masthead__inner">
+        <a class="logotype" href="index.html" aria-label="Signal — go to the homepage">SIGNAL<span class="mark">.</span></a>
+        <p class="masthead__tagline">Independent Technology Journalism &nbsp;·&nbsp; Reader Funded &nbsp;·&nbsp; No Sponsored Copy</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="navbar">
+    <div class="wrap navbar__inner">
+      <a class="navbar__label" href="index.html">SIGNAL<span class="mark">.</span></a>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle__text-open">Sections</span>
+        <span class="nav-toggle__text-close">Close</span>
+        <span class="bars" aria-hidden="true"><span></span></span>
+      </button>
+      <nav class="site-nav" id="site-nav" data-site-nav aria-label="Primary">
+        <ul>
+          <li><a href="index.html"><span class="idx" aria-hidden="true">01</span>The Latest</a></li>
+          <li><a href="article.html"><span class="idx" aria-hidden="true">02</span>Feature</a></li>
+          <li><a href="topics.html"><span class="idx" aria-hidden="true">03</span>Topics</a></li>
+          <li><a href="about.html"><span class="idx" aria-hidden="true">04</span>About</a></li>
+          <li><a href="subscribe.html" aria-current="page"><span class="idx" aria-hidden="true">05</span>Subscribe</a></li>
+        </ul>
+      </nav>
+      <a class="navbar__cta" href="#subscribe-form">Join Now</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">The Latest</a>
+        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" aria-hidden="true"><path d="M2 1l4 5-4 5" stroke="currentColor" stroke-width="1.5"/></svg>
+        <span aria-current="page">Subscribe</span>
+      </nav>
+      <div class="page-hero__split">
+        <div>
+          <h1>The Thursday Edition</h1>
+          <p class="deck">One long read, three short ones, and a standing note on what we could not confirm. Free, every Thursday at six in the morning Eastern, written by the reporters who filed it. Choose the beats you read and we will not send you the rest.</p>
+          <p style="margin-top:1.75rem"><a class="btn btn--red" href="#subscribe-form">Sign up free</a> <a class="btn btn--ghost" href="#plans" style="margin-left:.5rem">See membership</a></p>
+        </div>
+        <ul class="stats" style="border-left:0;border-right:0;border-bottom:0">
+          <li><span class="n">9,412</span><span class="l">Members</span></li>
+          <li><span class="n">41</span><span class="l">Weeks without a sponsored slot</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== THE FORM ===================== -->
+  <section class="section" id="signup" aria-labelledby="form-title">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <div class="section-rule">
+            <h2 id="form-title">Sign Up</h2>
+            <span class="folio">Four required fields</span>
+          </div>
+
+          <div class="error-summary" id="form-error-summary" role="alert" tabindex="-1" aria-labelledby="form-error-heading">
+            <h2 id="form-error-heading">There is a problem with your sign-up</h2>
+            <ul id="form-error-list"></ul>
+          </div>
+
+          <form id="subscribe-form" novalidate aria-describedby="form-intro">
+            <p id="form-intro" style="margin-top:0;color:var(--ink-soft)">We use your address to send the edition and nothing else. No third-party senders, no tracking pixels, and the list is held on our own mail server.</p>
+
+            <div class="field">
+              <label class="field__label" for="email">Email address <span aria-hidden="true">&mdash; required</span></label>
+              <input class="input" id="email" name="email" type="email" inputmode="email" autocomplete="email"
+                     placeholder="you@firm.com" aria-describedby="email-error email-hint" required>
+              <p class="field__hint" id="email-hint">Catch-all and role addresses are fine.</p>
+              <p class="error" id="email-error" data-show="false"></p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="name">What should we call you? <span aria-hidden="true">&mdash; required</span></label>
+              <input class="input" id="name" name="name" type="text" autocomplete="given-name"
+                     placeholder="Devan" aria-describedby="name-error" required>
+              <p class="error" id="name-error" data-show="false"></p>
+            </div>
+
+            <fieldset class="field" style="border:0;padding:0;margin:0 0 1.75rem">
+              <legend class="field__label" style="padding:0">Beats you read <span aria-hidden="true">&mdash; pick at least one</span></legend>
+              <p class="field__hint" id="beats-hint" style="margin-top:0;margin-bottom:.75rem">This is the whole personalisation. We send fewer things, not more.</p>
+              <ul class="choices" id="beats" data-beat-group aria-describedby="beats-error">
+                <li><label class="choice"><input type="checkbox" name="beats" value="infrastructure"> Infrastructure</label></li>
+                <li><label class="choice"><input type="checkbox" name="beats" value="ai-models"> AI &amp; Models</label></li>
+                <li><label class="choice"><input type="checkbox" name="beats" value="hardware"> Hardware</label></li>
+                <li><label class="choice"><input type="checkbox" name="beats" value="security"> Security &amp; Privacy</label></li>
+                <li><label class="choice"><input type="checkbox" name="beats" value="markets"> Markets &amp; Policy</label></li>
+                <li><label class="choice"><input type="checkbox" name="beats" value="startups"> Startups</label></li>
+                <li><label class="choice"><input type="checkbox" name="beats" value="data"> Data &amp; Benchmarks</label></li>
+                <li><label class="choice"><input type="checkbox" name="beats" value="longform"> Longform</label></li>
+              </ul>
+              <p class="error" id="beats-error" data-show="false"></p>
+            </fieldset>
+
+            <div class="field">
+              <label class="field__label" for="cadence">Delivery <span aria-hidden="true">&mdash; required</span></label>
+              <select class="select" id="cadence" name="cadence" aria-describedby="cadence-error cadence-hint" required>
+                <option value="">Choose how often we write to you</option>
+                <option value="weekly">Weekly &mdash; the Thursday Edition only</option>
+                <option value="weekly-plus">Weekly plus alerts &mdash; add breaking reporting</option>
+                <option value="monthly">Monthly digest &mdash; one email, everything filed</option>
+              </select>
+              <p class="field__hint" id="cadence-hint">Change or stop it in one click, from any email.</p>
+              <p class="error" id="cadence-error" data-show="false"></p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="role">Where you work <span aria-hidden="true">&mdash; optional</span></label>
+              <input class="input" id="role" name="role" type="text" autocomplete="organization"
+                     placeholder="Operator, analyst, founder, procurement&hellip;" aria-describedby="role-hint">
+              <p class="field__hint" id="role-hint">Helps us know who is actually reading. Never used for targeting.</p>
+            </div>
+
+            <div class="field">
+              <ul class="choices" style="grid-template-columns:1fr">
+                <li><label class="choice"><input type="checkbox" id="consent" name="consent" aria-describedby="consent-error" required> Yes, send me the Thursday Edition. I understand Signal is funded by readers and takes no advertising.</label></li>
+              </ul>
+              <p class="error" id="consent-error" data-show="false"></p>
+            </div>
+
+            <button class="btn btn--red btn--block" type="submit" style="max-width:340px">Sign up free</button>
+            <p class="meta" style="margin-top:1rem">By signing up you agree to our <a href="about.html#standards" class="link-underline">standards</a>. We publish our privacy practices on the masthead page.</p>
+          </form>
+
+          <div class="form-success" id="form-success" role="status" tabindex="-1">
+            <h2>You are on the list, <span id="success-name">there</span>.</h2>
+            <p>The next edition goes to <strong id="success-mail">you</strong> on Thursday at six in the morning Eastern.</p>
+            <p>A confirmation is on its way so you can check the address is right. If you do not see it by Friday, write to <a href="mailto:members@signal.press" class="link-underline">members@signal.press</a> and a person will fix it.</p>
+            <p style="margin-bottom:0"><a class="btn btn--ghost" href="article.html" style="margin-top:.75rem">Read this week&rsquo;s feature while you wait</a></p>
+          </div>
+        </div>
+
+        <aside aria-label="What arrives each week">
+          <div class="plate">
+            <div class="plate__head">
+              <h3>What Arrives</h3>
+              <span class="folio">E1</span>
+            </div>
+            <div class="plate__body">
+              <ol class="trending">
+                <li><span class="rank">&para;</span><div><h3>The long read</h3><span class="meta">One piece, 2,000&ndash;6,000 words, with the reporting notes attached</span></div></li>
+                <li><span class="rank">&para;</span><div><h3>Three short filings</h3><span class="meta">Each under 600 words, each with a document we looked at</span></div></li>
+                <li><span class="rank">&para;</span><div><h3>The unconfirmed</h3><span class="meta">A standing note on what we heard and could not prove. It runs every week, including when it is embarrassing</span></div></li>
+                <li><span class="rank">&para;</span><div><h3>The numbers</h3><span class="meta">Six figures from the week, with sources, in a table you can copy</span></div></li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="plate" style="margin-top:2rem">
+            <div class="plate__head">
+              <h3>Sample Edition</h3>
+              <span class="folio">No. 411</span>
+            </div>
+            <div class="plate__body">
+              <p class="kicker">Thursday, 15 October</p>
+              <h3 style="font-size:1.3rem;margin:.6rem 0 .8rem">Models Do Not Hallucinate. Companies Do.</h3>
+              <p style="font-size:.9375rem;color:var(--ink-soft);margin-bottom:1rem">Eleven incident reports, one table, and a definition of &ldquo;owner&rdquo; that most organisations cannot supply when asked.</p>
+              <p class="meta" style="margin-bottom:1.25rem">Followed by: the registry docket, a fab permit count, and four numbers on interconnection spend.</p>
+              <a class="readmore" href="article.html">Read a full piece
+                <svg width="16" height="11" viewBox="0 0 16 11" fill="none" aria-hidden="true"><path d="M0 5.5h13M9 1l4.5 4.5L9 10" stroke="currentColor" stroke-width="1.5"/></svg>
+              </a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SPINE: ANATOMY OF AN EDITION ===================== -->
+  <section class="spine-section section--sunk" aria-labelledby="anatomy-title">
+    <div class="wrap">
+      <div class="section-rule">
+        <h2 id="anatomy-title">How an Edition Gets Made</h2>
+        <span class="folio">Page E2 &nbsp;·&nbsp; Monday to Thursday</span>
+      </div>
+
+      <ol class="spine">
+        <li class="spine__entry">
+          <span class="spine__node" aria-hidden="true"><span>M</span></span>
+          <p class="entry__head"><span class="kicker">Monday, 10 a.m.</span> <span class="meta">The desk meeting</span></p>
+          <h3 class="entry__title">Everything on the table, including what is not ready</h3>
+          <p class="entry__excerpt">Every reporter states what they have, what they do not have, and what they are still waiting on a lawyer to answer. Roughly a third of what is discussed never gets filed, and that is the intended rate.</p>
+        </li>
+        <li class="spine__entry">
+          <span class="spine__node" aria-hidden="true"><span>T</span></span>
+          <p class="entry__head"><span class="kicker">Tuesday &ndash; Wednesday</span> <span class="meta">Reporting and check</span></p>
+          <h3 class="entry__title">The fact-checking desk takes the draft apart</h3>
+          <p class="entry__excerpt">Every figure, name, date, and characterisation goes to Wren Halloran with its source attached. Nothing publishes until the list is closed. Two pieces have been held for more than a month by this step.</p>
+        </li>
+        <li class="spine__entry">
+          <span class="spine__node" aria-hidden="true"><span>W</span></span>
+          <p class="entry__head"><span class="kicker">Thursday, 9 a.m.</span> <span class="meta">Right of reply</span></p>
+          <h3 class="entry__title">Subjects see the specific claims, in writing</h3>
+          <p class="entry__excerpt">Five working days, always. A refusal to respond is reported as a refusal to respond, in the same paragraph as the claim it concerns. This is the step most publications have quietly stopped doing.</p>
+        </li>
+        <li class="spine__entry">
+          <span class="spine__node" aria-hidden="true"><span>T</span></span>
+          <p class="entry__head"><span class="kicker">Thursday, 6 p.m.</span> <span class="meta">Send</span></p>
+          <h3 class="entry__title">The edition leaves on our own mail server</h3>
+          <p class="entry__excerpt">No third-party sender, no open-tracking pixel, no re-engagement campaign you did not ask for. Delivery problems are answered by a person, usually the same day.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===================== PLANS ===================== -->
+  <section class="section" id="plans" aria-labelledby="plans-title">
+    <div class="wrap">
+      <div class="section-rule">
+        <h2 id="plans-title">Membership</h2>
+        <span class="folio">Page E3 &nbsp;·&nbsp; The edition stays free; membership opens the archive</span>
+      </div>
+
+      <ul class="plans">
+        <li class="plan">
+          <p class="kicker">Reader</p>
+          <h3>The free edition</h3>
+          <p class="price">Free<small>No card, ever</small></p>
+          <ul>
+            <li><svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3.5 3.5L11 1" stroke="currentColor" stroke-width="1.8"/></svg><span>Thursday Edition, every week</span></li>
+            <li><svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3.5 3.5L11 1" stroke="currentColor" stroke-width="1.8"/></svg><span>All three short filings and the unconfirmed note</span></li>
+            <li><svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3.5 3.5L11 1" stroke="currentColor" stroke-width="1.8"/></svg><span>Full text after ninety days, always open</span></li>
+            <li><svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3.5 3.5L11 1" stroke="currentColor" stroke-width="1.8"/></svg><span>Beat selection and one-click unsubscribe</span></li>
+          </ul>
+          <a class="btn btn--ghost" href="#signup">Sign up free</a>
+        </li>
+
+        <li class="plan plan--featured">
+          <p class="kicker" style="color:#ff8f86">Most chosen</p>
+          <h3>Member</h3>
+          <p class="price"><sup>$</sup>12<small>Per month &nbsp;·&nbsp; or $110 a year</small></p>
+          <ul>
+            <li><svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3.5 3.5L11 1" stroke="currentColor" stroke-width="1.8"/></svg><span>Everything in Reader, immediately</span></li>
+            <li><svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3.5 3.5L11 1" stroke="currentColor" stroke-width="1.8"/></svg><span>The whole 288-story archive, no waiting period</span></li>
+            <li><svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3.5 3.5L11 1" stroke="currentColor" stroke-width="1.8"/></svg><span>Reporting notes and reproduction scripts per piece</span></li>
+            <li><svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3.5 3.5L11 1" stroke="currentColor" stroke-width="1.8"/></svg><span>Annual print volume, posted anywhere</span></li>
+            <li><svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3.5 3.5L11 1" stroke="currentColor" stroke-width="1.8"/></svg><span>Vote for the quarterly longform subject</span></li>
+          </ul>
+          <a class="btn btn--red" href="#signup">Become a member</a>
+        </li>
+
+        <li class="plan">
+          <p class="kicker">Teams &amp; institutions</p>
+          <h3>Reading room</h3>
+          <p class="price"><sup>$</sup>480<small>Per year &nbsp;·&nbsp; up to 25 seats</small></p>
+          <ul>
+            <li><svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3.5 3.5L11 1" stroke="currentColor" stroke-width="1.8"/></svg><span>Shared archive access for a desk or department</span></li>
+            <li><svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3.5 3.5L11 1" stroke="currentColor" stroke-width="1.8"/></svg><span>Citations cleared for internal reuse</span></li>
+            <li><svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3.5 3.5L11 1" stroke="currentColor" stroke-width="1.8"/></svg><span>Invoice or purchase order, no card required</span></li>
+            <li><svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3.5 3.5L11 1" stroke="currentColor" stroke-width="1.8"/></svg><span>Libraries and classrooms: write to us, we will work it out</span></li>
+          </ul>
+          <a class="btn btn--ghost" href="mailto:members@signal.press?subject=Reading%20room%20enquiry">Enquire by email</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== SPRING ACCORDION FAQ ===================== -->
+  <section class="section section--sunk" aria-labelledby="faq-title">
+    <div class="wrap wrap--narrow">
+      <div class="section-rule">
+        <h2 id="faq-title">Questions Readers Ask</h2>
+        <span class="folio">Page E4</span>
+      </div>
+
+      <ul class="accordion" data-accordion>
+        <li class="accordion__item">
+          <h3 style="margin:0">
+            <button class="accordion__trigger" type="button" id="faq-1-btn" aria-expanded="true" aria-controls="faq-1-panel">
+              <span class="q-num">01</span>
+              Is the Thursday Edition really free?
+              <span class="chev" aria-hidden="true"><svg width="13" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6"/></svg></span>
+            </button>
+          </h3>
+          <div class="accordion__panel" id="faq-1-panel" data-open="true" role="region" aria-labelledby="faq-1-btn">
+            <div>
+              <p>Yes, and it is not a trial for something else. There is no card at sign-up, no expiry, and no reduced version after a month. Membership buys the archive and the reporting notes, not the journalism you would otherwise be teased with.</p>
+            </div>
+          </div>
+        </li>
+
+        <li class="accordion__item">
+          <h3 style="margin:0">
+            <button class="accordion__trigger" type="button" id="faq-2-btn" aria-expanded="false" aria-controls="faq-2-panel">
+              <span class="q-num">02</span>
+              What happens to my email address?
+              <span class="chev" aria-hidden="true"><svg width="13" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6"/></svg></span>
+            </button>
+          </h3>
+          <div class="accordion__panel" id="faq-2-panel" data-open="false" role="region" aria-labelledby="faq-2-btn">
+            <div>
+              <p>It sits on our own mail server with your beat selection and nothing else. We do not use a third-party sending platform, we do not embed open-tracking pixels, and we have never sold, rented, or shared the list. If you write to us, that correspondence is kept for twelve months and then deleted unless a story is live.</p>
+            </div>
+          </div>
+        </li>
+
+        <li class="accordion__item">
+          <h3 style="margin:0">
+            <button class="accordion__trigger" type="button" id="faq-3-btn" aria-expanded="false" aria-controls="faq-3-panel">
+              <span class="q-num">03</span>
+              Can I get just one beat?
+              <span class="chev" aria-hidden="true"><svg width="13" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6"/></svg></span>
+            </button>
+          </h3>
+          <div class="accordion__panel" id="faq-3-panel" data-open="false" role="region" aria-labelledby="faq-3-btn">
+            <div>
+              <p>You can. Tick a single beat and the Thursday Edition shrinks to whatever we filed on it, which in a quiet week may be one item. We would rather send you something short than something you skim. Change the selection at any time from the link at the foot of every email.</p>
+            </div>
+          </div>
+        </li>
+
+        <li class="accordion__item">
+          <h3 style="margin:0">
+            <button class="accordion__trigger" type="button" id="faq-4-btn" aria-expanded="false" aria-controls="faq-4-panel">
+              <span class="q-num">04</span>
+              Who decides what Signal covers?
+              <span class="chev" aria-hidden="true"><svg width="13" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6"/></svg></span>
+            </button>
+          </h3>
+          <div class="accordion__panel" id="faq-4-panel" data-open="false" role="region" aria-labelledby="faq-4-btn">
+            <div>
+              <p>The reporters, in the Monday meeting, with the editor holding the veto. Members vote on the quarterly longform subject and nothing else, which is deliberate: an audience that chooses the news is still an audience, not a newsroom. No funder, grantor, or institutional subscriber has any say over the agenda, and that is written into the operating agreement.</p>
+            </div>
+          </div>
+        </li>
+
+        <li class="accordion__item">
+          <h3 style="margin:0">
+            <button class="accordion__trigger" type="button" id="faq-5-btn" aria-expanded="false" aria-controls="faq-5-panel">
+              <span class="q-num">05</span>
+              What if you get something wrong?
+              <span class="chev" aria-hidden="true"><svg width="13" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6"/></svg></span>
+            </button>
+          </h3>
+          <div class="accordion__panel" id="faq-5-panel" data-open="false" role="region" aria-labelledby="faq-5-btn">
+            <div>
+              <p>We amend the copy, keep the original wording in the corrections log at the foot of the piece, and email every member who received the uncorrected version. We do not delete posts. Forty-one corrections have run since issue No. 009, and the log is public.</p>
+            </div>
+          </div>
+        </li>
+
+        <li class="accordion__item">
+          <h3 style="margin:0">
+            <button class="accordion__trigger" type="button" id="faq-6-btn" aria-expanded="false" aria-controls="faq-6-panel">
+              <span class="q-num">06</span>
+              Can I republish or cite your reporting?
+              <span class="chev" aria-hidden="true"><svg width="13" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6"/></svg></span>
+            </button>
+          </h3>
+          <div class="accordion__panel" id="faq-6-panel" data-open="false" role="region" aria-labelledby="faq-6-btn">
+            <div>
+              <p>Cite freely, with a link. Republishing a whole piece needs a one-line email and we almost always say yes for non-commercial use, provided the byline, the original publication, and the corrections notice stay attached. Commercial syndication is a conversation with the cooperative, not with a robot.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== CLOSING NOTE ===================== -->
+  <section class="section" aria-labelledby="closing-title">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <div class="section-rule">
+            <h2 id="closing-title">Why This Costs Nothing and Charges Nothing</h2>
+            <span class="folio">Page E5</span>
+          </div>
+          <div class="prose" style="max-width:none">
+            <p class="dropcap">A newsroom that sells placements eventually sells the sentence next to them. That is not a moral claim, it is an observation about how nine years of invoices behave: the thing you were paid for gets written with more care than the thing you were not, and the difference becomes visible to readers long before it becomes visible to the editor.</p>
+            <figure class="figure">
+            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&amp;fit=crop&amp;w=1600&amp;q=80"
+                 alt="Folded newsprint stacked edge-on, ink pages softly out of focus"
+                 width="1600" height="900" loading="lazy" decoding="async">
+            <figcaption>
+              <span class="tag">Above</span>
+              <span>The 2025 print volume, set from the year&rsquo;s ten best-reviewed pieces and mailed to every member in December. It loses a small amount of money, which the cooperative considers correct. <span style="color:var(--rule-strong)">Photograph &mdash; Signal</span></span>
+            </figcaption>
+          </figure>
+
+          <p>So the cooperative wrote the prohibition into its operating agreement in 2023, where changing it now takes a two-thirds vote of the staff. Advertising is 0.0% of income and has never been anything else. The rest is members, archive licences, ring-fenced grants with named grantors, and a print annual that loses a small amount of money every year in the correct spirit.</p>
+            <p>If you read technology news for a living and you have never paid for any of it, the free edition is a genuine offer. If you find yourself opening ours before the others, membership is how that keeps existing.</p>
+          </div>
+        </div>
+        <aside aria-label="Other ways to support Signal">
+          <div class="plate">
+            <div class="plate__head">
+              <h3>Other Ways In</h3>
+              <span class="folio">E6</span>
+            </div>
+            <div class="plate__body">
+              <ul class="trending">
+                <li><span class="rank">&sect;</span><div><h3><a href="article.html">Read the current feature</a></h3><span class="meta">The Long Close, part one &mdash; 14 minutes</span></div></li>
+                <li><span class="rank">&sect;</span><div><h3><a href="topics.html">Browse the topic index</a></h3><span class="meta">Fourteen beats, 288 stories</span></div></li>
+                <li><span class="rank">&sect;</span><div><h3><a href="about.html#contact">Send us a document</a></h3><span class="meta">Secure drop, and a real postal address</span></div></li>
+                <li><span class="rank">&sect;</span><div><h3><a href="about.html#team">See who is writing</a></h3><span class="meta">Ten people, all of them reachable</span></div></li>
+              </ul>
+            </div>
+          </div>
+          <p style="margin-top:2rem"><a class="btn btn--red" href="#signup">Sign up for the edition</a></p>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a class="logotype" href="index.html">SIGNAL<span class="mark">.</span></a>
+        <p>An independent technology publication. Nine reporters, one fact-checker, no shareholders with a veto. Founded 2017 in Brooklyn.</p>
+        <div class="footer__social">
+          <a href="subscribe.html" aria-label="Subscribe to the Signal newsletter">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 6h18v12H3z" stroke="currentColor" stroke-width="1.6"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="1.6"/></svg>
+          </a>
+          <a href="article.html" aria-label="Read the current Signal feature">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4h11l5 5v11H4z" stroke="currentColor" stroke-width="1.6"/><path d="M15 4v5h5M8 13h8M8 17h6" stroke="currentColor" stroke-width="1.6"/></svg>
+          </a>
+          <a href="topics.html" aria-label="Browse Signal topics">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h7v14H4zM13 5h7v6h-7zM13 13h7v6h-7z" stroke="currentColor" stroke-width="1.6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <nav aria-label="Sections">
+        <h2>Sections</h2>
+        <ul>
+          <li><a href="topics.html">Infrastructure</a></li>
+          <li><a href="topics.html">AI &amp; Models</a></li>
+          <li><a href="topics.html">Hardware</a></li>
+          <li><a href="topics.html">Security</a></li>
+          <li><a href="topics.html">Markets &amp; Policy</a></li>
+          <li><a href="topics.html">Longform</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-label="The paper">
+        <h2>The Paper</h2>
+        <ul>
+          <li><a href="index.html">The Latest</a></li>
+          <li><a href="article.html">Current Feature</a></li>
+          <li><a href="topics.html">Topic Index</a></li>
+          <li><a href="about.html">About Signal</a></li>
+          <li><a href="about.html#team">Masthead &amp; Team</a></li>
+          <li><a href="subscribe.html">Subscribe</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-label="Reader services">
+        <h2>Reader Services</h2>
+        <ul>
+          <li><a href="subscribe.html">Thursday Edition</a></li>
+          <li><a href="subscribe.html#plans">Archive Access</a></li>
+          <li><a href="about.html#standards">Corrections &amp; Standards</a></li>
+          <li><a href="about.html#contact">Pitch Us a Story</a></li>
+          <li><a href="about.html#contact">Tip Line</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="footer__bottom">
+      <span>&copy; <span data-year>2026</span> Signal Media Cooperative</span>
+      <span class="sep" aria-hidden="true">&#9670;</span>
+      <span>Issue No. 412</span>
+      <span class="sep" aria-hidden="true">&#9670;</span>
+      <span>Set in Playfair Display, Source Serif &amp; IBM Plex Mono</span>
+      <span class="right"><a href="about.html#standards">Ethics</a> &nbsp;·&nbsp; <a href="about.html#contact">Contact</a></span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
