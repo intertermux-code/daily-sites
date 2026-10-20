@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Savings Rate Calculator — Mintwise</title>
+<meta name="description" content="Enter your take-home pay and six spending categories to see your savings rate on a live donut, with monthly surplus, runway, and a plain-English verdict.">
+<meta name="theme-color" content="#10b981">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="statusbar">
+  <div class="wrap statusbar__inner">
+    <span class="statusbar__item"><span class="led" aria-hidden="true"></span> All systems nominal</span>
+    <span class="statusbar__item statusbar__hide-sm">Model <strong>v2.4</strong></span>
+    <span class="statusbar__item statusbar__hide-sm">Nothing leaves this page</span>
+    <span class="statusbar__right">
+      <span class="statusbar__item" data-clock>--:--:-- UTC</span>
+      <span class="statusbar__item statusbar__hide-sm">Build <strong>2.4.1</strong></span>
+    </span>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-8 4 5"/><path d="M3 21h18"/></svg>
+      </span>
+      Mintwise
+      <span class="brand__sup">v2.4</span>
+    </a>
+    <nav class="nav" id="primary-nav" data-nav aria-label="Primary">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="index.html">Overview <span class="kbd">01</span></a></li>
+        <li><a class="nav__link" href="features.html">Features <span class="kbd">02</span></a></li>
+        <li><a class="nav__link" href="calculator.html" aria-current="page">Calculator <span class="kbd">03</span></a></li>
+        <li><a class="nav__link" href="pricing.html">Pricing <span class="kbd">04</span></a></li>
+        <li><a class="nav__link" href="contact.html">Support <span class="kbd">05</span></a></li>
+      </ul>
+      <div class="nav__cta"><a class="btn btn--primary" href="pricing.html">Start 30 Free Days</a></div>
+    </nav>
+    <button class="cmd-chip" type="button" data-palette-open>Jump to station <span class="kbd">⌘</span><span class="kbd">K</span></button>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation">
+      <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div class="scroll-line" aria-hidden="true"><div class="scroll-line__bar" data-scroll-line></div></div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Mintwise</a> / <span aria-current="page">Calculator</span></nav>
+    <p class="eyebrow">Instrument · savings rate</p>
+    <h1 data-stagger>Find the Number You Actually Keep</h1>
+    <p class="lead" style="max-width:56ch">Enter your monthly take-home pay and what you spend on six things. The donut redraws as you type — no account, no storage, nothing sent anywhere.</p>
+    <div class="cluster" style="margin-top:1.75rem">
+      <span class="tag tag--mint"><span class="led" aria-hidden="true"></span> Runs entirely in your browser</span>
+      <span class="tag">Updates on every keystroke</span>
+      <span class="tag">Keyboard and touch friendly</span>
+    </div>
+  </section>
+
+  <!-- ============ CALCULATOR: SPLIT DIALOGUE ============ -->
+  <section class="section section--tight" aria-labelledby="calc-title">
+    <div class="wrap">
+      <h2 id="calc-title" class="sr-only">Savings rate calculator</h2>
+      <form class="split" data-calc novalidate>
+
+        <!-- ---------- sticky readout ---------- -->
+        <div class="split__visual split__sticky">
+          <div class="panel panel--elevated">
+            <div class="panel__head"><span>Readout · live</span><span class="led" aria-hidden="true"></span></div>
+            <div class="panel__body">
+              <div class="donut-wrap">
+                <svg class="donut" viewBox="0 0 200 200" aria-hidden="true" data-donut>
+                  <circle class="donut__track" cx="100" cy="100" r="80"/>
+                  <g data-donut-segments transform="rotate(-90 100 100)"></g>
+                  <text class="donut__big" x="100" y="102" text-anchor="middle" data-out-rate>—</text>
+                  <text class="donut__cap" x="100" y="124" text-anchor="middle" data-donut-cap>awaiting income</text>
+                </svg>
+              </div>
+
+              <ul class="telemetry">
+                <li><span class="t-key">Savings rate</span><span class="t-dots" aria-hidden="true"></span><span class="t-val t-val--mint" data-out-rate>—</span></li>
+                <li><span class="t-key">Monthly surplus</span><span class="t-dots" aria-hidden="true"></span><span class="t-val" data-out-surplus>$0</span></li>
+                <li><span class="t-key">12-month projection</span><span class="t-dots" aria-hidden="true"></span><span class="t-val" data-out-year>$0</span></li>
+                <li><span class="t-key">Burn rate</span><span class="t-dots" aria-hidden="true"></span><span class="t-val" data-out-burn>$0</span></li>
+                <li><span class="t-key">Runway on buffer</span><span class="t-dots" aria-hidden="true"></span><span class="t-val" data-out-runway>—</span></li>
+                <li><span class="t-key">Fixed share</span><span class="t-dots" aria-hidden="true"></span><span class="t-val" data-out-fixed>—</span></li>
+                <li><span class="t-key">Flexible share</span><span class="t-dots" aria-hidden="true"></span><span class="t-val" data-out-flex>—</span></li>
+              </ul>
+
+              <ul class="legend" data-legend></ul>
+
+              <div class="verdict" data-verdict style="margin-top:1.25rem">
+                <svg class="verdict__i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+                <p><strong data-verdict-title>Reading the panel</strong><span data-verdict-body>Add your monthly take-home pay and the model will plot your savings rate.</span></p>
+              </div>
+
+              <p class="sr-only" role="status" aria-live="polite" data-calc-live>Enter income to calculate.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- flowing inputs ---------- -->
+        <div class="split__flow">
+
+          <div class="calc__group">
+            <header><span>01 · Income and buffer</span><span class="led" aria-hidden="true"></span></header>
+            <div class="panel__body">
+              <div class="form">
+                <div class="form__row">
+                  <div class="field">
+                    <label for="income">Take-home pay, monthly</label>
+                    <div class="money">
+                      <span class="money__pre" aria-hidden="true">$</span>
+                      <input class="input" type="number" id="income" name="income" inputmode="numeric" min="0" step="50" value="8600" data-calc-income aria-describedby="income-hint income-error">
+                    </div>
+                    <p class="field__hint" id="income-hint">After tax and payroll deductions — the money that reaches your account.</p>
+                    <p class="field__error" id="income-error" data-error-income></p>
+                  </div>
+                  <div class="field">
+                    <label for="buffer">Cash you already hold</label>
+                    <div class="money">
+                      <span class="money__pre" aria-hidden="true">$</span>
+                      <input class="input" type="number" id="buffer" name="buffer" inputmode="numeric" min="0" step="100" value="14200" data-calc-buffer aria-describedby="buffer-hint">
+                    </div>
+                    <p class="field__hint" id="buffer-hint">Savings and checking you could reach within a week. Feeds the runway figure only.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="calc__group">
+            <header><span>02 · Where it goes</span><span class="led" aria-hidden="true"></span></header>
+            <div class="panel__body">
+              <div class="cat">
+
+                <div class="cat__row">
+                  <div>
+                    <label class="cat__name" for="housing"><span class="cat__swatch" style="background:#064e3b" aria-hidden="true"></span> Housing &amp; Utilities</label>
+                    <p class="cat__meta">Rent or mortgage, power, water, internet</p>
+                  </div>
+                  <div class="cat__amt money">
+                    <span class="money__pre" aria-hidden="true">$</span>
+                    <input class="input" type="number" id="housing" name="housing" inputmode="numeric" min="0" step="10" value="2650" data-cat="housing">
+                  </div>
+                  <div class="cat__slider">
+                    <label class="sr-only" for="housing-range">Housing and utilities, drag to adjust</label>
+                    <input type="range" id="housing-range" min="0" max="8600" step="10" value="2650" data-cat-range="housing">
+                  </div>
+                </div>
+
+                <div class="cat__row">
+                  <div>
+                    <label class="cat__name" for="food"><span class="cat__swatch" style="background:#0d9488" aria-hidden="true"></span> Food &amp; Household</label>
+                    <p class="cat__meta">Groceries, supplies, everyday essentials</p>
+                  </div>
+                  <div class="cat__amt money">
+                    <span class="money__pre" aria-hidden="true">$</span>
+                    <input class="input" type="number" id="food" name="food" inputmode="numeric" min="0" step="10" value="980" data-cat="food">
+                  </div>
+                  <div class="cat__slider">
+                    <label class="sr-only" for="food-range">Food and household, drag to adjust</label>
+                    <input type="range" id="food-range" min="0" max="8600" step="10" value="980" data-cat-range="food">
+                  </div>
+                </div>
+
+                <div class="cat__row">
+                  <div>
+                    <label class="cat__name" for="transport"><span class="cat__swatch" style="background:#0369a3" aria-hidden="true"></span> Transport</label>
+                    <p class="cat__meta">Car payment, fuel, insurance, transit passes</p>
+                  </div>
+                  <div class="cat__amt money">
+                    <span class="money__pre" aria-hidden="true">$</span>
+                    <input class="input" type="number" id="transport" name="transport" inputmode="numeric" min="0" step="10" value="720" data-cat="transport">
+                  </div>
+                  <div class="cat__slider">
+                    <label class="sr-only" for="transport-range">Transport, drag to adjust</label>
+                    <input type="range" id="transport-range" min="0" max="8600" step="10" value="720" data-cat-range="transport">
+                  </div>
+                </div>
+
+                <div class="cat__row">
+                  <div>
+                    <label class="cat__name" for="health"><span class="cat__swatch" style="background:#f59e0b" aria-hidden="true"></span> Health &amp; Insurance</label>
+                    <p class="cat__meta">Premiums not taken from pay, copays, pharmacy</p>
+                  </div>
+                  <div class="cat__amt money">
+                    <span class="money__pre" aria-hidden="true">$</span>
+                    <input class="input" type="number" id="health" name="health" inputmode="numeric" min="0" step="10" value="460" data-cat="health">
+                  </div>
+                  <div class="cat__slider">
+                    <label class="sr-only" for="health-range">Health and insurance, drag to adjust</label>
+                    <input type="range" id="health-range" min="0" max="8600" step="10" value="460" data-cat-range="health">
+                  </div>
+                </div>
+
+                <div class="cat__row">
+                  <div>
+                    <label class="cat__name" for="leisure"><span class="cat__swatch" style="background:#38bdf8" aria-hidden="true"></span> Leisure &amp; Dining Out</label>
+                    <p class="cat__meta">Restaurants, subscriptions, travel, hobbies</p>
+                  </div>
+                  <div class="cat__amt money">
+                    <span class="money__pre" aria-hidden="true">$</span>
+                    <input class="input" type="number" id="leisure" name="leisure" inputmode="numeric" min="0" step="10" value="700" data-cat="leisure">
+                  </div>
+                  <div class="cat__slider">
+                    <label class="sr-only" for="leisure-range">Leisure and dining out, drag to adjust</label>
+                    <input type="range" id="leisure-range" min="0" max="8600" step="10" value="700" data-cat-range="leisure">
+                  </div>
+                </div>
+
+                <div class="cat__row">
+                  <div>
+                    <label class="cat__name" for="debt"><span class="cat__swatch" style="background:#be123c" aria-hidden="true"></span> Debt Payments</label>
+                    <p class="cat__meta">Student loans, credit card minimums, auto loans</p>
+                  </div>
+                  <div class="cat__amt money">
+                    <span class="money__pre" aria-hidden="true">$</span>
+                    <input class="input" type="number" id="debt" name="debt" inputmode="numeric" min="0" step="10" value="640" data-cat="debt">
+                  </div>
+                  <div class="cat__slider">
+                    <label class="sr-only" for="debt-range">Debt payments, drag to adjust</label>
+                    <input type="range" id="debt-range" min="0" max="8600" step="10" value="640" data-cat-range="debt">
+                  </div>
+                </div>
+
+              </div>
+              <p class="form-note" style="margin-top:1.25rem">Anything you do not list is treated as savings. Leave a category at zero if it does not apply to you.</p>
+            </div>
+          </div>
+
+          <div class="calc__group">
+            <header><span>03 · Load a known profile</span><span class="led" aria-hidden="true"></span></header>
+            <div class="panel__body">
+              <p style="font-size:var(--fs-14);color:var(--ink-2);margin-bottom:1rem">Profiles are medians from Mintwise households, not your numbers. Use one to see how the panel behaves, then overwrite every field.</p>
+              <div class="presets" data-presets>
+                <button class="preset" type="button" data-preset="solo" aria-pressed="false">Solo · $5,200</button>
+                <button class="preset" type="button" data-preset="balanced" aria-pressed="true">Balanced · $8,600</button>
+                <button class="preset" type="button" data-preset="family" aria-pressed="false">Family · $12,400</button>
+                <button class="preset" type="button" data-preset="student" aria-pressed="false">Part-time · $2,900</button>
+                <button class="btn btn--ghost btn--sm" type="button" data-calc-reset style="margin-left:auto">Clear All Fields</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="calc__group">
+            <header><span>04 · How the model works</span><span class="led" aria-hidden="true"></span></header>
+            <div class="panel__body">
+              <ul class="telemetry">
+                <li><span class="t-key">Savings rate</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">(income − expenses) ÷ income</span></li>
+                <li><span class="t-key">Burn rate</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">sum of all six categories</span></li>
+                <li><span class="t-key">Fixed share</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">housing + debt ÷ income</span></li>
+                <li><span class="t-key">Flexible share</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">food + transport + health + leisure</span></li>
+                <li><span class="t-key">Runway</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">cash held ÷ burn rate</span></li>
+              </ul>
+              <p style="margin-top:1.25rem;font-size:var(--fs-14);color:var(--ink-2)">The donut is drawn to scale against whichever is larger — your income or your expenses — so an overspend shows as a full ring plus a shortfall line instead of a broken chart. Interest on savings, employer 401(k) matches, and tax refunds are not modelled here; Mintwise adds those once it can read the real balances.</p>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ BENCHMARKS ============ -->
+  <section class="section section--band" aria-labelledby="bench-title">
+    <div class="wrap">
+      <div class="section__head">
+        <p class="eyebrow">Benchmarks</p>
+        <h2 id="bench-title">Where Your Rate Sits Against the Fleet</h2>
+        <p>Aggregated from Mintwise households that have linked at least two accounts for six months or more. Income is household take-home pay.</p>
+      </div>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Savings rate benchmarks, scrollable">
+        <table>
+          <caption>Median savings rate by household income band</caption>
+          <thead>
+            <tr>
+              <th scope="col">Income band (monthly)</th>
+              <th scope="col" class="num">Median rate</th>
+              <th scope="col" class="num">25th percentile</th>
+              <th scope="col" class="num">75th percentile</th>
+              <th scope="col" class="num">Median $ kept</th>
+              <th scope="col">Households</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Under $3,000</th><td class="num">4.8%</td><td class="num">0%</td><td class="num">11.2%</td><td class="num">$144</td><td class="num">412,900</td></tr>
+            <tr><th scope="row">$3,000 – $4,999</th><td class="num">8.6%</td><td class="num">2.1%</td><td class="num">15.4%</td><td class="num">$361</td><td class="num">986,400</td></tr>
+            <tr><th scope="row">$5,000 – $7,499</th><td class="num">14.2%</td><td class="num">6.4%</td><td class="num">22.8%</td><td class="num">$852</td><td class="num">1,204,700</td></tr>
+            <tr><th scope="row">$7,500 – $11,999</th><td class="num">18.4%</td><td class="num">9.8%</td><td class="num">27.6%</td><td class="num">$1,804</td><td class="num">861,300</td></tr>
+            <tr><th scope="row">$12,000 – $19,999</th><td class="num">23.1%</td><td class="num">13.6%</td><td class="num">33.4%</td><td class="num">$3,234</td><td class="num">318,600</td></tr>
+            <tr><th scope="row">$20,000 and above</th><td class="num">29.7%</td><td class="num">18.2%</td><td class="num">41.8%</td><td class="num">$7,425</td><td class="num">64,100</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="form-note" style="margin-top:1rem">A percentile is not a target. The right rate is the one your household can hold through a bad month without abandoning it.</p>
+
+      <figure class="figure" style="margin-top:2rem">
+        <img src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=1600&h=600&q=80" width="1600" height="600" alt="A person fanning out a small stack of United States banknotes across their lap." loading="lazy" decoding="async">
+        <figcaption>Cash you have already kept: the median Mintwise household in the $5,000–$7,499 band holds $852 a month, or $10,224 across a year.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ WHAT YOUR RATE MEANS (spring accordion) ============ -->
+  <section class="section" aria-labelledby="meaning-title">
+    <div class="wrap wrap--narrow" style="max-width:880px">
+      <p class="eyebrow">Reading the number</p>
+      <h2 id="meaning-title">What Each Band Actually Buys You</h2>
+      <div class="acc acc--boxed" style="margin-top:2rem">
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="true"><span class="acc__idx">01</span><span class="acc__title">Under 5% — build the floor</span><span class="acc__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button></h3>
+          <div class="acc__panel"><div class="acc__inner"><div class="acc__content">
+            <p>At this stage the goal is not wealth, it is stopping the borrow. One month of expenses sitting in a separate account changes every decision you make afterwards, because a surprise becomes an inconvenience instead of a debt.</p>
+            <ul>
+              <li>Pick one fixed number — often $25 a week — and make it an autopay the day after payday.</li>
+              <li>Do not optimise investments yet. A $500 buffer is worth more than a $500 index position you cannot touch for three days.</li>
+              <li>Expect the first two months to feel tight. That feeling is the cost of the floor, and it stops being news by month three.</li>
+            </ul>
+          </div></div></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false"><span class="acc__idx">02</span><span class="acc__title">5% to 15% — the compounding phase</span><span class="acc__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button></h3>
+          <div class="acc__panel"><div class="acc__inner"><div class="acc__content">
+            <p>This is where a household stops trading one problem for another. Every extra percentage point here is cheaper to find than the last one, because it comes from defaults rather than willpower.</p>
+            <ul>
+              <li>Raising 10% to 15% on $6,000 a month is $300 — roughly one subscription tier, one cheaper insurance quote, and one cancelled gym.</li>
+              <li>Match the money you are already saving before you chase a higher rate. An employer match is a 50–100% return with no behaviour change.</li>
+              <li>Track the rate, not the balance. The balance moves with life; the rate is the habit.</li>
+            </ul>
+          </div></div></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false"><span class="acc__idx">03</span><span class="acc__title">15% to 30% — options open up</span><span class="acc__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button></h3>
+          <div class="acc__panel"><div class="acc__inner"><div class="acc__content">
+            <p>Above 15% you can start making choices that were previously unavailable: a lower-paying job that suits you better, a deposit, a sabbatical, or leaving a situation on your own timetable rather than the next paycheck’s.</p>
+            <ul>
+              <li>Separate money by time horizon — under two years stays in cash or a money-market account, no matter how good the alternative looks.</li>
+              <li>Watch for the creep that follows a raise. If the rate holds flat while income climbs, the saved amount is still growing.</li>
+              <li>Name every goal with a date. “Someday” is not a plan and never survives a slow month.</li>
+            </ul>
+          </div></div></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false"><span class="acc__idx">04</span><span class="acc__title">30% and above — protect the habit</span><span class="acc__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button></h3>
+          <div class="acc__panel"><div class="acc__inner"><div class="acc__content">
+            <p>Rates this high are usually the product of a specific decision — no car payment, a low-rent market, dual incomes with one career pause — rather than a spending technique. That is worth naming, because it tells you whether the number is durable.</p>
+            <ul>
+              <li>Test durability: what happens to the rate in a month with a dental bill and a wedding?</li>
+              <li>Automate the surplus into a place with friction on withdrawal, not a checking account you pass daily.</li>
+              <li>Resist the urge to benchmark against strangers. A sustainable 22% beats a heroic 38% that ends in a rebound month.</li>
+            </ul>
+          </div></div></div>
+        </div>
+        <div class="acc__item">
+          <h3><button class="acc__btn" type="button" aria-expanded="false"><span class="acc__idx">05</span><span class="acc__title">Negative — the panel is telling you something</span><span class="acc__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button></h3>
+          <div class="acc__panel"><div class="acc__inner"><div class="acc__content">
+            <p>If the shortfall is real, it is usually carried by one of three things: a fixed cost that rose faster than pay, debt payments absorbing both, or a period of genuinely low income that no budget fixes. The first two are negotiable, the third is a timing problem.</p>
+            <ul>
+              <li>Re-check housing. A rate above 35% of take-home pay there is the most common single cause of a negative panel.</li>
+              <li>Move every debt minimum to the day after payday so nothing defaults while you reorganise.</li>
+              <li>If income is the problem, the calculator cannot help you — that is a different conversation, and <a href="contact.html">our support team will point you to free counselling</a> rather than a product.</li>
+            </ul>
+          </div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="cta">
+        <div>
+          <p class="eyebrow">From estimate to instrument</p>
+          <h2>Stop Typing Numbers You Remember</h2>
+          <p>The calculator runs on what you recall. Mintwise runs on what actually posted — including the four subscriptions you forgot and the utility bill that drifted 11% this summer.</p>
+        </div>
+        <div class="cta__actions">
+          <a class="btn btn--primary" href="pricing.html">Start 30 Free Days</a>
+          <a class="btn btn--onDark" href="features.html">Read the System Reference</a>
+        </div>
+        <ul class="telemetry" style="max-width:32rem">
+          <li><span class="t-key">Card required</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">No</span></li>
+          <li><span class="t-key">Free plan</span><span class="t-dots" aria-hidden="true"></span><span class="t-val">Two accounts, forever</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand">
+        <a class="brand" href="index.html">
+          <span class="brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-8 4 5"/><path d="M3 21h18"/></svg>
+          </span>
+          Mintwise
+        </a>
+        <p>A personal finance console for people who would rather measure than guess. Built in Denver by a crew of eleven.</p>
+        <p class="statusbar__item" style="text-transform:uppercase;letter-spacing:0.1em;font-family:var(--f-mono);font-size:0.75rem"><span class="led" aria-hidden="true"></span> All systems nominal</p>
+      </div>
+      <div class="footer-col">
+        <h2>Product</h2>
+        <ul>
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="calculator.html">Savings Calculator</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Mission</h2>
+        <ul>
+          <li><a href="index.html#flightplan-title">The flight plan</a></li>
+          <li><a href="index.html#systems-title">Six systems</a></li>
+          <li><a href="features.html#security">Security model</a></li>
+          <li><a href="features.html#roadmap-title">Launch schedule</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Support</h2>
+        <ul>
+          <li><a href="contact.html">Talk to Mission Control</a></li>
+          <li><a href="contact.html#faq">Common questions</a></li>
+          <li><a href="contact.html#channels">Response times</a></li>
+          <li><a href="mailto:security@mintwise.app">Report a vulnerability</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Mintwise Labs, Inc.</span>
+      <span class="statusbar__hide-sm">Mintwise is a software product, not a bank, broker, or advisor</span>
+      <span style="margin-left:auto">Made for calm hands <span class="kbd">⌘</span><span class="kbd">K</span></span>
+    </div>
+  </div>
+</footer>
+
+<div class="palette" data-palette hidden>
+  <div class="palette__box" role="dialog" aria-modal="true" aria-labelledby="palette-title">
+    <div class="palette__head"><span class="led" aria-hidden="true"></span><span id="palette-title">Jump to station</span></div>
+    <div class="palette__search">
+      <label class="sr-only" for="palette-input">Filter pages</label>
+      <input id="palette-input" type="search" data-palette-input placeholder="Type a page name…" autocomplete="off">
+    </div>
+    <ul class="palette__list" data-palette-list>
+      <li><a id="p-1" href="index.html"><span class="kbd">01</span> Overview <span class="palette__desc">Hero, flight plan, fleet numbers</span></a></li>
+      <li><a id="p-2" href="features.html"><span class="kbd">02</span> Features <span class="palette__desc">Six systems in depth</span></a></li>
+      <li><a id="p-3" href="calculator.html"><span class="kbd">03</span> Calculator <span class="palette__desc">Savings-rate model</span></a></li>
+      <li><a id="p-4" href="pricing.html"><span class="kbd">04</span> Pricing <span class="palette__desc">Plans and comparison</span></a></li>
+      <li><a id="p-5" href="contact.html"><span class="kbd">05</span> Support <span class="palette__desc">Contact form and FAQ</span></a></li>
+    </ul>
+    <div class="palette__foot">
+      <span><span class="kbd">↑</span><span class="kbd">↓</span> move</span>
+      <span><span class="kbd">↵</span> open</span>
+      <span><span class="kbd">Esc</span> close</span>
+    </div>
+  </div>
+</div>
+
+<script src="app.js" defer></script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
