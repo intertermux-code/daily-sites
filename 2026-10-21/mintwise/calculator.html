@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Budget Calculator — Find Your Savings Rate | Mintwise</title>
+  <meta name="description" content="Enter your monthly income and expenses to see your savings rate as a live donut chart. Free, private, and no account required — estimates only.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="scene" aria-hidden="true">
+    <span class="b1"></span><span class="b2"></span><span class="b3"></span><span class="b4"></span>
+  </div>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html" aria-label="Mintwise home">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-6 7-6 10a6 6 0 0 0 12 0c0-3-2-6-6-10Z"/><path d="M12 21v-8"/></svg>
+        </span>
+        Mintwise
+      </a>
+      <nav class="primary-nav" aria-label="Primary">
+        <ul id="primary-nav-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="calculator.html" aria-current="page">Calculator</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a class="btn btn--primary" href="pricing.html">Start Free</a></li>
+        </ul>
+      </nav>
+      <div class="header-cta">
+        <a class="btn btn--primary" href="pricing.html">Start Free</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav-list" aria-label="Open menu">
+          <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Free · Private · Nothing stored</p>
+        <h1>What’s Your Real Savings Rate?</h1>
+        <p class="lede">Type in your monthly income and a few typical expenses. The ring updates as you type — and your numbers never leave this page.</p>
+      </div>
+    </section>
+
+    <section class="section--tight" aria-labelledby="calc-h">
+      <div class="container calc">
+        <h2 id="calc-h" class="visually-hidden">Monthly budget inputs</h2>
+
+        <form class="glass calc__form" id="budget-calculator" aria-label="Budget calculator inputs">
+          <fieldset>
+            <legend>Income</legend>
+            <div class="field">
+              <label for="income">Monthly take-home pay</label>
+              <div class="money-field">
+                <span class="cur" aria-hidden="true">$</span>
+                <input type="number" id="income" data-calc="income" data-calc-input min="0" step="50" value="5200" inputmode="decimal">
+              </div>
+              <p class="hint">After taxes and deductions — what actually lands in your account.</p>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Fixed Costs</legend>
+            <div class="calc__rows">
+              <div class="calc__row" data-expense-row data-name="Rent / Mortgage">
+                <div class="label-cell field">
+                  <label for="exp-rent">Rent / Mortgage</label>
+                  <div class="money-field">
+                    <span class="cur" aria-hidden="true">$</span>
+                    <input type="number" id="exp-rent" data-role="amount" data-calc-input min="0" step="10" value="1650" inputmode="decimal">
+                  </div>
+                </div>
+              </div>
+              <div class="calc__row" data-expense-row data-name="Utilities &amp; Phone">
+                <div class="label-cell field">
+                  <label for="exp-utils">Utilities &amp; Phone</label>
+                  <div class="money-field">
+                    <span class="cur" aria-hidden="true">$</span>
+                    <input type="number" id="exp-utils" data-role="amount" data-calc-input min="0" step="10" value="180" inputmode="decimal">
+                  </div>
+                </div>
+              </div>
+              <div class="calc__row" data-expense-row data-name="Transport">
+                <div class="label-cell field">
+                  <label for="exp-transport">Transport</label>
+                  <div class="money-field">
+                    <span class="cur" aria-hidden="true">$</span>
+                    <input type="number" id="exp-transport" data-role="amount" data-calc-input min="0" step="10" value="240" inputmode="decimal">
+                  </div>
+                </div>
+              </div>
+              <div class="calc__row" data-expense-row data-name="Insurance">
+                <div class="label-cell field">
+                  <label for="exp-insurance">Insurance</label>
+                  <div class="money-field">
+                    <span class="cur" aria-hidden="true">$</span>
+                    <input type="number" id="exp-insurance" data-role="amount" data-calc-input min="0" step="10" value="140" inputmode="decimal">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Variable Spending</legend>
+            <div class="calc__rows">
+              <div class="calc__row" data-expense-row data-name="Groceries">
+                <div class="label-cell field">
+                  <label for="exp-groceries">Groceries</label>
+                  <div class="money-field">
+                    <span class="cur" aria-hidden="true">$</span>
+                    <input type="number" id="exp-groceries" data-role="amount" data-calc-input min="0" step="10" value="520" inputmode="decimal">
+                  </div>
+                </div>
+              </div>
+              <div class="calc__row" data-expense-row data-name="Dining &amp; Fun">
+                <div class="label-cell field">
+                  <label for="exp-fun">Dining &amp; Fun</label>
+                  <div class="money-field">
+                    <span class="cur" aria-hidden="true">$</span>
+                    <input type="number" id="exp-fun" data-role="amount" data-calc-input min="0" step="10" value="380" inputmode="decimal">
+                  </div>
+                </div>
+              </div>
+              <div class="calc__row" data-expense-row data-name="Subscriptions">
+                <div class="label-cell field">
+                  <label for="exp-subs">Subscriptions</label>
+                  <div class="money-field">
+                    <span class="cur" aria-hidden="true">$</span>
+                    <input type="number" id="exp-subs" data-role="amount" data-calc-input min="0" step="5" value="95" inputmode="decimal">
+                  </div>
+                </div>
+              </div>
+
+              <div class="calc__rows" data-calc="custom-rows" style="margin-top: 0.8rem;"></div>
+
+              <button class="calc__add" type="button" data-calc="add">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                Add Expense
+              </button>
+            </div>
+          </fieldset>
+        </form>
+
+        <aside class="glass calc__result" aria-label="Your results">
+          <h3>Monthly Snapshot</h3>
+          <div class="donut-holder donut-wrap">
+            <svg class="donut" viewBox="0 0 200 200" role="img" aria-labelledby="donut-title">
+              <title id="donut-title">Donut chart of savings versus each spending category</title>
+              <circle class="donut__track" cx="100" cy="100" r="80"></circle>
+              <g class="donut__slices"></g>
+            </svg>
+            <div class="donut-center" aria-hidden="true">
+              <strong data-out="rate">—</strong>
+              <span>Saved</span>
+            </div>
+          </div>
+
+          <p class="verdict verdict--ok" data-out="verdict">Add your monthly income to see your savings rate.</p>
+
+          <div class="calc-sums">
+            <div class="calc-sum">
+              <small>Income / mo</small>
+              <strong data-out="buffer">$0</strong>
+            </div>
+            <div class="calc-sum">
+              <small>Spent / mo</small>
+              <strong data-out="spent">$0</strong>
+            </div>
+            <div class="calc-sum" data-out-card="saved">
+              <small>Saved / mo</small>
+              <strong data-out="saved">$0</strong>
+            </div>
+            <div class="calc-sum">
+              <small>Saved / yr</small>
+              <strong data-out="year">$0</strong>
+            </div>
+          </div>
+
+          <div class="legend" data-out="legend" aria-label="Budget breakdown"></div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Reading the results -->
+    <section class="section" aria-labelledby="bench-h">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Benchmarks that make sense</p>
+          <h2 id="bench-h">How Your Rate Stacks Up</h2>
+        </div>
+        <div class="grid-3">
+          <div class="tilt-wrap"><article class="tilt-card"><div class="tilt-inner">
+            <h3 class="card-title">The 50/30/20 Floor</h3>
+            <p>A classic for a reason: roughly 50% of take-home to needs, 30% to wants, 20% to saving and debt payoff. Below 10% consistently is where emergencies start becoming credit-card problems.</p>
+          </div></article></div>
+          <div class="tilt-wrap"><article class="tilt-card"><div class="tilt-inner">
+            <h3 class="card-title">The 20–35% Growth Zone</h3>
+            <p>Members who cross 20% usually get there by fixing three things: one subscription bundle, one food-delivery habit, and one savings sweep they stopped thinking about. Mintwise finds all three for you.</p>
+          </div></article></div>
+          <div class="tilt-wrap"><article class="tilt-card"><div class="tilt-inner">
+            <h3 class="card-title">35%+ — The Optimizer’s Range</h3>
+            <p>At this level the game changes from budgeting to allocation: retirement catch-ups, taxable brokerage, house down payments. Keep the rate honest by including taxes on investment income.</p>
+          </div></article></div>
+        </div>
+        <p class="text-center" style="margin-top: 2.2rem; color: var(--ink-400); font-size: 0.9rem;">Estimates only, and not financial advice. Your real numbers live in your accounts — Mintwise can read them, safely.</p>
+      </div>
+    </section>
+
+    <!-- From estimate to autopilot -->
+    <section class="section--tight">
+      <div class="container">
+        <div class="split">
+          <div class="split__copy">
+            <p class="eyebrow">Next step</p>
+            <h2>Hand the Calculator Your Actual Numbers</h2>
+            <p>Estimates are motivating; receipts are better. Connect your accounts and Mintwise replaces every box on this page with live data — real groceries, real subscriptions, a savings rate that updates the second a charge posts.</p>
+            <ul class="check-list">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>24 months of history backfilled automatically</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>The same donut, built from your real spending</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Free forever plan — link one account and see</li>
+            </ul>
+          </div>
+          <div class="split__media">
+            <div class="frame-img">
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=80" width="1600" height="1067" alt="Open laptop on a desk displaying revenue charts beside a notebook and pen">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container cta-band">
+        <div class="cta-band__inner">
+          <h2>You Just Did the Hardest Part</h2>
+          <p>Looking is most of it. Make it stick: start the free plan, set one weekly sweep, and let the daily brief keep your rate honest.</p>
+          <div class="cta-band__actions">
+            <a class="btn btn--primary btn--lg" href="pricing.html">Start Free</a>
+            <a class="btn btn--ghost btn--lg" href="features.html">Explore Features</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="index.html" aria-label="Mintwise home">
+            <span class="brand__mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 4-6 7-6 10a6 6 0 0 0 12 0c0-3-2-6-6-10Z"/><path d="M12 21v-8"/></svg>
+            </span>
+            Mintwise
+          </a>
+          <p>Personal finance, finally made calm. Built for people who’d rather live than ledger.</p>
+        </div>
+        <nav class="footer-col" aria-label="Product">
+          <h3>Product</h3>
+          <ul>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="features.html#security">Security</a></li>
+            <li><a href="calculator.html">Budget Calculator</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="Learn">
+          <h3>Learn</h3>
+          <ul>
+            <li><a href="index.html#how">How Mintwise Works</a></li>
+            <li><a href="index.html#stories">Member Stories</a></li>
+            <li><a href="features.html#insights">Spending Insights</a></li>
+            <li><a href="pricing.html#compare">Plan Comparison</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="Support">
+          <h3>Support</h3>
+          <ul>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="contact.html#faq">Help Center FAQ</a></li>
+            <li><a href="mailto:hello@mintwise.app">hello@mintwise.app</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Mintwise Financial, Inc. All rights reserved.</p>
+        <p>Mintwise is a budgeting tool, not a bank or financial adviser. Investing involves risk.</p>
+      </div>
+    </div>
+  </footer>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
