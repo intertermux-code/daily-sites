@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Savings Rate Calculator — Mintwise</title>
+<meta name="description" content="Work out your real savings rate in ninety seconds. Enter your take-home income and six spending lines, and Mintwise draws the ring, benchmarks you against the national median, and forecasts twelve months ahead.">
+<meta name="theme-color" content="#fbfaf7">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Manrope:wght@400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" data-header>
+  <div class="shell header-inner">
+    <a class="brand" href="index.html" aria-label="Mintwise home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3c3.6 2.1 5.4 4.9 5.4 8.4 0 3.1-2.4 5.6-5.4 5.6s-5.4-2.5-5.4-5.6C6.6 7.9 8.4 5.1 12 3Z"></path>
+          <path d="M12 21v-4.2"></path>
+          <path d="M12 12.6c1.4-1.3 2.2-2.9 2.4-4.7"></path>
+        </svg>
+      </span>
+      <span class="brand-word">Mintwise</span>
+    </a>
+
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <ul class="nav-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="calculator.html" aria-current="page">Calculator</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-mobile-actions">
+        <a href="calculator.html" class="btn btn-outline btn-block">Try the calculator</a>
+        <a href="pricing.html" class="btn btn-solid btn-block">Start free</a>
+      </div>
+    </nav>
+
+    <div class="header-actions">
+      <a href="calculator.html" class="btn btn-ghost">Try the calculator</a>
+      <a href="pricing.html" class="btn btn-solid">Start free</a>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav" aria-label="Open navigation menu">
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-head">
+    <div class="shell">
+      <p class="eyebrow">Calculator</p>
+      <h1>What share of your money actually stays yours?</h1>
+      <p class="lede">Six lines and one income figure. The ring redraws as you type, benchmarks you against 218,000 Mintwise households, and shows what an extra push becomes by next October. Nothing is stored, sent, or seen by anyone.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0" aria-labelledby="calc-title">
+    <div class="shell">
+      <h2 id="calc-title" class="sr-only">Monthly budget calculator</h2>
+
+      <div class="calc-layout" id="budget-calculator">
+
+        <!-- ─── Inputs ─────────────────────────────────── -->
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h2 class="sr-only">Your figures</h2>
+              <p class="eyebrow eyebrow-sm" style="margin-bottom:10px">Your figures</p>
+              <p class="lede" style="font-size:15.5px">Monthly, after tax. Estimates are fine — the ring is forgiving.</p>
+            </div>
+            <button class="chip" type="button" id="calc-reset">Reset</button>
+          </div>
+
+          <div class="presets" role="group" aria-label="Start from an example household">
+            <button class="chip" type="button" data-preset="steady" aria-pressed="false">Salaried, single</button>
+            <button class="chip" type="button" data-preset="freelancer" aria-pressed="false">Freelancer</button>
+            <button class="chip" type="button" data-preset="couple" aria-pressed="false">Two earners, kids</button>
+          </div>
+
+          <div class="field">
+            <div class="field-row">
+              <label for="income">Monthly take-home income</label>
+              <span class="field-value" id="income-shown">$4,200</span>
+            </div>
+            <p class="hint">Salary, invoices, benefits, child support — whatever lands in your account.</p>
+            <div class="money-input" style="margin-top:12px">
+              <span class="cur" aria-hidden="true">$</span>
+              <input type="number" id="income" name="income" value="4200" min="0" max="40000" step="50" inputmode="numeric">
+            </div>
+            <label for="income-range" class="sr-only">Monthly take-home income, slider from 500 to 40000 dollars</label>
+            <input type="range" id="income-range" min="500" max="40000" step="50" value="4200">
+          </div>
+
+          <fieldset class="field" style="border:0;padding:0;margin-inline:0">
+            <legend class="field-row" style="width:100%;padding:0">
+              <span class="lbl">Monthly spending</span>
+              <span class="hint">Six buckets. Leave one at zero if it doesn’t apply.</span>
+            </legend>
+            <div class="expense-list" style="margin-top:10px">
+              <div class="expense">
+                <label class="e-label" for="e-housing">Housing<span>Rent, mortgage, ground rent, service charge</span></label>
+                <input type="number" id="e-housing" name="housing" value="1350" min="0" max="40000" step="10" inputmode="numeric">
+                <span class="e-pct">—</span>
+              </div>
+              <div class="expense">
+                <label class="e-label" for="e-food">Food &amp; household<span>Groceries, cleaning, the weekly shop</span></label>
+                <input type="number" id="e-food" name="food" value="620" min="0" max="40000" step="10" inputmode="numeric">
+                <span class="e-pct">—</span>
+              </div>
+              <div class="expense">
+                <label class="e-label" for="e-transport">Transport<span>Fuel, transit pass, insurance, servicing</span></label>
+                <input type="number" id="e-transport" name="transport" value="260" min="0" max="40000" step="10" inputmode="numeric">
+                <span class="e-pct">—</span>
+              </div>
+              <div class="expense">
+                <label class="e-label" for="e-bills">Utilities &amp; bills<span>Power, water, broadband, phone, council tax</span></label>
+                <input type="number" id="e-bills" name="bills" value="310" min="0" max="40000" step="10" inputmode="numeric">
+                <span class="e-pct">—</span>
+              </div>
+              <div class="expense">
+                <label class="e-label" for="e-health">Health &amp; family<span>Childcare, prescriptions, therapy, school clubs</span></label>
+                <input type="number" id="e-health" name="health" value="240" min="0" max="40000" step="10" inputmode="numeric">
+                <span class="e-pct">—</span>
+              </div>
+              <div class="expense">
+                <label class="e-label" for="e-life">Living &amp; subscriptions<span>Eating out, travel, streaming, gym, birthday presents</span></label>
+                <input type="number" id="e-life" name="life" value="420" min="0" max="40000" step="10" inputmode="numeric">
+                <span class="e-pct">—</span>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="field" style="margin-bottom:0">
+            <div class="field-row">
+              <label for="boost">Extra you’d like to save each month</label>
+              <span class="field-value" id="boost-out">+$0</span>
+            </div>
+            <p class="hint">A round-up habit, one cancelled subscription, or an overtime shift.</p>
+            <input type="range" id="boost" min="0" max="600" step="25" value="0">
+          </div>
+        </div>
+
+        <!-- ─── Results ────────────────────────────────── -->
+        <div class="result">
+          <div class="panel result-panel">
+            <div class="donut-wrap">
+              <svg class="donut" viewBox="0 0 220 220" role="img" aria-labelledby="donut-title donut-desc">
+                <title id="donut-title">Savings rate ring</title>
+                <desc id="donut-desc">A ring divided between the share of income spent and the share kept each month.</desc>
+                <circle class="donut-track" cx="110" cy="110" r="92"></circle>
+                <circle class="donut-spend" id="arc-spend" cx="110" cy="110" r="92" stroke-dasharray="0 578.05"></circle>
+                <circle class="donut-save" id="arc-save" cx="110" cy="110" r="92" stroke-dasharray="0 578.05"></circle>
+              </svg>
+              <div class="donut-center">
+                <p class="big" id="rate-out">0%</p>
+                <p class="cap">Savings rate</p>
+                <p class="sub" id="rate-sub">Add an income figure to begin</p>
+              </div>
+            </div>
+
+            <p id="calc-live" class="sr-only" role="status" aria-live="polite"></p>
+
+            <div class="verdict">
+              <h3 id="verdict-title">Steady but fragile</h3>
+              <p id="verdict-body">Mintwise will fill this in as you type.</p>
+            </div>
+
+            <dl class="result-grid">
+              <div class="result-cell">
+                <dt>Kept each month</dt>
+                <dd id="out-saved-month">$0</dd>
+              </div>
+              <div class="result-cell">
+                <dt>Banked in a year</dt>
+                <dd id="out-saved-year">$0</dd>
+              </div>
+              <div class="result-cell">
+                <dt>Going out the door</dt>
+                <dd id="out-spend">$0</dd>
+              </div>
+              <div class="result-cell">
+                <dt>Against the median</dt>
+                <dd id="out-median">0 pts <small>vs national median</small></dd>
+              </div>
+            </dl>
+
+            <div class="forecast">
+              <h3>Twelve months from tonight</h3>
+              <p>Each bar is the running total in your vaults, assuming nothing about your income changes.</p>
+              <ul class="sparkbars" id="forecast-bars"></ul>
+              <p class="axis-note" id="boost-line"></p>
+            </div>
+          </div>
+
+          <div class="calc-note">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"></circle><path d="M12 11v5"></path><path d="M12 7.6v.6"></path>
+            </svg>
+            <p>This tool estimates a savings rate from figures you type. It compares your result to published national averages and to Mintwise household data for October 2026; it is not financial advice, and it does not account for pension contributions made by an employer, which count toward your real rate.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Benchmarks ─────────────────────────────────────── -->
+  <section class="section section-alt" aria-labelledby="bench-title">
+    <div class="shell split">
+      <div class="split-copy">
+        <p class="eyebrow">Benchmarks</p>
+        <h2 id="bench-title">What a good number actually looks like</h2>
+        <p class="lede">A savings rate is share, not virtue. A person keeping 6% of $9,000 a month is not behind the person keeping 22% of $2,400 — but only one of them has a plan for a blown tyre.</p>
+
+        <ul class="f-points" style="margin-top:28px">
+          <li><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6"></path></svg><span><b>Under 5%</b> — you are one unexpected bill from overdraft. Fix the buffer before the lifestyle.</span></li>
+          <li><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6"></path></svg><span><b>10–15%</b> — solid, typical, and quietly enough. Most households who feel behind sit here.</span></li>
+          <li><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6"></path></svg><span><b>20–25%</b> — your money starts working before you do. Two years at this rate is a deposit.</span></li>
+          <li><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6"></path></svg><span><b>35%+</b> — early optionality. Check you are not under-spending on health, help, or joy.</span></li>
+        </ul>
+      </div>
+
+      <div class="f-visual" style="transform:none">
+        <div class="ui-head"><h3>Reference points</h3><p class="ui-tag">Oct 2026</p></div>
+        <ul class="bars">
+          <li class="bar-row"><span>National average</span><span class="bar-track"><span class="bar-fill soft" style="width:19%"></span></span><span class="bar-val">5.3%</span></li>
+          <li class="bar-row"><span>Mintwise median</span><span class="bar-track"><span class="bar-fill soft" style="width:45%"></span></span><span class="bar-val">12.6%</span></li>
+          <li class="bar-row"><span>Top quartile</span><span class="bar-track"><span class="bar-fill" style="width:69%"></span></span><span class="bar-val">19.4%</span></li>
+          <li class="bar-row"><span>Top decile</span><span class="bar-track"><span class="bar-fill" style="width:88%"></span></span><span class="bar-val">24.7%</span></li>
+          <li class="bar-row"><span>Five-year plan</span><span class="bar-track"><span class="bar-fill" style="width:100%"></span></span><span class="bar-val">35.0%</span></li>
+        </ul>
+        <figure style="margin:24px 0 0">
+          <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1600&q=80" alt="Calculator, receipts and a notebook laid out on a desk during a monthly budget review" width="1600" height="1067" loading="lazy" decoding="async">
+          <figcaption class="ui-sub" style="margin-top:12px">The arithmetic was never the hard part. Deciding once is.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Where the points come from ─────────────────────── -->
+  <section class="section" aria-labelledby="find-title">
+    <div class="shell">
+      <div class="section-head">
+        <p class="eyebrow">Getting two more points</p>
+        <h2 id="find-title">The gains are rarely in the lattes</h2>
+        <p class="lede">When households move their savings rate by more than four points in a quarter, it almost always comes from one of these three. None of them require a spreadsheet.</p>
+      </div>
+
+      <div class="pillar-list">
+        <div class="pillar">
+          <span class="pillar-num">01</span>
+          <h3>Rename the annual bills</h3>
+          <p>Insurance, road tax, and broadband renewals are the three largest per-hour wins in personal finance. Dividing them into twelve and parking them removes the panic month; comparing them once removes the cost entirely.</p>
+        </div>
+        <div class="pillar">
+          <span class="pillar-num">02</span>
+          <h3>Move the fixed, not the fun</h3>
+          <p>Subscriptions you forgot and a duplicate streaming plan are worth more than cutting eating out, and cost you nothing in happiness. A thirty-second audit usually finds $40–$80 a month.</p>
+        </div>
+        <div class="pillar">
+          <span class="pillar-num">03</span>
+          <h3>Save the raise, not the rent money</h3>
+          <p>Every pay increase should hit the vault before it hits the lifestyle. A floor that rises only when you want it to is the cheapest two points you will ever buy.</p>
+        </div>
+      </div>
+
+      <div class="page-head-actions">
+        <a href="features.html#budgeting" class="btn btn-solid btn-lg">See how the floor works</a>
+        <a href="pricing.html" class="btn btn-outline btn-lg">Compare plans</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-section" aria-labelledby="calc-cta">
+    <div class="shell cta-shell">
+      <p class="eyebrow eyebrow-light">Make it stick</p>
+      <h2 id="calc-cta">Your number is interesting. Your automations make it permanent.</h2>
+      <p class="lede lede-light">Mintwise watches the figure all month, moves the overflow on Friday, and tells you in one line each Sunday whether it worked.</p>
+      <div class="hero-cta hero-cta-center">
+        <a href="pricing.html" class="btn btn-solid btn-lg">Start free — no card needed</a>
+        <a href="contact.html" class="btn btn-outline-light btn-lg">Ask support a question</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="index.html" aria-label="Mintwise home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3c3.6 2.1 5.4 4.9 5.4 8.4 0 3.1-2.4 5.6-5.4 5.6s-5.4-2.5-5.4-5.6C6.6 7.9 8.4 5.1 12 3Z"></path>
+            <path d="M12 21v-4.2"></path>
+            <path d="M12 12.6c1.4-1.3 2.2-2.9 2.4-4.7"></path>
+          </svg>
+        </span>
+        <span class="brand-word">Mintwise</span>
+      </a>
+      <p class="footer-blurb">Calm money software for households who would rather live than audit. Built in Edinburgh and Lisbon.</p>
+      <p class="footer-meta">Member FDIC-insured partner network · Bancast Bank, N.A., routing #071000013</p>
+    </div>
+
+    <nav aria-labelledby="f-product">
+      <h2 id="f-product" class="footer-heading">Product</h2>
+      <ul class="footer-list">
+        <li><a href="features.html">Features</a></li>
+        <li><a href="calculator.html">Savings calculator</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="index.html">Phone app</a></li>
+      </ul>
+    </nav>
+
+    <nav aria-labelledby="f-company">
+      <h2 id="f-company" class="footer-heading">Company</h2>
+      <ul class="footer-list">
+        <li><a href="contact.html">Contact support</a></li>
+        <li><a href="contact.html#faq">Help centre</a></li>
+        <li><a href="pricing.html">Enterprise &amp; advisers</a></li>
+        <li><a href="features.html#security">Security</a></li>
+      </ul>
+    </nav>
+
+    <nav aria-labelledby="f-learn">
+      <h2 id="f-learn" class="footer-heading">Learn</h2>
+      <ul class="footer-list">
+        <li><a href="calculator.html">What is a savings rate?</a></li>
+        <li><a href="features.html#budgeting">The floor method</a></li>
+        <li><a href="features.html#insights">Bill renegotiation guide</a></li>
+        <li><a href="contact.html">Press enquiries</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="shell footer-bottom">
+    <p>© 2026 Mintwise Technologies Ltd. All rights reserved.</p>
+    <p class="footer-note">Mintwise is a financial management tool, not a bank. Balances shown come from read-only connections and may differ from your institution’s records.</p>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
