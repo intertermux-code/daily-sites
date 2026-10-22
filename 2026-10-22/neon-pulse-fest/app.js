@@ -1,456 +1,457 @@
-/* =========================================================
-   Neon Pulse — shared behaviour
-   Motion identity: Word-Stagger Headline + Blur-Fade Ascend
-   ========================================================= */
+/* ==========================================================================
+   NEON PULSE 2026 — shared behaviour
+   Every block is guarded by element-existence checks so one file serves
+   all five pages.
+   ========================================================================== */
 (function () {
   "use strict";
 
-  var REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var GATES_OPEN = new Date("2026-12-18T18:00:00");
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var FEST_START = new Date("2026-12-18T18:00:00");
 
-  /* ---------- mobile nav ---------- */
-  function initNav() {
-    var nav = document.querySelector(".primary-nav");
-    var toggle = document.querySelector(".nav-toggle");
-    if (!nav || !toggle) return;
+  /* ---------- 1. Mobile nav ---------- */
+  var toggle = document.querySelector("[data-nav-toggle]");
+  var nav = document.getElementById("primary-nav");
 
-    function setOpen(open) {
-      nav.setAttribute("data-open", open ? "true" : "false");
-      toggle.setAttribute("aria-expanded", open ? "true" : "false");
-      if (!open) return;
-      var first = nav.querySelector("a");
-      if (first && document.activeElement && document.activeElement !== toggle) first.focus();
-    }
-
-    toggle.setAttribute("aria-controls", nav.id);
-    setOpen(false);
+  if (toggle && nav) {
     toggle.addEventListener("click", function () {
-      setOpen(nav.getAttribute("data-open") !== "true");
+      var open = nav.getAttribute("data-open") === "true";
+      nav.setAttribute("data-open", String(!open));
+      toggle.setAttribute("aria-expanded", String(!open));
+      toggle.querySelector("[data-nav-label]").textContent = open ? "menu" : "close";
     });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && nav.getAttribute("data-open") === "true") {
-        setOpen(false);
+
+    nav.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        nav.setAttribute("data-open", "false");
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.querySelector("[data-nav-label]").textContent = "menu";
         toggle.focus();
       }
     });
-    nav.addEventListener("click", function (e) {
-      if (e.target.closest("a") && window.innerWidth <= 900) setOpen(false);
-    });
-    window.addEventListener("resize", function () {
-      if (window.innerWidth > 900) setOpen(false);
-    });
   }
 
-  /* ---------- motion 1: word-stagger headline ---------- */
-  function initWordStagger() {
-    var title = document.querySelector("[data-split]");
-    if (!title) return;
+  /* ---------- 2. Countdown to gates open ---------- */
+  var clock = document.querySelector("[data-countdown]");
 
-    var nodes = [];
-    (function walk(node) {
-      Array.prototype.slice.call(node.childNodes).forEach(function (child) {
-        if (child.nodeType === 3) {
-          var parts = child.textContent.split(/\s+/).filter(Boolean);
-          if (!parts.length) return;
-          var frag = document.createDocumentFragment();
-          parts.forEach(function (w) {
-            var span = document.createElement("span");
-            span.className = "word";
-            span.textContent = w;
-            frag.appendChild(span);
-            frag.appendChild(document.createTextNode(" "));
-          });
-          child.parentNode.replaceChild(frag, child);
-        } else if (child.nodeType === 1) {
-          walk(child);
-        }
-      });
-    })(title);
-
-    nodes = Array.prototype.slice.call(title.querySelectorAll(".word"));
-    title.classList.add("split");
-
-    if (REDUCED) {
-      nodes.forEach(function (w) { w.classList.add("settled"); });
-      return;
-    }
-    nodes.forEach(function (w, i) {
-      w.style.transitionDelay = (i * 60) + "ms";
-    });
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        nodes.forEach(function (w) { w.classList.add("settled"); });
-      });
-    });
-  }
-
-  /* ---------- motion 2: blur-fade ascend ---------- */
-  function initReveal() {
-    var items = Array.prototype.slice.call(document.querySelectorAll("[data-reveal]"));
-    if (!items.length) return;
-
-    if (REDUCED || !("IntersectionObserver" in window)) {
-      items.forEach(function (el) { el.classList.add("in"); });
-      return;
-    }
-
-    var seen = new WeakSet();
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting || seen.has(entry.target)) return;
-        seen.add(entry.target);
-        var group = entry.target.getAttribute("data-reveal-group");
-        var peers = group
-          ? Array.prototype.slice.call(document.querySelectorAll('[data-reveal-group="' + group + '"]'))
-          : [entry.target];
-        var idx = peers.indexOf(entry.target);
-        entry.target.style.transitionDelay = (Math.max(idx, 0) * 80) + "ms";
-        entry.target.classList.add("in");
-        io.unobserve(entry.target);
-      });
-    }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
-
-    items.forEach(function (el) { io.observe(el); });
-  }
-
-  /* ---------- countdown ---------- */
-  function pad(n) { return (n < 10 ? "0" : "") + n; }
-
-  function initCountdown() {
-    var root = document.querySelector("[data-countdown]");
-    if (!root) return;
+  if (clock) {
     var cells = {
-      d: root.querySelector("[data-unit='days']"),
-      h: root.querySelector("[data-unit='hours']"),
-      m: root.querySelector("[data-unit='mins']"),
-      s: root.querySelector("[data-unit='secs']")
+      days: clock.querySelector("[data-unit='days']"),
+      hours: clock.querySelector("[data-unit='hours']"),
+      minutes: clock.querySelector("[data-unit='minutes']"),
+      seconds: clock.querySelector("[data-unit='seconds']"),
     };
-    var note = root.querySelector("[data-countdown-note]");
+    var caption = document.querySelector("[data-countdown-caption]");
+    var rafId = null;
 
-    function tick() {
-      var diff = GATES_OPEN.getTime() - Date.now();
-      if (diff <= 0) {
-        Object.keys(cells).forEach(function (k) { if (cells[k]) cells[k].textContent = "00"; });
-        if (note) note.textContent = "Gates are open — the pulse is live.";
-        return;
-      }
-      var secs = Math.floor(diff / 1000);
-      var days = Math.floor(secs / 86400);
-      var hours = Math.floor((secs % 86400) / 3600);
-      var mins = Math.floor((secs % 3600) / 60);
-      var sec = secs % 60;
-      if (cells.d) cells.d.textContent = days;
-      if (cells.h) cells.h.textContent = pad(hours);
-      if (cells.m) cells.m.textContent = pad(mins);
-      if (cells.s) cells.s.textContent = pad(sec);
+    function pad(value, width) {
+      var out = String(Math.max(0, value));
+      while (out.length < width) out = "0" + out;
+      return out;
     }
-    tick();
-    window.setInterval(tick, 1000);
-  }
-
-  /* ---------- lineup filtering ---------- */
-  function initLineup() {
-    var board = document.querySelector("[data-lineup]");
-    if (!board) return;
-    var cards = Array.prototype.slice.call(board.querySelectorAll("[data-artist]"));
-    var chips = Array.prototype.slice.call(document.querySelectorAll("[data-filter]"));
-    var search = document.querySelector("[data-lineup-search]");
-    var countEl = document.querySelector("[data-lineup-count]");
-    var emptyEl = document.querySelector("[data-lineup-empty]");
-    var state = { day: "all", stage: "all", q: "" };
-
-    function apply() {
-      var shown = 0;
-      cards.forEach(function (card) {
-        var okDay = state.day === "all" || card.getAttribute("data-day") === state.day;
-        var okStage = state.stage === "all" || card.getAttribute("data-stage") === state.stage;
-        var okQ = !state.q || card.textContent.toLowerCase().indexOf(state.q) !== -1;
-        var show = okDay && okStage && okQ;
-        card.setAttribute("data-hidden", show ? "false" : "true");
-        if (show) shown++;
-      });
-      if (countEl) {
-        countEl.textContent = "Showing " + shown + " of " + cards.length + " artists";
-      }
-      if (emptyEl) emptyEl.hidden = shown !== 0;
-    }
-
-    chips.forEach(function (chip) {
-      chip.addEventListener("click", function () {
-        var kind = chip.getAttribute("data-filter");
-        var value = chip.getAttribute("data-value");
-        state[kind] = value;
-        chips.forEach(function (c) {
-          if (c.getAttribute("data-filter") === kind) {
-            c.setAttribute("aria-pressed", c === chip ? "true" : "false");
-          }
-        });
-        apply();
-      });
-    });
-
-    if (search) {
-      search.addEventListener("input", function () {
-        state.q = search.value.trim().toLowerCase();
-        apply();
-      });
-    }
-
-    var clear = document.querySelector("[data-lineup-clear]");
-    if (clear) {
-      clear.addEventListener("click", function () {
-        state = { day: "all", stage: "all", q: "" };
-        if (search) search.value = "";
-        chips.forEach(function (c) {
-          c.setAttribute("aria-pressed", c.getAttribute("data-value") === "all" ? "true" : "false");
-        });
-        apply();
-      });
-    }
-
-    apply();
-  }
-
-  /* ---------- ticket calculator ---------- */
-  var TIERS = {
-    friday: { name: "Friday Single Day", price: 129 },
-    saturday: { name: "Saturday Single Day", price: 149 },
-    weekend: { name: "Weekend General", price: 289 },
-    vip: { name: "Neon VIP", price: 549 }
-  };
-
-  function money(n) {
-    return "$" + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
-
-  function initTicketCalc() {
-    var calc = document.querySelector("[data-ticket-calc]");
-    if (!calc) return;
-    var tierSel = calc.querySelector("[data-calc-tier]");
-    var qtyOut = calc.querySelector("[data-calc-qty-out]");
-    var minus = calc.querySelector("[data-calc-minus]");
-    var plus = calc.querySelector("[data-calc-plus]");
-    var addons = Array.prototype.slice.call(calc.querySelectorAll("[data-addon]"));
-    var lines = calc.querySelector("[data-calc-lines]");
-    var totalEl = calc.querySelector("[data-calc-total]");
-    var qty = 2;
 
     function render() {
-      var tierKey = tierSel ? tierSel.value : "weekend";
-      var tier = TIERS[tierKey];
-      var rows = [];
-      var subtotal = 0;
+      var diff = FEST_START.getTime() - Date.now();
 
-      if (tier) {
-        subtotal += tier.price * qty;
-        rows.push({ label: tier.name + " × " + qty, value: money(tier.price * qty) });
+      if (diff <= 0) {
+        cells.days.textContent = "00";
+        cells.hours.textContent = "00";
+        cells.minutes.textContent = "00";
+        cells.seconds.textContent = "00";
+        if (caption) caption.textContent = "// gates are open — signal live at warehouse district";
+        return;
       }
-      addons.forEach(function (box) {
-        if (!box.checked) return;
-        var price = parseFloat(box.getAttribute("data-price")) || 0;
-        var fee = box.getAttribute("data-perPerson") === "true" ? price * qty : price;
-        subtotal += fee;
-        rows.push({
-          label: box.getAttribute("data-addon-name") + (box.getAttribute("data-perPerson") === "true" ? " × " + qty : ""),
-          value: money(fee)
-        });
-      });
 
-      var fees = subtotal * 0.0875;
-      rows.push({ label: "Service + facility fee", value: money(fees) });
+      var total = Math.floor(diff / 1000);
+      var days = Math.floor(total / 86400);
+      var hours = Math.floor((total % 86400) / 3600);
+      var minutes = Math.floor((total % 3600) / 60);
+      var seconds = total % 60;
 
-      if (lines) {
-        lines.textContent = "";
-        rows.forEach(function (r) {
-          var row = document.createElement("div");
-          row.className = "calc-line";
-          var label = document.createElement("span");
-          label.textContent = r.label;
-          var value = document.createElement("b");
-          value.textContent = r.value;
-          row.appendChild(label);
-          row.appendChild(value);
-          lines.appendChild(row);
-        });
-      }
-      if (totalEl) totalEl.textContent = money(subtotal + fees);
-      if (qtyOut) qtyOut.textContent = qty;
-      var summary = calc.querySelector("[data-calc-summary]");
-      if (summary && tier) {
-        summary.textContent = tier.name + " — 3 nights of sets, gates 18:00 each day." ;
-      }
+      cells.days.textContent = pad(days, days > 99 ? 3 : 2);
+      cells.hours.textContent = pad(hours, 2);
+      cells.minutes.textContent = pad(minutes, 2);
+      cells.seconds.textContent = pad(seconds, 2);
+
+      rafId = window.setTimeout(function () {
+        requestAnimationFrame(render);
+      }, 1000);
     }
 
-    if (minus) minus.addEventListener("click", function () { qty = Math.max(1, qty - 1); render(); });
-    if (plus) plus.addEventListener("click", function () { qty = Math.min(10, qty + 1); render(); });
-    if (tierSel) tierSel.addEventListener("change", render);
-    addons.forEach(function (b) { b.addEventListener("change", render); });
     render();
-  }
 
-  /* ---------- FAQ accordion ---------- */
-  function initAccordion() {
-    var heads = Array.prototype.slice.call(document.querySelectorAll(".acc-head"));
-    if (!heads.length) return;
-
-    heads.forEach(function (head, i) {
-      var panel = document.getElementById(head.getAttribute("aria-controls"));
-      if (!panel) return;
-      panel.setAttribute("role", "region");
-      panel.setAttribute("aria-labelledby", head.id);
-
-      head.addEventListener("click", function () {
-        var open = head.getAttribute("aria-expanded") === "true";
-        head.setAttribute("aria-expanded", open ? "false" : "true");
-        panel.setAttribute("data-open", open ? "false" : "true");
-      });
-
-      head.addEventListener("keydown", function (e) {
-        var map = { ArrowDown: 1, ArrowUp: -1 };
-        if (map[e.key]) {
-          e.preventDefault();
-          var next = heads[(i + map[e.key] + heads.length) % heads.length];
-          next.focus();
-        } else if (e.key === "Home") {
-          e.preventDefault(); heads[0].focus();
-        } else if (e.key === "End") {
-          e.preventDefault(); heads[heads.length - 1].focus();
-        }
-      });
-    });
-
-    var deep = window.location.hash.match(/^#faq-(.+)$/);
-    if (deep) {
-      var target = document.querySelector('[data-faq-id="' + deep[1] + '"]');
-      if (target) {
-        target.setAttribute("aria-expanded", "true");
-        var p = document.getElementById(target.getAttribute("aria-controls"));
-        if (p) p.setAttribute("data-open", "true");
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) {
+        window.clearTimeout(rafId);
+      } else {
+        render();
       }
-    }
-  }
-
-  /* ---------- gallery lightbox ---------- */
-  function initLightbox() {
-    var box = document.querySelector("[data-lightbox]");
-    if (!box) return;
-    var img = box.querySelector("img");
-    var cap = box.querySelector("figcaption");
-    var closeBtn = box.querySelector(".lightbox-close");
-    var shots = Array.prototype.slice.call(document.querySelectorAll("[data-shot]"));
-    var lastFocus = null;
-
-    function open(src, alt, text) {
-      lastFocus = document.activeElement;
-      img.src = src;
-      img.alt = alt;
-      if (cap) cap.textContent = text || alt;
-      box.setAttribute("data-open", "true");
-      document.body.style.overflow = "hidden";
-      closeBtn.focus();
-    }
-    function close() {
-      box.setAttribute("data-open", "false");
-      document.body.style.overflow = "";
-      if (lastFocus) lastFocus.focus();
-    }
-
-    shots.forEach(function (shot) {
-      shot.addEventListener("click", function () {
-        var src = shot.getAttribute("data-shot");
-        var alt = shot.getAttribute("data-shot-alt") || shot.querySelector("img").alt;
-        open(src, alt, shot.getAttribute("data-shot-caption"));
-      });
-    });
-
-    closeBtn.addEventListener("click", close);
-    box.addEventListener("click", function (e) { if (e.target === box) close(); });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && box.getAttribute("data-open") === "true") close();
     });
   }
 
-  /* ---------- newsletter ---------- */
-  function initForms() {
-    document.querySelectorAll("[data-newsletter]").forEach(function (form) {
-      var email = form.querySelector("input[type='email']");
-      var status = form.querySelector(".form-status");
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        var value = (email.value || "").trim();
-        var ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
-        if (status) {
-          status.textContent = ok
-            ? "You are on the list — dispatch #009 lands 07 Nov."
-            : "Check that address — we need a full name@domain.";
-          status.style.color = ok ? "var(--c-yellow)" : "#ff6b6b";
-        }
-        if (ok) form.reset();
-        else if (email) email.focus();
-      });
-    });
+  /* ---------- 3. Cursor spotlight (rAF throttled) ---------- */
+  var spotlightHosts = document.querySelectorAll("[data-spotlight]");
 
-    var select = document.querySelector("[data-sort-select]");
-    if (select) {
-      var grid = document.querySelector("[data-sortable]");
-      if (grid) {
-        select.addEventListener("change", function () {
-          var key = select.value;
-          var cards = Array.prototype.slice.call(grid.children);
-          cards.sort(function (a, b) {
-            var av = a.getAttribute("data-sort-" + key) || "";
-            var bv = b.getAttribute("data-sort-" + key) || "";
-            var an = parseFloat(av);
-            var bn = parseFloat(bv);
-            if (!isNaN(an) && !isNaN(bn)) return an - bn;
-            return av.localeCompare(bv);
-          });
-          cards.forEach(function (c) { grid.appendChild(c); });
+  if (spotlightHosts.length && !reduceMotion && window.matchMedia("(hover: hover)").matches) {
+    spotlightHosts.forEach(function (host) {
+      var pending = false;
+      var lastX = 0;
+      var lastY = 0;
+
+      host.addEventListener("pointermove", function (event) {
+        lastX = event.clientX;
+        lastY = event.clientY;
+
+        if (pending) return;
+        pending = true;
+
+        requestAnimationFrame(function () {
+          pending = false;
+          var rect = host.getBoundingClientRect();
+          if (!rect.width) return;
+          var x = ((lastX - rect.left) / rect.width) * 100;
+          var y = ((lastY - rect.top) / rect.height) * 100;
+          host.style.setProperty("--spot-x", x.toFixed(2) + "%");
+          host.style.setProperty("--spot-y", y.toFixed(2) + "%");
+          host.classList.add("spotlight--on");
         });
-      }
-    }
-  }
+      });
 
-  /* ---------- footer year ---------- */
-  function initYear() {
-    var el = document.querySelector("[data-year]");
-    if (el) el.textContent = new Date().getFullYear();
-  }
-
-  /* ---------- gallery marquee ---------- */
-  function initMarquee() {
-    var tracks = Array.prototype.slice.call(document.querySelectorAll("[data-marquee]"));
-    if (!tracks.length || REDUCED) return;
-    tracks.forEach(function (track) {
-      var items = Array.prototype.slice.call(track.children);
-      items.forEach(function (item) {
-        var clone = item.cloneNode(true);
-        clone.setAttribute("aria-hidden", "true");
-        clone.removeAttribute("data-shot");
-        clone.setAttribute("tabindex", "-1");
-        track.appendChild(clone);
+      host.addEventListener("pointerleave", function () {
+        host.classList.remove("spotlight--on");
       });
     });
   }
 
-  /* ---------- boot ---------- */
-  function boot() {
-    initNav();
-    initWordStagger();
-    initCountdown();
-    initLineup();
-    initTicketCalc();
-    initAccordion();
-    initLightbox();
-    initMarquee();
-    initForms();
-    initYear();
-    initReveal();
+  /* ---------- 4. Decode text ---------- */
+  var GLYPHS = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789<>/\\[]{}=+*#%$&@";
+  var decodeNodes = document.querySelectorAll("[data-decode]");
+
+  decodeNodes.forEach(function (node) {
+    var target = node.getAttribute("data-decode") || node.textContent.trim();
+
+    if (reduceMotion) {
+      node.textContent = target;
+      return;
+    }
+
+    var delay = parseInt(node.getAttribute("data-decode-delay") || "0", 10);
+    node.textContent = target.replace(/\S/g, "0");
+
+    window.setTimeout(function () {
+      var frame = 0;
+      var perChar = 2.6;
+
+      function tick() {
+        var out = "";
+        for (var i = 0; i < target.length; i++) {
+          var ch = target.charAt(i);
+          if (ch === " ") {
+            out += " ";
+            continue;
+          }
+          var settled = frame > i * perChar + 12;
+          if (settled) {
+            out += ch;
+          } else if (frame > i * perChar - 6) {
+            out += GLYPHS.charAt(Math.floor(Math.random() * GLYPHS.length));
+          } else {
+            out += "0";
+          }
+        }
+        node.textContent = out;
+        frame += 1;
+
+        if (frame <= target.length * perChar + 14) {
+          requestAnimationFrame(tick);
+        } else {
+          node.textContent = target;
+        }
+      }
+
+      requestAnimationFrame(tick);
+    }, delay);
+  });
+
+  /* ---------- 5. Ledger rows: expand into detail view ---------- */
+  document.querySelectorAll("[data-ledger]").forEach(function (ledger) {
+    var rows = ledger.querySelectorAll("[data-ledger-row]");
+
+    rows.forEach(function (row) {
+      var summary = row.querySelector(".ledger-row__summary");
+      var detail = row.querySelector(".ledger-detail");
+      if (!summary || !detail) return;
+
+      var panelId = detail.id || "panel-" + Math.random().toString(36).slice(2, 8);
+      detail.id = panelId;
+      summary.setAttribute("aria-expanded", "false");
+      summary.setAttribute("aria-controls", panelId);
+
+      summary.addEventListener("click", function () {
+        var open = row.getAttribute("data-state") === "open";
+
+        rows.forEach(function (other) {
+          other.setAttribute("data-state", "closed");
+          var otherSummary = other.querySelector(".ledger-row__summary");
+          if (otherSummary) otherSummary.setAttribute("aria-expanded", "false");
+        });
+
+        if (!open) {
+          row.setAttribute("data-state", "open");
+          summary.setAttribute("aria-expanded", "true");
+        }
+      });
+    });
+  });
+
+  /* ---------- 6. Lineup filters ---------- */
+  var lineup = document.querySelector("[data-lineup]");
+
+  if (lineup) {
+    var entries = Array.prototype.slice.call(lineup.querySelectorAll("[data-day]"));
+    var statusEl = document.querySelector("[data-filter-status]");
+    var emptyEl = document.querySelector("[data-empty-state]");
+    var active = { day: "all", stage: "all" };
+
+    function applyFilters() {
+      var shown = 0;
+
+      entries.forEach(function (entry) {
+        var dayOk = active.day === "all" || entry.getAttribute("data-day") === active.day;
+        var stageOk = active.stage === "all" || entry.getAttribute("data-stage") === active.stage;
+        var visible = dayOk && stageOk;
+        entry.hidden = !visible;
+        if (visible) shown += 1;
+        if (!visible && entry.getAttribute("data-state") === "open") {
+          entry.setAttribute("data-state", "closed");
+          var s = entry.querySelector(".ledger-row__summary");
+          if (s) s.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      if (statusEl) {
+        statusEl.textContent = shown + " / " + entries.length + " sets indexed";
+      }
+      if (emptyEl) {
+        emptyEl.setAttribute("data-show", shown === 0 ? "true" : "false");
+      }
+    }
+
+    document.querySelectorAll("[data-filter-group]").forEach(function (group) {
+      var key = group.getAttribute("data-filter-group");
+
+      group.addEventListener("click", function (event) {
+        var chip = event.target.closest("[data-filter-value]");
+        if (!chip) return;
+
+        group.querySelectorAll("[data-filter-value]").forEach(function (btn) {
+          btn.setAttribute("aria-pressed", String(btn === chip));
+        });
+
+        active[key] = chip.getAttribute("data-filter-value");
+        applyFilters();
+      });
+    });
+
+    var reset = document.querySelector("[data-filter-reset]");
+    if (reset) {
+      reset.addEventListener("click", function () {
+        active = { day: "all", stage: "all" };
+        document.querySelectorAll("[data-filter-value]").forEach(function (btn) {
+          btn.setAttribute("aria-pressed", String(btn.getAttribute("data-filter-value") === "all"));
+        });
+        applyFilters();
+      });
+    }
+
+    var requested = new URLSearchParams(window.location.search);
+    ["day", "stage"].forEach(function (key) {
+      var value = requested.get(key);
+      if (!value || value === "all") return;
+      var group = document.querySelector('[data-filter-group="' + key + '"]');
+      var chip = group ? group.querySelector('[data-filter-value="' + value + '"]') : null;
+      if (!chip) return;
+      active[key] = value;
+      group.querySelectorAll("[data-filter-value]").forEach(function (btn) {
+        btn.setAttribute("aria-pressed", String(btn === chip));
+      });
+    });
+
+    applyFilters();
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", boot);
-  } else {
-    boot();
+  /* ---------- 7. FAQ accordion ---------- */
+  document.querySelectorAll("[data-accordion]").forEach(function (accordion) {
+    var items = accordion.querySelectorAll("[data-accordion-item]");
+    var allowMultiple = accordion.getAttribute("data-accordion") === "multiple";
+
+    items.forEach(function (item) {
+      var button = item.querySelector("[data-accordion-trigger]");
+      var panel = item.querySelector("[data-accordion-panel]");
+      if (!button || !panel) return;
+
+      var panelId = panel.id || "acc-" + Math.random().toString(36).slice(2, 8);
+      panel.id = panelId;
+      var initiallyOpen = item.getAttribute("data-state") === "open";
+      if (!initiallyOpen) item.setAttribute("data-state", "closed");
+      button.setAttribute("aria-expanded", String(initiallyOpen));
+      button.setAttribute("aria-controls", panelId);
+
+      button.addEventListener("click", function () {
+        var open = item.getAttribute("data-state") === "open";
+
+        if (!allowMultiple) {
+          items.forEach(function (other) {
+            other.setAttribute("data-state", "closed");
+            var otherButton = other.querySelector("[data-accordion-trigger]");
+            if (otherButton) otherButton.setAttribute("aria-expanded", "false");
+          });
+        }
+
+        item.setAttribute("data-state", open ? "closed" : "open");
+        button.setAttribute("aria-expanded", String(!open));
+      });
+    });
+  });
+
+  /* ---------- 8. Marquee: duplicate rows for seamless loop ---------- */
+  document.querySelectorAll("[data-marquee]").forEach(function (marquee) {
+    marquee.querySelectorAll(".marquee__row").forEach(function (row) {
+      if (reduceMotion) return;
+      var clones = row.innerHTML;
+      row.insertAdjacentHTML("beforeend", clones);
+      row.setAttribute("aria-hidden", "false");
+      Array.prototype.forEach.call(row.children, function (child, index) {
+        if (index >= row.children.length / 2) child.setAttribute("aria-hidden", "true");
+      });
+    });
+  });
+
+  /* ---------- 9. Gallery lightbox ---------- */
+  var lightbox = document.querySelector("[data-lightbox]");
+
+  if (lightbox) {
+    var figure = lightbox.querySelector("figure");
+    var lbImg = lightbox.querySelector("img");
+    var lbTitle = lightbox.querySelector("[data-lightbox-title]");
+    var lbMeta = lightbox.querySelector("[data-lightbox-meta]");
+    var triggers = Array.prototype.slice.call(document.querySelectorAll("[data-lightbox-item]"));
+    var index = 0;
+    var lastFocused = null;
+
+    function paint(entry) {
+      var img = entry.querySelector("img");
+      lbImg.src = entry.getAttribute("data-full") || (img ? img.src : "");
+      lbImg.alt = img ? img.alt : "";
+      lbTitle.textContent = entry.getAttribute("data-title") || "";
+      lbMeta.textContent = entry.getAttribute("data-meta") || "";
+    }
+
+    function open(entry, position) {
+      lastFocused = document.activeElement;
+      index = position;
+      paint(entry);
+      lightbox.setAttribute("data-open", "true");
+      document.body.style.overflow = "hidden";
+      lightbox.querySelector("[data-lightbox-close]").focus();
+    }
+
+    function close() {
+      lightbox.setAttribute("data-open", "false");
+      document.body.style.overflow = "";
+      if (lastFocused) lastFocused.focus();
+    }
+
+    function step(direction) {
+      if (!triggers.length) return;
+      index = (index + direction + triggers.length) % triggers.length;
+      paint(triggers[index]);
+    }
+
+    triggers.forEach(function (entry, position) {
+      entry.addEventListener("click", function () {
+        open(entry, position);
+      });
+    });
+
+    lightbox.addEventListener("click", function (event) {
+      if (event.target === lightbox) close();
+      if (event.target.closest("[data-lightbox-close]")) close();
+      if (event.target.closest("[data-lightbox-prev]")) step(-1);
+      if (event.target.closest("[data-lightbox-next]")) step(1);
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (lightbox.getAttribute("data-open") !== "true") return;
+      if (event.key === "Escape") close();
+      if (event.key === "ArrowLeft") step(-1);
+      if (event.key === "ArrowRight") step(1);
+    });
+
+    if (figure) figure.setAttribute("role", "dialog");
+    if (figure) figure.setAttribute("aria-modal", "true");
+    if (figure) figure.setAttribute("aria-label", "Photo viewer");
   }
+
+  /* ---------- 10. Forms: local terminal-style confirmation ---------- */
+  document.querySelectorAll("[data-demo-form]").forEach(function (form) {
+    var status = form.querySelector("[data-form-status]");
+    var successText = form.getAttribute("data-form-status-ok") || "// entry logged to the ledger";
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      var invalid = false;
+      form.querySelectorAll("[required]").forEach(function (input) {
+        if (!input.value.trim()) {
+          invalid = true;
+          input.setAttribute("aria-invalid", "true");
+        } else {
+          input.removeAttribute("aria-invalid");
+        }
+      });
+
+      if (!status) return;
+
+      status.hidden = false;
+
+      if (invalid) {
+        status.setAttribute("data-tone", "error");
+        status.textContent = "!! missing required field — check the rows marked above";
+        return;
+      }
+
+      var name = form.querySelector("input[type='text'], input[type='email']");
+      var who = name && name.value.trim() ? name.value.trim().split("@")[0] : "guest";
+
+      status.removeAttribute("data-tone");
+      status.textContent = "$ " + successText + "  →  receipt queued for " + who;
+      form.reset();
+    });
+  });
+
+  /* ---------- 11. Tier buy buttons: checkout handoff ---------- */
+  var checkoutStatus = document.querySelector("[data-checkout-status]");
+  var buyButtons = document.querySelectorAll(".tier__actions button");
+
+  if (checkoutStatus && buyButtons.length) {
+    buyButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        var tier = button.closest(".tier");
+        var name = tier ? tier.querySelector(".tier__name") : null;
+        var stock = tier ? tier.querySelector(".tier__stock") : null;
+        var label = name ? name.textContent.trim() : "selected pass";
+
+        checkoutStatus.hidden = false;
+        checkoutStatus.removeAttribute("data-tone");
+        checkoutStatus.textContent =
+          "// " + label + " held for 15:00 · secure checkout opens 24 Oct, window 3 · " +
+          (stock ? stock.textContent.replace(/\s+/g, " ").trim() : "inventory confirmed");
+      });
+    });
+  }
+
+  /* ---------- 12. Footer stamp ---------- */
+  var stamp = document.querySelector("[data-year]");
+  if (stamp) stamp.textContent = String(new Date().getFullYear());
 })();
