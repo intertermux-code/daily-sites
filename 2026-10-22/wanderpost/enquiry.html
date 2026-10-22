@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Start a Trip Enquiry | Wanderpost — Slow Travel Studio</title>
+<meta name="description" content="Tell us which of the four journeys you keep going back to, when you can travel, and what you need the trip to do for you. A human replies within two working days.">
+<meta name="theme-color" content="#f7f2ea">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="shell header__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__seal" aria-hidden="true">旅</span>
+      <span>
+        <span class="brand__name">Wanderpost</span>
+        <span class="brand__sub">Slow Travel Studio</span>
+      </span>
+    </a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation menu"><span aria-hidden="true"></span></button>
+    <nav class="nav" id="primary-nav" aria-label="Primary">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="index.html">Home</a></li>
+        <li><a class="nav__link" href="journeys.html">Journeys</a></li>
+        <li><a class="nav__link" href="destination.html">Destination</a></li>
+        <li><a class="nav__link" href="stories.html">Stories</a></li>
+        <li><a class="nav__link" href="enquiry.html" aria-current="page">Enquiry</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn--terra header__cta" href="#trip-enquiry">Start writing</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero" aria-labelledby="page-title">
+    <p class="page-hero__kanji" aria-hidden="true">手紙</p>
+    <div class="shell page-hero__grid">
+      <div>
+        <ul class="crumbs" aria-label="Breadcrumb">
+          <li><a href="index.html">Home</a></li>
+          <li aria-current="page">Enquiry</li>
+        </ul>
+        <h1 id="page-title" class="stagger" data-stagger>Write to us as you would to a friend who lives there</h1>
+        <p class="lead">Two minutes of honesty here saves three rounds of email later. A named planner reads every enquiry and replies within two working days — with questions, not a brochure.</p>
+        <ul class="tag-row">
+          <li><span class="tag tag--terra">No payment asked</span></li>
+          <li><span class="tag">Reply in 2 working days</span></li>
+          <li><span class="tag">Six slots this quarter</span></li>
+        </ul>
+      </div>
+      <div class="page-hero__media" data-reveal>
+        <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80"
+             alt="Snow-lit peaks under a green northern night sky seen from a dark shoreline"
+             width="1200" height="960" loading="eager" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="enq-heading">
+    <div class="shell">
+      <div class="split" style="grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);align-items:start">
+
+        <div>
+          <h2 id="enq-heading">Trip enquiry</h2>
+          <p class="lead" style="margin-bottom:2rem">Fields marked with an asterisk are the ones we genuinely need. Everything else helps us write something specific back.</p>
+
+          <form id="trip-enquiry" novalidate>
+            <div class="form-summary" role="alert" tabindex="-1">
+              <h3>Three things to fix before we can read this</h3>
+              <ul></ul>
+            </div>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="enq-name">Your name <span class="req" aria-hidden="true">*</span></label>
+                <input class="input" id="enq-name" name="name" type="text" autocomplete="name" required aria-required="true">
+                <span class="error" id="enq-name-error"></span>
+              </div>
+              <div class="field">
+                <label for="enq-email">Email <span class="req" aria-hidden="true">*</span></label>
+                <input class="input" id="enq-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-required="true">
+                <p class="help">We reply from a person, not a no-reply address.</p>
+                <span class="error" id="enq-email-error"></span>
+              </div>
+              <div class="field">
+                <label for="enq-phone">Phone (optional)</label>
+                <input class="input" id="enq-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel">
+                <p class="help">Include your country code. Only used if you ask for a call.</p>
+              </div>
+              <div class="field">
+                <label for="enq-party">Who is travelling</label>
+                <select class="select" id="enq-party" name="party">
+                  <option value="solo">Just me</option>
+                  <option value="two">Two of us</option>
+                  <option value="family">Family, including children</option>
+                  <option value="friends">A group of friends</option>
+                  <option value="other">Something else — I will explain</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="enq-journey">Which journey <span class="req" aria-hidden="true">*</span></label>
+                <select class="select" id="enq-journey" name="journey" required aria-required="true">
+                  <option value="">Choose one</option>
+                  <option value="kyoto">Kyoto — Living Stillness, 18 days</option>
+                  <option value="patagonia">Patagonia — Walking the Wind, 24 days</option>
+                  <option value="marrakech">Marrakech — Medina &amp; Palm, 12 days</option>
+                  <option value="lofoten">Lofoten — Light on the Water, 14 days</option>
+                  <option value="unsure">Not sure yet — help me choose</option>
+                  <option value="custom">Somewhere else entirely</option>
+                </select>
+                <span class="error" id="enq-journey-error"></span>
+              </div>
+              <div class="field">
+                <label for="enq-travellers">Number of travellers <span class="req" aria-hidden="true">*</span></label>
+                <input class="input" id="enq-travellers" name="travellers" type="number" min="1" max="12" step="1" value="2" inputmode="numeric" required aria-required="true">
+                <p class="help">Between 1 and 12. Larger groups we usually refuse, politely.</p>
+                <span class="error" id="enq-travellers-error"></span>
+              </div>
+              <div class="field">
+                <label for="enq-month">Preferred month <span class="req" aria-hidden="true">*</span></label>
+                <select class="select" id="enq-month" name="month" required aria-required="true">
+                  <option value="">Choose a month</option>
+                  <option value="2027-03">March 2027</option>
+                  <option value="2027-04">April 2027</option>
+                  <option value="2027-05">May 2027</option>
+                  <option value="2027-06">June 2027</option>
+                  <option value="2027-07">July 2027</option>
+                  <option value="2027-08">August 2027</option>
+                  <option value="2027-09">September 2027</option>
+                  <option value="2027-10">October 2027</option>
+                  <option value="2027-11">November 2027</option>
+                  <option value="2027-12">December 2027</option>
+                  <option value="2028-01">January 2028</option>
+                  <option value="2028-02">February 2028</option>
+                </select>
+                <span class="error" id="enq-month-error"></span>
+              </div>
+              <div class="field">
+                <label for="enq-length">Days you have, including travel <span class="req" aria-hidden="true">*</span></label>
+                <input class="input" id="enq-length" name="length" type="number" min="5" max="60" step="1" value="14" inputmode="numeric" required aria-required="true">
+                <p class="help">Between 5 and 60. Our shortest honest journey is twelve days on the ground.</p>
+                <span class="error" id="enq-length-error"></span>
+              </div>
+              <div class="field">
+                <label for="enq-budget">Budget per person, sharing</label>
+                <select class="select" id="enq-budget" name="budget">
+                  <option value="">Rather not say yet</option>
+                  <option value="under-5k">Under £5,000</option>
+                  <option value="5-8k">£5,000 – £8,000</option>
+                  <option value="8-12k">£8,000 – £12,000</option>
+                  <option value="over-12k">Above £12,000</option>
+                </select>
+                <p class="help">Used only to keep proposals realistic. It never changes who you are offered.</p>
+              </div>
+              <div class="field">
+                <label for="enq-access">Access or mobility needs</label>
+                <input class="input" id="enq-access" name="access" type="text" placeholder="Thresholds, stairs, pace, heat, anything at all">
+                <p class="help">We will send photographs of every step before you agree to a place.</p>
+              </div>
+            </div>
+
+            <fieldset style="margin-top:2rem">
+              <legend>What you want the days to be about</legend>
+              <div class="choices">
+                <label class="choice"><input type="checkbox" name="interest" value="walking"> Long walking</label>
+                <label class="choice"><input type="checkbox" name="interest" value="craft"> Craft &amp; making</label>
+                <label class="choice"><input type="checkbox" name="interest" value="food"> Markets &amp; cooking</label>
+                <label class="choice"><input type="checkbox" name="interest" value="gardens"> Gardens &amp; quiet</label>
+                <label class="choice"><input type="checkbox" name="interest" value="wildlife"> Wildlife</label>
+                <label class="choice"><input type="checkbox" name="interest" value="photography"> Photography, slowly</label>
+                <label class="choice"><input type="checkbox" name="interest" value="reading"> Frankly, reading</label>
+                <label class="choice"><input type="checkbox" name="interest" value="history"> History with a specialist</label>
+              </div>
+            </fieldset>
+
+            <fieldset style="margin-top:1.5rem">
+              <legend>Pace you would like us to build to</legend>
+              <div class="choices">
+                <label class="choice"><input type="radio" name="pace" value="one-base" checked> One base, day walks</label>
+                <label class="choice"><input type="radio" name="pace" value="slow-move"> Move every fourth day</label>
+                <label class="choice"><input type="radio" name="pace" value="trekking"> Trekking, nights carried</label>
+                <label class="choice"><input type="radio" name="pace" value="mixed"> A mix of two of those</label>
+              </div>
+            </fieldset>
+
+            <div class="field field--full" style="margin-top:2rem">
+              <label for="enq-message">Tell us about the trip <span class="req" aria-hidden="true">*</span></label>
+              <textarea class="textarea" id="enq-message" name="message" required aria-required="true" placeholder="What made you keep coming back to this place? Who is coming, what they are like, and what you would hate to be rushed through."></textarea>
+              <p class="help">Minimum 20 characters. The more specific you are, the less generic our first reply is.</p>
+              <span class="error" id="enq-message-error"></span>
+            </div>
+
+            <div class="field" style="margin-top:1.5rem">
+              <label class="choice" for="enq-consent" style="align-items:flex-start;max-width:44rem">
+                <input type="checkbox" id="enq-consent" name="consent" required aria-required="true">
+                <span>You may email me about this enquiry. I understand nothing is booked and no payment is requested until I have seen a route in pencil.</span>
+              </label>
+              <span class="error" id="enq-consent-error"></span>
+            </div>
+
+            <div style="margin-top:2rem;display:flex;flex-wrap:wrap;gap:1rem;align-items:center">
+              <button class="btn btn--terra" type="submit">Send my enquiry</button>
+              <a class="btn btn--ghost" href="journeys.html">Compare the journeys first</a>
+            </div>
+            <p class="help" style="margin-top:1.2rem;font-size:0.84rem;color:var(--muted)">This is a demonstration site: the form checks your answers in your browser and does not transmit or store anything. On the live site your enquiry reaches only the planner assigned to your journey.</p>
+          </form>
+
+          <div class="form-success" id="enquiry-success" role="status" tabindex="-1">
+            <h2>Thank you, <span id="enquiry-name-out">traveller</span> — that is exactly what we needed</h2>
+            <p>Your enquiry is logged against the next open quarter. A named planner reads it and replies within two working days with questions and one honest opinion about your dates.</p>
+            <ul>
+              <li>Expect the subject line to start with “Re: your route”.</li>
+              <li>If your month is one we would argue against, we will say so in the first email rather than the third.</li>
+              <li>No payment details are ever requested by email. If anything asks you for a card, it is not us.</li>
+            </ul>
+            <p style="margin-top:1.6rem"><a class="btn btn--ghost" href="destination.html">Read the Kyoto guide while you wait</a></p>
+          </div>
+        </div>
+
+        <aside class="aside-card" data-reveal="delay-1">
+          <p class="vertical-inline" aria-hidden="true">手書き</p>
+          <h3>What happens next</h3>
+          <ol>
+            <li><strong>Within two working days</strong> — a reply from your planner with three or four questions.</li>
+            <li><strong>Week two</strong> — a fifteen-minute call. Voice, email, or written back-and-forth, whichever you think in.</li>
+            <li><strong>Week three</strong> — a pencil draft with the empty days marked, and a candid note on what we would change.</li>
+            <li><strong>Only then</strong> — a deposit, and never before a house is confirmed in your name.</li>
+          </ol>
+          <h3 style="margin-top:1.8rem">Rather just talk to a person?</h3>
+          <p style="font-size:0.92rem;color:rgba(240,233,223,0.8)">Studio hours are 09:00–18:00 UK time, Tuesday to Saturday. <a href="tel:+442070000000" style="color:var(--gold)">+44 20 7000 0000</a>, or <a href="mailto:hello@wanderpost.example" style="color:var(--gold)">hello@wanderpost.example</a>.</p>
+          <h3 style="margin-top:1.8rem">Who reads your enquiry</h3>
+          <p style="font-size:0.92rem;color:rgba(240,233,223,0.8)">Ines (Kyoto, Lofoten), Aldous (Patagonia), and Nadia (Marrakech). Three people, one pin board, no call centre.</p>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="brush-wrap" aria-hidden="true">
+    <svg class="brush" viewBox="0 0 1200 26" preserveAspectRatio="none" focusable="false">
+      <path d="M8 15c110-7 170 4 260-2s150-8 236-4 156 11 244 7 168-9 250-5 150 7 244 3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <path d="M200 21c180-3 340 4 520 1" fill="none" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <section class="section section--tight section--paper2" aria-labelledby="before-title">
+    <div class="shell">
+      <div class="section__head">
+        <p class="eyebrow">Before you write</p>
+        <h2 id="before-title">Four questions we are asked in nearly every reply</h2>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <span class="card__tag">Do you accommodate dietary and medical needs?</span>
+          <p style="margin-bottom:0">Yes, and we ask early rather than apologising late. Kitchen staff at every house we book are told in advance, and we carry a written card in the local language for each need you have.</p>
+        </div>
+        <div class="card">
+          <span class="card__tag">What if I need to change my dates?</span>
+          <p style="margin-bottom:0">Move them once, free, up to ninety days out — the houses we use would rather do that than lose you. After that we will find you the same beds on different dates more often than not.</p>
+        </div>
+        <div class="card">
+          <span class="card__tag">Do you take children?</span>
+          <p style="margin-bottom:0">On Marrakech and Kyoto, gladly, from about eight years old and with the empty days intact. On Patagonia we say no below sixteen, and we mean it for their safety rather than our convenience.</p>
+        </div>
+        <div class="card">
+          <span class="card__tag">Is there anything you refuse to arrange?</span>
+          <p style="margin-bottom:0">Animal encounters that involve holding, feeding, or riding for photographs; orphanage visits; and any itinerary that adds a second country to make the price look generous. We have turned down money four times for these reasons.</p>
+        </div>
+      </div>
+      <p class="lead" style="margin-top:2rem">Still unanswered? Put it in the message box above — it will be read, and it will be answered.</p>
+    </div>
+  </section>
+
+  <section class="cta-band" aria-labelledby="enq-cta">
+    <div class="shell">
+      <p class="eyebrow" style="justify-content:center">Spring 2027 · six slots</p>
+      <h2 id="enq-cta">The hardest part is the first two sentences</h2>
+      <p>Start with why you keep going back to this place in your head. We can build the rest.</p>
+      <div class="cta-actions">
+        <a class="btn" href="#trip-enquiry">Back to the form</a>
+        <a class="btn btn--ghost" href="stories.html">Read what travellers sent</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="shell">
+    <div class="footer__grid">
+      <div>
+        <a class="brand" href="index.html">
+          <span class="brand__seal" aria-hidden="true">旅</span>
+          <span>
+            <span class="brand__name">Wanderpost</span>
+            <span class="brand__sub">Slow Travel Studio</span>
+          </span>
+        </a>
+        <p style="margin-top:1.2rem;max-width:26rem">A three-person studio writing journeys for people who would rather know one place than photograph ten. London and Kyoto, by post and by phone.</p>
+        <p style="font-family:var(--font-mono);font-size:0.78rem;letter-spacing:0.14em">hello@wanderpost.example · +44 20 7000 0000</p>
+      </div>
+      <div>
+        <h2 class="footer__title">Journeys</h2>
+        <ul class="footer__links">
+          <li><a href="journeys.html?journey=kyoto">Kyoto — Living Stillness</a></li>
+          <li><a href="journeys.html?journey=patagonia">Patagonia — Walking the Wind</a></li>
+          <li><a href="journeys.html?journey=marrakech">Marrakech — Medina &amp; Palm</a></li>
+          <li><a href="journeys.html?journey=lofoten">Lofoten — Light on the Water</a></li>
+          <li><a href="journeys.html">All journeys</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer__title">Studio</h2>
+        <ul class="footer__links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="destination.html">Kyoto destination guide</a></li>
+          <li><a href="stories.html">Traveller stories</a></li>
+          <li><a href="enquiry.html">Trip enquiry</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer__title">The monthly dispatch</h2>
+        <p>One letter a month: what season it is, where the light is going, and one honest note about a plan we would change.</p>
+        <form class="newsletter" data-newsletter>
+          <label for="footer-email">Email address</label>
+          <input class="input" id="footer-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+          <button class="btn" type="submit">Send me letters</button>
+          <p class="form-note" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2026 Wanderpost Ltd. All rights reserved.</p>
+      <ul>
+        <li><a href="enquiry.html">Enquiries</a></li>
+        <li><a href="stories.html">Stories</a></li>
+        <li><a href="destination.html">Destination guides</a></li>
+      </ul>
+      <p class="footer__kanji" aria-hidden="true">ゆっくり旅せよ</p>
+    </div>
+  </div>
+</footer>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
