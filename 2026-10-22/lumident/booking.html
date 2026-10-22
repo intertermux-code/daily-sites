@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book an Appointment — Same-Week Slots | LumiDent Bellevue</title>
+  <meta name="description" content="Book your LumiDent appointment online: choose a service, dentist, date, and time. Most patients are seen within four days; confirmation arrives the same afternoon.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Newsreader:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="progress-bar" aria-hidden="true"></div>
+
+  <header class="site-head">
+    <div class="shell head-row">
+      <a class="brand" href="index.html">Lumi<span class="dot">·</span>Dent</a>
+      <nav aria-label="Primary">
+        <ul class="nav-list" id="nav-list">
+          <li><a href="index.html"><span class="n">01</span>Home</a></li>
+          <li><a href="services.html"><span class="n">02</span>Services</a></li>
+          <li><a href="doctors.html"><span class="n">03</span>Doctors</a></li>
+          <li><a href="smile-gallery.html"><span class="n">04</span>Smile Gallery</a></li>
+          <li><a href="contact.html"><span class="n">05</span>Contact</a></li>
+        </ul>
+      </nav>
+      <div class="head-cta">
+        <a class="btn btn--primary btn--sm" href="booking.html" aria-current="page">Book a visit</a>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Toggle navigation menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section class="shell page-hero" aria-labelledby="page-title">
+      <h1 id="page-title">Ninety seconds now. A calm chair later.</h1>
+      <p class="page-hero__aside">Pick a service, a day, and a time. We confirm by text the same afternoon — and if the slot you want is gone, we’ll offer two that aren’t.</p>
+    </section>
+
+    <section class="section shell" aria-labelledby="form-title">
+      <div class="form-grid">
+
+        <div class="form-col">
+          <p class="eyebrow"><span class="idx">01</span> Request an appointment</p>
+          <h2 id="form-title" style="font-size:clamp(26px,3.2vw,40px);margin-bottom:28px;">Tell us what brings you in.</h2>
+
+          <div class="form-card">
+            <form id="booking-form" novalidate>
+              <div class="field" style="margin-bottom:24px;">
+                <fieldset style="border:0;margin:0;padding:0;">
+                  <legend class="eyebrow" style="font-size:13px;letter-spacing:0.1em;margin-bottom:12px;">Are you new to LumiDent?</legend>
+                  <div class="choice-row">
+                    <div class="choice">
+                      <input type="radio" id="pt-new" name="patient-type" value="New patient" checked>
+                      <label for="pt-new">New patient</label>
+                    </div>
+                    <div class="choice">
+                      <input type="radio" id="pt-existing" name="patient-type" value="Returning patient">
+                      <label for="pt-existing">Returning patient</label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+
+              <div class="field-grid">
+                <div class="field field--full">
+                  <label for="bk-service">Service <span class="req" aria-hidden="true">*</span></label>
+                  <select id="bk-service" name="service" required data-msg-required="Choose the service you need.">
+                    <option value="">Select a service…</option>
+                    <option>New-patient exam &amp; 3D scan — $189</option>
+                    <option>Hygiene visit (cleaning)</option>
+                    <option>Implant consultation</option>
+                    <option>Aligner / braces consultation</option>
+                    <option>Cosmetic design consult (veneers, whitening)</option>
+                    <option>Emergency — pain or broken tooth</option>
+                    <option>Other / not sure yet</option>
+                  </select>
+                  <p class="error-msg" role="alert">Choose the service you need.</p>
+                </div>
+
+                <div class="field">
+                  <label for="bk-name">Full name <span class="req" aria-hidden="true">*</span></label>
+                  <input type="text" id="bk-name" name="name" autocomplete="name" placeholder="Jordan Avery" required data-msg-required="Please enter your name.">
+                  <p class="error-msg" role="alert">Please enter your name.</p>
+                </div>
+
+                <div class="field">
+                  <label for="bk-dentist">Preferred dentist</label>
+                  <select id="bk-dentist" name="dentist">
+                    <option value="">First available</option>
+                    <option>Dr. Mirela Kovac — implants &amp; full-arch</option>
+                    <option>Dr. Theo Lindqvist — orthodontics</option>
+                    <option>Dr. Amara Osei — cosmetic &amp; restorative</option>
+                    <option>Dr. Ben Sandoval — hygiene &amp; emergencies</option>
+                  </select>
+                  <p class="error-msg" role="alert"></p>
+                </div>
+
+                <div class="field">
+                  <label for="bk-email">Email <span class="req" aria-hidden="true">*</span></label>
+                  <input type="email" id="bk-email" name="email" autocomplete="email" placeholder="you@example.com" required data-msg-required="We need an email to send your confirmation.">
+                  <p class="error-msg" role="alert">Enter a valid email address.</p>
+                </div>
+
+                <div class="field">
+                  <label for="bk-phone">Mobile phone <span class="req" aria-hidden="true">*</span></label>
+                  <input type="tel" id="bk-phone" name="phone" autocomplete="tel" placeholder="(425) 555-0100" required data-msg-required="We confirm appointments by text." minlength="7">
+                  <p class="error-msg" role="alert">Enter a phone number with at least 7 digits.</p>
+                </div>
+
+                <div class="field">
+                  <label for="bk-date">Preferred date <span class="req" aria-hidden="true">*</span></label>
+                  <input type="date" id="bk-date" name="date" required data-msg-required="Pick a day that works for you.">
+                  <p class="error-msg" role="alert">Pick a day that works for you.</p>
+                </div>
+
+                <div class="field">
+                  <label for="bk-time">Preferred time <span class="req" aria-hidden="true">*</span></label>
+                  <select id="bk-time" name="time" required data-msg-required="Pick a time slot.">
+                    <option value="">Select a time…</option>
+                  </select>
+                  <p class="error-msg" role="alert">Pick a time slot.</p>
+                </div>
+
+                <div class="field field--full">
+                  <label for="bk-notes">Anything we should know?</label>
+                  <textarea id="bk-notes" name="notes" placeholder="Nervous first visit, specific tooth, accessibility needs, childcare timing…"></textarea>
+                  <p class="error-msg" role="alert"></p>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="consent" for="bk-consent">
+                  <input type="checkbox" id="bk-consent" name="consent" required data-msg-required="Please allow us to text you about this appointment.">
+                  <span>I agree to be texted and emailed about this appointment request. No marketing — just this visit. <span class="req" aria-hidden="true">*</span></span>
+                </label>
+                <p class="error-msg" role="alert">Please allow us to text you about this appointment.</p>
+              </div>
+
+              <button class="btn btn--primary" type="submit" style="width:100%;">Request this appointment <span class="arrow" aria-hidden="true">→</span></button>
+              <p style="font-size:13px;color:var(--ink-3);margin:16px 0 0;text-align:center;">Emergency swelling or trauma? Call <a href="tel:+14255550117" style="font-weight:700;">(425) 555-0117</a> — we hold two slots daily.</p>
+            </form>
+
+            <div id="booking-confirmation" class="confirm-panel" hidden aria-live="polite">
+              <div class="check" aria-hidden="true">✓</div>
+              <h2 id="conf-heading">Request received, <span id="conf-name">friend</span>.</h2>
+              <p>Your slot is held while our front desk verifies it against the live calendar. You’ll get a text confirmation this afternoon — usually within two hours.</p>
+              <div class="recap">
+                <div><b>Reference</b><span id="conf-ref">—</span></div>
+                <div><b>Service</b><span id="conf-service">—</span></div>
+                <div><b>Date</b><span id="conf-date">—</span></div>
+                <div><b>Time</b><span id="conf-time">—</span></div>
+                <div><b>Dentist</b><span id="conf-dentist">—</span></div>
+              </div>
+              <p style="margin-top:24px;">Need to change it? Reply to the text or call <a href="tel:+14255550117" style="font-weight:700;">(425) 555-0117</a> — rescheduling is free up to 4 hours before.</p>
+              <button class="btn btn--ghost btn--sm" type="button" id="conf-again" onclick="window.location.reload()">Book another visit</button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="form-aside" aria-label="Booking information">
+          <p class="eyebrow"><span class="idx">02</span> Good to know</p>
+          <div class="aside-block">
+            <h3>What happens after you submit</h3>
+            <ul>
+              <li>Front desk checks the slot against the live calendar.</li>
+              <li>You get a text confirmation the same afternoon.</li>
+              <li>New patients receive a 4-minute intake video by email.</li>
+            </ul>
+          </div>
+          <div class="aside-block">
+            <h3>Bring with you</h3>
+            <ul>
+              <li>Photo ID and insurance card (if you have one).</li>
+              <li>Medication list — even the “just vitamins” kind.</li>
+              <li>Any recent X-rays from another clinic, on a phone is fine.</li>
+            </ul>
+          </div>
+          <div class="aside-block">
+            <h3>Cancellations, plainly</h3>
+            <p>Reschedule free up to 4 hours before your visit. Same-day no-shows without a message are charged the missed-appointment fee printed on your quote — the chair was reserved for you.</p>
+          </div>
+          <div class="aside-block">
+            <h3>First-visit pricing</h3>
+            <p>The new-patient exam and 3D scan is <strong>$189</strong>, credited toward any treatment you start within six months. Hygiene visits for returning patients run $150–$340 depending on what your gums actually need.</p>
+          </div>
+          <div class="aside-block">
+            <h3>Prefer a human?</h3>
+            <p><a href="tel:+14255550117">(425) 555-0117</a>, Mon–Sat during clinic hours. Or email <a href="mailto:hello@lumident.care">hello@lumident.care</a> and a coordinator will call you back.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section section--alt" aria-labelledby="diorama-title">
+      <div class="shell diorama-head">
+        <div>
+          <p class="eyebrow"><span class="idx">03</span> Your first 90 minutes</p>
+          <h2 id="diorama-title">Know the room before you’re in it.</h2>
+        </div>
+        <p class="diorama-hint"><span class="bar" aria-hidden="true"></span>Scroll sideways</p>
+      </div>
+      <div class="shell">
+        <div class="diorama" role="region" aria-label="A first visit timeline in horizontal scroll" tabindex="0">
+          <article class="diorama__panel">
+            <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1600&q=80" alt="Bright clinic reception area with a front desk" width="1600" height="1067" loading="lazy">
+            <div class="diorama__body">
+              <span class="diorama__num">Minute 00</span>
+              <h3>Check-in, standing</h3>
+              <p>The desk hands you a tablet, not a clipboard. ID, insurance photo, one signature. Average time: four minutes.</p>
+            </div>
+          </article>
+          <article class="diorama__panel">
+            <img src="https://picsum.photos/seed/lumident-3c981d7e4030/1600/900?auto=format&fit=crop&w=1600&q=80" alt="Dentist listening to a patient during a consultation" width="1600" height="1067" loading="lazy">
+            <div class="diorama__body">
+              <span class="diorama__num">Minute 15</span>
+              <h3>The conversation</h3>
+              <p>Your dentist — not an assistant — asks what bothers you and what you’re afraid of. Write it down beforehand if it helps.</p>
+            </div>
+          </article>
+          <article class="diorama__panel">
+            <img src="https://picsum.photos/seed/lumident-9e8c14f0d9b0/1600/900?auto=format&fit=crop&w=1600&q=80" alt="Digital 3D scan of teeth on a large clinic display" width="1600" height="1067" loading="lazy">
+            <div class="diorama__body">
+              <span class="diorama__num">Minute 35</span>
+              <h3>Records &amp; scan</h3>
+              <p>Photographs, a wand scan, and only the X-rays your history calls for. You see everything on the chairside screen as it’s taken.</p>
+            </div>
+          </article>
+          <article class="diorama__panel">
+            <img src="https://picsum.photos/seed/lumident-32e8172e8bd5/1600/900?auto=format&fit=crop&w=1600&q=80" alt="Quiet private treatment room prepared for an appointment" width="1600" height="1067" loading="lazy">
+            <div class="diorama__body">
+              <span class="diorama__num">Minute 70</span>
+              <h3>The plan on paper</h3>
+              <p>You leave with one page: options, fees, timing, and a bold “nothing starts until you choose.” Take it to dinner before deciding.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <div class="shell">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <a class="brand" href="index.html">Lumi<span class="dot">·</span>Dent</a>
+          <p>A precision dental studio in Bellevue, Washington. Implants, orthodontics, and cosmetic care with pricing you can read before you sit down.</p>
+        </div>
+        <div>
+          <h3>Pages</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services &amp; Fees</a></li>
+            <li><a href="doctors.html">Doctors</a></li>
+            <li><a href="smile-gallery.html">Smile Gallery</a></li>
+            <li><a href="booking.html">Book a Visit</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Hours</h3>
+          <ul>
+            <li>Mon–Tue: 8:00 – 17:00</li>
+            <li>Wed–Thu: 9:00 – 19:00</li>
+            <li>Fri: 8:00 – 15:00</li>
+            <li>Sat: 9:00 – 14:00</li>
+            <li>Sun: Closed</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Visit</h3>
+          <ul>
+            <li>618 116th Ave NE, Suite 240</li>
+            <li>Bellevue, WA 98004</li>
+            <li><a href="tel:+14255550117">(425) 555-0117</a></li>
+            <li><a href="mailto:hello@lumident.care">hello@lumident.care</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot-bar">
+        <span>© <span id="year">2026</span> LumiDent Dental Studio. All rights reserved.</span>
+        <span>Licensed in Washington · DCA #84623 · <a href="contact.html">Accessibility &amp; contact</a></span>
+      </div>
+    </div>
+  </footer>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
