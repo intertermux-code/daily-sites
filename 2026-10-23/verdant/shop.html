@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shop the Registry — Verdant Botanical Skincare</title>
+<meta name="description" content="All twelve Verdant formulas in one ledger: published doses, texture notes, and quick-add pricing. Free shipping over $60 with complimentary botanical samples.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%235b7d5a'/%3E%3Cpath d='M8 22c0-8 5-13 16-14-1 11-6 15-12 15-2 0-4-1-4-1z' fill='%23fbfaf6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body class="page-shop">
+<div class="scroll-progress" aria-hidden="true"><span class="scroll-progress__bar"></span></div>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="announce" id="announce">
+  <div class="wrap announce__inner">
+    <p class="announce__item" data-announce>Complimentary botanical samples with every order over $60 — three doses, no upsell.</p>
+    <button type="button" class="announce__close" id="announce-close" aria-label="Dismiss announcement">
+      <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</div>
+
+<header class="site-header" id="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="index.html" aria-label="Verdant — home">
+      <svg class="brand__mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+        <path d="M6 26c-2-11 5-19 20-20-1 15-8 21-15 21-2 0-5-1-5-1z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+        <path d="M9 23c4-6 8-9 13-11" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+      <span class="brand__word">Verdant</span>
+    </a>
+    <nav class="main-nav" id="main-nav" aria-label="Primary">
+      <ul class="main-nav__list">
+        <li><a class="main-nav__link" href="index.html">Home</a></li>
+        <li><a class="main-nav__link" href="shop.html" aria-current="page">Shop</a></li>
+        <li><a class="main-nav__link" href="our-story.html">Our Story</a></li>
+        <li><a class="main-nav__link" href="routine.html">Routine</a></li>
+        <li><a class="main-nav__link" href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-tools">
+      <button type="button" class="cart-btn" id="cart-open" aria-haspopup="dialog" aria-controls="cart-drawer" aria-label="Open cart, 0 items">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8zm3 0V6a3 3 0 016 0v2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="cart-btn__label">Cart</span>
+        <span class="cart-btn__count" data-cart-count>0</span>
+      </button>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Open menu">
+        <span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero page-hero--wash">
+    <div class="wrap">
+      <p class="eyebrow">Registry &nbsp;/&nbsp; Twelve formulas, complete</p>
+      <h1>The Whole Shelf, On The Record</h1>
+      <p class="lede">Every Verdant formula sits in one indexed list. Open any row for the dose, the texture, and what we measured on the panel. Quick-add works from the row itself — the cart keeps running totals as you build.</p>
+      <div class="page-hero__rail">
+        <span>Free shipping over $60</span>
+        <span>Refills at 40% less plastic</span>
+        <span>60-day no-questions returns</span>
+        <span>Doses printed on every bottle</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:clamp(28px,4vw,48px)" aria-labelledby="registry-title">
+    <div class="wrap">
+      <h2 id="registry-title" class="sr-only">Product registry</h2>
+
+      <div class="filters" id="shop-filters" role="group" aria-label="Filter the registry by step">
+        <span class="filters__label">Filter</span>
+        <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" class="chip" id="cleanse" data-filter="cleanse" aria-pressed="false">Cleanse</button>
+        <button type="button" class="chip" id="tone" data-filter="tone" aria-pressed="false">Tone &amp; Mist</button>
+        <button type="button" class="chip" id="treat" data-filter="treat" aria-pressed="false">Treat</button>
+        <button type="button" class="chip" id="moisturise" data-filter="moisturise" aria-pressed="false">Moisturise</button>
+        <button type="button" class="chip" id="protect" data-filter="protect" aria-pressed="false">Protect</button>
+        <button type="button" class="chip" id="body" data-filter="body" aria-pressed="false">Hand &amp; Body</button>
+        <span class="filters__count mono" data-visible-count>12 formulas listed</span>
+      </div>
+
+      <div class="ledger reveal-rows" data-ledger id="registry">
+
+        <article class="ledger-row shop-row" data-cat="cleanse" data-row-id="v-01">
+          <div class="ledger-row__bar">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="v-01">
+              <span class="ledger-row__index mono">01</span>
+              <span class="ledger-row__name">Dewpoint Gel Cleanser</span>
+              <span class="ledger-row__cat mono hide-sm">Cleanse &middot; 150 ml</span>
+              <span class="ledger-row__price mono">$28</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <button type="button" class="quick-add" data-add-to-cart="v-01">Quick add</button>
+        </div>
+          <div class="ledger-row__detail" id="v-01">
+            <div class="ledger-detail">
+              <div class="ledger-detail__media"><img src="https://picsum.photos/seed/verdant-b7b375b1f20c/1600/900?auto=format&fit=crop&w=900&h=900&q=80" alt="Pump bottle of Dewpoint Gel Cleanser on a linen cloth" width="450" height="450" loading="lazy"></div>
+              <div class="ledger-detail__body">
+                <p class="ledger-detail__lead">A pH-5.5 gel that lifts SPF, sunscreen and city grime in thirty seconds and leaves the tight feeling out of the equation.</p>
+                <dl class="ledger-spec">
+                  <div><dt class="mono">Dose</dt><dd>8% coconut-derived surfactant blend, 6% glycerin, 2% oat ferment</dd></div>
+                  <div><dt class="mono">Texture</dt><dd>Low-foam gel, rinses without a film</dd></div>
+                  <div><dt class="mono">Use</dt><dd>PM daily; AM for oily and combination skin</dd></div>
+                  <div><dt class="mono">Batch</dt><dd>Lot 014 &middot; Gironde &middot; 24-month shelf life</dd></div>
+                </dl>
+                <div class="ledger-detail__actions">
+                  <button type="button" class="btn btn--sm btn--primary" data-add-to-cart="v-01">Add to cart &middot; $28</button>
+                  <a class="btn btn--sm btn--ghost" href="routine.html">Where it fits in a routine</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ledger-row shop-row" data-cat="tone" data-row-id="v-02">
+          <div class="ledger-row__bar">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="v-02">
+              <span class="ledger-row__index mono">02</span>
+              <span class="ledger-row__name">Verdant Essence No. 4</span>
+              <span class="ledger-row__cat mono hide-sm">Tone &middot; 120 ml</span>
+              <span class="ledger-row__price mono">$42</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <button type="button" class="quick-add" data-add-to-cart="v-02">Quick add</button>
+        </div>
+          <div class="ledger-row__detail" id="v-02">
+            <div class="ledger-detail">
+              <div class="ledger-detail__media"><img src="https://picsum.photos/seed/verdant-10727914f09b/1600/900?auto=format&fit=crop&w=900&h=900&q=80" alt="Tall glass bottle of Verdant Essence No. 4 with a pale green label" width="450" height="450" loading="lazy"></div>
+              <div class="ledger-detail__body">
+                <p class="ledger-detail__lead">The fourth revision of our watery layer: humectants sized to hold water in the upper epidermis so everything after it spreads further.</p>
+                <dl class="ledger-spec">
+                  <div><dt class="mono">Dose</dt><dd>5% centella extract, 3% betaine, 2% sodium PCA</dd></div>
+                  <div><dt class="mono">Texture</dt><dd>Thin as toner, slip like a light serum</dd></div>
+                  <div><dt class="mono">Use</dt><dd>AM and PM, on damp skin, two presses</dd></div>
+                  <div><dt class="mono">Batch</dt><dd>Lot 011 &middot; London &middot; 24-month shelf life</dd></div>
+                </dl>
+                <div class="ledger-detail__actions">
+                  <button type="button" class="btn btn--sm btn--primary" data-add-to-cart="v-02">Add to cart &middot; $42</button>
+                  <a class="btn btn--sm btn--ghost" href="our-story.html#ingredients">Ingredient record</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ledger-row shop-row" data-cat="treat" data-row-id="v-03">
+          <div class="ledger-row__bar">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="v-03">
+              <span class="ledger-row__index mono">03</span>
+              <span class="ledger-row__name">Sage Renewal Serum</span>
+              <span class="ledger-row__cat mono hide-sm">Treat &middot; 30 ml</span>
+              <span class="ledger-row__price mono">$58</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <button type="button" class="quick-add" data-add-to-cart="v-03">Quick add</button>
+        </div>
+          <div class="ledger-row__detail" id="v-03">
+            <div class="ledger-detail">
+              <div class="ledger-detail__media"><img src="https://picsum.photos/seed/verdant-d1fd07c64d1d/1600/900?auto=format&fit=crop&w=900&h=900&q=80" alt="Dropper bottle of Sage Renewal Serum beside a sage sprig" width="450" height="450" loading="lazy"></div>
+              <div class="ledger-detail__body">
+                <p class="ledger-detail__lead">Our most-reordered bottle. A weightless antioxidant fluid that fades the dull grey cast off tired skin in about two weeks.</p>
+                <dl class="ledger-spec">
+                  <div><dt class="mono">Dose</dt><dd>3% sage-derived polyphenols, 1% niacinamide, 1% vitamin C derivative</dd></div>
+                  <div><dt class="mono">Texture</dt><dd>Water-light, absorbs in 20 seconds</dd></div>
+                  <div><dt class="mono">Use</dt><dd>AM and PM before cream; four drops</dd></div>
+                  <div><dt class="mono">Batch</dt><dd>Lot 016 &middot; Gironde &middot; 18-month shelf life</dd></div>
+                </dl>
+                <div class="ledger-detail__actions">
+                  <button type="button" class="btn btn--sm btn--primary" data-add-to-cart="v-03">Add to cart &middot; $58</button>
+                  <a class="btn btn--sm btn--ghost" href="our-story.html#ingredients">Ingredient record</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ledger-row shop-row" data-cat="moisturise" data-row-id="v-04">
+          <div class="ledger-row__bar">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="v-04">
+              <span class="ledger-row__index mono">04</span>
+              <span class="ledger-row__name">Meadow Cream Rich</span>
+              <span class="ledger-row__cat mono hide-sm">Moisturise &middot; 50 ml</span>
+              <span class="ledger-row__price mono">$46</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <button type="button" class="quick-add" data-add-to-cart="v-04">Quick add</button>
+        </div>
+          <div class="ledger-row__detail" id="v-04">
+            <div class="ledger-detail">
+              <div class="ledger-detail__media"><img src="https://picsum.photos/seed/verdant-743b63f4a48d/1600/900?auto=format&fit=crop&w=900&h=900&q=80" alt="Ceramic jar of Meadow Cream Rich with a wooden lid" width="450" height="450" loading="lazy"></div>
+              <div class="ledger-detail__body">
+                <p class="ledger-detail__lead">Oat ferment and sasanqua oil whipped into a cream that holds overnight without a film. Built for wind, radiators and cold rooms.</p>
+                <dl class="ledger-spec">
+                  <div><dt class="mono">Dose</dt><dd>4% oat ferment, 3% squalane, 1% ceramide NP</dd></div>
+                  <div><dt class="mono">Texture</dt><dd>Medium-rich, matte finish, no pilling under SPF</dd></div>
+                  <div><dt class="mono">Use</dt><dd>PM last step; AM under SPF through winter</dd></div>
+                  <div><dt class="mono">Batch</dt><dd>Lot 015 &middot; Gironde &middot; 24-month shelf life</dd></div>
+                </dl>
+                <div class="ledger-detail__actions">
+                  <button type="button" class="btn btn--sm btn--primary" data-add-to-cart="v-04">Add to cart &middot; $46</button>
+                  <a class="btn btn--sm btn--ghost" href="contact.html#refills">Order a refill pouch</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ledger-row shop-row" data-cat="treat" data-row-id="v-05">
+          <div class="ledger-row__bar">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="v-05">
+              <span class="ledger-row__index mono">05</span>
+              <span class="ledger-row__name">Nightleaf Repair Balm</span>
+              <span class="ledger-row__cat mono hide-sm">Treat &middot; 30 ml</span>
+              <span class="ledger-row__price mono">$52</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <button type="button" class="quick-add" data-add-to-cart="v-05">Quick add</button>
+        </div>
+          <div class="ledger-row__detail" id="v-05">
+            <div class="ledger-detail">
+              <div class="ledger-detail__media"><img src="https://picsum.photos/seed/verdant-2c35fc9aa900/1600/900?auto=format&fit=crop&w=900&h=900&q=80" alt="Wide shallow jar of Nightleaf Repair Balm on a dark stone slab" width="450" height="450" loading="lazy"></div>
+              <div class="ledger-detail__body">
+                <p class="ledger-detail__lead">Bakuchiol at 1% in a cushioned balm base — the renewal step for skin that has never tolerated retinol, or is pregnant, or simply tired of peeling.</p>
+                <dl class="ledger-spec">
+                  <div><dt class="mono">Dose</dt><dd>1% bakuchiol, 2% peptide complex, 3% shea</dd></div>
+                  <div><dt class="mono">Texture</dt><dd>Balsam that melts on contact, faintly green</dd></div>
+                  <div><dt class="mono">Use</dt><dd>PM only, three nights a week to start</dd></div>
+                  <div><dt class="mono">Batch</dt><dd>Lot 013 &middot; London &middot; 18-month shelf life</dd></div>
+                </dl>
+                <div class="ledger-detail__actions">
+                  <button type="button" class="btn btn--sm btn--primary" data-add-to-cart="v-05">Add to cart &middot; $52</button>
+                  <a class="btn btn--sm btn--ghost" href="contact.html#patch">Patch-test guidance</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ledger-row shop-row" data-cat="moisturise" data-row-id="v-06">
+          <div class="ledger-row__bar">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="v-06">
+              <span class="ledger-row__index mono">06</span>
+              <span class="ledger-row__name">Bare Botanical Oil</span>
+              <span class="ledger-row__cat mono hide-sm">Seal &middot; 30 ml</span>
+              <span class="ledger-row__price mono">$38</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <button type="button" class="quick-add" data-add-to-cart="v-06">Quick add</button>
+        </div>
+          <div class="ledger-row__detail" id="v-06">
+            <div class="ledger-detail">
+              <div class="ledger-detail__media"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=900&h=900&q=80" alt="Amber bottle of Bare Botanical Oil lying on dried grasses" width="450" height="450" loading="lazy"></div>
+              <div class="ledger-detail__body">
+                <p class="ledger-detail__lead">Three cold-pressed oils, no essential oils, no fragrance. It seals in whatever you layered underneath instead of pretending to be a treatment.</p>
+                <dl class="ledger-spec">
+                  <div><dt class="mono">Dose</dt><dd>60% sasanqua, 30% meadowfoam, 10% sea buckthorn</dd></div>
+                  <div><dt class="mono">Texture</dt><dd>Fine, dry-touch, light amber</dd></div>
+                  <div><dt class="mono">Use</dt><dd>PM, two drops pressed over cream; or mixed into it</dd></div>
+                  <div><dt class="mono">Batch</dt><dd>Lot 012 &middot; Gironde &middot; 12-month shelf life</dd></div>
+                </dl>
+                <div class="ledger-detail__actions">
+                  <button type="button" class="btn btn--sm btn--primary" data-add-to-cart="v-06">Add to cart &middot; $38</button>
+                  <a class="btn btn--sm btn--ghost" href="our-story.html#sourcing">Where the oils come from</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ledger-row shop-row" data-cat="cleanse" data-row-id="v-07">
+          <div class="ledger-row__bar">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="v-07">
+              <span class="ledger-row__index mono">07</span>
+              <span class="ledger-row__name">Clarity Clay Mask</span>
+              <span class="ledger-row__cat mono hide-sm">Mask &middot; 75 ml</span>
+              <span class="ledger-row__price mono">$34</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <button type="button" class="quick-add" data-add-to-cart="v-07">Quick add</button>
+        </div>
+          <div class="ledger-row__detail" id="v-07">
+            <div class="ledger-detail">
+              <div class="ledger-detail__media"><img src="https://picsum.photos/seed/verdant-0c8ba9ada86f/1600/900?auto=format&fit=crop&w=900&h=900&q=80" alt="Tube of Clarity Clay Mask next to a bowl of green clay" width="450" height="450" loading="lazy"></div>
+              <div class="ledger-detail__body">
+                <p class="ledger-detail__lead">Green clay held moist with lactic acid so it never cracks your skin dry. Eight minutes on the congested zone, twice a week.</p>
+                <dl class="ledger-spec">
+                  <div><dt class="mono">Dose</dt><dd>12% illite clay, 3% lactic acid, 2% niacinamide</dd></div>
+                  <div><dt class="mono">Texture</dt><dd>Dense cream-clay, stays pliable</dd></div>
+                  <div><dt class="mono">Use</dt><dd>PM, twice weekly, T-zone or problem panels</dd></div>
+                  <div><dt class="mono">Batch</dt><dd>Lot 010 &middot; London &middot; 24-month shelf life</dd></div>
+                </dl>
+                <div class="ledger-detail__actions">
+                  <button type="button" class="btn btn--sm btn--primary" data-add-to-cart="v-07">Add to cart &middot; $34</button>
+                  <a class="btn btn--sm btn--ghost" href="routine.html">Build it into a routine</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ledger-row shop-row" data-cat="treat" data-row-id="v-08">
+          <div class="ledger-row__bar">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="v-08">
+              <span class="ledger-row__index mono">08</span>
+              <span class="ledger-row__name">Eye Meadow Compress</span>
+              <span class="ledger-row__cat mono hide-sm">Eye &middot; 15 ml</span>
+              <span class="ledger-row__price mono">$44</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <button type="button" class="quick-add" data-add-to-cart="v-08">Quick add</button>
+        </div>
+          <div class="ledger-row__detail" id="v-08">
+            <div class="ledger-detail">
+              <div class="ledger-detail__media"><img src="https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=900&h=900&q=80" alt="Slim pen applicator of Eye Meadow Compress against a sage card" width="450" height="450" loading="lazy"></div>
+              <div class="ledger-detail__body">
+                <p class="ledger-detail__lead">A cool, thin fluid for the orbital area — the panel found the puffiest mornings improved within an hour of applying.</p>
+                <dl class="ledger-spec">
+                  <div><dt class="mono">Dose</dt><dd>3% caffeine, 2% peptide blend, 1% edelweiss</dd></div>
+                  <div><dt class="mono">Texture</dt><dd>Gel-fluid, no migration into the eye</dd></div>
+                  <div><dt class="mono">Use</dt><dd>AM, ring finger, along the bone not the lash line</dd></div>
+                  <div><dt class="mono">Batch</dt><dd>Lot 009 &middot; Gironde &middot; 18-month shelf life</dd></div>
+                </dl>
+                <div class="ledger-detail__actions">
+                  <button type="button" class="btn btn--sm btn--primary" data-add-to-cart="v-08">Add to cart &middot; $44</button>
+                  <a class="btn btn--sm btn--ghost" href="shop.html#treat">More treatment steps</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ledger-row shop-row" data-cat="protect" data-row-id="v-09">
+          <div class="ledger-row__bar">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="v-09">
+              <span class="ledger-row__index mono">09</span>
+              <span class="ledger-row__name">Sun Veil SPF 30</span>
+              <span class="ledger-row__cat mono hide-sm">Protect &middot; 50 ml</span>
+              <span class="ledger-row__price mono">$36</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <button type="button" class="quick-add" data-add-to-cart="v-09">Quick add</button>
+        </div>
+          <div class="ledger-row__detail" id="v-09">
+            <div class="ledger-detail">
+              <div class="ledger-detail__media"><img src="https://picsum.photos/seed/verdant-928a51d0c11d/1600/900?auto=format&fit=crop&w=900&h=900&q=80" alt="Slim tube of Sun Veil SPF 30 standing against a green wash" width="450" height="450" loading="lazy"></div>
+              <div class="ledger-detail__body">
+                <p class="ledger-detail__lead">The most useful product in the line, and the one we ask you not to skip. Mineral-chemical hybrid that disappears on every depth we tested.</p>
+                <dl class="ledger-spec">
+                  <div><dt class="mono">Dose</dt><dd>SPF 30 / PA++++, 8% zinc oxide</dd></div>
+                  <div><dt class="mono">Texture</dt><dd>Fluid cream, satin finish, no cast</dd></div>
+                  <div><dt class="mono">Use</dt><dd>AM final step; two fingers of product, reapply outdoors</dd></div>
+                  <div><dt class="mono">Batch</dt><dd>Lot 017 &middot; Gironde &middot; 30-month shelf life</dd></div>
+                </dl>
+                <div class="ledger-detail__actions">
+                  <button type="button" class="btn btn--sm btn--primary" data-add-to-cart="v-09">Add to cart &middot; $36</button>
+                  <a class="btn btn--sm btn--ghost" href="contact.html#faq">Reef-safe question, answered</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ledger-row shop-row" data-cat="moisturise" data-row-id="v-10">
+          <div class="ledger-row__bar">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="v-10">
+              <span class="ledger-row__index mono">10</span>
+              <span class="ledger-row__name">Meadow Cream Light</span>
+              <span class="ledger-row__cat mono hide-sm">Moisturise &middot; 50 ml</span>
+              <span class="ledger-row__price mono">$40</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <button type="button" class="quick-add" data-add-to-cart="v-10">Quick add</button>
+        </div>
+          <div class="ledger-row__detail" id="v-10">
+            <div class="ledger-detail">
+              <div class="ledger-detail__media"><img src="https://picsum.photos/seed/verdant-9493b2852b30/1600/900?auto=format&fit=crop&w=900&h=900&q=80" alt="Airless pump of Meadow Cream Light with a folded muslin cloth" width="450" height="450" loading="lazy"></div>
+              <div class="ledger-detail__body">
+                <p class="ledger-detail__lead">The same barrier blend as Rich, cut with more water and half the butters — the one we recommend for warm months and oily skin.</p>
+                <dl class="ledger-spec">
+                  <div><dt class="mono">Dose</dt><dd>3% oat ferment, 2% squalane, 0.5% ceramide NP</dd></div>
+                  <div><dt class="mono">Texture</dt><dd>Gel-cream, cools on contact</dd></div>
+                  <div><dt class="mono">Use</dt><dd>AM and PM, year-round for oily skin</dd></div>
+                  <div><dt class="mono">Batch</dt><dd>Lot 015 &middot; London &middot; 24-month shelf life</dd></div>
+                </dl>
+                <div class="ledger-detail__actions">
+                  <button type="button" class="btn btn--sm btn--primary" data-add-to-cart="v-10">Add to cart &middot; $40</button>
+                  <a class="btn btn--sm btn--ghost" href="routine.html">Which cream suits you</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ledger-row shop-row" data-cat="tone" data-row-id="v-11">
+          <div class="ledger-row__bar">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="v-11">
+              <span class="ledger-row__index mono">11</span>
+              <span class="ledger-row__name">Mist of Morning Dew</span>
+              <span class="ledger-row__cat mono hide-sm">Mist &middot; 100 ml</span>
+              <span class="ledger-row__price mono">$30</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <button type="button" class="quick-add" data-add-to-cart="v-11">Quick add</button>
+        </div>
+          <div class="ledger-row__detail" id="v-11">
+            <div class="ledger-detail">
+              <div class="ledger-detail__media"><img src="https://picsum.photos/seed/verdant-b68d3911fa06/1600/900?auto=format&fit=crop&w=900&h=900&q=80" alt="Fine-mist spray bottle of Mist of Morning Dew with water droplets" width="450" height="450" loading="lazy"></div>
+              <div class="ledger-detail__body">
+                <p class="ledger-detail__lead">A mineral mist fine enough to sit over makeup without marking it, and cold enough to settle a flushed face after a train commute.</p>
+                <dl class="ledger-spec">
+                  <div><dt class="mono">Dose</dt><dd>4% sea fennel culture, 2% glycerin, mineral water base</dd></div>
+                  <div><dt class="mono">Texture</dt><dd>Ultra-fine mist, no droplets</dd></div>
+                  <div><dt class="mono">Use</dt><dd>Any time skin feels tight, over or under makeup</dd></div>
+                  <div><dt class="mono">Batch</dt><dd>Lot 008 &middot; Gironde &middot; 24-month shelf life</dd></div>
+                </dl>
+                <div class="ledger-detail__actions">
+                  <button type="button" class="btn btn--sm btn--primary" data-add-to-cart="v-11">Add to cart &middot; $30</button>
+                  <a class="btn btn--sm btn--ghost" href="our-story.html#ingredients">Ingredient record</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ledger-row shop-row" data-cat="body" data-row-id="v-12">
+          <div class="ledger-row__bar">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="v-12">
+              <span class="ledger-row__index mono">12</span>
+              <span class="ledger-row__name">Hand &amp; Husk Balm</span>
+              <span class="ledger-row__cat mono hide-sm">Hand &middot; 75 ml</span>
+              <span class="ledger-row__price mono">$24</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <button type="button" class="quick-add" data-add-to-cart="v-12">Quick add</button>
+        </div>
+          <div class="ledger-row__detail" id="v-12">
+            <div class="ledger-detail">
+              <div class="ledger-detail__media"><img src="https://picsum.photos/seed/verdant-da07968eb24e/1600/900?auto=format&fit=crop&w=900&h=900&q=80" alt="Aluminium tube of Hand and Husk Balm resting on oat husks" width="450" height="450" loading="lazy"></div>
+              <div class="ledger-detail__body">
+                <p class="ledger-detail__lead">For hands that wash twenty times a day. Oat husk oils and shea in a paste that survives one round of dishwashing.</p>
+                <dl class="ledger-spec">
+                  <div><dt class="mono">Dose</dt><dd>8% shea, 5% oat kernel oil, 3% panthenol</dd></div>
+                  <div><dt class="mono">Texture</dt><dd>Thick paste, sinks slowly, leaves a guard</dd></div>
+                  <div><dt class="mono">Use</dt><dd>After every wash, and a thick layer overnight</dd></div>
+                  <div><dt class="mono">Batch</dt><dd>Lot 007 &middot; London &middot; 30-month shelf life</dd></div>
+                </dl>
+                <div class="ledger-detail__actions">
+                  <button type="button" class="btn btn--sm btn--primary" data-add-to-cart="v-12">Add to cart &middot; $24</button>
+                  <a class="btn btn--sm btn--ghost" href="contact.html#shipping">Shipping and returns</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--wash" aria-labelledby="buy-title">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Section 02 &nbsp;/&nbsp; Before you add</p>
+          <h2 id="buy-title">How Buying From Us Works</h2>
+        </div>
+        <p class="section__note">Questions not answered here go to <a class="link-arrow" href="contact.html">the contact page<span aria-hidden="true"> &rarr;</span></a></p>
+      </div>
+      <div class="table-wrap">
+        <table class="data">
+          <caption>Order terms &mdash; updated October 2026</caption>
+          <thead>
+            <tr><th scope="col">Item</th><th scope="col">Detail</th><th scope="col">Note</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Shipping</th><td>Carbon-neutral courier, 2–4 working days</td><td>Free over $60, otherwise $4.50</td></tr>
+            <tr><th scope="row">Samples</th><td>Three doses with every order, chosen by cart contents</td><td>No charge, no signup required</td></tr>
+            <tr><th scope="row">Returns</th><td>60 days, opened or unopened, refund to original method</td><td>We cover the return label</td></tr>
+            <tr><th scope="row">Refills</th><td>Pouch at 40% less plastic than the bottle</td><td>15% off the bottled price</td></tr>
+            <tr><th scope="row">Subscriptions</th><td>Every 8, 10, or 12 weeks, pause any time</td><td>Skip the first delivery free</td></tr>
+            <tr><th scope="row">Testing</th><td>Panel of 40 people, 12 weeks, barrier reading at 72h</td><td>Results summarised in the letter</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col footer-col--brand">
+        <a class="brand brand--footer" href="index.html" aria-label="Verdant — home">
+          <svg class="brand__mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+            <path d="M6 26c-2-11 5-19 20-20-1 15-8 21-15 21-2 0-5-1-5-1z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+            <path d="M9 23c4-6 8-9 13-11" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+          <span class="brand__word">Verdant</span>
+        </a>
+        <p class="footer-blurb">Botanical skincare kept as a ledger: twelve formulas, published doses, and a record for every batch since 2019.</p>
+        <p class="footer-meta mono">Est. 2019 &middot; Gironde &amp; London</p>
+      </div>
+      <nav class="footer-col" aria-label="Shop">
+        <h3 class="footer-head mono">Shop</h3>
+        <ul class="footer-list">
+          <li><a href="shop.html">All formulas</a></li>
+          <li><a href="shop.html#cleanse">Cleansers</a></li>
+          <li><a href="shop.html#treat">Serums</a></li>
+          <li><a href="shop.html#moisturise">Moisturisers</a></li>
+          <li><a href="routine.html">Routine quiz</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-label="About">
+        <h3 class="footer-head mono">Record</h3>
+        <ul class="footer-list">
+          <li><a href="our-story.html">Our story</a></li>
+          <li><a href="our-story.html#ingredients">Ingredient ledger</a></li>
+          <li><a href="our-story.html#sourcing">Sourcing</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html#faq">Questions</a></li>
+        </ul>
+      </nav>
+      <div class="footer-col">
+        <h3 class="footer-head mono">Care</h3>
+        <ul class="footer-list">
+          <li><a href="contact.html#shipping">Shipping &amp; returns</a></li>
+          <li><a href="contact.html#refills">Refill programme</a></li>
+          <li><a href="contact.html#patch">Patch-test advice</a></li>
+          <li><a href="contact.html">hello@verdant.skin</a></li>
+        </ul>
+        <p class="footer-meta mono">Free shipping over $60</p>
+      </div>
+    </div>
+    <div class="footer-rule" data-rule aria-hidden="true"></div>
+    <div class="footer-bottom">
+      <p class="mono">&copy; <span data-year>2026</span> Verdant Skincare Ltd. All rights reserved.</p>
+      <p class="mono footer-bottom__note">Panel-tested &middot; Never tested on animals &middot; recyclable cartons</p>
+    </div>
+  </div>
+</footer>
+
+<div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+<aside class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true">
+  <header class="cart-drawer__head">
+    <h2 id="cart-title">Your cart</h2>
+    <button type="button" class="icon-btn" id="cart-close" aria-label="Close cart">
+      <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </header>
+  <div class="cart-drawer__body" data-cart-body>
+    <p class="cart-empty">Nothing on the list yet. <a href="shop.html">Open the registry</a> and add a formula.</p>
+  </div>
+  <footer class="cart-drawer__foot" data-cart-foot hidden>
+    <dl class="cart-totals">
+      <div><dt>Subtotal</dt><dd class="mono" data-cart-subtotal>$0.00</dd></div>
+      <div><dt>Shipping</dt><dd class="mono" data-cart-shipping>—</dd></div>
+      <div class="cart-totals__row--total"><dt>Total</dt><dd class="mono" data-cart-total>$0.00</dd></div>
+    </dl>
+    <p class="cart-shipping-note" data-cart-note></p>
+    <button type="button" class="btn btn--primary btn--block" data-checkout>Checkout</button>
+    <p class="mono cart-drawer__demo">Demo storefront — payment is not wired.</p>
+  </footer>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
