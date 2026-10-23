@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Savings Rate Calculator — Mintwise</title>
+<meta name="description" content="Enter your take-home pay and monthly costs to find your savings rate, twelve-month projection, emergency runway and the three cuts that move the number fastest.">
+<meta name="theme-color" content="#fbfbf9">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" data-header>
+  <div class="shell site-header__inner">
+    <a class="brand" href="index.html" aria-label="Mintwise, home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3c4.2 3.1 6.2 6.3 6.2 9.4A6.2 6.2 0 0 1 12 21a6.2 6.2 0 0 1-6.2-8.6C5.8 9.3 7.8 6.1 12 3Z"></path>
+          <path d="M12 21V9.5"></path>
+        </svg>
+      </span>
+      <span class="brand__word">Mintwise</span>
+    </a>
+
+    <nav class="nav" id="primary-nav" data-nav aria-label="Primary">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="index.html">Home</a></li>
+        <li><a class="nav__link" href="features.html">Features</a></li>
+        <li><a class="nav__link" href="calculator.html" aria-current="page">Calculator</a></li>
+        <li><a class="nav__link" href="pricing.html">Pricing</a></li>
+        <li><a class="nav__link" href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav__mobile-actions">
+        <a class="btn btn--primary magnetic" href="pricing.html">Start free</a>
+      </div>
+    </nav>
+
+    <div class="nav__actions">
+      <a class="nav__desk" href="features.html">See the features</a>
+      <a class="btn btn--primary btn--sm magnetic" href="pricing.html">Start free</a>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="primary-nav" aria-label="Open main menu">
+        <span class="nav-toggle__bar" aria-hidden="true"></span>
+        <span class="nav-toggle__bar" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-head" aria-labelledby="page-title">
+    <div class="shell page-head__inner">
+      <p class="eyebrow">Free tool · nothing saved to a server</p>
+      <h1 id="page-title">Find your real
+        <span class="decode" data-decode="savings rate">savings rate</span>
+      </h1>
+      <p class="lede">Type what lands in your account each month and what leaves it. The donut updates
+        as you go, with your projection, your runway and the three cuts worth making. Your figures stay
+        in this browser — there is no account to create and nothing to email us.</p>
+      <p class="page-head__meta">
+        <span>Monthly figures, after tax</span>
+        <span>Auto-saved locally</span>
+        <span>Reset any time</span>
+      </p>
+    </div>
+  </section>
+
+  <div class="shell calc-layout">
+
+    <form class="calc-form" data-calc novalidate>
+
+      <fieldset>
+        <legend>What comes in</legend>
+        <div class="field">
+          <label for="calc-income">Monthly take-home pay</label>
+          <span class="input-money">
+            <input id="calc-income" type="number" min="0" step="50" inputmode="decimal" value="4800" data-income>
+          </span>
+          <p class="hint">After tax, pension and payroll deductions — the number that actually reaches your account.</p>
+        </div>
+        <div class="field">
+          <label for="calc-savings">Savings and investing you already move</label>
+          <span class="input-money">
+            <input id="calc-savings" type="number" min="0" step="50" inputmode="decimal" value="600" data-savings>
+          </span>
+          <p class="hint">Pension top-ups you control, ISAs, brokerage transfers, the pot for a deposit. Count each once.</p>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>What goes out</legend>
+        <p class="hint" style="margin-block-end:1.25rem">Adjust the eight lines below or add your own.
+          Leave a line at zero if it does not apply — empty rows are ignored, not guessed.</p>
+        <div class="expense-rows" data-expense-rows></div>
+        <div class="form-actions">
+          <button class="btn btn--ghost btn--sm" type="button" data-add-row>Add another cost</button>
+          <button class="btn btn--ghost btn--sm" type="button" data-reset>Reset to defaults</button>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Start from a scenario</legend>
+        <p class="hint" style="margin-block-end:1.25rem">Median figures from 312,000 Mintwise members. Tap one to
+          load it, then bend the numbers toward your own life.</p>
+        <div class="preset-row">
+          <button class="preset" type="button" data-preset="single-salary" aria-pressed="false">Single salary</button>
+          <button class="preset" type="button" data-preset="dual-income" aria-pressed="false">Dual income, kids</button>
+          <button class="preset" type="button" data-preset="freelance" aria-pressed="false">Freelance, variable</button>
+          <button class="preset" type="button" data-preset="new-parent" aria-pressed="false">New parent</button>
+        </div>
+      </fieldset>
+
+      <p class="visually-hidden" role="status" aria-live="polite" data-live>
+        Enter your monthly take-home pay to calculate a savings rate.
+      </p>
+    </form>
+
+    <section class="calc-results" aria-labelledby="results-title">
+      <h2 id="results-title" class="visually-hidden">Your results</h2>
+
+      <div class="donut-wrap">
+        <svg class="donut" viewBox="0 0 200 200" role="img" aria-labelledby="donut-title donut-desc">
+          <title id="donut-title">Savings rate donut</title>
+          <desc id="donut-desc" data-donut-desc>Savings rate zero percent until you enter figures.</desc>
+          <circle class="donut__track" cx="100" cy="100" r="82" fill="none" stroke-width="18"></circle>
+          <g transform="rotate(-90 100 100)">
+            <circle class="donut__seg" data-seg="spend" cx="100" cy="100" r="82" fill="none"
+                    stroke="#cfdad2" stroke-width="18" stroke-dasharray="0 515.22" stroke-dashoffset="0"></circle>
+            <circle class="donut__seg" data-seg="save" cx="100" cy="100" r="82" fill="none"
+                    stroke="#10b981" stroke-width="18" stroke-dasharray="0 515.22" stroke-dashoffset="0"></circle>
+            <circle class="donut__seg" data-seg="free" cx="100" cy="100" r="82" fill="none"
+                    stroke="#c98a2b" stroke-width="18" stroke-dasharray="0 515.22" stroke-dashoffset="0"></circle>
+          </g>
+          <text class="donut__num" x="100" y="98" text-anchor="middle" data-out-rate>0%</text>
+          <text class="donut__cap" x="100" y="116" text-anchor="middle" data-out-rate-caption>add an income</text>
+          <text class="donut__sub" x="100" y="132" text-anchor="middle">mintwise members: 22%</text>
+        </svg>
+      </div>
+
+      <p class="result-grade" data-out-grade>Your rate appears here</p>
+
+      <p class="shortfall" data-shortfall hidden></p>
+
+      <ul class="legend">
+        <li><span class="swatch swatch--spend"></span><span>Spending</span><span class="value">committed</span></li>
+        <li><span class="swatch swatch--save"></span><span>Deliberate savings</span><span class="value">kept</span></li>
+        <li><span class="swatch swatch--free"></span><span>Unallocated</span><span class="value">at risk</span></li>
+      </ul>
+
+      <dl class="result-grid">
+        <div><dt>Kept each month</dt><dd data-out-monthly>$0</dd></div>
+        <div><dt>In twelve months</dt><dd data-out-yearly>$0</dd></div>
+        <div><dt>Spending share</dt><dd data-out-spending>0%</dd></div>
+        <div><dt>Runway per year</dt><dd data-out-runway>—</dd></div>
+      </dl>
+
+      <div>
+        <h3 class="feature-index__title">What would move the number</h3>
+        <ul class="rec-list" data-recs></ul>
+      </div>
+
+      <p class="hint" style="font-size:0.78rem;color:var(--ink-3)">Runway per year = twelve months of savings
+        divided by one month of spending — how long you could live on what you banked this year.</p>
+    </section>
+  </div>
+
+  <section class="bench" aria-labelledby="bench-title">
+    <div class="shell bench__grid">
+      <div>
+        <p class="eyebrow">Where you sit</p>
+        <h2 id="bench-title" class="h-display">Most households save under 10%. Members reach 22%.</h2>
+        <p>The gap is rarely discipline. It is order of operations: money moved on payday survives,
+          money left at the end of the month does not. Mintwise automates the order so the rate holds
+          through a bad week.</p>
+        <a class="btn btn--primary magnetic" href="features.html#autoflow">See how autoflow works</a>
+      </div>
+      <div class="bench__bars" role="img" aria-label="Comparison of savings rates: national median 8 percent, Mintwise members 22 percent, top ten percent 41 percent, and your current rate shown live.">
+        <p class="bench__bar">
+          <span>Median</span>
+          <span class="bench__bar-track"><span class="bench__bar-fill" style="width: 8%"></span></span>
+          <span>8%</span>
+        </p>
+        <p class="bench__bar">
+          <span>Upper quartile</span>
+          <span class="bench__bar-track"><span class="bench__bar-fill" style="width: 15%"></span></span>
+          <span>15%</span>
+        </p>
+        <p class="bench__bar">
+          <span>Members</span>
+          <span class="bench__bar-track"><span class="bench__bar-fill" style="width: 22%"></span></span>
+          <span>22%</span>
+        </p>
+        <p class="bench__bar">
+          <span>Top 10%</span>
+          <span class="bench__bar-track"><span class="bench__bar-fill" style="width: 41%"></span></span>
+          <span>41%</span>
+        </p>
+        <p class="bench__bar bench__bar--you">
+          <span>You</span>
+          <span class="bench__bar-track"><span class="bench__bar-fill" style="width: 2%" data-bench-you></span></span>
+          <span data-bench-label>0%</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="split" aria-labelledby="next-title">
+    <div class="shell split__grid">
+      <figure class="split__media">
+        <img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&amp;fit=crop&amp;w=1600&amp;q=80"
+             alt="Coins being added to a glass jar used as a household savings fund"
+             width="1600" height="1067" loading="lazy" decoding="async">
+        <figcaption>Twelve months of a 20% rate is a deposit, not a wish.</figcaption>
+      </figure>
+      <div class="split__copy">
+        <p class="eyebrow">Once you know the number</p>
+        <h2 id="next-title" class="h-display">Three things to do with the rate you just found.</h2>
+        <ol class="step__facts" style="margin-block:1.5rem 2rem">
+          <li><strong>Under 10%</strong> — raise the ring-fenced bill fund first. Leaks usually come from
+            annual charges being paid from a monthly balance, not from coffee.</li>
+          <li><strong>10% to 20%</strong> — set one payday autoflow rule at the number this calculator
+            shows you keep, and stop watching it. That single change accounts for most of the 38% median lift.</li>
+          <li><strong>Above 20%</strong> — the work shifts from saving to placement: cash ladder for anything
+            you need inside two years, goal portfolios for the rest, and a rate check each quarter.</li>
+        </ol>
+        <div class="hero__cta" style="margin:0">
+          <a class="btn btn--primary magnetic" href="pricing.html">Pick a plan</a>
+          <a class="btn btn--ghost" href="contact.html">Ask us about your figures</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" aria-labelledby="calc-cta">
+    <div class="shell cta__inner">
+      <p class="eyebrow">Put the number to work</p>
+      <h2 id="calc-cta" class="h-display">Thirty days of Mintwise will tell you if the rate holds.</h2>
+      <p class="cta__text">Connect one account, set the number you just calculated, and check the donut
+        again on the first of next month. Free trial, no card, cancel in one tap.</p>
+      <div class="cta__row">
+        <a class="btn btn--primary btn--lg magnetic" href="pricing.html">Start free</a>
+        <a class="btn btn--ghost btn--lg" href="features.html">Browse the features</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="shell site-footer__grid">
+    <div class="site-footer__brand">
+      <a class="brand brand--footer" href="index.html" aria-label="Mintwise, home">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3c4.2 3.1 6.2 6.3 6.2 9.4A6.2 6.2 0 0 1 12 21a6.2 6.2 0 0 1-6.2-8.6C5.8 9.3 7.8 6.1 12 3Z"></path>
+            <path d="M12 21V9.5"></path>
+          </svg>
+        </span>
+        <span class="brand__word">Mintwise</span>
+      </a>
+      <p class="site-footer__tag">Personal finance, quietly handled.</p>
+      <form class="signup" data-newsletter>
+        <label class="signup__label" for="footer-email">The monthly ledger — one email, the first Tuesday</label>
+        <div class="signup__row">
+          <input class="signup__input" id="footer-email" name="email" type="email" inputmode="email"
+                 autocomplete="email" placeholder="you@example.com" required>
+          <button class="btn btn--primary btn--sm magnetic" type="submit">Subscribe</button>
+        </div>
+        <p class="signup__status" data-newsletter-status role="status" aria-live="polite"></p>
+      </form>
+    </div>
+
+    <nav class="site-footer__col" aria-label="Product">
+      <h2 class="site-footer__title">Product</h2>
+      <ul>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="calculator.html">Savings calculator</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="features.html#security">Security model</a></li>
+      </ul>
+    </nav>
+
+    <nav class="site-footer__col" aria-label="Company">
+      <h2 class="site-footer__title">Company</h2>
+      <ul>
+        <li><a href="index.html#how">How it works</a></li>
+        <li><a href="index.html#quotes">Member stories</a></li>
+        <li><a href="contact.html">Contact &amp; support</a></li>
+        <li><a href="contact.html#faq">Help centre</a></li>
+      </ul>
+    </nav>
+
+    <nav class="site-footer__col" aria-label="Legal">
+      <h2 class="site-footer__title">Legal</h2>
+      <ul>
+        <li><a href="features.html#security">Privacy &amp; data</a></li>
+        <li><a href="pricing.html#compare">Plan comparison</a></li>
+        <li><a href="contact.html#faq">Common questions</a></li>
+        <li><a href="index.html#band-title">Certifications</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="shell site-footer__base">
+    <p>© <span data-year>2026</span> Mintwise Financial Technologies Ltd. Registered in England, no. 11482205.</p>
+    <p>Investments are not insured and may lose value. Mintwise is not a bank or a tax adviser.</p>
+  </div>
+</footer>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
