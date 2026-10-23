@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Verdant Skincare</title>
+<meta name="description" content="Talk to a Verdant formulator about routines, ingredients, orders, refills or wholesale. Real answers within two working days, plus shipping, returns, patch-test guidance and frequently asked questions.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%235b7d5a'/%3E%3Cpath d='M8 22c0-8 5-13 16-14-1 11-6 15-12 15-2 0-4-1-4-1z' fill='%23fbfaf6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body class="page-contact">
+<div class="scroll-progress" aria-hidden="true"><span class="scroll-progress__bar"></span></div>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="announce" id="announce">
+  <div class="wrap announce__inner">
+    <p class="announce__item" data-announce>Complimentary botanical samples with every order over $60 — three doses, no upsell.</p>
+    <button type="button" class="announce__close" id="announce-close" aria-label="Dismiss announcement">
+      <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</div>
+
+<header class="site-header" id="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="index.html" aria-label="Verdant — home">
+      <svg class="brand__mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+        <path d="M6 26c-2-11 5-19 20-20-1 15-8 21-15 21-2 0-5-1-5-1z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+        <path d="M9 23c4-6 8-9 13-11" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+      <span class="brand__word">Verdant</span>
+    </a>
+    <nav class="main-nav" id="main-nav" aria-label="Primary">
+      <ul class="main-nav__list">
+        <li><a class="main-nav__link" href="index.html">Home</a></li>
+        <li><a class="main-nav__link" href="shop.html">Shop</a></li>
+        <li><a class="main-nav__link" href="our-story.html">Our Story</a></li>
+        <li><a class="main-nav__link" href="routine.html">Routine</a></li>
+        <li><a class="main-nav__link" href="contact.html" aria-current="page">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-tools">
+      <button type="button" class="cart-btn" id="cart-open" aria-haspopup="dialog" aria-controls="cart-drawer" aria-label="Open cart, 0 items">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8zm3 0V6a3 3 0 016 0v2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="cart-btn__label">Cart</span>
+        <span class="cart-btn__count" data-cart-count>0</span>
+      </button>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Open menu">
+        <span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero page-hero--wash">
+    <div class="wrap">
+      <p class="eyebrow">Contact &nbsp;/&nbsp; Two working days</p>
+      <h1>Ask Us Anything About The Shelf</h1>
+      <p class="lede">Routine questions go to a formulator, not a script. Orders, refills and stock queries go to the two people who pack them. Write what you actually want to know — we would rather answer that than a template.</p>
+      <div class="page-hero__rail">
+        <span>Replies Mon–Fri, 9–17 GMT</span>
+        <span>hello@verdant.skin</span>
+        <span>Studio: 14 Ferrier Street, London E2</span>
+        <span>No chatbot, no queue ticket</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:clamp(26px,3vw,44px)" aria-labelledby="form-title">
+    <div class="wrap contact-grid">
+      <div>
+        <p class="eyebrow">Section 01 &nbsp;/&nbsp; Write to us</p>
+        <h2 id="form-title">Send A Message</h2>
+
+        <div class="contact-card" id="contact-success" hidden tabindex="-1">
+          <h3>Logged — thank you.</h3>
+          <p>Your reference is <strong class="mono" id="ticket-ref">VRD-00000</strong>. A formulator or the studio team will reply within two working days; if it is a routine question, expect an ordered list rather than a leaflet.</p>
+          <p style="margin:0"><a class="link-arrow" href="shop.html">Back to the registry<span aria-hidden="true"> &rarr;</span></a></p>
+        </div>
+
+        <form id="contact-form" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label class="field__label" for="c-name">Your name</label>
+              <input class="field__input" id="c-name" name="name" type="text" autocomplete="name" placeholder="Ilse Rovin" required data-required>
+              <p class="field__error" role="alert"></p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="c-email">Email address</label>
+              <input class="field__input" id="c-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required data-required>
+              <p class="field__error" role="alert"></p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="c-order">Order number</label>
+              <input class="field__input" id="c-order" name="order" type="text" autocomplete="off" placeholder="Optional — VRD-12345">
+              <p class="field__hint">Only needed for anything about a specific shipment.</p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="c-topic">What is this about?</label>
+              <select class="field__input field__select" id="c-topic" name="topic" required data-required>
+                <option value="">Choose a topic</option>
+                <option value="routine">Routine and product order</option>
+                <option value="ingredients">Ingredients, doses, or reactions</option>
+                <option value="order">An order, delivery, or return</option>
+                <option value="refills">Refills and subscriptions</option>
+                <option value="wholesale">Stocking Verdant (wholesale)</option>
+                <option value="press">Press and partnerships</option>
+              </select>
+              <p class="field__error" role="alert"></p>
+            </div>
+            <div class="field span-2">
+              <label class="field__label" for="c-message">Message</label>
+              <textarea class="field__input field__area" id="c-message" name="message" rows="8" placeholder="Tell us what your skin does, what you already use, and what you would like to change." required data-required></textarea>
+              <p class="field__error" role="alert"></p>
+            </div>
+            <div class="field span-2">
+              <label class="checkbox" for="c-consent">
+                <input id="c-consent" name="consent" type="checkbox" data-consent>
+                <span>You may keep my message on file so a follow-up answer makes sense. We never pass it to another brand, and we delete it after 24 months.</span>
+              </label>
+              <p class="field__error" role="alert"></p>
+            </div>
+          </div>
+          <div class="quiz__nav" style="margin-top:6px">
+            <button type="submit" class="btn btn--primary">Send message</button>
+            <a class="btn btn--ghost" href="routine.html">Try the quiz first</a>
+          </div>
+          <p class="form__status" data-form-status role="status" aria-live="polite" style="color:#a3594a"></p>
+        </form>
+      </div>
+
+      <aside aria-label="Studio details">
+        <figure class="aside-figure">
+          <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1000&h=750&q=80" alt="Bright studio bench with glass beakers, bottles and notebooks" width="600" height="450" loading="lazy">
+          <figcaption>The London bench, where replies get written</figcaption>
+        </figure>
+        <div class="contact-card">
+          <h3>Where We Are</h3>
+          <ul>
+            <li><span>Studio &amp; lab</span><span>London E2</span></li>
+            <li><span>Field and pressing</span><span>Dordogne, FR</span></li>
+            <li><span>Filling hall</span><span>Gironde, FR</span></li>
+            <li><span>Returns depot</span><span>Utrecht, NL</span></li>
+          </ul>
+          <p style="margin:14px 0 0">Visits by arrangement — the bench is small and we cannot host walk-ins, but we do open it twice a year for letter subscribers.</p>
+        </div>
+        <div class="contact-card">
+          <h3>Reply Times</h3>
+          <ul>
+            <li><span>Routine questions</span><span>~2 days</span></li>
+            <li><span>Orders and delivery</span><span>Same day</span></li>
+            <li><span>Reactions and safety</span><span>Under 4 hours</span></li>
+            <li><span>Wholesale</span><span>5 days</span></li>
+            <li><span>Press</span><span>5 days</span></li>
+          </ul>
+          <p style="margin:14px 0 0">If you have a sting, rash, or swelling that keeps going, stop the product and contact us the same day — we want the lot number from your carton.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--wash" id="faq" aria-labelledby="faq-title">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Section 02 &nbsp;/&nbsp; Frequently logged</p>
+          <h2 id="faq-title">The Questions We Answer Weekly</h2>
+        </div>
+        <p class="section__note">Open a row. If yours is not here, the form above is faster than guessing.</p>
+      </div>
+      <div class="ledger reveal-rows" data-ledger>
+        <article class="ledger-row" data-row-id="q1">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="faq-1">
+              <span class="ledger-row__index mono">01</span>
+              <span class="ledger-row__name">Can I use all twelve products?</span>
+              <span class="ledger-row__cat mono hide-sm">Routine</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="ledger-row__detail" id="faq-1">
+            <div class="ledger-detail">
+              <div class="ledger-detail__body" style="grid-column:1/-1">
+                <p class="ledger-detail__lead">No, and we would talk you out of trying. Twelve formulas is the whole line; a working routine uses three to five of them. The hand balm, mist and mask are extras you reach for on specific days, not steps.</p>
+                <p style="margin:0">Run the <a href="routine.html">three-question quiz</a> and it will name the subset that fits your skin and your minutes.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ledger-row" data-row-id="q2">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="faq-2">
+              <span class="ledger-row__index mono">02</span>
+              <span class="ledger-row__name">Why is there no scent at all?</span>
+              <span class="ledger-row__cat mono hide-sm">Formula</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="ledger-row__detail" id="faq-2">
+            <div class="ledger-detail">
+              <div class="ledger-detail__body" style="grid-column:1/-1">
+                <p class="ledger-detail__lead">Fragrance is the single most frequent cause of the reactions we are asked to explain, and it does nothing for skin. What you can smell is the raw material — green and slightly nutty from the sage, waxy from the shea.</p>
+                <p style="margin:0">If a bottle arrives smelling sharply different from the last one, send us the lot number and we will trace it.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ledger-row" data-row-id="q3">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="faq-3">
+              <span class="ledger-row__index mono">03</span>
+              <span class="ledger-row__name">Is Sun Veil reef-safe and travel-friendly?</span>
+              <span class="ledger-row__cat mono hide-sm">Protect</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="ledger-row__detail" id="faq-3">
+            <div class="ledger-detail">
+              <div class="ledger-detail__body" style="grid-column:1/-1">
+                <p class="ledger-detail__lead">Sun Veil is a hybrid filter system with no oxybenzone or octinoxate, and it is non-nano zinc. That covers the two filters banned in Hawaii, Key West and parts of Indonesia.</p>
+                <p style="margin:0">The 50 ml tube is cabin-bag compliant only if your airline allows it in your liquids pouch; we also sell a 30 ml travel size inside the starter set.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ledger-row" data-row-id="q4">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="faq-4">
+              <span class="ledger-row__index mono">04</span>
+              <span class="ledger-row__name">Safe in pregnancy?</span>
+              <span class="ledger-row__cat mono hide-sm">Safety</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="ledger-row__detail" id="faq-4">
+            <div class="ledger-detail">
+              <div class="ledger-detail__body" style="grid-column:1/-1">
+                <p class="ledger-detail__lead">Everything except Nightleaf Repair Balm is what we would consider routine-friendly, and we formulated bakuchiol into it precisely because retinoids are off the table. Still: show the ingredient list to your midwife or doctor before you start, and mention the niacinamide and vitamin C derivative in the serum.</p>
+                <p style="margin:0">Ask us on the form and we will send the full INCI list as a PDF within a day.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ledger-row" data-row-id="q5">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="faq-5">
+              <span class="ledger-row__index mono">05</span>
+              <span class="ledger-row__name">How do refills actually work?</span>
+              <span class="ledger-row__cat mono hide-sm">Refills</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="ledger-row__detail" id="faq-5">
+            <div class="ledger-detail">
+              <div class="ledger-detail__body" style="grid-column:1/-1">
+                <p class="ledger-detail__lead">Order a refill pouch for cream, serum or cleanser: 15% under the bottled price, 40% less plastic per millilitre. You squeeze the pouch into the empty bottle you keep, rinse the bottle once a month, and the pump head stays put.</p>
+                <p style="margin:0">Return nine empty bottles and we post a new one free — the <a href="#refills">bottle-back count</a> is run twice a year.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ledger-row" data-row-id="q6">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="faq-6">
+              <span class="ledger-row__index mono">06</span>
+              <span class="ledger-row__name">Do you test on animals, or sell into markets that do?</span>
+              <span class="ledger-row__cat mono hide-sm">Ethics</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="ledger-row__detail" id="faq-6">
+            <div class="ledger-detail">
+              <div class="ledger-detail__body" style="grid-column:1/-1">
+                <p class="ledger-detail__lead">Never, and we do not sell into territories that require it, which is why the line ships to 31 countries rather than everywhere. Our panel work is human, patch-tested, and reviewed by an independent dermatologist before any formula ships.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ledger-row" data-row-id="q7">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="faq-7">
+              <span class="ledger-row__index mono">07</span>
+              <span class="ledger-row__name">My serum tingles. Should it?</span>
+              <span class="ledger-row__cat mono hide-sm">Reactions</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="ledger-row__detail" id="faq-7">
+            <div class="ledger-detail">
+              <div class="ledger-detail__body" style="grid-column:1/-1">
+                <p class="ledger-detail__lead">Brief tingling on freshly washed skin can happen with the essence and serum, and should fade within a minute. Stinging that lasts, or any redness that deepens over a week, means stop and write to us.</p>
+                <p style="margin:0">Meanwhile, follow the <a href="#patch">patch-test method</a> below — it takes four nights and saves six weeks.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ledger-row" data-row-id="q8">
+          <h3 class="ledger-row__heading">
+            <button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false" aria-controls="faq-8">
+              <span class="ledger-row__index mono">08</span>
+              <span class="ledger-row__name">Can I stock Verdant in my store?</span>
+              <span class="ledger-row__cat mono hide-sm">Wholesale</span>
+              <span class="ledger-row__chev" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="ledger-row__detail" id="faq-8">
+            <div class="ledger-detail">
+              <div class="ledger-detail__body" style="grid-column:1/-1">
+                <p class="ledger-detail__lead">We work with 44 stockists, all of them pharmacies, independent beauty shops, or clinics — no marketplaces. Opening orders start at 12 units across at least four formulas, with a six-week reorder rhythm.</p>
+                <p style="margin:0">Send your business name, city and how customers would find you on the form above, and we will reply with the line sheet.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="shipping" aria-labelledby="ship-title">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Section 03 &nbsp;/&nbsp; Logistics</p>
+          <h2 id="ship-title">Shipping, Returns, Refills</h2>
+        </div>
+        <p class="section__note">Anything missing here, ask. <a class="link-arrow" href="#faq">FAQ above<span aria-hidden="true"> &rarr;</span></a></p>
+      </div>
+      <div class="table-wrap">
+        <table class="data">
+          <caption>Terms by destination &mdash; updated October 2026</caption>
+          <thead>
+            <tr><th scope="col">Destination</th><th scope="col">Method</th><th scope="col">Cost</th><th scope="col">Working days</th><th scope="col">Tracking</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">United Kingdom</th><td>Carbon-neutral courier</td><td>$4.50, free over $60</td><td>2–3</td><td>Yes</td></tr>
+            <tr><th scope="row">European Union</th><td>Carbon-neutral courier</td><td>$6.00, free over $80</td><td>3–5</td><td>Yes</td></tr>
+            <tr><th scope="row">United States &amp; Canada</th><td>Air, duties prepaid</td><td>$9.00, free over $120</td><td>5–8</td><td>Yes</td></tr>
+            <tr><th scope="row">Australia &amp; New Zealand</th><td>Air, duties prepaid</td><td>$11.00</td><td>7–11</td><td>Yes</td></tr>
+            <tr><th scope="row">Everywhere else</th><td>Write to us first</td><td>Quoted</td><td>Varies</td><td>On request</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="cards" style="margin-top:34px">
+        <article class="card" id="refills">
+          <p class="mono card__no">Refills</p>
+          <h3>Pouches And Bottle-Back</h3>
+          <p>Refill pouches cost 15% less than the bottle and use 40% less plastic. Nine empties returned to our Utrecht depot earns a new bottle of your choice, posted free, twice a year.</p>
+        </article>
+        <article class="card">
+          <p class="mono card__no">Returns</p>
+          <h3>Sixty Days, Opened</h3>
+          <p>If a formula does not suit you, send it back within sixty days even if it is half used. We refund the full amount and cover the label — no reason required, though we always ask what went wrong.</p>
+        </article>
+        <article class="card" id="patch">
+          <p class="mono card__no">Patch Test</p>
+          <h3>Four Nights Before You Commit</h3>
+          <p>Apply a rice-grain amount behind the ear on four consecutive nights. No sting, no spreading redness by night four means the face is fair game. Actives — the serum, essence and balm — deserve this every time.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--wash" aria-labelledby="who-title">
+    <div class="wrap split">
+      <figure class="split__figure">
+        <img src="https://picsum.photos/seed/verdant-0fd516a08d4a/1600/900?auto=format&fit=crop&w=1000&h=1200&q=80" alt="Hands holding a glass of green botanical extract in a bright room" width="500" height="600" loading="lazy">
+      </figure>
+      <div class="split__body">
+        <p class="eyebrow">Section 04 &nbsp;/&nbsp; Who replies</p>
+        <h2 id="who-title">Three People, Named</h2>
+        <p><strong>Ilse Rovin</strong> — founder and formulator. Routine questions, ingredient reasoning, and anything about a reaction land on her desk.</p>
+        <p><strong>Teo Almeida</strong> — studio operations. Orders, deliveries, refills, wholesale paperwork, and the bottle-back count.</p>
+        <p><strong>Rosalind Fee</strong> — panel and safety lead. If you report stinging or a rash, she reads it first and writes back the same day.</p>
+        <p>There is no outsourced inbox. That is also why we answer in two days rather than two hours, and why the answer will mention your actual skin rather than a category.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--cta" aria-labelledby="contact-cta">
+    <div class="wrap cta">
+      <div class="cta__body">
+        <p class="eyebrow">Section 05 &nbsp;/&nbsp; Meanwhile</p>
+        <h2 id="contact-cta">Prefer To Read First?</h2>
+        <p>The ingredient ledger answers most formula questions with the dose attached, and the registry lists all twelve with pricing.</p>
+      </div>
+      <div class="cta__actions">
+        <a class="btn btn--primary" href="our-story.html">Ingredient ledger</a>
+        <a class="btn btn--ghost btn--ghost--dark" href="shop.html">Browse the registry</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col footer-col--brand">
+        <a class="brand brand--footer" href="index.html" aria-label="Verdant — home">
+          <svg class="brand__mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+            <path d="M6 26c-2-11 5-19 20-20-1 15-8 21-15 21-2 0-5-1-5-1z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+            <path d="M9 23c4-6 8-9 13-11" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+          <span class="brand__word">Verdant</span>
+        </a>
+        <p class="footer-blurb">Botanical skincare kept as a ledger: twelve formulas, published doses, and a record for every batch since 2019.</p>
+        <p class="footer-meta mono">Est. 2019 &middot; Gironde &amp; London</p>
+      </div>
+      <nav class="footer-col" aria-label="Shop">
+        <h3 class="footer-head mono">Shop</h3>
+        <ul class="footer-list">
+          <li><a href="shop.html">All formulas</a></li>
+          <li><a href="shop.html#cleanse">Cleansers</a></li>
+          <li><a href="shop.html#treat">Serums</a></li>
+          <li><a href="shop.html#moisturise">Moisturisers</a></li>
+          <li><a href="routine.html">Routine quiz</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-label="About">
+        <h3 class="footer-head mono">Record</h3>
+        <ul class="footer-list">
+          <li><a href="our-story.html">Our story</a></li>
+          <li><a href="our-story.html#ingredients">Ingredient ledger</a></li>
+          <li><a href="our-story.html#sourcing">Sourcing</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html#faq">Questions</a></li>
+        </ul>
+      </nav>
+      <div class="footer-col">
+        <h3 class="footer-head mono">Care</h3>
+        <ul class="footer-list">
+          <li><a href="contact.html#shipping">Shipping &amp; returns</a></li>
+          <li><a href="contact.html#refills">Refill programme</a></li>
+          <li><a href="contact.html#patch">Patch-test advice</a></li>
+          <li><a href="contact.html">hello@verdant.skin</a></li>
+        </ul>
+        <p class="footer-meta mono">Free shipping over $60</p>
+      </div>
+    </div>
+    <div class="footer-rule" data-rule aria-hidden="true"></div>
+    <div class="footer-bottom">
+      <p class="mono">&copy; <span data-year>2026</span> Verdant Skincare Ltd. All rights reserved.</p>
+      <p class="mono footer-bottom__note">Panel-tested &middot; Never tested on animals &middot; recyclable cartons</p>
+    </div>
+  </div>
+</footer>
+
+<div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+<aside class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true">
+  <header class="cart-drawer__head">
+    <h2 id="cart-title">Your cart</h2>
+    <button type="button" class="icon-btn" id="cart-close" aria-label="Close cart">
+      <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </header>
+  <div class="cart-drawer__body" data-cart-body>
+    <p class="cart-empty">Nothing on the list yet. <a href="shop.html">Open the registry</a> and add a formula.</p>
+  </div>
+  <footer class="cart-drawer__foot" data-cart-foot hidden>
+    <dl class="cart-totals">
+      <div><dt>Subtotal</dt><dd class="mono" data-cart-subtotal>$0.00</dd></div>
+      <div><dt>Shipping</dt><dd class="mono" data-cart-shipping>—</dd></div>
+      <div class="cart-totals__row--total"><dt>Total</dt><dd class="mono" data-cart-total>$0.00</dd></div>
+    </dl>
+    <p class="cart-shipping-note" data-cart-note></p>
+    <button type="button" class="btn btn--primary btn--block" data-checkout>Checkout</button>
+    <p class="mono cart-drawer__demo">Demo storefront — payment is not wired.</p>
+  </footer>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
