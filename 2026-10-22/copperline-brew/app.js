@@ -1,526 +1,445 @@
 /* ============================================================
-   COPPERLINE BREWING CO. — shared behaviour
-   Signature motion: (1) scroll progress bar, (2) animated counters.
-   Everything is guarded by element-existence checks so one file
-   serves every page.
+   Copperline Brewing Co. — shared behaviour
+   Every block is guarded by element-existence checks so one
+   file can serve all pages.
    ============================================================ */
 (function () {
   "use strict";
 
-  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-  var doc = document;
-  doc.documentElement.classList.add("js");
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  function on(selector, fn) {
-    var el = doc.querySelector(selector);
-    if (el) fn(el);
-  }
-  function all(selector, fn) {
-    Array.prototype.forEach.call(doc.querySelectorAll(selector), fn);
-  }
-  function supportsIO() {
-    return "IntersectionObserver" in window;
-  }
+  /* ---------- 1. Mobile navigation ---------- */
+  function initNav() {
+    var toggle = document.querySelector(".nav-toggle");
+    var nav = document.getElementById("primary-nav");
+    if (!toggle || !nav) return;
 
-  /* ----------------------------------------------------------
-     1. Scroll progress — 2px bar pinned to the viewport top
-     ---------------------------------------------------------- */
-  (function scrollProgress() {
-    var bar = doc.querySelector(".progress");
-    if (!bar) return;
-    var queued = false;
+    toggle.setAttribute("aria-expanded", "false");
 
-    function paint() {
-      queued = false;
-      var h = doc.documentElement.scrollHeight - window.innerHeight;
-      var ratio = h > 0 ? Math.min(Math.max(window.pageYOffset / h, 0), 1) : 0;
-      bar.style.setProperty("--sp", ratio.toFixed(4));
-    }
-    function request() {
-      if (!queued) {
-        queued = true;
-        window.requestAnimationFrame(paint);
-      }
-    }
-    window.addEventListener("scroll", request, { passive: true });
-    window.addEventListener("resize", request);
-    paint();
-  })();
-
-  /* ----------------------------------------------------------
-     2. Animated counters — 0 -> target, easeOutExpo, 1.2s
-     ---------------------------------------------------------- */
-  (function counters() {
-    var nums = doc.querySelectorAll("[data-count]");
-    if (!nums.length) return;
-
-    function format(value, decimals, grouping) {
-      var out = value.toFixed(decimals);
-      if (!grouping) return out;
-      var parts = out.split(".");
-      parts[0] = Number(parts[0]).toLocaleString("en-US");
-      return parts.join(".");
-    }
-
-    function render(el, value) {
-      var decimals = parseInt(el.getAttribute("data-decimals") || "0", 10);
-      var grouping = el.getAttribute("data-group") !== "off";
-      el.textContent = format(value, decimals, grouping);
-    }
-
-    function run(el) {
-      var target = parseFloat(el.getAttribute("data-count"));
-      if (isNaN(target)) return;
-      if (reduce.matches) {
-        render(el, target);
-        return;
-      }
-      var duration = 1200;
-      var start = null;
-      render(el, 0);
-
-      function tick(now) {
-        if (start === null) start = now;
-        var t = Math.min((now - start) / duration, 1);
-        var eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-        render(el, target * eased);
-        if (t < 1) window.requestAnimationFrame(tick);
-        else render(el, target);
-      }
-      window.requestAnimationFrame(tick);
-    }
-
-    if (!supportsIO()) {
-      Array.prototype.forEach.call(nums, run);
-      return;
-    }
-    var io = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-          run(entry.target);
-          io.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.4 }
-    );
-    Array.prototype.forEach.call(nums, function (el) {
-      render(el, 0);
-      io.observe(el);
-    });
-  })();
-
-  /* ----------------------------------------------------------
-     3. Mosaic wall — tiles lock into the grid as they enter
-     ---------------------------------------------------------- */
-  (function mosaic() {
-    all(".mosaic", function (wall) {
-      Array.prototype.forEach.call(wall.children, function (tile, i) {
-        tile.style.setProperty("--i", i % 12);
-      });
-      if (reduce.matches || !supportsIO()) {
-        wall.classList.add("is-locked");
-        return;
-      }
-      var io = new IntersectionObserver(
-        function (entries) {
-          if (entries.some(function (e) { return e.isIntersecting; })) {
-            wall.classList.add("is-locked");
-            io.disconnect();
-          }
-        },
-        { threshold: 0.12 }
-      );
-      io.observe(wall);
-    });
-  })();
-
-  /* ----------------------------------------------------------
-     4. Age gate (21+) — index.html only
-     ---------------------------------------------------------- */
-  (function ageGate() {
-    var gate = doc.getElementById("agegate");
-    if (!gate) return;
-    var KEY = "copperline.age-verified";
-    var verified = false;
-    try {
-      verified = window.sessionStorage.getItem(KEY) === "yes";
-    } catch (err) {
-      verified = false;
-    }
-
-    if (verified) {
-      gate.hidden = true;
-      return;
-    }
-
-    gate.hidden = false;
-    doc.body.classList.add("locked");
-    var first = gate.querySelector("[data-age-yes]");
-    if (first) first.focus();
-
-    function trap(event) {
-      if (event.key !== "Tab") return;
-      var focusables = gate.querySelectorAll("button, [href], input");
-      if (!focusables.length) return;
-      var firstEl = focusables[0];
-      var lastEl = focusables[focusables.length - 1];
-      if (event.shiftKey && doc.activeElement === firstEl) {
-        event.preventDefault();
-        lastEl.focus();
-      } else if (!event.shiftKey && doc.activeElement === lastEl) {
-        event.preventDefault();
-        firstEl.focus();
-      }
-    }
-
-    gate.addEventListener("keydown", trap);
-
-    on("[data-age-yes]", function (btn) {
-      btn.addEventListener("click", function () {
-        try {
-          window.sessionStorage.setItem(KEY, "yes");
-        } catch (err) {
-          /* storage blocked: gate still clears for this page view */
-        }
-        gate.hidden = true;
-        doc.body.classList.remove("locked");
-        gate.removeEventListener("keydown", trap);
-        var main = doc.getElementById("main");
-        if (main) main.focus();
-      });
-    });
-
-    on("[data-age-no]", function (btn) {
-      btn.addEventListener("click", function () {
-        var msg = gate.querySelector(".agegate__denied");
-        if (msg) {
-          msg.textContent = "Sorry — our taproom is 21 and over. Come back when you are.";
-        }
-      });
-    });
-  })();
-
-  /* ----------------------------------------------------------
-     5. Mobile navigation
-     ---------------------------------------------------------- */
-  (function nav() {
-    var burger = doc.querySelector(".burger");
-    var menu = doc.querySelector(".nav");
-    if (!burger || !menu) return;
-
-    function setOpen(open) {
-      burger.setAttribute("aria-expanded", open ? "true" : "false");
-      menu.setAttribute("data-open", open ? "true" : "false");
-    }
-    setOpen(false);
-
-    burger.addEventListener("click", function () {
-      setOpen(burger.getAttribute("aria-expanded") !== "true");
-    });
-    menu.addEventListener("click", function (event) {
-      if (event.target.closest("a")) setOpen(false);
-    });
-    doc.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && burger.getAttribute("aria-expanded") === "true") {
-        setOpen(false);
-        burger.focus();
+    toggle.addEventListener("click", function () {
+      var open = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!open));
+      if (open) {
+        nav.setAttribute("hidden", "");
+      } else {
+        nav.removeAttribute("hidden");
+        var first = nav.querySelector("a");
+        if (first) first.focus();
       }
     });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
+        nav.setAttribute("hidden", "");
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.focus();
+      }
+    });
+
+    nav.addEventListener("click", function (e) {
+      if (e.target.closest("a") && window.innerWidth <= 980) {
+        nav.setAttribute("hidden", "");
+        toggle.setAttribute("aria-expanded", "false");
+      }
+    });
+
     window.addEventListener("resize", function () {
-      if (window.innerWidth > 860) setOpen(false);
-    });
-  })();
-
-  /* ----------------------------------------------------------
-     6. Beer grid — filter + detail modal (beers.html)
-     ---------------------------------------------------------- */
-  (function beers() {
-    var grid = doc.getElementById("beer-grid");
-    if (!grid) return;
-    var cards = Array.prototype.slice.call(grid.querySelectorAll(".beer"));
-
-    /* Filters */
-    all("[data-filter]", function (btn) {
-      btn.addEventListener("click", function () {
-        var want = btn.getAttribute("data-filter");
-        all("[data-filter]", function (other) {
-          other.setAttribute("aria-pressed", other === btn ? "true" : "false");
-        });
-        var shown = 0;
-        cards.forEach(function (card) {
-          var match = want === "all" || card.getAttribute("data-style-group") === want;
-          card.hidden = !match;
-          if (match) shown += 1;
-        });
-        var count = doc.getElementById("beer-count");
-        var empty = doc.getElementById("beer-empty");
-        if (count) count.textContent = shown;
-        if (empty) empty.hidden = shown !== 0;
-      });
-    });
-
-    /* Detail modal */
-    var overlay = doc.getElementById("beer-modal");
-    var dialog = overlay && overlay.querySelector("[role='dialog']");
-    if (!overlay || !dialog) return;
-    var lastFocus = null;
-
-    var FIELDS = {
-      name: "h2[data-field='name']",
-      style: "[data-field='style']",
-      abv: "[data-field='abv']",
-      ibu: "[data-field='ibu']",
-      srm: "[data-field='srm']",
-      season: "[data-field='season']",
-      notes: "[data-field='notes']",
-      malt: "[data-field='malt']",
-      hops: "[data-field='hops']",
-      yeast: "[data-field='yeast']",
-      pairing: "[data-field='pairing']",
-      batch: "[data-field='batch']",
-      availability: "[data-field='availability']"
-    };
-
-    function set(field, value) {
-      var el = dialog.querySelector(FIELDS[field]);
-      if (el) el.textContent = value || el.getAttribute("data-fallback") || "—";
-    }
-
-    function meter(key, value, max) {
-      var fill = dialog.querySelector("[data-meter='" + key + "']");
-      var label = dialog.querySelector("[data-meter-label='" + key + "']");
-      var pct = Math.round((parseFloat(value) / max) * 100);
-      pct = Math.min(Math.max(pct, 4), 100);
-      if (fill) fill.style.width = pct + "%";
-      if (label) label.textContent = String(value);
-    }
-
-    function open(card) {
-      var d = card.dataset;
-      set("name", d.name);
-      set("style", d.style);
-      set("abv", d.abv);
-      set("ibu", d.ibu);
-      set("srm", d.srm);
-      set("season", d.season);
-      set("notes", d.notes);
-      set("malt", d.malt);
-      set("hops", d.hops);
-      set("yeast", d.yeast);
-      set("pairing", d.pairing);
-      set("batch", d.batch);
-      set("availability", d.availability);
-
-      var img = dialog.querySelector("[data-field='img']");
-      if (img) {
-        img.src = d.img;
-        img.alt = d.alt || (d.name + " poured at the Copperline taproom");
+      if (window.innerWidth > 980) {
+        nav.removeAttribute("hidden");
+        toggle.setAttribute("aria-expanded", "false");
+      } else if (toggle.getAttribute("aria-expanded") === "false") {
+        nav.setAttribute("hidden", "");
       }
-      meter("bitter", d.ibu, 100);
-      meter("strength", parseFloat(d.abv), 12);
-      meter("color", parseInt(d.srm.replace(/[^0-9]/g, ""), 10) || 10, 80);
+    });
 
-      lastFocus = doc.activeElement;
-      overlay.hidden = false;
-      doc.body.classList.add("locked");
-      var closeBtn = overlay.querySelector(".modal__close");
-      if (closeBtn) closeBtn.focus();
+    if (window.innerWidth <= 980) nav.setAttribute("hidden", "");
+  }
+
+  /* ---------- 2. Primary motion: Blur-Fade Ascend ---------- */
+  function initReveal() {
+    var items = document.querySelectorAll("[data-reveal]");
+    if (!items.length) return;
+
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      items.forEach(function (el) { el.classList.add("in"); });
+      return;
+    }
+
+    // Stagger siblings inside the same group by 80ms.
+    var groups = new Map();
+    items.forEach(function (el) {
+      var parent = el.parentElement;
+      var idx = groups.get(parent) || 0;
+      groups.set(parent, idx + 1);
+      el.style.setProperty("--d", Math.min(idx, 8) * 80 + "ms");
+    });
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+
+    items.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---------- 3. Secondary motion: Clip-Path Image Reveal ---------- */
+  function initClipReveal() {
+    var media = document.querySelectorAll("[data-clip]");
+    if (!media.length) return;
+
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      media.forEach(function (el) { el.classList.add("in"); });
+      return;
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    media.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---------- 4. Age gate (index only) ---------- */
+  function initAgeGate() {
+    var gate = document.getElementById("age-gate");
+    if (!gate) return;
+
+    var KEY = "copperline-age-ok";
+    var remembered = false;
+    try { remembered = window.localStorage.getItem(KEY) === "yes"; } catch (e) { remembered = false; }
+
+    if (remembered) return;
+
+    var yes = document.getElementById("age-yes");
+    var no = document.getElementById("age-no");
+    var panel = gate.querySelector(".modal__panel");
+    var previouslyFocused = null;
+
+    function open() {
+      previouslyFocused = document.activeElement;
+      gate.removeAttribute("hidden");
+      document.body.classList.add("is-locked");
+      window.setTimeout(function () { if (yes) yes.focus(); }, 60);
+      document.addEventListener("keydown", onKey);
     }
 
     function close() {
-      overlay.hidden = true;
-      doc.body.classList.remove("locked");
+      gate.setAttribute("hidden", "");
+      document.body.classList.remove("is-locked");
+      document.removeEventListener("keydown", onKey);
+      if (previouslyFocused && previouslyFocused.focus) previouslyFocused.focus();
+    }
+
+    function onKey(e) {
+      if (e.key === "Tab" && panel) {
+        var f = gate.querySelectorAll("button, a[href]");
+        if (!f.length) return;
+        var first = f[0];
+        var last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+
+    if (yes) yes.addEventListener("click", function () {
+      try { window.localStorage.setItem(KEY, "yes"); } catch (e) { /* private mode */ }
+      close();
+    });
+
+    if (no) no.addEventListener("click", function () {
+      var deny = document.getElementById("age-deny");
+      if (deny) deny.removeAttribute("hidden");
+      no.setAttribute("aria-hidden", "true");
+      if (deny) deny.setAttribute("tabindex", "-1");
+      if (yes) {
+        yes.setAttribute("disabled", "disabled");
+      }
+      if (deny) deny.focus();
+    });
+
+    open();
+  }
+
+  /* ---------- 5. Beer detail modal + style filter (beers.html) ---------- */
+  function initBeers() {
+    var grid = document.getElementById("beer-grid");
+    if (!grid) return;
+
+    var modal = document.getElementById("beer-modal");
+    var body = document.getElementById("beer-modal-body");
+    var closeBtn = document.getElementById("beer-modal-close");
+    var lastFocus = null;
+
+    function openBeer(card) {
+      if (!modal || !body) return;
+      var detail = card.querySelector(".beer-detail");
+      body.innerHTML = detail ? detail.innerHTML : "";
+      modal.removeAttribute("hidden");
+      document.body.classList.add("is-locked");
+      lastFocus = card;
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function closeModal() {
+      if (!modal || modal.hasAttribute("hidden")) return;
+      modal.setAttribute("hidden", "");
+      document.body.classList.remove("is-locked");
+      body.innerHTML = "";
       if (lastFocus) lastFocus.focus();
     }
 
-    cards.forEach(function (card) {
-      card.addEventListener("click", function () { open(card); });
+    grid.addEventListener("click", function (e) {
+      var card = e.target.closest(".beer-card");
+      if (card) openBeer(card);
     });
-    all("[data-open-beer]", function (trigger) {
-      trigger.addEventListener("click", function () {
-        var target = grid.querySelector('#' + trigger.getAttribute("data-open-beer"));
-        if (target) open(target);
+
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+
+    if (modal) {
+      modal.addEventListener("click", function (e) {
+        if (e.target.classList.contains("modal__scrim")) closeModal();
+      });
+      modal.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeModal();
+        if (e.key !== "Tab") return;
+        var f = modal.querySelectorAll("button, a[href]");
+        if (!f.length) return;
+        var first = f[0];
+        var last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      });
+    }
+
+    /* Style filter */
+    var chips = document.querySelectorAll("[data-filter]");
+    var count = document.getElementById("beer-count");
+    var emptyMsg = document.getElementById("beer-empty");
+
+    function setCount(n) {
+      if (!count) return;
+      count.textContent = n + (n === 1 ? " beer on the board" : " beers on the board");
+    }
+
+    function applyFilter(value) {
+      var shown = 0;
+      grid.querySelectorAll(".beer-card").forEach(function (card) {
+        var match = value === "all" || card.getAttribute("data-style") === value;
+        card.hidden = !match;
+        if (match) {
+          shown++;
+          if (!reduceMotion) {
+            card.classList.remove("in");
+            window.requestAnimationFrame(function () { card.classList.add("in"); });
+          }
+        }
+      });
+      setCount(shown);
+      if (emptyMsg) emptyMsg.hidden = shown !== 0;
+    }
+
+    chips.forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        chips.forEach(function (c) { c.setAttribute("aria-pressed", String(c === chip)); });
+        applyFilter(chip.getAttribute("data-filter"));
       });
     });
-    overlay.addEventListener("click", function (event) {
-      if (event.target === overlay || event.target.closest("[data-close]")) close();
-    });
-    doc.addEventListener("keydown", function (event) {
-      if (overlay.hidden) return;
-      if (event.key === "Escape") {
-        close();
-        return;
-      }
-      if (event.key !== "Tab") return;
-      var focusables = overlay.querySelectorAll("button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])");
-      if (!focusables.length) return;
-      var firstEl = focusables[0];
-      var lastEl = focusables[focusables.length - 1];
-      if (event.shiftKey && doc.activeElement === firstEl) {
-        event.preventDefault();
-        lastEl.focus();
-      } else if (!event.shiftKey && doc.activeElement === lastEl) {
-        event.preventDefault();
-        firstEl.focus();
-      }
-    });
-  })();
 
-  /* ----------------------------------------------------------
-     7. Taproom hours — flag today's row (visit.html)
-     ---------------------------------------------------------- */
-  (function hours() {
-    var table = doc.querySelector("[data-hours]");
-    if (!table) return;
-    var day = new Date().getDay(); /* 0 = Sunday */
-    var rows = table.querySelectorAll("tbody tr");
-    Array.prototype.forEach.call(rows, function (row) {
-      var value = parseInt(row.getAttribute("data-day"), 10);
-      if (value === day) row.classList.add("is-today");
-    });
-    var status = doc.getElementById("open-status");
-    if (!status) return;
-    var today = table.querySelector("tbody tr[data-day='" + day + "']");
-    var closes = today ? today.getAttribute("data-close") : null;
+    setCount(grid.querySelectorAll(".beer-card:not([hidden])").length);
+  }
+
+  /* ---------- 6. Taproom open / closed status ---------- */
+  function initOpenStatus() {
+    var slots = document.querySelectorAll("[data-open-status]");
+    if (!slots.length) return;
+
+    // 0 = Sun … 6 = Sat; ranges in 24h decimals
+    var hours = {
+      0: { label: "Sunday", open: 12, close: 21 },
+      1: { label: "Monday", open: 0, close: 0 },
+      2: { label: "Tuesday", open: 16, close: 23 },
+      3: { label: "Wednesday", open: 16, close: 23 },
+      4: { label: "Thursday", open: 16, close: 23 },
+      5: { label: "Friday", open: 15, close: 24 },
+      6: { label: "Saturday", open: 12, close: 24 }
+    };
+
     var now = new Date();
-    var minutes = now.getHours() * 60 + now.getMinutes();
-    var parts = closes && closes.indexOf(":") > 0 ? closes.split(":") : null;
+    var day = now.getDay();
+    var t = now.getHours() + now.getMinutes() / 60;
+    var today = hours[day];
+    var isOpen = today.close > today.open && t >= today.open && t < today.close;
 
-    if (!parts) {
-      status.textContent = "Closed today — the taps reopen Wednesday at 11:00";
-      status.classList.add("chip--out");
+    function fmt(v) {
+      var h24 = Math.floor(v) % 24;
+      var m = Math.round((v - Math.floor(v)) * 60);
+      var suffix = h24 >= 12 ? "PM" : "AM";
+      var h12 = h24 % 12 === 0 ? 12 : h24 % 12;
+      return h12 + (m ? ":" + (m < 10 ? "0" + m : m) : "") + " " + suffix;
+    }
+
+    var message;
+    if (isOpen) {
+      message = "Open now — pouring until " + fmt(today.close);
+    } else if (today.close > today.open && t < today.open) {
+      message = "Closed — taps open at " + fmt(today.open) + " today";
+    } else {
+      var next = day;
+      for (var i = 1; i <= 7; i++) {
+        var cand = hours[(day + i) % 7];
+        if (cand.close > cand.open) {
+          next = (day + i) % 7;
+          break;
+        }
+      }
+      var prefix = next === day ? "" : hours[next].label + " ";
+      message = "Closed — back " + prefix + "at " + fmt(hours[next].open);
+    }
+
+    slots.forEach(function (el) {
+      el.textContent = message;
+      el.classList.remove("status-pill--open", "status-pill--closed");
+      el.classList.add(isOpen ? "status-pill--open" : "status-pill--closed");
+    });
+
+    var row = document.querySelector('.hours [data-day="' + day + '"]');
+    if (row) row.setAttribute("data-today", "true");
+  }
+
+  /* ---------- 7. Count-up figures (rAF, reduced-motion aware) ---------- */
+  function initCounters() {
+    var nums = document.querySelectorAll("[data-count]");
+    if (!nums.length) return;
+
+    function render(el, value) {
+      var suffix = el.getAttribute("data-suffix") || "";
+      var text = el.hasAttribute("data-raw") ? String(value) : value.toLocaleString("en-US");
+      el.textContent = text + suffix;
+    }
+
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      nums.forEach(function (el) { render(el, parseInt(el.getAttribute("data-count"), 10)); });
       return;
     }
-    var closeMin = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
-    var isOpen = minutes >= 11 * 60 && minutes < closeMin;
-    status.textContent = isOpen
-      ? "Open now — pouring until " + closes
-      : "Closed right now — taps reopen at 11:00";
-    if (!isOpen) status.classList.add("chip--out");
-    else status.classList.remove("chip--out");
-  })();
 
-  /* ----------------------------------------------------------
-     8. Forms — validation + confirmed state (no network)
-     ---------------------------------------------------------- */
-  (function forms() {
-    all("form[data-form]", function (form) {
-      var status = form.querySelector("[data-form-status]");
-      var required = Array.prototype.slice.call(
-        form.querySelectorAll("[required]")
-      );
-
-      function slot(input) {
-        var field = input.closest(".field");
-        return field ? field.querySelector(".field__err") : null;
-      }
-      function fail(input, message) {
-        var out = slot(input);
-        input.setAttribute("aria-invalid", "true");
-        if (out) out.textContent = message;
-        else if (status) {
-          status.hidden = false;
-          status.setAttribute("data-tone", "error");
-          status.textContent = message;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        var target = parseInt(el.getAttribute("data-count"), 10);
+        var start = null;
+        var dur = 1400;
+        function step(ts) {
+          if (start === null) start = ts;
+          var p = Math.min((ts - start) / dur, 1);
+          var eased = 1 - Math.pow(1 - p, 3);
+          render(el, Math.round(target * eased));
+          if (p < 1) window.requestAnimationFrame(step);
         }
-      }
-      function clear(input) {
-        var out = slot(input);
-        input.removeAttribute("aria-invalid");
-        if (out) out.textContent = "";
-      }
-
-      required.forEach(function (input) {
-        input.addEventListener("input", function () { clear(input); });
+        window.requestAnimationFrame(step);
+        io.unobserve(el);
       });
+    }, { threshold: 0.5 });
 
-      form.addEventListener("submit", function (event) {
-        event.preventDefault();
-        var bad = null;
-        var errors = 0;
+    nums.forEach(function (el) { io.observe(el); });
+  }
 
-        required.forEach(function (input) {
-          clear(input);
-          var value = (input.value || "").trim();
-          if (!value) {
-            fail(input, "Required");
-            errors += 1;
-            if (!bad) bad = input;
-            return;
-          }
-          if (input.type === "email" && !/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(value)) {
-            fail(input, "Enter a valid email");
-            errors += 1;
-            if (!bad) bad = input;
-          }
-          if (input.getAttribute("data-min-chars") && value.length < Number(input.getAttribute("data-min-chars"))) {
-            fail(input, "Add more detail (" + input.getAttribute("data-min-chars") + "+ characters)");
-            errors += 1;
-            if (!bad) bad = input;
-          }
+  /* ---------- 8. Progressive form handling ---------- */
+  function initForms() {
+    var forms = document.querySelectorAll("[data-form]");
+    if (!forms.length) return;
+
+    forms.forEach(function (form) {
+      var status = form.querySelector("[data-form-status]");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var ok = true;
+        var firstBad = null;
+
+        form.querySelectorAll("[data-required]").forEach(function (input) {
+          var errEl = form.querySelector('[data-error-for="' + input.id + '"]');
+          var value = input.value.trim();
+          var bad = !value || (input.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value));
+          input.setAttribute("aria-invalid", String(bad));
+          if (errEl) errEl.textContent = bad
+            ? (input.type === "email" ? "Enter a valid email address." : "This field is required.")
+            : "";
+          if (bad) { ok = false; if (!firstBad) firstBad = input; }
         });
 
-        var agree = form.querySelector("[data-agree]");
-        if (agree && !agree.checked) {
-          var agreeSlot = slot(agree);
-          if (agreeSlot) agreeSlot.textContent = "Please tick to continue";
-          errors += 1;
-          if (!bad) bad = agree;
-        }
-
-        if (errors) {
-          if (status) {
-            status.hidden = false;
-            status.setAttribute("data-tone", "error");
-            status.textContent = errors + (errors === 1 ? " field needs" : " fields need") + " attention before we can send this.";
-          }
-          if (bad) bad.focus();
+        if (!ok) {
+          if (status) { status.textContent = "Check the highlighted fields."; status.style.color = "#e88a66"; }
+          if (firstBad) firstBad.focus();
           return;
         }
 
-        var name = form.querySelector("[data-form-name]");
-        var kind = form.getAttribute("data-form");
-        var copy = {
-          tour: "Tour request logged. Our events lead confirms by email within one business day.",
-          private: "Private event enquiry received — we will reply with a floor plan and pricing.",
-          newsletter: "You are on the keg-list. New pours land in your inbox each Thursday.",
-          contact: "Message delivered to the taproom crew. Expect a reply within a day.",
-          table: "Table held for 20 minutes past your arrival window. See you soon."
-        };
-        if (status) {
-          status.hidden = false;
-          status.removeAttribute("data-tone");
-          status.textContent = (name && name.value.trim() ? name.value.trim().split(" ")[0] + ", " : "") + (copy[kind] || "Sent. We will be in touch.");
-        }
+        var success = form.getAttribute("data-success") || "Thanks — you are on the list.";
+        if (status) { status.style.color = ""; status.textContent = success; }
         form.reset();
+        form.querySelectorAll("[aria-invalid]").forEach(function (i) { i.removeAttribute("aria-invalid"); });
       });
     });
-  })();
+  }
 
-  /* ----------------------------------------------------------
-     9. Small polish
-     ---------------------------------------------------------- */
-  (function polish() {
-    /* Current year in every footer */
-    all("[data-year]", function (el) {
-      el.textContent = String(new Date().getFullYear());
-    });
+  /* ---------- 9. Split-pane depth: gentle parallax on sticky media ---------- */
+  function initSplitDrift() {
+    var panes = document.querySelectorAll("[data-drift]");
+    if (!panes.length || reduceMotion || window.innerWidth < 900) return;
 
-    /* Jump-to-anchor links keep focus on the target for keyboard users */
-    all('a[href^="#"]', function (link) {
-      link.addEventListener("click", function () {
-        var id = link.getAttribute("href").slice(1);
-        var target = id && doc.getElementById(id);
-        if (!target) return;
-        if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
-        window.setTimeout(function () { target.focus({ preventScroll: true }); }, 400);
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        panes.forEach(function (pane) {
+          var rect = pane.getBoundingClientRect();
+          var progress = (rect.top + rect.height / 2 - window.innerHeight / 2) / window.innerHeight;
+          pane.style.transform = "translate3d(0," + (progress * -14).toFixed(2) + "px,0)";
+        });
+        ticking = false;
       });
-    });
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
 
-    /* Make the main landmark programmatically focusable for skip link */
-    on("#main", function (main) {
-      if (!main.hasAttribute("tabindex")) main.setAttribute("tabindex", "-1");
-    });
-  })();
+  /* ---------- 10. Footer year ---------- */
+  function initYear() {
+    var el = document.getElementById("year");
+    if (el) el.textContent = String(new Date().getFullYear());
+  }
+
+  function boot() {
+    initNav();
+    initAgeGate();
+    initBeers();
+    initOpenStatus();
+    initCounters();
+    initForms();
+    initSplitDrift();
+    initYear();
+    initReveal();
+    initClipReveal();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
 })();
