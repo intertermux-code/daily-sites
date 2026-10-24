@@ -1,346 +1,464 @@
 /* ==========================================================================
    Chapter & Verse — shared behaviour
-   Motion signature: clip-path image reveal + magnetic primary buttons
+   Motions: Cursor Spotlight (rAF-throttled pointermove) + Parallax Layers
+   (single rAF scroll handler). Everything degrades under prefers-reduced-motion.
    ========================================================================== */
 (function () {
   "use strict";
 
-  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var motionOk = function () { return !reduced.matches; };
 
-  /* ---------- 1. Mobile navigation ---------- */
+  /* ------------------------------------------------------------------
+   * 1. Primary navigation
+   * ------------------------------------------------------------------ */
   function initNav() {
-    var toggle = document.querySelector(".nav__toggle");
-    var nav = document.getElementById("site-nav");
-    if (!toggle || !nav) return;
+    var bar = document.querySelector(".nav-bar");
+    if (!bar) return;
 
-    toggle.addEventListener("click", function () {
-      var open = nav.classList.toggle("is-open");
-      toggle.setAttribute("aria-expanded", open ? "true" : "false");
-    });
+    var toggle = bar.querySelector(".nav-toggle");
+    var list = document.getElementById("nav-list");
 
-    nav.addEventListener("keydown", function (e) {
-      if (e.key !== "Escape") return;
-      nav.classList.remove("is-open");
-      toggle.setAttribute("aria-expanded", "false");
-      toggle.focus();
-    });
+    if (toggle && list) {
+      toggle.addEventListener("click", function () {
+        var open = bar.classList.toggle("is-open");
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        if (open) {
+          var first = list.querySelector("a");
+          if (first) first.focus();
+        }
+      });
 
-    document.addEventListener("click", function (e) {
-      if (!nav.contains(e.target) && !toggle.contains(e.target)) {
-        nav.classList.remove("is-open");
-        toggle.setAttribute("aria-expanded", "false");
-      }
-    });
+      list.addEventListener("click", function (e) {
+        if (e.target.closest("a")) {
+          bar.classList.remove("is-open");
+          toggle.setAttribute("aria-expanded", "false");
+        }
+      });
 
-    // Reset the drawer when the layout switches back to inline nav.
-    window.matchMedia("(min-width: 64rem)").addEventListener("change", function (e) {
-      if (e.matches) {
-        nav.classList.remove("is-open");
-        toggle.setAttribute("aria-expanded", "false");
-      }
-    });
-  }
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && bar.classList.contains("is-open")) {
+          bar.classList.remove("is-open");
+          toggle.setAttribute("aria-expanded", "false");
+          toggle.focus();
+        }
+      });
 
-  /* ---------- 2. Clip-path image reveal ---------- */
-  function initReveal() {
-    var targets = document.querySelectorAll(".clip-reveal");
-    if (!targets.length) return;
-
-    if (reduce || !("IntersectionObserver" in window)) {
-      targets.forEach(function (el) { el.classList.add("is-visible"); });
-      return;
+      window.addEventListener("resize", function () {
+        if (window.innerWidth > 940) {
+          bar.classList.remove("is-open");
+          toggle.setAttribute("aria-expanded", "false");
+        }
+      });
     }
 
-    var io = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-          var el = entry.target;
-          var delay = parseInt(el.getAttribute("data-reveal-delay") || "0", 10);
-          window.setTimeout(function () {
-            el.classList.add("is-visible");
-          }, delay);
-          io.unobserve(el);
-        });
-      },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.15 }
-    );
-
-    targets.forEach(function (el) { io.observe(el); });
+    // Condensed brand flag once the nameplate has scrolled away
+    var masthead = document.querySelector(".masthead");
+    if (masthead) {
+      var flagObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            bar.classList.toggle("is-scrolled", !entry.isIntersecting);
+          });
+        },
+        { rootMargin: "-40% 0px 0px 0px", threshold: 0 }
+      );
+      flagObserver.observe(masthead);
+    }
   }
 
-  /* ---------- 3. Magnetic primary buttons ---------- */
-  function initMagnet() {
-    var items = document.querySelectorAll("[data-magnetic]");
-    if (!items.length || reduce) return;
-    if (window.matchMedia("(hover: none), (pointer: coarse)").matches) return;
+  /* ------------------------------------------------------------------
+   * 2. Cursor Spotlight — radial lamp that tracks the pointer
+   * ------------------------------------------------------------------ */
+  function initSpotlight() {
+    var zones = document.querySelectorAll("[data-spotlight]");
+    if (!zones.length || !motionOk()) return;
 
-    var RADIUS = 120;
+    var pending = false;
+    var target = null;
+    var x = 0;
+    var y = 0;
 
-    items.forEach(function (el) {
-      var state = { x: 0, y: 0, tx: 0, ty: 0, scale: 1, tscale: 1, raf: null, active: false };
-      var rect = null;
+    function paint() {
+      pending = false;
+      if (!target) return;
+      target.style.setProperty("--spot-x", x + "%");
+      target.style.setProperty("--spot-y", y + "%");
+    }
 
-      function frame() {
-        state.x += (state.tx - state.x) * 0.16;
-        state.y += (state.ty - state.y) * 0.16;
-        state.scale += (state.tscale - state.scale) * 0.16;
-        el.style.transform =
-          "translate3d(" + state.x.toFixed(2) + "px," + state.y.toFixed(2) + "px,0) scale(" + state.scale.toFixed(3) + ")";
-
-        var settled =
-          Math.abs(state.tx - state.x) < 0.1 &&
-          Math.abs(state.ty - state.y) < 0.1 &&
-          Math.abs(state.tscale - state.scale) < 0.001;
-
-        if (settled && !state.active) {
-          el.style.transform = "";
-          state.raf = null;
-          return;
+    zones.forEach(function (zone) {
+      zone.addEventListener("pointermove", function (e) {
+        var r = zone.getBoundingClientRect();
+        target = zone;
+        x = ((e.clientX - r.left) / r.width) * 100;
+        y = ((e.clientY - r.top) / r.height) * 100;
+        zone.classList.add("is-lit");
+        if (!pending) {
+          pending = true;
+          requestAnimationFrame(paint);
         }
-        state.raf = window.requestAnimationFrame(frame);
-      }
-
-      function start() {
-        if (state.raf === null) state.raf = window.requestAnimationFrame(frame);
-      }
-
-      el.addEventListener("mouseenter", function () {
-        rect = el.getBoundingClientRect();
-        state.active = true;
-        state.tscale = 1.04;
-        start();
       });
 
-      el.addEventListener("mousemove", function (e) {
-        if (!rect) rect = el.getBoundingClientRect();
-        var cx = rect.left + rect.width / 2;
-        var cy = rect.top + rect.height / 2;
-        var dx = e.clientX - cx;
-        var dy = e.clientY - cy;
-        var dist = Math.hypot(dx, dy);
-        var pull = Math.min(1, RADIUS / Math.max(dist, 1));
-        var max = Math.min(rect.width, rect.height) * 0.18;
-        state.tx = dx * 0.32 * pull;
-        state.ty = dy * 0.32 * pull;
-        state.tscale = 1 + 0.04 * Math.min(1, Math.max(0, 1 - dist / (RADIUS * 2.5)));
-        state.tx = Math.max(-max, Math.min(max, state.tx));
-        state.ty = Math.max(-max, Math.min(max, state.ty));
+      zone.addEventListener("pointerleave", function () {
+        zone.classList.remove("is-lit");
       });
 
-      el.addEventListener("mouseleave", function () {
-        state.active = false;
-        state.tx = 0;
-        state.ty = 0;
-        state.tscale = 1;
-        start();
+      // Keyboard parity: light the lamp from the centre on focus-in
+      zone.addEventListener("focusin", function () {
+        target = zone;
+        x = 34;
+        y = 42;
+        zone.classList.add("is-lit");
+        if (!pending) {
+          pending = true;
+          requestAnimationFrame(paint);
+        }
       });
 
-      el.addEventListener("blur", function () {
-        state.active = false;
-        state.tx = 0;
-        state.ty = 0;
-        state.tscale = 1;
+      zone.addEventListener("focusout", function () {
+        zone.classList.remove("is-lit");
       });
     });
-
-    // Rects are re-read on mouseenter, so buttons revealed by scrolling work
-    // without an extra listener.
   }
 
-  /* ---------- 4. Books: genre filter ---------- */
-  function initShelf() {
-    var bar = document.querySelector("[data-filter-bar]");
-    var shelf = document.getElementById("shelf");
-    if (!bar || !shelf) return;
+  /* ------------------------------------------------------------------
+   * 3. Parallax Layers — one rAF scroll handler, data-speed per layer
+   * ------------------------------------------------------------------ */
+  function initParallax() {
+    var layers = Array.prototype.slice.call(document.querySelectorAll("[data-speed]"));
+    if (!layers.length) return;
 
-    var chips = Array.prototype.slice.call(bar.querySelectorAll(".chip"));
+    var hero = layers[0].closest(".hero, .band");
+    var visible = true;
+
+    function frame() {
+      if (!motionOk()) {
+        layers.forEach(function (el) { el.style.transform = ""; });
+        return;
+      }
+      if (!visible) return;
+
+      var anchor = hero || document.body;
+      var rect = anchor.getBoundingClientRect();
+      var base = rect.top + rect.height / 2 - window.innerHeight / 2;
+
+      layers.forEach(function (el) {
+        var speed = parseFloat(el.getAttribute("data-speed")) || 0;
+        var shift = base * speed;
+        el.style.transform = "translate3d(0," + shift.toFixed(2) + "px,0)";
+      });
+    }
+
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        ticking = false;
+        frame();
+      });
+    }
+
+    if (hero) {
+      var io = new IntersectionObserver(
+        function (entries) {
+          visible = entries[0].isIntersecting;
+          if (visible) frame();
+        },
+        { rootMargin: "20% 0px 20% 0px" }
+      );
+      io.observe(hero);
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    reduced.addEventListener
+      ? reduced.addEventListener("change", frame)
+      : reduced.addListener(frame);
+    frame();
+  }
+
+  /* ------------------------------------------------------------------
+   * 4. books.html — genre filter + spine details
+   * ------------------------------------------------------------------ */
+  function initShelf() {
+    var shelf = document.getElementById("shelf");
+    if (!shelf) return;
+
+    var chips = Array.prototype.slice.call(document.querySelectorAll("[data-genre-filter]"));
     var books = Array.prototype.slice.call(shelf.querySelectorAll(".book"));
-    var count = document.getElementById("shelf-count");
-    var empty = document.getElementById("shelf-empty");
+    var countOut = document.getElementById("shelf-count");
+    var emptyOut = document.getElementById("shelf-empty");
 
     function apply(genre) {
       var shown = 0;
       books.forEach(function (book) {
         var match = genre === "all" || book.getAttribute("data-genre") === genre;
-        book.hidden = !match;
-        if (match) {
-          shown += 1;
-          if (!reduce) {
-            book.style.transition = "clip-path .9s cubic-bezier(.16,1,.3,1)";
-            book.style.clipPath = "inset(12% 8% round 12px)";
-            window.requestAnimationFrame(function () {
-              window.requestAnimationFrame(function () {
-                book.style.clipPath = "inset(0 0 round 0px)";
-                // Clear the clip once finished so the raised spine is not cropped.
-                window.setTimeout(function () {
-                  book.style.clipPath = "";
-                  book.style.transition = "";
-                }, 950);
-              });
-            });
-          }
-        }
+        book.classList.toggle("is-hidden", !match);
+        if (match) shown += 1;
+        else book.classList.remove("is-open");
       });
 
-      chips.forEach(function (chip) {
-        chip.setAttribute(
-          "aria-pressed",
-          chip.getAttribute("data-genre") === genre ? "true" : "false"
-        );
-      });
-
-      if (count) {
-        var label = genre === "all" ? "the whole shelf" : "the " + genre + " shelf";
-        count.textContent = "Showing " + shown + " of " + books.length + " titles in " + label + ".";
+      if (countOut) {
+        countOut.textContent =
+          shown === 1
+            ? "1 title on the shelf — " + labelFor(genre)
+            : shown + " titles on the shelf — " + labelFor(genre);
       }
-      if (empty) empty.hidden = shown !== 0;
+      if (emptyOut) emptyOut.hidden = shown !== 0;
+    }
+
+    function labelFor(genre) {
+      var chip = chips.filter(function (c) {
+        return c.getAttribute("data-genre-filter") === genre;
+      })[0];
+      return chip ? chip.querySelector(".chip-label").textContent.trim() : "the whole shelf";
     }
 
     chips.forEach(function (chip) {
       chip.addEventListener("click", function () {
-        apply(chip.getAttribute("data-genre"));
-      });
-    });
-
-    apply("all");
-  }
-
-  /* ---------- 5. Events: filter by kind ---------- */
-  function initEvents() {
-    var bar = document.querySelector("[data-event-filter]");
-    var list = document.getElementById("event-list");
-    if (!bar || !list) return;
-
-    var chips = Array.prototype.slice.call(bar.querySelectorAll(".chip"));
-    var events = Array.prototype.slice.call(list.querySelectorAll(".event"));
-    var count = document.getElementById("event-count");
-
-    chips.forEach(function (chip) {
-      chip.addEventListener("click", function () {
-        var kind = chip.getAttribute("data-kind");
-        var shown = 0;
-        events.forEach(function (ev) {
-          var match = kind === "all" || ev.getAttribute("data-kind") === kind;
-          ev.hidden = !match;
-          if (match) shown += 1;
-        });
         chips.forEach(function (c) {
           c.setAttribute("aria-pressed", c === chip ? "true" : "false");
         });
-        if (count) {
-          count.textContent = shown === 1
-            ? "1 event on the calendar."
-            : shown + " events on the calendar.";
+        apply(chip.getAttribute("data-genre-filter"));
+      });
+    });
+
+    apply(chips.length ? chips[0].getAttribute("data-genre-filter") : "all");
+
+    // Spine details
+    function closeAll(except) {
+      books.forEach(function (b) {
+        if (b !== except) b.classList.remove("is-open");
+      });
+    }
+
+    books.forEach(function (book) {
+      var spine = book.querySelector(".book-spine");
+      var close = book.querySelector(".book-detail-close");
+      if (!spine) return;
+
+      spine.setAttribute("aria-expanded", "false");
+      spine.addEventListener("click", function () {
+        var open = !book.classList.contains("is-open");
+        closeAll(book);
+        book.classList.toggle("is-open", open);
+        spine.setAttribute("aria-expanded", open ? "true" : "false");
+        if (open && close) close.focus();
+      });
+
+      if (close) {
+        close.addEventListener("click", function () {
+          book.classList.remove("is-open");
+          spine.setAttribute("aria-expanded", "false");
+          spine.focus();
+        });
+      }
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeAll(null);
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest(".book")) closeAll(null);
+    });
+  }
+
+  /* ------------------------------------------------------------------
+   * 5. events.html — filter the diary by kind
+   * ------------------------------------------------------------------ */
+  function initDiary() {
+    var list = document.getElementById("diary-list");
+    if (!list) return;
+
+    var chips = Array.prototype.slice.call(document.querySelectorAll("[data-diary-filter]"));
+    var rows = Array.prototype.slice.call(list.querySelectorAll(".diary-item"));
+    var out = document.getElementById("diary-count");
+
+    chips.forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        chips.forEach(function (c) {
+          c.setAttribute("aria-pressed", c === chip ? "true" : "false");
+        });
+        var kind = chip.getAttribute("data-diary-filter");
+        var shown = 0;
+        rows.forEach(function (row) {
+          var match = kind === "all" || row.getAttribute("data-kind") === kind;
+          row.hidden = !match;
+          if (match) shown += 1;
+        });
+        if (out) {
+          out.textContent =
+            shown === rows.length
+              ? "Showing all " + shown + " dated events for November 2026."
+              : "Showing " + shown + " of " + rows.length + " dated events for November 2026.";
         }
       });
     });
   }
 
-  /* ---------- 6. Signup / enquiry forms ---------- */
-  function validate(form) {
-    var ok = true;
-    var required = form.querySelectorAll("[data-required]");
-
-    Array.prototype.forEach.call(required, function (field) {
-      var wrap = field.closest(".field") || field.parentElement;
-      var errNode = wrap ? wrap.querySelector(".error") : null;
-      var value = (field.value || "").trim();
-      var bad = false;
-
-      if (!value) bad = true;
-      if (field.type === "email" && value && !/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(value)) bad = true;
-      if (field.getAttribute("data-check") === "terms" && !field.checked) bad = true;
-      if (field.getAttribute("data-check") === "tier" &&
-          !form.querySelector('input[name="tier"]:checked')) bad = true;
-
-      if (bad) {
-        ok = false;
-        field.setAttribute("aria-invalid", "true");
-        if (errNode) errNode.textContent = field.getAttribute("data-message") || "This field needs an answer.";
-      } else {
-        field.removeAttribute("aria-invalid");
-        if (errNode) errNode.textContent = "";
-      }
-    });
-
-    return ok;
-  }
-
+  /* ------------------------------------------------------------------
+   * 6. Forms — validate, report, confirm
+   * ------------------------------------------------------------------ */
   function initForms() {
     var forms = document.querySelectorAll("form[data-validate]");
     if (!forms.length) return;
 
-    Array.prototype.forEach.call(forms, function (form) {
-      var status = form.querySelector(".form-status");
-      var firstBad = null;
+    var emailRe = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
+
+    forms.forEach(function (form) {
+      var summary = form.querySelector(".error-summary");
+      var summaryList = summary ? summary.querySelector("ul") : null;
+      var success = document.getElementById(form.getAttribute("data-success"));
+
+      function fields() {
+        return Array.prototype.slice
+          .call(form.querySelectorAll("[data-rule]"))
+          .filter(function (el) { return !el.disabled && el.type !== "hidden"; });
+      }
+
+      function wrapOf(el) {
+        return el.closest(".field") || el;
+      }
+
+      function message(el) {
+        var v = (el.value || "").trim();
+        var kind = el.getAttribute("data-rule");
+        if (!v && el.hasAttribute("required")) {
+          return el.getAttribute("data-required-msg") || "This line is required.";
+        }
+        if (!v) return "";
+        if (kind === "email" && !emailRe.test(v)) return "Check the address — we need name@example.com.";
+        if (kind === "name" && v.length < 2) return "Give us a name of at least two letters.";
+        if (kind === "text" && v.length < 3) return "A little more detail, please.";
+        return "";
+      }
+
+      function setError(el, msg) {
+        var wrap = wrapOf(el);
+        var out = wrap.querySelector(".field-error");
+        wrap.classList.toggle("has-error", Boolean(msg));
+        if (msg) el.setAttribute("aria-invalid", "true");
+        else el.removeAttribute("aria-invalid");
+        if (out) out.textContent = msg;
+      }
+
+      form.addEventListener("blur", function (e) {
+        var el = e.target;
+        if (el.matches("[data-rule]")) setError(el, message(el));
+      }, true);
+
+      form.addEventListener("input", function (e) {
+        var el = e.target;
+        if (el.matches("[data-rule]") && wrapOf(el).classList.contains("has-error")) {
+          setError(el, message(el));
+        }
+      });
 
       form.addEventListener("submit", function (e) {
         e.preventDefault();
-        if (!validate(form)) {
-          firstBad = form.querySelector('[aria-invalid="true"]');
-          if (firstBad) firstBad.focus();
+        var problems = [];
+
+        fields().forEach(function (el) {
+          var msg = message(el);
+          setError(el, msg);
+          if (msg) {
+            problems.push({ el: el, msg: msg, label: labelFor(el) });
+          }
+        });
+
+        var consent = form.querySelector("[data-consent]");
+        if (consent && !consent.checked) {
+          var cmsg = "Tick the box so we may email you.";
+          setError(consent, cmsg);
+          problems.push({ el: consent, msg: cmsg, label: labelFor(consent) });
+        }
+
+        if (problems.length) {
+          if (summary && summaryList) {
+            summaryList.innerHTML = "";
+            problems.forEach(function (p) {
+              var li = document.createElement("li");
+              var a = document.createElement("a");
+              a.href = "#" + p.el.id;
+              a.textContent = p.label + ": " + p.msg;
+              a.addEventListener("click", function (ev) {
+                ev.preventDefault();
+                p.el.focus();
+              });
+              li.appendChild(a);
+              summaryList.appendChild(li);
+            });
+            summary.classList.add("is-visible");
+            summary.hidden = false;
+            summary.focus();
+          } else {
+            problems[0].el.focus();
+          }
           return;
         }
-        var name = form.querySelector('input[name="fullname"], input[name="name"]');
-        var who = name && name.value.trim() ? name.value.trim().split(" ")[0] : "you";
-        if (status) {
-          status.textContent = "Thank you, " + who +
-            ". Your note is on our desk — we answer every one by hand within two working days.";
-          status.classList.add("is-visible");
+
+        if (summary) {
+          summary.classList.remove("is-visible");
+          summary.hidden = true;
         }
-        form.reset();
+
+        var nameField = form.querySelector("[name='name']");
+        var who = nameField && nameField.value.trim() ? nameField.value.trim().split(" ")[0] : "friend";
+        var slot = form.querySelector("[data-success-name]");
+        if (slot) slot.textContent = who;
+
+        if (success) {
+          form.hidden = true;
+          success.classList.add("is-visible");
+          success.hidden = false;
+          var head = success.querySelector("h3, h2");
+          if (head) {
+            head.setAttribute("tabindex", "-1");
+            head.focus();
+          }
+        } else {
+          form.reset();
+        }
       });
 
-      Array.prototype.forEach.call(form.querySelectorAll("[data-required]"), function (field) {
-        field.addEventListener("input", function () {
-          if (field.getAttribute("aria-invalid") === "true") validate(form);
-        });
-        field.addEventListener("change", function () {
-          if (field.getAttribute("aria-invalid") === "true") validate(form);
-        });
-      });
-    });
-  }
-
-  /* ---------- 7. Footer newsletter ---------- */
-  function initNewsletter() {
-    var form = document.getElementById("newsletter-form");
-    if (!form) return;
-    var input = form.querySelector("input[type=email]");
-    var status = document.getElementById("newsletter-status");
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var value = (input.value || "").trim();
-      if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(value)) {
-        status.textContent = "That address does not look complete — try again?";
-        input.setAttribute("aria-invalid", "true");
-        input.focus();
-        return;
+      function labelFor(el) {
+        if (el.id && form.querySelector("label[for='" + el.id + "']")) {
+          return form.querySelector("label[for='" + el.id + "']").textContent.trim();
+        }
+        var legend = el.closest("fieldset") ? el.closest("fieldset").querySelector("legend") : null;
+        return legend ? legend.textContent.trim() : (el.name || "field");
       }
-      input.removeAttribute("aria-invalid");
-      status.textContent = "Filed. The next dispatch goes out on the first Friday of the month.";
-      form.reset();
     });
   }
 
-  /* ---------- 8. Current year in footers ---------- */
-  function initYear() {
-    var nodes = document.querySelectorAll("[data-year-now]");
-    var year = String(new Date().getFullYear());
-    Array.prototype.forEach.call(nodes, function (n) { n.textContent = year; });
+  /* ------------------------------------------------------------------
+   * 7. Small niceties
+   * ------------------------------------------------------------------ */
+  function initMisc() {
+    var year = document.getElementById("year");
+    if (year) year.textContent = String(new Date().getFullYear());
+
+    // Counter prices stay honest: no-op placeholder for future use.
+    var lastLines = document.querySelectorAll("[data-hours-today]");
+    if (lastLines.length) {
+      var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      var today = days[new Date().getDay()];
+      lastLines.forEach(function (el) {
+        el.textContent = "Today is " + today + " — the kettle is on until ten.";
+      });
+    }
   }
 
   function boot() {
     initNav();
-    initReveal();
-    initMagnet();
+    initSpotlight();
+    initParallax();
     initShelf();
-    initEvents();
+    initDiary();
     initForms();
-    initNewsletter();
-    initYear();
+    initMisc();
   }
 
   if (document.readyState === "loading") {
