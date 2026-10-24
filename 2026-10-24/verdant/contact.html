@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact The Lab — Orders, Refills &amp; Formulation Questions | Verdant</title>
+<meta name="description" content="Reach Verdant in Porto for orders, returns, refill pouches and formulation questions. Real people reply within one working day, including the chemist who blended your batch.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip To Content</a>
+
+<div class="announce">
+  <p class="announce__text">Complimentary shipping over US$60 &nbsp;·&nbsp; Batch 041 ships Monday &nbsp;·&nbsp; Formulated in Porto, Portugal</p>
+</div>
+
+<header class="site-head" id="site-head">
+  <div class="site-head__inner wrap">
+    <a class="brand" href="index.html">
+      <span class="brand__mark" aria-hidden="true"></span>
+      <span class="brand__name">Verdant</span>
+      <span class="brand__sub">Skincare Atelier</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <button class="nav__toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu">
+        <span class="nav__toggle-bar"></span><span class="nav__toggle-bar"></span>
+      </button>
+      <ul class="nav__list" id="primary-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="our-story.html">Our Story</a></li>
+        <li><a href="routine.html">Build A Routine</a></li>
+        <li><a href="contact.html" aria-current="page">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="head-tools">
+      <a class="head-tools__link" href="routine.html">Quiz</a>
+      <button class="cart-btn" id="cart-btn" aria-label="Open cart, 0 items">
+        <span class="cart-btn__label">Cart</span>
+        <span class="cart-btn__count" id="cart-count">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="backdrop" id="backdrop" hidden></div>
+
+<aside class="drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping cart" aria-hidden="true">
+  <div class="drawer__head">
+    <h2 class="drawer__title">Your Cart</h2>
+    <button class="drawer__close" id="drawer-close" aria-label="Close cart">Close <span aria-hidden="true">×</span></button>
+  </div>
+  <p class="drawer__ship" id="drawer-ship">Add US$60.00 more for complimentary shipping.</p>
+  <div class="drawer__bar"><span class="drawer__bar-fill" id="drawer-bar-fill"></span></div>
+  <div class="drawer__body" id="drawer-items"></div>
+  <div class="drawer__foot">
+    <div class="drawer__row"><span>Subtotal</span><strong id="drawer-subtotal">US$0.00</strong></div>
+    <p class="drawer__note">Taxes and duties calculated at checkout. Samples ship with every order.</p>
+    <button class="btn btn--block" id="drawer-checkout" type="button">Checkout Securely</button>
+    <button class="btn btn--ghost btn--block" id="drawer-continue" type="button">Continue Shopping</button>
+  </div>
+</aside>
+
+<main id="main">
+
+  <section class="page-head">
+    <div class="wrap page-head__grid">
+      <div>
+        <p class="eyebrow">13 — Correspondence &nbsp;/&nbsp; Porto, WET</p>
+        <h1>Talk To <span class="decode" data-decode="The Lab">The Lab</span></h1>
+      </div>
+      <div class="page-head__side" data-depth="0.03">
+        <p class="page-head__lede">Seven people work in this building and four of them read this inbox. Order problems go out the same day; formulation questions get a longer, better answer.</p>
+        <dl>
+          <div><dt>Reply Window</dt><dd>1 Working Day</dd></div>
+          <div><dt>Office Hours</dt><dd>09:00–18:00 WET</dd></div>
+          <div><dt>Batch Queries</dt><dd>Code Required</dd></div>
+          <div><dt>Returns Window</dt><dd>60 Days</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="contact-grid">
+
+      <section class="form-block" aria-labelledby="form-h2">
+        <h2 class="h-lg" id="form-h2">Write To Us</h2>
+        <p style="margin:14px 0 28px;max-width:52ch;color:var(--ink-70)">Include your batch code — it is printed on the carton flap beside the blend date — and we can pull the retained sample record for your exact units.</p>
+
+        <form id="contact-form" novalidate>
+          <div class="form-row form-row--2">
+            <div class="f-group">
+              <label for="c-name">Your Name</label>
+              <input id="c-name" name="name" type="text" autocomplete="name" aria-describedby="c-name-err" required>
+              <p class="f-err" id="c-name-err"></p>
+            </div>
+            <div class="f-group">
+              <label for="c-email">Email Address</label>
+              <input id="c-email" name="email" type="email" autocomplete="email" aria-describedby="c-email-err" required>
+              <p class="f-err" id="c-email-err"></p>
+            </div>
+          </div>
+
+          <div class="form-row form-row--2">
+            <div class="f-group">
+              <label for="c-topic">Reason For Writing</label>
+              <select id="c-topic" name="topic" aria-describedby="c-topic-err" required>
+                <option value="">Choose one…</option>
+                <option value="order">Order Or Delivery Status</option>
+                <option value="return">Return Or Refund</option>
+                <option value="refill">Refill Pouch &amp; Returns</option>
+                <option value="routine">Routine Or Ingredient Question</option>
+                <option value="reaction">Skin Reaction Report</option>
+                <option value="wholesale">Stockist &amp; Wholesale</option>
+                <option value="press">Press Or Sampling</option>
+              </select>
+              <p class="f-err" id="c-topic-err"></p>
+            </div>
+            <div class="f-group">
+              <label for="c-batch">Batch Code (Optional)</label>
+              <input id="c-batch" name="batch" type="text" placeholder="For example 041-B" autocomplete="off">
+              <p class="f-err" id="c-batch-err"></p>
+            </div>
+          </div>
+
+          <fieldset>
+            <legend class="legend">How Should We Reply?</legend>
+            <div class="radio-row">
+              <label class="radio-pill"><input type="radio" name="channel" value="email" checked> Email Me</label>
+              <label class="radio-pill"><input type="radio" name="channel" value="callback"> Call After 15:00 WET</label>
+              <label class="radio-pill"><input type="radio" name="channel" value="notes"> Send Formulation Notes</label>
+            </div>
+          </fieldset>
+
+          <div class="f-group">
+            <label for="c-msg">Message</label>
+            <textarea id="c-msg" name="message" placeholder="What is happening with your skin or your order?" aria-describedby="c-msg-err" required></textarea>
+            <p class="f-err" id="c-msg-err"></p>
+          </div>
+
+          <label class="consent"><input type="checkbox" name="consent" value="yes">
+            <span>I agree that Verdant may store this message and reply by email. We keep correspondence for two years and never sell it or pass it to an ad network.</span>
+          </label>
+
+          <button class="btn" type="submit">Send Message</button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <aside aria-label="Contact details">
+        <div class="info-card">
+          <h2>The Workshop</h2>
+          <address>
+            Verdant Skin Atelier Lda.<br>
+            Rua do Bonfim 214<br>
+            4300-053 Porto, Portugal
+          </address>
+          <p style="margin-top:12px">Visits by appointment on Fridays — the lab floor is not safe for walk-ins during fill.</p>
+        </div>
+        <div class="info-card">
+          <h2>Direct Lines</h2>
+          <p><a href="mailto:lab@verdant.skin">lab@verdant.skin</a> — formulations, reactions, ingredient questions</p>
+          <p style="margin-top:8px"><a href="mailto:orders@verdant.skin">orders@verdant.skin</a> — shipping, returns, refill pouches</p>
+          <p style="margin-top:8px"><a href="tel:+351220140310">+351 220 140 310</a> — Mon–Fri, 09:00–18:00 WET</p>
+        </div>
+        <div class="info-card" id="refills">
+          <h2>Refill Pouches</h2>
+          <p>Empty pods go back in the prepaid pouch that shipped with your first order. Stick the returned label on the outside, book a collection online, and post it at any CTT counter. Three pods returned earns a complimentary full formula.</p>
+        </div>
+        <div class="info-card">
+          <h2>Reporting A Reaction</h2>
+          <p>Stop the formula, keep the carton, and write to <a href="mailto:lab@verdant.skin">lab@verdant.skin</a> with the batch code and a photograph. We replace or refund inside the first month without argument, and log every report against that tank.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <section class="sec" aria-labelledby="faq-h2" style="padding-top:0">
+    <div class="wrap">
+      <header class="sec__head">
+        <h2 class="sec__title" id="faq-h2">Answered Twice A Week</h2>
+        <p class="sec__num">14 — Frequently Asked</p>
+      </header>
+      <div class="faq">
+        <details>
+          <summary>Where Is My Order?</summary>
+          <div class="faq__a"><p>Dispatch confirmation carries a tracking number within twenty-four hours of the batch release. EU deliveries arrive in two to four working days, US and UK in four to seven with duties already paid. If a parcel stalls past seven, write with your order number and we reship rather than wait on the carrier.</p></div>
+        </details>
+        <details>
+          <summary>Can I Mix Bakuchiol With My Retinoid?</summary>
+          <div class="faq__a"><p>Not on the same night. Bakuchiol is our alternative for people who cannot tolerate a retinoid, not a booster to layer on top of tretinoin. On prescription actives, keep the cleanser and the serum as support and leave the evening treatment to your prescriber.</p></div>
+        </details>
+        <details>
+          <summary>Why Does My Serum Feel Different This Batch?</summary>
+          <div class="faq__a"><p>Shea, squalane and ceramide pre-mixes vary slightly by harvest and refinery run. We hold tolerance to 0.2 pH and a narrow viscosity band; inside that, texture can read lighter or richer. If it falls outside, the batch never left the lab — send us the code and we will check the retained record.</p></div>
+        </details>
+        <details>
+          <summary>Do You Test On Animals?</summary>
+          <div class="faq__a"><p>No, and EU law prohibits it for cosmetics. Our panels are human volunteers in Porto who patch-test for twenty-eight days with signed consent and paid attendance. Ingredient suppliers provide animal-free declarations with each certificate of analysis.</p></div>
+        </details>
+        <details>
+          <summary>Is Verdant Safe In Pregnancy?</summary>
+          <div class="faq__a"><p>Cleanser and serum are fragrance-free and contain no retinoid, which is why most clinicians are comfortable with them. Our recommendation is always the same: confirm with your midwife or dermatologist first, then write to us and we will build you a two-product protocol.</p></div>
+        </details>
+        <details>
+          <summary>Do You Ship To My Country?</summary>
+          <div class="faq__a"><p>We ship to 38 countries, listed at checkout with duties. Where a market requires local registration we do not ship rather than send informally — no unlabelled parcels, no grey-market resellers, even when customers ask.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="hours-h2" style="padding-top:0">
+    <div class="wrap">
+      <h2 class="sr-only" id="hours-h2">Who reads the inbox</h2>
+      <div class="map-strip">
+        <div>
+          <h3>Ana Varela</h3>
+          <p>Founder &amp; Formulator. Reads every reaction report and every ingredient question herself. Two children’s drawings are taped above the homogeniser.</p>
+        </div>
+        <div>
+          <h3>Rui Pinto</h3>
+          <p>Senior Technician. Owns batch records, stability cabinets and the conductivity meter. Best person to ask about texture drift.</p>
+        </div>
+        <div>
+          <h3>Marta Lopes</h3>
+          <p>Orders &amp; Refills. Handles shipping, returns and the aluminium pod backlog. Answers fastest, usually before 11:00 WET.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="signup" aria-labelledby="contact-cta-h2">
+    <div class="wrap signup__inner">
+      <div>
+        <h2 class="h-lg" id="contact-cta-h2">Still Deciding?</h2>
+        <p>Take the three-question protocol instead. It is faster than writing, and it never asks you to describe your skin type.</p>
+      </div>
+      <div>
+        <a class="btn" href="routine.html">Build A Routine</a>
+        <a class="btn btn--ghost" href="shop.html" style="margin-top:12px">Read The Formula Sheets</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot__grid">
+    <div class="foot__brand">
+      <p class="foot__word">Verdant</p>
+      <p class="foot__tag">Minimal skincare, measured in active percentages. Blended in Bonfim, Porto.</p>
+      <address class="foot__addr">Rua do Bonfim 214<br>4300-053 Porto, Portugal</address>
+    </div>
+    <nav class="foot__col" aria-label="Shop">
+      <h2 class="foot__h">Shop</h2>
+      <ul>
+        <li><a href="shop.html">All Formulas</a></li>
+        <li><a href="shop.html#barrier-serum">Barrier Serum 3.4</a></li>
+        <li><a href="shop.html#gel-cleanse">Gel Cleanse pH 5.5</a></li>
+        <li><a href="shop.html#night-retinal">Night Bakuchiol 1</a></li>
+        <li><a href="shop.html#refill-cream">Refill Cream 6</a></li>
+      </ul>
+    </nav>
+    <nav class="foot__col" aria-label="Learn">
+      <h2 class="foot__h">Learn</h2>
+      <ul>
+        <li><a href="our-story.html">Our Story</a></li>
+        <li><a href="our-story.html#sourcing">Ingredient Sourcing</a></li>
+        <li><a href="routine.html">Build A Routine</a></li>
+        <li><a href="contact.html">Contact &amp; Returns</a></li>
+      </ul>
+    </nav>
+    <div class="foot__col">
+      <h2 class="foot__h">Shipping</h2>
+      <p class="foot__p">Free over US$60 in the US, EU and UK. Duties prepaid on every international order. Refill containers are postpaid to our Porto lab.</p>
+    </div>
+  </div>
+  <div class="wrap foot__base">
+    <p>© 2026 Verdant Skin Atelier Lda. All rights reserved.</p>
+    <p class="foot__links"><a href="contact.html">Terms</a><a href="contact.html">Privacy</a><a href="index.html">Back To Top</a></p>
+  </div>
+</footer>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
