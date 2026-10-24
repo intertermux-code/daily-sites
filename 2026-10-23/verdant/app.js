@@ -1,735 +1,688 @@
 /* ==========================================================================
    Verdant — shared behaviour
-   Vanilla JS, no dependencies. Every block is guarded by element checks.
+   Cart drawer · sticky header · mobile nav · Decode Text · Parallax Layers ·
+   Card Deck fan · page-specific shop filters, routine quiz, forms
+   Vanilla JS only. Motion respects prefers-reduced-motion.
    ========================================================================== */
 (function () {
-  'use strict';
+  "use strict";
 
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---------- Product registry (single source of truth) ---------- */
-  var PRODUCTS = [
-    { id: 'v-01', name: 'Dewpoint Gel Cleanser', cat: 'cleanse', price: 2800, size: '150 ml',
-      img: 'https://images.unsplash.com/photo-1608248548383-b7b375b1f20c?auto=format&fit=crop&w=900&h=900&q=80',
-      alt: 'Pump bottle of Dewpoint Gel Cleanser on a linen cloth' },
-    { id: 'v-02', name: 'Verdant Essence No. 4', cat: 'tone', price: 4200, size: '120 ml',
-      img: 'https://images.unsplash.com/photo-1570194060602-10727914f09b?auto=format&fit=crop&w=900&h=900&q=80',
-      alt: 'Tall glass bottle of Verdant Essence No. 4 with a pale green label' },
-    { id: 'v-03', name: 'Sage Renewal Serum', cat: 'treat', price: 5800, size: '30 ml',
-      img: 'https://images.unsplash.com/photo-1620916569896-d1fd07c64d1d?auto=format&fit=crop&w=900&h=900&q=80',
-      alt: 'Dropper bottle of Sage Renewal Serum beside a sage sprig' },
-    { id: 'v-04', name: 'Meadow Cream Rich', cat: 'moisturise', price: 4600, size: '50 ml',
-      img: 'https://images.unsplash.com/photo-1585238341972-743b63f4a48d?auto=format&fit=crop&w=900&h=900&q=80',
-      alt: 'Ceramic jar of Meadow Cream Rich with a wooden lid' },
-    { id: 'v-05', name: 'Nightleaf Repair Balm', cat: 'treat', price: 5200, size: '30 ml',
-      img: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa900?auto=format&fit=crop&w=900&h=900&q=80',
-      alt: 'Wide shallow jar of Nightleaf Repair Balm on a dark stone slab' },
-    { id: 'v-06', name: 'Bare Botanical Oil', cat: 'oil', price: 3800, size: '30 ml',
-      img: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=900&h=900&q=80',
-      alt: 'Amber bottle of Bare Botanical Oil lying on dried grasses' },
-    { id: 'v-07', name: 'Clarity Clay Mask', cat: 'mask', price: 3400, size: '75 ml',
-      img: 'https://images.unsplash.com/photo-1556228578-0c8ba9ada86f?auto=format&fit=crop&w=900&h=900&q=80',
-      alt: 'Tube of Clarity Clay Mask next to a bowl of green clay' },
-    { id: 'v-08', name: 'Eye Meadow Compress', cat: 'eye', price: 4400, size: '15 ml',
-      img: 'https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=900&h=900&q=80',
-      alt: 'Slim pen applicator of Eye Meadow Compress against a sage card' },
-    { id: 'v-09', name: 'Sun Veil SPF 30', cat: 'protect', price: 3600, size: '50 ml',
-      img: 'https://images.unsplash.com/photo-1556229053-928a51d0c11d?auto=format&fit=crop&w=900&h=900&q=80',
-      alt: 'Slim tube of Sun Veil SPF 30 standing against a green wash' },
-    { id: 'v-10', name: 'Meadow Cream Light', cat: 'moisturise', price: 4000, size: '50 ml',
-      img: 'https://images.unsplash.com/photo-1585238976565-9493b2852b30?auto=format&fit=crop&w=900&h=900&q=80',
-      alt: 'Airless pump of Meadow Cream Light with a folded muslin cloth' },
-    { id: 'v-11', name: 'Mist of Morning Dew', cat: 'mist', price: 3000, size: '100 ml',
-      img: 'https://images.unsplash.com/photo-1526947432338-b68d3911fa06?auto=format&fit=crop&w=900&h=900&q=80',
-      alt: 'Fine-mist spray bottle of Mist of Morning Dew with water droplets' },
-    { id: 'v-12', name: 'Hand & Husk Balm', cat: 'body', price: 2400, size: '75 ml',
-      img: 'https://images.unsplash.com/photo-1547721064-da07968eb24e?auto=format&fit=crop&w=900&h=900&q=80',
-      alt: 'Aluminium tube of Hand and Husk Balm resting on oat husks' }
-  ];
-  var BY_ID = {};
-  PRODUCTS.forEach(function (p) { BY_ID[p.id] = p; });
-
-  function money(cents) {
-    return '$' + (cents / 100).toFixed(2);
-  }
-  function moneyShort(cents) {
-    return cents % 100 === 0 ? '$' + (cents / 100) : money(cents);
-  }
-  function byId(id) { return document.getElementById(id); }
-
-  /* ---------- Scroll progress (signature motion 1) ---------- */
-  (function scrollProgress() {
-    var bar = document.querySelector('.scroll-progress__bar');
-    if (!bar) return;
-    var queued = false;
-    function paint() {
-      var doc = document.documentElement;
-      var max = doc.scrollHeight - window.innerHeight;
-      var ratio = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
-      bar.style.transform = 'scaleX(' + ratio.toFixed(4) + ')';
-      queued = false;
+  /* ---------- Catalog ---------------------------------------------------- */
+  var CATALOG = {
+    cleanser: {
+      name: "Moss & Oat Cleanser",
+      price: 26,
+      size: "150 ml",
+      category: "cleansers",
+      image: "https://images.unsplash.com/photo-1612817288484-6f916006746a?auto=format&fit=crop&w=400&q=80"
+    },
+    serum: {
+      name: "Dewpoint Serum",
+      price: 48,
+      size: "30 ml",
+      category: "serums",
+      image: "https://images.unsplash.com/photo-1571781926291-c477bbfd11f4?auto=format&fit=crop&w=400&q=80"
+    },
+    cream: {
+      name: "Calica Cream",
+      price: 52,
+      size: "50 ml",
+      category: "moisturisers",
+      image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=400&q=80"
+    },
+    night: {
+      name: "Nightbloom Bakuchiol",
+      price: 58,
+      size: "30 ml",
+      category: "serums",
+      image: "https://images.unsplash.com/photo-1585320806297-9794b3e46ae4?auto=format&fit=crop&w=400&q=80"
+    },
+    mist: {
+      name: "Fernwater Mist",
+      price: 30,
+      size: "100 ml",
+      category: "mists",
+      image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80"
+    },
+    eye: {
+      name: "Root Cellar Eye Balm",
+      price: 38,
+      size: "15 ml",
+      category: "moisturisers",
+      image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=400&q=80"
     }
-    window.addEventListener('scroll', function () {
-      if (!queued) { queued = true; window.requestAnimationFrame(paint); }
-    }, { passive: true });
-    window.addEventListener('resize', paint, { passive: true });
-    paint();
-  })();
+  };
 
-  /* ---------- Decode text (signature motion 2) ---------- */
-  (function decodeText() {
-    var nodes = Array.prototype.slice.call(document.querySelectorAll('.decode[data-decode]'));
-    if (!nodes.length) return;
-    var GLYPHS = 'abcdefghijklmnopqrstuvwxyz#%&*+=/\\<>';
-    nodes.forEach(function (node) {
-      var target = node.getAttribute('data-decode');
-      if (reduceMotion) { node.textContent = target; return; }
-      node.setAttribute('aria-label', target);
-      var frame = 0;
-      var total = 34;
-      node.classList.add('is-decoding');
-      function tick() {
-        var progress = frame / total;
-        var out = '';
-        for (var i = 0; i < target.length; i++) {
-          var ch = target[i];
-          if (ch === ' ') { out += ' '; continue; }
-          if (i < Math.floor(progress * target.length)) out += ch;
-          else out += GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-        }
-        node.textContent = out;
-        frame++;
-        if (frame <= total) {
-          window.requestAnimationFrame(function () {
-            window.setTimeout(tick, 28);
-          });
-        } else {
-          node.textContent = target;
-          node.classList.remove('is-decoding');
-        }
-      }
-      window.setTimeout(tick, 420);
+  var FREE_SHIPPING = 60;
+  var SHIPPING_FEE = 6;
+  var STORAGE_KEY = "verdant-cart";
+
+  function money(n) {
+    return "$" + n.toFixed(2);
+  }
+
+  function loadCart() {
+    var stored;
+    try { stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); } catch (err) { stored = []; }
+    if (!Array.isArray(stored)) stored = [];
+    return stored.filter(function (line) {
+      return line && CATALOG[line.id] && line.qty > 0;
+    }).map(function (line) {
+      return { id: line.id, qty: Math.min(99, Math.round(line.qty)) };
     });
-  })();
+  }
 
-  /* ---------- Announcement bar ---------- */
-  (function announce() {
-    var bar = byId('announce');
-    var close = byId('announce-close');
-    if (!bar || !close) return;
-    close.addEventListener('click', function () {
-      bar.hidden = true;
-    });
-  })();
+  function saveCart(cart) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(cart)); } catch (err) { /* private mode */ }
+  }
 
-  /* ---------- Mobile navigation ---------- */
-  (function nav() {
-    var toggle = byId('nav-toggle');
-    var menu = byId('main-nav');
-    if (!toggle || !menu) return;
-    function setOpen(open) {
-      toggle.setAttribute('aria-expanded', String(open));
-      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-      menu.classList.toggle('is-open', open);
+  var cart = loadCart();
+
+  function findLine(id) {
+    for (var i = 0; i < cart.length; i += 1) {
+      if (cart[i].id === id) return cart[i];
     }
-    toggle.addEventListener('click', function () {
-      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
-    });
-    menu.addEventListener('click', function (e) {
-      if (e.target.closest('a')) setOpen(false);
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') setOpen(false);
-    });
-    window.addEventListener('resize', function () {
-      if (window.innerWidth > 760) setOpen(false);
-    });
-  })();
-
-  /* ---------- Ledger row expansion ---------- */
-  (function ledger() {
-    var rows = Array.prototype.slice.call(document.querySelectorAll('[data-ledger] .ledger-row'));
-    if (!rows.length) return;
-    rows.forEach(function (row) {
-      var trigger = row.querySelector('[data-ledger-toggle]');
-      var panel = row.querySelector('.ledger-row__detail');
-      if (!trigger || !panel) return;
-      if (!panel.id) panel.id = 'panel-' + (row.dataset.rowId || Math.random().toString(36).slice(2, 8));
-      trigger.addEventListener('click', function () {
-        var open = trigger.getAttribute('aria-expanded') === 'true';
-        trigger.setAttribute('aria-expanded', String(!open));
-        row.classList.toggle('is-open', !open);
-      });
-    });
-
-    // Deep link: #v-03 opens that product row.
-    function openFromHash() {
-      var id = decodeURIComponent(location.hash.replace('#', ''));
-      if (!id) return;
-      var target = document.querySelector('.ledger-row [id="' + id + '"]') ||
-                   document.getElementById(id);
-      if (!target) return;
-      var row = target.closest('.ledger-row');
-      if (!row) return;
-      var trigger = row.querySelector('[data-ledger-toggle]');
-      if (trigger && trigger.getAttribute('aria-expanded') !== 'true') {
-        trigger.setAttribute('aria-expanded', 'true');
-        row.classList.add('is-open');
-      }
-      window.setTimeout(function () {
-        row.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
-      }, 120);
-    }
-    window.addEventListener('hashchange', openFromHash);
-    openFromHash();
-  })();
-
-  /* ---------- Cart ---------- */
-  var cart = (function restore() {
-    var items = [];
-    try {
-      var raw = window.localStorage.getItem('verdant-cart');
-      if (raw) {
-        JSON.parse(raw).forEach(function (entry) {
-          if (entry && BY_ID[entry.id] && entry.qty > 0) {
-            items.push({ id: entry.id, qty: Math.min(99, Math.floor(entry.qty)) });
-          }
-        });
-      }
-    } catch (err) { /* storage unavailable — cart stays in memory */ }
-    return items;
-  })();
-
-  function persist() {
-    try { window.localStorage.setItem('verdant-cart', JSON.stringify(cart)); } catch (err) { /* ignore */ }
-  }
-  function cartCount() {
-    return cart.reduce(function (n, i) { return n + i.qty; }, 0);
-  }
-  function subtotal() {
-    return cart.reduce(function (sum, i) { return sum + BY_ID[i.id].price * i.qty; }, 0);
-  }
-  var FREE_OVER = 6000;
-  var FLAT = 450;
-  function shipping() {
-    if (!cart.length) return 0;
-    return subtotal() >= FREE_OVER ? 0 : FLAT;
+    return null;
   }
 
   function addToCart(id, qty) {
-    if (!BY_ID[id]) return;
-    var line = null;
-    for (var i = 0; i < cart.length; i++) { if (cart[i].id === id) { line = cart[i]; break; } }
-    if (line) line.qty = Math.min(99, line.qty + (qty || 1));
-    else cart.push({ id: id, qty: qty || 1 });
-    persist();
-    renderCart();
-    bumpCartButton();
-    toast(BY_ID[id].name + ' added to your cart.');
+    if (!CATALOG[id]) return;
+    var line = findLine(id);
+    if (line) { line.qty = Math.min(99, line.qty + (qty || 1)); }
+    else { cart.push({ id: id, qty: qty || 1 }); }
+    commit();
+    toast(CATALOG[id].name + " added to cart");
+    openDrawer();
   }
+
   function setQty(id, qty) {
-    var line = null, idx = -1;
-    for (var i = 0; i < cart.length; i++) { if (cart[i].id === id) { line = cart[i]; idx = i; break; } }
+    var line = findLine(id);
     if (!line) return;
-    if (qty <= 0) cart.splice(idx, 1); else line.qty = Math.min(99, qty);
-    persist();
+    if (qty <= 0) { removeLine(id); return; }
+    line.qty = Math.min(99, qty);
+    commit();
+  }
+
+  function removeLine(id) {
+    cart = cart.filter(function (line) { return line.id !== id; });
+    commit();
+  }
+
+  function subtotal() {
+    return cart.reduce(function (sum, line) {
+      return sum + CATALOG[line.id].price * line.qty;
+    }, 0);
+  }
+
+  function itemCount() {
+    return cart.reduce(function (sum, line) { return sum + line.qty; }, 0);
+  }
+
+  function commit() {
+    saveCart(cart);
     renderCart();
   }
-  function removeLine(id) {
-    setQty(id, 0);
-    toast('Removed ' + BY_ID[id].name + '.');
-  }
 
-  var lastFocus = null;
-  function renderCart() {
-    var body = document.querySelector('[data-cart-body]');
-    var foot = document.querySelector('[data-cart-foot]');
-    var countNode = document.querySelector('[data-cart-count]');
-    var openBtn = byId('cart-open');
-    if (countNode) countNode.textContent = String(cartCount());
-    if (openBtn) openBtn.setAttribute('aria-label', 'Open cart, ' + cartCount() + ' item' + (cartCount() === 1 ? '' : 's'));
-    if (!body || !foot) return;
+  /* ---------- Cart drawer ------------------------------------------------ */
+  var drawer = document.querySelector("[data-cart-drawer]");
+  var backdrop = document.querySelector("[data-cart-backdrop]");
+  var bodyEl = document.querySelector("[data-cart-body]");
+  var countEl = document.querySelector("[data-cart-count]");
+  var subtotalEl = document.querySelector("[data-cart-subtotal]");
+  var shippingEl = document.querySelector("[data-cart-shipping]");
+  var totalEl = document.querySelector("[data-cart-total]");
+  var progressEl = document.querySelector("[data-cart-progress]");
+  var noteEl = document.querySelector("[data-cart-note]");
+  var lastFocused = null;
 
-    if (!cart.length) {
-      body.innerHTML = '<p class="cart-empty">Nothing on the list yet. <a href="shop.html">Open the registry</a> and add a formula.</p>';
-      foot.hidden = true;
-      return;
-    }
-    foot.hidden = false;
-    body.innerHTML = cart.map(function (line) {
-      var p = BY_ID[line.id];
-      return '<div class="cart-item" data-line="' + p.id + '">' +
-        '<div class="cart-item__media"><img src="' + p.img + '" alt="' + p.alt + '" width="66" height="66" loading="lazy"></div>' +
-        '<div class="cart-item__info">' +
-          '<p class="cart-item__name">' + p.name + '</p>' +
-          '<p class="cart-item__meta mono">' + p.id.toUpperCase() + ' &middot; ' + p.size + ' &middot; ' + money(p.price) + ' each</p>' +
-          '<div class="cart-item__qty" role="group" aria-label="Quantity for ' + p.name + '">' +
-            '<button type="button" class="qty-btn" data-dec="' + p.id + '" aria-label="Decrease quantity of ' + p.name + '">&minus;</button>' +
-            '<output aria-label="Quantity">' + line.qty + '</output>' +
-            '<button type="button" class="qty-btn" data-inc="' + p.id + '" aria-label="Increase quantity of ' + p.name + '">+</button>' +
+  var EMPTY_HTML =
+    '<p class="cart-empty">Your cart is empty. Start with the <a href="routine.html">ninety-second routine quiz</a> or <a href="shop.html">browse all six products</a>.</p>';
+
+  function lineMarkup(line) {
+    var p = CATALOG[line.id];
+    var rowTotal = p.price * line.qty;
+    return '' +
+      '<div class="cart-item" data-line="' + line.id + '">' +
+        '<div class="cart-item-media"><img src="' + p.image + '" alt="' + p.name + '" width="68" height="68" loading="lazy"></div>' +
+        '<div>' +
+          '<div class="cart-item-top">' +
+            '<div><h3>' + p.name + '</h3>' +
+            '<p class="cart-item-price">' + money(p.price) + ' · ' + p.size + '</p></div>' +
+            '<button class="line-remove" type="button" data-remove="' + line.id + '" aria-label="Remove ' + p.name + ' from cart">' +
+              '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M7 7l10 10M17 7L7 17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>' +
+            '</button>' +
+          '</div>' +
+          '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">' +
+            '<span class="qty">' +
+              '<button type="button" data-dec="' + line.id + '" aria-label="Decrease quantity of ' + p.name + '">−</button>' +
+              '<output aria-label="Quantity of ' + p.name + '">' + line.qty + '</output>' +
+              '<button type="button" data-inc="' + line.id + '" aria-label="Increase quantity of ' + p.name + '">+</button>' +
+            '</span>' +
+            '<span class="line-total">' + money(rowTotal) + '</span>' +
           '</div>' +
         '</div>' +
-        '<div class="cart-item__right">' +
-          '<span class="cart-item__price mono">' + money(p.price * line.qty) + '</span>' +
-          '<button type="button" class="cart-remove" data-remove="' + p.id + '">Remove</button>' +
-        '</div>' +
       '</div>';
-    }).join('');
+  }
 
-    var ship = shipping();
-    document.querySelector('[data-cart-subtotal]').textContent = money(subtotal());
-    document.querySelector('[data-cart-shipping]').textContent = cart.length && ship === 0 ? 'Free' : money(ship);
-    document.querySelector('[data-cart-total]').textContent = money(subtotal() + ship);
-    var note = document.querySelector('[data-cart-note]');
-    if (ship > 0) {
-      note.textContent = 'Add ' + money(FREE_OVER - subtotal()) + ' more for complimentary shipping.';
+  function renderCart() {
+    if (!drawer || !bodyEl) return;
+
+    if (cart.length === 0) {
+      bodyEl.innerHTML = EMPTY_HTML;
     } else {
-      note.textContent = 'Complimentary shipping unlocked, plus three botanical samples.';
+      bodyEl.innerHTML = cart.map(lineMarkup).join("");
+    }
+
+    var sub = subtotal();
+    var count = itemCount();
+    countEl.textContent = String(count);
+    subtotalEl.textContent = money(sub);
+
+    if (count === 0) {
+      shippingEl.textContent = "Free over $60";
+      totalEl.textContent = money(0);
+      progressEl.innerHTML = "";
+    } else if (sub >= FREE_SHIPPING) {
+      shippingEl.textContent = "Free";
+      totalEl.textContent = money(sub);
+      progressEl.innerHTML = "Free shipping unlocked." + bar(1);
+    } else {
+      shippingEl.textContent = money(SHIPPING_FEE);
+      totalEl.textContent = money(sub + SHIPPING_FEE);
+      progressEl.innerHTML = "Add " + money(FREE_SHIPPING - sub) + " more for free shipping." + bar(sub / FREE_SHIPPING);
     }
   }
 
-  function bumpCartButton() {
-    var btn = byId('cart-open');
-    if (!btn || reduceMotion) return;
-    btn.classList.remove('is-bumped');
-    void btn.offsetWidth;
-    btn.classList.add('is-bumped');
+  function bar(ratio) {
+    var pct = Math.max(0, Math.min(1, ratio)) * 100;
+    return '<span class="cart-progress-bar"><i style="width:' + pct.toFixed(1) + '%"></i></span>';
   }
 
-  function openCart() {
-    var drawer = byId('cart-drawer');
-    var backdrop = byId('drawer-backdrop');
+  function openDrawer() {
     if (!drawer) return;
-    lastFocus = document.activeElement;
-    drawer.classList.add('is-open');
-    drawer.setAttribute('aria-hidden', 'false');
-    if (backdrop) { backdrop.hidden = false; void backdrop.offsetWidth; backdrop.classList.add('is-visible'); }
-    document.body.classList.add('is-locked');
-    var close = byId('cart-close');
-    if (close) close.focus();
-  }
-  function closeCart() {
-    var drawer = byId('cart-drawer');
-    var backdrop = byId('drawer-backdrop');
-    if (!drawer || !drawer.classList.contains('is-open')) return;
-    drawer.classList.remove('is-open');
-    drawer.setAttribute('aria-hidden', 'true');
-    if (backdrop) {
-      backdrop.classList.remove('is-visible');
-      window.setTimeout(function () { backdrop.hidden = true; }, 380);
-    }
-    document.body.classList.remove('is-locked');
-    if (lastFocus && lastFocus.focus) lastFocus.focus();
+    lastFocused = document.activeElement;
+    drawer.classList.add("is-open");
+    drawer.setAttribute("aria-hidden", "false");
+    backdrop.hidden = false;
+    requestAnimationFrame(function () { backdrop.classList.add("is-open"); });
+    document.body.classList.add("is-locked");
+    var first = drawer.querySelector("[data-cart-close]");
+    if (first) first.focus();
   }
 
-  (function cartWiring() {
-    var drawer = byId('cart-drawer');
-    if (!drawer) return;
-    var open = byId('cart-open');
-    var close = byId('cart-close');
-    var backdrop = byId('drawer-backdrop');
-    if (open) open.addEventListener('click', openCart);
-    if (close) close.addEventListener('click', closeCart);
-    if (backdrop) backdrop.addEventListener('click', closeCart);
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeCart();
-      if (e.key === 'Tab' && drawer.classList.contains('is-open')) {
-        var f = drawer.querySelectorAll('button,a[href],input,[tabindex]:not([tabindex="-1"])');
-        if (!f.length) return;
-        var first = f[0], last = f[f.length - 1];
-        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  function closeDrawer() {
+    if (!drawer || !drawer.classList.contains("is-open")) return;
+    drawer.classList.remove("is-open");
+    drawer.setAttribute("aria-hidden", "true");
+    backdrop.classList.remove("is-open");
+    document.body.classList.remove("is-locked");
+    window.setTimeout(function () { backdrop.hidden = true; }, 320);
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+
+  if (drawer) {
+    document.addEventListener("click", function (ev) {
+      var t = ev.target;
+      var add = t.closest ? t.closest("[data-add]") : null;
+      if (add) {
+        var id = add.getAttribute("data-add") || add.getAttribute("data-id");
+        if (!CATALOG[id]) return;
+        addToCart(id, 1);
+        add.classList.add("is-added");
+        var prev = add.textContent;
+        add.textContent = "Added";
+        window.setTimeout(function () { add.classList.remove("is-added"); add.textContent = prev; }, 1400);
+        return;
+      }
+
+      if (t.closest("[data-cart-open]")) { openDrawer(); return; }
+      if (t.closest("[data-cart-close]")) { closeDrawer(); return; }
+      if (t === backdrop) { closeDrawer(); return; }
+
+      var inc = t.closest ? t.closest("[data-inc]") : null;
+      if (inc) { var l1 = findLine(inc.getAttribute("data-inc")); if (l1) setQty(l1.id, l1.qty + 1); return; }
+      var dec = t.closest ? t.closest("[data-dec]") : null;
+      if (dec) { var l2 = findLine(dec.getAttribute("data-dec")); if (l2) setQty(l2.id, l2.qty - 1); return; }
+      var rm = t.closest ? t.closest("[data-remove]") : null;
+      if (rm) { removeLine(rm.getAttribute("data-remove")); return; }
+
+      var checkout = t.closest ? t.closest("[data-cart-checkout]") : null;
+      if (checkout) {
+        if (cart.length === 0) {
+          noteEl.textContent = "Add a product to check out.";
+        } else {
+          noteEl.textContent = "Reserved " + itemCount() + " item" + (itemCount() === 1 ? "" : "s") +
+            " · " + money(subtotal()) + ". This preview saves your cart on this device — email hello@verdant.example and we will invoice you.";
+        }
+        window.setTimeout(function () { noteEl.textContent = ""; }, 6000);
       }
     });
 
-    drawer.addEventListener('click', function (e) {
-      var inc = e.target.closest('[data-inc]');
-      var dec = e.target.closest('[data-dec]');
-      var rm = e.target.closest('[data-remove]');
-      if (inc) setQty(inc.getAttribute('data-inc'), (cart.filter(function (l) { return l.id === inc.getAttribute('data-inc'); })[0] || {}).qty + 1);
-      if (dec) setQty(dec.getAttribute('data-dec'), (cart.filter(function (l) { return l.id === dec.getAttribute('data-dec'); })[0] || {}).qty - 1);
-      if (rm) removeLine(rm.getAttribute('data-remove'));
-    });
-
-    var checkout = document.querySelector('[data-checkout]');
-    if (checkout) checkout.addEventListener('click', function () {
-      toast('Demo storefront — totals are live, checkout is not wired to a payment provider.');
-    });
-
-    document.addEventListener('click', function (e) {
-      var add = e.target.closest('[data-add-to-cart]');
-      if (!add) return;
-      addToCart(add.getAttribute('data-add-to-cart'), 1);
-      if (add.classList.contains('quick-add')) {
-        var label = add.textContent;
-        add.textContent = 'Added \u2713';
-        add.classList.add('is-added');
-        window.setTimeout(function () { add.textContent = label; add.classList.remove('is-added'); }, 1400);
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape" && drawer.classList.contains("is-open")) { closeDrawer(); return; }
+      if (ev.key === "Tab" && drawer.classList.contains("is-open")) {
+        var focusables = drawer.querySelectorAll("button, a[href], input, select, textarea, [tabindex]:not([tabindex='-1'])");
+        if (focusables.length === 0) return;
+        var first = focusables[0];
+        var last = focusables[focusables.length - 1];
+        if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last.focus(); }
+        else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
       }
     });
+  }
 
-    renderCart();
-  })();
+  renderCart();
 
-  /* ---------- Toast ---------- */
+  /* ---------- Toast ------------------------------------------------------ */
+  var toastEl = null;
   var toastTimer = null;
   function toast(message) {
-    var el = byId('toast');
-    if (!el) return;
-    el.textContent = message;
-    el.classList.add('is-visible');
+    if (!toastEl) {
+      toastEl = document.createElement("p");
+      toastEl.className = "toast";
+      toastEl.setAttribute("role", "status");
+      toastEl.setAttribute("aria-live", "polite");
+      document.body.appendChild(toastEl);
+    }
+    toastEl.textContent = message;
+    toastEl.classList.add("is-shown");
     window.clearTimeout(toastTimer);
-    toastTimer = window.setTimeout(function () { el.classList.remove('is-visible'); }, 3200);
+    toastTimer = window.setTimeout(function () { toastEl.classList.remove("is-shown"); }, 2200);
+    if (countEl) {
+      countEl.classList.add("is-bumped");
+      window.setTimeout(function () { countEl.classList.remove("is-bumped"); }, 260);
+    }
   }
 
-  /* ---------- Hairline rule + ledger row reveals ---------- */
-  (function reveals() {
-    var watched = document.querySelectorAll('[data-rule], .reveal-rows');
-    if (!watched.length) return;
-    if (reduceMotion || !('IntersectionObserver' in window)) {
-      Array.prototype.forEach.call(watched, function (n) { n.classList.add('is-drawn', 'is-live'); });
-      return;
-    }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        var el = entry.target;
-        if (el.classList.contains('reveal-rows')) {
-          var triggers = el.querySelectorAll('[data-ledger-toggle]');
-          Array.prototype.forEach.call(triggers, function (t, i) {
-            window.setTimeout(function () { t.style.transitionDelay = '0ms'; }, i * 90);
-            t.style.transitionDelay = (i * 90) + 'ms';
-          });
-          el.classList.add('is-live');
-        } else {
-          el.classList.add('is-drawn');
-        }
-        io.unobserve(el);
-      });
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.2 });
-    Array.prototype.forEach.call(watched, function (n) { io.observe(n); });
-  })();
+  /* ---------- Header + nav ---------------------------------------------- */
+  var header = document.querySelector("[data-header]");
+  var navToggle = document.querySelector("[data-nav-toggle]");
+  var navList = document.getElementById("nav-list");
 
-  /* ---------- Shop: filter the registry ---------- */
-  (function shop() {
-    var filters = byId('shop-filters');
-    var rowsWrap = byId('registry');
-    if (!filters || !rowsWrap) return;
-    var rows = Array.prototype.slice.call(rowsWrap.querySelectorAll('.ledger-row'));
-    var countNode = rowsWrap.querySelector('[data-visible-count]');
-    function apply(cat) {
-      var shown = 0;
-      rows.forEach(function (row) {
-        var match = cat === 'all' || row.getAttribute('data-cat') === cat;
-        row.hidden = !match;
-        if (match) shown++;
-      });
-      if (countNode) {
-        countNode.textContent = shown + (shown === 1 ? ' formula' : ' formulas') + ' listed';
-      }
-    }
-    filters.addEventListener('click', function (e) {
-      var chip = e.target.closest('[data-filter]');
-      if (!chip) return;
-      Array.prototype.forEach.call(filters.querySelectorAll('[data-filter]'), function (c) {
-        c.setAttribute('aria-pressed', String(c === chip));
-      });
-      apply(chip.getAttribute('data-filter'));
+  if (navToggle && navList) {
+    navToggle.addEventListener("click", function () {
+      var open = navToggle.getAttribute("aria-expanded") === "true";
+      navToggle.setAttribute("aria-expanded", String(!open));
+      navList.classList.toggle("is-open", !open);
+      document.body.classList.toggle("is-locked", !open);
     });
-    apply(new URLSearchParams(location.search).get('cat') || 'all');
-    if (new URLSearchParams(location.search).get('cat')) {
-      var chip = filters.querySelector('[data-filter="' + new URLSearchParams(location.search).get('cat') + '"]');
-      if (chip) {
-        Array.prototype.forEach.call(filters.querySelectorAll('[data-filter]'), function (c) {
-          c.setAttribute('aria-pressed', String(c === chip));
-        });
+    navList.addEventListener("click", function (ev) {
+      if (ev.target.closest("a")) {
+        navToggle.setAttribute("aria-expanded", "false");
+        navList.classList.remove("is-open");
+        document.body.classList.remove("is-locked");
+      }
+    });
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape" && navToggle.getAttribute("aria-expanded") === "true") navToggle.click();
+    });
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 720 && navToggle.getAttribute("aria-expanded") === "true") navToggle.click();
+    });
+  }
+
+  /* ---------- Signature motion: Decode Text ------------------------------ */
+  function runDecode() {
+    var el = document.querySelector("[data-decode]");
+    if (!el) return;
+    var finalText = el.getAttribute("data-final") || el.textContent.trim();
+    if (reduceMotion) { el.textContent = finalText; return; }
+
+    var pool = "abcdefghijklmnopqrstuvwxyzæœ·+*—";
+    var frames = [];
+    var settleStart = [2, 5, 8, 11, 14];
+    for (var f = 0; f < 26; f += 1) {
+      var out = "";
+      for (var c = 0; c < finalText.length; c += 1) {
+        if (finalText.charAt(c) === " ") { out += " "; continue; }
+        if (f >= settleStart[c]) out += finalText.charAt(c);
+        else out += pool.charAt(Math.floor(Math.random() * pool.length));
+      }
+      frames.push(out);
+    }
+    frames.push(finalText);
+
+    el.classList.add("is-decoding");
+    var i = 0;
+    var tick = function () {
+      el.textContent = frames[Math.min(i, frames.length - 1)];
+      i += 1;
+      if (i > frames.length) {
+        el.classList.remove("is-decoding");
+        el.textContent = finalText;
+        return;
+      }
+      window.setTimeout(function () { requestAnimationFrame(tick); }, 48);
+    };
+    requestAnimationFrame(tick);
+  }
+  runDecode();
+
+  /* ---------- Signature motion: Parallax Layers + Card Deck fan ---------- */
+  var layers = Array.prototype.slice.call(document.querySelectorAll("[data-speed]"));
+  var deck = document.querySelector("[data-deck]");
+  var deckP = 0;
+  var deckTarget = 0;
+  var ticking = false;
+
+  function deckProgress() {
+    if (!deck) return 1;
+    var rect = deck.getBoundingClientRect();
+    var vh = window.innerHeight || 1;
+    // 0 when the deck enters the lower third, 1 once it clears the upper quarter
+    var start = vh * 0.92;
+    var end = vh * 0.24;
+    var p = (start - rect.top) / (start - end);
+    return Math.max(0, Math.min(1, p));
+  }
+
+  function applyFrame() {
+    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+
+    if (!reduceMotion) {
+      for (var i = 0; i < layers.length; i += 1) {
+        var speed = parseFloat(layers[i].getAttribute("data-speed")) || 0;
+        layers[i].style.transform = "translate3d(0," + (y * speed).toFixed(2) + "px,0)";
       }
     }
-  })();
 
-  /* ---------- Routine quiz ---------- */
-  (function quiz() {
-    var root = byId('quiz');
-    if (!root) return;
-    var steps = Array.prototype.slice.call(root.querySelectorAll('[data-step]'));
-    var result = byId('quiz-result');
-    var bar = root.querySelector('[data-quiz-bar]');
-    var answers = { feel: null, goal: null, time: null };
-    var index = 0;
+    if (deck && !reduceMotion) {
+      deckTarget = deckProgress();
+      deckP += (deckTarget - deckP) * 0.14;
+      if (Math.abs(deckTarget - deckP) < 0.002) deckP = deckTarget;
+      deck.style.setProperty("--deck-p", deckP.toFixed(3));
+    }
 
-    function paintBar() {
-      if (!bar) return;
-      var segs = bar.querySelectorAll('.quiz__seg');
-      Array.prototype.forEach.call(segs, function (s, i) {
-        s.classList.toggle('is-done', i < index || (i === index && answers[steps[i].getAttribute('data-step')]));
+    if (header) header.classList.toggle("is-stuck", y > 8);
+    ticking = false;
+  }
+
+  function requestFrame() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(applyFrame);
+  }
+
+  if (header) header.classList.toggle("is-stuck", (window.pageYOffset || 0) > 8);
+
+  if (reduceMotion) {
+    if (deck) deck.style.setProperty("--deck-p", "1");
+  } else {
+    window.addEventListener("scroll", requestFrame, { passive: true });
+    window.addEventListener("resize", requestFrame);
+    requestFrame();
+  }
+
+  /* ---------- Page: Shop filters --------------------------------------- */
+  var shopGrid = document.querySelector("[data-product-grid]");
+  if (shopGrid) {
+    var cards = Array.prototype.slice.call(shopGrid.querySelectorAll("[data-product]"));
+    var group = document.querySelectorAll("[data-filter-group]");
+    var countEl2 = document.querySelector("[data-result-count]");
+    var emptyMsg = document.querySelector("[data-filter-empty]");
+    var sortSelect = document.querySelector("[data-sort]");
+
+    function activeValues(which) {
+      var out = [];
+      for (var i = 0; i < which.length; i += 1) {
+        var checked = which[i].querySelectorAll("input[type='checkbox']:checked");
+        var vals = [];
+        for (var j = 0; j < checked.length; j += 1) vals.push(checked[j].value);
+        if (vals.length) out.push({ key: which[i].getAttribute("data-filter-group"), values: vals });
+      }
+      return out;
+    }
+
+    function applyFilters() {
+      var filters = activeValues(group);
+      var visible = cards.filter(function (card) {
+        return filters.every(function (f) {
+          var hay = (card.getAttribute("data-" + f.key) || "").split(/\s+/);
+          return f.values.some(function (v) { return hay.indexOf(v) !== -1; });
+        });
+      });
+
+      cards.forEach(function (card) { card.classList.toggle("is-hidden", visible.indexOf(card) === -1); });
+
+      if (sortSelect && sortSelect.value !== "featured") {
+        var sorted = visible.slice().sort(function (a, b) {
+          var pa = parseFloat(a.getAttribute("data-price"));
+          var pb = parseFloat(b.getAttribute("data-price"));
+          return sortSelect.value === "price-low" ? pa - pb : pb - pa;
+        });
+        sorted.forEach(function (card) { shopGrid.appendChild(card); });
+        cards.filter(function (c) { return visible.indexOf(c) === -1; })
+          .forEach(function (card) { shopGrid.appendChild(card); });
+      }
+
+      if (countEl2) {
+        countEl2.textContent = "Showing " + visible.length + " of " + cards.length + " products";
+      }
+      if (emptyMsg) emptyMsg.hidden = visible.length !== 0;
+    }
+
+    Array.prototype.forEach.call(group, function (g) {
+      g.addEventListener("change", applyFilters);
+    });
+    if (sortSelect) sortSelect.addEventListener("change", applyFilters);
+    applyFilters();
+  }
+
+  /* ---------- Page: Routine quiz --------------------------------------- */
+  var quiz = document.querySelector("[data-quiz]");
+  if (quiz) {
+    var steps = Array.prototype.slice.call(quiz.querySelectorAll("[data-quiz-step]"));
+    var result = document.querySelector("[data-quiz-result]");
+    var answers = {};
+    var current = 0;
+
+    function paint() {
+      steps.forEach(function (stepEl, i) {
+        stepEl.hidden = i !== current;
+        Array.prototype.forEach.call(stepEl.querySelectorAll("[data-quiz-dot]"), function (dot, j) {
+          dot.classList.toggle("is-active", j === i && j === current);
+          dot.classList.toggle("is-done", j < current);
+        });
       });
     }
-    function show(i) {
-      index = i;
-      steps.forEach(function (s, n) { s.classList.toggle('is-current', n === i); });
-      root.querySelectorAll('[data-back]').forEach(function (b) { b.disabled = i === 0; });
-      root.querySelectorAll('[data-next]').forEach(function (b) {
-        b.disabled = !answers[steps[i].getAttribute('data-step')];
-        b.textContent = i === steps.length - 1 ? 'Build my routine' : 'Next question';
-      });
-      paintBar();
+
+    function focusStep() {
+      var heading = steps[current].querySelector(".quiz-q");
+      if (heading) heading.focus();
     }
-    steps.forEach(function (step) {
-      var key = step.getAttribute('data-step');
-      step.addEventListener('change', function (e) {
-        if (!e.target.name) return;
-        answers[key] = e.target.value;
-        var nextBtn = step.querySelector('[data-next]');
+
+    quiz.addEventListener("click", function (ev) {
+      var opt = ev.target.closest("[data-option]");
+      if (opt) {
+        var stepEl = opt.closest("[data-quiz-step]");
+        var key = stepEl.getAttribute("data-key");
+        answers[key] = opt.getAttribute("data-option");
+        Array.prototype.forEach.call(stepEl.querySelectorAll("[data-option]"), function (o) {
+          o.setAttribute("aria-pressed", o === opt ? "true" : "false");
+        });
+        var nextBtn = stepEl.querySelector("[data-next]");
         if (nextBtn) nextBtn.disabled = false;
-        paintBar();
-      });
-    });
-    root.querySelectorAll('[data-next]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        if (!answers[steps[index].getAttribute('data-step')]) return;
-        if (index < steps.length - 1) { show(index + 1); return; }
-        buildRoutine();
-      });
-    });
-    root.querySelectorAll('[data-back]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        if (result && result.classList.contains('is-current')) {
-          result.classList.remove('is-current');
-          show(steps.length - 1);
-          return;
-        }
-        if (index > 0) show(index - 1);
-      });
+        return;
+      }
+
+      var next = ev.target.closest("[data-next]");
+      if (next) {
+        if (current < steps.length - 1) { current += 1; paint(); focusStep(); }
+        else { showResult(); }
+        return;
+      }
+      var back = ev.target.closest("[data-back]");
+      if (back && current > 0) { current -= 1; paint(); focusStep(); return; }
+      var restart = ev.target.closest("[data-quiz-restart]");
+      if (restart) {
+        answers = {};
+        current = 0;
+        Array.prototype.forEach.call(quiz.querySelectorAll("[data-option]"), function (o) {
+          o.setAttribute("aria-pressed", "false");
+        });
+        Array.prototype.forEach.call(quiz.querySelectorAll("[data-next]"), function (b) { b.disabled = true; });
+        if (result) result.hidden = true;
+        quiz.hidden = false;
+        paint();
+        var heading = quiz.querySelector("h2");
+        if (heading) heading.focus();
+      }
     });
 
-    function buildRoutine() {
-      var picks = [];
+    var LABELS = {
+      feel: { dry: "Tight and dry by 4pm", oily: "Shine through by noon", reactive: "Red and stinging", steady: "Comfortable, mostly" },
+      goal: { calm: "Calm the redness", tone: "Even out the tone", texture: "Smooth the texture", water: "Hold more water" },
+      time: { quick: "Two minutes", medium: "Four minutes", full: "Eight minutes" }
+    };
+
+    var DAYPART = { cleanser: "Both", mist: "Both", serum: "Morning", cream: "Both", night: "Evening", eye: "Evening" };
+
+    function recommend() {
+      var picks = ["cleanser"];
       var feel = answers.feel, goal = answers.goal, time = answers.time;
-      function pick(id) { if (id && picks.indexOf(id) === -1) picks.push(id); }
 
-      pick('v-01');
-      if (time !== 'quick') pick('v-02');
-      if (goal === 'lines') pick('v-05');
-      if (goal === 'glow' || goal === 'calm') pick('v-03');
-      if (goal === 'barrier') pick('v-06');
-      if (goal === 'lines' && time !== 'quick') pick('v-03');
-      if (feel === 'dry' || feel === 'sensitive') pick('v-04');
-      else if (feel === 'oily') pick('v-10');
-      else pick(time === 'full' ? 'v-04' : 'v-10');
-      if (goal === 'barrier') pick('v-04');
-      pick('v-09');
-      if (time === 'full') {
-        if (feel === 'oily' || feel === 'combination') pick('v-07');
-        if (goal === 'lines') pick('v-08');
-        if (feel === 'dry') pick('v-11');
-      }
+      if (goal === "tone" || goal === "texture") picks.push("serum");
+      if (goal === "calm") picks.push("cream");
+      if (goal === "water") picks.push("mist");
 
-      var total = picks.reduce(function (sum, id) { return sum + BY_ID[id].price; }, 0);
-      var morning = 1, evening = 1;
-      var html = picks.map(function (id, i) {
-        var p = BY_ID[id];
-        var slot;
-        if (p.cat === 'protect') slot = 'AM only, final step';
-        else if (p.cat === 'mask' || p.cat === 'body') slot = 'PM, twice weekly';
-        else if (p.cat === 'treat' && p.id === 'v-05') slot = 'PM only';
-        else if (p.cat === 'treat') slot = 'AM step ' + morning++ + ' &middot; PM step ' + evening++;
-        else slot = 'AM step ' + morning++ + ' &middot; PM step ' + evening++;
+      if (feel === "dry") { if (picks.indexOf("cream") === -1) picks.push("cream"); if (picks.indexOf("mist") === -1) picks.push("mist"); }
+      if (feel === "reactive" && picks.indexOf("cream") === -1) picks.push("cream");
+      if (feel === "oily" && picks.indexOf("serum") === -1) picks.push("serum");
+      if (feel === "steady" && picks.indexOf("serum") === -1) picks.push("serum");
 
-        return '<article class="ledger-row" data-row-id="rec-' + i + '">' +
-          '<h3 class="ledger-row__heading">' +
-            '<button type="button" class="ledger-row__trigger" data-ledger-toggle aria-expanded="false">' +
-              '<span class="ledger-row__index mono">' + String(i + 1).padStart(2, '0') + '</span>' +
-              '<span class="ledger-row__name">' + p.name + '</span>' +
-              '<span class="ledger-row__cat mono hide-sm">' + slot + '</span>' +
-              '<span class="ledger-row__price mono">' + moneyShort(p.price) + '</span>' +
-              '<span class="ledger-row__chev" aria-hidden="true"></span>' +
-            '</button>' +
-          '</h3>' +
-          '<div class="ledger-row__detail"><div class="ledger-detail">' +
-            '<div class="ledger-detail__media"><img src="' + p.img + '" alt="' + p.alt + '" width="450" height="450" loading="lazy"></div>' +
-            '<div class="ledger-detail__body">' +
-              '<p class="ledger-detail__lead">' + DETAIL[p.id] + '</p>' +
-              '<dl class="ledger-spec">' +
-                '<div><dt class="mono">Placement</dt><dd>' + slot + '</dd></div>' +
-                '<div><dt class="mono">Size</dt><dd>' + p.size + '</dd></div>' +
-                '<div><dt class="mono">Why it is here</dt><dd>' + REASON[p.id] + '</dd></div>' +
-              '</dl>' +
-              '<div class="ledger-detail__actions">' +
-                '<button type="button" class="btn btn--sm btn--primary" data-add-to-cart="' + p.id + '">Add to cart &middot; ' + moneyShort(p.price) + '</button>' +
-                '<a class="btn btn--sm btn--ghost" href="shop.html#' + p.id + '">Formula sheet</a>' +
-              '</div>' +
-            '</div>' +
-          '</div></div>' +
-        '</article>';
-      }).join('');
+      if ((goal === "texture" || goal === "tone") && time !== "quick") picks.push("night");
+      if (time === "full") picks.push("eye");
 
-      var heading = byId('result-title');
-      if (heading) {
-        heading.textContent = 'Your ' + (time === 'quick' ? 'two-minute' : time === 'core' ? 'five-minute' : 'full-ritual') + ' shelf, ' + picks.length + ' bottles';
-      }
-      var summary = byId('result-summary');
-      if (summary) {
-        summary.textContent = 'Built from ' + FEEL_LABEL[feel] + ' skin wanting ' + GOAL_LABEL[goal] + ', at ' + TIME_LABEL[time] + '.';
-      }
-      var totalNode = byId('result-total');
-      if (totalNode) totalNode.textContent = 'Full routine ' + money(total);
-      var addAll = byId('result-add-all');
-      if (addAll) {
-        addAll.removeAttribute('data-add-to-cart');
-        addAll.setAttribute('data-add-all', picks.join(','));
-        addAll.textContent = 'Add all ' + picks.length + ' to cart';
-      }
-      var list = byId('result-list');
-      if (list) list.innerHTML = html;
+      var cap = time === "quick" ? 2 : time === "medium" ? 3 : 4;
+      var seen = {};
+      picks = picks.filter(function (id) {
+        if (seen[id]) return false;
+        seen[id] = true;
+        return true;
+      }).slice(0, cap);
 
-      steps.forEach(function (s) { s.classList.remove('is-current'); });
-      if (result) {
-        result.classList.add('is-current');
-        if (bar) Array.prototype.forEach.call(bar.querySelectorAll('.quiz__seg'), function (s) { s.classList.add('is-done'); });
-        result.setAttribute('tabindex', '-1');
-        result.focus();
-      }
-      rebindLedger(list);
+      return picks.map(function (id) {
+        return { id: id, p: CATALOG[id] };
+      });
     }
 
-    var FEEL_LABEL = { dry: 'dry and tight', oily: 'oily by afternoon', combination: 'combination', sensitive: 'reactive and sensitive' };
-    var GOAL_LABEL = { calm: 'less redness', glow: 'more even tone', barrier: 'a barrier that holds water', lines: 'smoother texture' };
-    var TIME_LABEL = { quick: 'two minutes', core: 'five minutes', full: 'a full ten-minute ritual' };
-    var DETAIL = {
-      'v-01': 'A pH-5.5 gel that lifts SPF and city grime without the tight feeling afterwards.',
-      'v-02': 'A watery essence layered under serum so the rest of the routine spreads further.',
-      'v-03': 'A weightless antioxidant fluid that lifts the grey cast off tired skin.',
-      'v-04': 'Oat ferment and sasanqua oil whipped into a cream that holds all night.',
-      'v-05': 'A bakuchiol balm that resurfaces overnight without peeling weekend.',
-      'v-06': 'Three cold-pressed oils that seal in whatever you layered underneath.',
-      'v-07': 'A green clay and lactic mask that clears the congested zone in eight minutes.',
-      'v-08': 'A caffeine-and-peptide compress for the orbital area, applied with the ring finger.',
-      'v-09': 'A hybrid SPF 30 that disappears on every depth we tested it on.',
-      'v-10': 'The same barrier blend as Rich, cut with more water for warm months.',
-      'v-11': 'A fine mineral mist that resets makeup and rehydrates between washes.',
-      'v-12': 'A husk-and-shea balm for hands that wash twenty times a day.'
-    };
-    var REASON = {
-      'v-01': 'Every routine starts with a cleanser that does not strip.',
-      'v-02': 'Adds water back before you ask anything else of skin.',
-      'v-03': 'The even-tone and redness workhorse, morning and night.',
-      'v-04': 'Seals the barrier so overnight water loss stops.',
-      'v-05': 'Nightly renewal without retinol irritation.',
-      'v-06': 'Occlusive oil layer for skin that loses water by midday.',
-      'v-07': 'Weekly clear-out for congested areas.',
-      'v-08': 'Targeted support where texture shows first.',
-      'v-09': 'The single most effective product for tone and lines.',
-      'v-10': 'Lightweight hydration that will not slide on oily skin.',
-      'v-11': 'Midday hydration without disturbing what is underneath.',
-      'v-12': 'Because hands show age first and wash most.'
-    };
-    root.addEventListener('click', function (e) {
-      var retake = e.target.closest('[data-retake]');
-      if (!retake) return;
-      if (result) result.classList.remove('is-current');
-      show(steps.length - 1);
-      var panel = root.querySelector('.quiz__panel');
-      if (panel) panel.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
-    });
-    show(0);
-  })();
+    function showResult() {
+      if (!result) return;
+      var picks = recommend();
+      var total = picks.reduce(function (s, r) { return s + r.p.price; }, 0);
+      var rows = picks.map(function (r, i) {
+        var when = DAYPART[r.id] || "Morning";
+        return '' +
+          '<li class="routine-line">' +
+            '<img src="' + r.p.image + '" alt="' + r.p.name + '" width="72" height="72" loading="lazy">' +
+            '<div><p class="routine-when">' + when + '</p><h4>' + r.p.name + '</h4>' +
+            '<p>' + r.p.size + ' · ' + money(r.p.price) + '</p></div>' +
+            '<button class="btn btn-line" type="button" data-add="' + r.id + '" data-id="' + r.id + '" data-name="' + r.p.name + '" data-price="' + r.p.price + '">Add</button>' +
+          '</li>';
+      }).join("");
 
-  /* Add-all button on the routine result */
-  document.addEventListener('click', function (e) {
-    var all = e.target.closest('[data-add-all]');
-    if (!all) return;
-    var ids = all.getAttribute('data-add-all').split(',');
-    ids.forEach(function (id) { if (BY_ID[id]) cart.push({ id: id, qty: 1 }); });
-    persist();
-    renderCart();
-    bumpCartButton();
-    toast(ids.length + ' bottles added. Open the cart to check the order.');
-    openCart();
-  });
+      var advice = adviceText();
+      var profile = '' +
+        '<dl class="result-profile">' +
+          '<div><dt>Mid-afternoon feel</dt><dd>' + LABELS.feel[answers.feel] + '</dd></div>' +
+          '<div><dt>First priority</dt><dd>' + LABELS.goal[answers.goal] + '</dd></div>' +
+          '<div><dt>Time you will spend</dt><dd>' + LABELS.time[answers.time] + '</dd></div>' +
+        '</dl>';
 
-  /* Re-bind ledger toggles on rows injected by the quiz */
-  function rebindLedger(scope) {
-    if (!scope) return;
-    Array.prototype.forEach.call(scope.querySelectorAll('.ledger-row'), function (row) {
-      var trigger = row.querySelector('[data-ledger-toggle]');
-      if (!trigger || trigger.dataset.bound) return;
-      trigger.dataset.bound = '1';
-      trigger.addEventListener('click', function () {
-        var open = trigger.getAttribute('aria-expanded') === 'true';
-        trigger.setAttribute('aria-expanded', String(!open));
-        row.classList.toggle('is-open', !open);
+      result.querySelector("[data-result-routine]").innerHTML = rows;
+      result.querySelector("[data-result-profile]").innerHTML = profile;
+      result.querySelector("[data-result-total]").textContent = money(total);
+      result.querySelector("[data-result-advice]").innerHTML = advice;
+      result.querySelector("[data-result-count]").textContent =
+        "A " + picks.length + "-step ritual, " + (answers.time === "quick" ? "under two minutes" : answers.time === "medium" ? "about four minutes" : "a full evening pass");
+      result.hidden = false;
+      quiz.hidden = true;
+      result.focus();
+      result.scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
+    }
+
+    function adviceText() {
+      var tips = [];
+      if (answers.feel === "dry") tips.push("Apply Calica Cream to damp skin within sixty seconds of cleansing — the water you leave on does more than any extra layer.");
+      if (answers.feel === "oily") tips.push("Skip the toner step entirely. Over-cleansing is the usual cause of the 2pm shine you are trying to fix.");
+      if (answers.feel === "reactive") tips.push("Introduce one product at a time, seven days apart, and stop if stinging lasts beyond a minute.");
+      if (answers.feel === "steady") tips.push("Your barrier is doing its job — keep the routine short and save the actives for nights you actually need them.");
+      if (answers.goal === "calm") tips.push("Centella in Calica Cream works on visible redness over roughly six weeks. Photograph your face in the same light weekly rather than checking the mirror daily.");
+      if (answers.goal === "tone") tips.push("Niacamide at 4% and alpha-arbutin at 2% are the doses the pigment studies report. SPF is the other half of the result — wear it every morning.");
+      if (answers.goal === "texture") tips.push("Bakuchiol is slower than retinal but kinder: expect smoother-feeling skin around week eight, not week two.");
+      if (answers.goal === "water") tips.push("Glycerin and fermented green tea in Fernwater Mist pull water in; the cream has to follow immediately or it evaporates back out.");
+      return tips.map(function (t) { return "<li>" + t + "</li>"; }).join("");
+    }
+
+    var addAll = document.querySelector("[data-add-routine]");
+    if (addAll) {
+      addAll.addEventListener("click", function () {
+        var ids = recommend().map(function (r) { return r.id; });
+        ids.forEach(function (id) {
+          var line = findLine(id);
+          if (line) line.qty = Math.min(99, line.qty + 1);
+          else cart.push({ id: id, qty: 1 });
+        });
+        commit();
+        toast("Your " + ids.length + "-product ritual is in the cart");
+        openDrawer();
       });
+    }
+
+    paint();
+  }
+
+  /* ---------- Page: Forms ----------------------------------------------- */
+  var newsletter = document.querySelector("[data-newsletter]");
+  if (newsletter) {
+    newsletter.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var input = newsletter.querySelector("input[type='email']");
+      var status = newsletter.querySelector("[data-newsletter-status]");
+      var value = (input.value || "").trim();
+      if (!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(value)) {
+        status.textContent = "Enter a full email address, like you@example.com.";
+        input.focus();
+        return;
+      }
+      status.textContent = "Thanks — the next formulation note lands on the first Tuesday.";
+      input.value = "";
     });
   }
 
-  /* ---------- Forms ---------- */
-  (function forms() {
-    Array.prototype.forEach.call(document.querySelectorAll('form[data-newsletter]'), function (form) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var input = form.querySelector('input[type="email"]');
-        var status = form.querySelector('[data-form-status]');
-        if (!input || !input.value || input.validity.valid === false) {
-          if (status) status.textContent = 'Please enter a valid email address.';
-          if (input) input.focus();
-          return;
-        }
-        form.reset();
-        if (status) status.textContent = 'Added to the letter list — first note arrives on the 1st.';
-        toast('You are on the Ledger Letter list.');
-      });
+  var contactForm = document.querySelector("[data-contact-form]");
+  if (contactForm) {
+    contactForm.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var feedback = contactForm.querySelector("[data-form-feedback]");
+      var ok = true;
+
+      function check(name, test, message) {
+        var field = contactForm.querySelector("[data-field='" + name + "']");
+        var input = contactForm.elements[name];
+        var err = field ? field.querySelector(".error") : null;
+        var valid = test((input.value || "").trim());
+        if (field) field.classList.toggle("has-error", !valid);
+        if (err) err.textContent = valid ? "" : message;
+        if (!valid && ok) { input.focus(); }
+        ok = ok && valid;
+      }
+
+      check("name", function (v) { return v.length >= 2; }, "Tell us who to reply to.");
+      check("email", function (v) { return /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(v); }, "We need a working email address.");
+      check("message", function (v) { return v.length >= 15; }, "A sentence or two helps us route your note.");
+
+      if (!ok) {
+        feedback.textContent = "Check the highlighted fields and send again.";
+        feedback.classList.add("has-error");
+        return;
+      }
+      feedback.classList.remove("has-error");
+      var who = contactForm.elements.topic.value;
+      feedback.textContent = "Sent. A formulator on the " + who.toLowerCase() + " team answers within one working day.";
+      contactForm.reset();
     });
-
-    var contact = byId('contact-form');
-    if (contact) {
-      contact.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var ok = true;
-        var required = contact.querySelectorAll('[data-required]');
-        Array.prototype.forEach.call(required, function (field) {
-          var wrap = field.closest('.field');
-          var msg = wrap && wrap.querySelector('.field__error');
-          var bad = !field.value.trim() || (field.type === 'email' && field.validity.valid === false);
-          if (wrap) wrap.classList.toggle('field--error', bad);
-          if (msg) msg.textContent = bad ? (field.type === 'email' ? 'Enter a valid email address.' : 'This field is required.') : '';
-          if (bad) ok = false;
-        });
-        var consent = contact.querySelector('[data-consent]');
-        if (consent && !consent.checked) {
-          ok = false;
-          var cwrap = consent.closest('.field');
-          if (cwrap) cwrap.classList.add('field--error');
-          var cmsg = cwrap && cwrap.querySelector('.field__error');
-          if (cmsg) cmsg.textContent = 'Please tick the box so we can reply.';
-        }
-        var status = contact.querySelector('[data-form-status]');
-        if (!ok) {
-          if (status) status.textContent = 'Check the highlighted fields above.';
-          var firstBad = contact.querySelector('.field--error input, .field--error textarea, .field--error select');
-          if (firstBad) firstBad.focus();
-          return;
-        }
-        contact.reset();
-        Array.prototype.forEach.call(contact.querySelectorAll('.field'), function (f) { f.classList.remove('field--error'); });
-        if (status) status.textContent = '';
-        var panel = byId('contact-success');
-        if (panel) {
-          panel.hidden = false;
-          panel.focus();
-          var ref = byId('ticket-ref');
-          if (ref) ref.textContent = 'VRD-' + String(Date.now()).slice(-5);
-        }
-        toast('Message logged — a reply follows within two working days.');
-      });
-    }
-  })();
-
-  /* ---------- Footer year ---------- */
-  (function year() {
-    var node = document.querySelector('[data-year]');
-    if (node) node.textContent = String(new Date().getFullYear());
-  })();
-
-  /* ---------- Expose a couple of helpers for page markup ---------- */
-  window.Verdant = { products: PRODUCTS, addToCart: addToCart, openCart: openCart, toast: toast };
+  }
 })();
