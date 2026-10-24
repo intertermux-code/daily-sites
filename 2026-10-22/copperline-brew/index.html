@@ -3,359 +3,361 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Copperline Brewing Co. — Craft Brewery in the Old Foundry District</title>
-  <meta name="description" content="Copperline Brewing Co. pours small-batch ale from a restored 1911 foundry. Eighteen rotating taps, a working mosaic wall, and a patio that stays open late.">
-  <meta name="theme-color" content="#1a1917">
+  <title>Copperline Brewing Co. — Wire-Drawn Craft Beer from the Old Iron District</title>
+  <meta name="description" content="Copperline Brewing Co. brews copper-kettle ale and lager in a restored 1908 wire mill in Asheville, NC. Check the taps, book a tour, and pull up a stool in the taproom.">
+  <meta name="theme-color" content="#17140f">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Oswald:wght@400;500;600&family=Spectral:ital,wght@0,400;0,600;1,400&family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
 </head>
 <body>
-  <div class="progress" aria-hidden="true"></div>
   <a class="skip-link" href="#main">Skip to content</a>
-
-  <!-- Age gate: 21+ confirmation, shown once per session -->
-  <div class="agegate" id="agegate" role="dialog" aria-modal="true" aria-labelledby="agegate-title" hidden>
-    <div class="agegate__card">
-      <span class="brand__mark" aria-hidden="true">C</span>
-      <h2 id="agegate-title">Are you 21 or older?</h2>
-      <p>Copperline Brewing Co. is a licensed taproom. We need your answer before the taps open.</p>
-      <div class="agegate__btns">
-        <button class="btn" type="button" data-age-yes>Yes, I am 21+</button>
-        <button class="btn btn--ghost" type="button" data-age-no>No, not yet</button>
-      </div>
-      <p class="agegate__denied" role="status" aria-live="polite"></p>
-      <p class="agegate__fine">Please drink responsibly · Never share our beer with anyone under 21</p>
-    </div>
-  </div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
 
   <header class="site-header">
-    <div class="wrap">
+    <div class="container site-header__inner">
       <a class="brand" href="index.html">
-        <span class="brand__mark" aria-hidden="true">C</span>
-        <span class="brand__text">
-          <span class="brand__name">Copperline</span>
-          <span class="brand__sub">Brewing Co. · Est. 2012</span>
-        </span>
+        <svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+          <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="2.5"/>
+          <path d="M12 17h24M12 24h24M12 31h24" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.75"/>
+          <path d="M24 6c-6 6-6 30 0 36" fill="none" stroke="currentColor" stroke-width="2.5"/>
+        </svg>
+        <span>Copperline<small>Brewing Co.</small></span>
       </a>
-      <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">
-        <span></span><span></span><span></span>
-      </button>
-      <nav class="nav" id="primary-nav" aria-label="Primary">
-        <ul>
-          <li><a href="index.html" aria-current="page">Home</a></li>
-          <li><a href="beers.html">Beers</a></li>
-          <li><a href="our-story.html">Our Story</a></li>
-          <li><a href="visit.html">Visit</a></li>
-          <li><a href="events.html">Events</a></li>
+      <nav id="primary-nav" class="site-nav" aria-label="Primary">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="index.html" aria-current="page">Home</a></li>
+          <li><a class="site-nav__link" href="beers.html">Beers</a></li>
+          <li><a class="site-nav__link" href="our-story.html">Our Story</a></li>
+          <li><a class="site-nav__link" href="visit.html">Visit</a></li>
+          <li><a class="site-nav__link" href="events.html">Events</a></li>
+          <li><a class="site-nav__link site-nav__cta" href="visit.html">Book a Table</a></li>
         </ul>
       </nav>
-      <a class="btn btn--sm nav-cta" href="visit.html#tour">Book a Tour</a>
+      <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-label="Open navigation menu"><span></span></button>
+      <a class="btn btn--sm header-cta" href="visit.html">Book a Table</a>
     </div>
   </header>
 
   <main id="main">
-    <!-- ============ HERO + TAP-LIST TEASER ============ -->
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="wrap">
-        <div>
-          <p class="stamp">Foundry No. 4 · Iron &amp; Copper Line</p>
-          <h1 id="hero-title">Brewed<br>In Brass,<br><em>Poured Cold.</em></h1>
-          <p class="hero__lede">Eighteen taps, six fermenters, and one very old brick room. We brew the number we are standing on and nothing else — so the list below is exactly what leaves the hoses tonight.</p>
-          <div class="btn-row" style="margin-top:1.9rem">
-            <a class="btn" href="beers.html">See the Full Beer List</a>
+
+    <!-- ── Hero: split dialogue ── -->
+    <section class="hero">
+      <div class="container split split--wide-media">
+        <div class="split__copy">
+          <p class="eyebrow hero__kicker" data-reveal>Est. 2014 · Old Iron District, Asheville NC</p>
+          <h1 data-reveal>Wire-Drawn Beer,<span>Copper-Kettle Bright</span></h1>
+          <p class="lead" data-reveal>We brew in a 1908 wire mill where the floor still smells of hot metal and malt.
+            Twelve taps, four fermenters, one rule: every pint earns its pour. Come sit at the long oak bench and taste
+            what the mill makes when nobody rushes it.</p>
+          <div class="hero__actions" data-reveal>
+            <a class="btn" href="beers.html">See What’s on Tap</a>
             <a class="btn btn--ghost" href="visit.html">Plan Your Visit</a>
           </div>
-          <p class="hero__meta">
-            <span>Batch <b>No. 621</b></span>
-            <span>Mash in <b>04:40</b></span>
-            <span>Kegs filled <b>Today 13:15</b></span>
-            <span>Patio <b>Open till 23:00</b></span>
-          </p>
+
+          <div style="margin-top: clamp(2.2rem, 5vw, 3.4rem);" data-reveal>
+            <p class="stamp">No. 1 Board · Updated Daily at 3 PM</p>
+          </div>
         </div>
 
-        <div class="panel">
-          <p class="stamp" style="margin-bottom:1rem">On the taps tonight</p>
-          <div class="taplist">
-            <div class="tap">
-              <span class="tap__no" aria-hidden="true">07</span>
-              <div>
-                <p class="tap__name">Firebox Amber</p>
-                <p class="tap__style">Amber ale · the house pint</p>
-              </div>
-              <p class="tap__specs"><span>ABV <b>5.4%</b></span><span>IBU <b>32</b></span><span class="chip">Live</span></p>
-            </div>
-            <div class="tap">
-              <span class="tap__no" aria-hidden="true">12</span>
-              <div>
-                <p class="tap__name">Rivet &amp; Rye IPA</p>
-                <p class="tap__style">Rye IPA · Citra + Equinox</p>
-              </div>
-              <p class="tap__specs"><span>ABV <b>6.8%</b></span><span>IBU <b>58</b></span><span class="chip">Live</span></p>
-            </div>
-            <div class="tap">
-              <span class="tap__no" aria-hidden="true">03</span>
-              <div>
-                <p class="tap__name">Cold Work Stout</p>
-                <p class="tap__style">Nitro dry stout · cocoa nibs</p>
-              </div>
-              <p class="tap__specs"><span>ABV <b>4.9%</b></span><span>IBU <b>41</b></span><span class="chip">Live</span></p>
-            </div>
-            <div class="tap">
-              <span class="tap__no" aria-hidden="true">19</span>
-              <div>
-                <p class="tap__name">Blueprint Hazy</p>
-                <p class="tap__style">Hazy pale · flaked oats</p>
-              </div>
-              <p class="tap__specs"><span>ABV <b>5.9%</b></span><span>IBU <b>28</b></span><span class="chip">Live</span></p>
-            </div>
-            <div class="tap">
-              <span class="tap__no" aria-hidden="true">24</span>
-              <div>
-                <p class="tap__name">Foundry Saison</p>
-                <p class="tap__style">Barrel-aged saison · 11 months in oak</p>
-              </div>
-              <p class="tap__specs"><span>ABV <b>6.4%</b></span><span>IBU <b>24</b></span><span class="chip chip--out">Last keg</span></p>
-            </div>
+        <div class="split__media">
+          <div class="frame frame--land" data-drift>
+            <figure data-clip>
+              <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+                   alt="Warm taproom interior with long communal tables and copper pendant lights at Copperline Brewing Co."
+                   width="1200" height="800">
+            </figure>
+            <figcaption class="frame__caption">The Long Bench · Built from mill-line oak</figcaption>
           </div>
-          <p class="form-note" style="margin-top:1rem">List refreshed at opening and again at 17:00. Halves available on every tap.</p>
+
+          <div class="taplist" style="margin-top: clamp(1.4rem, 3vw, 2.2rem);" data-reveal>
+            <p class="taplist__title"><span>On the Board Tonight</span> <span class="live-dot">Live taps</span></p>
+            <ul>
+              <li><div class="tap-row"><span class="tap-row__name">Kiln Side Amber Ale<span class="tap-row__style">Amber ale · toffee, orange peel</span></span><span class="tap-row__spec">5.6% · 30 IBU</span></div></li>
+              <li><div class="tap-row"><span class="tap-row__name">Wire Pull West Coast IPA<span class="tap-row__style">IPA · pine, grapefruit snap</span></span><span class="tap-row__spec">6.8% · 65 IBU</span></div></li>
+              <li><div class="tap-row"><span class="tap-row__name">Night Shift Oatmeal Stout<span class="tap-row__style">Stout · cocoa, cold brew</span></span><span class="tap-row__spec">6.4% · 45 IBU</span></div></li>
+              <li><div class="tap-row"><span class="tap-row__name">Copper Penny Lager<span class="tap-row__style">Red lager · bread crust</span></span><span class="tap-row__spec">4.9% · 24 IBU</span></div></li>
+              <li><div class="tap-row"><span class="tap-row__name">Tin Roof Witbier<span class="tap-row__style">Wheat · coriander, lemon</span></span><span class="tap-row__spec">5.0% · 14 IBU</span></div></li>
+            </ul>
+            <p class="meta" style="margin-top:0.9rem;">Seven more pours plus two cask finishes on the
+              <a href="beers.html">full beer list</a>.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <div class="hazard-rule" aria-hidden="true"></div>
+    <svg class="divider" viewBox="0 0 1200 26" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path d="M4 16c60-13 118 9 178-2s120-14 182 1 124 12 186-3 128-11 190 4 118 6 176-6 106-4 196 6"/>
+    </svg>
 
-    <!-- ============ MOSAIC WALL ============ -->
-    <section class="sec" aria-labelledby="mosaic-title">
-      <div class="wrap">
-        <div class="sec-head">
-          <p class="stamp">Wall study · 001</p>
-          <h2 id="mosaic-title">The Yard, In Fragments</h2>
-          <p>Everything we care about lives on the west wall: keg-head rubbings, shift quotes, hop sacks, the numbers we hit last year. Here is a slice of it.</p>
+    <!-- ── Story teaser ── -->
+    <section class="section">
+      <div class="container split">
+        <div class="split__media">
+          <div class="frame" data-drift>
+            <figure data-clip>
+              <img src="https://picsum.photos/seed/copperline-brew-52585f298332/1600/900?auto=format&amp;fit=crop&amp;w=900&amp;q=80"
+                   alt="Brewer inspecting copper brew kettle pipework in a dim industrial brewhouse"
+                   width="900" height="1125" loading="lazy">
+            </figure>
+            <figcaption class="frame__caption">Kettle 2 · 15 barrel, steam-bent copper</figcaption>
+          </div>
+          <div style="display:flex; justify-content:center; margin-top:2rem;">
+            <div class="seal" data-reveal><span><b>1908</b>Mill No. 4<br>Wire &amp; Iron</span></div>
+          </div>
         </div>
 
-        <div class="mosaic">
-          <figure class="t-img t-span7">
-            <img src="https://picsum.photos/seed/copperline-brew-4e3d6a38eb80/1600/900?auto=format&fit=crop&w=1400&q=80" alt="Two glasses of Copperline amber beer clinking at the taproom bar" width="1400" height="933" loading="eager">
-            <figcaption>Friday service · 214 pints poured</figcaption>
-          </figure>
-
-          <div class="t-quote t-span5">
-            <p>“Fix the copper, then fix the beer. The beer follows the copper.”</p>
-            <cite>— Marguerite Okonjo, brewer, shift notes</cite>
+        <div class="split__copy">
+          <p class="eyebrow" data-reveal>The Short Version</p>
+          <h2 data-reveal>We Took a Derelict Wire Mill and Learned It to Brew</h2>
+          <p data-reveal>Marta Ellison and Dev Raghunathan bought Mill No. 4 in the winter of 2013 for the price of a used
+            car and eleven weeks of asbestos abatement. The building had drawn copper wire for telephone exchanges until
+            1979; the annealing ovens were still bolted to the floor when the first grain truck backed in.</p>
+          <p data-reveal>We kept everything we could. The pulleys became light fixtures, the wire spools became barstools,
+            and the copper line that once fed the telephone grid gave the brewery its name and its colour. What we added
+            was a four-vessel German brewhouse, a cold room cut into the old shipping bay, and a twelve-bial tap wall
+            plumbed by the same guy who once fixed the mill’s lathe.</p>
+          <p data-reveal>Twelve years on, Copperline pours 2,400 barrels a year to a room that seats ninety. We still
+            anneal our own wort chillers, still label every batch by mill-shift number, and still close at midnight
+            because the block wants sleep.</p>
+          <blockquote class="pullquote" data-reveal>
+            “A brewery should look like the building it lives in. Ours looks like wire, weathered and warm.”
+            <footer>Marta Ellison — Co-founder &amp; Head Brewer</footer>
+          </blockquote>
+          <div class="hero__actions" data-reveal>
+            <a class="btn btn--ghost" href="our-story.html">Read the Full Story</a>
           </div>
-
-          <figure class="t-img t-span4">
-            <img src="https://picsum.photos/seed/copperline-brew-1437b06d4eff/1600/900?auto=format&fit=crop&w=1200&q=80" alt="Stainless fermentation tanks standing in a row inside the converted foundry" width="1200" height="1500" loading="lazy">
-            <figcaption>Vessels 1–6 · 1911 brick shell</figcaption>
-          </figure>
-
-          <dl class="t-spec t-span4">
-            <div>
-              <dt>Batches brewed</dt>
-              <dd><span data-count="621">621</span> <small>since No. 001, 2012</small></dd>
-            </div>
-            <div>
-              <dt>Tap lines running</dt>
-              <dd>18 <small>of 22 valves</small></dd>
-            </div>
-          </dl>
-
-          <figure class="t-img t-span4">
-            <img src="https://picsum.photos/seed/copperline-brew-bd1823d8d2c3/1600/900?auto=format&fit=crop&w=1200&q=80" alt="Fresh green hop cones heaped in a picking crate" width="1200" height="800" loading="lazy">
-            <figcaption>Hallertau Blanc · 340 kg delivered</figcaption>
-          </figure>
-
-          <figure class="t-img t-span5">
-            <img src="https://picsum.photos/seed/copperline-brew-35e23f1e0792/1600/900?auto=format&fit=crop&w=1400&q=80" alt="Copper pipework and valves running along an industrial ceiling" width="1400" height="933" loading="lazy">
-            <figcaption>Original 1911 steam line, now glycol</figcaption>
-          </figure>
-
-          <div class="t-tag t-span7">
-            <span>No. 07 Firebox Amber · No. 12 Rivet &amp; Rye · No. 03 Cold Work · No. 19 Blueprint Hazy · No. 24 Foundry Saison</span>
-            <p style="color:var(--mute);font-size:0.95rem">Every recipe keeps the number it was brewed under. We never renumber a beer, and we never brew two at once.</p>
-          </div>
-
-          <figure class="t-img t-span8">
-            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=80" alt="Warm taproom interior with long timber tables and pendant lighting" width="1600" height="1067" loading="lazy">
-            <figcaption>The long bench · seats 46 without reservation</figcaption>
-          </figure>
-
-          <dl class="t-spec t-span4">
-            <dt>Annual output</dt>
-            <dd><span data-count="94">94</span><sup style="font-size:1.4rem;color:var(--hazard)">k</sup> <small>gallons, all cellared on site</small></dd>
-            <dt>Straights to the sea</dt>
-          </dl>
         </div>
       </div>
     </section>
 
-    <!-- ============ COUNTERS / NUMBERS SLAB ============ -->
-    <section class="sec sec--tight sec--slab" aria-labelledby="numbers-title">
-      <div class="wrap">
-        <h2 id="numbers-title" class="vh">Copperline by the numbers</h2>
+    <!-- ── Numbers band ── -->
+    <section class="section section--tight section--panel">
+      <div class="container">
+        <p class="eyebrow" data-reveal>By the Measure</p>
         <div class="stats">
-          <div class="stat">
-            <p class="stat__num"><span data-count="13">13</span></p>
-            <p class="stat__label">Years on Foundry Row</p>
-          </div>
-          <div class="stat">
-            <p class="stat__num"><span data-count="18">18</span></p>
-            <p class="stat__label">Taps, always rotating</p>
-          </div>
-          <div class="stat">
-            <p class="stat__num"><span data-count="621">621</span></p>
-            <p class="stat__label">Batches logged</p>
-          </div>
-          <div class="stat">
-            <p class="stat__num"><span data-count="2412">2412</span><sup>kg</sup></p>
-            <p class="stat__label">Spent grain to Hallow Road farm</p>
-          </div>
+          <div class="stat" data-reveal><span class="stat__num" data-count="2400">2,400</span><span class="stat__label">Barrels poured in 2025</span></div>
+          <div class="stat" data-reveal><span class="stat__num" data-count="12">12</span><span class="stat__label">Taps on the mill wall</span></div>
+          <div class="stat" data-reveal><span class="stat__num" data-count="31" data-suffix=" mi">31 mi</span><span class="stat__label">Average grain haul</span></div>
+          <div class="stat" data-reveal><span class="stat__num" data-count="118" data-suffix=" yrs">118 yrs</span><span class="stat__label">Of iron under the floor</span></div>
         </div>
       </div>
     </section>
 
-    <!-- ============ STORY TEASER ============ -->
-    <section class="sec" aria-labelledby="story-title">
-      <div class="wrap split">
-        <div class="prose">
-          <p class="stamp">Chapter one · 2009–2012</p>
-          <h2 id="story-title">We Bought A Room Full Of Dead Machines</h2>
-          <p class="lead">Two engineers and a cartographer found a bankrupt brass foundry with the tools still on the hooks. They kept the cranes, the windows and the floor. They brought in six fermenters and a 10-hectolitre brewhouse wrapped in copper the colour of the old nameplate.</p>
-          <p>Nine years of permits later, Rivet No. 1 poured. The first batch was an amber ale for the crew that helped lift the brewhouse in — 12 gallons, gone in a Saturday. Firebox Amber is still No. 07 on the list, still brewed to the same dog-eared card.</p>
-          <div class="btn-row" style="margin-top:1.8rem">
-            <a class="btn" href="our-story.html">Read the Whole Story</a>
-          </div>
+    <!-- ── Beer preview ── -->
+    <section class="section section--paper">
+      <div class="container">
+        <p class="eyebrow" data-reveal>This Month’s Pours</p>
+        <h2 data-reveal>Four Beers Worth the Drive</h2>
+        <p class="lead" data-reveal>Every beer below is brewed within these walls and poured within forty hours of
+          packaging. Filter the full list by style, strength, or bitterness when you are ready to choose.</p>
+        <div class="grid grid--4" style="margin-top: clamp(1.8rem, 4vw, 2.8rem);">
+          <article class="card card--paper" data-reveal>
+            <div class="card__media"><figure data-clip><img src="https://picsum.photos/seed/copperline-brew-7a5153f8d5f3/1600/900?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Tall glass of amber ale with a thick white head on a dark oak bar" width="800" height="533" loading="lazy"></figure></div>
+            <div class="card__body">
+              <h3 class="card__title">Kiln Side</h3>
+              <p class="card__text">Amber ale. Victory malt, orange peel, a clean English yeast that finishes like warm toffee.</p>
+              <div class="card__foot"><span class="tag tag--spec">5.6% ABV</span><span class="tag">30 IBU</span></div>
+            </div>
+          </article>
+          <article class="card card--paper" data-reveal>
+            <div class="card__media"><figure data-clip><img src="https://picsum.photos/seed/copperline-brew-bd189efa9ea4/1600/900?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Pale hop-forward IPA poured from a tap into a branded pint glass" width="800" height="533" loading="lazy"></figure></div>
+            <div class="card__body">
+              <h3 class="card__title">Wire Pull</h3>
+              <p class="card__text">West Coast IPA. Simcoe and Centennial, dry-hopped twice, bone-dry, unapologetically bitter.</p>
+              <div class="card__foot"><span class="tag tag--spec">6.8% ABV</span><span class="tag">65 IBU</span></div>
+            </div>
+          </article>
+          <article class="card card--paper" data-reveal>
+            <div class="card__media"><figure data-clip><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Nearly black stout in a snifter beside roasted coffee beans" width="800" height="533" loading="lazy"></figure></div>
+            <div class="card__body">
+              <h3 class="card__title">Night Shift</h3>
+              <p class="card__text">Oatmeal stout brewed with cold-brew from Blue Ridge Roasters, three blocks east.</p>
+              <div class="card__foot"><span class="tag tag--spec">6.4% ABV</span><span class="tag">45 IBU</span></div>
+            </div>
+          </article>
+          <article class="card card--paper" data-reveal>
+            <div class="card__media"><figure data-clip><img src="https://picsum.photos/seed/copperline-brew-4255b531a645/1600/900?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Golden lager in a pilsner glass catching afternoon light through mill windows" width="800" height="533" loading="lazy"></figure></div>
+            <div class="card__body">
+              <h3 class="card__title">Rolling Mill</h3>
+              <p class="card__text">Munich helles. Four weeks of cold conditioning in the old shipping bay, then nothing to hide.</p>
+              <div class="card__foot"><span class="tag tag--spec">4.6% ABV</span><span class="tag">18 IBU</span></div>
+            </div>
+          </article>
         </div>
-        <figure class="figure">
-          <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1200&q=80" alt="A glass of amber beer sitting on a scarred workbench under workshop light" width="1200" height="800" loading="lazy">
-          <figcaption><span>Bench 2, Foundry No. 4</span><b>No. 001 / 2012</b></figcaption>
-        </figure>
+        <div class="hero__actions" data-reveal>
+          <a class="btn btn--dark" href="beers.html">Open the Full Beer List</a>
+        </div>
       </div>
     </section>
 
-    <!-- ============ LATEST POURS ============ -->
-    <section class="sec sec--ink" aria-labelledby="latest-title">
-      <div class="wrap">
-        <div class="sec-head">
-          <p class="stamp">Fresh from the cellar</p>
-          <h2 id="latest-title">Three Pours Worth The Trip</h2>
-        </div>
-        <div class="kicker-row">
-          <article class="kicker">
-            <span class="kicker__no">No. 31 · New this month</span>
-            <h3>Slag Heap Schwarzbier</h3>
-            <p>Lagered eight weeks at 1°C. Charred malt, cocoa, a finish clean enough to drink three of. On the nitro widget at line 9.</p>
-            <a class="btn btn--ghost btn--sm" href="beers.html" style="margin-top:1rem">Full Tasting Note</a>
-          </article>
-          <article class="kicker">
-            <span class="kicker__no">No. 28 · Canned Friday</span>
-            <h3>Tin Roof Table Pils</h3>
-            <p>Czech floor malted barley, Saaz boiled twice, no oats, no shortcuts. The one we brew so regularly it needs its own valve.</p>
-            <a class="btn btn--ghost btn--sm" href="beers.html" style="margin-top:1rem">Full Tasting Note</a>
-          </article>
-          <article class="kicker">
-            <span class="kicker__no">No. 24 · Barrel program</span>
-            <h3>Foundry Saison</h3>
-            <p>Eleven months in ex-cider oak with a mixed culture caught off the west wall. Lemon rind, hay, faint funk. Six hundred bottles.</p>
-            <a class="btn btn--ghost btn--sm" href="beers.html" style="margin-top:1rem">Full Tasting Note</a>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ VISIT CTA ============ -->
-    <section class="sec sec--slab" aria-labelledby="visit-title">
-      <div class="wrap split">
-        <div class="prose">
-          <p class="stamp">Taproom · Foundry Row</p>
-          <h2 id="visit-title">Come Stand In The Old Machine Room</h2>
-          <p>Lunch runs Thursday through Sunday from 11:00: pork pies from Ashcombe, soft-shell crab in August, fries that our fry cook refuses to season tableside. Kids and dogs are welcome on the patio until 19:00; the hall is 21 and over after that.</p>
-          <div class="btn-row" style="margin-top:1.8rem">
-            <a class="btn" href="visit.html">Hours, Address &amp; Parking</a>
-            <a class="btn btn--ghost" href="events.html">What Is On This Month</a>
+    <!-- ── Events teaser ── -->
+    <section class="section">
+      <div class="container split split--reverse">
+        <div class="split__media">
+          <div class="frame frame--land" data-drift>
+            <figure data-clip>
+              <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&amp;fit=crop&amp;w=1000&amp;q=80"
+                   alt="Crowd gathered close to a small stage lit in warm amber during a live music night"
+                   width="1000" height="667" loading="lazy">
+            </figure>
+            <figcaption class="frame__caption">Friday Brass · The loading dock becomes a stage</figcaption>
           </div>
         </div>
-        <div class="panel">
-          <p class="stamp" style="margin-bottom:1rem">This week at Copperline</p>
-          <ul class="note-list">
-            <li><b>Tue–Sun</b> from 11:00 — 18 taps, hot food from 11:30</li>
-            <li><b>Thu 19:30</b> — Cask conditioning club, free with a pint</li>
-            <li><b>Fri late</b> — kitchen till 22:30, patio band from 20:00</li>
-            <li><b>Sat 10:00</b> — cellar tour, 12 places, book online</li>
-            <li><b>Sun</b> — board games, half-price growler refills</li>
+        <div class="split__copy">
+          <p class="eyebrow" data-reveal>Happening at the Mill</p>
+          <h2 data-reveal>Five Nights a Week, All of Them Free</h2>
+          <ul class="timeline" style="margin-top:1.6rem;">
+            <li data-reveal><span class="timeline__year">Every Tuesday</span><strong>Mill Trivia, 7 PM.</strong> Six rounds,
+              brewer-written, winner takes a pin of Night Shift for the table.</li>
+            <li data-reveal><span class="timeline__year">Every Friday</span><strong>Brass on the Dock, 8 PM.</strong>
+              Local horn players on the loading ramp, beers poured to the last set.</li>
+            <li data-reveal><span class="timeline__year">Oct 24</span><strong>High Tension Release Party.</strong>
+              Our 8.2% double IPA taps at noon; the first two hundred pints get the collector glass.</li>
+            <li data-reveal><span class="timeline__year">Nov 8</span><strong>Homebrew Clinic.</strong> Bring your stuck
+              mash, leave with a plan. $15, includes a kit worth $60.</li>
           </ul>
-          <p class="form-note" style="margin-top:1.25rem">14 Foundry Row, Iron Quarter · Bus 22 and 41 stop at Bellhouse Gate.</p>
+          <div class="hero__actions" data-reveal>
+            <a class="btn btn--ghost" href="events.html">See the Full Calendar &amp; Merch</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Visit block ── -->
+    <section class="section section--panel">
+      <div class="container split">
+        <div class="split__media">
+          <div class="frame frame--land" data-drift>
+            <figure data-clip>
+              <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&amp;fit=crop&amp;w=1000&amp;q=80"
+                   alt="Merchandise and growler shelves inside a brick-walled brewery retail room"
+                   width="1000" height="667" loading="lazy">
+            </figure>
+            <figcaption class="frame__caption">The Payoff Window · Growlers, cans, 64 oz fill</figcaption>
+          </div>
+        </div>
+        <div class="split__copy">
+          <p class="eyebrow" data-reveal>Find Us</p>
+          <h2 data-reveal>2147 Foundry Row, Asheville</h2>
+          <p data-reveal>Blue door under the painted sign, two blocks off the greenway, free parking in the old truck
+            court. Dogs welcome on the patio, kids welcome until 8 PM, and the whole room is step-free from the sidewalk
+            in.</p>
+          <p data-reveal><span class="meta">Right now at the mill:</span> <span class="status-pill status-pill--open" data-open-status>Pouring now</span></p>
+          <div class="hero__actions" data-reveal>
+            <a class="btn" href="visit.html">Hours, Tours &amp; Directions</a>
+            <a class="btn btn--ghost" href="events.html">Book an Event Table</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Newsletter ── -->
+    <section class="section section--tight">
+      <div class="container split split--reverse">
+        <div class="split__media">
+          <div style="display:flex; justify-content:center;">
+            <div class="seal" data-reveal><span><b>NEW</b>Release<br>Alerts<br>Monthly</span></div>
+          </div>
+        </div>
+        <div class="split__copy">
+          <p class="eyebrow" data-reveal>Get the Pour Sheet</p>
+          <h2 data-reveal>Tap List in Your Inbox, Every Thursday</h2>
+          <p data-reveal>One short note a week: what went on the board, what came off it, and which nights have a
+            table you can claim before the room fills. No offers, no spam, one click to leave.</p>
+          <form class="form" data-form data-success="Done — check Thursday’s note for your first pour sheet." novalidate>
+            <div class="field">
+              <label for="nl-email">Email address</label>
+              <input type="email" id="nl-email" name="email" autocomplete="email" data-required placeholder="you@example.com">
+              <p class="field__error" data-error-for="nl-email" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="nl-name">First name <span class="field__hint">(optional)</span></label>
+              <input type="text" id="nl-name" name="name" autocomplete="given-name">
+            </div>
+            <div>
+              <button class="btn" type="submit">Sign Me Up</button>
+            </div>
+            <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+          </form>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="hazard-rule" aria-hidden="true"></div>
-    <div class="wrap">
-      <div class="footer-top">
-        <div class="footer-col footer-brand">
-          <a class="brand" href="index.html">
-            <span class="brand__mark" aria-hidden="true">C</span>
-            <span class="brand__text">
-              <span class="brand__name">Copperline</span>
-              <span class="brand__sub">Brewing Co. · Est. 2012</span>
-            </span>
+    <div class="container">
+      <div class="site-footer__grid">
+        <div>
+          <a class="brand" href="index.html" style="margin-bottom:1rem;">
+            <svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+              <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="2.5"/>
+              <path d="M12 17h24M12 24h24M12 31h24" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.75"/>
+              <path d="M24 6c-6 6-6 30 0 36" fill="none" stroke="currentColor" stroke-width="2.5"/>
+            </svg>
+            <span>Copperline<small>Brewing Co.</small></span>
           </a>
-          <p>A twelve-barrel brewery, bottle shop and taproom inside Foundry No. 4 on Foundry Row. Copper pipework, cold beer, honest numbers.</p>
-          <form class="subscribe" data-form="newsletter" novalidate>
-            <label class="vh" for="footer-email">Email address for the weekly keg list</label>
-            <input id="footer-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
-            <button class="btn btn--sm" type="submit">Get The List</button>
-            <p class="form-status" data-form-status hidden role="status" aria-live="polite"></p>
-          </form>
+          <p class="legal-note">Brewed, canned, and poured in Mill No. 4 since 2014. Bottle shop open whenever the
+            taproom is.</p>
         </div>
-        <div class="footer-col">
-          <h3>Site</h3>
+        <div>
+          <h2 class="site-footer__heading">Explore</h2>
           <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="beers.html">Beers</a></li>
+            <li><a href="beers.html">Beers &amp; Tap List</a></li>
             <li><a href="our-story.html">Our Story</a></li>
-            <li><a href="visit.html">Visit</a></li>
+            <li><a href="visit.html">Visit the Taproom</a></li>
             <li><a href="events.html">Events &amp; Merch</a></li>
           </ul>
         </div>
-        <div class="footer-col">
-          <h3>Taproom</h3>
+        <div>
+          <h2 class="site-footer__heading">Taproom</h2>
           <ul>
-            <li>14 Foundry Row</li>
-            <li>Iron Quarter</li>
-            <li><a href="tel:+15550117446">+1 555 011 7446</a></li>
-            <li><a href="mailto:taproom@copperline.example">taproom@copperline.example</a></li>
-            <li>Wed–Sun 11:00–23:00 · Mon–Tue closed</li>
+            <li>2147 Foundry Row</li>
+            <li>Asheville, NC 28806</li>
+            <li><a href="tel:+18285550147">(828) 555-0147</a></li>
+            <li><a href="mailto:hello@copperlinebrew.example">hello@copperlinebrew.example</a></li>
           </ul>
+          <p class="meta" style="margin-top:0.8rem;">Tue–Thu 4–11 PM<br>Fri–Sat 12 PM–midnight<br>Sun 12–9 PM · Mon closed</p>
         </div>
-        <div class="footer-col">
-          <h3>Follow The Line</h3>
-          <div class="social">
-            <a href="https://www.instagram.com" aria-label="Copperline Brewing on Instagram" rel="noopener" target="_blank">IG</a>
-            <a href="https://www.facebook.com" aria-label="Copperline Brewing on Facebook" rel="noopener" target="_blank">FB</a>
-            <a href="https://untappd.com" aria-label="Copperline Brewing on Untappd" rel="noopener" target="_blank">UT</a>
-            <a href="mailto:taproom@copperline.example" aria-label="Email Copperline Brewing">ML</a>
-          </div>
-          <ul style="margin-top:1.2rem">
-            <li><a href="visit.html#tour">Cellar tours</a></li>
-            <li><a href="visit.html#private">Private hire</a></li>
-            <li><a href="events.html#merch">Merch &amp; cans to take home</a></li>
+        <div>
+          <h2 class="site-footer__heading">Good to Know</h2>
+          <ul>
+            <li>21+ after 8 PM, all ages until then</li>
+            <li>Well water, floor malt, no shortcuts</li>
+            <li>Sell-by dates stamped on every can</li>
+            <li>Designated driver gets a free Rolling Mill</li>
           </ul>
         </div>
       </div>
-      <div class="footer-bottom">
-        <span>© <span data-year>2026</span> Copperline Brewing Co. · Licence 44-B-1911</span>
-        <span>Drink responsibly · 21 and over only</span>
-        <span>Brewed, canned and cellared on Foundry Row</span>
+      <div class="site-footer__fine">
+        <p style="margin:0;">© <span id="year">2026</span> Copperline Brewing Co. · Please enjoy Copperline responsibly.</p>
+        <p class="legal-note" style="margin:0;">Drinks are poured by licensed bartenders. Never drink and drive —
+          rideshare pickup is at the east gate.</p>
       </div>
-      <p class="footer-legal">Please do not drink and drive. Our patio is covered, our taxi rank is on Bellhouse Gate, and we will happily pour you a soda while you wait.</p>
     </div>
   </footer>
 
-  <script src="app.js" defer></script>
+  <!-- ── Age gate ── -->
+  <div class="modal" id="age-gate" role="dialog" aria-modal="true" aria-labelledby="age-title" hidden>
+    <div class="modal__scrim"></div>
+    <div class="modal__panel">
+      <p class="eyebrow">Copperline Brewing Co.</p>
+      <h2 id="age-title" class="modal__title" style="font-size:clamp(1.6rem,4vw,2.4rem);">Are You 21 or Older?</h2>
+      <p class="age-copy">The mill pours for grown-ups. Confirm your age to see the tap list, booking times, and
+        release announcements.</p>
+      <p id="age-deny" class="field__error" role="alert" hidden>Sorry — you must be 21 or older to enter this site.
+        Ask a parent or friend to pick up a growler for you.</p>
+      <div class="modal__actions">
+        <button class="btn" type="button" id="age-yes">Yes, I Am 21+</button>
+        <button class="btn btn--ghost" type="button" id="age-no">Not Yet</button>
+      </div>
+      <p class="form-note" style="margin-top:1.2rem;">By entering you agree to our privacy terms: we store only this
+        choice, on this device, and nothing else.</p>
+    </div>
+  </div>
 <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
 </html>
