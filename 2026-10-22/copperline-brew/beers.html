@@ -3,641 +3,595 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Beer List — ABV, IBU &amp; Style Notes | Copperline Brewing Co.</title>
-  <meta name="description" content="The full Copperline Brewing beer list: sixteen taps and bottles with ABV, IBU, colour, malt, hop and yeast detail, plus tasting notes and food pairings for every number.">
-  <meta name="theme-color" content="#1a1917">
+  <title>Beers &amp; Tap List — Copperline Brewing Co.</title>
+  <meta name="description" content="The full Copperline beer list: twelve mill-brewed ales and lagers with ABV, IBU, style notes, and a pour sheet for every beer on the board.">
+  <meta name="theme-color" content="#17140f">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Oswald:wght@400;500;600&family=Spectral:ital,wght@0,400;0,600;1,400&family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
 </head>
 <body>
-  <div class="progress" aria-hidden="true"></div>
   <a class="skip-link" href="#main">Skip to content</a>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
 
   <header class="site-header">
-    <div class="wrap">
+    <div class="container site-header__inner">
       <a class="brand" href="index.html">
-        <span class="brand__mark" aria-hidden="true">C</span>
-        <span class="brand__text">
-          <span class="brand__name">Copperline</span>
-          <span class="brand__sub">Brewing Co. · Est. 2012</span>
-        </span>
+        <svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+          <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="2.5"/>
+          <path d="M12 17h24M12 24h24M12 31h24" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.75"/>
+          <path d="M24 6c-6 6-6 30 0 36" fill="none" stroke="currentColor" stroke-width="2.5"/>
+        </svg>
+        <span>Copperline<small>Brewing Co.</small></span>
       </a>
-      <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">
-        <span></span><span></span><span></span>
-      </button>
-      <nav class="nav" id="primary-nav" aria-label="Primary">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="beers.html" aria-current="page">Beers</a></li>
-          <li><a href="our-story.html">Our Story</a></li>
-          <li><a href="visit.html">Visit</a></li>
-          <li><a href="events.html">Events</a></li>
+      <nav id="primary-nav" class="site-nav" aria-label="Primary">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="index.html">Home</a></li>
+          <li><a class="site-nav__link" href="beers.html" aria-current="page">Beers</a></li>
+          <li><a class="site-nav__link" href="our-story.html">Our Story</a></li>
+          <li><a class="site-nav__link" href="visit.html">Visit</a></li>
+          <li><a class="site-nav__link" href="events.html">Events</a></li>
+          <li><a class="site-nav__link site-nav__cta" href="visit.html">Book a Table</a></li>
         </ul>
       </nav>
-      <a class="btn btn--sm nav-cta" href="visit.html#tour">Book a Tour</a>
+      <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-label="Open navigation menu"><span></span></button>
+      <a class="btn btn--sm header-cta" href="visit.html">Book a Table</a>
     </div>
   </header>
 
   <main id="main">
-    <section class="page-hero">
-      <div class="wrap">
-        <div>
-          <p class="stamp">Cellar log · Batch No. 621</p>
-          <h1>Seventeen Numbers,<br>One Wall Each.</h1>
-          <p>Every beer keeps the number it was first brewed under, and every number has a card on the wall before it reaches a tap. Pick one for the full tasting note, malt and hop schedule, and what we eat with it.</p>
-        </div>
-        <div class="panel panel--flat">
-          <p class="stamp" style="margin-bottom:0.9rem">Right now</p>
-          <dl class="beer__specs" style="grid-template-columns:repeat(2,1fr)">
-            <div><dt>Numbers on the wall</dt><dd>17</dd></div>
-            <div><dt>Taps live tonight</dt><dd>16</dd></div>
-            <div><dt>On the last keg</dt><dd>2</dd></div>
-            <div><dt>Cans to take</dt><dd>9</dd></div>
-          </dl>
-        </div>
-      </div>
-    </section>
-
-    <div class="hazard-rule" aria-hidden="true"></div>
-
-    <!-- ============ BEER GRID + FILTERS ============ -->
-    <section class="sec" aria-labelledby="list-title">
-      <div class="wrap">
-        <div class="sec-head">
-          <p class="stamp">The list</p>
-          <h2 id="list-title">What We Have In The Cellar</h2>
-          <p><span id="beer-count">17</span> beers shown. Filter by family, then open any card for the brewing detail.</p>
-        </div>
-
-        <div class="filters" role="group" aria-label="Filter beers by style family">
-          <span class="stamp">Filter</span>
-          <button class="fbtn" type="button" data-filter="all" aria-pressed="true">All</button>
-          <button class="fbtn" type="button" data-filter="core" aria-pressed="false">Core Range</button>
-          <button class="fbtn" type="button" data-filter="ipa" aria-pressed="false">IPA &amp; Pale</button>
-          <button class="fbtn" type="button" data-filter="dark" aria-pressed="false">Dark &amp; Roasted</button>
-          <button class="fbtn" type="button" data-filter="lager" aria-pressed="false">Lager &amp; Pils</button>
-          <button class="fbtn" type="button" data-filter="wild" aria-pressed="false">Barrel &amp; Wild</button>
-          <button class="fbtn" type="button" data-filter="seasonal" aria-pressed="false">Seasonal</button>
-        </div>
-
-        <p id="beer-empty" class="panel" hidden>No beer in that family is pouring today. Try another filter, or ask the bar — something is always conditioning.</p>
-
-        <div class="beergrid" id="beer-grid">
-
-          <article class="beer" id="beer-07" data-style-group="core" data-name="Firebox Amber" data-style="American amber ale, cask condition" data-abv="5.4%" data-ibu="32" data-srm="14" data-season="Year round · tap 7, cask 2" data-notes="Toffee and orange marmalade over a dry, biscuit base. The beer we built the brewery around; poured at every shift change since 2012." data-malt="Maris Otter pale, 12% crystal 60, 4% amber, hand-crimped in the mill room" data-hops="East Kent Goldings at 60 minutes, Fuggle at flame-out, dry Fuggle in the cask" data-yeast="House ale strain NC-111, cropped and re-used 214 times" data-pairing="Pork pie, mature cheddar, anything off the flat-top" data-batch="No. 621 · 1,040 L · mash 66°C, boil 75 min" data-availability="Three taps, canned Fridays" data-img="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1000&q=80" data-alt="Glass of Firebox Amber ale on the Copperline bar">
-            <div class="beer__img">
-              <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=800&q=80" alt="Glass of Firebox Amber, a copper-coloured ale, on the bar at Copperline" width="800" height="600" loading="lazy">
-              <span class="beer__no" aria-hidden="true">07</span>
-            </div>
-            <div class="beer__body">
-              <h3 class="beer__name">Firebox Amber</h3>
-              <p class="beer__style">American amber ale · house pint</p>
-              <p class="beer__notes">Toffee, marmalade, dry biscuit finish. The reason the doors are open.</p>
-              <div class="beer__bar">
-                <span class="tag">Cask</span><span class="tag">Marmalade</span><span class="tag">House Pint</span>
-              </div>
-              <dl class="beer__specs">
-                <div><dt>ABV</dt><dd>5.4%</dd></div>
-                <div><dt>IBU</dt><dd>32</dd></div>
-                <div><dt>SRM</dt><dd>14</dd></div>
-              </dl>
-              <button class="btn btn--ghost btn--sm" type="button" data-open-beer="beer-07" style="margin-top:0.8rem">Open Tasting Note</button>
-            </div>
-          </article>
-
-          <article class="beer" id="beer-08" data-style-group="core" data-name="Shift Change Pale" data-style="Session pale ale" data-abv="5.2%" data-ibu="40" data-srm="8" data-season="Year round · tap 3" data-notes="Grapefruit pith, pine resin, a lean malt backbone that keeps it drinkable at the end of a long shift. Our most-ordered half pint." data-malt="Floor-malted Maris Otter, 6% Caraweed, 4% flaked barley for head" data-hops="Simcoe late addition, Mosaic whirlpool, Amarillo dry hop 48 hours" data-yeast="House ale strain NC-111 at 18°C, free-rise" data-pairing="Soft-shell crab, salt-and-malt fries, blue cheese" data-batch="No. 619 · 1,040 L · dry hopped cold at 2°C" data-availability="Live on cask and bright tank" data-img="https://picsum.photos/seed/copperline-brew-a85eb0a6b6d0/1600/900?auto=format&fit=crop&w=1000&q=80" data-alt="Pint of pale ale with a thick white head">
-            <div class="beer__img">
-              <img src="https://picsum.photos/seed/copperline-brew-a85eb0a6b6d0/1600/900?auto=format&fit=crop&w=800&q=80" alt="Pint of Shift Change Pale ale under taproom lighting" width="800" height="600" loading="lazy">
-              <span class="beer__no" aria-hidden="true">08</span>
-            </div>
-            <div class="beer__body">
-              <h3 class="beer__name">Shift Change Pale</h3>
-              <p class="beer__style">Session pale ale · 5.2%</p>
-              <p class="beer__notes">Grapefruit pith and pine over a lean body. Built to be the third one.</p>
-              <div class="beer__bar">
-                <span class="tag">Dry Hop</span><span class="tag">Citrus</span><span class="tag">Half-Friendly</span>
-              </div>
-              <dl class="beer__specs">
-                <div><dt>ABV</dt><dd>5.2%</dd></div>
-                <div><dt>IBU</dt><dd>40</dd></div>
-                <div><dt>SRM</dt><dd>8</dd></div>
-              </dl>
-              <button class="btn btn--ghost btn--sm" type="button" data-open-beer="beer-08" style="margin-top:0.8rem">Open Tasting Note</button>
-            </div>
-          </article>
-
-          <article class="beer" id="beer-11" data-style-group="core" data-name="Bellhouse Best Bitter" data-style="Best bitter, hand-pulled" data-abv="4.3%" data-ibu="35" data-srm="9" data-season="Year round · hand pumps 1–4" data-notes="Marmalade, dried hedgerow flowers and a chalk-dry finish from water we treat to the Trent Valley profile. The bitter our regulars judge us on." data-malt="Maris Otter, 8% crystal 150, 5% golden malt for the copper rim" data-hops="Target bittering, Northdown at 20 minutes, Goldings in the service hop tower" data-yeast="House ale strain NC-111, two days cold conditioning" data-pairing="Ploughman's board, pork pie, pork crackling" data-batch="No. 612 · 520 L · cask only" data-availability="Hand pumps only — ask and we pull one" data-img="https://picsum.photos/seed/copperline-brew-4e3d6a38eb80/1600/900?auto=format&fit=crop&w=1000&q=80" data-alt="Two glasses of bitter held up at the Copperline bar">
-            <div class="beer__img">
-              <img src="https://picsum.photos/seed/copperline-brew-4e3d6a38eb80/1600/900?auto=format&fit=crop&w=800&q=80" alt="Two glasses of Bellhouse Best Bitter being raised for a toast" width="800" height="600" loading="lazy">
-              <span class="beer__no" aria-hidden="true">11</span>
-            </div>
-            <div class="beer__body">
-              <h3 class="beer__name">Bellhouse Best Bitter</h3>
-              <p class="beer__style">Best bitter · hand-pulled cask</p>
-              <p class="beer__notes">Marmalade and hedgerow flowers, chalk-dry finish, four degrees cellared.</p>
-              <div class="beer__bar">
-                <span class="tag">Hand Pump</span><span class="tag">Real Ale</span><span class="tag">Chalk Dry</span>
-              </div>
-              <dl class="beer__specs">
-                <div><dt>ABV</dt><dd>4.3%</dd></div>
-                <div><dt>IBU</dt><dd>35</dd></div>
-                <div><dt>SRM</dt><dd>9</dd></div>
-              </dl>
-              <button class="btn btn--ghost btn--sm" type="button" data-open-beer="beer-11" style="margin-top:0.8rem">Open Tasting Note</button>
-            </div>
-          </article>
-
-          <article class="beer" id="beer-12" data-style-group="ipa" data-name="Rivet &amp; Rye IPA" data-style="Rye India pale ale" data-abv="6.8%" data-ibu="58" data-srm="11" data-season="Year round · tap 12" data-notes="Burnt lime, black pepper from the rye, a resinous back-end that sticks. The beer that put us on the national lists in 2019." data-malt="Pale ale malt with 14% raw rye flaked at the mill, 5% cara rye" data-hops="Citra and Equinox whirlpool at 78°C, Simcoe dry hop, Mosaic finishing" data-yeast="California ale strain, cropped from batch No. 064" data-pairing="Smoked brisket, blue cheese fries, anything with chilli" data-batch="No. 617 · 1,040 L · dry hop 48 hours at 1°C" data-availability="On tap and canned" data-img="https://picsum.photos/seed/copperline-brew-bd1823d8d2c3/1600/900?auto=format&fit=crop&w=1000&q=80" data-alt="Green hop cones in a crate at harvest">
-            <div class="beer__img">
-              <img src="https://picsum.photos/seed/copperline-brew-bd1823d8d2c3/1600/900?auto=format&fit=crop&w=800&q=80" alt="Whole hop cones scattered on a steel table for Rivet and Rye IPA" width="800" height="600" loading="lazy">
-              <span class="beer__no" aria-hidden="true">12</span>
-            </div>
-            <div class="beer__body">
-              <h3 class="beer__name">Rivet &amp; Rye IPA</h3>
-              <p class="beer__style">Rye IPA · 6.8%</p>
-              <p class="beer__notes">Burnt lime and black pepper with a resin that holds the back of the throat.</p>
-              <div class="beer__bar">
-                <span class="tag">Rye</span><span class="tag">Whirlpool</span><span class="tag">Award 2019</span>
-              </div>
-              <dl class="beer__specs">
-                <div><dt>ABV</dt><dd>6.8%</dd></div>
-                <div><dt>IBU</dt><dd>58</dd></div>
-                <div><dt>SRM</dt><dd>11</dd></div>
-              </dl>
-              <button class="btn btn--ghost btn--sm" type="button" data-open-beer="beer-12" style="margin-top:0.8rem">Open Tasting Note</button>
-            </div>
-          </article>
-
-          <article class="beer" id="beer-19" data-style-group="ipa" data-name="Blueprint Hazy" data-style="New England pale ale" data-abv="5.9%" data-ibu="28" data-srm="6" data-season="Year round · tap 19" data-notes="Mango, ripe peach, soft oatmeal body and almost no bitterness. Brewed under the drawing pinned above mill 2 — hence the name." data-malt="Maris Otter, 18% flaked oats, 12% white wheat, fermented soft" data-hops="Nelson Sauvin and Galaxy dry hop, no bittering addition beyond 8 IBU" data-yeast="London pale ale strain, heavy pitch, 20°C" data-pairing="Fried chicken, soft goat cheese, cucumber salad" data-batch="No. 620 · 1,040 L · packaged 12 days after mash-in" data-availability="Bright tank only — drink it fresh" data-img="https://picsum.photos/seed/copperline-brew-1437b06d4eff/1600/900?auto=format&fit=crop&w=1000&q=80" data-alt="Cloudy pale ale in a nonic glass">
-            <div class="beer__img">
-              <img src="https://picsum.photos/seed/copperline-brew-a85eb0a6b6d0/1600/900?auto=format&fit=crop&w=800&h=600&q=80&crop=entropy" alt="Cloudy Blueprint Hazy pale ale poured into a nonic glass" width="800" height="600" loading="lazy">
-              <span class="beer__no" aria-hidden="true">19</span>
-            </div>
-            <div class="beer__body">
-              <h3 class="beer__name">Blueprint Hazy</h3>
-              <p class="beer__style">New England pale ale · 5.9%</p>
-              <p class="beer__notes">Mango and peach, oatmeal softness, a whisper of bitterness at 28 IBU.</p>
-              <div class="beer__bar">
-                <span class="tag">Hazy</span><span class="tag">Oats</span><span class="tag">Fresh Only</span>
-              </div>
-              <dl class="beer__specs">
-                <div><dt>ABV</dt><dd>5.9%</dd></div>
-                <div><dt>IBU</dt><dd>28</dd></div>
-                <div><dt>SRM</dt><dd>6</dd></div>
-              </dl>
-              <button class="btn btn--ghost btn--sm" type="button" data-open-beer="beer-19" style="margin-top:0.8rem">Open Tasting Note</button>
-            </div>
-          </article>
-
-          <article class="beer" id="beer-34" data-style-group="ipa" data-name="Pattern Nail Session IPA" data-style="Session India pale ale" data-abv="4.1%" data-ibu="44" data-srm="7" data-season="Year round · tap 34" data-notes="All lift, no weight. Melon and lemongrass hops over a thin cracker base, engineered so the second pint is the same as the first." data-malt="Golden Promise pale, 5% cara gold, no specialty grains" data-hops="Cascade, Amarillo and Hallertau Blanc, split across four late additions" data-yeast="House ale strain NC-111, fermented cool at 17°C" data-pairing="Oysters, green thai curry, mild cheddar" data-batch="No. 611 · 1,040 L · 6-week cycle" data-availability="On tap and in 440 mL cans" data-img="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1000&h=750&q=80" data-alt="Golden session IPA under bar lights">
-            <div class="beer__img">
-              <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=800&h=600&q=80" alt="Glass of Pattern Nail Session IPA on a dark timber bar" width="800" height="600" loading="lazy">
-              <span class="beer__no" aria-hidden="true">34</span>
-            </div>
-            <div class="beer__body">
-              <h3 class="beer__name">Pattern Nail Session IPA</h3>
-              <p class="beer__style">Session IPA · 4.1%</p>
-              <p class="beer__notes">Melon and lemongrass over a cracker base — four taps, all day.</p>
-              <div class="beer__bar">
-                <span class="tag">Session</span><span class="tag">Low ABV</span><span class="tag">Four Additions</span>
-              </div>
-              <dl class="beer__specs">
-                <div><dt>ABV</dt><dd>4.1%</dd></div>
-                <div><dt>IBU</dt><dd>44</dd></div>
-                <div><dt>SRM</dt><dd>7</dd></div>
-              </dl>
-              <button class="btn btn--ghost btn--sm" type="button" data-open-beer="beer-34" style="margin-top:0.8rem">Open Tasting Note</button>
-            </div>
-          </article>
-
-          <article class="beer" id="beer-77" data-style-group="ipa" data-name="Crucible Double IPA" data-style="Imperial India pale ale" data-abv="9.1%" data-ibu="72" data-srm="9" data-season="New this month · triple tap 77" data-notes="Pine sap, tangerine oil and a warming ethanol finish. Brewed at 22° gravity and dry-hopped with 40 grams per litre; we only pour it in thirds." data-malt="Golden Promise with 12% demarara sugar boiled in at 40 minutes" data-hops="Idaho 7, Simcoe and Vic Secret, three separate dry-hop charges" data-yeast="Champagne-cultured ale strain for attenuation, 20°C with a free rise" data-pairing="Aged gouda, dark chocolate, nothing else — it is the dessert" data-batch="No. 621 · 520 L · 18-month bottle life" data-availability="Tap 77 only, 180 mL thirds" data-img="https://picsum.photos/seed/copperline-brew-4e3d6a38eb80/1600/900?auto=format&fit=crop&w=1000&h=750&q=80" data-alt="Small glass of strong double IPA with hop resin aroma">
-            <div class="beer__img">
-              <img src="https://picsum.photos/seed/copperline-brew-4e3d6a38eb80/1600/900?auto=format&fit=crop&w=800&h=600&q=80" alt="Thirds glass of Crucible Double IPA at the Copperline bar" width="800" height="600" loading="lazy">
-              <span class="beer__no" aria-hidden="true">77</span>
-              <span class="beer__season">New</span>
-            </div>
-            <div class="beer__body">
-              <h3 class="beer__name">Crucible Double IPA</h3>
-              <p class="beer__style">Imperial IPA · 9.1%</p>
-              <p class="beer__notes">Pine sap, tangerine oil, warming finish. Poured in thirds, always.</p>
-              <div class="beer__bar">
-                <span class="tag">Triple Dry Hop</span><span class="tag">9.1%</span><span class="tag">Bottleable</span>
-              </div>
-              <dl class="beer__specs">
-                <div><dt>ABV</dt><dd>9.1%</dd></div>
-                <div><dt>IBU</dt><dd>72</dd></div>
-                <div><dt>SRM</dt><dd>9</dd></div>
-              </dl>
-              <button class="btn btn--ghost btn--sm" type="button" data-open-beer="beer-77" style="margin-top:0.8rem">Open Tasting Note</button>
-            </div>
-          </article>
-
-          <article class="beer" id="beer-03" data-style-group="dark" data-name="Cold Work Stout" data-style="Nitro dry stout" data-abv="4.9%" data-ibu="41" data-srm="38" data-season="Year round · nitro tap 5" data-notes="Cold-brew cocoa nibs, roasted barley and a tight cream head from the nitrogen widget. Dry as a foundry wall, no sweetness anywhere." data-malt="50% pale, 22% flaked barley, 16% roasted barley, 12% pale ale malt husk" data-hops="Magnum for a clean 41 IBU, no aroma additions" data-yeast="House ale strain NC-111, then two weeks cold at 1°C" data-pairing="Oysters, steak and kidney pudding, vanilla ice cream" data-batch="No. 605 · 1,040 L · nitro blended at 22 volumes" data-availability="Nitro on tap, canned in 440 mL" data-img="https://picsum.photos/seed/copperline-brew-1437b06d4eff/1600/900?auto=format&fit=crop&w=1000&h=750&q=80" data-alt="Nearly black nitro stout settling in a glass">
-            <div class="beer__img">
-              <img src="https://picsum.photos/seed/copperline-brew-1437b06d4eff/1600/900?auto=format&fit=crop&w=800&h=600&q=80" alt="Glass of Cold Work Stout with a cascading nitro head" width="800" height="600" loading="lazy">
-              <span class="beer__no" aria-hidden="true">03</span>
-            </div>
-            <div class="beer__body">
-              <h3 class="beer__name">Cold Work Stout</h3>
-              <p class="beer__style">Nitro dry stout · 4.9%</p>
-              <p class="beer__notes">Cold-brew cocoa, roasted barley, a cream head and zero sweetness.</p>
-              <div class="beer__bar">
-                <span class="tag">Nitro</span><span class="tag">Cocoa Nibs</span><span class="tag">Dry</span>
-              </div>
-              <dl class="beer__specs">
-                <div><dt>ABV</dt><dd>4.9%</dd></div>
-                <div><dt>IBU</dt><dd>41</dd></div>
-                <div><dt>SRM</dt><dd>38</dd></div>
-              </dl>
-              <button class="btn btn--ghost btn--sm" type="button" data-open-beer="beer-03" style="margin-top:0.8rem">Open Tasting Note</button>
-            </div>
-          </article>
-
-          <article class="beer" id="beer-31" data-style-group="dark" data-name="Slag Heap Schwarzbier" data-style="German black lager" data-abv="5.1%" data-ibu="29" data-srm="33" data-season="Year round · tap 9 (nitro)" data-notes="Charred malt and coffee up front, then a clean lager snap that erases the weight. Eight weeks at one degree is the whole trick." data-malt="Pilsner malt with 15% dehusked/carbarathe roast malt for colour without harshness" data-hops="Magnum bittering, Spalt at flame-out" data-yeast="W-34/70 lager strain, fermented 9°C, diacetyl rest at 14°C" data-pairing="Smoked trout, roast pork, black pudding" data-batch="No. 609 · 2,080 L · lagered 56 days" data-availability="Cellar temperature, on nitro and CO2" data-img="https://picsum.photos/seed/copperline-brew-a85eb0a6b6d0/1600/900?auto=format&fit=crop&w=1000&h=750&q=80" data-alt="Dark lager with a tan head against a charcoal backdrop">
-            <div class="beer__img">
-              <img src="https://picsum.photos/seed/copperline-brew-a85eb0a6b6d0/1600/900?auto=format&fit=crop&w=800&h=600&q=80" alt="Glass of Slag Heap Schwarzbier, black lager with a beige head" width="800" height="600" loading="lazy">
-              <span class="beer__no" aria-hidden="true">31</span>
-            </div>
-            <div class="beer__body">
-              <h3 class="beer__name">Slag Heap Schwarzbier</h3>
-              <p class="beer__style">German black lager · 5.1%</p>
-              <p class="beer__notes">Charred malt and coffee, then a clean lager finish with no weight at all.</p>
-              <div class="beer__bar">
-                <span class="tag">8 Weeks Cold</span><span class="tag">Dehusked Roast</span><span class="tag">Clean</span>
-              </div>
-              <dl class="beer__specs">
-                <div><dt>ABV</dt><dd>5.1%</dd></div>
-                <div><dt>IBU</dt><dd>29</dd></div>
-                <div><dt>SRM</dt><dd>33</dd></div>
-              </dl>
-              <button class="btn btn--ghost btn--sm" type="button" data-open-beer="beer-31" style="margin-top:0.8rem">Open Tasting Note</button>
-            </div>
-          </article>
-
-          <article class="beer" id="beer-61" data-style-group="dark" data-name="Sweepings Porter" data-style="Robust porter" data-abv="6.1%" data-ibu="38" data-srm="30" data-season="Year round · tap 15" data-notes="Burnt caramel, liquorice and a faint smoke from the floor-malt kiln. We named it after what the night sweep collected from the roaster." data-malt="Brown malt, chocolate malt, 8% crystal 120, pale ale base" data-hops="Target and East Kent Goldings, 60 and 15 minutes" data-yeast="House ale strain NC-111 with a 10% pitcher from batch No. 214" data-pairing="BBQ short rib, sticky toffee pudding, aged cheddar" data-batch="No. 604 · 1,040 L · 10-month bottle conditioning available" data-availability="On tap; oak-aged reserve in the bottle shop" data-img="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1000&h=750&q=80" data-alt="Dark porter in a dimly lit glass">
-            <div class="beer__img">
-              <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=800&h=600&q=80" alt="Glass of Sweepings Porter showing a deep brown body" width="800" height="600" loading="lazy">
-              <span class="beer__no" aria-hidden="true">61</span>
-            </div>
-            <div class="beer__body">
-              <h3 class="beer__name">Sweepings Porter</h3>
-              <p class="beer__style">Robust porter · 6.1%</p>
-              <p class="beer__notes">Burnt caramel, liquorice and a whisper of kiln smoke.</p>
-              <div class="beer__bar">
-                <span class="tag">Brown Malt</span><span class="tag">Liquorice</span><span class="tag">Oak Reserve</span>
-              </div>
-              <dl class="beer__specs">
-                <div><dt>ABV</dt><dd>6.1%</dd></div>
-                <div><dt>IBU</dt><dd>38</dd></div>
-                <div><dt>SRM</dt><dd>30</dd></div>
-              </dl>
-              <button class="btn btn--ghost btn--sm" type="button" data-open-beer="beer-61" style="margin-top:0.8rem">Open Tasting Note</button>
-            </div>
-          </article>
-
-          <article class="beer" id="beer-28" data-style-group="lager" data-name="Tin Roof Table Pils" data-style="Czech-style pale lager" data-abv="4.6%" data-ibu="36" data-srm="4" data-season="Year round · lager wall 1" data-notes="Cracker malt, Saaz spice and a snappy bitter finish. Decoction mashed, twice boiled, and poured with the four-finger head Czech rules demand." data-malt="Bohemian floor-malted pilsner, three-rest decoction" data-hops="Saaz at 90, 60 and 15 minutes — no late hops at all" data-yeast="W-34/70, open ferment at 10°C, then seven weeks at 1°C" data-pairing="Fried carp, sausage board, pickled anything" data-batch="No. 598 · 2,080 L · 49 days cold" data-availability="On tap with a dedicated pilsner nozzle" data-img="https://picsum.photos/seed/copperline-brew-35e23f1e0792/1600/900?auto=format&fit=crop&w=1000&h=750&q=80" data-alt="Pale lager poured long and foaming in a tall glass">
-            <div class="beer__img">
-              <img src="https://picsum.photos/seed/copperline-brew-35e23f1e0792/1600/900?auto=format&fit=crop&w=800&h=600&q=80" alt="Tin Roof Table Pils being poured with a thick white head" width="800" height="600" loading="lazy">
-              <span class="beer__no" aria-hidden="true">28</span>
-            </div>
-            <div class="beer__body">
-              <h3 class="beer__name">Tin Roof Table Pils</h3>
-              <p class="beer__style">Czech pale lager · 4.6%</p>
-              <p class="beer__notes">Cracker malt and Saaz spice, snappy finish, four-finger head.</p>
-              <div class="beer__bar">
-                <span class="tag">Decoction</span><span class="tag">Saaz</span><span class="tag">7 Weeks Cold</span>
-              </div>
-              <dl class="beer__specs">
-                <div><dt>ABV</dt><dd>4.6%</dd></div>
-                <div><dt>IBU</dt><dd>36</dd></div>
-                <div><dt>SRM</dt><dd>4</dd></div>
-              </dl>
-              <button class="btn btn--ghost btn--sm" type="button" data-open-beer="beer-28" style="margin-top:0.8rem">Open Tasting Note</button>
-            </div>
-          </article>
-
-          <article class="beer" id="beer-88" data-style-group="lager" data-name="Torchlight Märzen" data-style="Märzen / October lager" data-abv="5.7%" data-ibu="24" data-srm="9" data-season="August–October · tap 8" data-notes="Bready Vienna malt, gentle caramel, clean lager bitterness. We brew it in July and cellar it for nine weeks so it lands when the marquee goes up." data-malt="Vienna and Munich 10 with 6% melanoidin malt" data-hops="Spalt and Hallertau Mittelfrüh, 60 and 20 minutes" data-yeast="W-34/70 at 9°C, long cold conditioning at 0.5°C" data-pairing="Ribs, roasted chicken, pretzel and mustard" data-batch="No. 616 · 2,080 L · lagered 63 days" data-availability="Seasonal; cans while the tank lasts" data-img="https://picsum.photos/seed/copperline-brew-4e3d6a38eb80/1600/900?auto=format&fit=crop&w=1000&h=750&q=80" data-alt="Amber lager raised in a glass under marquee lights">
-            <div class="beer__img">
-              <img src="https://picsum.photos/seed/copperline-brew-4e3d6a38eb80/1600/900?auto=format&fit=crop&w=800&h=600&q=80" alt="Glass of Torchlight Marzen amber lager at the autumn marquee" width="800" height="600" loading="lazy">
-              <span class="beer__no" aria-hidden="true">88</span>
-              <span class="beer__season">Seasonal</span>
-            </div>
-            <div class="beer__body">
-              <h3 class="beer__name">Torchlight Märzen</h3>
-              <p class="beer__style">Märzen lager · 5.7%</p>
-              <p class="beer__notes">Bready Vienna malt and soft caramel after nine weeks in the cold room.</p>
-              <div class="beer__bar">
-                <span class="tag">Vienna Malt</span><span class="tag">Autumn</span><span class="tag">Clean Finish</span>
-              </div>
-              <dl class="beer__specs">
-                <div><dt>ABV</dt><dd>5.7%</dd></div>
-                <div><dt>IBU</dt><dd>24</dd></div>
-                <div><dt>SRM</dt><dd>9</dd></div>
-              </dl>
-              <button class="btn btn--ghost btn--sm" type="button" data-open-beer="beer-88" style="margin-top:0.8rem">Open Tasting Note</button>
-            </div>
-          </article>
-
-          <article class="beer" id="beer-24" data-style-group="wild" data-name="Foundry Saison" data-style="Barrel-aged mixed-fermentation saison" data-abv="6.4%" data-ibu="24" data-srm="5" data-season="Barrel release · tap 24, limited" data-notes="Lemon rind, white pepper, hay and a gentle tartness. Eleven months in ex-cider oak with a culture we caught off the west wall in 2016." data-malt="Pilsner malt with 18% spelt and 8% table beet sugar in the ferment" data-hops="Styrian Goldings aged two years, 20 IBU only" data-yeast="Belgian saison strain plus Brettanomyces, pedio and lacto from wall culture WC-3" data-pairing="Mussels, goat cheese, roast chicken with lemon" data-batch="Barrel set B-07 · 300 L · blended with young saison at 3:1" data-availability="Six hundred bottles; four taps tonight" data-img="https://picsum.photos/seed/copperline-brew-1437b06d4eff/1600/900?auto=format&fit=crop&w=1000&h=750&q=80" data-alt="Oak barrels stacked in a dim cellar">
-            <div class="beer__img">
-              <img src="https://picsum.photos/seed/copperline-brew-1437b06d4eff/1600/900?auto=format&fit=crop&w=800&h=600&q=80" alt="Oak barrel row from the Copperline mixed-fermentation programme" width="800" height="600" loading="lazy">
-              <span class="beer__no" aria-hidden="true">24</span>
-              <span class="beer__season">Last Keg</span>
-            </div>
-            <div class="beer__body">
-              <h3 class="beer__name">Foundry Saison</h3>
-              <p class="beer__style">Barrel-aged saison · 6.4%</p>
-              <p class="beer__notes">Lemon rind, hay and white pepper from eleven months in ex-cider oak.</p>
-              <div class="beer__bar">
-                <span class="tag">Oak</span><span class="tag">Mixed Culture</span><span class="tag">Bottled</span>
-              </div>
-              <dl class="beer__specs">
-                <div><dt>ABV</dt><dd>6.4%</dd></div>
-                <div><dt>IBU</dt><dd>24</dd></div>
-                <div><dt>SRM</dt><dd>5</dd></div>
-              </dl>
-              <button class="btn btn--ghost btn--sm" type="button" data-open-beer="beer-24" style="margin-top:0.8rem">Open Tasting Note</button>
-            </div>
-          </article>
-
-          <article class="beer" id="beer-55" data-style-group="wild" data-name="Slack Water Gose" data-style="Gose with sea buckthorn" data-abv="4.2%" data-ibu="9" data-srm="3" data-season="Summer only · tap 55" data-notes="Salt, coriander and sour sea buckthorn, effervescent and pale. Brewed with water we mineralise to the coast profile, then lactic-soured in the tank before boil." data-malt="51% wheat malt, 49% pilsner, no roast of any kind" data-hops="Hallertau Blanc at 6 IBU, just enough to hold the foam" data-yeast="Lactiplantibacillus for 36 hours, then a neutral ale strain at 18°C" data-pairing="Cured fish, salted cucumber, oysters, chips" data-batch="No. 613 · 520 L · 18 g/L sea buckthorn purée" data-availability="Summer, while the tank holds — usually six weeks" data-img="https://picsum.photos/seed/copperline-brew-bd1823d8d2c3/1600/900?auto=format&fit=crop&w=1000&h=750&q=80" data-alt="Pale, cloudy sour wheat beer with sea buckthorn garnish">
-            <div class="beer__img">
-              <img src="https://picsum.photos/seed/copperline-brew-bd1823d8d2c3/1600/900?auto=format&fit=crop&w=800&h=600&q=80" alt="Tall glass of Slack Water Gose, a pale sour wheat beer" width="800" height="600" loading="lazy">
-              <span class="beer__no" aria-hidden="true">55</span>
-              <span class="beer__season">Summer</span>
-            </div>
-            <div class="beer__body">
-              <h3 class="beer__name">Slack Water Gose</h3>
-              <p class="beer__style">Sea buckthorn gose · 4.2%</p>
-              <p class="beer__notes">Salt, crushed coriander and a sharp coastal sourness. Six weeks a year.</p>
-              <div class="beer__bar">
-                <span class="tag">Pre-Boil Sour</span><span class="tag">Sea Buckthorn</span><span class="tag">Salty</span>
-              </div>
-              <dl class="beer__specs">
-                <div><dt>ABV</dt><dd>4.2%</dd></div>
-                <div><dt>IBU</dt><dd>9</dd></div>
-                <div><dt>SRM</dt><dd>3</dd></div>
-              </dl>
-              <button class="btn btn--ghost btn--sm" type="button" data-open-beer="beer-55" style="margin-top:0.8rem">Open Tasting Note</button>
-            </div>
-          </article>
-
-          <article class="beer" id="beer-63" data-style-group="wild" data-name="Barrel No. 6 Tripel" data-style="Oak-aged Belgian tripel" data-abv="9.4%" data-ibu="26" data-srm="6" data-season="December release · bottle shop" data-notes="Pear skin, clove and warm alcohol, with a dry oak tail from six months on Chardonnay barrels. Refermented in the bottle with a wine cap." data-malt="Pilsner malt, 14% candi sugar, 8% white wheat" data-hops="Styrian Goldings and Saaz, 26 IBU" data-yeast="Belgian abbey strain at 22°C with a free rise, Brett at bottling in barrel 20%" data-pairing="Strong cheese, roasted pear, nothing salty" data-batch="Barrel set B-06 · 240 L · bottled 2026, 18+ years stable" data-availability="Bottle shop only, 750 mL, four per customer" data-img="https://picsum.photos/seed/copperline-brew-35e23f1e0792/1600/900?auto=format&fit=crop&w=1000&h=750&q=80" data-alt="Bottle of golden tripel resting in an oak barrel cradle">
-            <div class="beer__img">
-              <img src="https://picsum.photos/seed/copperline-brew-35e23f1e0792/1600/900?auto=format&fit=crop&w=800&h=600&q=80" alt="Bottle shop shelf with Barrel No. 6 Tripel in the Copperline cellar" width="800" height="600" loading="lazy">
-              <span class="beer__no" aria-hidden="true">63</span>
-              <span class="beer__season">December</span>
-            </div>
-            <div class="beer__body">
-              <h3 class="beer__name">Barrel No. 6 Tripel</h3>
-              <p class="beer__style">Oak-aged tripel · 9.4%</p>
-              <p class="beer__notes">Pear skin and clove with a dry oak tail. Bottled under wine caps.</p>
-              <div class="beer__bar">
-                <span class="tag">Wine Cap</span><span class="tag">Chardonnay Oak</span><span class="tag">Cellar 18 Yrs</span>
-              </div>
-              <dl class="beer__specs">
-                <div><dt>ABV</dt><dd>9.4%</dd></div>
-                <div><dt>IBU</dt><dd>26</dd></div>
-                <div><dt>SRM</dt><dd>6</dd></div>
-              </dl>
-              <button class="btn btn--ghost btn--sm" type="button" data-open-beer="beer-63" style="margin-top:0.8rem">Open Tasting Note</button>
-            </div>
-          </article>
-
-          <article class="beer" id="beer-42" data-style-group="seasonal" data-name="Wire Draw Doppelbock" data-style="Doppelbock, winter reserve" data-abv="7.4%" data-ibu="26" data-srm="18" data-season="December–February · tap 42" data-notes="Fig, toffee and toasted walnut with a liqueur-like warmth. Brewed at 19° and aged cold for ten weeks in the same room as the wall." data-malt="Munich 25, 12% Vienna, 6% carafa I for depth without roast" data-hops="Magnum bittering only; the malt does the talking" data-yeast="W-34/70 lager strain, fermented 8°C, ten weeks at −0.5°C" data-pairing="Roast venison, stilton, Christmas pudding, vanilla ice cream" data-batch="No. 601 · 1,040 L · ice-cream-strength cold conditioning" data-availability="Winter only; 180 mL serves by the fire" data-img="https://picsum.photos/seed/copperline-brew-a85eb0a6b6d0/1600/900?auto=format&fit=crop&w=1000&h=750&q=80" data-alt="Deep copper doppelbock in a stemmed glass by a fire">
-            <div class="beer__img">
-              <img src="https://picsum.photos/seed/copperline-brew-a85eb0a6b6d0/1600/900?auto=format&fit=crop&w=800&h=600&q=80" alt="Stemmed glass of Wire Draw Doppelbock beside the taproom fire" width="800" height="600" loading="lazy">
-              <span class="beer__no" aria-hidden="true">42</span>
-              <span class="beer__season">Winter</span>
-            </div>
-            <div class="beer__body">
-              <h3 class="beer__name">Wire Draw Doppelbock</h3>
-              <p class="beer__style">Doppelbock · 7.4%</p>
-              <p class="beer__notes">Fig, toffee and walnut, ten weeks cold. By the fire only.</p>
-              <div class="beer__bar">
-                <span class="tag">Winter</span><span class="tag">10 Weeks Cold</span><span class="tag">Sipping</span>
-              </div>
-              <dl class="beer__specs">
-                <div><dt>ABV</dt><dd>7.4%</dd></div>
-                <div><dt>IBU</dt><dd>26</dd></div>
-                <div><dt>SRM</dt><dd>18</dd></div>
-              </dl>
-              <button class="btn btn--ghost btn--sm" type="button" data-open-beer="beer-42" style="margin-top:0.8rem">Open Tasting Note</button>
-            </div>
-          </article>
-
-          <article class="beer" id="beer-90" data-style-group="seasonal" data-name="Garden Gate Kölsch" data-style="Kölsch, summer cask" data-abv="4.8%" data-ibu="22" data-srm="3" data-season="June–August · cask 4" data-notes="Delicate lemon verbena and white peach, hybrid-fermented warm then cold-stored like a lager. Cask-conditioned so it stays quiet in the heat." data-malt="Pilsner malt with 10% wheat, single infusion at 62°C" data-hops="Hallertau Blanc and Perle, split late additions" data-yeast="Kölsch hybrid strain, 17°C then four weeks at 2°C" data-pairing="Salads, grilled trout, mild herbs, terrace afternoons" data-batch="No. 607 · 520 L · cask only, hand pump" data-availability="Summer casks, 40 pints each" data-img="https://picsum.photos/seed/copperline-brew-1437b06d4eff/1600/900?auto=format&fit=crop&w=1000&h=750&q=80" data-alt="Light golden kolsch in a tall cylindrical glass">
-            <div class="beer__img">
-              <img src="https://picsum.photos/seed/copperline-brew-1437b06d4eff/1600/900?auto=format&fit=crop&w=800&h=600&q=80" alt="Tall glass of Garden Gate Kolsch on the patio table" width="800" height="600" loading="lazy">
-              <span class="beer__no" aria-hidden="true">90</span>
-              <span class="beer__season">Summer</span>
-            </div>
-            <div class="beer__body">
-              <h3 class="beer__name">Garden Gate Kölsch</h3>
-              <p class="beer__style">Kölsch · 4.8%</p>
-              <p class="beer__notes">Lemon verbena and white peach, hybrid-fermented and cold-stored.</p>
-              <div class="beer__bar">
-                <span class="tag">Hybrid Yeast</span><span class="tag">Cask</span><span class="tag">Patio</span>
-              </div>
-              <dl class="beer__specs">
-                <div><dt>ABV</dt><dd>4.8%</dd></div>
-                <div><dt>IBU</dt><dd>22</dd></div>
-                <div><dt>SRM</dt><dd>3</dd></div>
-              </dl>
-              <button class="btn btn--ghost btn--sm" type="button" data-open-beer="beer-90" style="margin-top:0.8rem">Open Tasting Note</button>
-            </div>
-          </article>
-        </div>
-
-        <p class="form-note" style="margin-top:1.5rem">Prices: pint £6.20, half £3.40, thirds of anything over 8% £4.10. Casks are hand-pulled and change at opening. Ask the bar for today's conditioning schedule.</p>
-      </div>
-    </section>
-
-    <!-- ============ STYLE GLOSSARY / SPEC TABLE ============ -->
-    <section class="sec sec--ink" aria-labelledby="glossary-title">
-      <div class="wrap">
-        <div class="sec-head">
-          <p class="stamp">Reading the card</p>
-          <h2 id="glossary-title">ABV, IBU, SRM — Plain Words</h2>
-          <p>Three numbers on every card. Here is what they actually mean before you commit to a pint.</p>
-        </div>
-        <div class="kicker-row">
-          <article class="kicker">
-            <span class="kicker__no">Strength</span>
-            <h3>ABV — Alcohol By Volume</h3>
-            <p>What the yeast ate and turned into alcohol. Under 4.5% drinks light for a full evening; 5–7% is our working range; above 8% we pour thirds and give you water with it.</p>
-          </article>
-          <article class="kicker">
-            <span class="kicker__no">Bitterness</span>
-            <h3>IBU — International Bitterness Units</h3>
-            <p>Measured in the lab, not guessed. Below 25 reads soft, 25–45 balances most ales, above 55 is assertive. Malt hides bitterness: our 32 IBU amber tastes rounder than a 32 IBU pilsner.</p>
-          </article>
-          <article class="kicker">
-            <span class="kicker__no">Colour</span>
-            <h3>SRM — Colour Scale</h3>
-            <p>One is pale straw, ten is copper, thirty is black with a tan head. It comes from the kiln, not the roast — which is why our black lager drinks clean and our amber drinks malty.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ BREWING CALENDAR ============ -->
-    <section class="sec" aria-labelledby="calendar-title">
-      <div class="wrap split">
-        <div class="prose">
-          <p class="stamp">Brewhouse calendar</p>
-          <h2 id="calendar-title">What Lands, And When</h2>
-          <p class="lead">We brew on a Tuesday and Thursday, can on Friday, and change the wall every fortnight. Nothing stays on the list because it is familiar — only because it sold.</p>
-          <ul class="note-list" style="margin-top:1.25rem">
-            <li><b>Jan–Feb</b> — Wire Draw Doppelbock finishes; the lager wall comes back to pilsner</li>
-            <li><b>Mar–Apr</b> — Spring best bitters, fresh-hopped Golden Promise trial brews</li>
-            <li><b>Jun–Aug</b> — Slack Water Gose and Garden Gate Kölsch; patio pours until 23:00</li>
-            <li><b>Sep</b> — wet-hop week; we pick at 06:00 and mash at 14:00 the same day</li>
-            <li><b>Oct</b> — Torchlight Märzen under the marquee, plus the cask club dinner</li>
-            <li><b>Nov–Dec</b> — barrel releases: Foundry Saison, Barrel No. 6 Tripel, winter reserve</li>
+    <section class="page-head">
+      <div class="container">
+        <nav aria-label="Breadcrumb">
+          <ul class="crumbs">
+            <li><a href="index.html">Home</a></li>
+            <li>Beers</li>
           </ul>
+        </nav>
+        <h1>The Board</h1>
+        <p class="lead">Twelve beers brewed in Mill No. 4, poured within forty hours of packaging. Pick a style to
+          narrow the board, then open any pour for malt, hops, bitterness, and what to eat beside it.</p>
+        <div class="hero__actions">
+          <a class="btn btn--ghost" href="visit.html">Tasting Flight · 5 Half Pours · $14</a>
         </div>
-        <div class="panel">
-          <p class="stamp" style="margin-bottom:1rem">Barrel room · 2026</p>
-          <table class="hours" style="border:0">
-            <caption>Barrel sets currently filling</caption>
-            <tbody>
-              <tr><th scope="row">Set B-06 · Chardonnay</th><td>9.4% tripel · bottled Dec</td></tr>
-              <tr><th scope="row">Set B-07 · Cider</th><td>Saison · 4 taps left</td></tr>
-              <tr><th scope="row">Set B-09 · Rye whisky</th><td>Imperial stout · Mar 2027</td></tr>
-              <tr><th scope="row">Set B-10 · Unlined oak</th><td>Wild pale · 24 months in</td></tr>
-              <tr><th scope="row">Set B-11 · Port pipe</th><td>Balsamic-tinged porter · Feb 2027</td></tr>
-            </tbody>
-          </table>
-          <a class="btn btn--ghost btn--sm" href="visit.html#tour" style="margin-top:1.25rem">Tour The Barrel Room</a>
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="container">
+        <div class="filters" role="group" aria-label="Filter beers by style">
+          <button class="chip" type="button" data-filter="all" aria-pressed="true">All Pours</button>
+          <button class="chip" type="button" data-filter="lager" aria-pressed="false">Lager</button>
+          <button class="chip" type="button" data-filter="ipa" aria-pressed="false">IPA</button>
+          <button class="chip" type="button" data-filter="ale" aria-pressed="false">Ale</button>
+          <button class="chip" type="button" data-filter="dark" aria-pressed="false">Dark</button>
+          <button class="chip" type="button" data-filter="wheat" aria-pressed="false">Wheat</button>
+          <button class="chip" type="button" data-filter="specialty" aria-pressed="false">Specialty</button>
+          <p class="meta result-count" id="beer-count" aria-live="polite">12 beers on the board</p>
+        </div>
+
+        <div class="grid grid--3" id="beer-grid" style="margin-top: clamp(1.6rem, 3vw, 2.4rem);">
+
+          <article class="card beer-card" data-style="ale" data-reveal>
+            <div class="card__media"><figure data-clip><img src="https://picsum.photos/seed/copperline-brew-7a5153f8d5f3/1600/900?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Glass of amber ale with a two-finger head resting on a slate coaster" width="800" height="533" loading="lazy"></figure></div>
+            <div class="card__body">
+              <h2 class="card__title">Kiln Side</h2>
+              <p class="card__text">Amber ale toffee, orange peel, and a dry English finish.</p>
+              <div class="tags"><span class="tag tag--spec">5.6% ABV</span><span class="tag tag--spec">30 IBU</span><span class="tag">Amber Ale</span></div>
+              <button class="beer-open" type="button" aria-haspopup="dialog">Open Pour Sheet</button>
+            </div>
+            <template class="beer-detail">
+              <div class="modal__beer-media"><img src="https://picsum.photos/seed/copperline-brew-7a5153f8d5f3/1600/900?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Amber ale poured at the bar, copper light catching the glass" width="1200" height="750"></div>
+              <h3 id="beer-modal-heading" class="modal__title" tabindex="-1">Kiln Side</h3>
+              <p class="modal__sub">Amber Ale · Flagship · Batch M-412</p>
+              <p>The beer that put the mill on the map: a proper English amber built on victory and biscuit malt,
+                hopped with East Kent Goldings, and finished with three days on oak chips from a discarded
+                racking line. Drink it at cellar temperature from the nonic pint and it tastes like the room
+                it came from.</p>
+              <dl class="beer-facts">
+                <div class="fact"><dt>ABV</dt><dd>5.6%</dd></div>
+                <div class="fact"><dt>IBU</dt><dd>30</dd></div>
+                <div class="fact"><dt>Colour</dt><dd>13 SRM</dd></div>
+                <div class="fact"><dt>Original Gravity</dt><dd>1.054</dd></div>
+              </dl>
+              <div class="grid grid--2" style="gap:1.2rem;">
+                <div><h4>Grain &amp; Hops</h4><p class="card__text">Maris Otter, Munich I, victory, cararyl; Goldings and a
+                  dry charge of Strisselspalt.</p></div>
+                <div><h4>Yeast &amp; Water</h4><p class="card__text">House English ale strain #4, reused for nine
+                  generations. Mill well water, 180 ppm sulfate.</p></div>
+              </div>
+              <p><strong>Eat it with:</strong> smoked trout dip on crackers, or the chili-caraway pretzel from
+                Rye &amp; Route next door.</p>
+              <p class="meta">On tap · 16 oz pour $8 · 32 oz crowler $13</p>
+            </template>
+          </article>
+
+          <article class="card beer-card" data-style="ipa" data-reveal>
+            <div class="card__media"><figure data-clip><img src="https://picsum.photos/seed/copperline-brew-bd189efa9ea4/1600/900?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Pale golden IPA with dense white head against a dark brick wall" width="800" height="533" loading="lazy"></figure></div>
+            <div class="card__body">
+              <h2 class="card__title">Wire Pull</h2>
+              <p class="card__text">West Coast IPA. Pine, grapefruit pith, bone dry.</p>
+              <div class="tags"><span class="tag tag--spec">6.8% ABV</span><span class="tag tag--spec">65 IBU</span><span class="tag">IPA</span></div>
+              <button class="beer-open" type="button" aria-haspopup="dialog">Open Pour Sheet</button>
+            </div>
+            <template class="beer-detail">
+              <div class="modal__beer-media"><img src="https://picsum.photos/seed/copperline-brew-bd189efa9ea4/1600/900?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Hop-forward pale ale in a tasting glass on the bar rail" width="1200" height="750"></div>
+              <h3 id="beer-modal-heading" class="modal__title" tabindex="-1">Wire Pull</h3>
+              <p class="modal__sub">West Coast IPA · Flagship · Batch M-415</p>
+              <p>Named for the drawing bench that once ran the length of this room. Wire Pull is fermented cool and
+                conditioned hard until every drop of sweetness is gone, then dry-hopped twice with Simcoe and
+                Centennial. Bitterness is the point, but the malt floor never falls out.</p>
+              <dl class="beer-facts">
+                <div class="fact"><dt>ABV</dt><dd>6.8%</dd></div>
+                <div class="fact"><dt>IBU</dt><dd>65</dd></div>
+                <div class="fact"><dt>Colour</dt><dd>6 SRM</dd></div>
+                <div class="fact"><dt>Original Gravity</dt><dd>1.066</dd></div>
+              </dl>
+              <div class="grid grid--2" style="gap:1.2rem;">
+                <div><h4>Grain &amp; Hops</h4><p class="card__text">Two-row, flaked maize, a little honey malt;
+                  Simcoe, Centennial, Magnum for the boil.</p></div>
+                <div><h4>Yeast &amp; Water</h4><p class="card__text">Chico ale strain, cropped house-side.
+                  Chloride-forward water for a chewy bitterness.</p></div>
+              </div>
+              <p><strong>Eat it with:</strong> beer-braised ribs or the blue cheese arancini, which stands up to
+                the pith.</p>
+              <p class="meta">On tap · 16 oz pour $9 · 4-pack $22</p>
+            </template>
+          </article>
+
+          <article class="card beer-card" data-style="dark" data-reveal>
+            <div class="card__media"><figure data-clip><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Dark stout in a snifter with roasted coffee beans scattered beside it" width="800" height="533" loading="lazy"></figure></div>
+            <div class="card__body">
+              <h2 class="card__title">Night Shift</h2>
+              <p class="card__text">Oatmeal stout brewed with local cold brew.</p>
+              <div class="tags"><span class="tag tag--spec">6.4% ABV</span><span class="tag tag--spec">45 IBU</span><span class="tag">Stout</span></div>
+              <button class="beer-open" type="button" aria-haspopup="dialog">Open Pour Sheet</button>
+            </div>
+            <template class="beer-detail">
+              <div class="modal__beer-media"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Nearly black stout poured slowly, tan head forming in the glass" width="1200" height="750"></div>
+              <h3 id="beer-modal-heading" class="modal__title" tabindex="-1">Night Shift</h3>
+              <p class="modal__sub">Oatmeal Stout · Flagship · Nitro on Tap</p>
+              <p>Brewed at 2 AM, because that is when the kettle frees up, and spiked with a twenty-gallon batch of
+                cold brew from Blue Ridge Roasters three blocks east. Nitro pour gives the body; flaked oats keep it
+                from turning to syrup.</p>
+              <dl class="beer-facts">
+                <div class="fact"><dt>ABV</dt><dd>6.4%</dd></div>
+                <div class="fact"><dt>IBU</dt><dd>45</dd></div>
+                <div class="fact"><dt>Colour</dt><dd>40 SRM</dd></div>
+                <div class="fact"><dt>Original Gravity</dt><dd>1.062</dd></div>
+              </dl>
+              <div class="grid grid--2" style="gap:1.2rem;">
+                <div><h4>Grain &amp; Hops</h4><p class="card__text">Maris Otter, flaked oats, roasted barley,
+                  debittered dark malt; Target in the boil.</p></div>
+                <div><h4>Yeast &amp; Water</h4><p class="card__text">House ale strain, 19 °C. Carbonated on a
+                  nitro widget for the cans.</p></div>
+              </div>
+              <p><strong>Eat it with:</strong> dark chocolate tart, or the fried chicken with hot honey —
+                salt makes the coffee note sing.</p>
+              <p class="meta">On tap (nitro) · 16 oz pour $9 · 16 oz can $10</p>
+            </template>
+          </article>
+
+          <article class="card beer-card" data-style="lager" data-reveal>
+            <div class="card__media"><figure data-clip><img src="https://picsum.photos/seed/copperline-brew-4255b531a645/1600/900?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Copper-red lager in a clean pilsner glass on a wooden table" width="800" height="533" loading="lazy"></figure></div>
+            <div class="card__body">
+              <h2 class="card__title">Copper Penny</h2>
+              <p class="card__text">Vienna-style red lager. Bread crust, clean finish.</p>
+              <div class="tags"><span class="tag tag--spec">4.9% ABV</span><span class="tag tag--spec">24 IBU</span><span class="tag">Lager</span></div>
+              <button class="beer-open" type="button" aria-haspopup="dialog">Open Pour Sheet</button>
+            </div>
+            <template class="beer-detail">
+              <div class="modal__beer-media"><img src="https://picsum.photos/seed/copperline-brew-4255b531a645/1600/900?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Reddish-gold lager with a frothy white head poured at the taps" width="1200" height="750"></div>
+              <h3 id="beer-modal-heading" class="modal__title" tabindex="-1">Copper Penny</h3>
+              <p class="modal__sub">Vienna Lager · Year Round · Batch L-118</p>
+              <p>Seven weeks cold. That is the entire trick. We decoct a third of the mash to build the crust
+                character, then let the lager tank sit at 1 °C until the beer is bright enough to read a menu
+                through. It pours the exact colour of the mill’s copper line.</p>
+              <dl class="beer-facts">
+                <div class="fact"><dt>ABV</dt><dd>4.9%</dd></div>
+                <div class="fact"><dt>IBU</dt><dd>24</dd></div>
+                <div class="fact"><dt>Colour</dt><dd>10 SRM</dd></div>
+                <div class="fact"><dt>Original Gravity</dt><dd>1.048</dd></div>
+              </dl>
+              <div class="grid grid--2" style="gap:1.2rem;">
+                <div><h4>Grain &amp; Hops</h4><p class="card__text">Vienna malt with 8% melanoidin; Saaz and
+                  Hallertau tradition.</p></div>
+                <div><h4>Yeast &amp; Water</h4><p class="card__text">W-34/70 lager strain, cropped and washed
+                  in-house every six weeks.</p></div>
+              </div>
+              <p><strong>Eat it with:</strong> bratwurst, aged gouda, or anything off the plancha.</p>
+              <p class="meta">On tap · 16 oz pour $7 · 4-pack $19</p>
+            </template>
+          </article>
+
+          <article class="card beer-card" data-style="lager" data-reveal>
+            <div class="card__media"><figure data-clip><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Pale golden helles in a stemware glass catching low afternoon light" width="800" height="533" loading="lazy"></figure></div>
+            <div class="card__body">
+              <h2 class="card__title">Rolling Mill</h2>
+              <p class="card__text">Munich helles. Soft, bready, endlessly drinkable.</p>
+              <div class="tags"><span class="tag tag--spec">4.6% ABV</span><span class="tag tag--spec">18 IBU</span><span class="tag">Lager</span></div>
+              <button class="beer-open" type="button" aria-haspopup="dialog">Open Pour Sheet</button>
+            </div>
+            <template class="beer-detail">
+              <div class="modal__beer-media"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Bright straw-colored lager with a soft white head on the bar" width="1200" height="750"></div>
+              <h3 id="beer-modal-heading" class="modal__title" tabindex="-1">Rolling Mill</h3>
+              <p class="modal__sub">Munich Helles · House Pilsner Alternative · Batch L-121</p>
+              <p>The beer we drink after work. Three Pilsner malts, a 90-minute boil for colour stability, and
+                four weeks of conditioning in the cold room cut into the old shipping bay. Designated drivers
+                and second-round philosophers get this one free.</p>
+              <dl class="beer-facts">
+                <div class="fact"><dt>ABV</dt><dd>4.6%</dd></div>
+                <div class="fact"><dt>IBU</dt><dd>18</dd></div>
+                <div class="fact"><dt>Colour</dt><dd>5 SRM</dd></div>
+                <div class="fact"><dt>Original Gravity</dt><dd>1.044</dd></div>
+              </dl>
+              <div class="grid grid--2" style="gap:1.2rem;">
+                <div><h4>Grain &amp; Hops</h4><p class="card__text">Pilsner malt, 5% wheat for head retention;
+                  Hallertau Perle and Sapher.</p></div>
+                <div><h4>Yeast &amp; Water</h4><p class="card__text">Bohemian lager strain, fermented at 9 °C
+                  then lagered hard.</p></div>
+              </div>
+              <p><strong>Eat it with:</strong> soft pretzel with mustard, or the oyster plate on Friday.</p>
+              <p class="meta">On tap · 16 oz pour $7 · 4-pack $19</p>
+            </template>
+          </article>
+
+          <article class="card beer-card" data-style="wheat" data-reveal>
+            <div class="card__media"><figure data-clip><img src="https://picsum.photos/seed/copperline-brew-9049fed747ef/1600/900?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Cloudy pale wheat beer garnished with a lemon wheel in a tall glass" width="800" height="533" loading="lazy"></figure></div>
+            <div class="card__body">
+              <h2 class="card__title">Tin Roof</h2>
+              <p class="card__text">Witbier with coriander, lemon verbena, sea salt.</p>
+              <div class="tags"><span class="tag tag--spec">5.0% ABV</span><span class="tag tag--spec">14 IBU</span><span class="tag">Wheat</span></div>
+              <button class="beer-open" type="button" aria-haspopup="dialog">Open Pour Sheet</button>
+            </div>
+            <template class="beer-detail">
+              <div class="modal__beer-media"><img src="https://picsum.photos/seed/copperline-brew-9049fed747ef/1600/900?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Pale hazy wheat beer poured on a patio table in bright daylight" width="1200" height="750"></div>
+              <h3 id="beer-modal-heading" class="modal__title" tabindex="-1">Tin Roof</h3>
+              <p class="modal__sub">Witbier · Seasonal Patio Pour · Batch M-409</p>
+              <p>Brewed for the twelve days when the patio roof actually is tin and hot. Twenty percent raw
+                wheat, unmilled oat hulls for clarity, and a spice tea of coriander, lemon verbena, and a
+                pinch of North Carolina salt at flameout.</p>
+              <dl class="beer-facts">
+                <div class="fact"><dt>ABV</dt><dd>5.0%</dd></div>
+                <div class="fact"><dt>IBU</dt><dd>14</dd></div>
+                <div class="fact"><dt>Colour</dt><dd>3 SRM</dd></div>
+                <div class="fact"><dt>Original Gravity</dt><dd>1.049</dd></div>
+              </dl>
+              <div class="grid grid--2" style="gap:1.2rem;">
+                <div><h4>Grain &amp; Hops</h4><p class="card__text">Pilsner malt, 20% raw wheat, 5% oats;
+                  Sting hops only, for restraint.</p></div>
+                <div><h4>Yeast &amp; Water</h4><p class="card__text">Belgian wit strain, warm fermented to
+                  pop the phenolics.</p></div>
+              </div>
+              <p><strong>Eat it with:</strong> steamed shrimp, goat cheese salad, or nothing at all on a hot day.</p>
+              <p class="meta">On tap · 16 oz pour $8 · seasonal cans while they last</p>
+            </template>
+          </article>
+
+          <article class="card beer-card" data-style="dark" data-reveal>
+            <div class="card__media"><figure data-clip><img src="https://picsum.photos/seed/copperline-brew-bab1ba2695d1/1600/900?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Dark brown porter in a footed glass beside charred oak barrel staves" width="800" height="533" loading="lazy"></figure></div>
+            <div class="card__body">
+              <h2 class="card__title">Soot &amp; Ember</h2>
+              <p class="card__text">Robust porter with beechwood-smoked malt.</p>
+              <div class="tags"><span class="tag tag--spec">5.9% ABV</span><span class="tag tag--spec">34 IBU</span><span class="tag">Porter</span></div>
+              <button class="beer-open" type="button" aria-haspopup="dialog">Open Pour Sheet</button>
+            </div>
+            <template class="beer-detail">
+              <div class="modal__beer-media"><img src="https://picsum.photos/seed/copperline-brew-bab1ba2695d1/1600/900?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Deep brown porter with cocoa-colored head poured from a copper tap" width="1200" height="750"></div>
+              <h3 id="beer-modal-heading" class="modal__title" tabindex="-1">Soot &amp; Ember</h3>
+              <p class="modal__sub">Smoked Porter · Autumn Cans · Batch M-418</p>
+              <p>A nod to the coal ovens that annealed the wire. Twelve percent beechwood-smoked malt from a
+                Bamberg maltster, plus chocolate and black patent, balanced by enough crystal to keep the smoke
+                company. Cask version gets a second life in the wood room.</p>
+              <dl class="beer-facts">
+                <div class="fact"><dt>ABV</dt><dd>5.9%</dd></div>
+                <div class="fact"><dt>IBU</dt><dd>34</dd></div>
+                <div class="fact"><dt>Colour</dt><dd>33 SRM</dd></div>
+                <div class="fact"><dt>Original Gravity</dt><dd>1.058</dd></div>
+              </dl>
+              <div class="grid grid--2" style="gap:1.2rem;">
+                <div><h4>Grain &amp; Hops</h4><p class="card__text">Beechwood smoked, chocolate, black patent,
+                  crystal 60; Northern brewer.</p></div>
+                <div><h4>Yeast &amp; Water</h4><p class="card__text">House ale strain, free of esters at
+                  18 °C.</p></div>
+              </div>
+              <p><strong>Eat it with:</strong> smoked brisket, or the dark-ale beer cheese we make on Saturdays.</p>
+              <p class="meta">On tap · 16 oz pour $9 · also on cask, limited</p>
+            </template>
+          </article>
+
+          <article class="card beer-card" data-style="ipa" data-reveal>
+            <div class="card__media"><figure data-clip><img src="https://picsum.photos/seed/copperline-brew-3f886ffe07f0/1600/900?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Intensely golden double IPA with hops laid across the bar in front of it" width="800" height="533" loading="lazy"></figure></div>
+            <div class="card__body">
+              <h2 class="card__title">High Tension</h2>
+              <p class="card__text">Double IPA, 8.2%, hop-back saturated.</p>
+              <div class="tags"><span class="tag tag--spec">8.2% ABV</span><span class="tag tag--spec">88 IBU</span><span class="tag">Double IPA</span></div>
+              <button class="beer-open" type="button" aria-haspopup="dialog">Open Pour Sheet</button>
+            </div>
+            <template class="beer-detail">
+              <div class="modal__beer-media"><img src="https://picsum.photos/seed/copperline-brew-3f886ffe07f0/1600/900?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Golden double IPA in a small tulip glass, resinous hop aroma implied by fresh cones nearby" width="1200" height="750"></div>
+              <h3 id="beer-modal-heading" class="modal__title" tabindex="-1">High Tension</h3>
+              <p class="modal__sub">Double IPA · October Release · Batch M-420</p>
+              <p>Our biggest hop bill of the year, and the only beer we brew twice to get right. Two pounds of
+                hops per barrel, a sugar add of sorghum to thin the body, and a release party where the first
+                two hundred pints come with the etched collector glass.</p>
+              <dl class="beer-facts">
+                <div class="fact"><dt>ABV</dt><dd>8.2%</dd></div>
+                <div class="fact"><dt>IBU</dt><dd>88</dd></div>
+                <div class="fact"><dt>Colour</dt><dd>7 SRM</dd></div>
+                <div class="fact"><dt>Original Gravity</dt><dd>1.084</dd></div>
+              </dl>
+              <div class="grid grid--2" style="gap:1.2rem;">
+                <div><h4>Grain &amp; Hops</h4><p class="card__text">Maris Otter plus 8% sorghum; Citra, Nelson
+                  Sauvin, Galaxy dry-hopped at 2 and 4 days.</p></div>
+                <div><h4>Yeast &amp; Water</h4><p class="card__text">English house strain pushed to 21 °C for
+                  stone-fruit esters.</p></div>
+              </div>
+              <p><strong>Eat it with:</strong> jalapeño cheese board, or nothing — one glass is a whole
+                afternoon.</p>
+              <p class="meta">On tap from Oct 24 · 10 oz taster $6 · 32 oz crowler $16</p>
+            </template>
+          </article>
+
+          <article class="card beer-card" data-style="ale" data-reveal>
+            <div class="card__media"><figure data-clip><img src="https://picsum.photos/seed/copperline-brew-6435f375c0b6/1600/900?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Hazy pale ale with soft orange tint in a tulip glass on a bar top" width="800" height="533" loading="lazy"></figure></div>
+            <div class="card__body">
+              <h2 class="card__title">Brass Tack</h2>
+              <p class="card__text">Hazy pale ale: mango, oat milk, soft bitterness.</p>
+              <div class="tags"><span class="tag tag--spec">5.2% ABV</span><span class="tag tag--spec">40 IBU</span><span class="tag">Pale Ale</span></div>
+              <button class="beer-open" type="button" aria-haspopup="dialog">Open Pour Sheet</button>
+            </div>
+            <template class="beer-detail">
+              <div class="modal__beer-media"><img src="https://picsum.photos/seed/copperline-brew-6435f375c0b6/1600/900?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Cloudy golden pale ale with a thick creamy head poured slowly from the tap" width="1200" height="750"></div>
+              <h3 id="beer-modal-heading" class="modal__title" tabindex="-1">Brass Tack</h3>
+              <p class="modal__sub">New England-Style Pale Ale · Year Round · Batch M-414</p>
+              <p>The counter-programming to Wire Pull: same hops, opposite decisions. We bitter late, add oats,
+                and skip the cold crash so the beer stays soft and turbid. Named after the fastener that held
+                the mill’s light fixtures, of which we found four hundred.</p>
+              <dl class="beer-facts">
+                <div class="fact"><dt>ABV</dt><dd>5.2%</dd></div>
+                <div class="fact"><dt>IBU</dt><dd>40</dd></div>
+                <div class="fact"><dt>Colour</dt><dd>5 SRM</dd></div>
+                <div class="fact"><dt>Original Gravity</dt><dd>1.052</dd></div>
+              </dl>
+              <div class="grid grid--2" style="gap:1.2rem;">
+                <div><h4>Grain &amp; Hops</h4><p class="card__text">Golden Promise, flaked oats, white wheat;
+                  Mosaic and Citra, all post-fermentation.</p></div>
+                <div><h4>Yeast &amp; Water</h4><p class="card__text">London cloudy ale strain; high chloride,
+                  low sulfate.</p></div>
+              </div>
+              <p><strong>Eat it with:</strong> fried green tomatoes or the mac-and-crisp sandwich at noon.</p>
+              <p class="meta">On tap · 16 oz pour $8 · 4-pack $21</p>
+            </template>
+          </article>
+
+          <article class="card beer-card" data-style="lager" data-reveal>
+            <div class="card__media"><figure data-clip><img src="https://picsum.photos/seed/copperline-brew-192fa07ceb11/1600/900?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Amber-amber smoked lager in a stoneware mug on a rustic counter" width="800" height="533" loading="lazy"></figure></div>
+            <div class="card__body">
+              <h2 class="card__title">Slag Line</h2>
+              <p class="card__text">Smoked lager, faintly mineral, dead clean.</p>
+              <div class="tags"><span class="tag tag--spec">5.1% ABV</span><span class="tag tag--spec">26 IBU</span><span class="tag">Rauchbier</span></div>
+              <button class="beer-open" type="button" aria-haspopup="dialog">Open Pour Sheet</button>
+            </div>
+            <template class="beer-detail">
+              <div class="modal__beer-media"><img src="https://picsum.photos/seed/copperline-brew-192fa07ceb11/1600/900?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Smoky amber lager served in a handleless glass beside a cast iron tool" width="1200" height="750"></div>
+              <h3 id="beer-modal-heading" class="modal__title" tabindex="-1">Slag Line</h3>
+              <p class="modal__sub">Smoked Lager · Taproom Only · Batch L-124</p>
+              <p>Only eight barrels of this, because the smoke malt is milled in the building across the alley and
+                we use 40% of it. Lagered six weeks so the smoke reads as aroma rather as ash. The brewery’s
+                sommelier beer — it cuts through fat and does not fight whiskey.</p>
+              <dl class="beer-facts">
+                <div class="fact"><dt>ABV</dt><dd>5.1%</dd></div>
+                <div class="fact"><dt>IBU</dt><dd>26</dd></div>
+                <div class="fact"><dt>Colour</dt><dd>9 SRM</dd></div>
+                <div class="fact"><dt>Original Gravity</dt><dd>1.050</dd></div>
+              </dl>
+              <div class="grid grid--2" style="gap:1.2rem;">
+                <div><h4>Grain &amp; Hops</h4><p class="card__text">40% beechwood smoked Pilsner malt; Spalt
+                  select for a faintly floral bitterness.</p></div>
+                <div><h4>Yeast &amp; Water</h4><p class="card__text">House lager strain, fermented cold and
+                  long.</p></div>
+              </div>
+              <p><strong>Eat it with:</strong> ham hock, grilled onion, or the smoked almonds we keep at the bar.</p>
+              <p class="meta">Taproom only · 16 oz pour $10 · never canned</p>
+            </template>
+          </article>
+
+          <article class="card beer-card" data-style="lager" data-reveal>
+            <div class="card__media"><figure data-clip><img src="https://picsum.photos/seed/copperline-brew-482665534263/1600/900?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Pale crisp session pilsner in a slim glass on a bright bar" width="800" height="533" loading="lazy"></figure></div>
+            <div class="card__body">
+              <h2 class="card__title">Anvil Light</h2>
+              <p class="card__text">Session pilsner, 4.4%, for the second hour.</p>
+              <div class="tags"><span class="tag tag--spec">4.4% ABV</span><span class="tag tag--spec">38 IBU</span><span class="tag">Session Pilsner</span></div>
+              <button class="beer-open" type="button" aria-haspopup="dialog">Open Pour Sheet</button>
+            </div>
+            <template class="beer-detail">
+              <div class="modal__beer-media"><img src="https://picsum.photos/seed/copperline-brew-482665534263/1600/900?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Light golden pilsner with a snappy head served in a stemmed glass" width="1200" height="750"></div>
+              <h3 id="beer-modal-heading" class="modal__title" tabindex="-1">Anvil Light</h3>
+              <p class="modal__sub">Session Pilsner · Weekday Pour · Batch L-126</p>
+              <p>Low gravity, higher bitterness than you would expect, and thirty-one days on the cold side.
+                Brewed for the four o’clock regulars who intend to walk home. If you only try one Copperline lager,
+                this is the one that shows the cold room.</p>
+              <dl class="beer-facts">
+                <div class="fact"><dt>ABV</dt><dd>4.4%</dd></div>
+                <div class="fact"><dt>IBU</dt><dd>38</dd></div>
+                <div class="fact"><dt>Colour</dt><dd>4 SRM</dd></div>
+                <div class="fact"><dt>Original Gravity</dt><dd>1.040</dd></div>
+              </dl>
+              <div class="grid grid--2" style="gap:1.2rem;">
+                <div><h4>Grain &amp; Hops</h4><p class="card__text">Weyerman Pilsner malt with 10% Munich; Saaz
+                  in three additions.</p></div>
+                <div><h4>Yeast &amp; Water</h4><p class="card__text">Czech lager strain, open fermentation,
+                  then six weeks cold.</p></div>
+              </div>
+              <p><strong>Eat it with:</strong> salted fish, potato chips, or a long conversation.</p>
+              <p class="meta">On tap · 16 oz pour $7 · $5 before 6 PM Monday–Wednesday</p>
+            </template>
+          </article>
+
+          <article class="card beer-card" data-style="specialty" data-reveal>
+            <div class="card__media"><figure data-clip><img src="https://picsum.photos/seed/copperline-brew-69354a8bf282/1600/900?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Deep ruby barleywine in a snifter next to oak barrel staves in a dim cellar" width="800" height="533" loading="lazy"></figure></div>
+            <div class="card__body">
+              <h2 class="card__title">Ironwork No. 7</h2>
+              <p class="card__text">Bourbon-barleywine, 22 months in oak.</p>
+              <div class="tags"><span class="tag tag--spec">10.2% ABV</span><span class="tag tag--spec">55 IBU</span><span class="tag tag--moss">Limited</span></div>
+              <button class="beer-open" type="button" aria-haspopup="dialog">Open Pour Sheet</button>
+            </div>
+            <template class="beer-detail">
+              <div class="modal__beer-media"><img src="https://picsum.photos/seed/copperline-brew-69354a8bf282/1600/900?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Dark ruby barrel-aged barleywine poured in a small tulip glass in a wood room" width="1200" height="750"></div>
+              <h3 id="beer-modal-heading" class="modal__title" tabindex="-1">Ironwork No. 7</h3>
+              <p class="modal__sub">Barrel-Aged Barleywine · 600 Bottles · Release Dec 5</p>
+              <p>Brewed once a year for the seventh anniversary of the first pour, then put into fourth-use
+                Kentucky bourbon barrels in the wood room behind the cold store. Twenty-two months later it comes
+                out as vanilla, dried fig, and leather, with almost none of the heat you would fear from 10.2%.</p>
+              <dl class="beer-facts">
+                <div class="fact"><dt>ABV</dt><dd>10.2%</dd></div>
+                <div class="fact"><dt>IBU</dt><dd>55</dd></div>
+                <div class="fact"><dt>Colour</dt><dd>18 SRM</dd></div>
+                <div class="fact"><dt>Original Gravity</dt><dd>1.104</dd></div>
+              </dl>
+              <div class="grid grid--2" style="gap:1.2rem;">
+                <div><h4>Grain &amp; Hops</h4><p class="card__text">Maris Otter, golden naked oats, 12% crystal
+                  120; Perle and Fuggle.</p></div>
+                <div><h4>Barrel Program</h4><p class="card__text">Eleven bourbon barrels, blended at
+                  bottling; 2% caraway for the seam.</p></div>
+              </div>
+              <p><strong>Eat it with:</strong> Stilton and quince, or a square of 80 percent chocolate. Sip at
+                cellar temperature.</p>
+              <p class="meta">Bottle release Dec 5, 11 AM · $22 for 500 ml · limit two per person</p>
+            </template>
+          </article>
+        </div>
+
+        <p class="lead" id="beer-empty" hidden style="margin-top:2rem;">No pours match that style right now — the
+          board changes with the season. Try another filter or ask the bar for the latest cask finish.</p>
+      </div>
+    </section>
+
+    <svg class="divider" viewBox="0 0 1200 26" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path d="M4 16c60-13 118 9 178-2s120-14 182 1 124 12 186-3 128-11 190 4 118 6 176-6 106-4 196 6"/>
+    </svg>
+
+    <!-- ── Process split ── -->
+    <section class="section">
+      <div class="container split">
+        <div class="split__media">
+          <div class="frame" data-drift>
+            <figure data-clip>
+              <img src="https://picsum.photos/seed/copperline-brew-52585f298332/1600/900?auto=format&amp;fit=crop&amp;w=900&amp;q=80"
+                   alt="Brewer checking gauge valves on copper brewhouse pipework"
+                   width="900" height="1125" loading="lazy">
+            </figure>
+            <figcaption class="frame__caption">Mash Filter · 15 bbl, four vessels</figcaption>
+          </div>
+        </div>
+        <div class="split__copy">
+          <p class="eyebrow" data-reveal>How the Board Fills</p>
+          <h2 data-reveal>Fourteen Days from Grain to Glass</h2>
+          <p data-reveal>Mill No. 4 runs a two-week cycle for ale and a five-week cycle for lager. We mash at 6:30 AM,
+            the yard birds hop the same morning, and cans move across the alley to the cold store by Thursday.</p>
+          <ul class="timeline" style="margin-top:1.6rem;">
+            <li data-reveal><span class="timeline__year">Day 1</span><strong>Mash &amp; lauter.</strong> Floor malt from
+              the Weyerman line, decocted for the lagers.</li>
+            <li data-reveal><span class="timeline__year">Day 2–4</span><strong>Boil &amp; whirlpool.</strong> Ninety
+              minutes for colour stability, hop-back at flameout.</li>
+            <li data-reveal><span class="timeline__year">Day 5–9</span><strong>Fermentation.</strong> Open tops for the
+              English strains, conical for everything else.</li>
+            <li data-reveal><span class="timeline__year">Day 10–13</span><strong>Dry hop &amp; cold crash.</strong> Two
+              charges, then down to 1 °C without gelatin.</li>
+            <li data-reveal><span class="timeline__year">Day 14</span><strong>Package or pour.</strong> Cans stamped with
+              the mill-shift number and the day they left the filler.</li>
+          </ul>
+          <div class="hero__actions" data-reveal>
+            <a class="btn btn--ghost" href="our-story.html">Meet the People Behind It</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight section--panel">
+      <div class="container split split--reverse">
+        <div class="split__media">
+          <div style="display:flex; justify-content:center;">
+            <div class="seal seal--sm" data-reveal><span><b>ASK</b>For the<br>Tasting<br>Flight</span></div>
+          </div>
+        </div>
+        <div class="split__copy">
+          <p class="eyebrow" data-reveal>Not Sure Where to Start?</p>
+          <h2 data-reveal>Order the Flight, Pick the Pint</h2>
+          <p data-reveal>Five half pours for fourteen dollars, arranged light to dark on a hickory paddle cut from the
+            mill’s old conveyor frame. If you find the one you want, the difference comes off your next full pour.</p>
+          <div class="hero__actions" data-reveal>
+            <a class="btn" href="visit.html">Taproom Hours &amp; Directions</a>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- ============ BEER DETAIL MODAL ============ -->
-  <div class="overlay" id="beer-modal" hidden>
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="beer-modal-name">
-      <div class="modal__grid">
-        <div class="modal__media" style="position:relative">
-          <button class="modal__close" type="button" data-close aria-label="Close beer details">✕</button>
-          <img data-field="img" src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1000&q=80" alt="Beer from Copperline Brewing Co." width="1000" height="750">
-        </div>
-        <div class="modal__body">
-          <p class="stamp">Cellar card</p>
-          <h2 id="beer-modal-name" data-field="name">Firebox Amber</h2>
-          <p class="beer__style" data-field="style">American amber ale</p>
-          <p data-field="notes">Toffee and orange marmalade over a dry biscuit base.</p>
-
-          <table class="spectable">
-            <caption class="vh">Brewing specifications for this beer</caption>
-            <tbody>
-              <tr><th scope="row">Alcohol</th><td data-field="abv">5.4%</td></tr>
-              <tr><th scope="row">Bitterness</th><td data-field="ibu">32 IBU</td></tr>
-              <tr><th scope="row">Colour</th><td data-field="srm">14 SRM</td></tr>
-              <tr><th scope="row">Pouring now</th><td data-field="season">Year round</td></tr>
-              <tr><th scope="row">Malt bill</th><td data-field="malt">Maris Otter, crystal 60</td></tr>
-              <tr><th scope="row">Hops</th><td data-field="hops">Goldings, Fuggle</td></tr>
-              <tr><th scope="row">Yeast</th><td data-field="yeast">House NC-111</td></tr>
-              <tr><th scope="row">Batch log</th><td data-field="batch">No. 621</td></tr>
-              <tr><th scope="row">Drink it with</th><td data-field="pairing">Pork pie, cheddar</td></tr>
-              <tr><th scope="row">How to get it</th><td data-field="availability">Tap and can</td></tr>
-            </tbody>
-          </table>
-
-          <div class="meter">
-            <div class="meter__row">
-              <span>Bitterness</span>
-              <div class="meter__track"><div class="meter__fill" data-meter="bitter" style="width:32%"></div></div>
-              <span data-meter-label="bitter">32</span>
-            </div>
-            <div class="meter__row">
-              <span>Strength</span>
-              <div class="meter__track"><div class="meter__fill" data-meter="strength" style="width:45%"></div></div>
-              <span data-meter-label="strength">5.4</span>
-            </div>
-            <div class="meter__row">
-              <span>Colour</span>
-              <div class="meter__track"><div class="meter__fill" data-meter="color" style="width:18%"></div></div>
-              <span data-meter-label="color">14</span>
-            </div>
-          </div>
-
-          <div class="btn-row" style="margin-top:1.6rem">
-            <a class="btn" href="visit.html">Come Drink It</a>
-            <a class="btn btn--ghost" href="events.html#merch">Take Cans Home</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <footer class="site-footer">
-    <div class="hazard-rule" aria-hidden="true"></div>
-    <div class="wrap">
-      <div class="footer-top">
-        <div class="footer-col footer-brand">
-          <a class="brand" href="index.html">
-            <span class="brand__mark" aria-hidden="true">C</span>
-            <span class="brand__text">
-              <span class="brand__name">Copperline</span>
-              <span class="brand__sub">Brewing Co. · Est. 2012</span>
-            </span>
+    <div class="container">
+      <div class="site-footer__grid">
+        <div>
+          <a class="brand" href="index.html" style="margin-bottom:1rem;">
+            <svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+              <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="2.5"/>
+              <path d="M12 17h24M12 24h24M12 31h24" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.75"/>
+              <path d="M24 6c-6 6-6 30 0 36" fill="none" stroke="currentColor" stroke-width="2.5"/>
+            </svg>
+            <span>Copperline<small>Brewing Co.</small></span>
           </a>
-          <p>A twelve-barrel brewery, bottle shop and taproom inside Foundry No. 4 on Foundry Row. Copper pipework, cold beer, honest numbers.</p>
-          <form class="subscribe" data-form="newsletter" novalidate>
-            <label class="vh" for="footer-email">Email address for the weekly keg list</label>
-            <input id="footer-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
-            <button class="btn btn--sm" type="submit">Get The List</button>
-            <p class="form-status" data-form-status hidden role="status" aria-live="polite"></p>
-          </form>
+          <p class="legal-note">Brewed, canned, and poured in Mill No. 4 since 2014. Bottle shop open whenever the
+            taproom is.</p>
         </div>
-        <div class="footer-col">
-          <h3>Site</h3>
+        <div>
+          <h2 class="site-footer__heading">Explore</h2>
           <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="beers.html">Beers</a></li>
+            <li><a href="beers.html">Beers &amp; Tap List</a></li>
             <li><a href="our-story.html">Our Story</a></li>
-            <li><a href="visit.html">Visit</a></li>
+            <li><a href="visit.html">Visit the Taproom</a></li>
             <li><a href="events.html">Events &amp; Merch</a></li>
           </ul>
         </div>
-        <div class="footer-col">
-          <h3>Taproom</h3>
+        <div>
+          <h2 class="site-footer__heading">Taproom</h2>
           <ul>
-            <li>14 Foundry Row</li>
-            <li>Iron Quarter</li>
-            <li><a href="tel:+15550117446">+1 555 011 7446</a></li>
-            <li><a href="mailto:taproom@copperline.example">taproom@copperline.example</a></li>
-            <li>Wed–Sun 11:00–23:00 · Mon–Tue closed</li>
+            <li>2147 Foundry Row</li>
+            <li>Asheville, NC 28806</li>
+            <li><a href="tel:+18285550147">(828) 555-0147</a></li>
+            <li><a href="mailto:hello@copperlinebrew.example">hello@copperlinebrew.example</a></li>
           </ul>
+          <p class="meta" style="margin-top:0.8rem;">Tue–Thu 4–11 PM<br>Fri–Sat 12 PM–midnight<br>Sun 12–9 PM · Mon closed</p>
         </div>
-        <div class="footer-col">
-          <h3>Follow The Line</h3>
-          <div class="social">
-            <a href="https://www.instagram.com" aria-label="Copperline Brewing on Instagram" rel="noopener" target="_blank">IG</a>
-            <a href="https://www.facebook.com" aria-label="Copperline Brewing on Facebook" rel="noopener" target="_blank">FB</a>
-            <a href="https://untappd.com" aria-label="Copperline Brewing on Untappd" rel="noopener" target="_blank">UT</a>
-            <a href="mailto:taproom@copperline.example" aria-label="Email Copperline Brewing">ML</a>
-          </div>
-          <ul style="margin-top:1.2rem">
-            <li><a href="visit.html#tour">Cellar tours</a></li>
-            <li><a href="visit.html#private">Private hire</a></li>
-            <li><a href="events.html#merch">Merch &amp; cans to take home</a></li>
+        <div>
+          <h2 class="site-footer__heading">Good to Know</h2>
+          <ul>
+            <li>21+ after 8 PM, all ages until then</li>
+            <li>Well water, floor malt, no shortcuts</li>
+            <li>Sell-by dates stamped on every can</li>
+            <li>Designated driver gets a free Rolling Mill</li>
           </ul>
         </div>
       </div>
-      <div class="footer-bottom">
-        <span>© <span data-year>2026</span> Copperline Brewing Co. · Licence 44-B-1911</span>
-        <span>Drink responsibly · 21 and over only</span>
-        <span>Brewed, canned and cellared on Foundry Row</span>
+      <div class="site-footer__fine">
+        <p style="margin:0;">© <span id="year">2026</span> Copperline Brewing Co. · Please enjoy Copperline responsibly.</p>
+        <p class="legal-note" style="margin:0;">Drinks are poured by licensed bartenders. Never drink and drive —
+          rideshare pickup is at the east gate.</p>
       </div>
-      <p class="footer-legal">Please do not drink and drive. Our patio is covered, our taxi rank is on Bellhouse Gate, and we will happily pour you a soda while you wait.</p>
     </div>
   </footer>
 
-  <script src="app.js" defer></script>
+  <!-- ── Beer detail modal ── -->
+  <div class="modal" id="beer-modal" role="dialog" aria-modal="true" aria-labelledby="beer-modal-heading" hidden>
+    <div class="modal__scrim"></div>
+    <div class="modal__panel">
+      <button class="modal__close" type="button" id="beer-modal-close" aria-label="Close pour sheet">✕</button>
+      <div id="beer-modal-body"></div>
+    </div>
+  </div>
 <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
 </html>
