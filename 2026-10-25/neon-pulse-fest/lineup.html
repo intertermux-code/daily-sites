@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lineup — Neon Pulse 2026: 33 Artists Filterable by Day and Stage</title>
+<meta name="description" content="The Neon Pulse 2026 bill: 32 of 42 artists announced across Main Pulse, Magenta Dome, Cyan Bunker and Afterglow. Filter by day, stage or name and see exact set times.">
+<meta name="theme-color" content="#050308">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800&family=Major+Mono+Display&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="crt" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="masthead">
+  <div class="masthead__inner">
+    <a class="brand" href="index.html">neon<b>pulse</b><i>_26</i></a>
+    <button class="nav__toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open or close the navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="primary-nav" data-open="false" aria-label="Primary">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="index.html">Home</a></li>
+        <li><a class="nav__link" href="lineup.html" aria-current="page">Lineup</a></li>
+        <li><a class="nav__link" href="tickets.html">Tickets</a></li>
+        <li><a class="nav__link" href="info.html">Info</a></li>
+        <li><a class="nav__link" href="gallery.html">Gallery</a></li>
+      </ul>
+    </nav>
+    <p class="tchip" id="tchip">Gates in <span>—</span></p>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="pagehero" aria-labelledby="page-title">
+    <div class="wrap stack">
+      <p class="kicker">Lineup · Announced 12 Oct 2026</p>
+      <h1 id="page-title" class="h-lg" data-stagger data-stagger-onload>The 2026 <span class="glow-mag">Bill</span></h1>
+      <p class="lead">
+        Thirty-three artists confirmed, nine slots still held for the 20 November drop.
+        Filter the grid by night or by room — set times are final unless the schedule log
+        says otherwise, and every chain runs hand-to-hand with no dead air.
+      </p>
+      <div class="pagehero__bar">
+        <span>Days: <b>Fri 18 – Sun 20 Dec</b></span>
+        <span>Rooms: <b>4</b></span>
+        <span>Announced: <b>33 / 42</b></span>
+        <span>Next drop: <b>20 Nov, 09:00 EST</b></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter chapter--short" aria-labelledby="filter-title">
+    <div class="wrap stack">
+      <div class="term">
+        <div class="term__bar"><span class="term__dots" aria-hidden="true"><i></i><i></i><i></i></span> lineup — <b>query.sh</b></div>
+        <div class="term__body">
+          <h2 id="filter-title" class="visually-hidden">Filter the lineup</h2>
+          <div class="filters">
+            <div class="filters__group">
+              <p class="filters__legend" id="legend-day">Filter by day</p>
+              <div class="chips" role="group" aria-labelledby="legend-day">
+                <button class="chip" type="button" data-filter-group="day" data-value="all" aria-pressed="true">All three nights</button>
+                <button class="chip" type="button" data-filter-group="day" data-value="fri" aria-pressed="false">Fri 18 Dec</button>
+                <button class="chip" type="button" data-filter-group="day" data-value="sat" aria-pressed="false">Sat 19 Dec</button>
+                <button class="chip" type="button" data-filter-group="day" data-value="sun" aria-pressed="false">Sun 20 Dec</button>
+              </div>
+            </div>
+            <div class="filters__group">
+              <p class="filters__legend" id="legend-stage">Filter by stage</p>
+              <div class="chips" role="group" aria-labelledby="legend-stage">
+                <button class="chip" type="button" data-filter-group="stage" data-value="all" aria-pressed="true">All stages</button>
+                <button class="chip" type="button" data-filter-group="stage" data-value="main-pulse" aria-pressed="false">Main Pulse</button>
+                <button class="chip" type="button" data-filter-group="stage" data-value="magenta-dome" aria-pressed="false">Magenta Dome</button>
+                <button class="chip" type="button" data-filter-group="stage" data-value="cyan-bunker" aria-pressed="false">Cyan Bunker</button>
+                <button class="chip" type="button" data-filter-group="stage" data-value="afterglow" aria-pressed="false">Afterglow</button>
+              </div>
+            </div>
+            <div class="filters__group">
+              <label class="filters__legend" for="act-search">Search the bill</label>
+              <div class="search">
+                <span class="search__glyph" aria-hidden="true">$</span>
+                <input id="act-search" type="search" placeholder="artist, genre or format — try “drum &amp; bass”" autocomplete="off">
+              </div>
+            </div>
+            <div class="filters__group" style="flex-direction:row; display:flex; align-items:center; gap:1rem; flex-wrap:wrap">
+              <p class="note" id="act-count" role="status" aria-live="polite">33 acts</p>
+              <button class="btn btn--ghost" id="filter-clear" type="button" style="min-height:44px">Reset filters</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter chapter--short" id="bill" aria-labelledby="bill-title">
+    <div class="wrap stack">
+      <h2 id="bill-title" class="visually-hidden">Announced artists</h2>
+      <div class="acts" id="act-grid">
+
+        <!-- ============ FRIDAY ============ -->
+        <article class="act" data-day="fri" data-stage="main-pulse" data-genre="melodic house dj set">
+          <p class="act__day">Fri 18 Dec · Opener</p>
+          <h3 class="act__name">Glass Harbour</h3>
+          <p class="act__genre">Melodic house · DJ set</p>
+          <p class="act__slot"><span>Main Pulse</span> 18:10–19:20</p>
+        </article>
+        <article class="act" data-day="fri" data-stage="magenta-dome" data-genre="modular live electro">
+          <p class="act__day">Fri 18 Dec</p>
+          <h3 class="act__name">Kat Cassini</h3>
+          <p class="act__genre">Live modular · solo rig</p>
+          <p class="act__slot"><span>Magenta Dome</span> 19:20–20:30</p>
+        </article>
+        <article class="act" data-day="fri" data-stage="cyan-bunker" data-genre="hard techno">
+          <p class="act__day">Fri 18 Dec</p>
+          <h3 class="act__name">Delta Noir</h3>
+          <p class="act__genre">Hard techno · DJ set</p>
+          <p class="act__slot"><span>Cyan Bunker</span> 20:30–22:00</p>
+        </article>
+        <article class="act" data-day="fri" data-stage="magenta-dome" data-genre="live a/v techno">
+          <p class="act__day">Fri 18 Dec</p>
+          <h3 class="act__name">Phosphor</h3>
+          <p class="act__genre">Live A/V · 360° projection</p>
+          <p class="act__slot"><span>Magenta Dome</span> 21:45–23:00</p>
+        </article>
+        <article class="act" data-day="fri" data-stage="cyan-bunker" data-genre="acid electro">
+          <p class="act__day">Fri 18 Dec</p>
+          <h3 class="act__name">Tombstone Radio</h3>
+          <p class="act__genre">Acid electro · live PA</p>
+          <p class="act__slot"><span>Cyan Bunker</span> 22:00–23:20</p>
+        </article>
+        <article class="act" data-day="fri" data-stage="main-pulse" data-genre="techno dj set">
+          <p class="act__day">Fri 18 Dec</p>
+          <h3 class="act__name">Monolith Jr</h3>
+          <p class="act__genre">Techno · DJ set</p>
+          <p class="act__slot"><span>Main Pulse</span> 23:00–00:30</p>
+        </article>
+        <article class="act" data-day="fri" data-stage="main-pulse" data-genre="live headline techno">
+          <p class="act__day">Fri 18 Dec · Headline</p>
+          <h3 class="act__name glow-mag">Voltage Saint</h3>
+          <p class="act__genre">Live A/V headline · 90 min</p>
+          <p class="act__slot"><span>Main Pulse</span> 00:30–02:00</p>
+        </article>
+        <article class="act" data-day="fri" data-stage="magenta-dome" data-genre="melodic techno dj set">
+          <p class="act__day">Fri 18 Dec</p>
+          <h3 class="act__name">Sister Signal</h3>
+          <p class="act__genre">Melodic techno · DJ set</p>
+          <p class="act__slot"><span>Magenta Dome</span> 01:15–02:45</p>
+        </article>
+        <article class="act" data-day="fri" data-stage="cyan-bunker" data-genre="drum and bass">
+          <p class="act__day">Fri 18 Dec</p>
+          <h3 class="act__name">CRT Ghost</h3>
+          <p class="act__genre">Drum &amp; bass · DJ set</p>
+          <p class="act__slot"><span>Cyan Bunker</span> 02:10–03:30</p>
+        </article>
+        <article class="act" data-day="fri" data-stage="afterglow" data-genre="ambient dub seated">
+          <p class="act__day">Fri 18 Dec · Late</p>
+          <h3 class="act__name">Subnet</h3>
+          <p class="act__genre">Ambient · seated, tea service</p>
+          <p class="act__slot"><span>Afterglow</span> 03:30–06:00</p>
+        </article>
+
+        <!-- ============ SATURDAY ============ -->
+        <article class="act" data-day="sat" data-stage="main-pulse" data-genre="downtempo open air">
+          <p class="act__day">Sat 19 Dec · Opener</p>
+          <h3 class="act__name">Halcyon Drift</h3>
+          <p class="act__genre">Downtempo · live band</p>
+          <p class="act__slot"><span>Main Pulse</span> 16:20–17:40</p>
+        </article>
+        <article class="act" data-day="sat" data-stage="magenta-dome" data-genre="electro live pa">
+          <p class="act__day">Sat 19 Dec</p>
+          <h3 class="act__name">Anomie</h3>
+          <p class="act__genre">Electro · live PA</p>
+          <p class="act__slot"><span>Magenta Dome</span> 17:30–18:40</p>
+        </article>
+        <article class="act" data-day="sat" data-stage="cyan-bunker" data-genre="jungle reggae bass">
+          <p class="act__day">Sat 19 Dec</p>
+          <h3 class="act__name">Bass Meridian</h3>
+          <p class="act__genre">Jungle · sound-system rig</p>
+          <p class="act__slot"><span>Cyan Bunker</span> 18:40–20:00</p>
+        </article>
+        <article class="act" data-day="sat" data-stage="main-pulse" data-genre="house dj set">
+          <p class="act__day">Sat 19 Dec</p>
+          <h3 class="act__name">Kilowatt Kid</h3>
+          <p class="act__genre">Warehouse house · DJ set</p>
+          <p class="act__slot"><span>Main Pulse</span> 20:00–21:30</p>
+        </article>
+        <article class="act" data-day="sat" data-stage="cyan-bunker" data-genre="hard techno industrial">
+          <p class="act__day">Sat 19 Dec</p>
+          <h3 class="act__name">Ferro-Concrete</h3>
+          <p class="act__genre">Industrial techno · DJ set</p>
+          <p class="act__slot"><span>Cyan Bunker</span> 21:00–22:30</p>
+        </article>
+        <article class="act" data-day="sat" data-stage="magenta-dome" data-genre="melodic techno live a/v">
+          <p class="act__day">Sat 19 Dec</p>
+          <h3 class="act__name">Yuki Parade</h3>
+          <p class="act__genre">Live A/V · laser-free projection</p>
+          <p class="act__slot"><span>Magenta Dome</span> 22:00–23:30</p>
+        </article>
+        <article class="act" data-day="sat" data-stage="main-pulse" data-genre="techno dj set">
+          <p class="act__day">Sat 19 Dec</p>
+          <h3 class="act__name">Static Sermon</h3>
+          <p class="act__genre">Techno · DJ set</p>
+          <p class="act__slot"><span>Main Pulse</span> 22:40–00:10</p>
+        </article>
+        <article class="act" data-day="sat" data-stage="main-pulse" data-genre="peak techno dj set">
+          <p class="act__day">Sat 19 Dec</p>
+          <h3 class="act__name">Delphi Stack</h3>
+          <p class="act__genre">Peak-time techno · DJ set</p>
+          <p class="act__slot"><span>Main Pulse</span> 00:10–01:30</p>
+        </article>
+        <article class="act" data-day="sat" data-stage="magenta-dome" data-genre="headline special two hour">
+          <p class="act__day">Sat 19 Dec · Headline</p>
+          <h3 class="act__name glow-mag">Nullbyte</h3>
+          <p class="act__genre">128→174 BPM special · 2 hrs</p>
+          <p class="act__slot"><span>Magenta Dome</span> 01:00–03:00</p>
+        </article>
+        <article class="act" data-day="sat" data-stage="cyan-bunker" data-genre="drum and bass live mix">
+          <p class="act__day">Sat 19 Dec</p>
+          <h3 class="act__name">Hex Mother</h3>
+          <p class="act__genre">Drum &amp; bass · live mix</p>
+          <p class="act__slot"><span>Cyan Bunker</span> 01:20–03:00</p>
+        </article>
+        <article class="act" data-day="sat" data-stage="afterglow" data-genre="dub ambient">
+          <p class="act__day">Sat 19 Dec · Late</p>
+          <h3 class="act__name">Pale Circuit</h3>
+          <p class="act__genre">Dub ambient · seated</p>
+          <p class="act__slot"><span>Afterglow</span> 02:40–05:00</p>
+        </article>
+        <article class="act" data-day="sat" data-stage="cyan-bunker" data-genre="techno closing">
+          <p class="act__day">Sat 19 Dec · Late</p>
+          <h3 class="act__name">Tundra Beat</h3>
+          <p class="act__genre">Slow techno · bunker close</p>
+          <p class="act__slot"><span>Cyan Bunker</span> 03:10–04:00</p>
+        </article>
+        <article class="act" data-day="sat" data-stage="afterglow" data-genre="ambient sunrise">
+          <p class="act__day">Sun 20 Dec · Sunrise</p>
+          <h3 class="act__name">Low Orbit</h3>
+          <p class="act__genre">Ambient sunrise · pier deck</p>
+          <p class="act__slot"><span>Afterglow</span> 05:30–08:00</p>
+        </article>
+
+        <!-- ============ SUNDAY ============ -->
+        <article class="act" data-day="sun" data-stage="main-pulse" data-genre="house daytime open air">
+          <p class="act__day">Sun 20 Dec · Opener</p>
+          <h3 class="act__name">Marla Voltage</h3>
+          <p class="act__genre">Daytime house · DJ set</p>
+          <p class="act__slot"><span>Main Pulse</span> 14:30–16:00</p>
+        </article>
+        <article class="act" data-day="sun" data-stage="magenta-dome" data-genre="melodic techno dj set">
+          <p class="act__day">Sun 20 Dec</p>
+          <h3 class="act__name">Neon Catechism</h3>
+          <p class="act__genre">Melodic techno · DJ set</p>
+          <p class="act__slot"><span>Magenta Dome</span> 15:40–17:10</p>
+        </article>
+        <article class="act" data-day="sun" data-stage="main-pulse" data-genre="live electronic band">
+          <p class="act__day">Sun 20 Dec</p>
+          <h3 class="act__name">Sable Signal</h3>
+          <p class="act__genre">Live electronic band</p>
+          <p class="act__slot"><span>Main Pulse</span> 18:40–20:00</p>
+        </article>
+        <article class="act" data-day="sun" data-stage="magenta-dome" data-genre="trance four hour">
+          <p class="act__day">Sun 20 Dec</p>
+          <h3 class="act__name">Radio Void</h3>
+          <p class="act__genre">Trance · 90-min journey</p>
+          <p class="act__slot"><span>Magenta Dome</span> 19:50–21:20</p>
+        </article>
+        <article class="act" data-day="sun" data-stage="cyan-bunker" data-genre="hard techno">
+          <p class="act__day">Sun 20 Dec</p>
+          <h3 class="act__name">Cinder Array</h3>
+          <p class="act__genre">Hard techno · DJ set</p>
+          <p class="act__slot"><span>Cyan Bunker</span> 20:40–22:00</p>
+        </article>
+        <article class="act" data-day="sun" data-stage="main-pulse" data-genre="live band modular">
+          <p class="act__day">Sun 20 Dec</p>
+          <h3 class="act__name">Project Loom</h3>
+          <p class="act__genre">Live band · six-piece</p>
+          <p class="act__slot"><span>Main Pulse</span> 21:00–22:20</p>
+        </article>
+        <article class="act" data-day="sun" data-stage="magenta-dome" data-genre="deep house vinyl">
+          <p class="act__day">Sun 20 Dec</p>
+          <h3 class="act__name">Olive Static</h3>
+          <p class="act__genre">Vinyl-only deep house</p>
+          <p class="act__slot"><span>Magenta Dome</span> 22:30–00:00</p>
+        </article>
+        <article class="act" data-day="sun" data-stage="cyan-bunker" data-genre="closing b2b back to back">
+          <p class="act__day">Sun 20 Dec · Close</p>
+          <h3 class="act__name glow-cyan">Axiom b2b Vanta</h3>
+          <p class="act__genre">Back-to-back · 4 hrs</p>
+          <p class="act__slot"><span>Cyan Bunker</span> 22:00–02:00</p>
+        </article>
+        <article class="act" data-day="sun" data-stage="main-pulse" data-genre="melodic close">
+          <p class="act__day">Sun 20 Dec · Close</p>
+          <h3 class="act__name">Vespertine</h3>
+          <p class="act__genre">Melodic close · lights up slow</p>
+          <p class="act__slot"><span>Main Pulse</span> 00:30–02:00</p>
+        </article>
+        <article class="act" data-day="sun" data-stage="afterglow" data-genre="ambient final">
+          <p class="act__day">Sun 20 Dec · Final</p>
+          <h3 class="act__name">Quiet Machine</h3>
+          <p class="act__genre">Ambient · last set of 2026</p>
+          <p class="act__slot"><span>Afterglow</span> 00:00–02:00</p>
+        </article>
+      </div>
+
+      <p class="empty" id="act-empty" hidden>$ no match — try a different night, room or genre.</p>
+      <p class="note">Nine remaining slots announce on 20 November at 09:00 EST, including the full
+        Afterglow curfew bill and two live showcase slots from the Brooklyn label collective.</p>
+    </div>
+  </section>
+
+  <div class="ticker ticker--mag" data-marquee aria-label="Genre ticker">
+    <div class="ticker__track">
+      <div class="ticker__group">
+        <span class="tick-word">Hard <b>techno</b></span><span class="tick-sep" aria-hidden="true">/</span>
+        <span class="tick-word"><b>Drum &amp; bass</b></span><span class="tick-sep" aria-hidden="true">/</span>
+        <span class="tick-word">Warehouse <b>house</b></span><span class="tick-sep" aria-hidden="true">/</span>
+        <span class="tick-word"><b>Modular live</b></span><span class="tick-sep" aria-hidden="true">/</span>
+        <span class="tick-word">Jungle <b>&amp; dub</b></span><span class="tick-sep" aria-hidden="true">/</span>
+        <span class="tick-word"><b>Ambient</b> until sunrise</span><span class="tick-sep" aria-hidden="true">/</span>
+      </div>
+    </div>
+  </div>
+
+
+  <section class="chapter chapter--panel" id="frames" aria-labelledby="frames-title">
+    <div class="wrap stack">
+      <div class="stack" style="gap:.4rem">
+        <p class="kicker">Between Sets</p>
+        <h2 id="frames-title" class="h-md" data-stagger>The Site That Holds the <span class="glow-cyan">Bill</span></h2>
+        <p class="lead">Four rooms, one pier. These are the spaces the artists walk between when a chain tips over — the frames our house photographers kept from 2025.</p>
+      </div>
+      <div class="grid grid--4">
+        <figure class="frame">
+          <img src="https://picsum.photos/seed/neon-pulse-fest-6464f9b93708/1600/900?auto=format&fit=crop&w=800&q=80" alt="Crowd inside a tent lit from a central rig, beams through haze" width="800" height="600" loading="lazy">
+          <figcaption><b>Magenta Dome</b> · 02:14 · handover to Nullbyte</figcaption>
+        </figure>
+        <figure class="frame">
+          <img src="https://picsum.photos/seed/neon-pulse-fest-9312f5e86fb7/1600/900?auto=format&fit=crop&w=800&q=80" alt="Lighting truss glowing over a packed concrete floor" width="800" height="600" loading="lazy">
+          <figcaption><b>Cyan Bunker</b> · 20:10 · truss check before Ferro-Concrete</figcaption>
+        </figure>
+        <figure class="frame">
+          <img src="https://picsum.photos/seed/neon-pulse-fest-bb9b4ec30468/1600/900?auto=format&fit=crop&w=800&q=80" alt="Open-air deck crowd against a bright stage wash at night" width="800" height="600" loading="lazy">
+          <figcaption><b>Main Pulse</b> · 18:35 · Friday opening set</figcaption>
+        </figure>
+        <figure class="frame">
+          <img src="https://picsum.photos/seed/neon-pulse-fest-48bbe9401a79/1600/900?auto=format&fit=crop&w=800&q=80" alt="Artist at the decks mid-set with a raised hand" width="800" height="600" loading="lazy">
+          <figcaption><b>Afterglow stair</b> · 05:41 · sunrise programme</figcaption>
+        </figure>
+      </div>
+      <p class="note">Full archive frames from every act on this bill are on the <a href="gallery.html">gallery page</a>.</p>
+    </div>
+  </section>
+
+  <section class="chapter chapter--dark" aria-labelledby="chains-title">
+    <div class="wrap grid grid--2">
+      <div class="stack">
+        <p class="kicker">Handover Log</p>
+        <h2 id="chains-title" class="h-md" data-stagger>Saturday, Room to <span class="glow-cyan">Room</span></h2>
+        <p class="lead">
+          The chain is the schedule: one artist plays out, the next is already on the deck in
+          the adjoining room. These are the eight crossover moments where the whole site tips
+          at once — arrive five minutes early and you'll feel it.
+        </p>
+        <div class="grid grid--4" style="margin-top:.6rem">
+          <div class="stat"><span class="stat__num">2:00</span><span class="stat__label">Max Dead Air (min)</span></div>
+          <div class="stat"><span class="stat__num">8</span><span class="stat__label">Crossovers</span></div>
+          <div class="stat"><span class="stat__num">174</span><span class="stat__label">Peak BPM</span></div>
+          <div class="stat"><span class="stat__num">16h</span><span class="stat__label">Sat Programme</span></div>
+        </div>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <caption>Saturday 19 Dec — chain crossovers, all times EST</caption>
+          <thead>
+            <tr><th scope="col">Time</th><th scope="col">From</th><th scope="col">To</th><th scope="col">What happens</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="tnum">20:00</td><td>Bunker · Bass Meridian</td><td>Main · Kilowatt Kid</td><td>Jungle hands the low end to house</td></tr>
+            <tr><td class="tnum">22:00</td><td>Main · Static Sermon</td><td>Bunker · Ferro-Concrete</td><td>Site-wide tempo step from 128 to 140</td></tr>
+            <tr><td class="tnum">23:30</td><td>Dome · Yuki Parade</td><td>Dome · (own chain)</td><td>Projection reset, 90-second blackout</td></tr>
+            <tr><td class="tnum">01:00</td><td>Main · Delphi Stack</td><td>Dome · Nullbyte</td><td>Headline ramp begins, 128 BPM</td></tr>
+            <tr><td class="tnum">01:20</td><td>Bunker · (open)</td><td>Bunker · Hex Mother</td><td>Drum &amp; bass live mix opens cold</td></tr>
+            <tr><td class="tnum">03:00</td><td>Dome · Nullbyte</td><td>Bunker · Hex Mother</td><td>174 BPM carried across both rooms</td></tr>
+            <tr><td class="tnum">04:00</td><td>Bunker · Tundra Beat</td><td>Afterglow · Pale Circuit</td><td>Last dancefloor room powers down</td></tr>
+            <tr><td class="tnum">05:30</td><td>Afterglow · Pale Circuit</td><td>Afterglow · Low Orbit</td><td>Sunrise set opens on the pier deck</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter chapter--short chapter--magenta" aria-labelledby="legend-title">
+    <div class="wrap grid grid--2">
+      <div class="stack">
+        <h2 id="legend-title" class="h-sm" data-stagger>How to Read the <span class="glow-mag">Grid</span></h2>
+        <p>Each card carries the night, the stage colour bar down its left edge, the format
+          (DJ set, live PA, A/V, back-to-back) and the exact play window. Times are hard:
+          our crews stop the music on the clock, not on the artist's cue.</p>
+        <div class="btn-row">
+          <a class="btn btn--mag" href="tickets.html">Get a 3-day pass</a>
+          <a class="btn btn--ghost" href="info.html">Site map &amp; hours</a>
+        </div>
+      </div>
+      <div class="term">
+        <div class="term__bar"><span class="term__dots" aria-hidden="true"><i></i><i></i><i></i></span> legend — <b>stage_colours</b></div>
+        <div class="term__body stack">
+          <p class="prompt">Main Pulse <span class="badge badge--cyan">Cyan bar</span> — open air, headline slots</p>
+          <p class="prompt">Magenta Dome <span class="badge badge--mag">Magenta bar</span> — tent, live A/V</p>
+          <p class="prompt">Cyan Bunker <span class="badge badge--cyan">Cyan bar</span> — concrete, no phones</p>
+          <p class="prompt">Afterglow <span class="badge badge--amber">Amber bar</span> — seated, late</p>
+          <p class="note">The Bunker runs a phone-neutral policy: tape-over cameras at the door,
+            released on exit. It is the only room where our photographers don't shoot.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p class="foot__mark display" aria-hidden="true">neon pulse</p>
+    <div class="foot__cols">
+      <section>
+        <h2>Navigate</h2>
+        <ul class="foot__list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="lineup.html">Lineup</a></li>
+          <li><a href="tickets.html">Tickets</a></li>
+          <li><a href="info.html">Info &amp; FAQ</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+        </ul>
+      </section>
+      <section>
+        <h2>Festival</h2>
+        <p class="foot__meta">18–20 December 2026<br>Pier 94 at The Edge, Brooklyn<br>Four stages · 42 artists · 34 hours<br>Gates: Fri 18:00, Sat 16:00, Sun 14:00</p>
+      </section>
+      <section>
+        <h2>On Site</h2>
+        <ul class="foot__list">
+          <li><a href="info.html#access">Accessibility &amp; access</a></li>
+          <li><a href="info.html#conduct">Code of conduct</a></li>
+          <li><a href="info.html#transit">Transit &amp; arrival</a></li>
+          <li><a href="info.html#faq">Bag policy &amp; cashless</a></li>
+        </ul>
+      </section>
+      <section>
+        <h2>Signal Channels</h2>
+        <p class="foot__meta">Box office: hello@neonpulse.fm<br>Access line: access@neonpulse.fm<br>@neonpulse.msf · /neonpulsefest<br>Press &amp; photo: press@neonpulse.fm</p>
+      </section>
+    </div>
+    <div class="foot__bottom">
+      <span>© <span id="year">2026</span> Neon Pulse Festival — a Brooklyn Waterfront Productions event.</span>
+      <span><b>Hear it, don't suffer it:</b> free earplugs at every bar, all night.</span>
+    </div>
+  </div>
+</footer>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
