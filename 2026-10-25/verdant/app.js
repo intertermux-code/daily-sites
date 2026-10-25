@@ -12,14 +12,14 @@
   var PRODUCTS = {
     "p-clover":     { name: "Clover Milk Cleanser",   price: 32, note: "Cloud-milk gel cleanser, pH 5.2", img: IMG + "1556228578-8c89e6adf883" + Q },
     "p-morningdew": { name: "Morning Dew Essence",    price: 48, note: "Fermented oat water, first layer", img: IMG + "1620916566398-39f1143ab7be" + Q },
-    "p-calendula":  { name: "Calendula Cushion Cream",price: 46, note: "Redness-soothing day moisturiser", img: IMG + "1571781926291-c477c6a7ac57" + Q },
-    "p-sorrel":     { name: "Sorrel Night Balm",      price: 58, note: "Oxalis + shea overnight seal", img: IMG + "1612817265721-a940043a1f1d" + Q },
-    "p-vervain":    { name: "Vervain Vitamin C Drops",price: 62, note: "12% derivatives + green tea", img: IMG + "1608298432030-a2262ff9670e" + Q },
-    "p-fennel":     { name: "Fennel Squalane Seal",   price: 44, note: "Weightless oil-suffix step", img: IMG + "1629198733737-d70a629b94e0" + Q },
-    "p-fern":       { name: "Fern Clay Refine Mask",  price: 36, note: "Weekly kaolin + wood fern", img: IMG + "1598440947619-2c35fc9aa901" + Q },
-    "p-moss":       { name: "Sheet Moss Compress",    price: 28, note: "Cooling 10-minute veil, 4 ct", img: IMG + "1556228453-efd67c77b50b" + Q },
-    "p-echo":       { name: "Echo Eye Renewal",       price: 52, note: "Caffeine + peptide, 15 ml", img: IMG + "1611930022073-b7a2ba819f98" + Q },
-    "p-bloom":      { name: "Bloom Mineral SPF 30",   price: 40, note: "No-white-cast zinc finish", img: IMG + "1631729371279-11d3a0189279" + Q }
+    "p-calendula":  { name: "Calendula Cushion Cream",price: 46, note: "Redness-soothing day moisturiser", img: IMG + "1779437141537-62577b216307" + Q },
+    "p-sorrel":     { name: "Sorrel Night Balm",      price: 58, note: "Oxalis + shea overnight seal", img: IMG + "1763503836825-97f5450d155a" + Q },
+    "p-vervain":    { name: "Vervain Vitamin C Drops",price: 62, note: "12% derivatives + green tea", img: IMG + "1747303969063-3b90bcb3942e" + Q },
+    "p-fennel":     { name: "Fennel Squalane Seal",   price: 44, note: "Weightless oil-suffix step", img: IMG + "1693990437506-dac9d69697a9" + Q },
+    "p-fern":       { name: "Fern Clay Refine Mask",  price: 36, note: "Weekly kaolin + wood fern", img: IMG + "1748543668751-902d6461890d" + Q },
+    "p-moss":       { name: "Sheet Moss Compress",    price: 28, note: "Cooling 10-minute veil, 4 ct", img: IMG + "1748390359572-8e7a47bf5cb5" + Q },
+    "p-echo":       { name: "Echo Eye Renewal",       price: 52, note: "Caffeine + peptide, 15 ml", img: IMG + "1714980716123-4b6a640795a9" + Q },
+    "p-bloom":      { name: "Bloom Mineral SPF 30",   price: 40, note: "No-white-cast zinc finish", img: IMG + "1700163105110-799ec7a4b8fc" + Q }
   };
 
   var FREE_SHIP = 60;
