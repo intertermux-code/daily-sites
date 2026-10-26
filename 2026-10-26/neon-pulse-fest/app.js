@@ -1,386 +1,501 @@
-/* =====================================================================
-   NEON PULSE — shared behaviour
-   Everything is guarded by element-existence checks so one file serves
-   every page. Signature motion: decode text + parallax layers.
-   ===================================================================== */
+/* ==========================================================================
+   NEON PULSE FEST — shared behaviour
+   Every block is guarded by an element-existence check so one file can be
+   linked from every page.
+   ========================================================================== */
+
 (function () {
   "use strict";
 
-  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-  var $ = function (sel, ctx) { return (ctx || document).querySelector(sel); };
-  var $$ = function (sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); };
-
-  /* ---------- footer year ---------- */
-  function initYear() {
-    var nodes = $$("[data-year]");
-    if (!nodes.length) return;
-    var y = String(new Date().getFullYear());
-    nodes.forEach(function (n) { n.textContent = y; });
+  var root = document.documentElement;
+  var reduceQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var reduced = reduceQuery.matches;
+  if (reduced) root.classList.add("no-motion");
+  if (typeof reduceQuery.addEventListener === "function") {
+    reduceQuery.addEventListener("change", function (e) {
+      reduced = e.matches;
+      root.classList.toggle("no-motion", reduced);
+    });
   }
 
-  /* ---------- mobile nav ---------- */
+  /* ------------------------------------------------------------------
+     1. Scroll progress — 2px bar pinned to the viewport top (signature)
+     ------------------------------------------------------------------ */
+  function initScrollProgress() {
+    var host = document.querySelector("[data-scroll-progress]");
+    if (!host) return;
+    var bar = host.querySelector(".scroll-progress__bar");
+    if (!bar) return;
+    var queued = false;
+
+    function paint() {
+      queued = false;
+      var doc = document.documentElement;
+      var scrollable = doc.scrollHeight - window.innerHeight;
+      var ratio = scrollable > 0 ? window.scrollY / scrollable : 0;
+      ratio = Math.min(1, Math.max(0, ratio));
+      bar.style.transform = "scaleX(" + ratio.toFixed(4) + ")";
+      host.setAttribute("aria-valuenow", String(Math.round(ratio * 100)));
+    }
+
+    function request() {
+      if (queued) return;
+      queued = true;
+      window.requestAnimationFrame(paint);
+    }
+
+    window.addEventListener("scroll", request, { passive: true });
+    window.addEventListener("resize", request, { passive: true });
+    paint();
+  }
+
+  /* ------------------------------------------------------------------
+     2. Word-stagger headline — assigns the 60ms cadence (signature)
+     ------------------------------------------------------------------ */
+  function initWordStagger() {
+    var heads = document.querySelectorAll("[data-stagger]");
+    if (!heads.length) return;
+    Array.prototype.forEach.call(heads, function (head) {
+      var words = head.querySelectorAll(".word");
+      Array.prototype.forEach.call(words, function (word, i) {
+        word.style.setProperty("--d", i * 60 + "ms");
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     3. Countdown to gates open
+     ------------------------------------------------------------------ */
+  function pad(n, size) {
+    var s = String(Math.max(0, Math.floor(n)));
+    while (s.length < (size || 2)) s = "0" + s;
+    return s;
+  }
+
+  function initCountdown() {
+    var box = document.querySelector("[data-countdown]");
+    if (!box) return;
+    var target = new Date(box.getAttribute("data-countdown"));
+    if (isNaN(target.getTime())) return;
+
+    var cells = {
+      days: box.querySelector("[data-cd-days]"),
+      hours: box.querySelector("[data-cd-hours]"),
+      minutes: box.querySelector("[data-cd-minutes]"),
+      seconds: box.querySelector("[data-cd-seconds]")
+    };
+    var status = box.querySelector("[data-countdown-status]");
+
+    function tick() {
+      var left = target.getTime() - Date.now();
+      if (left <= 0) {
+        if (cells.days) cells.days.textContent = "00";
+        if (cells.hours) cells.hours.textContent = "00";
+        if (cells.minutes) cells.minutes.textContent = "00";
+        if (cells.seconds) cells.seconds.textContent = "00";
+        if (status) status.textContent = "Gates are open — pulse live at the reactor.";
+        box.classList.add("countdown--live");
+        window.clearInterval(timer);
+        return;
+      }
+      var secs = Math.floor(left / 1000);
+      if (cells.days) cells.days.textContent = pad(secs / 86400);
+      if (cells.hours) cells.hours.textContent = pad((secs % 86400) / 3600);
+      if (cells.minutes) cells.minutes.textContent = pad((secs % 3600) / 60);
+      if (cells.seconds) cells.seconds.textContent = pad(secs % 60);
+    }
+
+    tick();
+    var timer = window.setInterval(tick, 1000);
+  }
+
+  /* ------------------------------------------------------------------
+     4. Mobile navigation
+     ------------------------------------------------------------------ */
   function initNav() {
-    var toggle = $(".nav-toggle");
-    var nav = $("#site-nav");
+    var toggle = document.querySelector("[data-nav-toggle]");
+    var nav = document.querySelector("[data-nav]");
     if (!toggle || !nav) return;
+
+    toggle.setAttribute("aria-expanded", "false");
+    nav.setAttribute("data-nav-state", "closed");
 
     function setOpen(open) {
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
-      toggle.setAttribute("aria-label", open ? "Close navigation menu" : "Open navigation menu");
       nav.classList.toggle("is-open", open);
+      nav.setAttribute("data-nav-state", open ? "open" : "closed");
     }
 
     toggle.addEventListener("click", function () {
       setOpen(toggle.getAttribute("aria-expanded") !== "true");
     });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
+
+    nav.addEventListener("click", function (event) {
+      if (event.target.closest("a")) setOpen(false);
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
         setOpen(false);
         toggle.focus();
       }
     });
-    nav.addEventListener("click", function (e) {
-      if (e.target.closest("a")) setOpen(false);
-    });
+
     window.addEventListener("resize", function () {
-      if (window.innerWidth > 860) setOpen(false);
-    });
+      if (window.innerWidth > 1000) setOpen(false);
+    }, { passive: true });
   }
 
-  /* ---------- decode text (signature motion #1) ----------
-     Cycles random glyphs, then resolves left to right, terminal style. */
-  var GLYPHS = "▚▞█▄▀#@%&$*+=/\\<>01ZXQWERTYUIOPASDFGHJKL";
+  /* ------------------------------------------------------------------
+     5. Lineup filters (day × stage)
+     ------------------------------------------------------------------ */
+  function initLineup() {
+    var grid = document.querySelector("[data-lineup-grid]");
+    var group = document.querySelector("[data-filter-group]");
+    if (!grid || !group) return;
 
-  function decode(el) {
-    var target = el.getAttribute("data-decode") || el.textContent;
-    var delay = parseInt(el.getAttribute("data-delay") || "0", 10);
-    if (reduced.matches) { el.textContent = target; return; }
-
-    el.setAttribute("data-decoding", "true");
-    var total = target.length;
-    var frame = 0;
-    var lockFrames = 4; // frames each character spends before settling
-
-    function tick() {
-      var out = "";
-      var settled = Math.floor(frame / lockFrames);
-      for (var i = 0; i < total; i++) {
-        var ch = target.charAt(i);
-        if (ch === " ") { out += " "; continue; }
-        if (i < settled) out += ch;
-        else out += GLYPHS.charAt(Math.floor(Math.random() * GLYPHS.length));
-      }
-      el.textContent = out;
-      frame++;
-      if (settled <= total) requestAnimationFrame(tick);
-      else { el.textContent = target; el.removeAttribute("data-decoding"); }
-    }
-    window.setTimeout(function () { requestAnimationFrame(tick); }, delay);
-  }
-
-  function initDecode() {
-    var nodes = $$("[data-decode]");
-    if (!nodes.length) return;
-    if (!("IntersectionObserver" in window)) { nodes.forEach(decode); return; }
-    var seen = new WeakSet();
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting || seen.has(entry.target)) return;
-        seen.add(entry.target);
-        decode(entry.target);
-        io.unobserve(entry.target);
-      });
-    }, { threshold: 0.4 });
-    nodes.forEach(function (n) { io.observe(n); });
-  }
-
-  /* ---------- parallax layers (signature motion #2) ---------- */
-  function initParallax() {
-    var layers = $$("[data-speed]");
-    if (!layers.length || reduced.matches) return;
-    var ticking = false;
-
-    function apply() {
-      var y = window.pageYOffset || document.documentElement.scrollTop || 0;
-      for (var i = 0; i < layers.length; i++) {
-        var s = parseFloat(layers[i].getAttribute("data-speed")) || 0;
-        layers[i].style.transform = "translate3d(0," + (y * s * -0.6).toFixed(2) + "px,0)";
-      }
-      ticking = false;
-    }
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(apply);
-    }
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
-    apply();
-  }
-
-  /* ---------- CRT lock-on reveal ---------- */
-  function initReveal() {
-    var nodes = $$(".signal");
-    if (!nodes.length) return;
-    if (reduced.matches || !("IntersectionObserver" in window)) {
-      nodes.forEach(function (n) { n.classList.add("is-in"); });
-      return;
-    }
-    document.documentElement.classList.add("js");
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry, idx) {
-        if (!entry.isIntersecting) return;
-        var el = entry.target;
-        el.style.transitionDelay = Math.min(idx * 55, 280) + "ms";
-        el.classList.add("is-in");
-        io.unobserve(el);
-      });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
-    nodes.forEach(function (n) { io.observe(n); });
-  }
-
-  /* ---------- countdown ---------- */
-  function pad(n, w) {
-    var s = String(Math.max(0, n));
-    while (s.length < (w || 2)) s = "0" + s;
-    return s;
-  }
-
-  function initCountdown() {
-    var root = $("[data-countdown]");
-    if (!root) return;
-    var target = new Date(root.getAttribute("data-countdown"));
-    if (isNaN(target.getTime())) return;
-
-    var cells = {
-      days: $("[data-unit=days]", root),
-      hours: $("[data-unit=hours]", root),
-      minutes: $("[data-unit=minutes]", root),
-      seconds: $("[data-unit=seconds]", root)
-    };
-    var foot = $(".countdown-foot", root);
-
-    function render() {
-      var diff = target.getTime() - Date.now();
-      if (diff <= 0) {
-        Object.keys(cells).forEach(function (k) { if (cells[k]) cells[k].textContent = "00"; });
-        if (foot) foot.textContent = "Gates are open. Terminal Nine is live — see you at the apron.";
-        return false;
-      }
-      var s = Math.floor(diff / 1000);
-      var d = Math.floor(s / 86400);
-      var h = Math.floor((s % 86400) / 3600);
-      var m = Math.floor((s % 3600) / 60);
-      var sec = s % 60;
-      if (cells.days) cells.days.textContent = pad(d, d > 99 ? 3 : 2);
-      if (cells.hours) cells.hours.textContent = pad(h);
-      if (cells.minutes) cells.minutes.textContent = pad(m);
-      if (cells.seconds) cells.seconds.textContent = pad(sec);
-      return true;
-    }
-
-    render();
-    var id = window.setInterval(function () {
-      if (!render()) window.clearInterval(id);
-    }, 1000);
-  }
-
-  /* ---------- lineup filters ---------- */
-  function initFilters() {
-    var grid = $("[data-filterable]");
-    if (!grid) return;
-    var acts = $$(".act", grid);
-    var groups = $$(".filter-group[data-facet]");
-    var tally = $("[data-result-count]");
-    var emptyMsg = $("[data-no-results]");
-    var state = {};
-
-    function readFacet(group) {
-      var active = $(".chip[aria-pressed=true]", group);
-      state[group.getAttribute("data-facet")] = active ? active.getAttribute("data-value") : "all";
-    }
+    var cards = Array.prototype.slice.call(grid.querySelectorAll("[data-artist]"));
+    var status = document.querySelector("[data-filter-status]");
+    var empty = document.querySelector("[data-lineup-empty]");
+    var active = { day: "all", stage: "all" };
 
     function apply() {
       var shown = 0;
-      acts.forEach(function (act) {
-        var ok = Object.keys(state).every(function (facet) {
-          var want = state[facet];
-          if (want === "all") return true;
-          var have = (act.getAttribute("data-" + facet) || "").split(" ");
-          return have.indexOf(want) !== -1;
-        });
-        act.classList.toggle("is-hidden", !ok);
-        if (ok) shown++;
+      cards.forEach(function (card) {
+        var dayOk = active.day === "all" || card.getAttribute("data-day") === active.day;
+        var stageOk = active.stage === "all" ||
+          (card.getAttribute("data-stages") || "").split(" ").indexOf(active.stage) > -1;
+        var visible = dayOk && stageOk;
+        card.classList.toggle("is-hidden", !visible);
+        card.setAttribute("aria-hidden", visible ? "false" : "true");
+        if (visible) shown++;
       });
 
-      // day section headings: hide when every act inside is hidden
-      $$("[data-day-section]").forEach(function (sec) {
-        var visible = $$(".act:not(.is-hidden)", sec).length;
-        sec.hidden = visible === 0;
-        var n = $(".count-tally", sec);
-        if (n) n.textContent = visible + (visible === 1 ? " act" : " acts");
-      });
-
-      if (tally) tally.textContent = String(shown);
-      if (emptyMsg) emptyMsg.hidden = shown !== 0;
+      if (status) {
+        status.textContent = "❯ showing " + pad(shown) + " of " + pad(cards.length) +
+          " acts — " + (active.day === "all" ? "all days" : active.day) +
+          " / " + (active.stage === "all" ? "all stages" : active.stage);
+      }
+      if (empty) empty.hidden = shown !== 0;
     }
 
-    groups.forEach(function (group) {
-      readFacet(group);
-      group.addEventListener("click", function (e) {
-        var chip = e.target.closest(".chip");
-        if (!chip) return;
-        $$(".chip", group).forEach(function (c) {
-          c.setAttribute("aria-pressed", c === chip ? "true" : "false");
-        });
-        readFacet(group);
-        apply();
+    group.addEventListener("click", function (event) {
+      var chip = event.target.closest("[data-filter]");
+      if (!chip) return;
+      var kind = chip.getAttribute("data-filter");
+      var value = chip.getAttribute("data-value");
+      active[kind] = value;
+
+      Array.prototype.forEach.call(group.querySelectorAll('[data-filter="' + kind + '"]'), function (sibling) {
+        sibling.setAttribute("aria-pressed", sibling === chip ? "true" : "false");
       });
+      apply();
     });
 
-    var reset = $("[data-reset-filters]");
-    if (reset) {
-      reset.addEventListener("click", function () {
-        groups.forEach(function (group) {
-          $$(".chip", group).forEach(function (c, i) {
-            c.setAttribute("aria-pressed", i === 0 ? "true" : "false");
-          });
-          readFacet(group);
-        });
-        apply();
-      });
-    }
     apply();
   }
 
-  /* ---------- FAQ accordion ---------- */
+  /* ------------------------------------------------------------------
+     6. FAQ accordion
+     ------------------------------------------------------------------ */
   function initAccordion() {
-    var items = $$(".acc-item");
-    if (!items.length) return;
+    var accordion = document.querySelector("[data-accordion]");
+    if (!accordion) return;
 
-    items.forEach(function (item) {
-      var btn = $(".acc-btn", item);
-      var panel = $(".acc-panel", item);
-      if (!btn || !panel) return;
+    var buttons = Array.prototype.slice.call(accordion.querySelectorAll(".accordion__btn"));
 
-      function setHeight(open) {
-        if (reduced.matches) {
-          panel.style.blockSize = open ? "auto" : "0px";
-          return;
-        }
-        if (open) {
-          panel.style.blockSize = panel.scrollHeight + "px";
-        } else {
-          panel.style.blockSize = "0px";
-        }
-      }
+    buttons.forEach(function (btn) {
+      var panel = document.getElementById(btn.getAttribute("aria-controls"));
+      if (!panel) return;
+      btn.setAttribute("aria-expanded", btn.getAttribute("aria-expanded") || "false");
+      panel.setAttribute("role", "region");
+      panel.setAttribute("aria-labelledby", btn.id);
 
       btn.addEventListener("click", function () {
-        var open = btn.getAttribute("aria-expanded") === "true";
-        btn.setAttribute("aria-expanded", open ? "false" : "true");
-        setHeight(!open);
-      });
+        var isOpen = btn.getAttribute("aria-expanded") === "true";
 
-      panel.addEventListener("transitionend", function (e) {
-        if (e.propertyName === "block-size" && btn.getAttribute("aria-expanded") === "true") {
-          panel.style.blockSize = "auto";
+        if (accordion.hasAttribute("data-single-open")) {
+          buttons.forEach(function (other) {
+            var otherPanel = document.getElementById(other.getAttribute("aria-controls"));
+            if (other === btn) return;
+            other.setAttribute("aria-expanded", "false");
+            if (otherPanel) otherPanel.setAttribute("data-open", "false");
+          });
         }
-      });
 
-      window.addEventListener("resize", function () {
-        if (btn.getAttribute("aria-expanded") === "true") panel.style.blockSize = "auto";
+        btn.setAttribute("aria-expanded", isOpen ? "false" : "true");
+        panel.setAttribute("data-open", isOpen ? "false" : "true");
+        if (!isOpen) {
+          panel.style.setProperty("--panel-h", panel.scrollHeight + 40 + "px");
+        }
       });
     });
 
-    var deep = location.hash.replace("#", "");
-    if (deep) {
-      var target = document.getElementById(deep);
-      var host = target && target.closest ? target.closest(".acc-item") : null;
-      if (host) {
-        var b = $(".acc-btn", host);
-        if (b && b.getAttribute("aria-expanded") !== "true") b.click();
+    window.addEventListener("resize", function () {
+      buttons.forEach(function (btn) {
+        if (btn.getAttribute("aria-expanded") !== "true") return;
+        var panel = document.getElementById(btn.getAttribute("aria-controls"));
+        if (panel) panel.style.setProperty("--panel-h", panel.scrollHeight + 40 + "px");
+      });
+    }, { passive: true });
+  }
+
+  /* ------------------------------------------------------------------
+     7. Ticket builder + running total
+     ------------------------------------------------------------------ */
+  function initTicketBuilder() {
+    var builder = document.querySelector("[data-ticket-builder]");
+    if (!builder) return;
+
+    var summary = document.querySelector("[data-order-summary]");
+    var MAX = 8;
+
+    function readRows() {
+      var rows = [];
+      Array.prototype.forEach.call(builder.querySelectorAll("[data-price]"), function (row) {
+        var input = row.querySelector("[data-qty]");
+        if (!input) return;
+        rows.push({
+          row: row,
+          input: input,
+          name: row.getAttribute("data-label") || "Ticket",
+          price: parseFloat(row.getAttribute("data-price")),
+          soldOut: row.getAttribute("data-sold-out") === "true",
+          qty: Math.max(0, parseInt(input.value, 10) || 0)
+        });
+      });
+      return rows;
+    }
+
+    function paint() {
+      var rows = readRows();
+      var subtotal = 0;
+      var count = 0;
+
+      rows.forEach(function (item) {
+        var lineTotal = item.price * item.qty;
+        subtotal += lineTotal;
+        count += item.qty;
+        var line = item.row.querySelector("[data-line-total]");
+        if (line) line.textContent = "£" + lineTotal.toFixed(2);
+        var minus = item.row.querySelector("[data-step='-1']");
+        var plus = item.row.querySelector("[data-step='1']");
+        if (minus) minus.disabled = item.qty <= 0 || item.soldOut;
+        if (plus) plus.disabled = item.qty >= MAX || item.soldOut;
+      });
+
+      var fees = count > 0 ? Math.round(subtotal * 0.09 * 100) / 100 : 0;
+      var total = subtotal + fees;
+
+      if (summary) {
+        var sCount = summary.querySelector("[data-sum-count]");
+        var sSub = summary.querySelector("[data-sum-subtotal]");
+        var sFee = summary.querySelector("[data-sum-fees]");
+        var sTotal = summary.querySelector("[data-sum-total]");
+        var sNote = summary.querySelector("[data-sum-note]");
+        if (sCount) sCount.textContent = pad(count);
+        if (sSub) sSub.textContent = "£" + subtotal.toFixed(2);
+        if (sFee) sFee.textContent = "£" + fees.toFixed(2);
+        if (sTotal) sTotal.textContent = "£" + total.toFixed(2);
+        if (sNote) sNote.textContent = count === 0
+          ? "No passes held yet. Add a tier to reserve."
+          : count + (count === 1 ? " pass held for 15:00" : " passes held for 15:00") + " — checkout not started.";
+        var confirm = summary.querySelector("[data-sum-confirm]");
+        if (confirm) {
+          confirm.setAttribute("aria-disabled", count === 0 ? "true" : "false");
+          confirm.disabled = count === 0;
+        }
       }
     }
+
+    builder.addEventListener("click", function (event) {
+      var btn = event.target.closest("[data-step]");
+      if (!btn) return;
+      var row = btn.closest("[data-price]");
+      var input = row && row.querySelector("[data-qty]");
+      if (!input || input.disabled) return;
+      var next = (parseInt(input.value, 10) || 0) + parseInt(btn.getAttribute("data-step"), 10);
+      input.value = String(Math.min(MAX, Math.max(0, next)));
+      paint();
+    });
+
+    builder.addEventListener("change", function (event) {
+      if (event.target.matches("[data-qty]")) paint();
+    });
+
+    paint();
   }
 
-  /* ---------- marquee: clone the track so -50% loops seamlessly ---------- */
-  function initMarquee() {
-    var tracks = $$(".marquee-track");
-    if (!tracks.length) return;
-    tracks.forEach(function (track) {
-      if (track.getAttribute("data-doubled") === "true") return;
-      var clones = track.children.length;
-      for (var i = 0; i < clones; i++) {
-        var c = track.children[i].cloneNode(true);
-        c.setAttribute("aria-hidden", "true");
-        track.appendChild(c);
-      }
-      track.setAttribute("data-doubled", "true");
+  /* ------------------------------------------------------------------
+     8. Gallery — seamless marquee + lightbox
+     ------------------------------------------------------------------ */
+  function initGallery() {
+    var tracks = document.querySelectorAll("[data-marquee-track]");
+    if (tracks.length) {
+      Array.prototype.forEach.call(tracks, function (track) {
+        if (track.getAttribute("data-duplicated") === "true") return;
+        var children = Array.prototype.slice.call(track.children);
+        children.forEach(function (child) {
+          var clone = child.cloneNode(true);
+          clone.setAttribute("aria-hidden", "true");
+          Array.prototype.forEach.call(clone.querySelectorAll("button"), function (b) { b.disabled = true; });
+          track.appendChild(clone);
+        });
+        track.setAttribute("data-duplicated", "true");
+      });
+    }
+
+    var lightbox = document.querySelector("[data-lightbox]");
+    var grids = document.querySelectorAll("[data-shot-grid]");
+    if (!lightbox || !grids.length) return;
+
+    var img = lightbox.querySelector("img");
+    var cap = lightbox.querySelector("figcaption");
+    var closeBtn = lightbox.querySelector("[data-lightbox-close]");
+    var lastFocus = null;
+
+    function open(src, alt, text) {
+      img.src = src;
+      img.alt = alt;
+      cap.textContent = text;
+      lastFocus = document.activeElement;
+      lightbox.hidden = false;
+      root.style.overflow = "hidden";
+      closeBtn.focus();
+    }
+
+    function close() {
+      lightbox.hidden = true;
+      root.style.overflow = "";
+      if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+    }
+
+    Array.prototype.forEach.call(grids, function (grid) {
+      grid.addEventListener("click", function (event) {
+        var shot = event.target.closest("[data-shot-src]");
+        if (!shot) return;
+        var figure = shot.closest(".shot") || shot.closest(".postcard") || shot;
+        var caption = figure.getAttribute("data-shot-cap") || shot.getAttribute("aria-label") || "Festival photograph";
+        open(shot.getAttribute("data-shot-src"), shot.getAttribute("data-shot-alt") || caption, caption);
+      });
+    });
+
+    if (closeBtn) closeBtn.addEventListener("click", close);
+    lightbox.addEventListener("click", function (event) {
+      if (event.target === lightbox) close();
+    });
+    document.addEventListener("keydown", function (event) {
+      if (!lightbox.hidden && event.key === "Escape") close();
     });
   }
 
-  /* ---------- validated forms ---------- */
+  /* ------------------------------------------------------------------
+     9. Forms — client-side validation + inline status
+     ------------------------------------------------------------------ */
   function initForms() {
-    $$("form[data-form]").forEach(function (form) {
-      var status = $("[data-status]", form);
-      var email = $("input[type=email]", form);
+    var forms = document.querySelectorAll("[data-form]");
+    if (!forms.length) return;
 
-      function say(msg, kind) {
-        if (!status) return;
-        status.textContent = msg;
-        status.className = "form-status " + (kind || "");
-      }
+    Array.prototype.forEach.call(forms, function (form) {
+      var status = form.querySelector("[data-form-status]");
 
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        var invalid = null;
-        $$("input[required], textarea[required], select[required]", form).forEach(function (input) {
-          var bad = !input.value.trim();
-          if (!bad && input.type === "email") bad = !/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(input.value.trim());
-          input.setAttribute("aria-invalid", bad ? "true" : "false");
-          if (bad && !invalid) invalid = input;
+      function validate() {
+        var ok = true;
+        var firstBad = null;
+        var fields = form.querySelectorAll("[data-required], [data-pattern]");
+
+        Array.prototype.forEach.call(fields, function (input) {
+          var field = input.closest(".field") || input;
+          var value = input.type === "checkbox" ? (input.checked ? "on" : "") : (input.value || "").trim();
+          var problem = "";
+
+          if (input.hasAttribute("data-required") && !value) {
+            problem = input.getAttribute("data-name") + " is required.";
+          } else if (value && input.hasAttribute("data-pattern") &&
+            !new RegExp(input.getAttribute("data-pattern")).test(value)) {
+            problem = "That " + (input.getAttribute("data-name") || "entry") + " does not look right.";
+          }
+
+          if (problem) {
+            ok = false;
+            field.setAttribute("data-invalid", "true");
+            var err = form.querySelector('[data-error-for="' + input.id + '"]');
+            if (err) err.textContent = problem;
+            if (!firstBad) firstBad = input;
+          } else {
+            field.removeAttribute("data-invalid");
+            var clean = form.querySelector('[data-error-for="' + input.id + '"]');
+            if (clean) clean.textContent = "";
+          }
         });
 
-        if (invalid) {
-          say("$ error: " + (invalid.labels && invalid.labels[0] ? invalid.labels[0].textContent.toLowerCase() : "field") + " is required or malformed.", "err");
-          invalid.focus();
+        if (!ok && firstBad) firstBad.focus();
+        return ok;
+      }
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (!validate()) {
+          if (status) {
+            status.hidden = false;
+            status.textContent = "CHECK FAILED ❯ fix the highlighted fields and submit again.";
+            status.style.borderColor = "var(--magenta)";
+            status.style.color = "var(--magenta)";
+            status.style.background = "rgba(255,47,179,0.1)";
+          }
           return;
         }
-
-        var name = form.getAttribute("data-form");
-        if (name === "newsletter") {
-          say("$ ok — subscribed. Next dispatch: the 01 lineup drop, 24 hours early.", "ok");
-        } else if (name === "waitlist") {
-          say("$ ok — you are on the restock list for this tier. One message when seats return, never two.", "ok");
-        } else if (name === "contact") {
-          say("$ ok — message queued. Box office replies inside one business day, PT.", "ok");
-        } else {
-          say("$ ok — received.", "ok");
+        var name = form.querySelector("[data-greet]");
+        var who = name && name.value.trim() ? name.value.trim().split(/\s+/)[0] : "friend";
+        if (status) {
+          status.hidden = false;
+          status.style.borderColor = "";
+          status.style.color = "";
+          status.style.background = "";
+          status.textContent = "TRANSMISSION LOGGED ❯ " + who + ", you are on the list. Watch your inbox for the drop.";
         }
         form.reset();
-        $$("input, textarea, select", form).forEach(function (i) { i.removeAttribute("aria-invalid"); });
       });
 
-      if (email) {
-        email.addEventListener("input", function () { email.setAttribute("aria-invalid", "false"); });
-      }
+      form.addEventListener("input", function (event) {
+        var input = event.target;
+        if (!input.closest) return;
+        var field = input.closest(".field");
+        if (field && field.getAttribute("data-invalid") === "true" && (input.value || "").trim()) {
+          field.removeAttribute("data-invalid");
+          var err = form.querySelector('[data-error-for="' + input.id + '"]');
+          if (err) err.textContent = "";
+        }
+      });
     });
   }
 
-  /* ---------- boot ---------- */
-  function boot() {
-    initYear();
-    initNav();
-    initDecode();
-    initParallax();
-    initReveal();
-    initCountdown();
-    initFilters();
-    initAccordion();
-    initMarquee();
-    initForms();
+  /* ------------------------------------------------------------------
+     10. Small shared niceties
+     ------------------------------------------------------------------ */
+  function initMisc() {
+    var year = document.querySelector("[data-year]");
+    if (year) year.textContent = String(new Date().getFullYear());
+
   }
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
-  else boot();
+  /* ------------------------------------------------------------------ */
+  function boot() {
+    initScrollProgress();
+    initWordStagger();
+    initCountdown();
+    initNav();
+    initLineup();
+    initAccordion();
+    initTicketBuilder();
+    initGallery();
+    initForms();
+    initMisc();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
 })();
