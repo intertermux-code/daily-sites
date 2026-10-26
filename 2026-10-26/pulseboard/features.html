@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Features — Pulseboard</title>
+<meta name="description" content="Shared metric definitions, sub-two-second boards, and decision logs that survive the meeting. A deep look at how Pulseboard works.">
+<link rel="canonical" href="features.html">
+<meta name="theme-color" content="#FAF9F6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body class="t-ink">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" data-site-header>
+  <div class="shell site-header__inner">
+    <a class="brand" href="index.html" aria-label="Pulseboard home">
+      <span class="brand__mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="brand__word">Pulseboard</span>
+    </a>
+    <nav class="primary-nav" id="primary-nav" aria-label="Primary">
+      <ul class="primary-nav__list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="features.html" aria-current="page">Features</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="primary-nav__cta">
+        <a class="btn btn--primary btn--sm" href="contact.html">Book a demo</a>
+      </div>
+    </nav>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation menu">
+      <span class="nav-toggle__bar" aria-hidden="true"></span>
+      <span class="nav-toggle__bar" aria-hidden="true"></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero" aria-labelledby="ph-title">
+    <div class="shell page-hero__grid">
+      <div>
+        <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>Features, in detail</p>
+        <h1 class="display" id="ph-title">Three load-bearing ideas, <em>built properly.</em></h1>
+        <p class="lead">Most analytics tools offer an endless list of widgets. Pulseboard offers a smaller set of things that decide whether your numbers can be trusted: one definition per metric, queries fast enough to answer live in the room, and a record of what your team actually did about it.</p>
+      </div>
+      <dl class="page-hero__meta">
+        <div><dt>Reading time</dt><dd>About six minutes, with the spec panels.</dd></div>
+        <div><dt>Who builds this</dt><dd>Analytics engineers, growth teams, finance analysts.</dd></div>
+        <div><dt>Jump to</dt><dd><a class="link-arrow" href="#definitions">Definitions<span aria-hidden="true">→</span></a></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ===== FEATURE 1 ===== -->
+  <section class="feature" id="definitions" aria-labelledby="f1-title">
+    <div class="feature__aside">
+      <p class="feature__num">Feature 01</p>
+      <h2 class="feature__title" id="f1-title">One definition, everywhere it is quoted</h2>
+      <p class="feature__kicker">The metric is the source of truth. Charts are simply views of it.</p>
+    </div>
+    <div class="feature__body">
+      <figure class="feature__figure">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="Two people reviewing charts and figures on a laptop together" width="1600" height="1067" loading="lazy">
+        <figcaption class="feature__cap">A metric definition in review: filters, exclusions, owner, and the boards that depend on it.</figcaption>
+      </figure>
+      <div class="prose">
+        <p>Write <strong>weekly activation</strong> once. Attach the window, the internal-workspace exclusion, the owner, and the review date. Every board, alert, export, and API response that quotes the metric reads from that single line — so a change is felt consistently, and instantly traceable.</p>
+        <p>Definitions are versioned like code. Deprecating a metric does not delete a chart; it annotates every consumer with the replacement suggestion and the date the old rule stopped being maintained. When an executive asks why March looks different from April, the answer is a diff, not a recollection.</p>
+      </div>
+      <div class="pillars">
+        <div class="pillar">
+          <h3>Plain-language rules</h3>
+          <p>Filters read as sentences your non-technical colleagues can confirm in a review.</p>
+        </div>
+        <div class="pillar">
+          <h3>Impact preview</h3>
+          <p>Before saving an edit, see the 14 boards and 6 alerts that will change and by how much.</p>
+        </div>
+        <div class="pillar">
+          <h3>Review cadence</h3>
+          <p>Each metric carries a named owner and a next-review date; stale ones surface themselves.</p>
+        </div>
+        <div class="pillar">
+          <h3>Portable as YAML</h3>
+          <p>Export the whole model, keep it in your repository, and diff it in a pull request.</p>
+        </div>
+      </div>
+
+      <div class="acc" data-accordion>
+        <div class="acc__item">
+          <h3 class="sr-only">Specification details</h3>
+          <button class="acc__btn" type="button" aria-expanded="false" aria-controls="sp-def-1" data-accordion-open>
+            <span class="acc__tag">Model</span>
+            <span class="acc__label">How Pulseboard resolves an event into a metric</span>
+            <span class="acc__chev" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 4.5 6 8.5 10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span>
+          </button>
+          <div class="acc__panel" id="sp-def-1" role="region" aria-label="Model detail">
+            <div class="acc__inner"><div>
+              <p>Your warehouse tables are mapped once into an entity graph: accounts, users, workspaces, and the events that pass between them. A metric is expressed against that graph, not against a SQL snippet, which is why the same definition survives a schema migration and can be reused across boards without being re-typed.</p>
+              <ul>
+                <li>Column mapping is previewed and versioned before it is saved</li>
+                <li>Joins are declared once as relationships, then reused everywhere</li>
+                <li>Backfill runs automatically when a new event property appears</li>
+              </ul>
+            </div></div>
+          </div>
+        </div>
+        <div class="acc__item">
+          <button class="acc__btn" type="button" aria-expanded="false" aria-controls="sp-def-2">
+            <span class="acc__tag">Guardrails</span>
+            <span class="acc__label">What happens when someone edits a live metric</span>
+            <span class="acc__chev" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 4.5 6 8.5 10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span>
+          </button>
+          <div class="acc__panel" id="sp-def-2" role="region" aria-label="Guardrails detail">
+            <div class="acc__inner"><div>
+              <p>Edits to a metric that is referenced by an alert or a subscribed board require a second reviewer. Both the before and after values are computed for the last 90 days, so you can see that the change moves trial conversion by 0.4 points before anybody on Monday’s call finds out by accident.</p>
+              <ul>
+                <li>Dual approval on alert-referenced metrics</li>
+                <li>Side-by-side recompute over a chosen history window</li>
+                <li>Automatic notice to every board subscriber</li>
+              </ul>
+            </div></div>
+          </div>
+        </div>
+        <div class="acc__item">
+          <button class="acc__btn" type="button" aria-expanded="false" aria-controls="sp-def-3">
+            <span class="acc__tag">Sharing</span>
+            <span class="acc__label">Giving finance and support the same answer</span>
+            <span class="acc__chev" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 4.5 6 8.5 10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span>
+          </button>
+          <div class="acc__panel" id="sp-def-3" role="region" aria-label="Sharing detail">
+            <div class="acc__inner"><div>
+              <p>Boards can be published to a read-only link, embedded in your internal wiki, or pushed as a weekly digest. Every view carries the definition link in its footer, so a screenshot taken out of context still tells the reader which rule produced the number.</p>
+              <ul>
+                <li>Read-only links with expiry and watermarking</li>
+                <li>Embed blocks for Notion, Confluence, and Google Slides</li>
+                <li>CSV export includes the definition text in a header row</li>
+              </ul>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURE 2 ===== -->
+  <section class="feature" id="performance" aria-labelledby="f2-title">
+    <div class="feature__aside">
+      <p class="feature__num">Feature 02</p>
+      <h2 class="feature__title" id="f2-title">Answers in the room, not after it</h2>
+      <p class="feature__kicker">p95 board render is 1.9 seconds. That is a product requirement, not a marketing figure.</p>
+    </div>
+    <div class="feature__body">
+      <figure class="feature__figure">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="Analytics dashboard displayed on a desk monitor during a team review" width="1600" height="1067" loading="lazy">
+        <figcaption class="feature__cap">Rollup health for one workspace: what is pre-computed, what is live, and what is still warming.</figcaption>
+      </figure>
+      <div class="prose">
+        <p>Rollups are materialised incrementally as events arrive, so a trend spanning nine quarters reads from a small, warm table rather than scanning your fact table for the fourth time that morning. When someone asks an unusual question that needs a heavier scan, Pulseboard runs it in the background, keeps the board interactive, and pings the person who asked when the answer is ready.</p>
+        <p>Because speed is a property of the model, not of the machine, the same board that opens in two seconds for a four-person startup opens in two seconds for a 900-seat platform team. Each workspace gets a visible query budget, and cache warmth is inspectable rather than hidden behind a spinner.</p>
+      </div>
+      <div class="pillars">
+        <div class="pillar">
+          <h3>Incremental materialisation</h3>
+          <p>New partitions extend existing rollups instead of rebuilding the history.</p>
+        </div>
+        <div class="pillar">
+          <h3>Background for heavy asks</h3>
+          <p>Long scans never block the board you are already presenting.</p>
+        </div>
+        <div class="pillar">
+          <h3>Budget you can see</h3>
+          <p>Warehouse cost per team and per board, reported back to you weekly.</p>
+        </div>
+        <div class="pillar">
+          <h3>No sampling, ever</h3>
+          <p>Every event is counted; if a figure is estimated, the label says so in words.</p>
+        </div>
+      </div>
+      <div class="acc" data-accordion>
+        <div class="acc__item">
+          <h3 class="sr-only">Performance details</h3>
+          <button class="acc__btn" type="button" aria-expanded="false" aria-controls="sp-perf-1" data-accordion-open>
+            <span class="acc__tag">Latency</span>
+            <span class="acc__label">Where the 1.9 seconds actually goes</span>
+            <span class="acc__chev" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 4.5 6 8.5 10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span>
+          </button>
+          <div class="acc__panel" id="sp-perf-1" role="region" aria-label="Latency detail">
+            <div class="acc__inner"><div>
+              <p>Roughly 240 milliseconds is browser render and font layout, 380 milliseconds is the rollup read, and the remainder is network from the browser to the region nearest your team. We measure it from real sessions, not from our own instrumentation, and publish the p50, p95, and p99 in the status page every month.</p>
+              <ul>
+                <li>p50 0.7s · p95 1.9s · p99 3.4s over the last 90 days</li>
+                <li>Charts stream in as each query resolves, not all at once</li>
+                <li>Static board snapshots for presentations, generated on demand</li>
+              </ul>
+            </div></div>
+          </div>
+        </div>
+        <div class="acc__item">
+          <button class="acc__btn" type="button" aria-expanded="false" aria-controls="sp-perf-2">
+            <span class="acc__tag">Freshness</span>
+            <span class="acc__label">Real-time, hourly, or your own cadence</span>
+            <span class="acc__chev" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 4.5 6 8.5 10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span>
+          </button>
+          <div class="acc__panel" id="sp-perf-2" role="region" aria-label="Freshness detail">
+            <div class="acc__inner"><div>
+              <p>Each metric declares the freshness it needs. Launch-day counters run on the streaming tail with about eight seconds of lag; retention cohorts refresh nightly with the warehouse; finance-facing measures refresh on the close calendar you set. A board shows the as-of time on every number, so nobody mistakes a nightly figure for a live one.</p>
+              <ul>
+                <li>Streaming tail: 8s median lag on active metrics</li>
+                <li>Nightly build: reconciles against warehouse partitions</li>
+                <li>Explicit as-of stamps and missing-partition alerts</li>
+              </ul>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURE 3 ===== -->
+  <section class="feature" id="reviews" aria-labelledby="f3-title">
+    <div class="feature__aside">
+      <p class="feature__num">Feature 03</p>
+      <h2 class="feature__title" id="f3-title">A board that remembers what you decided</h2>
+      <p class="feature__kicker">Analytics ends at a number. Pulseboard ends at an outcome, with a name attached.</p>
+    </div>
+    <div class="feature__body">
+      <figure class="feature__figure">
+        <img src="https://picsum.photos/seed/pulseboard-009f0124c53e/1600/900?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="A product team gathered around a table reviewing a shared board" width="1600" height="1067" loading="lazy">
+        <figcaption class="feature__cap">Monday review: the decision log is open beside the board it came from.</figcaption>
+      </figure>
+      <div class="prose">
+        <p>Comment threads pin to a data point rather than to a page, so a discussion from March still sits exactly where it happened. Close a thread with a decision and Pulseboard records the owner, the intended effect, and the metric that will prove it. Two weeks later it annotates the chart itself: “Trial re-engage experiment shipped here — activation +6%.”</p>
+        <p>The weekly digest is written from that log, not from a chart dump: what moved, what your team chose, and what has not been followed up. It is the difference between a dashboard people look at and a practice people keep.</p>
+      </div>
+      <div class="pillars">
+        <div class="pillar">
+          <h3>Point-anchored threads</h3>
+          <p>Context stays glued to the week and segment it was about.</p>
+        </div>
+        <div class="pillar">
+          <h3>Outcome annotation</h3>
+          <p>Shipped changes appear on the timeline automatically, dated.</p>
+        </div>
+        <div class="pillar">
+          <h3>Follow-up ledger</h3>
+          <p>Open decisions with owners and due dates, visible to the whole team.</p>
+        </div>
+        <div class="pillar">
+          <h3>Written digest</h3>
+          <p>A short prose summary of the week, edited by you before it is sent.</p>
+        </div>
+      </div>
+      <div class="acc" data-accordion>
+        <div class="acc__item">
+          <h3 class="sr-only">Review workflow details</h3>
+          <button class="acc__btn" type="button" aria-expanded="false" aria-controls="sp-rev-1" data-accordion-open>
+            <span class="acc__tag">Workflow</span>
+            <span class="acc__label">Running the weekly review without a slide deck</span>
+            <span class="acc__chev" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 4.5 6 8.5 10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span>
+          </button>
+          <div class="acc__panel" id="sp-rev-1" role="region" aria-label="Workflow detail">
+            <div class="acc__inner"><div>
+              <p>Presentation mode walks the board in the order you arrange, one exhibit at a time, and keeps the discussion in the side panel. Anyone joining late reads what happened in the room instead of asking you to repeat it, and the notes become next week’s agenda without a separate document.</p>
+              <ul>
+                <li>Guided order with keyboard navigation and a presenter timer</li>
+                <li>Decisions recorded with owner, due date, and success metric</li>
+                <li>Agenda carried forward automatically from the last review</li>
+              </ul>
+            </div></div>
+          </div>
+        </div>
+        <div class="acc__item">
+          <button class="acc__btn" type="button" aria-expanded="false" aria-controls="sp-rev-2">
+            <span class="acc__tag">Alerts</span>
+            <span class="acc__label">What wakes you up, and what deliberately does not</span>
+            <span class="acc__chev" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 4.5 6 8.5 10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span>
+          </button>
+          <div class="acc__panel" id="sp-rev-2" role="region" aria-label="Alerts detail">
+            <div class="acc__inner"><div>
+              <p>Alerts inherit the metric they watch, so a threshold always means the same thing as the number on the board. Sensitivity is a dial you can justify, weekend seasonality is learned rather than assumed, and every alert carries the board link plus the last decision that touched that measure.</p>
+              <ul>
+                <li>Threshold, drift, and absence-of-data rules per metric</li>
+                <li>Routes to Slack, email, or a webhook into your pager</li>
+                <li>Snooze with a reason, reviewed in the weekly digest</li>
+              </ul>
+            </div></div>
+          </div>
+        </div>
+        <div class="acc__item">
+          <button class="acc__btn" type="button" aria-expanded="false" aria-controls="sp-rev-3">
+            <span class="acc__tag">Access</span>
+            <span class="acc__label">Who sees what, including the uncomfortable parts</span>
+            <span class="acc__chev" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2 4.5 6 8.5 10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span>
+          </button>
+          <div class="acc__panel" id="sp-rev-3" role="region" aria-label="Access detail">
+            <div class="acc__inner"><div>
+              <p>Workspace, board, and metric each have their own permission, and row-level rules can hide a region or a customer group without duplicating the definition. Every read is logged with the person, the board, and the filters used, which is what makes an audit a five-minute task instead of a quarter of memory work.</p>
+              <ul>
+                <li>SSO with SCIM provisioning on Scale plans</li>
+                <li>Row-level rules per team, region, or account tier</li>
+                <li>Readable audit log, exportable for compliance review</li>
+              </ul>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== INTEGRATIONS ===== -->
+  <section class="section section--surface" aria-labelledby="int-title">
+    <div class="shell">
+      <div class="section__head section__head--stack">
+        <p class="eyebrow"><span class="eyebrow__index">04</span>Plugs in quietly</p>
+        <h2 class="section__title" id="int-title">It sits in front of the stack you already paid for.</h2>
+        <p class="section__aside">Pulseboard does not ask you to move your events, replace your warehouse, or re-instrument your app. Connections are read-only by default and every mapping is previewed before it is saved.</p>
+      </div>
+      <div class="cards cards--3">
+        <article class="card" data-tilt>
+          <p class="card__index" aria-hidden="true">Warehouses</p>
+          <h3 class="card__title">Snowflake, BigQuery, Redshift, Postgres</h3>
+          <p class="card__body">Connect with a read-only role. Column mapping is previewed, then versioned, so a schema change is a reviewable diff instead of a broken chart at 8am.</p>
+          <div class="tilt__glare" aria-hidden="true"></div>
+        </article>
+        <article class="card" data-tilt>
+          <p class="card__index" aria-hidden="true">Streams</p>
+          <h3 class="card__title">Kafka, Kinesis, and your own tail</h3>
+          <p class="card__body">Subscribe to a copy of the stream for live measures. If the tail falls behind, the board says so on the number rather than quietly showing stale truth.</p>
+          <div class="tilt__glare" aria-hidden="true"></div>
+        </article>
+        <article class="card" data-tilt>
+          <p class="card__index" aria-hidden="true">Surfaces</p>
+          <h3 class="card__title">Slack, email, webhooks, embeds</h3>
+          <p class="card__body">Meetings happen where work happens. Alerts, digests, and board links route into Slack or your wiki, and everything is readable on a phone.</p>
+          <div class="tilt__glare" aria-hidden="true"></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section closing" aria-labelledby="cta-title">
+    <div class="shell closing__inner">
+      <p class="eyebrow"><span class="eyebrow__index">05</span>Next</p>
+      <h2 class="display display--sm" id="cta-title">See the three features <em>on your own numbers.</em></h2>
+      <p class="lead">Bring the report your team distrusts. We will rebuild it live in twenty minutes and you keep it, whether or not you buy.</p>
+      <div class="closing__actions">
+        <a class="btn btn--primary" href="contact.html">Book a 20-minute demo</a>
+        <a class="btn btn--ghost" href="pricing.html">Compare plans<span class="btn__arrow" aria-hidden="true">→</span></a>
+      </div>
+      <p class="closing__fine">Prefer to read first? Plans, limits, and what is included are on the <a href="pricing.html">pricing page</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="shell">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a class="brand" href="index.html" aria-label="Pulseboard home">
+          <span class="brand__mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand__word">Pulseboard</span>
+        </a>
+        <p>Analytics for teams that ship. One definition per metric, one board per decision, one number on every Monday.</p>
+        <p class="footer__contact"><a href="mailto:hello@pulseboard.example">hello@pulseboard.example</a> · <a href="tel:+14155550142">+1 (415) 555-0142</a></p>
+      </div>
+      <nav class="footer__col" aria-labelledby="f-product">
+        <h2 class="footer__title" id="f-product">Product</h2>
+        <ul>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="features.html#definitions">Shared definitions</a></li>
+          <li><a href="features.html#performance">Query performance</a></li>
+          <li><a href="features.html#reviews">Decision logs</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+      </nav>
+      <nav class="footer__col" aria-labelledby="f-company">
+        <h2 class="footer__title" id="f-company">Company</h2>
+        <ul>
+          <li><a href="about.html">Our story</a></li>
+          <li><a href="about.html#team">Team</a></li>
+          <li><a href="about.html#principles">Principles</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html#demo">Book a demo</a></li>
+        </ul>
+      </nav>
+      <div class="footer__col">
+        <h2 class="footer__title" id="f-notes">Trust notes</h2>
+        <ul class="footer__notes">
+          <li>SOC 2 Type II, audited 2026</li>
+          <li>EU and US data residency</li>
+          <li>Read-only warehouse access</li>
+          <li>Status page with 90-day history</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bar">
+      <p>© 2026 Pulseboard Labs, Inc.</p>
+      <p>Built in Oakland and Lisbon · <a href="contact.html">Talk to a human</a></p>
+    </div>
+  </div>
+</footer>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
