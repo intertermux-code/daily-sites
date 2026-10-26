@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Savings Rate Calculator — Mintwise</title>
+  <meta name="description" content="Enter your monthly income and expenses to see your savings rate as a live donut chart, with benchmarks and a yearly projection. Free, instant, nothing stored.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="wordmark" href="index.html">Mint<span class="mint">wise</span><span class="dot">.</span></a>
+      <span class="masthead-issue">Issue №14 — Money, Edited</span>
+      <nav class="site-nav" aria-label="Primary">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Open navigation menu">
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="calculator.html" aria-current="page">Calculator</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a class="nav-cta" href="pricing.html">Start free trial</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="container">
+        <p class="hero-kicker">Interactive — nothing you type leaves this page</p>
+        <h1 id="page-title" class="hero-title" data-stagger>What is your savings <span class="serif-word">rate</span>, really?</h1>
+        <p class="lede">Enter your monthly take-home pay and what leaves it. The donut fills in real time, the verdict benchmarks you against U.S. household medians, and the projection shows next year’s balance if nothing changes. All maths happens in your browser.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="calc-title">
+      <div class="container">
+        <p class="eyebrow"><span class="no">01</span> The worksheet</p>
+        <h2 id="calc-title" style="position:absolute;left:-9999px;">Monthly budget calculator</h2>
+        <div class="calc-grid">
+
+          <form class="calc-panel" id="budget-form" aria-describedby="calc-help">
+            <p id="calc-help" style="font-size:0.9375rem; color:var(--muted); margin-bottom: 24px;">Figures are monthly, after tax. Leave a line blank or zero if it doesn’t apply to you.</p>
+
+            <p class="field-group-title">Income</p>
+            <div class="field">
+              <label for="income">Take-home pay</label>
+              <span class="money-input"><input type="number" id="income" name="income" min="0" step="50" inputmode="decimal" placeholder="3,900" value="3900"></span>
+            </div>
+            <div class="field">
+              <label for="side-income">Side income</label>
+              <span class="money-input"><input type="number" id="side-income" name="income2" min="0" step="50" inputmode="decimal" placeholder="0" value="0"></span>
+            </div>
+
+            <p class="field-group-title">Essentials</p>
+            <div class="field">
+              <label for="rent">Rent or mortgage</label>
+              <span class="money-input"><input class="expense-input" type="number" id="rent" name="rent" min="0" step="50" inputmode="decimal" placeholder="1,400" value="1400"></span>
+            </div>
+            <div class="field">
+              <label for="utilities">Utilities &amp; phone</label>
+              <span class="money-input"><input class="expense-input" type="number" id="utilities" name="utilities" min="0" step="10" inputmode="decimal" placeholder="210" value="210"></span>
+            </div>
+            <div class="field">
+              <label for="groceries">Groceries</label>
+              <span class="money-input"><input class="expense-input" type="number" id="groceries" name="groceries" min="0" step="10" inputmode="decimal" placeholder="420" value="420"></span>
+            </div>
+            <div class="field">
+              <label for="transport">Transport &amp; fuel</label>
+              <span class="money-input"><input class="expense-input" type="number" id="transport" name="transport" min="0" step="10" inputmode="decimal" placeholder="260" value="260"></span>
+            </div>
+            <div class="field">
+              <label for="insurance">Insurance &amp; health</label>
+              <span class="money-input"><input class="expense-input" type="number" id="insurance" name="insurance" min="0" step="10" inputmode="decimal" placeholder="180" value="180"></span>
+            </div>
+
+            <p class="field-group-title">Lifestyle &amp; debt</p>
+            <div class="field">
+              <label for="dining">Dining &amp; going out</label>
+              <span class="money-input"><input class="expense-input" type="number" id="dining" name="dining" min="0" step="10" inputmode="decimal" placeholder="300" value="300"></span>
+            </div>
+            <div class="field">
+              <label for="subscriptions">Subscriptions</label>
+              <span class="money-input"><input class="expense-input" type="number" id="subscriptions" name="subscriptions" min="0" step="5" inputmode="decimal" placeholder="65" value="65"></span>
+            </div>
+            <div class="field">
+              <label for="debt">Debt payments</label>
+              <span class="money-input"><input class="expense-input" type="number" id="debt" name="debt" min="0" step="10" inputmode="decimal" placeholder="350" value="350"></span>
+            </div>
+
+            <p class="field-group-title">Everything else</p>
+            <div id="custom-expenses"></div>
+            <button type="button" class="btn btn--ghost btn--small" id="add-expense" aria-controls="custom-expenses">+ Add a custom line</button>
+
+            <div class="calc-actions">
+              <button type="button" class="btn btn--ghost btn--small" id="calc-reset">Reset worksheet</button>
+              <a class="btn btn--small" href="pricing.html">Put this on autopilot <span class="arrow" aria-hidden="true">→</span></a>
+            </div>
+          </form>
+
+          <aside class="donut-panel" aria-live="polite">
+            <div class="donut-wrap">
+              <svg viewBox="0 0 240 240" role="img" aria-label="Savings rate donut chart">
+                <circle cx="120" cy="120" r="90" fill="none" stroke="#e6e6df" stroke-width="26"></circle>
+                <circle id="donut-arc" cx="120" cy="120" r="90" fill="none" stroke="#10b981" stroke-width="26" stroke-linecap="round"
+                        transform="rotate(-90 120 120)" stroke-dasharray="565.487" stroke-dashoffset="565.487"></circle>
+              </svg>
+              <div class="donut-center">
+                <b id="donut-rate">0%</b>
+                <span>Savings rate</span>
+              </div>
+            </div>
+            <p id="verdict" class="verdict" data-level="zero" role="status">Add your monthly income to begin</p>
+
+            <table class="mini-table">
+              <caption style="caption-side: bottom; padding-top: 10px; font-size: 0.75rem; color: var(--muted); text-align: left;">Live totals — after-tax, per month</caption>
+              <thead>
+                <tr><th scope="col">Line</th><th scope="col">Amount</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Income</td><td id="out-income">$0</td></tr>
+                <tr><td>Expenses</td><td id="out-expenses">$0</td></tr>
+                <tr><td>Kept monthly</td><td id="out-savings">$0</td></tr>
+                <tr><td>Projected in 12 months</td><td id="out-yearly" class="mint">$0</td></tr>
+                <tr><td>Cash-flow margin</td><td id="out-runway">—</td></tr>
+              </tbody>
+            </table>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 Benchmarks -->
+    <section class="section" aria-labelledby="bench-title">
+      <div class="container">
+        <p class="eyebrow"><span class="no">02</span> Reading the donut</p>
+        <div class="spread">
+          <div class="col-5">
+            <h2 id="bench-title" class="section-title">Benchmarks, <span class="serif">without the lecture</span></h2>
+            <p class="lede">The U.S. personal savings rate has averaged around 5% for the past two decades. Mintwise members, one year in, average 18%. The gap is rarely income — it’s visibility.</p>
+          </div>
+          <div class="col-7">
+            <table class="mini-table" style="background: var(--card); border: 1px solid var(--rule); border-radius: var(--radius);">
+              <thead>
+                <tr><th scope="col">Your rate</th><th scope="col">Company</th><th scope="col">First move</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>0–4%</td><td>Average household</td><td>Flag subscriptions, then re-price insurance</td></tr>
+                <tr><td>5–9%</td><td>Above median</td><td>Automate $100 the day after payday</td></tr>
+                <tr><td>10–19%</td><td>Strong</td><td>Split between emergency fund and goals</td></tr>
+                <tr><td>20%+</td><td>Top decile</td><td>Put the surplus on a 90-day investment plan</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 Next step -->
+    <section class="section section--flush" aria-labelledby="cta3">
+      <div class="container">
+        <div class="cta-band">
+          <h2 id="cta3">Like the number? Make it permanent with round-ups.</h2>
+          <div class="btn-row">
+            <a class="btn" href="features.html#saving">See automatic saving <span class="arrow" aria-hidden="true">→</span></a>
+            <a class="btn btn--ghost" style="border-color:#fff; color:#fff;" href="contact.html">Ask a human first</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="footer-wordmark" href="index.html">Mint<span class="mint">wise</span><span class="dot">.</span></a>
+          <p>Personal finance, edited for clarity. Built in Portland by a team that would rather forecast than lecture.</p>
+        </div>
+        <nav class="footer-col" aria-label="Footer — pages">
+          <h4>The Edition</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="calculator.html">Savings calculator</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="footer-col">
+          <h4>Assurance</h4>
+          <ul>
+            <li><a href="contact.html#faq">Security FAQ</a></li>
+            <li><a href="features.html#security">How we protect data</a></li>
+            <li><a href="pricing.html">Plans &amp; trials</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <span>© <span id="year">2026</span> Mintwise Financial, Inc. All rights reserved.</span>
+        <span>Mintwise is a budgeting tool, not a bank. Investing involves risk.</span>
+      </div>
+    </div>
+  </footer>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
