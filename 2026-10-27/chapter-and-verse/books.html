@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Books &amp; the Standing Shelf — Chapter &amp; Verse</title>
+<meta name="description" content="Eighteen classics standing on our oak shelf: fiction, poetry, philosophy, essays. Filter by genre, pull a spine, and read the bookseller’s note. Plus new arrivals and the rare-books list.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%237c2d3e'/%3E%3Ctext x='16' y='23' font-family='serif' font-size='19' fill='%23f7f1e5' text-anchor='middle'%3E%E7%AB%A0%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..600&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">章</span>
+      <span class="brand-text">Chapter <em>&amp;</em> Verse</span>
+    </a>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open navigation menu">
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-label">Menu</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <ul class="nav-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="books.html" aria-current="page">Books</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="book-club.html">Book Club</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Visit</a></li>
+      </ul>
+      <p class="nav-meta">27 Marlowe Street, Somerville · Open Tuesday to Sunday, 10 to 7</p>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero" aria-labelledby="books-title">
+    <p class="hero-vert" aria-hidden="true">棚 の 上</p>
+    <div class="wrap page-hero-grid">
+      <div>
+        <p class="eyebrow">Fiction · Poetry · Philosophy · Essays</p>
+        <h1 class="stagger" id="books-title">
+          <span class="w" style="--i:1">The</span>
+          <span class="w" style="--i:2">Standing</span>
+          <span class="w" style="--i:3">Shelf</span>
+        </h1>
+        <p class="lede">Eighteen books we keep facing out, never flat. Pull one with your eyes first: choose a genre, then a spine, and the bookseller’s note appears underneath — why it earns its place on the oak.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#shelf">Go to the shelf</a>
+          <a class="btn btn-ghost" href="#rare">Rare &amp; first editions</a>
+        </div>
+      </div>
+      <figure class="page-hero-figure">
+        <img src="https://picsum.photos/seed/chapter-and-verse-b7833e8f5b7c/1600/900?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="Clothbound spines standing in a row on a wooden shelf, slightly uneven." width="1600" height="1067" loading="eager">
+        <figcaption>The shelf we built in 2015 from the banisters of the old Davis Square stair.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div class="brush-divider" role="presentation"></div>
+
+  <!-- ── The shelf ───────────────────────────────────────── -->
+  <section class="section-tight" aria-labelledby="shelf-heading" id="shelf">
+    <div class="wrap section-head">
+      <p class="eyebrow">Choose a genre, then a spine</p>
+      <h2 id="shelf-heading">What Is Standing Today</h2>
+      <p class="lede">Spines are drawn to their real heights, so the row reads like the row on our floor. Tap any book to open its note.</p>
+    </div>
+
+    <div class="wrap">
+      <div class="filter-bar" id="genre-filter" role="group" aria-label="Filter the shelf by genre">
+        <p class="filter-label">Genre</p>
+        <button class="filter-btn" type="button" data-genre="all" aria-pressed="true">All shelves</button>
+        <button class="filter-btn" type="button" data-genre="fiction" aria-pressed="false">Fiction</button>
+        <button class="filter-btn" type="button" data-genre="poetry" aria-pressed="false">Poetry</button>
+        <button class="filter-btn" type="button" data-genre="philosophy" aria-pressed="false">Philosophy</button>
+        <button class="filter-btn" type="button" data-genre="essays" aria-pressed="false">Essays</button>
+        <p class="shelf-count" id="shelf-count" role="status" aria-live="polite">Showing 18 of 18 spines</p>
+      </div>
+    </div>
+
+    <div class="wrap shelf-stage">
+      <div class="shelf" role="group" aria-label="Book shelf. Select a spine to read its note.">
+
+        <button class="spine spine--deep t1" type="button" aria-pressed="true"
+          data-genre="fiction" data-shelf="Fiction, left hand"
+          data-title="The Tale of Genji" data-author="Murasaki Shikibu" data-genre-label="Fiction"
+          data-year="c. 1010" data-press="Vintage Classics, trans. Royall Tyler" data-price="$24.00"
+          data-note="The first novel ever written, and still the most patient one. Five hundred pages of court life where nothing happens except weather, jealousy and time. Read three chapters a night and you will have a year of good company.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">The Tale of Genji</span>
+          <span class="spine-author">Shikibu</span>
+        </button>
+
+        <button class="spine spine--ink t3" type="button" aria-pressed="false"
+          data-genre="fiction" data-shelf="Fiction, left hand"
+          data-title="Kokoro" data-author="Natsume Sōseki" data-genre-label="Fiction"
+          data-year="1910" data-press="Canongate, trans. Jay Rubin" data-price="$16.00"
+          data-note="A young student, an older friend he calls Sensei, and a confession held shut for forty years. Sōseki wrote it as Japan was learning to be modern; it reads like a letter you should not open on the train.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">Kokoro</span>
+          <span class="spine-author">Sōseki</span>
+        </button>
+
+        <button class="spine t2" type="button" aria-pressed="false"
+          data-genre="fiction" data-shelf="Fiction, middle"
+          data-title="Jane Eyre" data-author="Charlotte Brontë" data-genre-label="Fiction"
+          data-year="1847" data-press="Penguin Classics, ed. Robert Polhemus" data-price="$18.00"
+          data-note="We shelve it beside its 1847 Currer Bell first edition in the back room. The house is Gothic, the heroine is not. Nobody in English fiction says I must be my own keeper better than this.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">Jane Eyre</span>
+          <span class="spine-author">Brontë</span>
+        </button>
+
+        <button class="spine spine--moss t5" type="button" aria-pressed="false"
+          data-genre="fiction" data-shelf="Fiction, middle"
+          data-title="The Sound of the Mountain" data-author="Yasunari Kawabata" data-genre-label="Fiction"
+          data-year="1954" data-press="Vintage, trans. Edward Seidensticker" data-price="$17.00"
+          data-note="An old man in Kamakura hears a sound at the base of his skull and calls it the mountain talking. Kawabata writes the way a brush lifts off paper: barely there, entirely exact. Our quietest loud book.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">The Sound of the Mountain</span>
+          <span class="spine-author">Kawabata</span>
+        </button>
+
+        <button class="spine spine--paper t4" type="button" aria-pressed="false"
+          data-genre="fiction" data-shelf="Fiction, right hand"
+          data-title="Mrs Dalloway" data-author="Virginia Woolf" data-genre-label="Fiction"
+          data-year="1925" data-press="Hogarth Press, 1929 reprint" data-price="$19.00"
+          data-note="Buy the edition with wide margins; the thoughts need somewhere to sit. One June day, a flower market, a party, and a sentence that keeps turning around the person who is thinking it.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">Mrs Dalloway</span>
+          <span class="spine-author">Woolf</span>
+        </button>
+
+        <button class="spine spine--seal t6" type="button" aria-pressed="false"
+          data-genre="fiction" data-shelf="Fiction, right hand"
+          data-title="The Master and Margarita" data-author="Mikhail Bulgakov" data-genre-label="Fiction"
+          data-year="1967" data-press="Penguin, trans. Pevear &amp; Volokhonsky" data-price="$22.00"
+          data-note="The devil brings a retinue and a talking cat to atheist Moscow while Pilate washes his hands in a novel inside the novel. Bulgakov hid it from Stalin and his widow mailed it out of a suitcase of typescript.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">The Master and Margarita</span>
+          <span class="spine-author">Bulgakov</span>
+        </button>
+
+        <button class="spine spine--gold t3" type="button" aria-pressed="false"
+          data-genre="poetry" data-shelf="Poetry corner"
+          data-title="Leaves of Grass" data-author="Walt Whitman" data-genre-label="Poetry"
+          data-year="1855 / 1891" data-press="Library of America, death edition" data-price="$28.00"
+          data-note="Ask for the 1891 text: Whitman spent thirty years re-cutting it. We read the whole thing aloud every October and it still takes nine hours with two breaks.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">Leaves of Grass</span>
+          <span class="spine-author">Whitman</span>
+        </button>
+
+        <button class="spine spine--indigo t1" type="button" aria-pressed="false"
+          data-genre="poetry" data-shelf="Poetry corner"
+          data-title="The Divine Comedy" data-author="Dante Alighieri" data-genre-label="Poetry"
+          data-year="c. 1320" data-press="Everyman’s Library, trans. Durling" data-price="$34.00"
+          data-note="Durling and Martinez keep the sentence order, which means you feel the thirds and the rhymes instead of merely being told about them. Bring a pencil; the margins of this one get crowded.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">The Divine Comedy</span>
+          <span class="spine-author">Dante</span>
+        </button>
+
+        <button class="spine t4" type="button" aria-pressed="false"
+          data-genre="poetry" data-shelf="Poetry corner"
+          data-title="The Essential Haiku" data-author="Bashō, Buson, Issa" data-genre-label="Poetry"
+          data-year="1994" data-press="Ecco, edited by Robert Hass" data-price="$20.00"
+          data-note="Seventeen syllables, a frog, an old well, and the whole of August. Hass pairs each poem with its Japanese, so you can watch what a translation decides to lose.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">The Essential Haiku</span>
+          <span class="spine-author">Hass, ed.</span>
+        </button>
+
+        <button class="spine spine--paper t2" type="button" aria-pressed="false"
+          data-genre="poetry" data-shelf="Poetry corner"
+          data-title="If Not, Winter" data-author="Sappho · trans. Anne Carson" data-genre-label="Poetry"
+          data-year="2002" data-press="Alfred A. Knopf" data-price="$26.00"
+          data-note="Fragment 31 with a bracket where the papyrus is missing: [ ]. Carson lets the hole stay in the poem, which is the most honest thing a translator can do. Poetry keeps its own wounds.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">If Not, Winter</span>
+          <span class="spine-author">Carson</span>
+        </button>
+
+        <button class="spine spine--moss t6" type="button" aria-pressed="false"
+          data-genre="poetry" data-shelf="Poetry corner"
+          data-title="Gitanjali" data-author="Rabindranath Tagore" data-genre-label="Poetry"
+          data-year="1910" data-press="Macmillan, authorised translation" data-price="$14.00"
+          data-note="Song-offerings, written in the same year Tagore rewrote his own father’s house into a school. We keep the 1910 prose version and the English original shelved facing each other.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">Gitanjali</span>
+          <span class="spine-author">Tagore</span>
+        </button>
+
+        <button class="spine spine--deep t5" type="button" aria-pressed="false"
+          data-genre="philosophy" data-shelf="Philosophy, window side"
+          data-title="Meditations" data-author="Marcus Aurelius" data-genre-label="Philosophy"
+          data-year="c. 180" data-press="Hackett, trans. John M. Cooper" data-price="$14.00"
+          data-note="Private reminders written in a tent on the Danube, never meant for us. The Hackett edition by Cooper shows you the Greek where the Latin habit has smoothed the thought.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">Meditations</span>
+          <span class="spine-author">Aurelius</span>
+        </button>
+
+        <button class="spine spine--ink t2" type="button" aria-pressed="false"
+          data-genre="philosophy" data-shelf="Philosophy, window side"
+          data-title="Tao Te Ching" data-author="Laozi · trans. Ursula K. Le Guin" data-genre-label="Philosophy"
+          data-year="c. 400 BCE" data-press="Shambhala, New Translation" data-price="$16.00"
+          data-note="Le Guin worked from twenty English versions and called the result a poem by a poet for readers who are not scholars. Eighty-one short chapters; read one, close the book, go outside.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">Tao Te Ching</span>
+          <span class="spine-author">Le Guin</span>
+        </button>
+
+        <button class="spine t6" type="button" aria-pressed="false"
+          data-genre="philosophy" data-shelf="Philosophy, window side"
+          data-title="The Republic" data-author="Plato · trans. G. M. A. Grube" data-genre-label="Philosophy"
+          data-year="c. 375 BCE" data-press="Hackett, revised by C. D. C. Reeve" data-price="$18.00"
+          data-note="Our Margins club reads Book VII aloud every third Thursday, in the cave light by the back stair. Yes, it is long. It is also the argument every later book is having.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">The Republic</span>
+          <span class="spine-author">Plato</span>
+        </button>
+
+        <button class="spine spine--gold t4" type="button" aria-pressed="false"
+          data-genre="philosophy" data-shelf="Philosophy, low shelf"
+          data-title="On the Shortness of Life" data-author="Lucius Annaeus Seneca" data-genre-label="Philosophy"
+          data-year="c. 49" data-press="Penguin Classics, trans. John Davie" data-price="$12.00"
+          data-note="Thirty-six pages that will make you rearrange one week of your calendar. Seneca to Paulinus, on the one resource nobody can borrow back.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">On the Shortness of Life</span>
+          <span class="spine-author">Seneca</span>
+        </button>
+
+        <button class="spine spine--seal t1" type="button" aria-pressed="false"
+          data-genre="philosophy" data-shelf="Philosophy, low shelf"
+          data-title="The Analects" data-author="Confucius · trans. D. C. Lau" data-genre-label="Philosophy"
+          data-year="c. 475 BCE" data-press="Penguin Classics" data-price="$16.00"
+          data-note="Conversations, not a system. Lau’s notes tell you which disciple is asking, and that changes everything: the same question gets three different answers.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">The Analects</span>
+          <span class="spine-author">Confucius</span>
+        </button>
+
+        <button class="spine spine--paper t5" type="button" aria-pressed="false"
+          data-genre="essays" data-shelf="Essays, long table"
+          data-title="The Pillow Book" data-author="Sei Shōnagon" data-genre-label="Essays"
+          data-year="c. 1002" data-press="Penguin Classics, trans. Ivan Morris" data-price="$21.00"
+          data-note="Lists, gossip, weather, and the exact sound of a cart wheel at night — written by a lady-in-waiting who found her emperor tedious. Read it in fragments; that is how she wrote it.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">The Pillow Book</span>
+          <span class="spine-author">Shōnagon</span>
+        </button>
+
+        <button class="spine spine--indigo t3" type="button" aria-pressed="false"
+          data-genre="essays" data-shelf="Essays, long table"
+          data-title="Notes of a Native Son" data-author="James Baldwin" data-genre-label="Essays"
+          data-year="1955" data-press="Beacon Press, edition with foreword" data-price="$18.00"
+          data-note="Ten essays written at twenty-six and twenty-nine, none of which has aged politely. The title piece ends on a note about his father’s funeral; we always need a minute after that one.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">Notes of a Native Son</span>
+          <span class="spine-author">Baldwin</span>
+        </button>
+
+        <button class="spine t2" type="button" aria-pressed="false"
+          data-genre="essays" data-shelf="Essays, long table"
+          data-title="A Room of One’s Own" data-author="Virginia Woolf" data-genre-label="Essays"
+          data-year="1929" data-press="Harcourt, annotated edition" data-price="$17.00"
+          data-note="Two lectures that became an essay about five hundred pounds and a lock on the door. The annotated edition shows you which college would not let her in, and why she noticed.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">A Room of One’s Own</span>
+          <span class="spine-author">Woolf</span>
+        </button>
+
+        <button class="spine spine--moss t4" type="button" aria-pressed="false"
+          data-genre="essays" data-shelf="Essays, low shelf"
+          data-title="Walden" data-author="Henry David Thoreau" data-genre-label="Essays"
+          data-year="1854" data-press="Yale University Press, ed. Ralph C. Williams" data-price="$23.00"
+          data-note="Two years, two months, two days — and nine years of rewriting. Read the bean-field chapter out loud in someone else’s company and you will understand why we keep a bench by the window.">
+          <span class="spine-band" aria-hidden="true"></span>
+          <span class="spine-title">Walden</span>
+          <span class="spine-author">Thoreau</span>
+        </button>
+
+      </div>
+
+      <!-- Reading note panel -->
+      <article class="note-panel" aria-live="polite" aria-labelledby="note-title">
+        <div>
+          <p class="note-label" id="note-plate-label">Shelf note · Fiction, left hand</p>
+          <h3 class="note-title" id="note-title">The Tale of Genji</h3>
+          <p class="note-author" id="note-author">Murasaki Shikibu</p>
+          <p class="note-body" id="note-body">The first novel ever written, and still the most patient one. Five hundred pages of court life where nothing happens except weather, jealousy and time. Read three chapters a night and you will have a year of good company.</p>
+          <div class="note-buy">
+            <span class="note-price" id="note-price">$24.00</span>
+            <a class="btn btn-ghost" href="contact.html#hold">Hold a copy</a>
+          </div>
+        </div>
+        <dl class="note-meta">
+          <div><dt>Genre</dt><dd id="note-genre">Fiction</dd></div>
+          <div><dt>First published</dt><dd id="note-year">c. 1010</dd></div>
+          <div><dt>Our edition</dt><dd id="note-press">Vintage Classics, trans. Royall Tyler</dd></div>
+          <div><dt>Format</dt><dd>Paperback, 549 pp.</dd></div>
+          <div><dt>Stock</dt><dd>Six in the shop, two at the warehouse</dd></div>
+          <div><dt>Club match</dt><dd>The Long Table · Quiet Fire</dd></div>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <div class="brush-divider" role="presentation"></div>
+
+  <!-- ── Notes from the long table ──────────────────────── -->
+  <section class="section" id="staff-picks" aria-labelledby="long-table-title">
+    <div class="wrap section-head">
+      <p class="eyebrow">Handwritten, changed every Wednesday</p>
+      <h2 id="long-table-title">Notes from the Long Table</h2>
+      <p class="lede">Three cards we wrote this week and did not want to throw away.</p>
+    </div>
+    <div class="wrap card-grid">
+      <article class="card">
+        <img src="https://picsum.photos/seed/chapter-and-verse-fa031fa81a97/1600/900?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="A reader at a table between tall shelves in warm afternoon light." width="1600" height="1067" loading="lazy">
+        <div class="card-body">
+          <p class="card-tag">Imogen · Fiction</p>
+          <h3>Sōseki, Over Woolf</h3>
+          <p>“For the person who says they cannot finish novels any more. Forty short chapters, one friendship, one letter at the end. I have handed it across the counter eleven times since August and nobody has returned it unread.”</p>
+          <div class="card-foot"><a class="text-link" href="books.html?genre=fiction">See the fiction shelf</a><span class="muted">$16</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <img src="https://picsum.photos/seed/chapter-and-verse-9d179a9bc4ac/1600/900?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="Open books and a notebook arranged on a desk." width="1600" height="1067" loading="lazy">
+        <div class="card-body">
+          <p class="card-tag">Theo · Philosophy</p>
+          <h3>Seneca for a Busy Month</h3>
+          <p>“Sell you the twelve-page Penguin, not the collected essays. You will actually read it, and it will annoy you in the right way on a Tuesday evening, which is the whole point of Stoicism.”</p>
+          <div class="card-foot"><a class="text-link" href="books.html?genre=philosophy">See philosophy</a><span class="muted">$12</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="A cup of tea beside an open paperback on a wooden surface." width="1600" height="1067" loading="lazy">
+        <div class="card-body">
+          <p class="card-tag">Sadie · Poetry</p>
+          <h3>Haiku for the Commute</h3>
+          <p>“Issa’s poem about the snail: do not hurry, you who have no legs. I put the Essential Haiku in every bag that leaves this counter in November. People come back and say the train felt longer.”</p>
+          <div class="card-foot"><a class="text-link" href="books.html?genre=poetry">See poetry</a><span class="muted">$20</span></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── New arrivals ───────────────────────────────────── -->
+  <section class="section-tight" id="new-table" aria-labelledby="new-title">
+    <div class="wrap section-head">
+      <p class="eyebrow">Threshold table · twelve titles this week</p>
+      <h2 id="new-title">New on the Table</h2>
+      <p class="lede">Restocked Mondays, rotated Wednesdays. Prices include our member discount if you show the club card.</p>
+    </div>
+    <div class="wrap">
+      <ul class="defn-list">
+        <li>
+          <h3>Kawabata: The Old Capital</h3>
+          <p class="defn-sub">Paperback · Harvest · trans. Lane</p>
+          <p class="defn-sub">Two twin sisters, one snowbound Kyoto, one mistaken identity.</p>
+          <span class="defn-price">$18.00</span>
+        </li>
+        <li>
+          <h3>Sei Shōnagon: Later Entries</h3>
+          <p class="defn-sub">Hardcover · NYRB Classics</p>
+          <p class="defn-sub">The fragments the Penguin leaves out, with Morris’s notes.</p>
+          <span class="defn-price">$26.00</span>
+        </li>
+        <li>
+          <h3>Mitsuyo Kakuta: The Octopus Lives Here Now</h3>
+          <p class="defn-sub">Paperback · Counterpoint · trans. Aki Gerhardt</p>
+          <p class="defn-sub">A letter to a friend who may not be real. Read it in one sitting.</p>
+          <span class="defn-price">$19.00</span>
+        </li>
+        <li>
+          <h3>Simone Weil: The Need for Roots</h3>
+          <p class="defn-sub">Paperback · Routledge Classics</p>
+          <p class="defn-sub">Written in London in 1943, still the best argument for attention.</p>
+          <span class="defn-price">$17.00</span>
+        </li>
+        <li>
+          <h3>Bashō: The road to Oku no Hosomichi</h3>
+          <p class="defn-sub">Cloth · Black Square Editions</p>
+          <p class="defn-sub">The narrow road to the far north, side by side in both languages.</p>
+          <span class="defn-price">$32.00</span>
+        </li>
+        <li>
+          <h3>Simone de Beauvoir: The Prime of Youth</h3>
+          <p class="defn-sub">Paperback · Vintage · trans. O’Bryan</p>
+          <p class="defn-sub">Memories of being twenty and wrong in public, at speed.</p>
+          <span class="defn-price">$20.00</span>
+        </li>
+        <li>
+          <h3>Robinson Jeffers: Selected Poems</h3>
+          <p class="defn-sub">Paperback · Vintage, ed. Cox</p>
+          <p class="defn-sub">Catalina, hawks, and the longest line in American poetry.</p>
+          <span class="defn-price">$21.00</span>
+        </li>
+        <li>
+          <h3>Vergil: The Aeneid</h3>
+          <p class="defn-sub">Hardcover · Knopf · trans. Emily Wilson</p>
+          <p class="defn-sub">Wilson’s 2017 text in the ten-line short meter. Our fastest seller this autumn.</p>
+          <span class="defn-price">$38.00</span>
+        </li>
+      </ul>
+      <div class="hero-actions">
+        <a class="btn btn-ghost" href="contact.html#hold">Ask us to order anything</a>
+        <a class="text-link" href="events.html">Books we are reading aloud</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="brush-divider" role="presentation"></div>
+
+  <!-- ── Rare & first editions ───────────────────────────── -->
+  <section class="section" id="rare" aria-labelledby="rare-title">
+    <div class="wrap section-head">
+      <p class="eyebrow">Down twelve steps · cooler by one degree</p>
+      <h2 id="rare-title">Rare &amp; First Editions</h2>
+      <p class="lede">Theo keeps the back room at 60 degrees and 42 percent humidity. Browsing is always free; touch only with clean hands and a request.</p>
+    </div>
+    <div class="wrap">
+      <ul class="defn-list">
+        <li>
+          <h3>Jane Eyre — first edition, three volumes</h3>
+          <p class="defn-sub">Smith, Elder &amp; Co., 1847 · Currer Bell</p>
+          <p>Original purple-green publisher’s cloth, half-title present, no repair to the spine of volume II. A complete three-volume set.</p>
+          <span class="defn-price">$11,500</span>
+        </li>
+        <li>
+          <h3>Leaves of Grass — first US trade edition</h3>
+          <p class="defn-sub">Towtha &amp; Young, 1861</p>
+          <p>Second issue with the pine-tree ad on the rear wrapper. A sound, honest copy rather than a museum one.</p>
+          <span class="defn-price">$6,800</span>
+        </li>
+        <li>
+          <h3>The Pillow Book — Ivan Morris, first UK</h3>
+          <p class="defn-sub">Jonathan Cape, 1967</p>
+          <p>Dust jacket unclipped, presentation copy with a bookseller’s inscription dated 1971.</p>
+          <span class="defn-price">$340</span>
+        </li>
+        <li>
+          <h3>Kokoro — Japanese two-volume printing</h3>
+          <p class="defn-sub">Sōkōsha, 1914</p>
+          <p>Early standalone printing in folded wrappings, from a school library in Nagano with discreet stamps.</p>
+          <span class="defn-price">$900</span>
+        </li>
+        <li>
+          <h3>Meditations — Casaubon, Greek text</h3>
+          <p class="defn-sub">Canterbury, printed 1680</p>
+          <p>Full calf, rebacked in the twentieth century with the original spine laid down. Marginalia in three hands.</p>
+          <span class="defn-price">$2,150</span>
+        </li>
+      </ul>
+      <div class="hero-actions">
+        <a class="btn" href="contact.html#hold">Request a back-room viewing</a>
+      </div>
+      <p class="muted" style="margin-top:22px; max-width:62ch">Every rare book comes with a provenance card, and we will spend twenty minutes telling you what is on it. If you would rather hear the story with a room full of people, the Rare Books Table opens to everyone on the first Sunday of the month.</p>
+    </div>
+  </section>
+
+  <!-- ── Band ───────────────────────────────────────────── -->
+  <section class="band" aria-labelledby="read-band">
+    <div class="wrap band-grid">
+      <div>
+        <p class="eyebrow eyebrow--paper">Next step</p>
+        <h2 id="read-band">Take One of These to a Room Full of People</h2>
+        <p class="lede">Eighteen shelf titles, six clubs, forty nights a year. Sign up in two minutes and we will hold your chair and your book at cost.</p>
+        <a class="btn btn-invert" href="book-club.html">Join a book club</a>
+      </div>
+      <ul class="band-list">
+        <li><span class="band-date">The Long Table</span><span class="band-name">Second Tuesday, 7:00 pm</span><span class="band-meta">Long novels · 12 seats · open</span></li>
+        <li><span class="band-date">Quiet Fire</span><span class="band-name">Last Sunday, 4:00 pm</span><span class="band-meta">Poetry · 12 seats · two left</span></li>
+        <li><span class="band-date">Margins</span><span class="band-name">Third Thursday, 6:45 pm</span><span class="band-meta">Philosophy · 12 seats · waiting list</span></li>
+        <li><span class="band-date">The Threshold</span><span class="band-name">First Saturday, 10:30 am</span><span class="band-meta">New fiction · 12 seats · open</span></li>
+        <li><span class="band-date">Slow Room</span><span class="band-name">Saturdays, 9:00 am</span><span class="band-meta">Silent reading · 18 seats · open</span></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <a class="brand brand--footer" href="index.html">
+        <span class="brand-mark" aria-hidden="true">章</span>
+        <span class="brand-text">Chapter <em>&amp;</em> Verse</span>
+      </a>
+      <p>An independent bookshop on Marlowe Street. Slow reading, honest shelves, tea at the counter since 2011.</p>
+      <p class="footer-hours"><strong>Tuesday to Sunday</strong><br>10:00 am – 7:00 pm<br><span class="muted">Closed Monday. Late Shelf fortnight: until 10:00 pm.</span></p>
+    </div>
+    <nav class="footer-nav" aria-label="Footer">
+      <h2>Pages</h2>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="books.html">Books &amp; the shelf</a></li>
+        <li><a href="events.html">Events calendar</a></li>
+        <li><a href="book-club.html">Book clubs</a></li>
+        <li><a href="about.html">Our story</a></li>
+        <li><a href="contact.html">Visit &amp; contact</a></li>
+      </ul>
+    </nav>
+    <div class="footer-nav">
+      <h2>Shelves</h2>
+      <ul>
+        <li><a href="books.html?genre=fiction">Fiction</a></li>
+        <li><a href="books.html?genre=poetry">Poetry</a></li>
+        <li><a href="books.html?genre=philosophy">Philosophy</a></li>
+        <li><a href="books.html?genre=essays">Essays &amp; memoir</a></li>
+        <li><a href="books.html#rare">Rare &amp; first editions</a></li>
+      </ul>
+    </div>
+    <div class="footer-signup">
+      <h2>The Monthly Leaf</h2>
+      <p>One letter on the first Friday: what we shelved, what we read, what is on. Nothing else.</p>
+      <form id="footer-signup" class="stack-form" data-form="leaf" novalidate>
+        <label for="f-email">Email address</label>
+        <div class="stack-row">
+          <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
+          <button class="btn" type="submit">Join</button>
+        </div>
+        <p class="form-status" id="footer-signup-status" role="status" aria-live="polite"></p>
+      </form>
+      <p class="fine-print">27 Marlowe Street, Somerville, MA 02143 · (617) 555-0148 · <a href="mailto:hello@chapterandverse.shop">hello@chapterandverse.shop</a></p>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <p>© <span data-year>2026</span> Chapter &amp; Verse Booksellers</p>
+    <p class="vert-tag" aria-hidden="true">本 と 静 け さ</p>
+  </div>
+</footer>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
