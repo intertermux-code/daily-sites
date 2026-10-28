@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Budget calculator — find your savings rate in one sitting · Mintwise</title>
+<meta name="description" content="Enter take-home income and six expense categories to see your savings rate on a live ring, your monthly surplus, your yearly total, and what the gap means.">
+<meta name="theme-color" content="#10b981">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Manrope:wght@400..800&family=IBM+Plex+Mono:wght@400;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="wrap masthead__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#eafff5" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-2.5-6.5-5.6-6.5-9.2C5.5 8 8 5.5 12 5.5S18.5 8 18.5 11.8c0 3.6-2.5 6.7-6.5 9.2Z"/><path d="M12 21V9"/><path d="M12 12.5 9 10M12 15l3-2.5"/></svg>
+      </span>
+      <span>
+        <span class="brand__word">Mintwise</span>
+        <span class="brand__folio">Vol. III — Worksheet</span>
+      </span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="bars" aria-hidden="true"><span class="bar"></span><span class="bar"></span><span class="bar"></span></span>
+      <span>Menu</span>
+    </button>
+    <div class="nav__panel" id="site-nav">
+      <nav aria-label="Primary">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="index.html"><span class="num">01</span>Home</a></li>
+          <li><a class="nav__link" href="features.html"><span class="num">02</span>Features</a></li>
+          <li><a class="nav__link" href="calculator.html" aria-current="page"><span class="num">03</span>Calculator</a></li>
+          <li><a class="nav__link" href="pricing.html"><span class="num">04</span>Pricing</a></li>
+          <li><a class="nav__link" href="contact.html"><span class="num">05</span>Support</a></li>
+        </ul>
+      </nav>
+    </div>
+    <a class="btn btn--primary btn--sm" href="pricing.html">See plans</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero bg-field" aria-labelledby="page-title">
+    <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="wrap">
+      <p class="crumbs"><a href="index.html">Home</a> — §03 Calculator</p>
+      <p class="tag" style="margin-bottom:var(--s-3)">§ 03 — Worksheet, fill it in</p>
+      <h1 id="page-title">What percentage did you actually keep last month?</h1>
+      <p class="lead">Seven numbers. The ring answers the question most people have never put precisely. Nothing you type is sent anywhere — the maths runs in this browser tab.</p>
+      <div class="page-hero__meta">
+        <div><b>0</b><span>fields required to start — defaults are loaded</span></div>
+        <div><b>72 s</b><span>median time to a filled-in worksheet</span></div>
+        <div><b>Local</b><span>no account, no email, no upload</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker" aria-label="Method notes, scrolling">
+    <div class="ticker__track">
+      <div class="ticker__group">
+        <span class="ticker__item"><span class="mark">◆</span> Savings rate = kept ÷ take-home</span>
+        <span class="ticker__item"><span class="mark">◆</span> <em>Round to the nearest ten dollars; precision is not the point</em></span>
+        <span class="ticker__item"><span class="mark">◆</span> Gifts and tithing come off before the ratio</span>
+        <span class="ticker__item"><span class="mark">◆</span> Debt payments count as spending, not saving</span>
+        <span class="ticker__item"><span class="mark">◆</span> One month is a snapshot; three is a trend</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── The worksheet ─────────────────────────────────────────────── -->
+  <section class="chapter bg-field" id="worksheet" aria-labelledby="worksheet-title">
+    <div class="wrap chapter-grid">
+      <header class="chapter__head">
+        <p class="chapter__folio"><b>§ 03.1</b> Worksheet</p>
+        <div>
+          <h2 id="worksheet-title">Enter your month, read the ring</h2>
+          <p class="chapter__kicker">Edit any field and the donut, the bars, and the verdict all move together.</p>
+        </div>
+      </header>
+
+      <div class="chapter__col calc" data-reveal="rise">
+
+        <form class="glass-card glass-card--solid" data-calc onsubmit="return false;">
+          <p class="tag" style="margin-bottom:var(--s-3)">Start from a shape</p>
+          <div class="presets" data-presets role="group" aria-label="Load an example household">
+            <button class="chip" type="button" data-preset="solo" aria-pressed="false">Single earner</button>
+            <button class="chip" type="button" data-preset="family" aria-pressed="false">Two-adult family</button>
+            <button class="chip" type="button" data-preset="freelancer" aria-pressed="false">Freelancer</button>
+            <button class="chip" type="button" data-preset="lean" aria-pressed="false">Deliberately lean</button>
+          </div>
+
+          <hr style="margin:var(--s-4) 0">
+
+          <h3 style="font-size:var(--step-1)">Income</h3>
+          <div class="field-row field-row--2">
+            <div class="field">
+              <label for="income">Monthly take-home</label>
+              <div class="input-shell"><span class="affix" aria-hidden="true">$</span>
+                <input id="income" type="number" inputmode="numeric" min="0" step="50" value="6100" data-input="income">
+              </div>
+              <p class="hint">After tax and payroll deductions — the figure that reaches your account.</p>
+            </div>
+            <div class="field">
+              <label for="give">Gifts, tithing, remittances</label>
+              <div class="input-shell"><span class="affix" aria-hidden="true">$</span>
+                <input id="give" type="number" inputmode="numeric" min="0" step="10" value="170" data-input="give">
+              </div>
+              <p class="hint">Money you send out on purpose. It leaves before the ratio is calculated.</p>
+            </div>
+          </div>
+
+          <h3 style="font-size:var(--step-1);margin-top:var(--s-4)">Outgoings</h3>
+          <div class="field-row field-row--2">
+            <div class="field">
+              <label for="housing">Housing &amp; utilities</label>
+              <div class="input-shell"><span class="affix" aria-hidden="true">$</span><input id="housing" type="number" inputmode="numeric" min="0" step="10" value="1650" data-input="housing"></div>
+              <p class="hint">Rent or mortgage, power, water, internet, phone.</p>
+            </div>
+            <div class="field">
+              <label for="food">Food &amp; groceries</label>
+              <div class="input-shell"><span class="affix" aria-hidden="true">$</span><input id="food" type="number" inputmode="numeric" min="0" step="10" value="560" data-input="food"></div>
+              <p class="hint">Everything eaten out of the house counts, including delivery fees.</p>
+            </div>
+            <div class="field">
+              <label for="transport">Transport &amp; car</label>
+              <div class="input-shell"><span class="affix" aria-hidden="true">$</span><input id="transport" type="number" inputmode="numeric" min="0" step="10" value="380" data-input="transport"></div>
+              <p class="hint">Loan, insurance, transit pass, fuel, parking.</p>
+            </div>
+            <div class="field">
+              <label for="health">Health &amp; insurance</label>
+              <div class="input-shell"><span class="affix" aria-hidden="true">$</span><input id="health" type="number" inputmode="numeric" min="0" step="10" value="220" data-input="health"></div>
+              <p class="hint">Premiums, copays, therapy, prescriptions, dental.</p>
+            </div>
+            <div class="field">
+              <label for="lifestyle">Lifestyle &amp; fun</label>
+              <div class="input-shell"><span class="affix" aria-hidden="true">$</span><input id="lifestyle" type="number" inputmode="numeric" min="0" step="10" value="340" data-input="lifestyle"></div>
+              <p class="hint">Dining, subscriptions, travel sinking fund, the gym you keep.</p>
+            </div>
+            <div class="field">
+              <label for="debt">Debt &amp; loans</label>
+              <div class="input-shell"><span class="affix" aria-hidden="true">$</span><input id="debt" type="number" inputmode="numeric" min="0" step="10" value="260" data-input="debt"></div>
+              <p class="hint">Student, personal, buy-now-pay-later. Minimums only, not the extra.</p>
+            </div>
+          </div>
+
+          <p class="small" style="margin-top:var(--s-3);color:var(--ink-4)">Mortgage principal is partly saving; if you own, add principal back as income-side retention in the notes below and read the ring as a floor.</p>
+        </form>
+
+        <div>
+          <div class="glass-card">
+            <div class="donut-wrap">
+              <div class="donut">
+                <svg viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+                  <circle class="donut__track" cx="100" cy="100" r="78"></circle>
+                  <circle class="donut__ring donut__ring--spend" cx="100" cy="100" r="78" stroke-dasharray="490.09" stroke-dashoffset="0" opacity="0.25"></circle>
+                  <circle class="donut__ring donut__ring--save" cx="100" cy="100" r="78" stroke-dasharray="490.09" stroke-dashoffset="157.63"></circle>
+                </svg>
+                <p class="donut__center" role="status" aria-live="polite">
+                  <b data-out="rate">68%</b>
+                  <span data-out="rateraw">of $5,930 take-home</span>
+                </p>
+              </div>
+
+              <div class="bars" data-out="bars" style="width:100%">
+                <!-- filled by app.js -->
+              </div>
+            </div>
+
+            <div class="readout" style="margin-top:var(--s-4)">
+              <div><p class="k">Kept this month</p><p class="v" data-out="save">$0</p></div>
+              <div><p class="k">Total outgoings</p><p class="v" data-out="total-out">$0</p></div>
+              <div><p class="k">Banked in a year</p><p class="v" data-out="year">$0</p></div>
+              <div><p class="k">Free days per month</p><p class="v" data-out="freeday">0 days</p></div>
+            </div>
+
+            <div class="verdict verdict--good" data-out="verdict" style="margin-top:var(--s-4)">
+              <b>Strong</b>Adjust a field to read your own verdict.
+            </div>
+          </div>
+
+          <div class="glass-card glass-card--mint" style="margin-top:var(--s-3)">
+            <h3 style="font-size:var(--step-1)">What the ring is doing</h3>
+            <ul class="ledger">
+              <li class="ledger__row"><span class="ledger__n">a</span><span class="ledger__t">Outer mint arc<span>Savings rate — kept ÷ take-home</span></span><span class="ledger__v" data-out="save">$0</span></li>
+              <li class="ledger__row"><span class="ledger__n">b</span><span class="ledger__t">Grey arc<span>Committed outgoings as a share of take-home</span></span><span class="ledger__v" data-out="total-out">$0</span></li>
+              <li class="ledger__row"><span class="ledger__n">c</span><span class="ledger__t">Free days<span>Days of average daily spending your surplus would cover</span></span><span class="ledger__v" data-out="freeday">0 days</span></li>
+            </ul>
+            <p style="margin-top:var(--s-3)"><button class="btn btn--glass btn--sm" type="button" data-copy-plan>Copy this snapshot</button></p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="chapter__col"><p class="marginalia">The grey arc is the sneaky one: it is normal for outgoings to touch 85% of take-home. Above 95% and one flat tyre becomes a loan.</p></aside>
+    </div>
+  </section>
+
+  <!-- ── §03.2 Interpretation ─────────────────────────────────────── -->
+  <section class="chapter bg-field" id="reading" aria-labelledby="reading-title">
+    <div class="wrap chapter-grid">
+      <header class="chapter__head">
+        <p class="chapter__folio"><b>§ 03.2</b> Reading</p>
+        <div>
+          <h2 id="reading-title">Which band you landed in, and what it buys</h2>
+          <p class="chapter__kicker">Benchmarks from 38,400 Mintwise households, grouped by take-home band. Compare like with like.</p>
+        </div>
+      </header>
+
+      <div class="chapter__col">
+        <div class="table-scroll">
+          <table class="cmp">
+            <caption>Savings rate bands, with the practical consequence of each.</caption>
+            <thead>
+              <tr><th scope="col">Band</th><th scope="col">Rate</th><th scope="col">Median household</th><th scope="col">What it buys first</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Negative</td><td>&lt; 0%</td><td>7% of members</td><td>A floor plan: cut the three largest recurring charges</td></tr>
+              <tr><td>Thin</td><td>0–5%</td><td>19% of members</td><td>One $50 buffer. Then a second.</td></tr>
+              <tr><td>Steady</td><td>5–15%</td><td>41% of members</td><td>A three-month emergency fund inside 18 months</td></tr>
+              <tr><td>Strong</td><td>15–30%</td><td>26% of members</td><td>Debt payoff dates, or a deposit on something</td></tr>
+              <tr><td>Exceptional</td><td>30%+</td><td>7% of members</td><td>Choices: retire early, work less, fund someone else</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="chapter__col grid-3">
+        <article class="tile glass-card hover-lift">
+          <span class="tile__icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span>
+          <h3>Rate under 5%?</h3>
+          <p>Do not cut lifestyle yet. Find the recurring charges first — Bill Radar usually turns up $30–$60 a month that nobody chose deliberately.</p>
+        </article>
+        <article class="tile glass-card hover-lift">
+          <span class="tile__icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5l3 2"/></svg></span>
+          <h3>Rate 5–15%?</h3>
+          <p>Move the surplus on the day pay lands. Money that sits in checking gets spent; money in a jar does not. Sweep is a feature for a reason.</p>
+        </article>
+        <article class="tile glass-card hover-lift">
+          <span class="tile__icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18l5-6 4 3 7-9"/><path d="M20 6h-4M20 6v4"/></svg></span>
+          <h3>Rate over 15%?</h3>
+          <p>Your constraint is now decisions, not dollars. Set a date for each jar; un-deployed surplus quietly loses to inflation.</p>
+        </article>
+      </div>
+
+      <aside class="chapter__col"><p class="marginalia">Free days is the number that lands with people: your surplus expressed as <em>days of life you already paid for</em>.</p></aside>
+    </div>
+  </section>
+
+  <!-- ── §03.3 Worked example ─────────────────────────────────────── -->
+  <section class="chapter bg-field" id="example" aria-labelledby="example-title">
+    <div class="wrap chapter-grid">
+      <header class="chapter__head">
+        <p class="chapter__folio"><b>§ 03.3</b> Worked case</p>
+        <div>
+          <h2 id="example-title">The same household, three months apart</h2>
+          <p class="chapter__kicker">Ada and Tom, two adults, one rent, one car. No raise between January and April — only ledger changes.</p>
+        </div>
+      </header>
+
+      <div class="chapter__col feature-split">
+        <div class="glass-card glass-card--solid">
+          <h3 style="font-size:var(--step-1)">What changed</h3>
+          <ul class="ledger">
+            <li class="ledger__row"><span class="ledger__n">Jan</span><span class="ledger__t">First worksheet<span>Take-home $7,900 · kept $210</span></span><span class="ledger__v">2.7%</span></li>
+            <li class="ledger__row"><span class="ledger__n">Feb</span><span class="ledger__t">Cancelled 4 subscriptions<span>Found via Bill Radar, no lifestyle cut</span></span><span class="ledger__v">+ $61/mo</span></li>
+            <li class="ledger__row"><span class="ledger__n">Feb</span><span class="ledger__t">Insurance re-shopped<span>Same cover, one phone call</span></span><span class="ledger__v">+ $84/mo</span></li>
+            <li class="ledger__row"><span class="ledger__n">Mar</span><span class="ledger__t">Grocery envelope set at $780<span>Was averaging $940 with no ceiling</span></span><span class="ledger__v">+ $160/mo</span></li>
+            <li class="ledger__row"><span class="ledger__n">Apr</span><span class="ledger__t">Sweep date moved to payday<span>Surplus leaves checking the morning it lands</span></span><span class="ledger__v">kept $612</span></li>
+            <li class="ledger__row"><span class="ledger__n">Apr</span><span class="ledger__t">Closing ring reading<span>Same income, same rent, one quarter of edits</span></span><span class="ledger__v">7.7%</span></li>
+          </ul>
+          <p class="small" style="margin-top:var(--s-3);color:var(--ink-4)">Figures reproduce this worksheet with the Two-adult family preset, then the four edits applied in order.</p>
+        </div>
+        <figure class="figure" data-reveal="clip">
+          <img src="https://picsum.photos/seed/mintwise-7986c22a3303/1600/900?auto=format&fit=crop&w=1000&h=1150&q=80" width="1000" height="1150" alt="Two people shaking hands across a table after agreeing on terms." loading="lazy">
+          <figcaption class="figure__caption"><b>Fig. 3.2 — Agreement</b>Most household money friction is a missing number, not a missing dollar.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── §03.4 Method notes ───────────────────────────────────────── -->
+  <section class="chapter bg-field" id="method" aria-labelledby="method-title">
+    <div class="wrap chapter-grid">
+      <header class="chapter__head">
+        <p class="chapter__folio"><b>§ 03.4</b> Method</p>
+        <div>
+          <h2 id="method-title">Four definitions, stated before the maths</h2>
+          <p class="chapter__kicker">Every calculator has hidden choices. Here are ours, in writing.</p>
+        </div>
+      </header>
+
+      <div class="chapter__col">
+        <div class="grid-2">
+          <div class="glass-card">
+            <h3>Take-home, not gross</h3>
+            <p>The ring divides by what actually reaches your account. Employer pension match, HSA contributions, and pre-tax commuter deductions sit outside this worksheet — Mintwise reads them from your payslip and shows a second, inclusive rate in the app.</p>
+          </div>
+          <div class="glass-card">
+            <h3>Debt payments are spending</h3>
+            <p>Minimum payments reduce the ring. Extra principal above the minimum counts as retention, because it buys your freedom date. Most apps treat it as spending and make the picture look worse than it is.</p>
+          </div>
+          <div class="glass-card">
+            <h3>Annual costs are smoothed</h3>
+            <p>Car registration, holiday gifts, property tax: divide by twelve and enter the monthly figure. The calculator assumes a normal month, and a normal month is the one you plan against.</p>
+          </div>
+          <div class="glass-card">
+            <h3>One month, then three</h3>
+            <p>A single worksheet is a snapshot with all the bias that implies. Run it for three consecutive months in the app and the trend line replaces the guess.</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="chapter__col"><p class="marginalia">If a number makes you feel worse without telling you what to do next, it is a vanity metric. We deleted two of those in 2025.</p></aside>
+
+      <div class="chapter__col" style="margin-top:var(--s-4)">
+        <a class="btn btn--primary" href="pricing.html">Turn this into a running ledger</a>
+        <a class="btn btn--glass" href="contact.html" style="margin-left:8px">Ask us to check your figures</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="index.html" style="color:#eafff5">
+          <span class="brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#eafff5" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-2.5-6.5-5.6-6.5-9.2C5.5 8 8 5.5 12 5.5S18.5 8 18.5 11.8c0 3.6-2.5 6.7-6.5 9.2Z"/><path d="M12 21V9"/><path d="M12 12.5 9 10M12 15l3-2.5"/></svg>
+          </span>
+          <span><span class="brand__word">Mintwise</span><span class="brand__folio" style="color:#6ee7b7">Vol. III — Worksheet</span></span>
+        </a>
+        <p style="margin-top:var(--s-3);max-width:38ch">A personal finance app built like a well-kept ledger: plain language, one savings rate, and no hidden business model.</p>
+        <p class="footer-title">The Margin — monthly notes</p>
+        <form class="newsletter" data-newsletter>
+          <label class="sr-only" for="nl-email">Email address for The Margin newsletter</label>
+          <input id="nl-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          <button class="btn btn--primary btn--sm" type="submit">Subscribe</button>
+          <p class="nl-note small" role="status" style="flex-basis:100%;min-height:20px;margin:0">One issue a month. Unsubscribe link at the top of every one.</p>
+        </form>
+      </div>
+
+      <div>
+        <p class="footer-title">Contents</p>
+        <ul class="footer-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="calculator.html">Budget calculator</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="contact.html">Support &amp; FAQ</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-title">Product</p>
+        <ul class="footer-list">
+          <li><a href="features.html#envelopes">Envelope budgets</a></li>
+          <li><a href="features.html#rules">Rules engine</a></li>
+          <li><a href="features.html#radar">Bill Radar</a></li>
+          <li><a href="features.html#goals">Goal jars</a></li>
+          <li><a href="features.html#household">Household sharing</a></li>
+          <li><a href="features.html#export">Data export</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-title">Company</p>
+        <ul class="footer-list">
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html#faq">Security questions</a></li>
+          <li><a href="pricing.html">Plans</a></li>
+          <li><a href="index.html#numbers">Published metrics</a></li>
+          <li><a href="index.html#safeguards">Safeguards</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="footer-rule">
+
+    <div class="index-block" style="color:#b7d6c8">
+      <p class="footer-title">Index of terms</p>
+      <dl>
+        <dt>Bill Radar</dt><dd>price-hike alerts, <span class="folio">§03.4</span> — <a href="features.html#radar">Features</a></dd>
+        <dt>Envelope</dt><dd>a named monthly ceiling, <span class="folio">§03.1</span> — <a href="features.html#envelopes">Features</a></dd>
+        <dt>Household plan</dt><dd>two adults, one ledger, <span class="folio">§03.6</span> — <a href="features.html#household">Features</a></dd>
+        <dt>Ledger export</dt><dd>CSV, JSON, OFX, PDF, <span class="folio">§03.7</span> — <a href="features.html#export">Features</a></dd>
+        <dt>Reconciliation</dt><dd>the Sunday close, <span class="folio">§02</span> — <a href="index.html#how">Method</a></dd>
+        <dt>Savings rate</dt><dd>kept ÷ take-home, <span class="folio">§04</span> — <a href="calculator.html">Calculator</a></dd>
+        <dt>Safeguards</dt><dd>SOC 2, AES-256, read-only, <span class="folio">§01</span> — <a href="index.html#safeguards">Safeguards</a></dd>
+        <dt>Subscription tiers</dt><dd>Seed, Plus, Household, <span class="folio">§06</span> — <a href="pricing.html">Pricing</a></dd>
+      </dl>
+    </div>
+
+    <hr class="footer-rule">
+
+    <div class="footer-bottom">
+      <p style="margin:0">© <span data-year>2026</span> Mintwise Ledger Co. · Portland, Maine · Set in Fraunces, Manrope, and IBM Plex Mono.</p>
+      <nav aria-label="Legal">
+        <ul>
+          <li><a href="contact.html">Support</a></li>
+          <li><a href="index.html#safeguards">Security</a></li>
+          <li><a href="pricing.html">Billing</a></li>
+        </ul>
+      </nav>
+    </div>
+    <p class="colophon" style="margin-top:var(--s-3)">“Write it down, then decide.” — the house rule.</p>
+  </div>
+</footer>
+
+<button class="scrolltop" type="button" aria-label="Back to top of page">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+</button>
+
+<script src="app.js" defer></script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
