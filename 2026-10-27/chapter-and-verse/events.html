@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Events Calendar — Chapter &amp; Verse Bookshop</title>
+<meta name="description" content="Forty nights a year on Marlowe Street: aloud reading, tea hours, the rare-books table, the Late Shelf. See the November and December calendar, then reserve a chair.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%237c2d3e'/%3E%3Ctext x='16' y='23' font-family='serif' font-size='19' fill='%23f7f1e5' text-anchor='middle'%3E%E7%AB%A0%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..600&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">章</span>
+      <span class="brand-text">Chapter <em>&amp;</em> Verse</span>
+    </a>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open navigation menu">
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-label">Menu</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <ul class="nav-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="books.html">Books</a></li>
+        <li><a href="events.html" aria-current="page">Events</a></li>
+        <li><a href="book-club.html">Book Club</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Visit</a></li>
+      </ul>
+      <p class="nav-meta">27 Marlowe Street, Somerville · Open Tuesday to Sunday, 10 to 7</p>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero" aria-labelledby="events-title">
+    <p class="hero-vert" aria-hidden="true">今 月 の 予 定</p>
+    <div class="wrap page-hero-grid">
+      <div>
+        <p class="eyebrow">November – December 2026 · Forty nights a year</p>
+        <h1 class="stagger" id="events-title">
+          <span class="w" style="--i:1">The</span>
+          <span class="w" style="--i:2">Shop,</span>
+          <span class="w" style="--i:3">After</span>
+          <span class="w" style="--i:4">Dark</span>
+        </h1>
+        <p class="lede">Chairs are folding, the microphone is a carpenter’s pencil on a tin can, and readings run twenty minutes no matter who you are. Most nights cost nothing. Reserve below and we will write your name on a card.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#event-list">See the calendar</a>
+          <a class="btn btn-ghost" href="contact.html#hold">Reserve a chair</a>
+        </div>
+      </div>
+      <figure class="page-hero-figure">
+        <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="Tall wooden shelves packed with clothbound books in a quiet shop room." width="1067" height="1600" loading="eager">
+        <figcaption>Twenty-four chairs go out at 6:15, folded away by 9:40, restocked Monday.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div class="brush-divider" role="presentation"></div>
+
+  <!-- ── Calendar ────────────────────────────────────────── -->
+  <section class="section-tight" aria-labelledby="cal-title" id="event-list-section">
+    <div class="wrap section-head">
+      <p class="eyebrow">Everything on the door card</p>
+      <h2 id="cal-title">The Calendar</h2>
+    </div>
+
+    <div class="wrap">
+      <div class="filter-bar" id="event-filter" role="group" aria-label="Filter the events calendar">
+        <p class="filter-label">Show</p>
+        <button class="filter-btn" type="button" data-filter="upcoming" aria-pressed="true">Upcoming</button>
+        <button class="filter-btn" type="button" data-filter="free" aria-pressed="false">Free nights</button>
+        <button class="filter-btn" type="button" data-filter="paid" aria-pressed="false">Ticketed</button>
+        <button class="filter-btn" type="button" data-filter="past" aria-pressed="false">Already read</button>
+        <button class="filter-btn" type="button" data-filter="all" aria-pressed="false">All</button>
+        <p class="shelf-count" id="event-count" role="status" aria-live="polite">10 nights listed</p>
+      </div>
+    </div>
+
+    <div class="wrap" style="padding-top:clamp(30px,4vw,52px)">
+      <ul class="event-list" id="event-list">
+
+        <li class="event" data-kind="upcoming" data-price="free">
+          <div class="event-date"><span class="event-day">05</span><span class="event-mon">Nov</span><span class="event-wd">Thursday</span></div>
+          <div class="event-body">
+            <h3>The Pillow Book, in Fragments</h3>
+            <p>Sei Shōnagon’s lists read aloud in shifts — eight of us, ninety minutes, tea between sets. Bring a paragraph you love and we will put it in the running order.</p>
+            <p class="event-meta"><span>7:00 – 8:30 pm</span><span>Poetry Corner</span><span>Led by Sadie Nakamura</span><span>Free · 24 chairs</span></p>
+          </div>
+          <div class="event-side"><span class="chip chip--filled">Free</span><a class="text-link" href="contact.html#hold">Reserve</a></div>
+        </li>
+
+        <li class="event" data-kind="upcoming" data-price="paid">
+          <div class="event-date"><span class="event-day">08</span><span class="event-mon">Nov</span><span class="event-wd">Sunday</span></div>
+          <div class="event-body">
+            <h3>Rare Books Table</h3>
+            <p>The back room comes upstairs for one morning: the 1847 <em>Jane Eyre</em>, the 1861 <em>Leaves of Grass</em>, and a box of uncatalogued letters we bought in Portsmouth. Theo handles everything; you look, you do not touch.</p>
+            <p class="event-meta"><span>2:00 – 4:00 pm</span><span>Long Table</span><span>$8 · includes cake</span><span>18 places</span></p>
+          </div>
+          <div class="event-side"><span class="chip">$8</span><a class="text-link" href="contact.html#hold">Reserve</a></div>
+        </li>
+
+        <li class="event" data-kind="upcoming" data-price="free">
+          <div class="event-date"><span class="event-day">11</span><span class="event-mon">Nov</span><span class="event-wd">Wednesday</span></div>
+          <div class="event-body">
+            <h3>Kawabata, Chapter by Chapter</h3>
+            <p><em>The Sound of the Mountain</em>, chapters 1–9. We read two aloud, argue about the third, and stop exactly at 8:15 because the bus leaves.</p>
+            <p class="event-meta"><span>6:30 – 8:15 pm</span><span>Long Table</span><span>Free · 12 seats, 2 left</span><span>Book at cost for members</span></p>
+          </div>
+          <div class="event-side"><span class="chip chip--filled">Free</span><a class="text-link" href="book-club.html">Join the club</a></div>
+        </li>
+
+        <li class="event" data-kind="upcoming" data-price="paid">
+          <div class="event-date"><span class="event-day">14</span><span class="event-mon">Nov</span><span class="event-wd">Friday</span></div>
+          <div class="event-body">
+            <h3>Late Shelf: Candles and Stacks</h3>
+            <p>The shop stays open until 10:00 with the overheads off. Eighteen beeside candles, a kettle, one cellist in the back room from nine, and the whole poetry alcove to yourself.</p>
+            <p class="event-meta"><span>8:00 – 10:00 pm</span><span>Whole shop</span><span>$8 · pay on the door</span><span>No limit on bodies</span></p>
+          </div>
+          <div class="event-side"><span class="chip">$8</span><a class="text-link" href="contact.html#hold">Reserve</a></div>
+        </li>
+
+        <li class="event" data-kind="upcoming" data-price="free">
+          <div class="event-date"><span class="event-day">21</span><span class="event-mon">Nov</span><span class="event-wd">Saturday</span></div>
+          <div class="event-body">
+            <h3>Little Verses</h3>
+            <p>Children’s hour on the threshold rug: Issa’s snail, a March wind, a very fat cat, and a paper-crane craft nobody is expected to keep neat. Ages 4 to 9, grown-ups stay.</p>
+            <p class="event-meta"><span>10:30 – 11:15 am</span><span>The Threshold</span><span>Free · 16 children</span><span>Cocoa included</span></p>
+          </div>
+          <div class="event-side"><span class="chip chip--filled">Free</span><a class="text-link" href="contact.html#hold">Reserve</a></div>
+        </li>
+
+        <li class="event" data-kind="upcoming" data-price="free">
+          <div class="event-date"><span class="event-day">24</span><span class="event-mon">Nov</span><span class="event-wd">Tuesday</span></div>
+          <div class="event-body">
+            <h3>Sōseki’s <em>Kokoro</em>, Part Two</h3>
+            <p>“Sensei and the Redemption.” The letter is read in full, by one person, without commentary until it ends. Then the room talks for an hour.</p>
+            <p class="event-meta"><span>7:00 – 8:30 pm</span><span>Event Hall</span><span>Free · 24 chairs · full, add to list</span></p>
+          </div>
+          <div class="event-side"><span class="chip chip--filled">Free</span><a class="text-link" href="contact.html#hold">Waiting list</a></div>
+        </li>
+
+        <li class="event" data-kind="upcoming" data-price="free">
+          <div class="event-date"><span class="event-day">03</span><span class="event-mon">Dec</span><span class="event-wd">Thursday</span></div>
+          <div class="event-body">
+            <h3>Winter Exchange</h3>
+            <p>Bring one book you finished and loved; leave it with a note inside; take one someone else loved. We keep the unsold ones for the school library in January.</p>
+            <p class="event-meta"><span>7:00 – 9:00 pm</span><span>Long Table</span><span>Free</span><span>Label your note, please</span></p>
+          </div>
+          <div class="event-side"><span class="chip chip--filled">Free</span><a class="text-link" href="contact.html">Details</a></div>
+        </li>
+
+        <li class="event" data-kind="upcoming" data-price="paid">
+          <div class="event-date"><span class="event-day">12</span><span class="event-mon">Dec</span><span class="event-wd">Saturday</span></div>
+          <div class="event-body">
+            <h3>Dante in the Dark: Inferno I–IX</h3>
+            <p>Dante set the poem in the spring of 1300; we read it in the darkest week of our own year. Cantos 1–9 in Italian and in Durling, one candle to a pair, mulled cider at the half-way mark.</p>
+            <p class="event-meta"><span>5:00 – 7:00 pm</span><span>Back Room</span><span>$12 · includes mulled cider</span><span>14 places</span></p>
+          </div>
+          <div class="event-side"><span class="chip">$12</span><a class="text-link" href="contact.html#hold">Reserve</a></div>
+        </li>
+
+        <li class="event" data-kind="upcoming" data-price="free">
+          <div class="event-date"><span class="event-day">19</span><span class="event-mon">Dec</span><span class="event-wd">Saturday</span></div>
+          <div class="event-body">
+            <h3>Silent Reading Morning</h3>
+            <p>Three hours, no talking, no phone-light. Bring anything; we supply the chair, the tea and a shared hour of not being reachable.</p>
+            <p class="event-meta"><span>9:00 am – 12:00 pm</span><span>Event Hall</span><span>Free · 18 seats</span></p>
+          </div>
+          <div class="event-side"><span class="chip chip--filled">Free</span><a class="text-link" href="contact.html#hold">Reserve</a></div>
+        </li>
+
+        <li class="event" data-kind="upcoming" data-price="paid">
+          <div class="event-date"><span class="event-day">31</span><span class="event-mon">Dec</span><span class="event-wd">Wednesday</span></div>
+          <div class="event-body">
+            <h3>Last Page of the Year</h3>
+            <p>We open until 11:30. One final aloud reading at 10:00 — Baldwin, <em>Notes of a Native Son</em>, the last essay — and everyone leaves holding a book for the next year.</p>
+            <p class="event-meta"><span>9:00 – 11:30 pm</span><span>Whole shop</span><span>$8 · 10 percent off all shelves</span></p>
+          </div>
+          <div class="event-side"><span class="chip">$8</span><a class="text-link" href="contact.html#hold">Reserve</a></div>
+        </li>
+
+        <li class="event event--past" data-kind="past" data-price="free">
+          <div class="event-date"><span class="event-day">18</span><span class="event-mon">Oct</span><span class="event-wd">Sunday</span></div>
+          <div class="event-body">
+            <h3>Leaves of Grass, All of It</h3>
+            <p>Nine hours, twenty-two readers, one broken microphone. Someone read “Song of Myself” sections 33–45 standing on a chair, and nobody objected.</p>
+            <p class="event-meta"><span>Recorded highlight: 51 attendees</span><span>Next full read: October 2027</span></p>
+          </div>
+          <div class="event-side"><span class="chip">Done</span><a class="text-link" href="books.html?genre=poetry">Poetry shelf</a></div>
+        </li>
+
+        <li class="event event--past" data-kind="past" data-price="paid">
+          <div class="event-date"><span class="event-day">04</span><span class="event-mon">Oct</span><span class="event-wd">Sunday</span></div>
+          <div class="event-body">
+            <h3>Genji Night: The Purple Mask</h3>
+            <p>Chapters 1–5 with tea at each break and a paper fan for a program. The twelve seats became twenty, so we left the chairs out and stood a bit.</p>
+            <p class="event-meta"><span>6:00 – 10:20 pm</span><span>Long Table</span><span>$8</span></p>
+          </div>
+          <div class="event-side"><span class="chip">Done</span><a class="text-link" href="books.html">Fiction shelf</a></div>
+        </li>
+
+        <li class="event event--past" data-kind="past" data-price="free">
+          <div class="event-date"><span class="event-day">20</span><span class="event-mon">Sep</span><span class="event-wd">Sunday</span></div>
+          <div class="event-body">
+            <h3>The Margins, First Night</h3>
+            <p>Plato’s Book VII, the cave, and a strong argument about shadows between Imogen and a retired physics teacher who now comes every month.</p>
+            <p class="event-meta"><span>6:45 pm</span><span>Back stair</span><span>Free</span></p>
+          </div>
+          <div class="event-side"><span class="chip">Done</span><a class="text-link" href="book-club.html">Club list</a></div>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+
+  <div class="brush-divider" role="presentation"></div>
+
+  <!-- ── Promenade: how a night runs ─────────────────────── -->
+  <section class="section" aria-labelledby="night-title">
+    <div class="wrap section-head">
+      <p class="eyebrow">One night, sideways</p>
+      <h2 id="night-title">How an Evening Runs</h2>
+      <p class="lede">Scroll the four stops the way you would walk them on the night itself.</p>
+    </div>
+
+    <div class="diorama" data-diorama>
+      <div class="diorama-controls wrap">
+        <p class="diorama-hint">Arrows, drag, or the left and right keys.</p>
+        <div class="diorama-btns">
+          <button class="round-btn" type="button" data-dir="-1" aria-label="Previous stop" aria-controls="night-track">←</button>
+          <span class="diorama-count"><span data-diorama-index>1</span> / <span data-diorama-total>4</span></span>
+          <button class="round-btn" type="button" data-dir="1" aria-label="Next stop" aria-controls="night-track">→</button>
+        </div>
+      </div>
+      <ul class="diorama-track" id="night-track" tabindex="0" aria-label="The four stops of an event night, horizontally scrollable">
+        <li class="exhibit">
+          <p class="exhibit-num" aria-hidden="true">6:15</p>
+          <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="Shop interior with wooden fixtures under warm light." width="1600" height="1067" loading="lazy">
+          <div class="exhibit-body">
+            <h3>Chairs Before Doors</h3>
+            <p class="exhibit-vert" aria-hidden="true">席</p>
+            <p>Twenty-four folding chairs, name cards in burgundy ink, the kettle on. Whoever arrives first sits in the middle, because the middle is where the reading lands.</p>
+          </div>
+        </li>
+        <li class="exhibit">
+          <p class="exhibit-num" aria-hidden="true">7:00</p>
+          <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="Tall shelves of books in a quiet library room." width="1600" height="1067" loading="lazy">
+          <div class="exhibit-body">
+            <h3>Twenty Minutes, Hard Stop</h3>
+            <p class="exhibit-vert" aria-hidden="true">読</p>
+            <p>The reader goes first without introduction — the book is the introduction. Then one question from the room, chosen by whoever asks it most quietly.</p>
+          </div>
+        </li>
+        <li class="exhibit">
+          <p class="exhibit-num" aria-hidden="true">7:35</p>
+          <img src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="Stack of paperbacks and reading glasses on linen." width="1600" height="1067" loading="lazy">
+          <div class="exhibit-body">
+            <h3>Tea and Arguing</h3>
+            <p class="exhibit-vert" aria-hidden="true">茶</p>
+            <p>Hojicha, two biscuits, and the part people actually come for. The Long Table seats eight at a stretch; nobody is asked to leave until the chairs go away.</p>
+          </div>
+        </li>
+        <li class="exhibit">
+          <p class="exhibit-num" aria-hidden="true">9:40</p>
+          <img src="https://picsum.photos/seed/chapter-and-verse-b7833e8f5b7c/1600/900?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="A library ladder beside packed shelves at closing time." width="1600" height="1067" loading="lazy">
+          <div class="exhibit-body">
+            <h3>Folding Away</h3>
+            <p class="exhibit-vert" aria-hidden="true">閉</p>
+            <p>Books restocked, name cards kept for next time, and one shelf moved slightly so that whatever was read tonight is at eye level tomorrow morning.</p>
+          </div>
+        </li>
+      </ul>
+      <div class="diorama-rail wrap" aria-hidden="true"><span data-diorama-thumb></span></div>
+    </div>
+  </section>
+
+  <!-- ── Hosting info ────────────────────────────────────── -->
+  <section class="section-tight" aria-labelledby="host-title">
+    <div class="wrap split">
+      <div class="split-body">
+        <p class="eyebrow">For readers who want the floor</p>
+        <h2 id="host-title">Read to Twenty-Four People</h2>
+        <p class="lede">We book the calendar four months ahead and answer every request, including the ones we cannot fit.</p>
+        <ul class="rule-list">
+          <li><strong>Twenty minutes.</strong> Bring one book, one author, or one page of your own; we will time you from the counter.</li>
+          <li><strong>No cover charge for debuts.</strong> If it is your first public reading anywhere, the door money is yours.</li>
+          <li><strong>Access matters.</strong> Step-free entrance, an induction loop at the Long Table, and large-print copies of anything you read on request.</li>
+        </ul>
+        <div class="hero-actions">
+          <a class="btn" href="contact.html#hold">Propose a night</a>
+          <a class="btn btn-ghost" href="book-club.html">Six standing clubs</a>
+        </div>
+      </div>
+      <figure class="split-figure">
+        <img src="https://picsum.photos/seed/chapter-and-verse-83ca737da792/1600/900?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="An open book and a cup of tea on a reading table." width="1600" height="1067" loading="lazy">
+        <figcaption>Sadie’s timing card for the Kawabata night: 19 minutes 40 seconds.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div class="brush-divider" role="presentation"></div>
+
+  <section class="section quote-section" aria-labelledby="events-quote">
+    <p class="quote-vert" aria-hidden="true">声 に て 読 む</p>
+    <blockquote class="wrap quote">
+      <p id="events-quote">“Nobody in the shop has ever been sorry they came on a Wednesday night. Some of them have been sorry they came alone.”</p>
+      <footer><cite>Sadie Nakamura</cite> — bookseller, events</footer>
+    </blockquote>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <a class="brand brand--footer" href="index.html">
+        <span class="brand-mark" aria-hidden="true">章</span>
+        <span class="brand-text">Chapter <em>&amp;</em> Verse</span>
+      </a>
+      <p>An independent bookshop on Marlowe Street. Slow reading, honest shelves, tea at the counter since 2011.</p>
+      <p class="footer-hours"><strong>Tuesday to Sunday</strong><br>10:00 am – 7:00 pm<br><span class="muted">Closed Monday. Late Shelf fortnight: until 10:00 pm.</span></p>
+    </div>
+    <nav class="footer-nav" aria-label="Footer">
+      <h2>Pages</h2>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="books.html">Books &amp; the shelf</a></li>
+        <li><a href="events.html">Events calendar</a></li>
+        <li><a href="book-club.html">Book clubs</a></li>
+        <li><a href="about.html">Our story</a></li>
+        <li><a href="contact.html">Visit &amp; contact</a></li>
+      </ul>
+    </nav>
+    <div class="footer-nav">
+      <h2>Shelves</h2>
+      <ul>
+        <li><a href="books.html?genre=fiction">Fiction</a></li>
+        <li><a href="books.html?genre=poetry">Poetry</a></li>
+        <li><a href="books.html?genre=philosophy">Philosophy</a></li>
+        <li><a href="books.html?genre=essays">Essays &amp; memoir</a></li>
+        <li><a href="books.html#rare">Rare &amp; first editions</a></li>
+      </ul>
+    </div>
+    <div class="footer-signup">
+      <h2>The Monthly Leaf</h2>
+      <p>One letter on the first Friday: what we shelved, what we read, what is on. Nothing else.</p>
+      <form id="footer-signup" class="stack-form" data-form="leaf" novalidate>
+        <label for="f-email">Email address</label>
+        <div class="stack-row">
+          <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
+          <button class="btn" type="submit">Join</button>
+        </div>
+        <p class="form-status" id="footer-signup-status" role="status" aria-live="polite"></p>
+      </form>
+      <p class="fine-print">27 Marlowe Street, Somerville, MA 02143 · (617) 555-0148 · <a href="mailto:hello@chapterandverse.shop">hello@chapterandverse.shop</a></p>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <p>© <span data-year>2026</span> Chapter &amp; Verse Booksellers</p>
+    <p class="vert-tag" aria-hidden="true">本 と 静 け さ</p>
+  </div>
+</footer>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
