@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mintwise budget calculator — work out your savings rate</title>
+<meta name="description" content="Enter take-home pay and expenses to see your savings rate as a live donut: monthly spend, safe weekly figure, cash runway and exactly what closing the gap to your target costs.">
+<meta name="theme-color" content="#10b981">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap site-header__in">
+    <a class="brand" href="index.html">
+      <span class="brand__mark" aria-hidden="true"></span>
+      <span class="brand__name">Mintwise</span>
+      <span class="brand__tag" aria-hidden="true">®</span>
+    </a>
+    <nav class="nav" id="primary-nav" aria-label="Primary">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="index.html">Home</a></li>
+        <li><a class="nav__link" href="features.html">Features</a></li>
+        <li><a class="nav__link" href="calculator.html" aria-current="page">Calculator</a></li>
+        <li><a class="nav__link" href="pricing.html">Pricing</a></li>
+        <li><a class="nav__link" href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav__aside">
+        <p class="nav__note">30 days free · no card</p>
+        <a class="btn btn--primary btn--sm" href="pricing.html">Start free trial</a>
+      </div>
+    </nav>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+      <span class="menu-toggle__bars" aria-hidden="true"></span>
+      <span class="sr-only">Menu</span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+  <!-- ============ PAGE HERO ============ -->
+  <section class="phero" data-spotlight>
+    <div class="phero__spot" aria-hidden="true"></div>
+    <div class="wrap phero__in">
+      <div>
+        <p class="eyebrow"><span class="eyebrow__rule" aria-hidden="true"></span>§ 01 — Free tool, no sign-up</p>
+        <h1 class="phero__title">What is your savings rate, really?</h1>
+        <p class="phero__lead">Type what you take home and what you spend. The donut recalculates as you go: the outer ring is the share you keep, the inner ring is the share your life genuinely requires. Nothing here is saved, sent or tracked.</p>
+        <div class="phero__cta">
+          <a class="btn btn--primary btn--lg" href="#calculator">Jump to the calculator</a>
+          <a class="btn btn--outline btn--lg" href="features.html">See how Mintwise does this live</a>
+        </div>
+      </div>
+      <aside class="phero__side">
+        <dl class="kv">
+          <div><dt>Example below assumes</dt><dd>$4,200 net</dd></div>
+          <div><dt>Example savings rate</dt><dd>24.6%</dd></div>
+          <div><dt>Your data leaves the page?</dt><dd>Never</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ CALCULATOR ============ -->
+  <section class="sec" id="calculator" aria-labelledby="calc-title">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="sec-head__num">§ 02 — The calculator</p>
+        <h2 class="sec-head__title" id="calc-title">Build the month, then read the rings</h2>
+        <p class="sec-head__lead">Start from the worked example and overwrite it. Every figure is monthly and in US dollars; convert at your own rate if you live elsewhere.</p>
+      </header>
+
+      <div class="calc">
+        <!-- ------- inputs ------- -->
+        <form class="panel calc__form" id="calc-form" aria-describedby="calc-live">
+          <div class="panel__head">
+            <h3 class="panel__title">Your month</h3>
+            <p class="panel__hint">Edit any field</p>
+          </div>
+
+          <div class="form__pair">
+            <div class="field">
+              <label class="field__label" for="income">Take-home pay, monthly</label>
+              <span class="money"><input class="input" id="income" type="number" min="0" step="50" value="4200" inputmode="decimal" autocomplete="off"></span>
+              <p class="field__help">After tax, pension and student loan.</p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="extra">Side or irregular income</label>
+              <span class="money"><input class="input" id="extra" type="number" min="0" step="50" value="0" inputmode="decimal" autocomplete="off"></span>
+              <p class="field__help">Average freelance, bonuses and gifts over twelve months.</p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="cash">Money already saved</label>
+            <span class="money"><input class="input" id="cash" type="number" min="0" step="100" value="9800" inputmode="decimal" autocomplete="off"></span>
+            <p class="field__help">Emergency fund plus any cash you could actually reach.</p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="target">Savings-rate target</label>
+            <div class="slider-row">
+              <output id="target-out" for="target">20% of income</output>
+              <input id="target" type="range" min="0" max="45" step="1" value="20">
+            </div>
+            <p class="field__help">Drag it. The verdict tells you what the gap costs in cash, not in willpower.</p>
+          </div>
+
+          <h4 class="block-title">Expenses, line by line</h4>
+          <div class="row row--head" aria-hidden="true">
+            <span class="row__label">Expense</span>
+            <span class="row__label">Amount</span>
+            <span class="row__label">Type</span>
+            <span class="row__label"></span>
+          </div>
+          <div class="rows" id="exp-rows">
+            <div class="row">
+              <div>
+                <label class="sr-only" for="exp-name-1">Expense name, line 1</label>
+                <input class="input js-name" id="exp-name-1" type="text" value="Rent / mortgage" autocomplete="off">
+              </div>
+              <div>
+                <label class="sr-only" for="exp-amt-1">Monthly amount for line 1</label>
+                <span class="money"><input class="input js-amt" id="exp-amt-1" type="number" min="0" step="10" value="1450" inputmode="decimal" autocomplete="off"></span>
+              </div>
+              <div>
+                <label class="sr-only" for="exp-type-1">Type for line 1</label>
+                <select class="select js-type" id="exp-type-1">
+                  <option value="essential" selected>Essential</option>
+                  <option value="lifestyle">Lifestyle</option>
+                </select>
+              </div>
+              <div>
+                <button class="row__remove js-remove" type="button" aria-label="Remove line 1, Rent / mortgage">&times;</button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <label class="sr-only" for="exp-name-2">Expense name, line 2</label>
+                <input class="input js-name" id="exp-name-2" type="text" value="Groceries" autocomplete="off">
+              </div>
+              <div>
+                <label class="sr-only" for="exp-amt-2">Monthly amount for line 2</label>
+                <span class="money"><input class="input js-amt" id="exp-amt-2" type="number" min="0" step="10" value="480" inputmode="decimal" autocomplete="off"></span>
+              </div>
+              <div>
+                <label class="sr-only" for="exp-type-2">Type for line 2</label>
+                <select class="select js-type" id="exp-type-2">
+                  <option value="essential" selected>Essential</option>
+                  <option value="lifestyle">Lifestyle</option>
+                </select>
+              </div>
+              <div>
+                <button class="row__remove js-remove" type="button" aria-label="Remove line 2, Groceries">&times;</button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <label class="sr-only" for="exp-name-3">Expense name, line 3</label>
+                <input class="input js-name" id="exp-name-3" type="text" value="Utilities &amp; bills" autocomplete="off">
+              </div>
+              <div>
+                <label class="sr-only" for="exp-amt-3">Monthly amount for line 3</label>
+                <span class="money"><input class="input js-amt" id="exp-amt-3" type="number" min="0" step="10" value="196" inputmode="decimal" autocomplete="off"></span>
+              </div>
+              <div>
+                <label class="sr-only" for="exp-type-3">Type for line 3</label>
+                <select class="select js-type" id="exp-type-3">
+                  <option value="essential" selected>Essential</option>
+                  <option value="lifestyle">Lifestyle</option>
+                </select>
+              </div>
+              <div>
+                <button class="row__remove js-remove" type="button" aria-label="Remove line 3, Utilities and bills">&times;</button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <label class="sr-only" for="exp-name-4">Expense name, line 4</label>
+                <input class="input js-name" id="exp-name-4" type="text" value="Transit &amp; fuel" autocomplete="off">
+              </div>
+              <div>
+                <label class="sr-only" for="exp-amt-4">Monthly amount for line 4</label>
+                <span class="money"><input class="input js-amt" id="exp-amt-4" type="number" min="0" step="10" value="210" inputmode="decimal" autocomplete="off"></span>
+              </div>
+              <div>
+                <label class="sr-only" for="exp-type-4">Type for line 4</label>
+                <select class="select js-type" id="exp-type-4">
+                  <option value="essential" selected>Essential</option>
+                  <option value="lifestyle">Lifestyle</option>
+                </select>
+              </div>
+              <div>
+                <button class="row__remove js-remove" type="button" aria-label="Remove line 4, Transit and fuel">&times;</button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <label class="sr-only" for="exp-name-5">Expense name, line 5</label>
+                <input class="input js-name" id="exp-name-5" type="text" value="Eating out &amp; hobbies" autocomplete="off">
+              </div>
+              <div>
+                <label class="sr-only" for="exp-amt-5">Monthly amount for line 5</label>
+                <span class="money"><input class="input js-amt" id="exp-amt-5" type="number" min="0" step="10" value="320" inputmode="decimal" autocomplete="off"></span>
+              </div>
+              <div>
+                <label class="sr-only" for="exp-type-5">Type for line 5</label>
+                <select class="select js-type" id="exp-type-5">
+                  <option value="essential">Essential</option>
+                  <option value="lifestyle" selected>Lifestyle</option>
+                </select>
+              </div>
+              <div>
+                <button class="row__remove js-remove" type="button" aria-label="Remove line 5, Eating out and hobbies">&times;</button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <label class="sr-only" for="exp-name-6">Expense name, line 6</label>
+                <input class="input js-name" id="exp-name-6" type="text" value="Subscriptions" autocomplete="off">
+              </div>
+              <div>
+                <label class="sr-only" for="exp-amt-6">Monthly amount for line 6</label>
+                <span class="money"><input class="input js-amt" id="exp-amt-6" type="number" min="0" step="10" value="74" inputmode="decimal" autocomplete="off"></span>
+              </div>
+              <div>
+                <label class="sr-only" for="exp-type-6">Type for line 6</label>
+                <select class="select js-type" id="exp-type-6">
+                  <option value="essential">Essential</option>
+                  <option value="lifestyle" selected>Lifestyle</option>
+                </select>
+              </div>
+              <div>
+                <button class="row__remove js-remove" type="button" aria-label="Remove line 6, Subscriptions">&times;</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="calc__actions">
+            <button class="btn btn--primary" type="button" id="add-row">Add expense line</button>
+            <button class="btn btn--outline" type="button" id="reset-calc">Restore the example</button>
+          </div>
+          <p class="sr-only" id="calc-live" role="status" aria-live="polite"></p>
+          <p class="calc-note note-spaced">Everything you type stays in this browser tab. Mintwise never reads these fields, and there is no analytics script on this page.</p>
+        </form>
+
+        <!-- ------- outputs ------- -->
+        <div class="calc__out">
+          <div class="panel">
+            <div class="panel__head">
+              <h3 class="panel__title">The result</h3>
+              <p class="panel__hint">Outer: kept · Inner: essentials</p>
+            </div>
+            <div class="out__donut">
+              <div class="donut">
+                <svg viewBox="0 0 240 240" role="img" aria-label="Donut chart of savings rate and essentials share, updated as you type." id="donut-svg">
+                  <circle class="donut__track" cx="120" cy="120" r="92"></circle>
+                  <circle class="donut__save" id="ring-save" cx="120" cy="120" r="92" stroke-dasharray="0 578.1"></circle>
+                  <circle class="donut__track donut__track--inner" cx="120" cy="120" r="64"></circle>
+                  <circle class="donut__spend" id="ring-spend" cx="120" cy="120" r="64" stroke-dasharray="0 402.1"></circle>
+                </svg>
+                <p class="donut__centre"><b id="donut-num">0.0%</b><span id="donut-sub">Add income</span></p>
+              </div>
+              <p class="legend"><i class="legend__key legend__key--mint" aria-hidden="true"></i>Mint ring — savings rate&nbsp;&nbsp;&nbsp;<i class="legend__key legend__key--ink" aria-hidden="true"></i>Ink ring — essentials, of income</p>
+            </div>
+          </div>
+
+          <div class="out__grid">
+            <dl class="out__cell"><dt>Total spend</dt><dd><span id="out-spent">$0</span><small>every month</small></dd></dl>
+            <dl class="out__cell"><dt>Left to keep</dt><dd><span id="out-keep">$0</span><small>after expenses</small></dd></dl>
+            <dl class="out__cell"><dt>Savings rate</dt><dd><span id="out-rate">0.0%</span><small>of take-home pay</small></dd></dl>
+            <dl class="out__cell"><dt>In a year</dt><dd><span id="out-year">$0</span><small>if nothing changes</small></dd></dl>
+            <dl class="out__cell"><dt>Weekly spend at target</dt><dd><span id="out-weekly">$0.00</span><small>essentials + target already paid</small></dd></dl>
+            <dl class="out__cell"><dt>Cash runway</dt><dd><span id="out-runway">—</span><small>at current burn</small></dd></dl>
+            <dl class="out__cell"><dt>Gap to target</dt><dd><span id="out-gap">—</span><small id="out-gap-note">set your target above</small></dd></dl>
+            <dl class="out__cell"><dt>Share of income spent</dt><dd><span id="out-share">0%</span><small>essential + lifestyle</small></dd></dl>
+          </div>
+
+          <p class="verdict" id="verdict" role="status" aria-live="polite">Enter your take-home pay to see the rings move.</p>
+
+          <div class="panel">
+            <div class="panel__head">
+              <h3 class="panel__title">Where it actually goes</h3>
+              <p class="panel__hint">Top six lines</p>
+            </div>
+            <dl class="breakdown" id="breakdown"></dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MARQUEE ============ -->
+  <div class="marquee" aria-label="Read the rings this way">
+    <div class="marquee__track">
+      <div class="marquee__group">
+        <span>Keep 5% — the fund exists</span><span aria-hidden="true">·</span>
+        <span>Keep 10% — compounding starts</span><span aria-hidden="true">·</span>
+        <span>Keep 20% — options open</span><span aria-hidden="true">·</span>
+        <span>Keep 35% — you buy back years</span><span aria-hidden="true">·</span>
+      </div>
+      <div class="marquee__group" aria-hidden="true">
+        <span>Keep 5% — the fund exists</span><span>·</span>
+        <span>Keep 10% — compounding starts</span><span>·</span>
+        <span>Keep 20% — options open</span><span>·</span>
+        <span>Keep 35% — you buy back years</span><span>·</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ HOW TO READ IT ============ -->
+  <section class="sec" aria-labelledby="read-title">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="sec-head__num">§ 03 — Reading the answer</p>
+        <h2 class="sec-head__title" id="read-title">Three questions this calculator should settle</h2>
+      </header>
+      <ol class="steps">
+        <li>
+          <b>01 — Is the ring honest?</b>
+          <h3>Your savings rate is what is left after everything real</h3>
+          <p>Most people calculate savings rate on payslip gross and forget tax, pension and the annual insurance bill. Here, income means cash in hand and expenses include the money that is already committed. If the number surprises you, it is probably the honest one.</p>
+        </li>
+        <li>
+          <b>02 — Which ring moves first?</b>
+          <h3>Essentials are a negotiation, lifestyle is a decision</h3>
+          <p>When the inner ink ring passes 55% of income, savings maths stops being fun: the levers are rent, insurance, debt and transport, and they take months to shift. Below 45%, the fastest gains are almost always in the lifestyle lines — which is also where the weekly figure lives.</p>
+        </li>
+        <li>
+          <b>03 — What is the runway for?</b>
+          <h3>It prices your freedom, in months</h3>
+          <p>Runway is saved cash divided by monthly spend: how long you could keep your life going with no income at all. Three months makes a bad week survivable, six makes a job you hate optional, twelve makes a career change a plan rather than a fantasy.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ BENCHMARK TABLE ============ -->
+  <section class="sec sec--tint" aria-labelledby="bench-title">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="sec-head__num">§ 04 — Benchmarks</p>
+        <h2 class="sec-head__title" id="bench-title">Where 24.6% puts you</h2>
+        <p class="sec-head__lead">Bands from Mintwise member data, October 2025 to September 2026, 148,300 households. Compare yourself to the row that matches your situation, not to the best row.</p>
+      </header>
+      <div class="table-wrap">
+        <table class="compare">
+          <caption>Savings-rate bands by household situation</caption>
+          <thead>
+            <tr>
+              <th scope="col">Band</th>
+              <th scope="col">Single, rented</th>
+              <th scope="col">Couple, no kids</th>
+              <th scope="col">Family, one earner</th>
+              <th scope="col">Freelance, spiky income</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">0–4% · tight</th>
+              <td>18%</td><td>11%</td><td>14%</td><td>21%</td>
+            </tr>
+            <tr>
+              <th scope="row">5–9% · recovering</th>
+              <td>27%</td><td>19%</td><td>24%</td><td>23%</td>
+            </tr>
+            <tr>
+              <th scope="row">10–19% · building</th>
+              <td>31%</td><td>33%</td><td>32%</td><td>29%</td>
+            </tr>
+            <tr>
+              <th scope="row">20–34% · strong <span class="chip chip--mint">you are here in the example</span></th>
+              <td>17%</td><td>26%</td><td>22%</td><td>18%</td>
+            </tr>
+            <tr>
+              <th scope="row">35%+ · aggressive</th>
+              <td>7%</td><td>11%</td><td>8%</td><td>9%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="inline-note">Percentages show the share of households in that band. A savings rate is a ratio, not a moral score: a single renter at 6% and a dual-income household at 22% can both be entirely sensible.</p>
+    </div>
+  </section>
+
+  <!-- ============ WORKED EXAMPLES ============ -->
+  <section class="sec" aria-labelledby="ex-title">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="sec-head__num">§ 05 — Worked examples</p>
+        <h2 class="sec-head__title" id="ex-title">Three months, typed out</h2>
+      </header>
+      <ul class="quotes">
+        <li class="quotes__item">
+          <h3>The 8% to 18% fix</h3>
+          <blockquote><p>“Dana, 31, retail manager. Take-home $3,180, spend $2,925, rent fixed.”</p></blockquote>
+          <p>Nothing dramatic: two forgotten streaming bundles and a car insurance renewal that was silently rolling monthly. Cutting $310 a month moved her from 8.0% to 17.8%, and the annual insurance payment stopped being a crisis because it became a sinking fund.</p>
+          <p class="quotes__stat">$310 a month · $3,720 a year</p>
+        </li>
+        <li class="quotes__item">
+          <h3>The spiky-income problem</h3>
+          <blockquote><p>“Iftekhar, 38, freelance developer. Six months over $6k, six months under $2.4k.”</p></blockquote>
+          <p>His savings rate looked like 11% because good months were spent as though they were ordinary. Setting the target at 25% of the twelve-month average, then paying the flat weekly figure regardless of income, made the variance stop mattering.</p>
+          <p class="quotes__stat">Runway 2.1 → 5.8 months</p>
+        </li>
+        <li class="quotes__item">
+          <h3>The household with two opinions</h3>
+          <blockquote><p>“Nora &amp; Sam, 34 and 36. One shared ledger, two private categories.”</p></blockquote>
+          <p>They agreed on essentials and disagreed on everything else. Splitting the shared costs from personal spend, then measuring their savings rate on combined take-home, turned the argument into arithmetic they could both check.</p>
+          <p class="quotes__stat">42% of income kept, together</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="cta" aria-labelledby="cta-calc">
+    <div class="wrap cta__in">
+      <div>
+        <p class="eyebrow"><span class="eyebrow__rule" aria-hidden="true"></span>§ 06 — Make it live</p>
+        <h2 class="cta__title" id="cta-calc">Stop guessing the numbers.</h2>
+        <p class="cta__lead">This calculator works on what you remember. Mintwise works on what actually happened, refreshed every fifteen minutes from your own accounts.</p>
+      </div>
+      <div class="cta__actions">
+        <a class="btn btn--primary btn--lg" href="pricing.html">Start your 30-day trial</a>
+        <a class="btn btn--light btn--lg" href="contact.html">Ask us a question</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__in">
+    <div class="site-footer__brand">
+      <a class="brand brand--footer" href="index.html">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span class="brand__name">Mintwise</span>
+      </a>
+      <p>Clear ledgers for complicated months. Built in Manchester, used in 41 countries.</p>
+      <p class="site-footer__addr">Mintwise Ltd · 3rd Floor, 18 Byrom Street, Manchester M3 4AP, United Kingdom</p>
+    </div>
+    <nav class="site-footer__col" aria-label="Product">
+      <h2 class="site-footer__h">Product</h2>
+      <ul>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="calculator.html">Budget calculator</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="features.html#security">Security</a></li>
+      </ul>
+    </nav>
+    <nav class="site-footer__col" aria-label="Company">
+      <h2 class="site-footer__h">Company</h2>
+      <ul>
+        <li><a href="index.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html#faq">FAQ</a></li>
+        <li><a href="pricing.html">Plans</a></li>
+      </ul>
+    </nav>
+    <nav class="site-footer__col" aria-label="Support">
+      <h2 class="site-footer__h">Support</h2>
+      <ul>
+        <li><a href="contact.html#channels">Help centre</a></li>
+        <li><a href="contact.html#channels">Talk to us</a></li>
+        <li><a href="contact.html#faq">Common questions</a></li>
+        <li><a href="calculator.html">Plan a budget</a></li>
+      </ul>
+    </nav>
+    <div class="site-footer__col">
+      <h2 class="site-footer__h">Follow</h2>
+      <ul class="social">
+        <li><a href="contact.html" aria-label="Mintwise journal and updates"><span aria-hidden="true">Jn</span>Journal</a></li>
+        <li><a href="contact.html" aria-label="Mintwise on the community forum"><span aria-hidden="true">Fm</span>Forum</a></li>
+        <li><a href="contact.html" aria-label="Mintwise product roadmap"><span aria-hidden="true">Rd</span>Roadmap</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap site-footer__base">
+    <p>© <span data-year>2026</span> Mintwise Ltd. Registered in England &amp; Wales, no. 11984422.</p>
+    <p>Mintwise is a financial-literacy tool, not a bank, lender or regulated adviser. Nothing here is investment advice.</p>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
