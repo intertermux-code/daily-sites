@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reservations — Book a Table at Ember &amp; Oak</title>
+<meta name="description" content="Reserve a table at Ember &amp; Oak. One seating a night, Tuesday through Saturday, parties of two to eight online and nine or more by request. Confirmation same day.">
+<meta name="theme-color" content="#07060a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============================ HEADER ============================ -->
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="index.html" aria-label="Ember and Oak — home">
+      <svg class="brand__mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M16 2c1.5 6.5 6.5 8 6.5 14.5A6.5 6.5 0 0 1 16 23a6.5 6.5 0 0 1-6.5-6.5C9.5 10 14.5 8.5 16 2Z" stroke="currentColor" stroke-width="1.4"/>
+        <path d="M16 11c.8 3 3 3.8 3 6.6a3 3 0 1 1-6 0c0-2.8 2.2-3.6 3-6.6Z" fill="currentColor" opacity=".65"/>
+        <path d="M8 29h16M11 26h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <span class="brand__text">
+        <span class="brand__name">Ember &amp; Oak</span>
+        <span class="brand__sub">Wood Fire · Est. 2014</span>
+      </span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <ul class="site-nav__list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="visit.html">Visit</a></li>
+        <li><a href="reservations.html" aria-current="page">Reservations</a></li>
+      </ul>
+      <div class="site-nav__foot">
+        <span>412 Miller Street, Old Grain District</span>
+        <span>Tuesday–Saturday · one seating, 5–10 PM</span>
+        <a href="tel:+13125550148">(312) 555-0148</a>
+      </div>
+      <div class="site-nav__cta">
+        <a class="btn btn--ember btn--wide" href="reservations.html">Book a Table</a>
+      </div>
+    </nav>
+
+    <a class="btn btn--ember btn--sm header-cta" href="reservations.html">Reserve</a>
+  </div>
+</header>
+<div class="scrim" aria-hidden="true"></div>
+
+<main id="main">
+
+  <!-- ============================ BANNER ============================ -->
+  <section class="banner" aria-labelledby="res-title">
+    <div class="banner__media">
+      <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=80"
+           alt="A table for two laid with linen and candlelight in the wood-fire dining room"
+           width="1800" height="1200" fetchpriority="high" decoding="async">
+    </div>
+    <div class="shell">
+      <p class="eyebrow">One Seating · Twenty-Eight Tables</p>
+      <h1 id="res-title" class="banner__title">Hold your table at the fire.</h1>
+      <p class="lede">Send the request below and the host stand confirms by phone the same working day. Nothing is charged, and you can cancel up to two hours before seating.</p>
+      <div class="hero__actions">
+        <a class="btn btn--ember" href="#booking">Jump to the Form</a>
+        <a class="btn btn--ghost" href="tel:+13125550148">Call (312) 555-0148</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ FORM ============================ -->
+  <section class="chapter chapter--short chapter--ember" id="booking" aria-labelledby="booking-title">
+    <span class="chapter__index" aria-hidden="true">R</span>
+    <div class="shell" style="max-width:1120px">
+
+      <header style="margin-bottom:var(--space-m)">
+        <p class="eyebrow">Booking Request</p>
+        <h2 class="h3" id="booking-title">Five fields and you’re seated.</h2>
+        <p style="color:var(--muted);max-width:var(--measure)">Fields marked <span style="color:var(--ember)">*</span> are required. We validate as you go, so the only thing that can stop you is a typo.</p>
+      </header>
+
+      <div class="chapter__grid chapter__grid--2" style="align-items:start;gap:clamp(1.5rem,4vw,3rem)">
+
+        <form class="form-shell form-shell--2" id="reservation-form" novalidate aria-labelledby="booking-title">
+          <div class="field-grid field-grid--2" style="grid-column:1/-1">
+            <div class="field">
+              <label for="res-name">Name on the Reservation <span class="req" aria-hidden="true">*</span></label>
+              <input class="input" id="res-name" name="name" type="text" autocomplete="name"
+                     placeholder="Rowan Deeks" required aria-describedby="res-name-err">
+              <p class="error" id="res-name-err" role="alert">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+                <span>Please tell us who the table is for.</span>
+              </p>
+            </div>
+
+            <div class="field">
+              <label for="res-phone">Phone <span class="req" aria-hidden="true">*</span></label>
+              <input class="input" id="res-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
+                     placeholder="(312) 555-0148" required aria-describedby="res-phone-err">
+              <p class="error" id="res-phone-err" role="alert">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+                <span>We text a reminder, so we need a phone number.</span>
+              </p>
+              <p class="field__hint">Mobile numbers get the 4 PM reminder text; landlines get a call instead.</p>
+            </div>
+
+            <div class="field">
+              <label for="res-email">Email <span class="req" aria-hidden="true">*</span></label>
+              <input class="input" id="res-email" name="email" type="email" autocomplete="email"
+                     placeholder="you@example.com" required aria-describedby="res-email-err">
+              <p class="error" id="res-email-err" role="alert">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+                <span>Enter a complete email address.</span>
+              </p>
+            </div>
+
+            <div class="field">
+              <label for="res-party">Party Size <span class="req" aria-hidden="true">*</span></label>
+              <select class="select" id="res-party" name="party" required aria-describedby="res-party-err">
+                <option value="" selected>Select how many are dining</option>
+                <option value="2 guests">2 guests</option>
+                <option value="3 guests">3 guests</option>
+                <option value="4 guests">4 guests</option>
+                <option value="5 guests">5 guests</option>
+                <option value="6 guests">6 guests</option>
+                <option value="7 guests">7 guests</option>
+                <option value="8 guests">8 guests</option>
+                <option value="9 or more — Grain Room table">9 or more (Grain Room table)</option>
+              </select>
+              <p class="error" id="res-party-err" role="alert">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+                <span>Select how many guests are dining.</span>
+              </p>
+            </div>
+
+            <div class="field">
+              <label for="res-date">Date <span class="req" aria-hidden="true">*</span></label>
+              <input class="input" id="res-date" name="date" type="date" required aria-describedby="res-date-err">
+              <p class="error" id="res-date-err" role="alert">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+                <span>Choose the evening you’d like to join us.</span>
+              </p>
+              <p class="field__hint">We serve Tuesday through Saturday. Sundays and Mondays the fire is cold.</p>
+            </div>
+
+            <div class="field">
+              <label for="res-time">Seating Time <span class="req" aria-hidden="true">*</span></label>
+              <select class="select" id="res-time" name="time" required aria-describedby="res-time-err">
+                <option value="" selected>Pick a seating time</option>
+                <option value="5:00 PM">5:00 PM — quietest end of the room</option>
+                <option value="5:45 PM">5:45 PM</option>
+                <option value="6:30 PM">6:30 PM</option>
+                <option value="7:15 PM">7:15 PM — the coals are flat</option>
+                <option value="8:00 PM">8:00 PM</option>
+                <option value="8:45 PM">8:45 PM</option>
+                <option value="9:30 PM">9:30 PM — last tickets</option>
+              </select>
+              <p class="error" id="res-time-err" role="alert">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+                <span>Pick a seating time between 5 PM and 10 PM.</span>
+              </p>
+            </div>
+
+            <fieldset class="field field--full" style="border:0;padding:0;margin:0">
+              <legend class="label" style="font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--champagne);padding:0;margin-bottom:.8rem">Where You’d Like to Sit</legend>
+              <div class="choice-row">
+                <label class="choice is-selected"><input type="radio" name="seating" value="Dining room" checked><span>Dining Room</span></label>
+                <label class="choice"><input type="radio" name="seating" value="Fire Bar"><span>Fire Bar (8 seats)</span></label>
+                <label class="choice"><input type="radio" name="seating" value="Window tables"><span>Window Tables</span></label>
+                <label class="choice"><input type="radio" name="seating" value="Grain Room"><span>Grain Room (private)</span></label>
+              </div>
+              <p class="field__hint">Bar and window requests are held, not guaranteed — the kitchen needs the bar clear on busy services.</p>
+            </fieldset>
+
+            <div class="field field--full">
+              <label for="res-occasion">Occasion</label>
+              <select class="select" id="res-occasion" name="occasion">
+                <option value="" selected>Just dinner</option>
+                <option value="Birthday">Birthday</option>
+                <option value="Anniversary">Anniversary</option>
+                <option value="Proposal">Proposal — we’ll clear the corner</option>
+                <option value="Business">Business dinner</option>
+                <option value="First visit">First time at Ember &amp; Oak</option>
+              </select>
+            </div>
+
+            <div class="field field--full">
+              <label for="res-notes">Allergies, Dietary Notes, Anything Else</label>
+              <textarea class="textarea" id="res-notes" name="notes" rows="4"
+                        placeholder="Two vegetarians, one shellfish allergy, and we’d love the decanter list read against the short rib."></textarea>
+              <p class="field__hint">The kitchen cannot promise a fully allergen-free plate, but it builds around what you tell us.</p>
+            </div>
+          </div>
+
+          <div class="form-foot field--full" style="grid-column:1/-1">
+            <p class="form-status" role="status" aria-live="polite">No card required. We hold the table fifteen minutes past your seating time.</p>
+            <button class="btn btn--ember" type="submit">
+              Request This Table
+              <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </form>
+
+        <!-- CONFIRMATION STATE -->
+        <div class="confirm" aria-live="polite">
+          <div class="confirm__inner">
+            <div class="confirm__card">
+              <div class="confirm__seal" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12.5l5 5L20 6.5"/></svg>
+              </div>
+              <p class="eyebrow eyebrow--center">Table Requested</p>
+              <h2 class="h3" tabindex="-1">The fire is lit for you, <span data-confirm="name">friend</span>.</h2>
+              <p style="color:var(--text-soft);margin-inline:auto;max-width:44ch">A host calls to confirm within the working day. Keep an eye on an unknown local number — that is us, not a telemarketer.</p>
+
+              <dl class="confirm__list">
+                <div><dt>Date</dt><dd class="v" data-confirm="date">—</dd></div>
+                <div><dt>Seating</dt><dd class="v" data-confirm="time">—</dd></div>
+                <div><dt>Party</dt><dd class="v" data-confirm="party">—</dd></div>
+                <div><dt>Phone</dt><dd class="v" data-confirm="phone">—</dd></div>
+                <div><dt>Reference</dt><dd class="v" data-confirm="code">—</dd></div>
+              </dl>
+
+              <div class="hero__actions" style="justify-content:center;margin-top:var(--space-m)">
+                <button class="btn btn--ghost btn--sm" type="button" data-reset-form>Book Another Evening</button>
+                <a class="btn btn--ghost btn--sm" href="menu.html">Read Tonight’s Menu</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SIDE NOTES -->
+        <aside class="menu-note" aria-labelledby="hold-title">
+          <h3 id="hold-title">How the hold works</h3>
+          <p>Tables release every Monday at 9 AM for the week ahead. We hold your seating for fifteen minutes, then give the table to whoever is standing at the host stand.</p>
+          <p>Cancelling is not an offence — call or reply to the confirmation text and the seat goes back on the sheet the same night. Two unclaimed bookings in a year is the only thing that puts you at the back of the list.</p>
+          <p>Parties of nine or more are served the seven-course Fire Menu at the Grain Room table, $145 per guest, with forty-eight hours’ notice. Send the request and we will call you the same day to plan it.</p>
+          <p><a class="btn btn--ghost btn--sm" href="visit.html">Hours, Directions &amp; Access</a></p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider-ember">
+
+  <!-- ============================ POLICY ACCORDION ============================ -->
+  <section class="chapter chapter--short" aria-labelledby="policy-title">
+    <span class="chapter__index" aria-hidden="true">VII</span>
+    <div class="shell chapter__grid chapter__grid--2-wide">
+      <div>
+        <p class="eyebrow">Before You Book</p>
+        <h2 class="h3" id="policy-title">The house rules, unfolded.</h2>
+        <p class="lede">Four short answers to the questions the host stand hears most. Only one panel opens at a time.</p>
+        <p style="color:var(--muted)">Something not covered here? <a href="visit.html">Send us a note</a> — a person reads it, usually within a day.</p>
+      </div>
+
+      <div class="accordion">
+        <div class="accordion__item is-open" data-open>
+          <h3 class="visually-hidden">Cancellation</h3>
+          <button class="accordion__trigger" type="button" aria-expanded="true">
+            <span><span class="accordion__no">01</span>Cancellations &amp; No-Shows</span>
+            <span class="accordion__chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="accordion__panel"><div class="accordion__inner"><div class="accordion__body">
+            <p>Cancel any time up to two hours before your seating with no charge and no explanation required. After that, small parties are asked for $25 per guest; the Grain Room table is $60 per guest because the whole kitchen cooks for it in advance.</p>
+            <p>If illness or a delayed flight takes you out at the last minute, tell us anyway. We release the seat and re-book you first the following week.</p>
+          </div></div></div>
+        </div>
+
+        <div class="accordion__item">
+          <h3 class="visually-hidden">Children</h3>
+          <button class="accordion__trigger" type="button" aria-expanded="false">
+            <span><span class="accordion__no">02</span>Children &amp; the Room</span>
+            <span class="accordion__chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="accordion__panel"><div class="accordion__inner"><div class="accordion__body">
+            <p>Under-tens are welcome at the early seatings — 5 PM and 5:45 PM — and we send the half-portion of the hearth chicken out before anything else arrives. No highchairs at the bar, two available in the dining room.</p>
+            <p>Older children eat the full menu and do it well; the wood-fired gnocchi is the house special for a nine-year-old.</p>
+          </div></div></div>
+        </div>
+
+        <div class="accordion__item">
+          <h3 class="visually-hidden">Dietary needs</h3>
+          <button class="accordion__trigger" type="button" aria-expanded="false">
+            <span><span class="accordion__no">03</span>Dietary &amp; Allergy Requests</span>
+            <span class="accordion__chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="accordion__panel"><div class="accordion__inner"><div class="accordion__body">
+            <p>Vegetarian, vegan and gluten-conscious menus run in parallel every service. Put your needs in the notes field and the kitchen cooks to them before you sit down.</p>
+            <p>One honest limit: the dining room, the hutch and the cold cellar share a single small kitchen, so we cannot guarantee a plate free of trace wheat, dairy, nut or shellfish contact. Tell your server and we will be blunt with you about what we can and cannot do.</p>
+          </div></div></div>
+        </div>
+
+        <div class="accordion__item">
+          <h3 class="visually-hidden">Large parties</h3>
+          <button class="accordion__trigger" type="button" aria-expanded="false">
+            <span><span class="accordion__no">04</span>Nine or More, and Takeover Nights</span>
+            <span class="accordion__chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="accordion__panel"><div class="accordion__inner"><div class="accordion__body">
+            <p>The Grain Room table seats sixteen behind the kitchen, served the seven-course Fire Menu at $145 per guest with an optional pour flight at $68. Forty-eight hours’ notice, deposit of $50 per guest.</p>
+            <p>Full takeovers of the twenty-eight-seat room run Sunday nights only, when the fire is cold and can be lit to order for you. Email <a href="mailto:room@emberandoak.com">room@emberandoak.com</a> for dates six weeks out.</p>
+          </div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ CTA ============================ -->
+  <section class="cta-band" aria-labelledby="res-cta">
+    <p class="eyebrow eyebrow--center">Prefer a Voice?</p>
+    <h2 id="res-cta" class="h2">The host stand answers between 2 and 10 PM.</h2>
+    <p class="rise" data-delay="1">Call and ask for Marta. She can hold the bar, plan the Grain Room table, and tell you honestly which night the kitchen is running hot.</p>
+    <div class="hero__actions" style="justify-content:center;margin-top:0">
+      <a class="btn btn--ember" href="tel:+13125550148">Call (312) 555-0148</a>
+      <a class="btn btn--ghost" href="mailto:room@emberandoak.com">Email the Room</a>
+    </div>
+  </section>
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="site-footer">
+  <div class="shell">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="Ember and Oak — home">
+          <svg class="brand__mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M16 2c1.5 6.5 6.5 8 6.5 14.5A6.5 6.5 0 0 1 16 23a6.5 6.5 0 0 1-6.5-6.5C9.5 10 14.5 8.5 16 2Z" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M16 11c.8 3 3 3.8 3 6.6a3 3 0 1 1-6 0c0-2.8 2.2-3.6 3-6.6Z" fill="currentColor" opacity=".65"/>
+            <path d="M8 29h16M11 26h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          <span class="brand__text">
+            <span class="brand__name">Ember &amp; Oak</span>
+            <span class="brand__sub">Wood Fire · Est. 2014</span>
+          </span>
+        </a>
+        <p>A twenty-eight seat dining room built around a twelve-foot oak hearth in the Old Grain District. One seating, every night we’re open.</p>
+        <ul class="tag-list">
+          <li class="chip">No gas, ever</li>
+          <li class="chip">Seasonal reprint</li>
+          <li class="chip">Dog friendly patio</li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2>Pages</h2>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">The Menu</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="visit.html">Visit</a></li>
+          <li><a href="reservations.html">Reservations</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2>Find Us</h2>
+        <ul>
+          <li><span>412 Miller Street</span></li>
+          <li><span>Old Grain District</span></li>
+          <li><span>Chicago, IL 60642</span></li>
+          <li><a href="tel:+13125550148">(312) 555-0148</a></li>
+          <li><a href="mailto:room@emberandoak.com">room@emberandoak.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2>The Fire Note</h2>
+        <p style="color:var(--muted);font-size:.92rem">One letter a month: what the market gave us, what’s on the coals, and the occasional Tuesday-only menu.</p>
+        <form class="newsletter" id="newsletter-form" novalidate>
+          <label for="nl-email" class="visually-hidden">Email address</label>
+          <div class="newsletter__row">
+            <input class="input" id="nl-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            <button class="btn btn--ghost btn--sm" type="submit">Join</button>
+          </div>
+          <p class="newsletter__note" aria-live="polite">No more than twelve emails a year. Unsubscribe in one click.</p>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-word" aria-hidden="true">
+      <svg viewBox="0 0 900 96" role="img">
+        <text x="0" y="74" font-family="Fraunces, Georgia, serif" font-size="86" letter-spacing="4" fill="currentColor">EMBER &amp; OAK</text>
+      </svg>
+    </div>
+
+    <div class="footer-bottom">
+      <p style="margin:0">© <span data-year>2026</span> Ember &amp; Oak Hospitality LLC. All rights reserved.</p>
+      <p style="margin:0">Fully cooked to order · Undercooked items available on request · <a href="visit.html">Accessibility &amp; dietary notes</a></p>
+    </div>
+  </div>
+</footer>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
