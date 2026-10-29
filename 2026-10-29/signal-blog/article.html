@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Hidden Cost of a Hundred-Millisecond Promise — Signal</title>
+<meta name="description" content="Signal instrumented 41 production workloads across six CDN providers and found the advertised sub-100 millisecond delivery time drifting by 37 milliseconds — mostly on the smallest accounts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"><i></i></div>
+
+<header class="masthead">
+  <div class="ticker" aria-label="Signal newswire">
+    <span class="ticker-label">Newswire</span>
+    <div class="ticker-track" aria-hidden="true">
+      <span class="ticker-item"><b>p95 across 14 tracked CDNs</b> 136 ms</span>
+      <span class="ticker-item"><b>Hyperscaler capex</b> +38% YoY</span>
+      <span class="ticker-item"><b>arXiv · distributed-systems</b> 412 preprints this week</span>
+      <span class="ticker-item"><b>Postgres 18</b> adoption 22% of tracked deployments</span>
+      <span class="ticker-item"><b>EU cloud sovereignty rule</b> in committee</span>
+      <span class="ticker-item"><b>TypeScript 7.0 native port</b> 4.8× faster cold builds</span>
+    </div>
+    <div class="ticker-track ticker-dup" aria-hidden="true">
+      <span class="ticker-item"><b>p95 across 14 tracked CDNs</b> 136 ms</span>
+      <span class="ticker-item"><b>Hyperscaler capex</b> +38% YoY</span>
+      <span class="ticker-item"><b>arXiv · distributed-systems</b> 412 preprints this week</span>
+      <span class="ticker-item"><b>Postgres 18</b> adoption 22% of tracked deployments</span>
+      <span class="ticker-item"><b>EU cloud sovereignty rule</b> in committee</span>
+      <span class="ticker-item"><b>TypeScript 7.0 native port</b> 4.8× faster cold builds</span>
+    </div>
+  </div>
+
+  <div class="wrap masthead-top">
+    <a class="wordmark" href="index.html">Signal<span class="wordmark-mark" aria-hidden="true">.</span></a>
+    <p class="issue-line">No. 214 · Thursday, 29 October 2026 · Reader-funded since 2019</p>
+    <a class="btn btn-solid" href="subscribe.html">Subscribe — Free</a>
+  </div>
+
+  <div class="nav-bar">
+    <div class="wrap nav-inner">
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="menu-btn-text">Index</span>
+        <span class="menu-glyph" aria-hidden="true"></span>
+      </button>
+      <nav aria-label="Primary">
+        <ul class="nav-list" id="primary-nav">
+          <li><a href="index.html">Front Page</a></li>
+          <li><a href="article.html" aria-current="page">Lead Dispatch</a></li>
+          <li><a href="topics.html">Topics</a></li>
+          <li><a href="about.html">Masthead</a></li>
+          <li><a href="subscribe.html">Newsletter</a></li>
+        </ul>
+      </nav>
+      <p class="nav-meta">Desk time 14:02 CET</p>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap">
+    <div class="article-head">
+      <p class="crumbs"><a href="index.html">Front Page</a> / <a href="topics.html#infrastructure">Infrastructure</a> / Lead Dispatch</p>
+      <p class="series-tag"><span aria-hidden="true">◆</span> Part 1 of 3 · The Latency Ledger</p>
+      <h1>The Hidden Cost of a Hundred-Millisecond Promise</h1>
+      <p class="article-lede">Every content delivery network still sells sub-100 ms delivery. Signal spent eleven weeks instrumenting 41 production workloads across six providers. The number holds for the accounts that can afford to measure it — and quietly breaks for everyone else.</p>
+      <div class="article-meta">
+        <img class="avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&h=200&q=80" alt="Portrait of Marta Ellison, Senior Correspondent for infrastructure at Signal" width="52" height="52">
+        <p style="margin:0"><span class="byline-name">Marta Ellison</span><br><span class="mono" style="font-size:.68rem">Senior Correspondent, Infrastructure</span></p>
+        <p class="mono" style="margin:0">Published 29 Oct 2026, 06:00 CET</p>
+        <p class="mono" style="margin:0">14 min read</p>
+        <p class="mono" style="margin:0">Probes · 2.1M requests</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap article-body">
+    <article class="prose">
+      <figure>
+        <img src="https://picsum.photos/seed/signal-blog-7163e312e7c2/1600/900?auto=format&fit=crop&w=1600&q=80" alt="Patch panel of fibre-optic and copper network cables in a communications room" width="1600" height="900">
+        <figcaption>Fig. 1 — A Frankfurt point of presence, one of nine the team was able to visit. Signal ran probes from inside the facility and from the last mile outside it.</figcaption>
+      </figure>
+
+      <p>The marketing has not changed in four years. Six of the eleven delivery networks we approached still promise a hundred milliseconds to the first byte of a cached object, anywhere in the European Economic Area. Two of them put the figure in the contract as a service-level objective. The other four describe it in a datasheet, with a footnote about “typical performance.”</p>
+
+      <p>So we stopped asking and started measuring. Between 4 August and 20 October, Signal ran 2.1 million requests from 41 production workloads that volunteer organisations agreed to let us instrument — a municipal library union, three universities, twelve small publishers, nine logistics operators, and eleven software cooperatives. We sampled every ninety seconds, from inside their own edge caches and from the last mile outside them.</p>
+
+      <p>The headline result is uncomfortable but not mysterious: the median measured p95 across the fleet was <b>136 ms</b>, not the advertised 100. The interesting finding is where the gap sat. Workloads on enterprise contracts landed within four milliseconds of the promise, and their providers published the dashboards to prove it. Workloads on entry-tier contracts averaged <b>+37 ms</b>, and nobody published anything at all.</p>
+
+      <h2 id="method"><span class="h2-num">01 — Method</span>The Measurement Was Deliberately Boring</h2>
+
+      <p>We used the same instrument at every site: a small probe container that fetches three objects of different sizes from the nearest point of presence, records DNS, TCP, TLS, and time-to-first-byte separately, and pushes signed samples to a bucket we control. Nothing about the workload changed. The probes read the same caches the real traffic reads.</p>
+
+      <ul class="bul">
+        <li><b>Sample window:</b> 4 August – 20 October 2026, eleven weeks, ninety-second cadence.</li>
+        <li><b>Volume:</b> 2,118,440 requests, of which 4,011 failed and are counted as failures rather than retried away.</li>
+        <li><b>Geography:</b> 41 workloads across 14 countries, all inside the EEA, none behind a provider-owned resolver.</li>
+        <li><b>Disclosure:</b> providers were told we were measuring and were not told which accounts participated. Five of six asked what the methodology would be. One asked us not to publish per-alias numbers; we publish per-tier numbers instead.</li>
+      </ul>
+
+      <p>We deliberately did not use a synthetic monitoring service. Synthetic probes measure the network a monitoring vendor has bought, not the network your users inherited. The difference showed up immediately: our last-mile figures ran 18–26 ms slower than the same sites’ public status pages reported on the same days.</p>
+
+      <h2 id="divergence"><span class="h2-num">02 — Where the Thirty-Seven Milliseconds Come From</span>The Divergence Is a Routing Decision</h2>
+
+      <p>Thirty-seven milliseconds sounds like trivia until you notice it is not noise. It is a stable, reproducible, tier-shaped offset that appears at the same moment every day and disappears when traffic is cheap.</p>
+
+      <table class="datatable">
+        <caption>Table 1 — Measured p95 by contract tier, all providers combined. Lower is better.</caption>
+        <thead>
+          <tr><th scope="col">Contract tier</th><th scope="col">Workloads</th><th scope="col">Promised p95</th><th scope="col">Measured p95</th><th class="num">Divergence</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Enterprise, negotiated</td><td>6</td><td>100 ms</td><td>104 ms</td><td class="num">+4 ms</td></tr>
+          <tr><td>Business, standard</td><td>14</td><td>100 ms</td><td>119 ms</td><td class="num">+19 ms</td></tr>
+          <tr><td>Entry / self-serve</td><td>21</td><td>100 ms</td><td>137 ms</td><td class="num">+37 ms</td></tr>
+          <tr><td>Free research tier</td><td>4</td><td>“best effort”</td><td>212 ms</td><td class="num">+112 ms</td></tr>
+        </tbody>
+      </table>
+
+      <p>Three mechanisms explain most of the spread, and all three are visible in configuration rather than in hardware.</p>
+
+      <p><b>Anycast population.</b> Entry-tier accounts are advertised from fewer points of presence. Four of the workloads we measured resolved, on a Tuesday afternoon, to a presence 1,400 km further from the requester than the one their own enterprise customers used. That alone was worth 22 ms.</p>
+
+      <p><b>Cache admission policy.</b> Small accounts get smaller cache quotas and more aggressive eviction. The library union saw its hottest object — a 340 KB stylesheet used by every reading room — evicted 41 times in eleven weeks. Each eviction meant a cold round trip to origin, and origin sat in a region chosen by price.</p>
+
+      <p><b>Tiered egress paths.</b> Two providers route discounted traffic through a shared peering aggregate rather than a private one. Congestion at 20:00 local time cost those workloads a further 11 ms, and the effect was entirely predictable from the daily curve.</p>
+
+      <blockquote class="pull">
+        “We didn’t lose latency to bad hardware. We lost it to a pricing page.”
+        <cite>Infrastructure lead, municipal library union</cite>
+      </blockquote>
+
+      <h2 id="bill"><span class="h2-num">03 — The Bill</span>Who Pays for the Gap</h2>
+
+      <p>The cost is not only experiential. Three of the twelve publishers reported that the divergence pushed them over a traffic-shaping threshold, triggering a per-gigabyte rate they had not budgeted for. One cooperative moved 9% of its annual hosting spend on re-egress it did not expect to buy.</p>
+
+      <p>Meanwhile the enterprise tier keeps improving. Median p95 on negotiated contracts fell 6 ms year over year, driven by cheaper origin shields and better prefetch. The gap between tiers is widening because the top tier is optimised for measurement, and the bottom tier is optimised for margin. Both are honest engineering goals. Only one of them appears in the datasheet.</p>
+
+      <ol class="num">
+        <li>Publish the tail, not the promise. Three providers now show a p95 histogram per region. Ask for it before you sign, and ask for it again every renewal.</li>
+        <li>Instrument your own last mile. A 60-euro probe and ninety seconds of cadence will tell you more than any status page.</li>
+        <li>Read the eviction counters. If your hottest object evicts more than once a week, your cache quota is a marketing number, not a capacity one.</li>
+        <li>Price the egress tail. Shaping thresholds are the quietest line item on a delivery contract and the first one to bite in an election year.</li>
+      </ol>
+
+      <h2 id="accountability"><span class="h2-num">04 — Accountability</span>A Number Nobody Has to Defend</h2>
+
+      <p>When we asked providers to explain the divergence, the answers clustered into two shapes. Five described the datasheet figure as a median — a statistic that says almost nothing about the tail a reader actually waits on. One described it as a target measured “at the edge,” which, taken literally, is true: measured at the edge, from inside the edge, by the edge, about the edge.</p>
+
+      <p>Two of the six have since changed their documentation. That is the fastest response we have ever seen to a measurement story, and it tells you the original wording was never load-bearing.</p>
+
+      <figure>
+        <img src="https://picsum.photos/seed/signal-blog-049c5d8a8824/1600/900?auto=format&fit=crop&w=1600&q=80" alt="Long-exposure photograph of network equipment lights in a darkened telecommunications rack room" width="1600" height="900" loading="lazy">
+        <figcaption>Fig. 2 — Aggregate hardware serving discounted traffic in the same building as the private peering that serves negotiated contracts. Signal identified the difference from routing tables, not from the invoice.</figcaption>
+      </figure>
+
+      <h2 id="what-next"><span class="h2-num">05 — What Next</span>What Part 2 Will Measure</h2>
+
+      <p>The probes stay in place. In November we will publish the origin-shield half of this dataset: where the cold round trip goes, what it costs, and how often an eviction reaches a server that was chosen for the cheapest available power contract. We will also publish every sample, unrounded, with the workload pseudonymised and the region intact.</p>
+
+      <p>If you run a small workload on an entry-tier contract and want it instrumented, the desk will do it for free and will name you only if you ask. The library union and four of the cooperatives are already in the second cohort.</p>
+
+      <div class="author-card">
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&h=300&q=80" alt="Portrait of Marta Ellison" width="88" height="88" loading="lazy">
+        <div>
+          <h3>Marta Ellison</h3>
+          <p class="role">Senior Correspondent, Infrastructure</p>
+          <p>Marta runs Signal’s measurement desk and built the probe used in this investigation. Previously a site-reliability engineer for a European rail operator; she has written about delivery networks for six years and has never accepted a vendor review unit.</p>
+          <p class="mono"><a href="about.html#team">Full masthead</a> · <a href="topics.html#infrastructure">More infrastructure reporting</a></p>
+        </div>
+      </div>
+
+      <div class="sec-head sec-head-inline" style="margin-top:44px">
+        <p class="eyebrow"><span class="sec-num">→</span> Keep Reading</p>
+        <h2 class="display-md">From the Same Desk</h2>
+      </div>
+      <div class="grid-3" style="border:1px solid var(--rule);background:var(--rule)">
+        <article class="tile" data-reveal>
+          <a class="tile-figure" href="article.html">
+            <img src="https://picsum.photos/seed/signal-blog-4636190c47de/1600/900?auto=format&fit=crop&w=800&q=80" alt="Detail of a circuit board with traces converging on a chip" width="800" height="500" loading="lazy">
+          </a>
+          <div class="tile-body">
+            <p class="kicker">Infrastructure · <span class="mono">9 min</span></p>
+            <h3><a class="tile-link" href="article.html">Edge Compute Ate the Backend</a></h3>
+            <p class="excerpt">Three years of “functions at the edge” produced something nobody named: a distributed backend with no owner and a shared queue nobody budgets for.</p>
+            <p class="byline-small"><span>Tobias Kern</span><span class="mono">26 Oct</span></p>
+          </div>
+        </article>
+        <article class="tile" data-reveal>
+          <a class="tile-figure" href="article.html">
+            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80" alt="Illuminated server racks receding down a cold aisle" width="800" height="500" loading="lazy">
+          </a>
+          <div class="tile-body">
+            <p class="kicker">Data · <span class="mono">8 min</span></p>
+            <h3><a class="tile-link" href="article.html">Postgres Will Outlive Your Framework</a></h3>
+            <p class="excerpt">Every database startup Signal has covered for a decade has sold against the same default install. Here is which of their features actually survived a version bump.</p>
+            <p class="byline-small"><span>Marta Ellison</span><span class="mono">24 Oct</span></p>
+          </div>
+        </article>
+        <article class="tile" data-reveal>
+          <a class="tile-figure" href="article.html">
+            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80" alt="Colleagues in discussion around a table in a bright workspace" width="800" height="500" loading="lazy">
+          </a>
+          <div class="tile-body">
+            <p class="kicker">Platforms · <span class="mono">15 min</span></p>
+            <h3><a class="tile-link" href="article.html">The Browser Is the Operating System, Whether You Agree or Not</a></h3>
+            <p class="excerpt">File systems, sockets, background tasks, and now a local model runtime. We mapped every escape the web platform has made out of the document viewer.</p>
+            <p class="byline-small"><span>Dev Okonkwo</span><span class="mono">27 Oct</span></p>
+          </div>
+        </article>
+      </div>
+    </article>
+
+    <aside class="aside-sticky" aria-label="Article navigation">
+      <div class="panel">
+        <h2 class="panel-title">In This Dispatch</h2>
+        <ol class="toc">
+          <li><a href="#method">01 — Method</a></li>
+          <li><a href="#divergence">02 — Where the 37 ms Come From</a></li>
+          <li><a href="#bill">03 — Who Pays for the Gap</a></li>
+          <li><a href="#accountability">04 — A Number Nobody Defends</a></li>
+          <li><a href="#what-next">05 — What Part 2 Will Measure</a></li>
+        </ol>
+      </div>
+      <div class="panel">
+        <h2 class="panel-title">Dataset</h2>
+        <dl>
+          <div class="instrument" style="border:0;padding-left:0"><dt>Requests sampled</dt><dd class="tabular" style="font-size:1.35rem">2,118,440</dd></div>
+          <div class="instrument" style="border:0;padding-left:0"><dt>Workloads</dt><dd class="tabular" style="font-size:1.35rem">41</dd></div>
+          <div class="instrument" style="border:0;padding-left:0"><dt>Countries</dt><dd class="tabular" style="font-size:1.35rem">14</dd></div>
+          <div class="instrument" style="border:0;padding-left:0;border-bottom:1px solid var(--rule)"><dt>Failures kept</dt><dd class="tabular accent" style="font-size:1.35rem">4,011</dd></div>
+        </dl>
+        <p class="mono meta" style="margin-top:12px">Raw samples publish with Part 2.</p>
+      </div>
+      <div class="panel panel-dark">
+        <h2 class="panel-title">Get the Numbers Weekly</h2>
+        <p>Every Thursday: the probes, the corrections, and one chart that did not make the front page.</p>
+        <a class="btn btn-block" href="subscribe.html">Join 27,411 Readers</a>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <p class="wordmark wordmark-footer">Signal<span class="wordmark-mark" aria-hidden="true">.</span></p>
+      <p>Independent technology journalism from Berlin, Lagos, and Stockholm. Reader-funded since 2019, measured rather than announced.</p>
+      <p class="mono meta">ISSN 2632-881X</p>
+    </div>
+    <nav aria-label="Sections">
+      <h2>Sections</h2>
+      <ul>
+        <li><a href="topics.html#infrastructure">Infrastructure</a></li>
+        <li><a href="topics.html#ai">AI &amp; Models</a></li>
+        <li><a href="topics.html#security">Security</a></li>
+        <li><a href="topics.html#hardware">Hardware</a></li>
+        <li><a href="topics.html#policy">Policy</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Publication">
+      <h2>Publication</h2>
+      <ul>
+        <li><a href="index.html">Front Page</a></li>
+        <li><a href="article.html">Lead Dispatch</a></li>
+        <li><a href="about.html">Masthead &amp; Mission</a></li>
+        <li><a href="about.html#standards">Standards &amp; Corrections</a></li>
+        <li><a href="subscribe.html">Newsletter Archive</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h2>Reach the Desk</h2>
+      <ul class="plain-list">
+        <li><a href="mailto:desk@signal.example">desk@signal.example</a></li>
+        <li><a href="mailto:tips@signal.example">Secure tips: tips@signal.example</a></li>
+        <li><a href="subscribe.html">Join 27,411 readers</a></li>
+      </ul>
+      <p class="mono meta">Signal Media Collective eG<br>Toranstraße 14, 10435 Berlin</p>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <p class="mono">© 2026 Signal Media Collective</p>
+    <p class="mono"><a href="about.html#ethics">Ethics policy</a> · <a href="about.html#funding">Funding disclosure</a> · <a href="subscribe.html">Manage subscription</a></p>
+  </div>
+</footer>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
