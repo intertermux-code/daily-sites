@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Features — Ten Things Mintwise Actually Does | Mintwise</title>
+<meta name="description" content="A full walkthrough of Mintwise: read-only linking, the merchant classifier, safe-to-spend math, 32-day projection, price-creep alerts, vaults, shared wallets, taxes, reporting, and the security model behind all of it.">
+<meta name="theme-color" content="#fbfaf6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="wrap masthead__inner">
+    <a class="brand" href="index.html" aria-label="Mintwise — home">
+      <span class="brand__mark" aria-hidden="true"></span>Mintwise<span class="brand__sup">Ledger OS</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="index.html"><span>Home</span><span class="nav__idx">01</span></a></li>
+        <li><a class="nav__link" href="features.html" aria-current="page"><span>Features</span><span class="nav__idx">02</span></a></li>
+        <li><a class="nav__link" href="calculator.html"><span>Calculator</span><span class="nav__idx">03</span></a></li>
+        <li><a class="nav__link" href="pricing.html"><span>Pricing</span><span class="nav__idx">04</span></a></li>
+        <li><a class="nav__link" href="contact.html"><span>Support</span><span class="nav__idx">05</span></a></li>
+      </ul>
+      <span class="nav__cta"><a class="btn btn--mint" href="calculator.html">Run the budget calculator</a></span>
+    </nav>
+    <div class="tools">
+      <a class="btn btn--sm masthead__cta" href="pricing.html">See plans</a>
+      <button class="navtoggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+        <span class="navtoggle__bars" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="navtoggle__label">Menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============================================ PAGE HERO =============== -->
+  <section class="pagehero" aria-labelledby="featTitle">
+    <div class="wrap">
+      <p class="crumbs"><a href="index.html">Mintwise</a><span aria-hidden="true">/</span><span aria-current="page">Features</span></p>
+      <h1 id="featTitle">Ten features,<br>explained properly</h1>
+      <div class="pagehero__grid">
+        <div>
+          <p class="lead">No teaser screenshots. Each capability below states what it reads, what it decides, and the exact setting that lets you turn it down. Where Mintwise guesses, it shows its confidence.</p>
+          <div class="pills" style="margin-top:1.5rem">
+            <span class="pill">Read-only by default</span>
+            <span class="pill">12,400 institutions</span>
+            <span class="pill">Offline-first mobile</span>
+            <span class="pill">CSV &amp; JSON export</span>
+            <span class="pill">No ad revenue</span>
+          </div>
+        </div>
+        <div>
+          <p class="eyebrow eyebrow--plain">Document set 02 · rev. 2026.10</p>
+          <p class="small muted">Updated after every release. Feature availability by plan is listed on the <a href="pricing.html#compare">comparison table</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================== SCREEN RAIL (horizontal) ======== -->
+  <section class="sect sect--tight" aria-labelledby="railTitle">
+    <div class="wrap">
+      <h2 id="railTitle" class="sr-only">App screens in a horizontal rail</h2>
+    </div>
+    <div class="diorama diorama--rail" id="screenRail" data-manual>
+      <div class="diorama__stage">
+        <div class="diorama__pin">
+          <div class="diorama__viewport">
+            <div class="diorama__track">
+              <article class="exhibit" data-label="Home">
+                <div class="media media--43" data-reveal>
+                  <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&h=1200&q=80" width="1600" height="1200" alt="Balances and a spend chart on the Mintwise home dashboard." loading="lazy">
+                </div>
+                <h3>Home</h3>
+                <p>Safe-to-spend, today’s committed items, and the projection line for the next 32 days.</p>
+              </article>
+              <article class="exhibit" data-label="Budget">
+                <div class="media media--43" data-reveal>
+                  <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1600&h=1200&q=80" width="1600" height="1200" alt="A desk with calculator, coins, and receipts while assigning budget envelopes." loading="lazy">
+                </div>
+                <h3>Budget</h3>
+                <p>Rolling envelopes with carry-forward. Overspend borrows from a pool you name, never silently.</p>
+              </article>
+              <article class="exhibit" data-label="Vaults">
+                <div class="media media--43" data-reveal>
+                  <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&h=1200&q=80" width="1600" height="1200" alt="A laptop showing savings growth over twelve months." loading="lazy">
+                </div>
+                <h3>Vaults</h3>
+                <p>Named goals with deadlines, auto-transfers, and a progress bar that accounts for inflation you set.</p>
+              </article>
+              <article class="exhibit" data-label="Ledger">
+                <div class="media media--43" data-reveal>
+                  <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1600&h=1200&q=80" width="1600" height="1200" alt="Invoices and bills sorted into piles for reconciliation." loading="lazy">
+                </div>
+                <h3>Ledger</h3>
+                <p>Every raw transaction, filterable, with duplicate detection and one-click splitting.</p>
+              </article>
+              <article class="exhibit" data-label="Reports">
+                <div class="media media--43" data-reveal>
+                  <img src="https://picsum.photos/seed/mintwise-9c6a06602f64/1600/900?auto=format&fit=crop&w=1600&h=1200&q=80" width="1600" height="1200" alt="A report view with category trends and a period comparison." loading="lazy">
+                </div>
+                <h3>Reports</h3>
+                <p>Period-over-period comparisons you can export as CSV, PDF, or a printable one-pager.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wrap">
+        <div class="diorama__rail" aria-hidden="true"><i></i></div>
+        <p class="diorama__count" role="status">Five surfaces — drag or scroll sideways</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================= DEEP SECTIONS ============== -->
+  <section class="sect sect--rule" aria-labelledby="deepTitle">
+    <div class="wrap">
+      <div class="sect__head">
+        <div>
+          <p class="eyebrow"><span class="secnum">03</span> The ten</p>
+          <h2 id="deepTitle">What each one does, and what it never touches</h2>
+        </div>
+        <p class="lead">Ordered in the sequence a new household meets them: connect, understand, predict, control, grow.</p>
+      </div>
+
+      <div style="display:grid;gap:clamp(3rem,7vw,6rem)">
+
+        <!-- 01 -->
+        <article class="split" id="linking">
+          <div>
+            <p class="eyebrow"><span class="secnum">01</span> Linking</p>
+            <h3 style="margin-block:0.9rem 1rem">Read-only aggregation across 12,400 institutions</h3>
+            <p class="muted">Mintwise requests the narrowest scope each bank offers: transactions and balances, nothing else. Credentials are exchanged once for a rotating token that your bank can revoke from its own dashboard, and we store only the token.</p>
+            <ul class="checks">
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Refresh cadence you control</b> — hourly, daily, or manual pull only.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>No transfer capability</b> — the API scope cannot move money outbound, by design.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Manual fallback</b> — CSV and OFX import for the credit union that never got an API.</span></li>
+            </ul>
+            <p class="mono small" style="margin-top:1.25rem">Median setup: 1 min 32 s · 6 accounts</p>
+          </div>
+          <div class="split__media">
+            <div class="media media--wide" data-reveal>
+              <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1600&h=1000&q=80" width="1600" height="1000" alt="A card tapped on a payment terminal, the moment a transaction is created." loading="lazy">
+            </div>
+          </div>
+        </article>
+
+        <!-- 02 -->
+        <article class="split split--rev">
+          <div>
+            <p class="eyebrow"><span class="secnum">02</span> Classification</p>
+            <h3 style="margin-block:0.9rem 1rem">A merchant classifier that admits uncertainty</h3>
+            <p class="muted">Rules first, then a model trained on your own history, then a fallback. When confidence drops below 80%, Mintwise marks the row amber and leaves it unfiled rather than guessing at 2 a.m. and quietly corrupting your budget.</p>
+            <ul class="checks">
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Overrides are permanent</b> — rename once and the merchant is pinned forever.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Split one charge many ways</b> — a $240 warehouse run divided into household, resale, and gifts.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Nine custom levels deep</b>, with tags that cross-cut categories for reporting.</span></li>
+            </ul>
+            <p class="mono small" style="margin-top:1.25rem">97.6% filed without a tap · 40-transaction learning curve</p>
+          </div>
+          <div class="split__media">
+            <div class="scrn">
+              <div class="scrn__top"><i></i><i></i><i></i><span class="scrn__title">Needs review · 3</span></div>
+              <div class="scrn__body">
+                <div class="mini"><span class="k g">?</span><span class="n">“MTN DECK *4471”<small>Confidence 61% · suggest Home repair</small></span><span class="v neg">−$88.00</span></div>
+                <div class="mini"><span class="k g">?</span><span class="n">“ACME SUPPLY CO”<small>Confidence 74% · suggest Tools</small></span><span class="v neg">−$212.40</span></div>
+                <div class="mini"><span class="k m">✓</span><span class="n">“Calico Grocer”<small>Confidence 99% · pinned by you in 2024</small></span><span class="v neg">−$61.40</span></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 03 -->
+        <article class="split">
+          <div>
+            <p class="eyebrow"><span class="secnum">03</span> Safe to spend</p>
+            <h3 style="margin-block:0.9rem 1rem">The one number, recalculated all day</h3>
+            <p class="muted">Balance minus committed bills minus your own scheduled savings, then adjusted for the clearing lag your bank actually shows. It is deliberately smaller than your balance and it is the figure every other screen is built around.</p>
+            <ul class="checks">
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Pending-aware</b> — holds are subtracted the second the terminal posts them.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Per-account or pooled</b> — read it across the household or per wallet.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Home-screen widget</b> — one glance, no app open, no network call.</span></li>
+            </ul>
+            <p class="mono small" style="margin-top:1.25rem">Recalculated at 04:00 and on every cleared item</p>
+          </div>
+          <div class="split__media">
+            <div class="scrn">
+              <div class="scrn__top"><i></i><i></i><i></i><span class="scrn__title">Safe to spend · pooled</span></div>
+              <div class="scrn__body">
+                <div class="mini"><span class="k m">$</span><span class="n">Available today<small>After 14 committed items</small></span><span class="v pos">$1,284.10</span></div>
+                <div class="mini"><span class="k">—</span><span class="n">Balance shown by banks<small>All 6 accounts</small></span><span class="v">$14,902.55</span></div>
+                <div class="mini"><span class="k c">!</span><span class="n">Held or pending<small>Card authorisations, 3 items</small></span><span class="v neg">−$206.31</span></div>
+                <div class="mini"><span class="k g">→</span><span class="n">Committed to 12th<small>Rent, power, car note</small></span><span class="v neg">−$1,692.08</span></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 04 -->
+        <article class="split split--rev">
+          <div>
+            <p class="eyebrow"><span class="secnum">04</span> Projection</p>
+            <h3 style="margin-block:0.9rem 1rem">Thirty-two days forward, with the maths visible</h3>
+            <p class="muted">The forecast walks day by day: scheduled items on their real dates, variable categories at your trailing 8-week median, income on its actual cadence. Tap any day to see exactly which lines produced the figure.</p>
+            <ul class="checks">
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Dip warnings</b> — a named date and amount, eleven days out on median.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Scenario pins</b> — model a $3,000 repair or a bonus without editing real data.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Honest error bars</b> — ±3.4% median accuracy, published per institution.</span></li>
+            </ul>
+          </div>
+          <div class="split__media">
+            <div class="media media--wide" data-reveal>
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&h=1000&q=80" width="1600" height="1000" alt="A laptop displaying a forward cash-flow projection chart." loading="lazy">
+            </div>
+          </div>
+        </article>
+
+        <!-- 05 -->
+        <article class="split">
+          <div>
+            <p class="eyebrow"><span class="secnum">05</span> Leak detection</p>
+            <h3 style="margin-block:0.9rem 1rem">Price creep, duplicate charges, and trials that never ended</h3>
+            <p class="muted">Mintwise keeps a price history per recurring merchant. When a renewal posts higher than its own March baseline, you get one line: what it was, what it is, and how long you have paid it. Nothing is auto-cancelled; nothing is “negotiated for you” by a third party.</p>
+            <ul class="checks">
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Renewal calendar</b> — every commitment on one timeline, with the cancel date beside it.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Duplicate sweep</b> — same merchant, same amount, same day, flagged both times.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Orphan detector</b> — charges with no matching subscription or invoice.</span></li>
+            </ul>
+            <p class="mono small" style="margin-top:1.25rem">$318 recovered per household, median, first 90 days</p>
+          </div>
+          <div class="split__media">
+            <div class="scrn">
+              <div class="scrn__top"><i></i><i></i><i></i><span class="scrn__title">Renewals · next 30 days</span></div>
+              <div class="scrn__body">
+                <div class="mini"><span class="k c">▲</span><span class="n">Riverline Studio<small>$54 → $69 · +27.8% since March</small></span><span class="v neg">Apr 14</span></div>
+                <div class="mini"><span class="k g">!</span><span class="n">Northgate Gym<small>No charge since June 2023</small></span><span class="v neg">Apr 02</span></div>
+                <div class="mini"><span class="k">·</span><span class="n">Fiber 500<small>Flat 24 months · good as signed</small></span><span class="v">$79</span></div>
+                <div class="mini"><span class="k m">✓</span><span class="n">Cloudbox Storage<small>Trialled → cancelled on 11 Mar</small></span><span class="v pos">$0</span></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 06 -->
+        <article class="split split--rev">
+          <div>
+            <p class="eyebrow"><span class="secnum">06</span> Vaults</p>
+            <h3 style="margin-block:0.9rem 1rem">Named goals that get funded the morning after payday</h3>
+            <p class="muted">A vault is a rule, not a jar. You set the deadline and the target; Mintwise works backwards to a per-paycheck amount, then raises or lowers it as your real margin changes. Surplus rounding moves the leftover on the same run.</p>
+            <ul class="checks">
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Priority order</b> — rent, runway, taxes, then fun. Funded top-down.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Pause with a reason</b> — skipping a month logs why and re-plans the deadline.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Real destination</b> — vaults map to an external account or a partner savings product; your choice.</span></li>
+            </ul>
+          </div>
+          <div class="split__media">
+            <div class="media media--wide" data-reveal>
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&h=1000&q=80" width="1600" height="1000" alt="A savings growth dashboard showing progress toward goals." loading="lazy">
+            </div>
+          </div>
+        </article>
+
+        <!-- 07 -->
+        <article class="split">
+          <div>
+            <p class="eyebrow"><span class="secnum">07</span> Shared wallets</p>
+            <h3 style="margin-block:0.9rem 1rem">Two people, one household, separate truths</h3>
+            <p class="muted">Invite a partner to a shared wallet while your personal accounts stay private. Each side chooses, per linked account, whether the other person sees balances, transactions, or nothing. Nothing is silently merged.</p>
+            <ul class="checks">
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Contribution fairness</b> — split 50/50, by income percentage, or by agreed amounts.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>No-argument ledger</b> — who fronted the deposit, settled on the last Sunday of the month.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Clean exit</b> — one member leaving exports their half of the history as CSV.</span></li>
+            </ul>
+            <p class="mono small" style="margin-top:1.25rem">Up to 5 members on Household · 2 on Plus</p>
+          </div>
+          <div class="split__media">
+            <div class="scrn">
+              <div class="scrn__top"><i></i><i></i><i></i><span class="scrn__title">Wallet · Elm St</span></div>
+              <div class="scrn__body">
+                <div class="mini"><span class="k m">50</span><span class="n">Shared pot<small>Funded by income share: 46 / 54</small></span><span class="v">$2,140</span></div>
+                <div class="mini"><span class="k">D</span><span class="n">Dana fronted the roof deposit<small>Settles 31 Oct</small></span><span class="v pos">+$900</span></div>
+                <div class="mini"><span class="k">T</span><span class="n">Theo fronted the vet bill<small>Settles 31 Oct</small></span><span class="v neg">−$412</span></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 08 -->
+        <article class="split split--rev">
+          <div>
+            <p class="eyebrow"><span class="secnum">08</span> Taxes &amp; self-employment</p>
+            <h3 style="margin-block:0.9rem 1rem">A set-aside that keeps pace with irregular income</h3>
+            <p class="muted">Mark a transaction business in one swipe and it moves out of your budget and into a schedule. Mintwise estimates the quarterly set-aside from your filing status and rate, holds it in a dedicated vault, and produces a pack your accountant can open without a login.</p>
+            <ul class="checks">
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Mileage capture</b> — location-tagged trips logged with dates for a deduction record.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Quarterly estimate</b> — a number and a deadline, revised as Q-to-date income changes.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Accountant export</b> — Schedule-C-shaped CSV plus receipts where you attached them.</span></li>
+            </ul>
+          </div>
+          <div class="split__media">
+            <div class="media media--wide" data-reveal>
+              <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1600&h=1000&q=80" width="1600" height="1000" alt="A calculator and paperwork laid out while setting aside tax money." loading="lazy">
+            </div>
+          </div>
+        </article>
+
+        <!-- 09 -->
+        <article class="split">
+          <div>
+            <p class="eyebrow"><span class="secnum">09</span> Reporting &amp; export</p>
+            <h3 style="margin-block:0.9rem 1rem">Your data leaves as easily as it arrived</h3>
+            <p class="muted">Twelve standard reports, one custom builder, and a full-fidelity export in CSV, JSON, OFX, or a printable one-pager. If you close your account, Mintwise hands over thirteen months of categorised history before it deletes anything.</p>
+            <ul class="checks">
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Comparison mode</b> — this month against the same month last year, category by category.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Scheduled delivery</b> — the one-pager in your inbox on the 1st, or never.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Open API</b> — a documented read endpoint for your own dashboards on Plus and up.</span></li>
+            </ul>
+          </div>
+          <div class="split__media">
+            <div class="scrn">
+              <div class="scrn__top"><i></i><i></i><i></i><span class="scrn__title">Export · October</span></div>
+              <div class="scrn__body">
+                <div class="mini"><span class="k">1,182</span><span class="n">Rows ready<small>Categorised, deduplicated, reconciled</small></span><span class="v">CSV</span></div>
+                <div class="mini"><span class="k">41</span><span class="n">Attached receipts<small>Merchant, date, amount</small></span><span class="v">PDF</span></div>
+                <div class="mini"><span class="k">±0</span><span class="n">Reconciliation drift<small>Matches bank totals to the cent</small></span><span class="v pos">Clean</span></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 10 -->
+        <article class="split split--rev">
+          <div>
+            <p class="eyebrow"><span class="secnum">10</span> Calm by design</p>
+            <h3 style="margin-block:0.9rem 1rem">Notifications you opt into, one at a time</h3>
+            <p class="muted">There is no streak, no badge count, and no red dot. Alerts ship off except for overdraft risk, and every rule is scoped to a category or merchant. Weekly review is a Sunday email with three questions and a two-minute answer sheet.</p>
+            <ul class="checks">
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Quiet hours per rule</b> — dining nudges can arrive Friday 8 p.m. and never again.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Accessibility first</b> — dynamic type to 23pt, full VoiceOver labels, and a dyslexic-friendly type swap.</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Colour never carries meaning alone</b> — every state pairs a hue with a glyph and a word.</span></li>
+            </ul>
+          </div>
+          <div class="split__media">
+            <div class="media media--wide" data-reveal>
+              <img src="https://picsum.photos/seed/mintwise-c884e5e12686/1600/900?auto=format&fit=crop&w=1600&h=1000&q=80" width="1600" height="1000" alt="A quiet desk with a notebook and pen for a weekly money review." loading="lazy">
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================== SECURITY ============== -->
+  <section class="sect sect--night" id="security" aria-labelledby="secTitle">
+    <div class="wrap">
+      <div class="sect__head" style="border-color:rgba(255,255,255,0.16)">
+        <div>
+          <p class="eyebrow" style="color:#86d8b8"><span class="secnum" style="color:#86d8b8">11</span> Security model</p>
+          <h2 id="secTitle">What we can see is deliberately very little</h2>
+        </div>
+        <p class="lead" style="color:#a9b8b2">Mintwise is architected so that a worst day at our company still cannot expose your money or your identity to a third party.</p>
+      </div>
+
+      <div class="gridline">
+        <div class="col-4">
+          <p class="kpi"><span class="figure">0</span><span class="caption">Staff with raw credential access</span></p>
+          <h3 style="margin-block:1rem 0.6rem;font-size:1.3rem">Tokenised, not stored</h3>
+          <p class="small" style="color:#a9b8b2">Bank credentials are exchanged for scoped tokens at the aggregator. We hold the token handle; the credential never touches our disks, and rotation happens on the aggregator’s schedule.</p>
+        </div>
+        <div class="col-4">
+          <p class="kpi"><span class="figure">AES-256</span><span class="caption">Every field, at rest and in transit</span></p>
+          <h3 style="margin-block:1rem 0.6rem;font-size:1.3rem">Keys you can revoke</h3>
+          <p class="small" style="color:#a9b8b2">Device keys live in the Secure Enclave or StrongBox. Revoking a session from the app kills it server-side inside fifteen seconds, and a lost phone cannot be used to authorise anything.</p>
+        </div>
+        <div class="col-4">
+          <p class="kpi"><span class="figure">31 days</span><span class="caption">Deleted on request, verified by audit</span></p>
+          <h3 style="margin-block:1rem 0.6rem;font-size:1.3rem">Deletion is real</h3>
+          <p class="small" style="color:#a9b8b2">Close the account and the categorised history, exports, and backups go on a scheduled purge. You get the deletion certificate by email, and the ledger export beforehand if you want it.</p>
+        </div>
+      </div>
+
+      <div class="pills" style="margin-top:clamp(2rem,4vw,3rem);gap:0.6rem">
+        <span class="pill" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.2);color:#cfd8d4">SOC 2 Type II · 2024, 2025, 2026</span>
+        <span class="pill" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.2);color:#cfd8d4">Annual third-party penetration test</span>
+        <span class="pill" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.2);color:#cfd8d4">GDPR &amp; CCPA data-subject requests</span>
+        <span class="pill" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.2);color:#cfd8d4">Bug bounty, published policy</span>
+        <span class="pill" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.2);color:#cfd8d4">US data residency, Oregon &amp; Virginia regions</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ INSTUTIONS =============== -->
+  <section class="sect sect--paper2" aria-labelledby="instTitle">
+    <div class="wrap">
+      <div class="sect__head">
+        <div>
+          <p class="eyebrow"><span class="secnum">12</span> Coverage</p>
+          <h2 id="instTitle">If it posts a statement, it probably links</h2>
+        </div>
+        <p class="lead">12,400 institutions across the United States, Canada, the UK, and the EU, plus manual import for anything that resists.</p>
+      </div>
+
+      <div class="stats">
+        <div><span class="figure">12,400</span><p>Banks, credit unions, brokers, and card issuers reachable today.</p></div>
+        <div><span class="figure">92%</span><p>Of accounts match cleanly on first sync without a manual repair.</p></div>
+        <div><span class="figure">4 min</span><p>Median lag from posted transaction to categorised ledger entry.</p></div>
+        <div><span class="figure">6</span><p>Account types: checking, savings, credit, brokerage, loan, rental ledger.</p></div>
+      </div>
+
+      <div class="pills" style="margin-top:2rem">
+        <span class="pill">Chase</span><span class="pill">Bank of America</span><span class="pill">Wells Fargo</span>
+        <span class="pill">Capital One</span><span class="pill">US Bancorp</span><span class="pill">Navy Federal</span>
+        <span class="pill">Credit Union One</span><span class="pill">Ally</span><span class="pill">SoFi</span>
+        <span class="pill">Fidelity</span><span class="pill">Schwab</span><span class="pill">Vanguard</span>
+        <span class="pill">Robinhood</span><span class="pill">Amex</span><span class="pill">Discover</span>
+        <span class="pill">Monzo</span><span class="pill">Barclays UK</span><span class="pill">RBC</span>
+        <span class="pill">N26</span><span class="pill">Starling</span><span class="pill">TSYS-connected credit unions</span>
+      </div>
+      <p class="small muted" style="margin-top:1.5rem">Institution names appear for coverage description only. Mintwise is not affiliated with or endorsed by them, and links are provided through licensed aggregation partners.</p>
+    </div>
+  </section>
+
+  <!-- =============================================== CTA =================== -->
+  <section class="sect sect--tight" aria-labelledby="featCta">
+    <div class="wrap">
+      <div class="cta">
+        <div>
+          <p class="eyebrow eyebrow--plain" style="color:#86d8b8">Next</p>
+          <h2 id="featCta" style="margin-block:1rem 0.9rem">Test the maths on your own month</h2>
+          <p>The calculator uses the same safe-to-spend and projection logic as the app. Enter seven numbers and read your ring, runway, and benchmark gap.</p>
+        </div>
+        <div class="cta__actions">
+          <a class="btn btn--mint" href="calculator.html">Open the calculator</a>
+          <a class="btn btn--outline-light" href="pricing.html">Compare the plans</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div class="foot__brand">
+        <a class="brand" href="index.html" aria-label="Mintwise — home">
+          <span class="brand__mark" aria-hidden="true"></span>Mintwise<span class="brand__sup">Ledger OS</span>
+        </a>
+        <p>A personal finance app for people who would rather read a ledger than be coached by a mascot. Built in Portland by eleven people.</p>
+        <p class="foot__status"><i aria-hidden="true"></i>All systems normal · 99.98% uptime</p>
+      </div>
+
+      <div>
+        <h5>Product</h5>
+        <ul>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="calculator.html">Budget calculator</a></li>
+          <li><a href="pricing.html">Plans &amp; pricing</a></li>
+          <li><a href="features.html#security">Security model</a></li>
+          <li><a href="index.html#diorama">How it works</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>Support</h5>
+        <ul>
+          <li><a href="contact.html">Contact a human</a></li>
+          <li><a href="contact.html#faq">Answers to questions</a></li>
+          <li><a href="contact.html#channels">Response times</a></li>
+          <li><a href="pricing.html#compare">Feature comparison</a></li>
+          <li><a href="contact.html#office">Office &amp; hours</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="features.html">What we build</a></li>
+          <li><a href="pricing.html">Pricing philosophy</a></li>
+          <li><a href="contact.html">Careers &amp; press</a></li>
+        </ul>
+      </div>
+
+      <div class="foot__news">
+        <h5>The Ledger — monthly dispatch</h5>
+        <p class="small" style="color:#97a7a1;margin:0">One email a month: a real household case study, one rule change, zero pitch.</p>
+        <form id="newsForm" action="#" method="post">
+          <label class="sr-only" for="newsEmail">Email address for The Ledger newsletter</label>
+          <input id="newsEmail" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required>
+          <button class="btn btn--sm" type="submit">Subscribe</button>
+        </form>
+        <p class="note" data-state="idle">We store the address and nothing else. Unsubscribe in one click.</p>
+      </div>
+    </div>
+
+    <p class="foot__disclaimer">Mintwise is a financial management tool, not a bank, broker, or advisor. Account and pricing figures shown are illustrative. Banking services and FDIC insurance are provided by partner institutions; vault balances are covered up to $250,000 per depositor through programmatic pass-through insurance.</p>
+
+    <div class="foot__bar">
+      <p class="foot__legal">© <span id="footYear">2026</span> Mintwise Ledger, Inc. · <a href="contact.html">Privacy</a> · <a href="contact.html">Terms</a> · <a href="contact.html#channels">Disclosures</a></p>
+      <p class="foot__legal">Made on the 5th floor of a former print shop.</p>
+    </div>
+  </div>
+</footer>
+
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
