@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Budget Calculator — Find Your Savings Rate | Mintwise</title>
+<meta name="description" content="Enter your monthly income and seven spending categories to get a live savings-rate ring, emergency-fund runway, twelve-month projection, and a read against the 50/30/20 benchmark. No account required.">
+<meta name="theme-color" content="#fbfaf6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="wrap masthead__inner">
+    <a class="brand" href="index.html" aria-label="Mintwise — home">
+      <span class="brand__mark" aria-hidden="true"></span>Mintwise<span class="brand__sup">Ledger OS</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="index.html"><span>Home</span><span class="nav__idx">01</span></a></li>
+        <li><a class="nav__link" href="features.html"><span>Features</span><span class="nav__idx">02</span></a></li>
+        <li><a class="nav__link" href="calculator.html" aria-current="page"><span>Calculator</span><span class="nav__idx">03</span></a></li>
+        <li><a class="nav__link" href="pricing.html"><span>Pricing</span><span class="nav__idx">04</span></a></li>
+        <li><a class="nav__link" href="contact.html"><span>Support</span><span class="nav__idx">05</span></a></li>
+      </ul>
+      <span class="nav__cta"><a class="btn btn--mint" href="pricing.html">Choose a plan</a></span>
+    </nav>
+    <div class="tools">
+      <a class="btn btn--sm masthead__cta" href="pricing.html">See plans</a>
+      <button class="navtoggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+        <span class="navtoggle__bars" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="navtoggle__label">Menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============================================ PAGE HERO =============== -->
+  <section class="pagehero" aria-labelledby="calcTitle">
+    <div class="wrap">
+      <p class="crumbs"><a href="index.html">Mintwise</a><span aria-hidden="true">/</span><span aria-current="page">Calculator</span></p>
+      <h1 id="calcTitle">What percentage<br>do you keep?</h1>
+      <div class="pagehero__grid">
+        <div>
+          <p class="lead">Nine numbers, one ring. Enter last month’s take-home pay and your seven biggest spending lines and Mintwise returns the savings rate, the runway your cash actually buys, and where you sit against the 50/30/20 benchmark.</p>
+        </div>
+        <div>
+          <p class="eyebrow eyebrow--plain">Works offline · nothing is stored</p>
+          <p class="small muted">Every figure is calculated in your browser. No account, no email, no server call — clear the fields and the page forgets you were here.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================ CALCULATOR ========== -->
+  <section class="sect sect--tight" aria-labelledby="calcHead">
+    <div class="wrap">
+      <h2 id="calcHead" class="sr-only">Monthly budget calculator</h2>
+
+      <form id="budgetForm" class="calc" action="calculator.html" method="get">
+
+        <!-- INPUT COLUMN -->
+        <div class="calc__panel">
+          <div class="calc__panelhead">
+            <p class="eyebrow eyebrow--plain" style="margin:0"><span class="secnum">A</span>&nbsp; Your month</p>
+            <button class="preset" type="button" data-preset="balanced" aria-pressed="true">Balanced</button>
+          </div>
+
+          <div class="calc__body">
+            <p class="small muted" style="margin-bottom:1.5rem">Drag a slider or type a figure — the two stay in step. Amounts are monthly and after tax.</p>
+
+            <div class="presets" style="margin-bottom:1.75rem">
+              <button class="preset" type="button" data-preset="tight" aria-pressed="false">Tight month</button>
+              <button class="preset" type="button" data-preset="balanced" aria-pressed="true">Balanced month</button>
+              <button class="preset" type="button" data-preset="fire" aria-pressed="false">Aggressive saver</button>
+            </div>
+
+            <fieldset style="border:0;padding:0;margin:0 0 1.5rem">
+              <legend class="eyebrow eyebrow--plain" style="margin-bottom:1rem">Income &amp; cash on hand</legend>
+
+              <div class="field">
+                <div class="field__top">
+                  <label for="income">Monthly take-home pay</label>
+                  <span class="hint">after tax and deductions</span>
+                </div>
+                <div class="field__row">
+                  <label class="sr-only" for="r-income">Monthly take-home pay slider</label>
+                  <input id="r-income" type="range" min="0" max="20000" step="50" value="5200" data-pair="income">
+                  <span class="inputwrap">
+                    <span class="cur" aria-hidden="true">$</span>
+                    <input id="income" name="income" type="number" min="0" max="400000" step="50" value="5200" inputmode="numeric" data-pair="r-income">
+                  </span>
+                </div>
+              </div>
+
+              <div class="field">
+                <div class="field__top">
+                  <label for="reserve">Cash you already hold</label>
+                  <span class="hint">checking + savings</span>
+                </div>
+                <div class="field__row">
+                  <label class="sr-only" for="r-reserve">Cash you already hold slider</label>
+                  <input id="r-reserve" type="range" min="0" max="100000" step="500" value="6800" data-pair="reserve">
+                  <span class="inputwrap">
+                    <span class="cur" aria-hidden="true">$</span>
+                    <input id="reserve" name="reserve" type="number" min="0" max="2000000" step="500" value="6800" inputmode="numeric" data-pair="r-reserve">
+                  </span>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset style="border:0;padding:0;margin:0">
+              <legend class="eyebrow eyebrow--plain" style="margin-bottom:1rem">Seven spending lines</legend>
+
+              <div class="field">
+                <div class="field__top"><label for="c-housing">Housing</label><span class="hint">rent, mortgage, HOA</span></div>
+                <div class="field__row">
+                  <label class="sr-only" for="r-housing">Housing slider</label>
+                  <input id="r-housing" type="range" min="0" max="6000" step="25" value="1450" data-pair="c-housing">
+                  <span class="inputwrap"><span class="cur" aria-hidden="true">$</span>
+                  <input id="c-housing" name="housing" type="number" min="0" max="60000" step="25" value="1450" inputmode="numeric" data-pair="r-housing"></span>
+                </div>
+              </div>
+
+              <div class="field">
+                <div class="field__top"><label for="c-food">Food &amp; groceries</label><span class="hint">home cooking plus takeout</span></div>
+                <div class="field__row">
+                  <label class="sr-only" for="r-food">Food and groceries slider</label>
+                  <input id="r-food" type="range" min="0" max="3000" step="10" value="620" data-pair="c-food">
+                  <span class="inputwrap"><span class="cur" aria-hidden="true">$</span>
+                  <input id="c-food" name="food" type="number" min="0" max="40000" step="10" value="620" inputmode="numeric" data-pair="r-food"></span>
+                </div>
+              </div>
+
+              <div class="field">
+                <div class="field__top"><label for="c-transport">Transport</label><span class="hint">car note, fuel, transit, insurance</span></div>
+                <div class="field__row">
+                  <label class="sr-only" for="r-transport">Transport slider</label>
+                  <input id="r-transport" type="range" min="0" max="2500" step="10" value="380" data-pair="c-transport">
+                  <span class="inputwrap"><span class="cur" aria-hidden="true">$</span>
+                  <input id="c-transport" name="transport" type="number" min="0" max="40000" step="10" value="380" inputmode="numeric" data-pair="r-transport"></span>
+                </div>
+              </div>
+
+              <div class="field">
+                <div class="field__top"><label for="c-utilities">Utilities &amp; bills</label><span class="hint">power, water, internet, phone</span></div>
+                <div class="field__row">
+                  <label class="sr-only" for="r-utilities">Utilities and bills slider</label>
+                  <input id="r-utilities" type="range" min="0" max="1500" step="10" value="240" data-pair="c-utilities">
+                  <span class="inputwrap"><span class="cur" aria-hidden="true">$</span>
+                  <input id="c-utilities" name="utilities" type="number" min="0" max="40000" step="10" value="240" inputmode="numeric" data-pair="r-utilities"></span>
+                </div>
+              </div>
+
+              <div class="field">
+                <div class="field__top"><label for="c-subs">Subscriptions</label><span class="hint">streaming, software, memberships</span></div>
+                <div class="field__row">
+                  <label class="sr-only" for="r-subs">Subscriptions slider</label>
+                  <input id="r-subs" type="range" min="0" max="800" step="5" value="95" data-pair="c-subs">
+                  <span class="inputwrap"><span class="cur" aria-hidden="true">$</span>
+                  <input id="c-subs" name="subs" type="number" min="0" max="40000" step="5" value="95" inputmode="numeric" data-pair="r-subs"></span>
+                </div>
+              </div>
+
+              <div class="field">
+                <div class="field__top"><label for="c-health">Health &amp; fitness</label><span class="hint">premiums, copays, gym</span></div>
+                <div class="field__row">
+                  <label class="sr-only" for="r-health">Health and fitness slider</label>
+                  <input id="r-health" type="range" min="0" max="1500" step="10" value="180" data-pair="c-health">
+                  <span class="inputwrap"><span class="cur" aria-hidden="true">$</span>
+                  <input id="c-health" name="health" type="number" min="0" max="40000" step="10" value="180" inputmode="numeric" data-pair="r-health"></span>
+                </div>
+              </div>
+
+              <div class="field">
+                <div class="field__top"><label for="c-wants">Lifestyle &amp; fun</label><span class="hint">dining out, travel, hobbies</span></div>
+                <div class="field__row">
+                  <label class="sr-only" for="r-wants">Lifestyle and fun slider</label>
+                  <input id="r-wants" type="range" min="0" max="4000" step="10" value="410" data-pair="c-wants">
+                  <span class="inputwrap"><span class="cur" aria-hidden="true">$</span>
+                  <input id="c-wants" name="wants" type="number" min="0" max="40000" step="10" value="410" inputmode="numeric" data-pair="r-wants"></span>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+
+        <!-- RESULT COLUMN -->
+        <div>
+          <div class="calc__panel" style="margin-bottom:1.25rem">
+            <div class="calc__panelhead">
+              <p class="eyebrow eyebrow--plain" style="margin:0"><span class="secnum">B</span>&nbsp; The read</p>
+              <span class="tag tag--mint">Live</span>
+            </div>
+            <div class="calc__body">
+              <div class="donutwrap">
+                <div class="donut">
+                  <svg viewBox="0 0 200 200" role="img" aria-labelledby="donutTitle donutDesc">
+                    <title id="donutTitle">Savings rate ring</title>
+                    <desc id="donutDesc">Eight segments showing each spending category and the untouched savings remainder, each sized as a share of monthly income. The figure in the centre is the savings rate.</desc>
+                    <circle cx="100" cy="100" r="80" fill="none" stroke="#eef0e9" stroke-width="26"></circle>
+                    <g transform="rotate(-90 100 100)" fill="none" stroke-width="26">
+                      <circle class="seg donut__arc" data-cat="housing" cx="100" cy="100" r="80" stroke="#0c1512" stroke-dasharray="140.16 362.50" stroke-dashoffset="0"></circle>
+                      <circle class="seg donut__arc" data-cat="food" cx="100" cy="100" r="80" stroke="#c2410c" stroke-dasharray="59.90 442.76" stroke-dashoffset="-140.16"></circle>
+                      <circle class="seg donut__arc" data-cat="transport" cx="100" cy="100" r="80" stroke="#a8730b" stroke-dasharray="36.73 465.93" stroke-dashoffset="-200.06"></circle>
+                      <circle class="seg donut__arc" data-cat="utilities" cx="100" cy="100" r="80" stroke="#3d4b46" stroke-dasharray="23.20 479.46" stroke-dashoffset="-236.79"></circle>
+                      <circle class="seg donut__arc" data-cat="subs" cx="100" cy="100" r="80" stroke="#7c9c93" stroke-dasharray="9.18 493.48" stroke-dashoffset="-259.99"></circle>
+                      <circle class="seg donut__arc" data-cat="health" cx="100" cy="100" r="80" stroke="#b3703f" stroke-dasharray="17.40 485.26" stroke-dashoffset="-269.17"></circle>
+                      <circle class="seg donut__arc" data-cat="wants" cx="100" cy="100" r="80" stroke="#d6d9d0" stroke-dasharray="39.63 463.03" stroke-dashoffset="-286.57"></circle>
+                      <circle class="seg donut__arc" data-cat="savings" cx="100" cy="100" r="80" stroke="#10b981" stroke-dasharray="176.45 326.21" stroke-dashoffset="-326.20"></circle>
+                    </g>
+                  </svg>
+                  <div class="donut__center">
+                    <span class="rate" id="savingsRate">35%</span>
+                    <span class="lbl">Savings rate</span>
+                  </div>
+                </div>
+
+                <ul class="legend" id="legend" aria-label="Ring segments, each as a percentage of monthly income">
+                  <li><span class="sw" style="background:#0c1512"></span><span>Housing</span><span class="pc">28%</span><span class="vl">$1,450</span></li>
+                  <li><span class="sw" style="background:#10b981"></span><span>Untouched savings</span><span class="pc">35%</span><span class="vl">$1,825</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="calc__panel">
+            <div class="calc__panelhead">
+              <p class="eyebrow eyebrow--plain" style="margin:0"><span class="secnum">C</span>&nbsp; Against 50/30/20</p>
+            </div>
+            <div class="calc__body">
+              <div class="stats" style="grid-template-columns:repeat(2,1fr);margin-bottom:1.5rem;border-radius:var(--radius)">
+                <div>
+                  <span class="figure" id="savingsAmount">$1,825</span>
+                  <p>Kept this month, from <span class="mono" id="monthlySpend">$3,375</span> spent</p>
+                </div>
+                <div>
+                  <span class="figure" id="runwayMonths">2.0</span>
+                  <p>Months of runway your cash on hand buys</p>
+                </div>
+                <div>
+                  <span class="figure" id="yearProjection">$21,900</span>
+                  <p>Projected at this rate over twelve months</p>
+                </div>
+                <div>
+                  <span class="figure">50/30/20</span>
+                  <p>The benchmark: needs, wants, savings</p>
+                </div>
+              </div>
+
+              <div class="bars" id="benchBars"></div>
+
+              <p class="verdict" id="verdict" role="status" aria-live="polite" style="margin-top:1.5rem">
+                <strong>Reading: strong.</strong> A 35% savings rate puts you in the top decile of Mintwise households. At this pace you bank $21,900 a year.
+              </p>
+
+              <div class="hero__actions" style="margin-top:1.75rem">
+                <a class="btn btn--mint btn--sm" href="features.html#linking">Let Mintwise read these numbers for you</a>
+                <a class="btn btn--ghost btn--sm" href="contact.html">Ask us to check your setup</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============================================ HOW TO READ IT =========== -->
+  <section class="sect sect--paper2" aria-labelledby="readHow">
+    <div class="wrap">
+      <div class="sect__head">
+        <div>
+          <p class="eyebrow"><span class="secnum">04</span> Reading the ring</p>
+          <h2 id="readHow">Three numbers, and what each one is really for</h2>
+        </div>
+        <p class="lead">Most budgeting advice collapses into a single percentage. Here is how to interpret the three that matter, in order.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <p class="step__n">01</p>
+          <div>
+            <h3>The savings rate is your freedom dial</h3>
+            <p class="muted">It is the share of take-home pay that survives the month. Under 5% you are one car repair from credit. 20% is the planner’s benchmark. Above 30% and the number starts doing compounding work for you.</p>
+          </div>
+          <p class="mono small muted">Mintwise recalculates this nightly and never rounds it in your favour.</p>
+        </div>
+        <div class="step">
+          <p class="step__n">02</p>
+          <div>
+            <h3>Runway is the number that changes behaviour</h3>
+            <p class="muted">Cash on hand divided by monthly spend. Six months means a job loss is an inconvenience rather than an emergency loan. Most households arrive at two to three months and are shocked, which is exactly why we surface it first.</p>
+          </div>
+          <p class="mono small muted">Target: 3 months single, 6 months household, 9 months self-employed.</p>
+        </div>
+        <div class="step">
+          <p class="step__n">03</p>
+          <div>
+            <h3>The benchmark gap tells you where to cut</h3>
+            <p class="muted">Needs over 50% of income is a housing or transport problem, and those are structural, not discipline problems. Wants over 30% is the only place a slider helps. Compare the bars, then pick one line.</p>
+          </div>
+          <p class="mono small muted">In-app, price-creep alerts find this line for you automatically.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================= WORKED EXAMPLES ============== -->
+  <section class="sect" aria-labelledby="exTitle">
+    <div class="wrap">
+      <div class="sect__head">
+        <div>
+          <p class="eyebrow"><span class="secnum">05</span> Worked examples</p>
+          <h2 id="exTitle">Three months, three very different readings</h2>
+        </div>
+        <p class="lead">Load any of these with the preset buttons above, then move one slider and watch the ring respond.</p>
+      </div>
+
+      <div class="tgrid">
+        <div class="card">
+          <p class="mono small muted">Preset — Tight month</p>
+          <h3>$3,900 income · 5% kept</h3>
+          <p class="small muted">Rent absorbs 35% before a single grocery run. The 50/30/20 bars show needs at 87%, so the honest advice is not “cancel streaming” — it is that the housing line is the whole story, and a 12-month plan beats a weekly sacrifice.</p>
+          <p class="mono small"><span class="tag tag--clay">Needs 87%</span> &nbsp; Runway 0.6 months</p>
+        </div>
+        <div class="card">
+          <p class="mono small muted">Preset — Balanced month</p>
+          <h3>$5,200 income · 35% kept</h3>
+          <p class="small muted">Housing at 28% and lifestyle at 8% leave real margin. The gap here is not income but structure: the $1,825 surplus only becomes savings if a vault moves it on the 26th, before the month spends it.</p>
+          <p class="mono small"><span class="tag tag--mint">Savings 35%</span> &nbsp; Runway 2.0 months</p>
+        </div>
+        <div class="card">
+          <p class="mono small muted">Preset — Aggressive saver</p>
+          <h3>$7,400 income · 55% kept</h3>
+          <p class="small muted">Subscriptions cut to one, lifestyle capped at $300, and a fixed rent that has not moved in three years. Sustainable for a season, punishing forever — the ring flatters you if you never budget for the birthday you have to attend.</p>
+          <p class="mono small"><span class="tag tag--mint">Savings 55%</span> &nbsp; Runway 9.5 months</p>
+        </div>
+      </div>
+
+      <div class="media media--wide" data-reveal style="margin-top:clamp(2.5rem,5vw,4rem)">
+        <img src="https://picsum.photos/seed/mintwise-c884e5e12686/1600/900?auto=format&fit=crop&w=1600&h=1000&q=80" width="1600" height="1000" alt="A notebook open to a hand-written monthly plan beside a calculator." loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ LIMITS / NOTES =========== -->
+  <section class="sect sect--paper2" aria-labelledby="noteTitle">
+    <div class="wrap">
+      <div class="gridline">
+        <div class="col-7">
+          <p class="eyebrow"><span class="secnum">06</span> Honest limits</p>
+          <h2 id="noteTitle" style="margin-block:0.9rem 1.25rem">What this calculator does not know</h2>
+          <ul class="checks">
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Irregular income.</b> Enter an average across three months. The linked app re-baselines on every payslip instead.</span></li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Sinking funds.</b> Car registration, holidays, and property tax do not live in these seven lines. Add their monthly equivalent to the closest category.</span></li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Debt payoff strategy.</b> Minimums sit in housing, transport, and bills here; Mintwise models avalanche versus snowball separately.</span></li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><b>Investment returns.</b> The twelve-month figure assumes no market growth at all, so treat it as a floor.</span></li>
+          </ul>
+        </div>
+        <div class="col-5">
+          <div class="card card--ink" style="height:100%">
+            <p class="eyebrow eyebrow--plain" style="color:#86d8b8">Next step</p>
+            <h3 style="margin-block:1rem 0.75rem;color:#fff">Stop typing it in</h3>
+            <p class="small" style="color:#a9b8b2">Link an account and Mintwise fills these nine fields from thirteen months of real transactions, then keeps them current every morning at four o’clock.</p>
+            <div class="kpi" style="margin-block:1.5rem">
+              <div><span class="figure">90 s</span><span class="caption">Median setup</span></div>
+              <div><span class="figure">13 mo</span><span class="caption">History backfilled</span></div>
+              <div><span class="figure">Free</span><span class="caption">Solo tier</span></div>
+            </div>
+            <a class="btn btn--mint btn--block" href="pricing.html">See what each plan costs</a>
+            <a class="link-arrow" style="color:#86d8b8;margin-top:1rem;display:inline-flex" href="features.html">Read the feature detail
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div class="foot__brand">
+        <a class="brand" href="index.html" aria-label="Mintwise — home">
+          <span class="brand__mark" aria-hidden="true"></span>Mintwise<span class="brand__sup">Ledger OS</span>
+        </a>
+        <p>A personal finance app for people who would rather read a ledger than be coached by a mascot. Built in Portland by eleven people.</p>
+        <p class="foot__status"><i aria-hidden="true"></i>All systems normal · 99.98% uptime</p>
+      </div>
+
+      <div>
+        <h5>Product</h5>
+        <ul>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="calculator.html">Budget calculator</a></li>
+          <li><a href="pricing.html">Plans &amp; pricing</a></li>
+          <li><a href="features.html#security">Security model</a></li>
+          <li><a href="index.html#diorama">How it works</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>Support</h5>
+        <ul>
+          <li><a href="contact.html">Contact a human</a></li>
+          <li><a href="contact.html#faq">Answers to questions</a></li>
+          <li><a href="contact.html#channels">Response times</a></li>
+          <li><a href="pricing.html#compare">Feature comparison</a></li>
+          <li><a href="contact.html#office">Office &amp; hours</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="features.html">What we build</a></li>
+          <li><a href="pricing.html">Pricing philosophy</a></li>
+          <li><a href="contact.html">Careers &amp; press</a></li>
+        </ul>
+      </div>
+
+      <div class="foot__news">
+        <h5>The Ledger — monthly dispatch</h5>
+        <p class="small" style="color:#97a7a1;margin:0">One email a month: a real household case study, one rule change, zero pitch.</p>
+        <form id="newsForm" action="#" method="post">
+          <label class="sr-only" for="newsEmail">Email address for The Ledger newsletter</label>
+          <input id="newsEmail" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required>
+          <button class="btn btn--sm" type="submit">Subscribe</button>
+        </form>
+        <p class="note" data-state="idle">We store the address and nothing else. Unsubscribe in one click.</p>
+      </div>
+    </div>
+
+    <p class="foot__disclaimer">Mintwise is a financial management tool, not a bank, broker, or advisor. Account and pricing figures shown are illustrative. Banking services and FDIC insurance are provided by partner institutions; vault balances are covered up to $250,000 per depositor through programmatic pass-through insurance.</p>
+
+    <div class="foot__bar">
+      <p class="foot__legal">© <span id="footYear">2026</span> Mintwise Ledger, Inc. · <a href="contact.html">Privacy</a> · <a href="contact.html">Terms</a> · <a href="contact.html#channels">Disclosures</a></p>
+      <p class="foot__legal">Made on the 5th floor of a former print shop.</p>
+    </div>
+  </div>
+</footer>
+
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
