@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Features — Pulseboard product analytics on your warehouse</title>
+<meta name="description" content="Raw-cardinality event queries, funnel and retention analysis, anomaly alerting, and a governed metrics layer — every Pulseboard feature explained with its trade-offs.">
+<meta name="theme-color" content="#4f46e5">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"><span></span></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="brand__mark" aria-hidden="true"></span>Pulseboard</a>
+    <nav class="nav" id="site-nav" aria-label="Primary">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="index.html">Home</a></li>
+        <li><a class="nav__link" href="features.html" aria-current="page">Features</a></li>
+        <li><a class="nav__link" href="pricing.html">Pricing</a></li>
+        <li><a class="nav__link" href="about.html">About</a></li>
+        <li><a class="nav__link" href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav__actions">
+      <a class="btn btn--outline btn--sm nav__cta" href="pricing.html">See plans</a>
+      <a class="btn btn--primary btn--sm" href="contact.html">Book a demo</a>
+    </div>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open navigation menu"><i></i><i></i><i></i></button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- Intro -->
+  <section class="intro rule-top">
+    <div class="gridlines" aria-hidden="true"></div>
+    <div class="wrap intro__grid">
+      <div>
+        <p class="sec-num"><i>Features</i> Six systems, one warehouse</p>
+        <h1 class="h1">Everything here runs on the tables you already own</h1>
+      </div>
+      <div class="intro__meta">
+        <p class="muted" style="font-family:var(--font-body);font-size:1rem;letter-spacing:0;text-transform:none;color:var(--ink-2);border-top:1px solid var(--rule)">Each section states what the feature does, what it costs you in warehouse compute, and where it is deliberately limited. We would rather you scope the project honestly than discover the edge in month three.</p>
+        <nav class="jump" data-jump aria-label="Jump to feature">
+          <a href="#realtime">Raw queries</a>
+          <a href="#cohorts">Funnels &amp; retention</a>
+          <a href="#anomaly">Anomaly alerts</a>
+          <a href="#governance">Metrics layer</a>
+          <a href="#integrations">Integrations</a>
+          <a href="#security">Security</a>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 Raw queries -->
+  <section id="realtime" class="sect rule-top">
+    <div class="wrap split">
+      <div class="split__sticky">
+        <div class="dash">
+          <div class="dash__chrome">
+            <span class="dash__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="dash__url">app.pulseboard.io/northwind / query workbench</span>
+          </div>
+          <div class="dash__main" style="padding:14px">
+            <div class="dash__head">
+              <span class="dash__title">event_stream · 41,206,880 rows</span>
+              <span class="dash__live"><i aria-hidden="true"></i> 38 ms</span>
+            </div>
+            <div class="dash__panel">
+              <h4>Result set — no sampling applied</h4>
+              <table class="tbl">
+                <thead>
+                  <tr><th scope="col">Actor</th><th scope="col">Event</th><th scope="col">Property</th><th scope="col">Time</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><b>u_88f1…</b></td><td class="tag">checkout_started</td><td>plan=scale</td><td>14:02:11</td></tr>
+                  <tr><td><b>u_2c07…</b></td><td class="tag">checkout_started</td><td>plan=team</td><td>14:02:11</td></tr>
+                  <tr><td><b>u_51ba…</b></td><td class="tag">report_shared</td><td>recipients=7</td><td>14:02:09</td></tr>
+                  <tr><td><b>u_9de3…</b></td><td class="tag">checkout_failed</td><td>code=card_declined</td><td>14:02:08</td></tr>
+                  <tr><td><b>u_4f70…</b></td><td class="tag">cohort_created</td><td>size=214</td><td>14:02:06</td></tr>
+                  <tr><td><b>u_1a6c…</b></td><td class="tag">checkout_started</td><td>plan=scale</td><td>14:02:04</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="dash__panel">
+              <h4>Segment size, exact</h4>
+              <div class="dash__bars" aria-hidden="true">
+                <i style="height:34%"></i><i style="height:70%"></i><i style="height:52%"></i><i class="is-peak" style="height:96%"></i><i style="height:46%"></i><i style="height:62%"></i><i style="height:38%"></i><i style="height:58%"></i>
+              </div>
+              <div class="dash__legend"><span>214 users matched</span><span>0 dropped</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="split__content split__line">
+        <p class="sec-num"><i>01</i> Raw event queries</p>
+        <h2 class="h2">The long tail is where your worst problem lives</h2>
+        <p class="lead">Sampling engines resolve a segment by scanning a pre-built slice of your data. That is fast, and it is also why the enterprise churn you can see in the CRM never shows up in the funnel. Pulseboard compiles your question to SQL against the raw event table and lets the warehouse do what warehouses are good at.</p>
+        <p class="muted">A segment of 214 users returns 214 users. A property with 3.1 million distinct values is grouped, not dropped. When a query would scan more than your compute guard allows, the workbench tells you the byte estimate up front and offers a narrower window instead of quietly substituting an approximation.</p>
+
+        <h3 class="h3">What you get</h3>
+        <ul class="checks">
+          <li>Unlimited property cardinality, including per-account custom properties</li>
+          <li>Cross-event segmentation: users who did A in the last 7 days and never did B</li>
+          <li>Sessionization at query time, with a configurable inactivity window</li>
+          <li>Computed properties defined in the metrics layer and reused everywhere</li>
+          <li>Full SQL escape hatch with the compiled query shown line by line</li>
+        </ul>
+
+        <h3 class="h3">The honest cost</h3>
+        <div class="specs">
+          <div><span class="specs__k">Compute</span><span>You pay warehouse credits per query, so we ship per-workspace budgets, a 40-second hard cancel, and a cache that keys on the compiled SQL plus the table version.</span></div>
+          <div><span class="specs__k">Freshness</span><span>Answers are as current as your pipeline. Most teams land events in 1–3 minutes; batch loaders inherit their own cadence and we surface it as a lag badge on every board.</span></div>
+          <div><span class="specs__k">Tuning</span><span>Clustering the event table on <code>actor_id</code> and <code>occurred_at</code> typically cuts funnel cost by 40–70%. The onboarding audit prints the exact DDL for your engine.</span></div>
+        </div>
+
+        <p style="margin-top:26px"><a class="tlink" href="pricing.html">See which plan includes per-query budgets <span aria-hidden="true">&rarr;</span></a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 Funnels & retention -->
+  <section id="cohorts" class="sect band-2 rule-top">
+    <div class="gridlines" aria-hidden="true"></div>
+    <div class="wrap split split--rev">
+      <div class="split__sticky">
+        <div class="dash">
+          <div class="dash__chrome">
+            <span class="dash__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="dash__url">app.pulseboard.io/northwind / retention</span>
+          </div>
+          <div class="dash__main" style="padding:14px">
+            <div class="dash__head">
+              <span class="dash__title">Weekly retention · activated accounts</span>
+              <span class="dash__live"><i aria-hidden="true"></i> Unsampled</span>
+            </div>
+            <div class="dash__panel">
+              <h4>Week 0 cohort · 4,812 accounts</h4>
+              <div class="heat" role="img" aria-label="Weekly retention grid declining from 100 percent in week zero to 56 percent by week eight across four acquisition cohorts">
+        <span class="heat__lbl"> Organic</span><span class="heat__c">100</span><span class="heat__c heat__c--a">84</span><span class="heat__c heat__c--a">77</span><span class="heat__c heat__c--b">71</span><span class="heat__c heat__c--b">68</span><span class="heat__c heat__c--c">65</span><span class="heat__c heat__c--c">63</span><span class="heat__c heat__c--d">61</span>
+        <span class="heat__lbl"> Paid</span><span class="heat__c">100</span><span class="heat__c heat__c--a">79</span><span class="heat__c heat__c--b">66</span><span class="heat__c heat__c--b">58</span><span class="heat__c heat__c--c">52</span><span class="heat__c heat__c--c">48</span><span class="heat__c heat__c--d">45</span><span class="heat__c heat__c--d">42</span>
+        <span class="heat__lbl"> Partner</span><span class="heat__c">100</span><span class="heat__c heat__c--a">88</span><span class="heat__c">83</span><span class="heat__c heat__c--a">79</span><span class="heat__c heat__c--b">76</span><span class="heat__c heat__c--b">74</span><span class="heat__c heat__c--c">72</span><span class="heat__c heat__c--c">70</span>
+        <span class="heat__lbl"> Outbound</span><span class="heat__c">100</span><span class="heat__c heat__c--a">81</span><span class="heat__c heat__c--b">69</span><span class="heat__c heat__c--c">62</span><span class="heat__c heat__c--c">59</span><span class="heat__c heat__c--d">57</span><span class="heat__c heat__c--d">56</span><span class="heat__c heat__c--e">56</span>
+        <span class="heat__lbl"> Weeks</span><span class="heat__c heat__c--e">0</span><span class="heat__c heat__c--e">1</span><span class="heat__c heat__c--e">2</span><span class="heat__c heat__c--e">3</span><span class="heat__c heat__c--e">4</span><span class="heat__c heat__c--e">5</span><span class="heat__c heat__c--e">6</span><span class="heat__c heat__c--e">7</span>
+              </div>
+            </div>
+            <div class="dash__row">
+              <div class="dash__panel">
+                <h4>Step-to-step drop</h4>
+                <ul class="dash__funnel">
+                  <li><span>Invite</span><span class="dash__bar"><span style="width:92%"></span></span><b>92%</b></li>
+                  <li><span>First query</span><span class="dash__bar"><span style="width:68%"></span></span><b>68%</b></li>
+                  <li><span>Board saved</span><span class="dash__bar"><span style="width:44%"></span></span><b>44%</b></li>
+                  <li><span>Alert added</span><span class="dash__bar"><span style="width:31%"></span></span><b>31%</b></li>
+                </ul>
+              </div>
+              <div class="dash__panel">
+                <h4>Time to value</h4>
+                <p style="font-family:var(--font-display);font-weight:800;font-size:26px;letter-spacing:-.05em;margin:0">2.4 <span style="font-size:13px;font-weight:600">days</span></p>
+                <p class="mono" style="margin:6px 0 0">median, invite &rarr; first alert</p>
+                <p class="mono" style="margin:8px 0 0;color:var(--ok)">▼ 1.1 days vs Q2</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="split__content split__line">
+        <p class="sec-num"><i>02</i> Funnels, retention, paths</p>
+        <h2 class="h2">Behaviour analysis your analysts can audit</h2>
+        <p class="lead">Build a funnel by dragging steps onto the canvas, then open the compiled SQL and read the join it chose. Two people looking at the same chart get the same definition, the same window, and the same exclusion rules &mdash; even when one of them is a product manager and the other is a data engineer checking the work.</p>
+        <p class="muted">Retention grids compare cohorts side by side, with a baseline cohort always visible. Paths collapse nested events so a click storm inside one modal reads as a single step instead of forty noise branches.</p>
+
+        <h3 class="h3">Analysis primitives</h3>
+        <ul class="checks">
+          <li>Funnels with ordered, unordered, or any-step matching and a configurable window</li>
+          <li>Unbounded funnels for multi-quarter enterprise sales motions</li>
+          <li>Retention by cohort, with rolling, unbounded and bracket modes</li>
+          <li>Path discovery with a collapse rule per event family</li>
+          <li>Distribution and percentile views for latency-style properties</li>
+          <li>Cohort overlap matrix to see what &ldquo;activated&rdquo; actually means</li>
+        </ul>
+
+        <h3 class="h3">Saved as a definition, not a screenshot</h3>
+        <p class="muted">Any chart can be promoted to a metric. Promotion writes the definition into the metrics layer, opens a review request, and gives every dependent board an upgrade flag when the definition changes &mdash; so a redefinition never silently rewrites last quarter&rsquo;s narrative.</p>
+        <div class="specs">
+          <div><span class="specs__k">Experiments</span><span>Read a Flagship, LaunchDarkly or Statsig split against any of the above with a confidence interval computed on the warehouse, not in the browser.</span></div>
+          <div><span class="specs__k">Exports</span><span>Board data exports to CSV or straight back into a warehouse table for downstream joins.</span></div>
+        </div>
+        <p style="margin-top:26px"><a class="tlink" href="contact.html">Bring one funnel that argues with itself <span aria-hidden="true">&rarr;</span></a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 Anomaly alerts -->
+  <section id="anomaly" class="sect rule-top">
+    <div class="wrap split">
+      <div class="split__sticky">
+        <div class="alert">
+          <p class="alert__head"><i aria-hidden="true"></i> Anomaly watch · #growth-alerts</p>
+          <h4>Checkout completion fell 11.4% in <span class="mono" style="font-size:.85em">eu-west</span></h4>
+          <p class="small muted">Started 09:42 UTC · persists for 38 minutes · confidence 97%. Payment-provider latency for card authorizations tripled at the same moment.</p>
+          <div class="alert__grid">
+            <div><span>Expected</span><b>52.1%</b></div>
+            <div><span>Observed</span><b>46.1%</b></div>
+            <div><span>Impact</span><b>€38k/hr</b></div>
+          </div>
+          <div class="alert__code">select funnel(checkout_started → checkout_completed)
+  by geo.region, hour(occurred_at)
+where occurred_at &gt;= now() - interval '6 hours'
+  and plan in ('team','scale')</div>
+          <div class="alert__actions">
+            <span class="alert__btn alert__btn--pri">Open in workbench</span>
+            <span class="alert__btn">Assign to payments</span>
+            <span class="alert__btn">Silence 4h</span>
+          </div>
+        </div>
+        <p class="mono" style="margin-top:24px">Routed to Slack #growth-alerts · PagerDuty secondary · email digest for the low-severity tier</p>
+      </div>
+
+      <div class="split__content split__line">
+        <p class="sec-num"><i>03</i> Anomaly detection</p>
+        <h2 class="h2">Find out from a message, not from Monday&rsquo;s review</h2>
+        <p class="lead">Pick the metrics your team actually reacts to, set a cadence, and Pulseboard learns the shape of each one: weekly seasonality, month-end spikes, the November dip that everyone stopped explaining three years ago. When a metric leaves its own band, an alert fires with the query attached.</p>
+        <p class="muted">Alerts decompose automatically. The message above did not stop at &ldquo;conversion is down&rdquo;; it segmented by region, plan and device, ranked the contributors, and matched the drop to a provider latency change it could see in your own event stream. You still decide whether it matters &mdash; you just start three steps further along.</p>
+
+        <h3 class="h3">Watch configuration</h3>
+        <ul class="checks">
+          <li>Seasonality-aware bands with per-metric sensitivity from &ldquo;quiet&rdquo; to &ldquo;hair trigger&rdquo;</li>
+          <li>Threshold, period-over-period, and modelled baselines side by side</li>
+          <li>Automatic dimension drill-down, capped at the top five contributors</li>
+          <li>Routing by severity to Slack, PagerDuty, email, or a webhook into your own on-call</li>
+          <li>Acknowledgement, snooze, and incident notes written back onto the board</li>
+          <li>Weekly false-positive review that suggests retuning or retiring a watch</li>
+        </ul>
+
+        <div class="specs">
+          <div><span class="specs__k">Guard rail</span><span>Watches only run on metrics defined in the metrics layer. An alert on an ad-hoc chart is an alert nobody maintains, so the product refuses to create one.</span></div>
+          <div><span class="specs__k">Noise</span><span>Median customer runs 11 watches and receives 3 messages a week. Every message carries a &ldquo;not useful&rdquo; button that pauses the watch and opens the tuning form.</span></div>
+        </div>
+        <p style="margin-top:26px"><a class="tlink" href="features.html#governance">How metric definitions stay trustworthy <span aria-hidden="true">&rarr;</span></a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Governance -->
+  <section id="governance" class="sect band-2 rule-top">
+    <div class="gridlines" aria-hidden="true"></div>
+    <div class="wrap split split--rev">
+      <div class="split__sticky">
+        <div class="dash">
+          <div class="dash__chrome">
+            <span class="dash__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="dash__url">app.pulseboard.io/northwind / metrics / activated_account</span>
+          </div>
+          <div class="dash__main" style="padding:14px">
+            <div class="dash__head">
+              <span class="dash__title">activated_account</span>
+              <span class="dash__live"><i aria-hidden="true"></i> v7 · approved</span>
+            </div>
+            <pre class="code" style="font-size:11px;padding:14px 16px"><span class="c">-- metrics/activated_account.sql</span>
+<span class="k">with</span> first_value <span class="k">as</span> (
+  <span class="k">select</span> account_id,
+         <span class="f">min</span>(occurred_at) <span class="k">as</span> saved_at
+  <span class="k">from</span>   events.raw
+  <span class="k">where</span>  event_name = <span class="f">'board_saved'</span>
+  <span class="k">group by</span> account_id
+)
+<span class="k">select</span> <span class="f">count</span>(<span class="k">distinct</span> f.account_id)
+<span class="k">from</span> first_value f
+<span class="k">join</span> dim.accounts a <span class="k">using</span> (account_id)
+<span class="k">where</span> f.saved_at &lt;= a.trial_ends_at
+<span class="k">and</span>   a.is_internal = <span class="k">false</span></pre>
+            <div class="dash__panel">
+              <h4>Lineage &amp; review</h4>
+              <div class="specs" style="border-top:0">
+                <div style="grid-template-columns:74px minmax(0,1fr);padding:8px 0;gap:12px;font-size:10.5px"><span class="specs__k" style="font-size:8.5px;padding-top:2px">Owner</span><span>growth-analytics</span></div>
+                <div style="grid-template-columns:74px minmax(0,1fr);padding:8px 0;gap:12px;font-size:10.5px"><span class="specs__k" style="font-size:8.5px;padding-top:2px">Used by</span><span>14 boards · 3 watches · 2 exports</span></div>
+                <div style="grid-template-columns:74px minmax(0,1fr);padding:8px 0;gap:12px;font-size:10.5px;border-bottom:0"><span class="specs__k" style="font-size:8.5px;padding-top:2px">Last change</span><span>v6 → v7 excluded internal accounts</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="split__content split__line">
+        <p class="sec-num"><i>04</i> Metrics layer &amp; governance</p>
+        <h2 class="h2">One definition of &ldquo;active&rdquo;, enforced everywhere</h2>
+        <p class="lead">Most analytics estates do not have a data problem; they have a vocabulary problem. Growth says active, finance says billed, support says ticketed, and the weekly review spends twenty minutes reconciling three dashboards that are each correct in isolation.</p>
+        <p class="muted">Pulseboard promotes a question into a named metric with an owner, a version history, and a dependency graph. Funnels, boards, alerts, exports and the read API all resolve through it. Change the definition and every consumer gets a flag plus a diff, so a redefinition is a decision the team makes rather than something that quietly happens.</p>
+
+        <h3 class="h3">Governance you can hand to your security reviewer</h3>
+        <ul class="checks">
+          <li>Workspaces, projects and roles mapped to your existing warehouse grants</li>
+          <li>Row-level policies and column masking applied before the query compiles</li>
+          <li>Approval workflow for metric changes, with a signed review trail</li>
+          <li>Per-person audit log exportable to your SIEM</li>
+          <li>SSO with SCIM provisioning, and service accounts with scoped tokens</li>
+          <li>PII detection on property names, with one-click masking templates</li>
+        </ul>
+
+        <div class="specs">
+          <div><span class="specs__k">Read API</span><span>Every governed metric is queryable through a REST and a GraphQL endpoint, rate-limited per token, so the number in your product is the number in the board.</span></div>
+          <div><span class="specs__k">dbt</span><span>Import a dbt manifest to inherit models, tests and descriptions. Pulseboard never re-implements a transformation you already own.</span></div>
+        </div>
+        <p style="margin-top:26px"><a class="tlink" href="features.html#security">Compliance detail &amp; certifications <span aria-hidden="true">&rarr;</span></a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 Integrations -->
+  <section id="integrations" class="sect rule-top" aria-labelledby="int-h">
+    <div class="wrap">
+      <div class="head2 head2--split">
+        <div>
+          <p class="sec-num"><i>05</i> Integrations</p>
+          <h2 class="h2" id="int-h">It arrives through the pipes you already run</h2>
+        </div>
+        <p class="muted">Sixty-one maintained connectors. Hover the strip to pause it and read the list.</p>
+      </div>
+    </div>
+    <div class="marquee chips-marquee rule-top band-2" style="--speed:60s">
+      <div class="marquee__track">
+        <div class="marquee__group">
+          <span class="chip"><b>WH</b> Snowflake</span>
+          <span class="chip"><b>WH</b> BigQuery</span>
+          <span class="chip"><b>WH</b> Redshift</span>
+          <span class="chip"><b>WH</b> Databricks</span>
+          <span class="chip"><b>WH</b> Postgres</span>
+          <span class="chip"><b>WH</b> ClickHouse</span>
+          <span class="chip"><b>PIPE</b> Segment</span>
+          <span class="chip"><b>PIPE</b> mParticle</span>
+          <span class="chip"><b>PIPE</b> RudderStack</span>
+          <span class="chip"><b>PIPE</b> Kafka</span>
+          <span class="chip"><b>PIPE</b> Fivetran</span>
+          <span class="chip"><b>MODEL</b> dbt</span>
+          <span class="chip"><b>FLAG</b> LaunchDarkly</span>
+          <span class="chip"><b>FLAG</b> Statsig</span>
+          <span class="chip"><b>FLAG</b> Flagship</span>
+          <span class="chip"><b>CHAT</b> Slack</span>
+          <span class="chip"><b>CHAT</b> Microsoft Teams</span>
+          <span class="chip"><b>OPS</b> PagerDuty</span>
+          <span class="chip"><b>OPS</b> Datadog</span>
+          <span class="chip"><b>CRM</b> Salesforce</span>
+          <span class="chip"><b>CRM</b> HubSpot</span>
+          <span class="chip"><b>TICKET</b> Linear</span>
+          <span class="chip"><b>TICKET</b> Jira</span>
+          <span class="chip"><b>IDENT</b> Okta</span>
+          <span class="chip"><b>IDENT</b> Entra ID</span>
+        </div>
+        <div class="marquee__group" aria-hidden="true">
+          <span class="chip"><b>WH</b> Snowflake</span>
+          <span class="chip"><b>WH</b> BigQuery</span>
+          <span class="chip"><b>WH</b> Redshift</span>
+          <span class="chip"><b>WH</b> Databricks</span>
+          <span class="chip"><b>WH</b> Postgres</span>
+          <span class="chip"><b>WH</b> ClickHouse</span>
+          <span class="chip"><b>PIPE</b> Segment</span>
+          <span class="chip"><b>PIPE</b> mParticle</span>
+          <span class="chip"><b>PIPE</b> RudderStack</span>
+          <span class="chip"><b>PIPE</b> Kafka</span>
+          <span class="chip"><b>PIPE</b> Fivetran</span>
+          <span class="chip"><b>MODEL</b> dbt</span>
+          <span class="chip"><b>FLAG</b> LaunchDarkly</span>
+          <span class="chip"><b>FLAG</b> Statsig</span>
+          <span class="chip"><b>FLAG</b> Flagship</span>
+          <span class="chip"><b>CHAT</b> Slack</span>
+          <span class="chip"><b>CHAT</b> Microsoft Teams</span>
+          <span class="chip"><b>OPS</b> PagerDuty</span>
+          <span class="chip"><b>OPS</b> Datadog</span>
+          <span class="chip"><b>CRM</b> Salesforce</span>
+          <span class="chip"><b>CRM</b> HubSpot</span>
+          <span class="chip"><b>TICKET</b> Linear</span>
+          <span class="chip"><b>TICKET</b> Jira</span>
+          <span class="chip"><b>IDENT</b> Okta</span>
+          <span class="chip"><b>IDENT</b> Entra ID</span>
+        </div>
+      </div>
+    </div>
+    <div class="wrap" style="margin-top:clamp(44px,5vw,68px)">
+      <div class="grid grid--3">
+        <article class="cell">
+          <span class="cell__num">01</span>
+          <h3 class="h4">Event pipeline, unchanged</h3>
+          <p>If Segment, RudderStack or your own Kafka topic already lands events in the warehouse, there is nothing new to install. We read the table where it is.</p>
+        </article>
+        <article class="cell">
+          <span class="cell__num">02</span>
+          <h3 class="h4">Business context joined in</h3>
+          <p>Sync Salesforce or HubSpot account tiers as a dimension so a funnel can be split by contract value rather than by a guess like &ldquo;many events&rdquo;.</p>
+        </article>
+        <article class="cell">
+          <span class="cell__num">03</span>
+          <h3 class="h4">Answers pushed back out</h3>
+          <p>Alerts land in Slack or PagerDuty, board links embed in Notion, and the read API writes metric series into the tools your operators already watch.</p>
+        </article>
+      </div>
+      <div class="grid grid--2" style="margin-top:clamp(36px,4vw,56px)">
+        <figure class="frame" style="margin:0">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&amp;fit=crop&amp;w=1200&amp;h=900&amp;q=80" width="1200" height="900" alt="A analyst reviewing a dashboard of growth metrics on a laptop screen beside a notebook of query notes" loading="lazy">
+          <figcaption class="frame__cap">Halcyon Bank · handover at the end of migration week two</figcaption>
+        </figure>
+        <article class="cell">
+          <span class="cell__num">Handover</span>
+          <h3 class="h4">The connectors you keep running yourself</h3>
+          <p>We do not take ownership of your pipeline. What we hand over is the mapping: which column became which property, which events we recommend retiring, the clustering DDL that made the funnels cheap, and a diagram your team can maintain without us.</p>
+          <ul class="checks">
+            <li>Connection tested at setup and re-verified on every sync</li>
+            <li>Connector failures surface as a lag badge, never a silent stale chart</li>
+            <li>Schema drift alerts when a new event name appears in production</li>
+          </ul>
+          <p><a class="tlink" href="pricing.html#addons">See the pipeline audit add-on <span aria-hidden="true">&rarr;</span></a></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 Security -->
+  <section id="security" class="sect band-ink rule-top" aria-labelledby="sec-h">
+    <div class="gridlines" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="head2">
+        <p class="sec-num" style="color:rgba(255,255,255,.6)"><i style="color:#a5b4fc">06</i> Security &amp; deployment</p>
+        <h2 class="h2" id="sec-h" style="color:#fff">Nothing about the architecture needs a waiver</h2>
+      </div>
+      <div class="metrics" style="margin-bottom:clamp(44px,5vw,72px)">
+        <div class="metric">
+          <div class="metric__num"><span data-count="0">0</span><span class="metric__unit">copies</span></div>
+          <p class="metric__label">Of your raw events</p>
+          <p class="metric__note">Result sets only, encrypted, purged on a 30-day rolling window.</p>
+        </div>
+        <div class="metric">
+          <div class="metric__num"><span data-count="9">0</span><span class="metric__unit">regions</span></div>
+          <p class="metric__label">Control-plane residency</p>
+          <p class="metric__note">Choose EU, US or a dedicated deployment; data does not leave it.</p>
+        </div>
+        <div class="metric">
+          <div class="metric__num"><span data-count="100">0</span><span class="metric__unit">%</span></div>
+          <p class="metric__label">Read-only access</p>
+          <p class="metric__note">No write grants, ever. Verified at connect time on every sync.</p>
+        </div>
+        <div class="metric">
+          <div class="metric__num"><span data-count="18">0</span><span class="metric__unit">min</span></div>
+          <p class="metric__label">Median security review</p>
+          <p class="metric__note">Time customers report spending on the architecture questionnaire.</p>
+        </div>
+      </div>
+      <div class="grid grid--3" style="background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.16)">
+        <article class="cell" style="background:var(--ink)">
+          <h3 class="h4" style="color:#fff">Certifications</h3>
+          <ul class="checks checks--ink">
+            <li>SOC 2 Type II, audited annually</li>
+            <li>ISO/IEC 27001:2022</li>
+            <li>GDPR DPA, SCCs and UK addendum</li>
+            <li>Penetration test summary available under NDA</li>
+          </ul>
+        </article>
+        <article class="cell" style="background:var(--ink)">
+          <h3 class="h4" style="color:#fff">Network posture</h3>
+          <ul class="checks checks--ink">
+            <li>Private Link or VPC peering to the warehouse</li>
+            <li>No inbound ports, no public data endpoint</li>
+            <li>Per-tenant encryption keys with BYOK option</li>
+            <li>IP allowlisting on the read API</li>
+          </ul>
+        </article>
+        <article class="cell" style="background:var(--ink)">
+          <h3 class="h4" style="color:#fff">Operational</h3>
+          <ul class="checks checks--ink">
+            <li>99.99% query availability SLA on Scale</li>
+            <li>Public status page and incident retrospectives</li>
+            <li>Regional failover with a documented runbook</li>
+            <li>Deletion within 14 days of offboarding</li>
+          </ul>
+        </article>
+      </div>
+      <p class="mono" style="margin-top:34px;color:rgba(255,255,255,.6)">Need the full architecture pack? <a href="contact.html" style="color:#fff;text-decoration:underline">Ask for it on the demo form</a> — it goes out with the calendar invite.</p>
+    </div>
+  </section>
+
+  <!-- 07 Trade-offs FAQ -->
+  <section class="sect rule-top" aria-labelledby="faq-h">
+    <div class="wrap wrap--narrow" style="max-width:1000px">
+      <p class="sec-num"><i>07</i> Questions data engineers ask</p>
+      <h2 class="h2" id="faq-h" style="margin-bottom:clamp(30px,4vw,48px)">The awkward ones, answered</h2>
+      <div class="faq">
+        <details open>
+          <summary>Is this just a query tool for analysts?</summary>
+          <div class="faq__a"><p>No &mdash; and this is the design tension we manage hardest. The workbench and SQL editor exist because analysts will not trust a tool they cannot audit. But the product manager surface is the board: drag steps, pick a saved metric, and the compiled query stays hidden behind an &ldquo;explain this&rdquo; disclosure. Roughly 71% of Pulseboard views in a healthy workspace are opened by non-analysts.</p></div>
+        </details>
+        <details>
+          <summary>What happens to cost when a board refreshes every five minutes?</summary>
+          <div class="faq__a"><p>You pay for the scan, so we make refresh an explicit decision. Boards default to warehouse wake-up cadence, with per-board schedules, result caching keyed on table version, and a compute meter on every board footer. Teams on Scale set per-workspace budgets that pause non-critical refreshes instead of failing the quarter&rsquo;s warehouse bill.</p></div>
+        </details>
+        <details>
+          <summary>Can we use Pulseboard if our tracking plan is a mess?</summary>
+          <div class="faq__a"><p>Almost always yes. The modelling step is where you say which of your event names mean what, and computed properties let you normalise three spelling variants of <code>plan_type</code> without a pipeline rewrite. The migration audit lists the events you should stop emitting; it does not require a tracking-plan freeze before you get value.</p></div>
+        </details>
+        <details>
+          <summary>Do you have a native SDK?</summary>
+          <div class="faq__a"><p>We do, for browser and the four mobile platforms, and it writes into your warehouse rather than into us. Most customers keep their existing collector because they already route through Segment, RudderStack or a Kafka topic. Choosing Pulseboard does not require replacing an instrumentation stack that works.</p></div>
+        </details>
+        <details>
+          <summary>What is the smallest warehouse this is worth pointing at?</summary>
+          <div class="faq__a"><p>Below roughly 5 million events a month you will get more out of a lighter tool, and we say that in demos. Where we earn our keep is where segments are long-lived, cardinality is high, and the warehouse team already has opinions about a vendor copying their data out.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 CTA -->
+  <section class="cta band-ink">
+    <div class="gridlines" aria-hidden="true"></div>
+    <div class="wrap cta__grid">
+      <div>
+        <p class="sec-num" style="color:rgba(255,255,255,.6)"><i style="color:#a5b4fc">08</i> Next step</p>
+        <h2 class="h2">Test the ugliest query on the list</h2>
+        <p>Send us the question that currently takes three tickets and a meeting. We will run it against a sample of your own tables in the demo and show you the SQL it compiled to.</p>
+      </div>
+      <div>
+        <div class="cta__actions">
+          <a class="btn btn--onink" href="contact.html">Book a demo <span class="btn__arrow" aria-hidden="true">&rarr;</span></a>
+          <a class="btn btn--outline" href="pricing.html" style="color:#fff;border-color:rgba(255,255,255,.4)">Compare plans</a>
+        </div>
+        <p class="mono" style="margin-top:20px;color:rgba(255,255,255,.6)">Features by plan, in one table</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div>
+        <a class="brand" href="index.html"><span class="brand__mark" aria-hidden="true"></span>Pulseboard</a>
+        <p class="footer__blurb">Warehouse-native product analytics. Unsampling the long tail since 2019.</p>
+        <p class="mono">Berlin · Lisbon · 4,200 teams</p>
+      </div>
+      <div>
+        <h3>Product</h3>
+        <ul class="footer__links">
+          <li><a href="features.html">Feature deep dives</a></li>
+          <li><a href="features.html#integrations">Integrations</a></li>
+          <li><a href="features.html#security">Security &amp; compliance</a></li>
+          <li><a href="pricing.html">Plans &amp; pricing</a></li>
+          <li><a href="pricing.html#compare">Compare capabilities</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Company</h3>
+        <ul class="footer__links">
+          <li><a href="about.html">About Pulseboard</a></li>
+          <li><a href="about.html#story">Our story</a></li>
+          <li><a href="about.html#team">Team</a></li>
+          <li><a href="about.html#values">Operating principles</a></li>
+          <li><a href="contact.html">Contact &amp; demos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Start here</h3>
+        <ul class="footer__links">
+          <li><a href="contact.html#demo-form">Request a demo</a></li>
+          <li><a href="index.html#how-h">How onboarding works</a></li>
+          <li><a href="index.html#metrics">Platform numbers</a></li>
+          <li><a href="pricing.html#faq">Billing questions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span class="status"><i aria-hidden="true"></i> All systems operational · 99.99% last 90 days</span>
+      <span>&copy; <span data-year>2026</span> Pulseboard GmbH</span>
+      <span>Built for teams that argue with data</span>
+    </div>
+  </div>
+</footer>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
