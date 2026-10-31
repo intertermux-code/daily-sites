@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reservations — Ember &amp; Oak</title>
+<meta name="description" content="Hold a table at Ember &amp; Oak. Choose a date, seating time, and party size, and the fire-side ticket fills in as you type. Confirmation sent by email and phone.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner wrap">
+    <a class="brand" href="index.html">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="32" height="32" focusable="false"><path d="M16 3c3.4 4.1 6.6 7.2 6.6 12.1 0 4.4-3 7.6-6.6 7.6s-6.6-3.2-6.6-7.6C9.4 10.2 12.6 7.1 16 3Z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M16 12.6c1.5 1.9 2.9 3.3 2.9 5.5a2.9 2.9 0 1 1-5.8 0c0-2.2 1.4-3.6 2.9-5.5Z" fill="currentColor" opacity=".75"/><path d="M6 27h20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </span>
+      <span class="brand__type">
+        <span class="brand__name">Ember <em>&amp;</em> Oak</span>
+        <span class="brand__sub">Wood-Fire Kitchen · Est. 2014</span>
+      </span>
+    </a>
+
+    <nav class="nav" id="primary-nav" aria-label="Primary">
+      <ul class="nav__list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="reservations.html" aria-current="page">Reservations</a></li>
+        <li><a href="visit.html">Visit</a></li>
+      </ul>
+      <a class="btn btn--ember nav__cta" href="reservations.html">Reserve a Table</a>
+    </nav>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation menu">
+      <span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span>
+    </button>
+  </div>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span class="ticker__group"><em>Oak</em><i>·</i><em>Apple</em><i>·</i><em>Hearth at 485°C</em><i>·</i><em>No gas flame since 2014</em><i>·</i><em>Bin 12 refilled 06:40</em><i>·</i><em>Bone marrow on the coals</em><i>·</i><em>Covers tonight 38</em><i>·</i></span>
+      <span class="ticker__group"><em>Oak</em><i>·</i><em>Apple</em><i>·</i><em>Hearth at 485°C</em><i>·</i><em>No gas flame since 2014</em><i>·</i><em>Bin 12 refilled 06:40</em><i>·</i><em>Bone marrow on the coals</em><i>·</i><em>Covers tonight 38</em><i>·</i></span>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="page-head">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="index.html">Home</a><span aria-hidden="true">/</span><span>Reservations</span>
+      </nav>
+      <h1 class="words">Hold a Table Beside the Fire</h1>
+      <p class="page-head__lede">The book opens sixty days ahead and closes one day ahead online. Sixteen seats every night are kept for walk-ins — if the ticket you want is gone, call and ask the host.</p>
+    </div>
+  </div>
+
+  <section class="section wrap" aria-labelledby="book-title">
+    <h2 id="book-title" class="sr-only">Reservation request</h2>
+
+    <div class="book">
+      <div>
+        <div class="form-panel">
+          <div class="form-panel__head">
+            <span>Host desk · Request form</span>
+            <span class="mono-label mono-label--ember">Fields marked * required</span>
+          </div>
+
+          <form class="form" id="booking-form" novalidate>
+            <div class="field-row field-row--2">
+              <div class="field">
+                <label for="name">Name on the table <span class="req" aria-hidden="true">*</span></label>
+                <input id="name" name="name" type="text" autocomplete="name" required aria-describedby="name-err" placeholder="Rhiannon Pike">
+                <p class="field__err" id="name-err" role="alert"></p>
+              </div>
+              <div class="field">
+                <label for="phone">Phone number <span class="req" aria-hidden="true">*</span></label>
+                <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required aria-describedby="phone-hint phone-err" placeholder="(401) 555-0142">
+                <p class="field__hint" id="phone-hint">We ring to confirm parties of seven or more.</p>
+                <p class="field__err" id="phone-err" role="alert"></p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="email">Email for the hold <span class="req" aria-hidden="true">*</span></label>
+              <input id="email" name="email" type="email" autocomplete="email" required aria-describedby="email-err" placeholder="you@example.com">
+              <p class="field__err" id="email-err" role="alert"></p>
+            </div>
+
+            <div class="field-row field-row--3">
+              <div class="field">
+                <label for="date">Date <span class="req" aria-hidden="true">*</span></label>
+                <input id="date" name="date" type="date" required aria-describedby="date-err">
+                <p class="field__err" id="date-err" role="alert"></p>
+              </div>
+              <div class="field">
+                <label for="time">Seating time <span class="req" aria-hidden="true">*</span></label>
+                <select id="time" name="time" required aria-describedby="time-err">
+                  <option value="">Choose…</option>
+                  <option>17:30</option><option>18:00</option><option>18:30</option>
+                  <option>19:00</option><option>19:30</option><option>20:00</option>
+                  <option>20:30</option><option>21:00</option><option>21:15</option>
+                </select>
+                <p class="field__err" id="time-err" role="alert"></p>
+              </div>
+              <div class="field">
+                <label for="party">Party size <span class="req" aria-hidden="true">*</span></label>
+                <select id="party" name="party" required aria-describedby="party-err">
+                  <option value="">Choose…</option>
+                  <option>1</option><option>2</option><option>3</option><option>4</option>
+                  <option>5</option><option>6</option><option>7</option><option>8</option>
+                  <option>10</option><option>12</option>
+                </select>
+                <p class="field__err" id="party-err" role="alert"></p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="seating">Where you would like to sit</label>
+              <select id="seating" name="seating">
+                <option>Any seat</option>
+                <option>Hearth counter</option>
+                <option>Long Oak Table</option>
+                <option>Window, Foundry Street</option>
+                <option>Quiet corner, back hall</option>
+              </select>
+              <p class="field__hint">Requests, not guarantees. The counter seats eight and is first to fill.</p>
+            </div>
+
+            <div class="field">
+              <label for="notes">Allergies, occasions, or a wood you are curious about</label>
+              <textarea id="notes" name="notes" rows="4" placeholder="No shellfish for one of us. Celebrating an eleventh anniversary — a table facing the fire would be perfect."></textarea>
+            </div>
+
+            <div class="form__foot">
+              <button class="btn btn--ember btn--lg" type="submit">Send Request to the Host Desk</button>
+              <p class="form__status" data-form-status role="status" aria-live="polite"></p>
+            </div>
+            <p class="field__hint">We hold your details for this booking only and never pass them on. Cancel free of charge up to four hours before your seating.</p>
+          </form>
+        </div>
+
+        <!-- confirmation -->
+        <div class="confirm" id="confirmation" aria-live="polite">
+          <div class="confirm__top">
+            <span class="seal" aria-hidden="true">
+              <span class="seal__inner"><span class="seal__top">Table Held</span><span class="seal__mid">Ember</span><span class="seal__bot">Oak</span></span>
+            </span>
+            <div>
+              <p class="confirm__code">Confirmation <span data-out="code">EO-FRI-0000</span></p>
+              <h2>Your Table Is in the Book</h2>
+            </div>
+          </div>
+          <p>Hold on to the code above. A copy is on its way to the email you gave us, and the host will call any party of seven or more the same afternoon.</p>
+          <dl class="confirm__grid">
+            <div class="confirm__cell"><dt class="mono-label">Name</dt><dd style="margin:.3rem 0 0;font-family:var(--display);font-size:1.15rem" data-out="name">—</dd></div>
+            <div class="confirm__cell"><dt class="mono-label">Party</dt><dd style="margin:.3rem 0 0;font-family:var(--display);font-size:1.15rem" data-out="party">—</dd></div>
+            <div class="confirm__cell"><dt class="mono-label">Date</dt><dd style="margin:.3rem 0 0;font-family:var(--display);font-size:1.15rem" data-out="date">—</dd></div>
+            <div class="confirm__cell"><dt class="mono-label">Seating</dt><dd style="margin:.3rem 0 0;font-family:var(--display);font-size:1.15rem" data-out="time">—</dd></div>
+            <div class="confirm__cell"><dt class="mono-label">Preference</dt><dd style="margin:.3rem 0 0;font-family:var(--display);font-size:1.15rem" data-out="seat">—</dd></div>
+            <div class="confirm__cell"><dt class="mono-label">Room</dt><dd style="margin:.3rem 0 0;font-family:var(--display);font-size:1.15rem" data-out="room">—</dd></div>
+          </dl>
+          <p>Arrive within fifteen minutes or the seat returns to the walk-in list. Read the <a class="link-ember" href="menu.html">menu before you come<span class="arrow" aria-hidden="true"> →</span></a>, or <a class="link-ember" href="visit.html">check hours and directions<span class="arrow" aria-hidden="true"> →</span></a>.</p>
+        </div>
+      </div>
+
+      <!-- live ticket -->
+      <aside class="ticket" aria-labelledby="ticket-title">
+        <div class="ticket__head">
+          <p class="mono-label mono-label--ember">Live ticket · fills as you type</p>
+          <h2 id="ticket-title" style="font-size:1.5rem;margin-top:.35rem">Your Request</h2>
+        </div>
+        <dl class="ticket__rows">
+          <div class="trow"><dt>Held for</dt><dd data-out="name" data-live="true">—</dd></div>
+          <div class="trow"><dt>Guests</dt><dd data-out="party" data-live="true">—</dd></div>
+          <div class="trow"><dt>Date</dt><dd data-out="date" data-live="true">—</dd></div>
+          <div class="trow"><dt>Seating</dt><dd data-out="time" data-live="true">—</dd></div>
+          <div class="trow"><dt>Seat request</dt><dd data-out="seat" data-live="true">Any seat</dd></div>
+          <div class="trow"><dt>Room</dt><dd data-out="room" data-live="true">Main Hall</dd></div>
+        </dl>
+        <div class="ticket__foot">
+          <p>Fire board · tonight<br>Hearth 485°C · Oak bin 62%<br>Counter 8 seats · Long table 12</p>
+          <p>Prefer a person? <a href="tel:+14015550142">(401) 555-0142</a>, answered 15:00 onward.</p>
+        </div>
+      </aside>
+    </div>
+
+    <section class="panel rules" aria-labelledby="rules-title">
+      <header class="panel__head"><span class="mono-label mono-label--ember">Before you book</span><h2 id="rules-title">How the Book Works</h2></header>
+      <div class="rules__grid">
+        <div>
+          <h3>Sixty days out</h3>
+          <p>Reservations release every morning at 9:00 a.m. for the same date sixty days ahead. Monday the ovens are cold and the book is closed.</p>
+        </div>
+        <div>
+          <h3>Walk-ins at the counter</h3>
+          <p>Sixteen seats each service are never released online. Come before 18:00 or after 20:30 and you will very likely eat that night.</p>
+        </div>
+        <div>
+          <h3>Large parties</h3>
+          <p>Seven to twelve go on the Long Oak Table with a set fire menu. Send the request with a note and the host calls you back the same day.</p>
+        </div>
+        <div>
+          <h3>Cancellations</h3>
+          <p>Cancel free up to four hours ahead. Late cancellations and no-shows carry twenty dollars a head, because the coals were lit for you.</p>
+        </div>
+      </div>
+    </section>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <div class="site-footer__brand">
+      <p class="footer-name">Ember <em>&amp;</em> Oak</p>
+      <p>418 Foundry Street<br>Providence, Rhode Island 02903</p>
+      <p class="mono-label">Hearth lit daily from 06:00</p>
+    </div>
+    <nav aria-label="Footer">
+      <h2 class="footer-h">Pages</h2>
+      <ul class="footer-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="reservations.html">Reservations</a></li>
+        <li><a href="visit.html">Visit</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h2 class="footer-h">Hours</h2>
+      <ul class="footer-list footer-list--hours">
+        <li><span>Tue–Thu</span><span>17:00–22:00</span></li>
+        <li><span>Fri–Sat</span><span>17:00–23:30</span></li>
+        <li><span>Sunday</span><span>11:00–20:00</span></li>
+        <li><span>Monday</span><span>Ovens cold</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="footer-h">Get in Touch</h2>
+      <ul class="footer-list">
+        <li><a href="tel:+14015550142">(401) 555-0142</a></li>
+        <li><a href="mailto:hearth@emberandoak.com">hearth@emberandoak.com</a></li>
+        <li><a href="visit.html#private-dining">Private dining &amp; buyouts</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap site-footer__base">
+    <p>© 2014–2026 Ember &amp; Oak. Cooked over oak and apple.</p>
+    <p class="mono-label">No gas flame · No shortcuts</p>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
