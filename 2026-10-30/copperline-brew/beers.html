@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en" class="js-off">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beer Board — Specs, ABV &amp; IBU | Copperline Brewing Co.</title>
+<meta name="description" content="Every Copperline beer with full specs: ABV, IBU, original and final gravity, yeast, hops, malt, tasting notes, and food pairings. Tap wall, cans, and barrel releases.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <div class="ticker-group">
+        <span>Copperline Brewing Co.</span>
+        <span>214 Foundry Street, Corktown</span>
+        <span>Brewhouse № “The Wire” — 12 BBL</span>
+        <span>Ten taps, four guest lines</span>
+        <span>Dogs welcome on the patio</span>
+        <span>Barrel release: Dec 3</span>
+      </div>
+      <div class="ticker-group">
+        <span>Copperline Brewing Co.</span>
+        <span>214 Foundry Street, Corktown</span>
+        <span>Brewhouse № “The Wire” — 12 BBL</span>
+        <span>Ten taps, four guest lines</span>
+        <span>Dogs welcome on the patio</span>
+        <span>Barrel release: Dec 3</span>
+      </div>
+    </div>
+  </div>
+  <div class="wrap masthead-inner">
+    <a class="brand" href="index.html" aria-label="Copperline Brewing Co. home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b87333" stroke-width="2" stroke-linecap="square">
+          <path d="M5 3h14v5a7 7 0 0 1-14 0V3Z"/>
+          <path d="M9 15v6M15 15v6M7 21h10"/>
+        </svg>
+      </span>
+      <span>
+        <span class="brand-name">Copperline</span>
+        <span class="brand-sub">Brewing Co.</span>
+      </span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav" aria-label="Open navigation menu">
+      <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="square"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="square"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    </button>
+    <nav class="site-nav" id="site-nav" data-site-nav aria-label="Main">
+      <ul class="nav-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="beers.html" aria-current="page">Beers</a></li>
+        <li><a href="our-story.html">Our Story</a></li>
+        <li><a href="visit.html">Visit</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-head" aria-labelledby="page-h">
+    <div class="wrap">
+      <p class="crumbs"><a href="index.html">Home</a> / <span aria-current="page">Beers</span></p>
+      <div class="split split--63" style="align-items:end">
+        <div class="reveal">
+          <p class="eyebrow">Nine on the board · Ten on the wall</p>
+          <h1 id="page-h">The Beer Board</h1>
+        </div>
+        <p class="lede dim reveal">
+          Every beer we run, with the numbers we actually brew to. Open a card for the gravity
+          readings, the hop and malt bill, the tasting notes, and what Dana says to eat with it.
+        </p>
+      </div>
+      <div class="chip-row reveal" style="margin-top:34px" data-filter-group data-filter-targets="#beer-grid .beer-card" data-filter-count="#beer-count" role="group" aria-label="Filter beers by style">
+        <button class="chip filter-chip" type="button" data-filter="all" aria-pressed="true">All nine</button>
+        <button class="chip filter-chip" type="button" data-filter="ipa" aria-pressed="false">IPA</button>
+        <button class="chip filter-chip" type="button" data-filter="lager" aria-pressed="false">Lager</button>
+        <button class="chip filter-chip" type="button" data-filter="dark" aria-pressed="false">Dark</button>
+        <button class="chip filter-chip" type="button" data-filter="sour" aria-pressed="false">Sour</button>
+        <button class="chip filter-chip" type="button" data-filter="session" aria-pressed="false">Under 5%</button>
+        <button class="chip filter-chip" type="button" data-filter="barrel" aria-pressed="false">Barrel-aged</button>
+      </div>
+      <p class="mono reveal" id="beer-count" style="font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-mute);margin-top:14px">Showing all 9</p>
+    </div>
+  </section>
+
+  <!-- ============ BEER GRID ============ -->
+  <section class="section section--tight" aria-labelledby="grid-h">
+    <div class="wrap">
+      <h2 id="grid-h" class="sr-only">Beers on the board</h2>
+      <div class="beer-grid" id="beer-grid">
+
+        <article class="beer-card reveal" data-beer="wirecutter-ipa" data-kind="ipa">
+          <div class="frame frame--wide" aria-hidden="true">
+            <img src="https://picsum.photos/seed/copperline-brew-442f5186f3ba/1600/900?auto=format&fit=crop&w=800&q=80" alt="Golden West Coast IPA in a textured pint glass on a steel bar top" width="800" height="533" loading="lazy">
+          </div>
+          <div class="beer-card__top">
+            <div>
+              <p class="beer-card__idx">№ 01 · Flagship</p>
+              <h3 id="wirecutter-ipa">Wirecutter IPA</h3>
+              <p class="beer-card__style">West Coast IPA</p>
+            </div>
+            <span class="pint" aria-hidden="true"></span>
+          </div>
+          <div class="beer-card__bars">
+            <div class="bar-line"><span>ABV</span><span class="meter"><span class="meter-fill" style="--k:.57"></span></span><span class="val">6.8%</span></div>
+            <div class="bar-line"><span>IBU</span><span class="meter"><span class="meter-fill" style="--k:.65"></span></span><span class="val">65</span></div>
+          </div>
+          <p class="beer-card__note">Bone-dry, resinous, and built for people who like an IPA with edges.</p>
+          <p class="chip-row"><span class="chip">Pine</span><span class="chip">Grapefruit</span><span class="chip">Dry finish</span></p>
+          <button class="btn btn--sm" type="button" data-beer-open aria-haspopup="dialog">Full spec sheet</button>
+        </article>
+
+        <article class="beer-card reveal" data-beer="slag-heap-hazy" data-kind="ipa">
+          <div class="frame frame--wide" aria-hidden="true">
+            <img src="https://picsum.photos/seed/copperline-brew-6f8d1a212eb2/1600/900?auto=format&fit=crop&w=800&q=80" alt="Hazy pale-gold New England IPA with a thick white head in a nonic glass" width="800" height="533" loading="lazy">
+          </div>
+          <div class="beer-card__top">
+            <div>
+              <p class="beer-card__idx">№ 02 · Fast turn</p>
+              <h3 id="slag-heap-hazy">Slag Heap Hazy</h3>
+              <p class="beer-card__style">New England IPA</p>
+            </div>
+            <span class="pint" aria-hidden="true"></span>
+          </div>
+          <div class="beer-card__bars">
+            <div class="bar-line"><span>ABV</span><span class="meter"><span class="meter-fill" style="--k:.60"></span></span><span class="val">7.2%</span></div>
+            <div class="bar-line"><span>IBU</span><span class="meter"><span class="meter-fill" style="--k:.40"></span></span><span class="val">40</span></div>
+          </div>
+          <p class="beer-card__note">Kveik at 98°F, heavy dry hop, on the wall eleven days after mash-in.</p>
+          <p class="chip-row"><span class="chip chip--solid">Mango</span><span class="chip">Soft</span><span class="chip">Juicy</span></p>
+          <button class="btn btn--sm" type="button" data-beer-open aria-haspopup="dialog">Full spec sheet</button>
+        </article>
+
+        <article class="beer-card reveal" data-beer="rolling-mill-amber" data-kind="amber">
+          <div class="frame frame--wide" aria-hidden="true">
+            <img src="https://picsum.photos/seed/copperline-brew-4e5096a6d586/1600/900?auto=format&fit=crop&w=800&q=80" alt="Copper-amber ale glowing in a pint glass against a dark background" width="800" height="533" loading="lazy">
+          </div>
+          <div class="beer-card__top">
+            <div>
+              <p class="beer-card__idx">№ 03 · House control</p>
+              <h3 id="rolling-mill-amber">Rolling Mill Amber</h3>
+              <p class="beer-card__style">Amber Ale</p>
+            </div>
+            <span class="pint" aria-hidden="true"></span>
+          </div>
+          <div class="beer-card__bars">
+            <div class="bar-line"><span>ABV</span><span class="meter"><span class="meter-fill" style="--k:.47"></span></span><span class="val">5.6%</span></div>
+            <div class="bar-line"><span>IBU</span><span class="meter"><span class="meter-fill" style="--k:.28"></span></span><span class="val">28</span></div>
+          </div>
+          <p class="beer-card__note">Toffee and toast from the yeast jar we have kept alive since 2014.</p>
+          <p class="chip-row"><span class="chip">Toffee</span><span class="chip">Toast</span><span class="chip chip--rust">Our logo colour</span></p>
+          <button class="btn btn--sm" type="button" data-beer-open aria-haspopup="dialog">Full spec sheet</button>
+        </article>
+
+        <article class="beer-card reveal" data-beer="cold-draw-stout" data-kind="dark stout">
+          <div class="frame frame--wide" aria-hidden="true">
+            <img src="https://picsum.photos/seed/copperline-brew-2ee8dd4a0d6c/1600/900?auto=format&fit=crop&w=800&q=80" alt="Near-black nitro stout with a dense tan head settling in a snifter" width="800" height="533" loading="lazy">
+          </div>
+          <div class="beer-card__top">
+            <div>
+              <p class="beer-card__idx">№ 04 · Nitro tower</p>
+              <h3 id="cold-draw-stout">Cold Draw Stout</h3>
+              <p class="beer-card__style">Oatmeal Stout</p>
+            </div>
+            <span class="pint pint--low" aria-hidden="true"></span>
+          </div>
+          <div class="beer-card__bars">
+            <div class="bar-line"><span>ABV</span><span class="meter"><span class="meter-fill" style="--k:.51"></span></span><span class="val">6.1%</span></div>
+            <div class="bar-line"><span>IBU</span><span class="meter"><span class="meter-fill" style="--k:.38"></span></span><span class="val">38</span></div>
+          </div>
+          <p class="beer-card__note">Roasted hard, fermented cool, and silky off the nitrogen blend.</p>
+          <p class="chip-row"><span class="chip">Cocoa</span><span class="chip">Cold brew</span><span class="chip">Silky</span></p>
+          <button class="btn btn--sm" type="button" data-beer-open aria-haspopup="dialog">Full spec sheet</button>
+        </article>
+
+        <article class="beer-card reveal" data-beer="flux-state-pils" data-kind="lager session">
+          <div class="frame frame--wide" aria-hidden="true">
+            <img src="https://picsum.photos/seed/copperline-brew-9889bc207225/1600/900?auto=format&fit=crop&w=800&q=80" alt="Clear straw-coloured pilsner with a lingering white head in a stemmed glass" width="800" height="533" loading="lazy">
+          </div>
+          <div class="beer-card__top">
+            <div>
+              <p class="beer-card__idx">№ 05 · Decoction</p>
+              <h3 id="flux-state-pils">Flux State Pils</h3>
+              <p class="beer-card__style">Czech-Style Pilsner</p>
+            </div>
+            <span class="pint" aria-hidden="true"></span>
+          </div>
+          <div class="beer-card__bars">
+            <div class="bar-line"><span>ABV</span><span class="meter"><span class="meter-fill" style="--k:.40"></span></span><span class="val">4.8%</span></div>
+            <div class="bar-line"><span>IBU</span><span class="meter"><span class="meter-fill" style="--k:.35"></span></span><span class="val">35</span></div>
+          </div>
+          <p class="beer-card__note">Three boiled mash rests, six weeks of cold, and our most-sold pint.</p>
+          <p class="chip-row"><span class="chip">Hay</span><span class="chip">Lemon peel</span><span class="chip chip--rust">Hard mode</span></p>
+          <button class="btn btn--sm" type="button" data-beer-open aria-haspopup="dialog">Full spec sheet</button>
+        </article>
+
+        <article class="beer-card reveal" data-beer="patina-gose" data-kind="sour session">
+          <div class="frame frame--wide" aria-hidden="true">
+            <img src="https://picsum.photos/seed/copperline-brew-118f29f2f6ce/1600/900?auto=format&fit=crop&w=800&q=80" alt="Pale cloudy sour gose garnished with a lime wheel on a bar top" width="800" height="533" loading="lazy">
+          </div>
+          <div class="beer-card__top">
+            <div>
+              <p class="beer-card__idx">№ 06 · Spring only</p>
+              <h3 id="patina-gose">Patina Gose</h3>
+              <p class="beer-card__style">Kettle-Sour Gose</p>
+            </div>
+            <span class="pint" aria-hidden="true"></span>
+          </div>
+          <div class="beer-card__bars">
+            <div class="bar-line"><span>ABV</span><span class="meter"><span class="meter-fill" style="--k:.35"></span></span><span class="val">4.2%</span></div>
+            <div class="bar-line"><span>IBU</span><span class="meter"><span class="meter-fill" style="--k:.10"></span></span><span class="val">10</span></div>
+          </div>
+          <p class="beer-card__note">Thirty-six hours of kettle souring, then salt and lime and nothing else.</p>
+          <p class="chip-row"><span class="chip">Green apple</span><span class="chip">Saline</span><span class="chip">Tart</span></p>
+          <button class="btn btn--sm" type="button" data-beer-open aria-haspopup="dialog">Full spec sheet</button>
+        </article>
+
+        <article class="beer-card reveal" data-beer="ten-thousand-hours" data-kind="barrel dark">
+          <div class="frame frame--wide" aria-hidden="true">
+            <img src="https://picsum.photos/seed/copperline-brew-1e3b5129c784/1600/900?auto=format&fit=crop&w=800&q=80" alt="Dark oak whiskey barrels stacked in a dim warehouse aisle" width="800" height="533" loading="lazy">
+          </div>
+          <div class="beer-card__top">
+            <div>
+              <p class="beer-card__idx">№ 07 · Dec 3 release</p>
+              <h3 id="ten-thousand-hours">Ten Thousand Hours</h3>
+              <p class="beer-card__style">Barleywine in Rye Barrels</p>
+            </div>
+            <span class="pint" aria-hidden="true"></span>
+          </div>
+          <div class="beer-card__bars">
+            <div class="bar-line"><span>ABV</span><span class="meter"><span class="meter-fill" style="--k:.95"></span></span><span class="val">11.4%</span></div>
+            <div class="bar-line"><span>IBU</span><span class="meter"><span class="meter-fill" style="--k:.55"></span></span><span class="val">55</span></div>
+          </div>
+          <p class="beer-card__note">Twenty-two months in once-used rye barrels, blended across four vessels.</p>
+          <p class="chip-row"><span class="chip chip--solid">Fig</span><span class="chip">Rye oak</span><span class="chip">900 bottles</span></p>
+          <button class="btn btn--sm" type="button" data-beer-open aria-haspopup="dialog">Full spec sheet</button>
+        </article>
+
+        <article class="beer-card reveal" data-beer="static-cling" data-kind="ipa session">
+          <div class="frame frame--wide" aria-hidden="true">
+            <img src="https://picsum.photos/seed/copperline-brew-70d99b101f6f/1600/900?auto=format&fit=crop&w=800&q=80" alt="Row of pale ale pints lined up on a wooden tasting paddle" width="800" height="533" loading="lazy">
+          </div>
+          <div class="beer-card__top">
+            <div>
+              <p class="beer-card__idx">№ 08 · Shift beer</p>
+              <h3 id="static-cling">Static Cling</h3>
+              <p class="beer-card__style">Session Pale Ale</p>
+            </div>
+            <span class="pint pint--out" aria-hidden="true"></span>
+          </div>
+          <div class="beer-card__bars">
+            <div class="bar-line"><span>ABV</span><span class="meter"><span class="meter-fill" style="--k:.38"></span></span><span class="val">4.6%</span></div>
+            <div class="bar-line"><span>IBU</span><span class="meter"><span class="meter-fill" style="--k:.32"></span></span><span class="val">32</span></div>
+          </div>
+          <p class="beer-card__note">Low gravity, high Idaho 7. The refill you do not think about.</p>
+          <p class="chip-row"><span class="chip">Orange peel</span><span class="chip">Melon</span><span class="chip">Snappy</span></p>
+          <button class="btn btn--sm" type="button" data-beer-open aria-haspopup="dialog">Full spec sheet</button>
+        </article>
+
+        <article class="beer-card reveal" data-beer="kiln-light" data-kind="lager session">
+          <div class="frame frame--wide" aria-hidden="true">
+            <img src="https://picsum.photos/seed/copperline-brew-f2f92b6417b4/1600/900?auto=format&fit=crop&w=800&q=80" alt="Pale golden cream ale in a classic pint glass on an outdoor picnic table" width="800" height="533" loading="lazy">
+          </div>
+          <div class="beer-card__top">
+            <div>
+              <p class="beer-card__idx">№ 09 · Summer</p>
+              <h3 id="kiln-light">Kiln Light</h3>
+              <p class="beer-card__style">Cream Ale</p>
+            </div>
+            <span class="pint" aria-hidden="true"></span>
+          </div>
+          <div class="beer-card__bars">
+            <div class="bar-line"><span>ABV</span><span class="meter"><span class="meter-fill" style="--k:.42"></span></span><span class="val">5.0%</span></div>
+            <div class="bar-line"><span>IBU</span><span class="meter"><span class="meter-fill" style="--k:.18"></span></span><span class="val">18</span></div>
+          </div>
+          <p class="beer-card__note">Corn we flake in the milling room, carbonated hard, served colder than the pilsner.</p>
+          <p class="chip-row"><span class="chip">Sweet corn</span><span class="chip">Spritzy</span><span class="chip">Patio</span></p>
+          <button class="btn btn--sm" type="button" data-beer-open aria-haspopup="dialog">Full spec sheet</button>
+        </article>
+
+      </div>
+      <noscript><p class="mono dim" style="margin-top:24px">Spec sheets need JavaScript. Everything else on this board — ABV, IBU, and tasting notes — reads above.</p></noscript>
+    </div>
+  </section>
+
+  <!-- ============ HOW TO READ A SPEC ============ -->
+  <section class="section section--ruled" aria-labelledby="read-h">
+    <div class="wrap">
+      <div class="split split--37" style="align-items:end;margin-bottom:34px">
+        <div class="reveal">
+          <p class="eyebrow">Instrument panel, honestly labelled</p>
+          <h2 id="read-h">How to Read Our Numbers</h2>
+        </div>
+        <p class="dim reveal">We print the readings we take, not the ones that sell. Here is what each dial on this page actually means.</p>
+      </div>
+
+      <div class="dash">
+        <div class="c4 tile reveal">
+          <p class="panel-head"><span class="lamp lamp--warn" aria-hidden="true"></span> ABV <span class="panel-code">0–12%</span></p>
+          <svg class="gauge" viewBox="0 0 120 76" role="img" aria-label="Alcohol by volume gauge showing 6.8 percent on a 0 to 12 percent scale" data-val="6.8" data-max="12">
+            <path class="dial-arc" d="M12 62 A48 48 0 0 1 108 62"></path>
+            <path class="dial-live" d="M12 62 A48 48 0 0 1 108 62"></path>
+            <line class="dial-tick" x1="19" y1="62" x2="24" y2="62"></line>
+            <line class="dial-tick" x1="60" y1="21" x2="60" y2="26"></line>
+            <line class="dial-tick" x1="101" y1="62" x2="96" y2="62"></line>
+            <line class="dial-needle" x1="60" y1="62" x2="60" y2="24"></line>
+            <circle class="dial-hub" cx="60" cy="62" r="5"></circle>
+          </svg>
+          <p class="readout-label">Wirecutter — 6.8% ABV</p>
+          <p class="dim" style="margin-top:14px">Alcohol by volume, measured on the distillation bench every batch. Our range runs 4.2% to 11.4%.</p>
+        </div>
+
+        <div class="c4 tile reveal">
+          <p class="panel-head"><span class="lamp lamp--on" aria-hidden="true"></span> IBU <span class="panel-code">0–100</span></p>
+          <svg class="gauge" viewBox="0 0 120 76" role="img" aria-label="International bitterness units gauge showing 65 on a 0 to 100 scale" data-val="65" data-max="100">
+            <path class="dial-arc" d="M12 62 A48 48 0 0 1 108 62"></path>
+            <path class="dial-live" d="M12 62 A48 48 0 0 1 108 62"></path>
+            <line class="dial-tick" x1="19" y1="62" x2="24" y2="62"></line>
+            <line class="dial-tick" x1="60" y1="21" x2="60" y2="26"></line>
+            <line class="dial-tick" x1="101" y1="62" x2="96" y2="62"></line>
+            <line class="dial-needle" x1="60" y1="62" x2="60" y2="24"></line>
+            <circle class="dial-hub" cx="60" cy="62" r="5"></circle>
+          </svg>
+          <p class="readout-label">Wirecutter — 65 IBU</p>
+          <p class="dim" style="margin-top:14px">Chemical bitterness, not perceived. A 40 IBU hazy drinks softer than a 65 IBU West Coast because there is more sugar holding it.</p>
+        </div>
+
+        <div class="c4 tile reveal">
+          <p class="panel-head"><span class="lamp lamp--cold" aria-hidden="true"></span> SRM <span class="panel-code">Colour 0–40</span></p>
+          <svg class="gauge" viewBox="0 0 120 76" role="img" aria-label="Standard reference method colour gauge showing 17 on a 0 to 40 scale" data-val="17" data-max="40">
+            <path class="dial-arc" d="M12 62 A48 48 0 0 1 108 62"></path>
+            <path class="dial-live" d="M12 62 A48 48 0 0 1 108 62"></path>
+            <line class="dial-tick" x1="19" y1="62" x2="24" y2="62"></line>
+            <line class="dial-tick" x1="60" y1="21" x2="60" y2="26"></line>
+            <line class="dial-tick" x1="101" y1="62" x2="96" y2="62"></line>
+            <line class="dial-needle" x1="60" y1="62" x2="60" y2="24"></line>
+            <circle class="dial-hub" cx="60" cy="62" r="5"></circle>
+          </svg>
+          <p class="readout-label">Rolling Mill — 17 SRM</p>
+          <p class="dim" style="margin-top:14px">How dark the beer is. 3 is a pilsner, 17 is our amber, 42 is the stout — the number we named the logo after sits at 14.</p>
+        </div>
+
+        <div class="c6 tile tile--paper reveal">
+          <p class="panel-head">Gravity, start to finish <span class="panel-code">OG → FG</span></p>
+          <h3>Dryness Is a Math Problem</h3>
+          <p class="dim">
+            Original gravity is how much sugar is in the wort before fermentation; final gravity is
+            what is left after the yeast stops. The gap between them is the beer’s body. Static Cling
+            runs 1.044 to 1.010 — a small gap, so it drinks light. Ten Thousand Hours runs 1.112 to
+            1.034 — a huge gap with a lot still left behind, which is why it is thick and cellared.
+          </p>
+          <div style="display:grid;gap:12px;margin-top:20px">
+            <div class="bar-line"><span>Patina</span><span class="meter meter--paper"><span class="meter-fill" style="--k:.20"></span></span><span class="val">1.006</span></div>
+            <div class="bar-line"><span>Flux State</span><span class="meter meter--paper"><span class="meter-fill" style="--k:.34"></span></span><span class="val">1.012</span></div>
+            <div class="bar-line"><span>Wirecutter</span><span class="meter meter--paper"><span class="meter-fill" style="--k:.37"></span></span><span class="val">1.011</span></div>
+            <div class="bar-line"><span>Cold Draw</span><span class="meter meter--paper"><span class="meter-fill" style="--k:.56"></span></span><span class="val">1.018</span></div>
+            <div class="bar-line"><span>Ten 000 Hrs</span><span class="meter meter--paper"><span class="meter-fill" style="--k:1"></span></span><span class="val">1.034</span></div>
+          </div>
+        </div>
+
+        <div class="c6 tile reveal">
+          <p class="panel-head"><span class="lamp lamp--on" aria-hidden="true"></span> Freshness Log <span class="panel-code">FR-09</span></p>
+          <h3>Why the Wall Beats the Can</h3>
+          <p class="dim">
+            Every keg gets a date when it hits the wall and we write it on the handle. House average
+            from tank to empty keg is nine days; the limit we hold ourselves to is fourteen. Cans leave
+            the cooler at the three-day mark and stay good for about four months if you keep them cold
+            and out of the sun — but hop aroma is the first thing to go, which is why the IPA is a tap
+            beer and the amber is a can beer.
+          </p>
+          <ul class="spec-list" style="margin-top:22px">
+            <li><dt>Best on tap</dt><dd>IPAs, stouts</dd></li>
+            <li><dt>Best canned</dt><dd>Amber, pilsner</dd></li>
+            <li><dt>Best bottled</dt><dd>Barleywine</dd></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TO-GO SHELF ============ -->
+  <section class="section section--ruled" aria-labelledby="shelf-h">
+    <div class="wrap">
+      <div class="dash">
+        <div class="c5 reveal">
+          <figure class="frame halftone frame--tall">
+            <img src="https://picsum.photos/seed/copperline-brew-1332132d4161/1600/900?auto=format&fit=crop&w=1200&q=80" alt="Aluminium beer cans with hand-drawn labels standing on a stainless packing table" width="1200" height="1600" loading="lazy">
+          </figure>
+        </div>
+        <div class="c7 tile tile--ink reveal">
+          <p class="panel-head">To-Go Shelf <span class="panel-code">PK-02</span></p>
+          <h2 id="shelf-h">Cans, Crowlers, and the 500 ml Wax</h2>
+          <p class="dim">
+            We can on Tuesdays and fill crowlers to order. Everything is dated on the bottom, and if
+            you bring a growler we purge it with CO₂ before it goes under the filler — which is the
+            only reason a growler is worth drinking at home.
+          </p>
+          <table class="data-table" style="margin-top:22px">
+            <caption class="sr-only">Packaging options and prices at the Copperline to-go shelf</caption>
+            <thead><tr><th scope="col">Format</th><th scope="col">Volume</th><th scope="col">Price</th><th scope="col">Fills</th></tr></thead>
+            <tbody>
+              <tr><td class="day">Single can</td><td>16 oz</td><td>$9</td><td>Year-round four</td></tr>
+              <tr><td class="day">Four-pack</td><td>4 × 16 oz</td><td>$32</td><td>Mix any two styles</td></tr>
+              <tr><td class="day">Crowler</td><td>32 oz, sealed at the bar</td><td>$13</td><td>Any beer on the wall</td></tr>
+              <tr><td class="day">Bottle, waxed</td><td>500 ml</td><td>$26</td><td>Barrel-aged releases</td></tr>
+              <tr><td class="day">Growler fill</td><td>64 oz</td><td>$18 / $22 with a new jug</td><td>Anything but nitro</td></tr>
+            </tbody>
+          </table>
+          <p class="mono" style="font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-mute);margin-top:20px">
+            Shelf state: 6 styles canned · 2 waiting on labels · Dec 3 wax drop at 4:00 PM
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PAIRINGS ============ -->
+  <section class="section section--ruled" aria-labelledby="pair-h">
+    <div class="wrap">
+      <div class="split split--63" style="margin-bottom:32px">
+        <div class="reveal">
+          <p class="eyebrow">Eat this, drink this</p>
+          <h2 id="pair-h">Pairings From the Truck Rotation</h2>
+        </div>
+        <p class="dim reveal">We do not run a kitchen. Four trucks hold court in the yard Thursday through Sunday, and we taste every beer against whatever is on the window that week.</p>
+      </div>
+      <div class="dash">
+        <div class="c6 tile reveal">
+          <p class="panel-head">Char &amp; smoke <span class="panel-code">P-01</span></p>
+          <h3>Wirecutter IPA × Burnt Ends</h3>
+          <p class="dim">The resin in a high-IBU beer cuts fat the way acid does. Order the burnt ends, then order a second Wirecutter before you decide you are not.</p>
+        </div>
+        <div class="c6 tile reveal">
+          <p class="panel-head">Brine &amp; salt <span class="panel-code">P-02</span></p>
+          <h3>Patina Gose × Pickles and Oysters</h3>
+          <p class="dim">Salt in the beer makes salt on the plate read as seasoning instead of brine. This is why the gose exists, and why it only lasts four months.</p>
+        </div>
+        <div class="c6 tile reveal">
+          <p class="panel-head">Roast &amp; bitter <span class="panel-code">P-03</span></p>
+          <h3>Cold Draw Stout × Chocolate Torte</h3>
+          <p class="dim">Match roast to roast. Anything sweeter than 70% cacao and the stout turns metallic; anything drier and you might as well drink coffee.</p>
+        </div>
+        <div class="c6 tile reveal">
+          <p class="panel-head">Fat &amp; malt <span class="panel-code">P-04</span></p>
+          <h3>Rolling Mill Amber × Aged Gouda</h3>
+          <p class="dim">Toffee malt and crystallised cheese are the same flavour at two different ages. This is the pairing we put in front of people who say they do not like beer.</p>
+        </div>
+      </div>
+      <p class="reveal" style="margin-top:32px"><a class="btn btn--paper" href="visit.html">See which truck is in the yard this week</a></p>
+    </div>
+  </section>
+
+  <!-- ============ NEXT ON THE BOARD ============ -->
+  <section class="section section--tight section--ruled" aria-labelledby="next-h">
+    <div class="wrap">
+      <h2 id="next-h" class="reveal">Next On the Board</h2>
+      <div class="dash" style="margin-top:24px">
+        <div class="c4 tile tile--ink reveal">
+          <p class="readout readout--sm">Nov 21</p>
+          <h3 style="margin-top:12px">Ground State</h3>
+          <p class="beer-card__style">Cold IPA · 6.4% · 58 IBU</p>
+          <p class="dim" style="margin-top:12px">Lager yeast, IPA hop load, crash-cold. Two weeks on the wall, then it is gone.</p>
+        </div>
+        <div class="c4 tile tile--ink reveal">
+          <p class="readout readout--sm">Dec 3</p>
+          <h3 style="margin-top:12px">Ten Thousand Hours ’24</h3>
+          <p class="beer-card__style">Barleywine · 11.4% · 900 bottles</p>
+          <p class="dim" style="margin-top:12px">Rye-barrel blend, four vessels, poured by the ounce until the pallet is empty.</p>
+        </div>
+        <div class="c4 tile tile--ink reveal">
+          <p class="readout readout--sm">Jan 9</p>
+          <h3 style="margin-top:12px">Cinder Block</h3>
+          <p class="beer-card__style">Vienna Dunkel · 5.8% · 26 IBU</p>
+          <p class="dim" style="margin-top:12px">Bread crust and walnut, decocted on the same day we pull the pilsner out.</p>
+        </div>
+      </div>
+      <p class="reveal" style="margin-top:30px"><a class="btn" href="events.html">Full release and event calendar</a></p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand">
+        <h2>Copperline Brewing Co.</h2>
+        <p class="dim">
+          Craft beer brewed on Foundry Street since 2014, in a wire-drawing plant we refused to
+          renovate. Independent and employee-owned.
+        </p>
+        <p class="chip-row" style="margin-top:18px">
+          <span class="chip"><span class="lamp lamp--on" aria-hidden="true"></span> Est. 2014</span>
+          <span class="chip">12 BBL</span>
+        </p>
+      </div>
+      <div class="footer-col">
+        <h3>Beer</h3>
+        <ul>
+          <li><a href="beers.html">Full beer list</a></li>
+          <li><a href="beers.html#wirecutter-ipa">Wirecutter IPA</a></li>
+          <li><a href="beers.html#ten-thousand-hours">Ten Thousand Hours</a></li>
+          <li><a href="events.html#merch">Merch &amp; growlers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Visit</h3>
+        <ul>
+          <li>214 Foundry Street</li>
+          <li>Corktown, Michigan 48201</li>
+          <li><a href="tel:+13135550147">(313) 555-0147</a></li>
+          <li><a href="visit.html">Hours, tours &amp; parking</a></li>
+          <li><a href="events.html">Event calendar</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="our-story.html">Our story</a></li>
+          <li><a href="contact.html">Contact &amp; private bookings</a></li>
+          <li><a href="contact.html#faq">Frequently asked</a></li>
+          <li><a href="contact.html#careers">Work the line</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <span>© <span data-year>2026</span> Copperline Brewing Co.</span>
+      <span>Drink it fresh. Please do not drink and drive.</span>
+      <a href="visit.html">Taproom hours</a>
+      <a href="beers.html#main">Back to top</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ BEER DETAIL MODAL ============ -->
+<dialog class="beer-modal" id="beer-modal" aria-labelledby="modal-title">
+  <div class="beer-modal-bar">
+    <span class="mono" style="font-size:.68rem;letter-spacing:.2em;text-transform:uppercase">Beer Spec Sheet</span>
+    <button class="modal-close" type="button" aria-label="Close beer spec sheet">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    </button>
+  </div>
+  <div class="beer-modal-inner">
+    <div>
+      <figure class="frame frame--tall">
+        <img data-modal-img src="https://picsum.photos/seed/copperline-brew-442f5186f3ba/1600/900?auto=format&fit=crop&w=800&q=80" alt="" width="800" height="1066">
+      </figure>
+      <p class="sr-only" id="m-alt"></p>
+      <p class="mono" data-modal-avail style="font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--copper-lite);margin-top:14px">—</p>
+    </div>
+    <div>
+      <h2 id="modal-title" data-modal-title>Beer</h2>
+      <p class="beer-card__style" data-modal-style>Style</p>
+      <p class="lede" data-modal-blurb style="margin-top:16px">—</p>
+      <ul class="spec-list" data-modal-specs></ul>
+      <h3 style="font-size:1.15rem">Tasting Notes</h3>
+      <ul data-modal-notes></ul>
+      <h3 style="font-size:1.15rem;margin-top:22px">Drink It With</h3>
+      <p class="dim" data-modal-pairing>—</p>
+      <h3 style="font-size:1.15rem;margin-top:22px">From the Brew Log</h3>
+      <p class="dim" data-modal-story>—</p>
+      <p style="margin-top:24px"><a class="btn btn--sm" href="visit.html">Pour one at the bar</a></p>
+    </div>
+  </div>
+</dialog>
+
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
