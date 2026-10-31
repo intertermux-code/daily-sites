@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Start a Trip Enquiry · Wanderpost</title>
+<meta name="description" content="A five-minute enquiry form read by a guide, not a sales desk. Two working days to reply, no deposit at this stage, and an honest argument about your chosen month.">
+<meta name="theme-color" content="#1d120c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <span class="burst" aria-hidden="true"></span>
+      <span>Wanderpost<small>Posted by hand</small></span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav" aria-label="Open navigation menu"><span></span></button>
+    <nav class="site-nav" id="siteNav" aria-label="Main">
+      <ul class="nav-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="journeys.html">Journeys</a></li>
+        <li><a href="destination.html">Destinations</a></li>
+        <li><a href="stories.html">Stories</a></li>
+        <li><a href="enquiry.html" aria-current="page">Enquire</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero" data-spotlight>
+    <div class="col">
+      <p class="crumb"><a href="index.html">Home</a> · Enquiry</p>
+      <p class="hero__kicker">Enquiries open · Departures Feb 2027 – Nov 2027</p>
+      <h1>Tell Us the Month, the People, and What You Are Actually After.</h1>
+      <p class="hero__lede">Five minutes here saves us both a fortnight of emails. A guide reads every enquiry — not a sales desk.</p>
+      <p class="hero__meta">
+        <span>Replies within 2 working days</span>
+        <span>No deposit at this stage</span>
+        <span>We will argue about your month</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="band band--tight">
+    <div class="col">
+      <p class="eyebrow">The enquiry</p>
+      <h2>Three Short Steps.</h2>
+      <p>Nothing here is binding and no money moves. We use it to work out whether your dates and your expectations match the route — and if they do not, we say so in the reply rather than taking your deposit.</p>
+
+      <div class="form-shell">
+        <ol class="steps" aria-label="Enquiry steps">
+          <li data-state="current"><button type="button">01 · About you</button></li>
+          <li data-state="upcoming"><button type="button">02 · The trip</button></li>
+          <li data-state="upcoming"><button type="button">03 · What matters</button></li>
+        </ol>
+
+        <form id="enquiryForm" method="post" novalidate aria-label="Trip enquiry">
+
+          <fieldset class="form-step" id="step-1">
+            <h2>Who is writing?</h2>
+            <p class="help" style="margin-bottom:1.75rem">Just enough for us to reply properly. We keep enquiry data for eighteen months and never sell it.</p>
+
+            <div class="field">
+              <label for="fullName">Your name</label>
+              <input class="control" type="text" id="fullName" name="name" autocomplete="name" data-required required>
+              <span class="field-error">Please tell us what to call you.</span>
+            </div>
+
+            <div class="field">
+              <label for="email">Email</label>
+              <input class="control" type="email" id="email" name="email" autocomplete="email" inputmode="email" required>
+              <span class="help">A human replies from this address — usually Aiko, Youssef, Ingrid or Rodrigo.</span>
+              <span class="field-error">We need an address to reply to.</span>
+            </div>
+
+            <div class="field">
+              <label for="phone">Phone (optional)</label>
+              <input class="control" type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel">
+              <span class="help">Only used for the thirty-minute call, never for marketing.</span>
+            </div>
+
+            <div class="field">
+              <label for="fromCity">Where are you flying from?</label>
+              <input class="control" type="text" id="fromCity" name="from" placeholder="Glasgow, London, Dublin…" autocomplete="address-level2" data-required required>
+              <span class="field-error">This decides which airport connections we price for you.</span>
+            </div>
+
+            <div class="step-nav">
+              <button class="btn btn--lg" type="button" data-step-next>Next: the trip <span class="btn-arrow" aria-hidden="true"></span></button>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-step" id="step-2" hidden>
+            <h2>Which journey, and when?</h2>
+
+            <div class="field">
+              <label for="journey">Route you are eyeing</label>
+              <select class="control" id="journey" name="route" data-required required>
+                <option value="">Choose a route</option>
+                <option value="kyoto">Kyoto · 21 days</option>
+                <option value="patagonia">Patagonia · 24 days</option>
+                <option value="marrakech">Marrakech · 14 days</option>
+                <option value="lofoten">Lofoten · 16 days</option>
+                <option value="unsure">No idea yet — help me choose</option>
+              </select>
+              <span class="field-error">Pick one, or choose “no idea yet” and we will ask you three questions.</span>
+            </div>
+
+            <div class="field">
+              <label for="startDate">Preferred month of departure</label>
+              <input class="control" type="date" id="startDate" name="start" min="2027-01-01">
+              <span class="help">Enquiries open about nine months ahead. If your date is inside four months we will still read it.</span>
+              <span class="field-error">Choose a month that has not already passed.</span>
+            </div>
+
+            <div class="field">
+              <label for="partySize">How many of you?</label>
+              <input class="control" type="number" id="partySize" name="party" min="1" max="9" step="1" value="2" data-required required>
+              <span class="help">Nine is the ceiling on Kyoto, Marrakech and Lofoten; Patagonia caps at six.</span>
+              <span class="field-error">Between 1 and 9 — larger groups get a private departure instead.</span>
+            </div>
+
+            <div class="field">
+              <span class="field-label" id="paceLabel">What pace suits you?</span>
+              <div class="chip-row" role="group" aria-labelledby="paceLabel">
+                <label class="chip"><input type="radio" name="pace" value="slow" data-required-group="Choose the pace that sounds most like you." required><span>Slow — one base, long lunches</span></label>
+                <label class="chip"><input type="radio" name="pace" value="medium"><span>Medium — moving every fourth day</span></label>
+                <label class="chip"><input type="radio" name="pace" value="active"><span>Active — out early, walking far</span></label>
+              </div>
+              <span class="help" id="paceHint"></span>
+              <span class="field-error">Choose the pace that sounds most like you.</span>
+            </div>
+
+            <div class="step-nav">
+              <button class="btn btn--ghost" type="button" data-step-back>Back</button>
+              <button class="btn btn--lg" type="button" data-step-next>Next: what matters <span class="btn-arrow" aria-hidden="true"></span></button>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-step" id="step-3" hidden>
+            <h2>What Matters to You</h2>
+            <p class="help" style="margin-bottom:1.75rem">Tick anything that applies. This is the part the guide reads first.</p>
+
+            <div class="field">
+              <span class="field-label" id="careLabel">Things you want in the trip</span>
+              <div class="chip-row" role="group" aria-labelledby="careLabel">
+                <label class="chip"><input type="checkbox" name="care" value="food"><span>Cooking &amp; markets</span></label>
+                <label class="chip"><input type="checkbox" name="care" value="craft"><span>Workshops with makers</span></label>
+                <label class="chip"><input type="checkbox" name="care" value="walking"><span>Long walks</span></label>
+                <label class="chip"><input type="checkbox" name="care" value="water"><span>Boats &amp; kayaks</span></label>
+                <label class="chip"><input type="checkbox" name="care" value="quiet"><span>Quiet days, no plan</span></label>
+                <label class="chip"><input type="checkbox" name="care" value="history"><span>History &amp; architecture</span></label>
+                <label class="chip"><input type="checkbox" name="care" value="photography"><span>Photography at odd hours</span></label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="budget">Budget per person</label>
+              <select class="control" id="budget" name="budget">
+                <option value="">Not sure yet</option>
+                <option value="under-5k">Under £5,000</option>
+                <option value="5-7k">£5,000 – £7,000</option>
+                <option value="7-9k">£7,000 – £9,000</option>
+                <option value="over-9k">Over £9,000</option>
+              </select>
+              <span class="help">Fares above exclude international flights, which we price separately at cost.</span>
+            </div>
+
+            <div class="field">
+              <label for="access">Access, dietary or health needs</label>
+              <textarea class="control" id="access" name="access" rows="3" placeholder="Step-free rooms, coeliac, a knee that hates stairs, a fear of boats — anything that changes the plan."></textarea>
+            </div>
+
+            <div class="field">
+              <label for="notes">Anything else we should know?</label>
+              <textarea class="control" id="notes" name="notes" rows="5" maxlength="600" placeholder="Who you are coming with, what bored you on the last trip, the one thing you would travel for."></textarea>
+              <p class="char-count" id="notesCount">0 / 600</p>
+            </div>
+
+            <div class="field">
+              <label for="heard">How did you find us?</label>
+              <select class="control" id="heard" name="heard">
+                <option value="">Choose one</option>
+                <option value="friend">A traveller told me</option>
+                <option value="envelope">Somebody's posted route note</option>
+                <option value="press">Press or a podcast</option>
+                <option value="search">Search</option>
+                <option value="return">I have travelled with you before</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label class="chip" style="width:100%;justify-content:flex-start"><input type="checkbox" id="consent" name="consent" data-required required><span>I am happy for Wanderpost to email me about this enquiry.</span></label>
+              <span class="field-error">We need this tick to be allowed to reply.</span>
+            </div>
+
+            <div class="step-nav">
+              <button class="btn btn--ghost" type="button" data-step-back>Back</button>
+              <button class="btn btn--lg" type="submit">Send my enquiry <span class="btn-arrow" aria-hidden="true"></span></button>
+            </div>
+          </fieldset>
+        </form>
+
+        <div class="success-card" id="enquirySuccess" hidden>
+          <h2>Posted, <span data-success-name>traveller</span>.</h2>
+          <p>Your enquiry about <strong data-success-route>Kyoto · 21 days</strong> is with the guide who runs that route. You will get a reply from a person — not a template — within two working days, and it will either hold dates for you or tell you honestly why those dates are wrong.</p>
+          <p>Nothing is booked and nothing is charged at this stage. If you would rather talk it through first, ring the office on <a href="tel:+441314600192">+44 131 460 0192</a>, Tuesday to Friday, 09:30–17:00.</p>
+          <p class="ref" data-success-ref>Reference WP-27-0000</p>
+          <div class="card-actions" style="margin-top:1.75rem">
+            <a class="btn btn--chrome" href="journeys.html">Back to the journeys <span class="btn-arrow" aria-hidden="true"></span></a>
+            <a class="btn btn--ghost" style="border-color:rgba(247,234,214,.45);color:#f7ead6" href="stories.html">Read what travellers write back</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHAT HAPPENS NEXT ============ -->
+  <section class="band" id="next">
+    <div class="col">
+      <p class="eyebrow">After you press send</p>
+      <h2>What Happens Next, in Order.</h2>
+      <ol class="method">
+        <li>
+          <span class="idx num">01</span>
+          <div>
+            <h3>Two working days: a guide's reply</h3>
+            <p>Not a holding email. The person who will lead your route reads it and answers, including whether your month is the one we would change.</p>
+          </div>
+        </li>
+        <li>
+          <span class="idx num">02</span>
+          <div>
+            <h3>A thirty-minute call</h3>
+            <p>Who is coming, what bored you last time, whether you want looking after or left alone on day four. Most trips are settled here.</p>
+          </div>
+        </li>
+        <li>
+          <span class="idx num">03</span>
+          <div>
+            <h3>A written plan and a price</h3>
+            <p>Day-by-day, itemised, with the flight options at cost. Deposit is £750 per person and the balance is due seventy days out.</p>
+          </div>
+        </li>
+        <li>
+          <span class="idx num">04</span>
+          <div>
+            <h3>The brown envelope</h3>
+            <p>Fourteen weeks before departure: route notes, paper map, a letter from your guide, and a stamp from the place you are going.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ OFFICE / CONTACT ============ -->
+  <section class="band band--paper" id="office">
+    <div class="col">
+      <p class="eyebrow">Or skip the form</p>
+      <h2>Reach a Human in the Office.</h2>
+
+      <div class="stack stack--close">
+        <div class="info-card">
+          <h3>By telephone</h3>
+          <p><a href="tel:+441314600192">+44 131 460 0192</a> — Tuesday to Friday, 09:30–17:00 UK time. Rachel or Neil answers; both have walked at least one of these routes.</p>
+        </div>
+        <div class="info-card">
+          <h3>By post or in person</h3>
+          <p>Wanderpost Post House, 3 Cowgate, Edinburgh EH1 1JQ. The kettle is on and you can walk in without an appointment on a Thursday — that is when the guides ring in from abroad.</p>
+        </div>
+        <div class="info-card">
+          <h3>By email</h3>
+          <p><a href="mailto:post@wanderpost.travel">post@wanderpost.travel</a>. Better for long questions, group bookings, and anyone who hates phone calls, which is most of us.</p>
+        </div>
+      </div>
+
+      <div class="chrome-rule" role="presentation"></div>
+
+      <div class="faq">
+        <details>
+          <summary>Is my data kept safe?</summary>
+          <p>We store enquiry details for eighteen months on servers in the UK, share them only with the guide running your route and our flight provider, and delete them on request. No third-party advertising trackers run on this site.</p>
+        </details>
+        <details>
+          <summary>Do you take private or company groups?</summary>
+          <p>Yes — up to sixteen on Marrakech and Kyoto as a private departure, with the same guides and a different price. Ring the office, because the calendar matters more than the headcount.</p>
+        </details>
+        <details>
+          <summary>What is the cancellation policy?</summary>
+          <p>Full refund of the deposit up to ninety days out, then 40% of the fare, then nothing inside thirty days. Every booking is ATOL-protected (10152) and financially bonded through ABTOT, so if we fell over tomorrow your money and your flight home are covered.</p>
+        </details>
+        <details>
+          <summary>Can I change my month after booking?</summary>
+          <p>Once, free, up to six months out, subject to the departure not being full. Nine people a year do it and usually move to February or late May — the months in the <a href="destination.html#best-time">month picker</a> with the green dots.</p>
+        </details>
+      </div>
+
+      <div class="airmail" role="presentation"></div>
+      <p class="lede">Ready? The form takes five minutes and a guide reads it, not a call centre.</p>
+      <div class="card-actions">
+        <a class="btn btn--lg" href="#enquiryForm">Jump back to the enquiry <span class="btn-arrow" aria-hidden="true"></span></a>
+        <a class="btn btn--ghost btn--lg" href="journeys.html">Look at the journeys first</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="col">
+    <p class="eyebrow">Wanderpost Post House · Edinburgh</p>
+    <h2>Write to us when you are ready — not before.</h2>
+    <p class="lede">We answer every enquiry within two working days, usually with an argument about your chosen month.</p>
+    <a class="btn btn--chrome btn--lg" href="enquiry.html">Start an enquiry <span class="btn-arrow" aria-hidden="true"></span></a>
+
+    <div class="footer-grid">
+      <div>
+        <p class="footer-brand">Wanderpost</p>
+        <p>Slow travel, planned by people who live there.<br>
+        3 Cowgate, Edinburgh EH1 1JQ, Scotland<br>
+        <a href="tel:+441314600192">+44 131 460 0192</a><br>
+        <a href="mailto:post@wanderpost.travel">post@wanderpost.travel</a></p>
+        <p>Office hours: Tuesday to Friday, 09:30–17:00. The kettle is on; visitors welcome without an appointment.</p>
+      </div>
+      <div>
+        <h3>The Four Routes</h3>
+        <ul>
+          <li><a href="journeys.html#kyoto">Kyoto · 21 days</a></li>
+          <li><a href="journeys.html#patagonia">Patagonia · 24 days</a></li>
+          <li><a href="journeys.html#marrakech">Marrakech · 14 days</a></li>
+          <li><a href="journeys.html#lofoten">Lofoten · 16 days</a></li>
+          <li><a href="destination.html">Kyoto month guide</a></li>
+          <li><a href="journeys.html">All journeys &amp; dates</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>The Post</h3>
+        <ul>
+          <li><a href="index.html#why">Why slow travel</a></li>
+          <li><a href="index.html#method">How a trip gets built</a></li>
+          <li><a href="stories.html">Traveller stories</a></li>
+          <li><a href="enquiry.html">Enquiry form</a></li>
+          <li><a href="enquiry.html#office">Talk to a human</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span data-year>2026</span> Wanderpost Travel Ltd · ATOL 9741 · Registered in Scotland SC418209</p>
+      <ul>
+        <li><a href="stories.html">Stories</a></li>
+        <li><a href="journeys.html">Journeys</a></li>
+        <li><a href="destination.html">Destinations</a></li>
+        <li><a href="enquiry.html">Enquire</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
