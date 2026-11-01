@@ -3,213 +3,226 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Weekly Schedule — Forge Strength Lab</title>
-<meta name="description" content="The full Forge class grid: 37 coached sessions a week across powerlifting platforms, HIIT engine classes, mobility rebuild flows and open yard time. Filter by day.">
-<meta name="theme-color" content="#0e0e10">
+<title>Weekly Board — Class Schedule | Forge Strength Club</title>
+<meta name="description" content="Every coached session Forge runs this week, filterable by day. Times, coaches, intensity, and remaining spots for powerlifting, conditioning, and mobility.">
+<meta name="theme-color" content="#08090a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
-<script src="app.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<div class="scan" aria-hidden="true"></div>
+
+<div class="sysbar">
+  <div class="col sysbar-in">
+    <span class="status-dot" aria-hidden="true"></span>
+    <span>Platform online</span>
+    <span class="hide-sm">· <span data-clock>T+00:00:00</span></span>
+    <span class="spacer"></span>
+    <span class="hide-sm"><span data-wallclock>--:--:-- local</span></span>
+    <span class="hide-sm">· Unit 7 Foundry Row</span>
+  </div>
+</div>
 
 <header class="site-head">
-  <div class="wrap head-inner">
-    <a class="brand" href="index.html">
-      <span class="brand-mark" aria-hidden="true">F</span>
-      <span class="brand-word">Forge</span>
-      <span class="brand-sub">Strength Lab</span>
-    </a>
-    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="primary-nav">
-      <span class="sr-only">Open main menu</span>
-      <span class="bar" aria-hidden="true"></span>
-      <span class="bar" aria-hidden="true"></span>
-      <span class="bar" aria-hidden="true"></span>
-    </button>
-    <nav id="primary-nav" class="nav" aria-label="Main">
+  <div class="col head-in">
+    <a class="brand" href="index.html"><span class="mark" aria-hidden="true"></span>Forge<small>Strength Club</small></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="nav-word">Menu</span></button>
+    <nav class="nav" id="primary-nav" aria-label="Primary" data-open="false">
       <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="programs.html">Programs</a></li>
-        <li><a href="schedule.html" aria-current="page">Schedule</a></li>
-        <li><a href="trainers.html">Coaches</a></li>
-        <li><a href="membership.html">Membership</a></li>
+        <li><a href="index.html" data-key="1"><kbd>1</kbd><span class="word">Home</span></a></li>
+        <li><a href="programs.html" data-key="2"><kbd>2</kbd><span class="word">Programs</span></a></li>
+        <li><a href="schedule.html" data-key="3" aria-current="page"><kbd>3</kbd><span class="word">Schedule</span></a></li>
+        <li><a href="trainers.html" data-key="4"><kbd>4</kbd><span class="word">Coaches</span></a></li>
+        <li><a href="membership.html" data-key="5"><kbd>5</kbd><span class="word">Membership</span></a></li>
       </ul>
-      <a class="btn btn-volt nav-cta" href="membership.html#trial">Book a free trial</a>
     </nav>
   </div>
 </header>
 
 <main id="main">
 
-  <!-- ============ BANNER ============ -->
-  <section class="banner">
-    <div class="wrap">
-      <p class="banner-sub reveal"><a class="crumb" href="index.html">Home<span class="crumb-sep" aria-hidden="true">/</span></a><span class="here">Schedule</span></p>
-      <h1 class="display reveal">The week,<br><span class="volt">on the wall.</span></h1>
-      <p class="lede reveal">Thirty-seven coached sessions, one fixed grid, posted on the yard wall and in the app every Thursday for the week after. Classes cap at fourteen. Booking opens seven days ahead at 06:00.</p>
-      <p class="hero-meta reveal"><span>Term follows the school calendar</span><span>14 spaces per class</span><span>Unpicked spots freed 90 min out</span></p>
-    </div>
+  <section class="page-intro col">
+    <p class="crumbs"><a href="index.html">Home</a><span aria-hidden="true">/</span><span class="volt">Schedule</span></p>
+    <h1>The week<br>board</h1>
+    <p class="lead">Coached sessions for the current block, published Friday at 18:00. Filter to a day, then hold your slot from the app or the floor desk. Booking opens seven days out at 05:00.</p>
   </section>
 
-  <!-- ============ FILTER + GRID ============ -->
-  <section class="section wrap wrap-wide" aria-labelledby="grid-h">
-    <p class="eyebrow reveal">Class grid</p>
-    <h2 id="grid-h" class="h-lg reveal">Filter by day</h2>
-
-    <div class="filters reveal" id="day-filters" role="group" aria-label="Filter classes by day of the week">
-      <button class="filter" type="button" data-day="all" aria-pressed="true">All week</button>
-      <button class="filter" type="button" data-day="monday" aria-pressed="false">Monday</button>
-      <button class="filter" type="button" data-day="tuesday" aria-pressed="false">Tuesday</button>
-      <button class="filter" type="button" data-day="wednesday" aria-pressed="false">Wednesday</button>
-      <button class="filter" type="button" data-day="thursday" aria-pressed="false">Thursday</button>
-      <button class="filter" type="button" data-day="friday" aria-pressed="false">Friday</button>
-      <button class="filter" type="button" data-day="saturday" aria-pressed="false">Saturday</button>
-      <button class="filter" type="button" data-day="sunday" aria-pressed="false">Sunday</button>
+  <section class="section col" aria-labelledby="board-title">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title" id="board-title">Filter by day</h2>
+      <span class="rule" aria-hidden="true"></span>
+      <span class="sec-meta mono" id="week-count">32 slots</span>
     </div>
 
-    <p class="result-count" id="class-count" role="status">Showing all 37 classes across the week</p>
+    <div class="filters" role="group" aria-label="Filter the class board by day">
+      <button class="filter" type="button" data-day-filter="all" aria-pressed="true">All week</button>
+      <button class="filter" type="button" id="mon" data-day-filter="mon" aria-pressed="false">Mon</button>
+      <button class="filter" type="button" id="tue" data-day-filter="tue" aria-pressed="false">Tue</button>
+      <button class="filter" type="button" id="wed" data-day-filter="wed" aria-pressed="false">Wed</button>
+      <button class="filter" type="button" id="thu" data-day-filter="thu" aria-pressed="false">Thu</button>
+      <button class="filter" type="button" id="fri" data-day-filter="fri" aria-pressed="false">Fri</button>
+      <button class="filter" type="button" id="sat" data-day-filter="sat" aria-pressed="false">Sat</button>
+      <button class="filter" type="button" id="sun" data-day-filter="sun" aria-pressed="false">Sun</button>
+    </div>
+    <p class="sr-only" role="status" aria-live="polite" id="week-status"></p>
 
-    <div class="table-scroll reveal">
-      <table id="schedule-table">
-        <caption>Forge weekly class timetable · coaches named on every session</caption>
+    <div class="table-wrap" style="margin-top:1.15rem">
+      <table class="data" id="week-grid">
+        <caption class="mono">Block 12 · week of 2 November · all times Eastern</caption>
         <thead>
           <tr>
             <th scope="col">Day</th>
             <th scope="col">Time</th>
-            <th scope="col">Class</th>
+            <th scope="col">Session</th>
             <th scope="col">Coach</th>
-            <th scope="col">Focus</th>
-            <th scope="col">Length</th>
-            <th scope="col">Spaces</th>
+            <th scope="col">Intensity</th>
+            <th scope="col">Spots left</th>
           </tr>
         </thead>
         <tbody>
-          <tr data-day="monday"><td>Monday</td><td class="time">05:30</td><td><strong>Engine 45</strong></td><td>Ines Ferreira</td><td>Conditioning</td><td>45 min</td><td>3 left</td></tr>
-          <tr data-day="monday"><td>Monday</td><td class="time">07:00</td><td><strong>Platform: Squat</strong></td><td>Marcus Adeyemi</td><td>Powerlifting</td><td>80 min</td><td>Full</td></tr>
-          <tr data-day="monday"><td>Monday</td><td class="time">12:10</td><td><strong>Lunch Lift 40</strong></td><td>Ada Whitmore</td><td>Barbell</td><td>40 min</td><td>6 left</td></tr>
-          <tr data-day="monday"><td>Monday</td><td class="time">17:30</td><td><strong>Platform: Squat</strong></td><td>Marcus Adeyemi</td><td>Powerlifting</td><td>80 min</td><td>1 left</td></tr>
-          <tr data-day="monday"><td>Monday</td><td class="time">18:45</td><td><strong>HIIT Engine</strong></td><td>Ines Ferreira</td><td>Conditioning</td><td>45 min</td><td>4 left</td></tr>
-          <tr data-day="monday"><td>Monday</td><td class="time">20:00</td><td><strong>Open Yard</strong></td><td>Rae Hussain</td><td>Self-directed</td><td>Open</td><td>Walk-in</td></tr>
+          <tr data-day="mon"><td class="mono">Mon</td><td class="t-time">06:00</td><td><span class="t-name">Chassis — Mobility</span><span class="t-sub">CH-03 · mats</span></td><td>Cass Nolan</td><td><span class="meter" role="img" aria-label="Intensity 2 of 5"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></td><td class="tnum">Open</td></tr>
+          <tr data-day="mon"><td class="mono">Mon</td><td class="t-time">06:00</td><td><span class="t-name">Powerlifting — Novice A</span><span class="t-sub">PL-01 · squat cycle</span></td><td>Mara Voss</td><td><span class="meter" role="img" aria-label="Intensity 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td class="tnum">3</td></tr>
+          <tr data-day="mon"><td class="mono">Mon</td><td class="t-time">12:15</td><td><span class="t-name">Lunch Express — Bench</span><span class="t-sub">PL-01 · 45 min hard</span></td><td>Priya Raman</td><td><span class="meter" role="img" aria-label="Intensity 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td><td class="tnum">6</td></tr>
+          <tr data-day="mon"><td class="mono">Mon</td><td class="t-time">18:30</td><td><span class="t-name">Powerlifting — Intermediate</span><span class="t-sub">PL-01 · deadlift wave</span></td><td>Mara Voss</td><td><span class="meter meter--hi" role="img" aria-label="Intensity 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td class="tnum">2</td></tr>
+          <tr data-day="mon"><td class="mono">Mon</td><td class="t-time">20:00</td><td><span class="t-name">Open Platform</span><span class="t-sub">No coaching · members only</span></td><td>Floor desk</td><td><span class="mono muted">—</span></td><td class="tnum">n/a</td></tr>
 
-          <tr data-day="tuesday"><td>Tuesday</td><td class="time">06:00</td><td><strong>Engine 45</strong></td><td>Ines Ferreira</td><td>Conditioning</td><td>45 min</td><td>8 left</td></tr>
-          <tr data-day="tuesday"><td>Tuesday</td><td class="time">09:30</td><td><strong>Mobility Rebuild</strong></td><td>Ada Whitmore</td><td>Range</td><td>50 min</td><td>2 left</td></tr>
-          <tr data-day="tuesday"><td>Tuesday</td><td class="time">12:10</td><td><strong>Lunch Lift 40</strong></td><td>Tomasz Nowak</td><td>Barbell</td><td>40 min</td><td>5 left</td></tr>
-          <tr data-day="tuesday"><td>Tuesday</td><td class="time">17:00</td><td><strong>Platform: Beginners</strong></td><td>Marcus Adeyemi</td><td>Powerlifting</td><td>70 min</td><td>7 left</td></tr>
-          <tr data-day="tuesday"><td>Tuesday</td><td class="time">18:15</td><td><strong>HIIT Engine</strong></td><td>Tomasz Nowak</td><td>Conditioning</td><td>45 min</td><td>Full</td></tr>
-          <tr data-day="tuesday"><td>Tuesday</td><td class="time">19:30</td><td><strong>Mobility Flow</strong></td><td>Ada Whitmore</td><td>Range</td><td>50 min</td><td>9 left</td></tr>
+          <tr data-day="tue"><td class="mono">Tue</td><td class="t-time">06:30</td><td><span class="t-name">Engine Build</span><span class="t-sub">EN-02 · zone 5 intervals</span></td><td>Theo Reyes</td><td><span class="meter meter--hi" role="img" aria-label="Intensity 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td class="tnum">4</td></tr>
+          <tr data-day="tue"><td class="mono">Tue</td><td class="t-time">07:45</td><td><span class="t-name">Engine Build — Light</span><span class="t-sub">EN-02 · scaled rest</span></td><td>Jonny Frost</td><td><span class="meter" role="img" aria-label="Intensity 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td class="tnum">7</td></tr>
+          <tr data-day="tue"><td class="mono">Tue</td><td class="t-time">12:15</td><td><span class="t-name">Engine Build</span><span class="t-sub">EN-02 · sled focus</span></td><td>Theo Reyes</td><td><span class="meter meter--hi" role="img" aria-label="Intensity 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td class="tnum">Full</td></tr>
+          <tr data-day="tue"><td class="mono">Tue</td><td class="t-time">17:30</td><td><span class="t-name">Chassis — Mobility</span><span class="t-sub">CH-03 · hips and ankles</span></td><td>Cass Nolan</td><td><span class="meter" role="img" aria-label="Intensity 2 of 5"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></td><td class="tnum">Open</td></tr>
+          <tr data-day="tue"><td class="mono">Tue</td><td class="t-time">19:15</td><td><span class="t-name">Engine Build</span><span class="t-sub">EN-02 · erg rotation</span></td><td>Jonny Frost</td><td><span class="meter meter--hi" role="img" aria-label="Intensity 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td class="tnum">5</td></tr>
 
-          <tr data-day="wednesday"><td>Wednesday</td><td class="time">05:30</td><td><strong>Engine 45</strong></td><td>Tomasz Nowak</td><td>Conditioning</td><td>45 min</td><td>6 left</td></tr>
-          <tr data-day="wednesday"><td>Wednesday</td><td class="time">07:00</td><td><strong>Platform: Bench</strong></td><td>Marcus Adeyemi</td><td>Powerlifting</td><td>80 min</td><td>2 left</td></tr>
-          <tr data-day="wednesday"><td>Wednesday</td><td class="time">12:10</td><td><strong>Lunch Lift 40</strong></td><td>Ines Ferreira</td><td>Barbell</td><td>40 min</td><td>4 left</td></tr>
-          <tr data-day="wednesday"><td>Wednesday</td><td class="time">17:30</td><td><strong>HIIT Engine</strong></td><td>Ines Ferreira</td><td>Conditioning</td><td>45 min</td><td>1 left</td></tr>
-          <tr data-day="wednesday"><td>Wednesday</td><td class="time">18:45</td><td><strong>Accessory Lab</strong></td><td>Tomasz Nowak</td><td>Hypertrophy</td><td>60 min</td><td>5 left</td></tr>
-          <tr data-day="wednesday"><td>Wednesday</td><td class="time">20:00</td><td><strong>Open Yard</strong></td><td>Rae Hussain</td><td>Self-directed</td><td>Open</td><td>Walk-in</td></tr>
+          <tr data-day="wed"><td class="mono">Wed</td><td class="t-time">06:00</td><td><span class="t-name">Chassis — Mobility</span><span class="t-sub">CH-03 · daily 25</span></td><td>Cass Nolan</td><td><span class="meter" role="img" aria-label="Intensity 2 of 5"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></td><td class="tnum">Open</td></tr>
+          <tr data-day="wed"><td class="mono">Wed</td><td class="t-time">06:00</td><td><span class="t-name">Powerlifting — Novice A</span><span class="t-sub">PL-01 · bench cycle</span></td><td>Mara Voss</td><td><span class="meter" role="img" aria-label="Intensity 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td class="tnum">4</td></tr>
+          <tr data-day="wed"><td class="mono">Wed</td><td class="t-time">09:30</td><td><span class="t-name">Technique Lab</span><span class="t-sub">PL-01 · bar only, filmed</span></td><td>Priya Raman</td><td><span class="meter" role="img" aria-label="Intensity 1 of 5"><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td class="tnum">8</td></tr>
+          <tr data-day="wed"><td class="mono">Wed</td><td class="t-time">12:15</td><td><span class="t-name">Engine Build</span><span class="t-sub">EN-02 · 40 min</span></td><td>Theo Reyes</td><td><span class="meter meter--hi" role="img" aria-label="Intensity 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td class="tnum">2</td></tr>
+          <tr data-day="wed"><td class="mono">Wed</td><td class="t-time">18:30</td><td><span class="t-name">Powerlifting — Novice B</span><span class="t-sub">PL-01 · squat cycle</span></td><td>Priya Raman</td><td><span class="meter" role="img" aria-label="Intensity 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td class="tnum">1</td></tr>
 
-          <tr data-day="thursday"><td>Thursday</td><td class="time">06:00</td><td><strong>Engine 45</strong></td><td>Ines Ferreira</td><td>Conditioning</td><td>45 min</td><td>7 left</td></tr>
-          <tr data-day="thursday"><td>Thursday</td><td class="time">09:30</td><td><strong>Mobility Rebuild</strong></td><td>Ada Whitmore</td><td>Range</td><td>50 min</td><td>3 left</td></tr>
-          <tr data-day="thursday"><td>Thursday</td><td class="time">12:10</td><td><strong>Lunch Lift 40</strong></td><td>Marcus Adeyemi</td><td>Barbell</td><td>40 min</td><td>Full</td></tr>
-          <tr data-day="thursday"><td>Thursday</td><td class="time">17:00</td><td><strong>Platform: Deadlift</strong></td><td>Marcus Adeyemi</td><td>Powerlifting</td><td>80 min</td><td>2 left</td></tr>
-          <tr data-day="thursday"><td>Thursday</td><td class="time">18:15</td><td><strong>HIIT Engine</strong></td><td>Tomasz Nowak</td><td>Conditioning</td><td>45 min</td><td>4 left</td></tr>
-          <tr data-day="thursday"><td>Thursday</td><td class="time">19:30</td><td><strong>Mobility Flow</strong></td><td>Ada Whitmore</td><td>Range</td><td>50 min</td><td>6 left</td></tr>
+          <tr data-day="thu"><td class="mono">Thu</td><td class="t-time">06:30</td><td><span class="t-name">Engine Build</span><span class="t-sub">EN-02 · zone 5 intervals</span></td><td>Jonny Frost</td><td><span class="meter meter--hi" role="img" aria-label="Intensity 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td class="tnum">6</td></tr>
+          <tr data-day="thu"><td class="mono">Thu</td><td class="t-time">08:00</td><td><span class="t-name">Chassis — Range &amp; Reset</span><span class="t-sub">CH-03 · over-40 group</span></td><td>Cass Nolan</td><td><span class="meter" role="img" aria-label="Intensity 2 of 5"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></td><td class="tnum">9</td></tr>
+          <tr data-day="thu"><td class="mono">Thu</td><td class="t-time">12:15</td><td><span class="t-name">Engine Build</span><span class="t-sub">EN-02 · ski focus</span></td><td>Theo Reyes</td><td><span class="meter meter--hi" role="img" aria-label="Intensity 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td class="tnum">3</td></tr>
+          <tr data-day="thu"><td class="mono">Thu</td><td class="t-time">17:00</td><td><span class="t-name">Accessory Hour</span><span class="t-sub">PL-01 · weak-point work</span></td><td>Mara Voss</td><td><span class="meter" role="img" aria-label="Intensity 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td><td class="tnum">5</td></tr>
+          <tr data-day="thu"><td class="mono">Thu</td><td class="t-time">19:15</td><td><span class="t-name">Engine Build</span><span class="t-sub">EN-02 · 40 min</span></td><td>Jonny Frost</td><td><span class="meter" role="img" aria-label="Intensity 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td class="tnum">Full</td></tr>
 
-          <tr data-day="friday"><td>Friday</td><td class="time">05:30</td><td><strong>Engine 45</strong></td><td>Tomasz Nowak</td><td>Conditioning</td><td>45 min</td><td>9 left</td></tr>
-          <tr data-day="friday"><td>Friday</td><td class="time">07:00</td><td><strong>Platform: Bench</strong></td><td>Ada Whitmore</td><td>Powerlifting</td><td>80 min</td><td>3 left</td></tr>
-          <tr data-day="friday"><td>Friday</td><td class="time">12:10</td><td><strong>Lunch Lift 40</strong></td><td>Ines Ferreira</td><td>Barbell</td><td>40 min</td><td>2 left</td></tr>
-          <tr data-day="friday"><td>Friday</td><td class="time">17:30</td><td><strong>Friday Face-Off</strong></td><td>Marcus Adeyemi</td><td>Team conditioning</td><td>50 min</td><td>Full</td></tr>
-          <tr data-day="friday"><td>Friday</td><td class="time">18:45</td><td><strong>Open Yard</strong></td><td>Rae Hussain</td><td>Self-directed</td><td>Open</td><td>Walk-in</td></tr>
+          <tr data-day="fri"><td class="mono">Fri</td><td class="t-time">06:00</td><td><span class="t-name">Chassis — Mobility</span><span class="t-sub">CH-03 · daily 25</span></td><td>Cass Nolan</td><td><span class="meter" role="img" aria-label="Intensity 2 of 5"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></td><td class="tnum">Open</td></tr>
+          <tr data-day="fri"><td class="mono">Fri</td><td class="t-time">06:00</td><td><span class="t-name">Powerlifting — Novice A</span><span class="t-sub">PL-01 · deadlift cycle</span></td><td>Mara Voss</td><td><span class="meter" role="img" aria-label="Intensity 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td class="tnum">2</td></tr>
+          <tr data-day="fri"><td class="mono">Fri</td><td class="t-time">12:15</td><td><span class="t-name">Lunch Express — Squat</span><span class="t-sub">PL-01 · 45 min hard</span></td><td>Priya Raman</td><td><span class="meter" role="img" aria-label="Intensity 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td><td class="tnum">7</td></tr>
+          <tr data-day="fri"><td class="mono">Fri</td><td class="t-time">18:30</td><td><span class="t-name">Powerlifting — Mixed Ability</span><span class="t-sub">PL-01 · top set on board</span></td><td>Mara Voss</td><td><span class="meter meter--hi" role="img" aria-label="Intensity 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td class="tnum">4</td></tr>
+          <tr data-day="fri"><td class="mono">Fri</td><td class="t-time">20:00</td><td><span class="t-name">Open Platform + Yoke</span><span class="t-sub">Members only · bring a belt</span></td><td>Jonny Frost</td><td><span class="mono muted">Self-set</span></td><td class="tnum">n/a</td></tr>
 
-          <tr data-day="saturday"><td>Saturday</td><td class="time">08:00</td><td><strong>Saturday Grind</strong></td><td>Marcus Adeyemi</td><td>Strength + engine</td><td>60 min</td><td>5 left</td></tr>
-          <tr data-day="saturday"><td>Saturday</td><td class="time">09:30</td><td><strong>Platform: Deadlift</strong></td><td>Tomasz Nowak</td><td>Powerlifting</td><td>80 min</td><td>1 left</td></tr>
-          <tr data-day="saturday"><td>Saturday</td><td class="time">11:00</td><td><strong>Family Engine</strong></td><td>Ines Ferreira</td><td>Conditioning</td><td>40 min</td><td>8 left</td></tr>
-          <tr data-day="saturday"><td>Saturday</td><td class="time">13:00</td><td><strong>Mobility Rebuild</strong></td><td>Ada Whitmore</td><td>Range</td><td>50 min</td><td>6 left</td></tr>
+          <tr data-day="sat"><td class="mono">Sat</td><td class="t-time">08:00</td><td><span class="t-name">Long Engine — Sled Lane</span><span class="t-sub">EN-02 · 55 min, low impact</span></td><td>Theo Reyes</td><td><span class="meter" role="img" aria-label="Intensity 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td><td class="tnum">8</td></tr>
+          <tr data-day="sat"><td class="mono">Sat</td><td class="t-time">09:30</td><td><span class="t-name">Peaking Squad</span><span class="t-sub">PL-01 · competition try-outs</span></td><td>Mara Voss</td><td><span class="meter meter--hi" role="img" aria-label="Intensity 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></td><td class="tnum">By invite</td></tr>
+          <tr data-day="sat"><td class="mono">Sat</td><td class="t-time">11:00</td><td><span class="t-name">Open Platform</span><span class="t-sub">Guests welcome with a pass</span></td><td>Floor desk</td><td><span class="mono muted">—</span></td><td class="tnum">n/a</td></tr>
+          <tr data-day="sat"><td class="mono">Sat</td><td class="t-time">13:00</td><td><span class="t-name">Chassis — Long Form</span><span class="t-sub">CH-03 · 45 min</span></td><td>Cass Nolan</td><td><span class="meter" role="img" aria-label="Intensity 2 of 5"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></td><td class="tnum">12</td></tr>
 
-          <tr data-day="sunday"><td>Sunday</td><td class="time">08:30</td><td><strong>Long Row 40</strong></td><td>Ines Ferreira</td><td>Endurance</td><td>40 min</td><td>7 left</td></tr>
-          <tr data-day="sunday"><td>Sunday</td><td class="time">10:00</td><td><strong>Test Day Platform</strong></td><td>Marcus Adeyemi</td><td>Powerlifting</td><td>90 min</td><td>Invite</td></tr>
-          <tr data-day="sunday"><td>Sunday</td><td class="time">11:30</td><td><strong>Mobility &amp; Recovery</strong></td><td>Ada Whitmore</td><td>Range</td><td>50 min</td><td>10 left</td></tr>
-          <tr data-day="sunday"><td>Sunday</td><td class="time">13:00</td><td><strong>Open Yard</strong></td><td>Rae Hussain</td><td>Self-directed</td><td>Open</td><td>Walk-in</td></tr>
+          <tr data-day="sun"><td class="mono">Sun</td><td class="t-time">09:00</td><td><span class="t-name">Chassis — Range &amp; Reset</span><span class="t-sub">CH-03 · 30 min</span></td><td>Cass Nolan</td><td><span class="meter" role="img" aria-label="Intensity 2 of 5"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></td><td class="tnum">Open</td></tr>
+          <tr data-day="sun"><td class="mono">Sun</td><td class="t-time">10:00</td><td><span class="t-name">Recovery Hour</span><span class="t-sub">Sauna · plunge · soft tissue</span></td><td>Ines Duarte</td><td><span class="meter" role="img" aria-label="Intensity 1 of 5"><i class="on"></i><i></i><i></i><i></i><i></i></span></td><td class="tnum">6</td></tr>
+          <tr data-day="sun"><td class="mono">Sun</td><td class="t-time">13:00</td><td><span class="t-name">Open Platform</span><span class="t-sub">Quiet hour · no coaching</span></td><td>Floor desk</td><td><span class="mono muted">—</span></td><td class="tnum">n/a</td></tr>
         </tbody>
       </table>
     </div>
+    <p class="overflow-note" style="margin-top:.6rem">Keyboard: press 1–5 to jump between pages. Swipe the table sideways on narrow screens.</p>
   </section>
 
-  <div class="marquee marquee-ink" aria-hidden="true">
-    <div class="marquee-track">
-      <span>Booking opens seven days ahead</span><span>·</span><span>06:00 Thursday</span><span>·</span><span>Free your spot, not your neighbour&rsquo;s</span><span>·</span>
-      <span>Booking opens seven days ahead</span><span>·</span><span>06:00 Thursday</span><span>·</span><span>Free your spot, not your neighbour&rsquo;s</span><span>·</span>
+  <!-- ============ DAY LOADING ============ -->
+  <section class="section col" aria-labelledby="load-title">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title" id="load-title">How the week loads</h2>
+      <span class="rule" aria-hidden="true"></span>
+      <span class="sec-meta mono">Recovery-first</span>
     </div>
-  </div>
 
-  <!-- ============ HOW BOOKING WORKS ============ -->
-  <section class="section wrap" aria-labelledby="book-h">
-    <p class="eyebrow reveal">House rules</p>
-    <h2 id="book-h" class="h-lg reveal">How holding a space works</h2>
-    <ol class="steps" data-stagger style="margin-top:var(--sp-3)">
-      <li class="reveal">
-        <div>
-          <h3>Book seven days out</h3>
-          <p class="muted">The grid unlocks each Thursday at 06:00 for the following week. Full Forge members get first pick for 24 hours before trial members can book.</p>
-        </div>
-      </li>
-      <li class="reveal">
-        <div>
-          <h3>Cancel ninety minutes ahead</h3>
-          <p class="muted">Cancel inside the window and it counts as a miss. Three misses in a block and your booking window shrinks to three days — it is our way of protecting the class, not punishing you.</p>
-        </div>
-      </li>
-      <li class="reveal">
-        <div>
-          <h3>Waitlist moves you up</h3>
-          <p class="muted">Every full class has a waitlist. When a space frees, the next name is texted automatically and has twenty minutes to claim it before it passes on.</p>
-        </div>
-      </li>
-      <li class="reveal">
-        <div>
-          <h3>Arrive chalked and five early</h3>
-          <p class="muted">Platforms start on the minute. Late arrivals get cut into the warm-up, not the working sets, and the coach will fill you in while you load.</p>
-        </div>
-      </li>
-    </ol>
+    <div class="telemetry telemetry--4">
+      <div><span class="readout-k mono">Mon / Wed / Fri</span><span class="readout-v">PL</span><span class="readout-u mono">Heavy compound</span></div>
+      <div><span class="readout-k mono">Tue / Thu / Sat</span><span class="readout-v">EN</span><span class="readout-u mono">Engine intervals</span></div>
+      <div><span class="readout-k mono">Every morning</span><span class="readout-v">CH</span><span class="readout-u mono">25 min chassis</span></div>
+      <div><span class="readout-k mono">Sunday</span><span class="readout-v">R</span><span class="readout-u mono">Reset only</span></div>
+    </div>
+
+    <p class="prose measure" style="margin-top:1.5rem">Lifting days and engine days never overlap on purpose. If you want both in one week — and most people should — you run PL on Monday, Wednesday, and Friday, and EN on Tuesday and Thursday. Saturday is the optional third engine day; Sunday is not a training day, whatever the board offers.</p>
   </section>
 
-  <!-- ============ OPEN YARD / PT ============ -->
-  <section class="section wrap" aria-labelledby="extra-h">
-    <p class="eyebrow reveal">Outside the class grid</p>
-    <h2 id="extra-h" class="h-lg reveal">Open yard &amp; one-to-one</h2>
-    <div class="stack" style="margin-top:var(--sp-3)">
-      <div class="panel reveal">
-        <h3 class="h-lg">Open yard hours</h3>
-        <p class="muted">Gate-code access for Full Forge and Foundry members. A staff member is on the desk whenever the floor is open; Rae and the evening team cover the last two hours.</p>
-        <dl class="defs">
-          <div><dt>Weekdays</dt><dd>05:30–22:00, desk staffed 06:00–21:00</dd></div>
-          <div><dt>Saturday</dt><dd>07:00–18:00, desk staffed until 17:00</dd></div>
-          <div><dt>Sunday</dt><dd>08:00–14:00, desk staffed until 13:30</dd></div>
-          <div><dt>Holidays</dt><dd>Reduced grid; posted on the yard wall and in the app</dd></div>
-        </dl>
-      </div>
-      <div class="panel reveal">
-        <h3 class="h-lg">One-to-one coaching</h3>
-        <p class="muted">Sixty-minute private sessions with Marcus, Tomasz or Ada, booked in fifteen-minute slots off the grid. Twelve spaces a week, released with the class grid each Thursday.</p>
-        <p class="small"><span class="chip chip-volt">£58 per session</span> <span class="chip">Block of five: £265</span></p>
-      </div>
-      <div class="panel panel-flip reveal">
-        <h3 class="h-lg">Busiest and quietest hours</h3>
-        <p>If you hate queueing for a platform, avoid Monday 17:30, Thursday 17:00 and every 12:10 lunch lift. Wednesday and Sunday mornings are nearly empty, and the rowing bank is always free after 20:00.</p>
-      </div>
+  <!-- ============ BOOKING RULES ============ -->
+  <section class="section col" aria-labelledby="rules-title">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title" id="rules-title">Booking rules</h2>
+      <span class="rule" aria-hidden="true"></span>
+      <span class="sec-meta mono">Four lines</span>
+    </div>
+
+    <ul class="rows">
+      <li><span class="idx">01</span><div><h4>Hold a slot seven days out</h4><p>The board opens at 05:00 each day for the week ahead. Coached classes cap at ten on the platform and sixteen on the engine floor.</p></div></li>
+      <li><span class="idx">02</span><div><h4>Release by two hours before</h4><p>No-show three sessions in a month and your booking privilege moves to sixty-minute notice. We are not precious about it — it stops someone else lifting.</p></div></li>
+      <li><span class="idx">03</span><div><h4>Drop-ins cost twenty-five dollars</h4><p>Pay at the desk, bring a friend for the second session free. Drop-ins get the technique lab, not the peaking squad.</p></div></li>
+      <li><span class="idx">04</span><div><h4>Open platform needs no booking</h4><p>Members with a Gate Pass train whenever the doors are unlocked. Coaching is on the floor Tuesday and Friday evenings.</p></div></li>
+    </ul>
+
+    <div class="telemetry telemetry--3" style="margin-top:1.5rem">
+      <div><span class="readout-k mono">Gate opens</span><span class="readout-v tnum">05:00</span></div>
+      <div><span class="readout-k mono">Last coached class</span><span class="readout-v tnum">19:15</span></div>
+      <div><span class="readout-k mono">Board resets</span><span class="readout-v tnum">Fri 18:00</span></div>
     </div>
   </section>
 
-  <!-- ============ CTA BAND ============ -->
-  <section class="band" aria-labelledby="when-cta">
-    <div class="wrap">
-      <p class="chip chip-rust reveal">Trial includes booking</p>
-      <h2 id="when-cta" class="reveal">Find your slot,<br>then take it.</h2>
-      <p class="reveal">Trial members can book any class on this grid for seven days, free. Pick two that sit comfortably around your work and we will hold both.</p>
-      <div class="hero-actions reveal">
-        <a class="btn btn-ink" href="membership.html#trial">Reserve my trial week</a>
-        <a class="btn btn-ghost" href="programs.html">Check the track first</a>
+  <!-- ============ COACH LEGEND ============ -->
+  <section class="section col" aria-labelledby="legend-title">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <h2 class="sec-title" id="legend-title">Who is coaching</h2>
+      <span class="rule" aria-hidden="true"></span>
+      <span class="sec-meta mono">Six on the floor</span>
+    </div>
+
+    <div class="card-row tilt-persp">
+      <article class="tilt-card card-row--split" data-tilt>
+        <div class="tilt-media"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80" width="600" height="600" loading="lazy" alt="Portrait of head coach Mara Voss."></div>
+        <div class="tilt-body">
+          <span class="tilt-index">Mon · Wed · Fri · Sat</span>
+          <h3>Mara Voss</h3>
+          <p>Powerlifting cycles and the peaking squad. Author of the Forge beginner progression and the coach who will make you put the bar down.</p>
+          <div class="tilt-foot"><a class="link-arrow" href="trainers.html#voss">Coach file<span class="arw" aria-hidden="true">→</span></a><span class="mono muted">11 classes / wk</span></div>
+        </div>
+        <span class="glare" aria-hidden="true"></span>
+      </article>
+
+      <article class="tilt-card card-row--split" data-tilt>
+        <div class="tilt-media"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" width="600" height="600" loading="lazy" alt="Portrait of conditioning lead Theo Reyes."></div>
+        <div class="tilt-body">
+          <span class="tilt-index">Tue · Wed · Thu · Sat</span>
+          <h3>Theo Reyes</h3>
+          <p>Engine block and every heart-rate target on the wall. Runs the Saturday long sled session that members describe as “fair but unpleasant”.</p>
+          <div class="tilt-foot"><a class="link-arrow" href="trainers.html#reyes">Coach file<span class="arw" aria-hidden="true">→</span></a><span class="mono muted">9 classes / wk</span></div>
+        </div>
+        <span class="glare" aria-hidden="true"></span>
+      </article>
+
+      <article class="tilt-card card-row--split" data-tilt>
+        <div class="tilt-media"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80" width="600" height="600" loading="lazy" alt="Portrait of mobility coach Cass Nolan."></div>
+        <div class="tilt-body">
+          <span class="tilt-index">Every morning · Sat · Sun</span>
+          <h3>Cass Nolan</h3>
+          <p>Chassis and range. Teaches the 06:00 mobility block six days a week and the Thursday over-40 group, and will ask you to breathe before you stretch.</p>
+          <div class="tilt-foot"><a class="link-arrow" href="trainers.html#nolan">Coach file<span class="arw" aria-hidden="true">→</span></a><span class="mono muted">10 classes / wk</span></div>
+        </div>
+        <span class="glare" aria-hidden="true"></span>
+      </article>
+    </div>
+    <p style="margin-top:1.5rem"><a class="link-arrow" href="trainers.html">All five coach files<span class="arw" aria-hidden="true">→</span></a></p>
+  </section>
+
+  <section class="cta-band" aria-labelledby="sc-cta">
+    <div class="col">
+      <p class="mono volt">Trial · no card required</p>
+      <h2 id="sc-cta" style="margin-block:.4rem .8rem">Try any class before you join</h2>
+      <p class="muted measure">One free coached session, any day on this board except the peaking squad. Tell us which slot and a coach meets you at the desk.</p>
+      <div class="btn-row" style="margin-top:1.4rem">
+        <a class="btn btn--primary" href="membership.html#trial" data-magnetic>Book the free session<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="2"/></svg></a>
+        <a class="btn btn--ghost" href="membership.html">Compare membership</a>
       </div>
     </div>
   </section>
@@ -217,41 +230,57 @@
 </main>
 
 <footer class="site-foot">
-  <div class="wrap">
-    <p class="big-foot" aria-hidden="true">Forge</p>
+  <div class="col">
     <div class="foot-grid">
-      <section>
-        <h2>Find us</h2>
-        <p class="small muted">Unit 7, Kiln Yard<br>Heathmill Road<br>Manchester M12 5PQ</p>
-      </section>
-      <section>
-        <h2>Hours</h2>
-        <p class="small muted">Weekdays 05:30–22:00<br>Saturday 07:00–18:00<br>Sunday 08:00–14:00</p>
-      </section>
-      <section>
-        <h2>Pages</h2>
-        <ul class="foot-links">
+      <div>
+        <h4>Forge Strength Club</h4>
+        <p class="muted" style="font-size:.92rem;max-width:34ch">Unit 7, Foundry Row<br>Carson Street, Pittsburgh PA 15201</p>
+        <div class="chip-row" style="margin-top:.9rem">
+          <span class="chip">11 platforms</span>
+          <span class="chip">24/7 gate · FORGE+</span>
+          <span class="chip">Est. 2016</span>
+        </div>
+      </div>
+      <nav aria-labelledby="foot-nav">
+        <h4 id="foot-nav">Navigate</h4>
+        <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="programs.html">Programs</a></li>
           <li><a href="schedule.html">Schedule</a></li>
           <li><a href="trainers.html">Coaches</a></li>
           <li><a href="membership.html">Membership</a></li>
         </ul>
-      </section>
-      <section>
-        <h2>Talk to a human</h2>
-        <ul class="foot-links">
-          <li><a href="tel:+441615550142">0161 555 0142</a></li>
-          <li><a href="mailto:desk@forge-strength.co.uk">desk@forge-strength.co.uk</a></li>
+      </nav>
+      <nav aria-labelledby="foot-train">
+        <h4 id="foot-train">Train</h4>
+        <ul>
+          <li><a href="programs.html#powerlifting">Powerlifting</a></li>
+          <li><a href="programs.html#conditioning">Conditioning</a></li>
+          <li><a href="programs.html#mobility">Mobility</a></li>
+          <li><a href="membership.html#bmi">Body-readout tool</a></li>
+          <li><a href="membership.html#trial">Free trial</a></li>
         </ul>
-      </section>
+      </nav>
+      <div>
+        <h4>Floor line</h4>
+        <ul>
+          <li><a href="tel:+14125550173">+1 (412) 555-0173</a></li>
+          <li><a href="mailto:coaches@forgestrength.club">coaches@forgestrength.club</a></li>
+          <li><span class="plain">Mon–Thu 05:00–22:00</span></li>
+          <li><span class="plain">Fri 05:00–21:00</span></li>
+          <li><span class="plain">Sat–Sun 07:00–18:00</span></li>
+        </ul>
+      </div>
     </div>
-    <div class="foot-legal">
-      <p>&copy; <span id="year">2026</span> Forge Strength Lab Ltd</p>
-      <p>First-aid certified staff on every shift</p>
+    <div class="foot-bar">
+      <span>© <span data-year>2026</span> Forge Strength Club</span>
+      <span class="spacer"></span>
+      <span>Gate status: nominal</span>
+      <span>Site build 2.6.1</span>
     </div>
   </div>
 </footer>
 
+<script src="app.js" defer></script>
 <a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
 </html>
