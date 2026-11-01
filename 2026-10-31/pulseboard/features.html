@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Features — Pulseboard Instrument Panels</title>
+<meta name="description" content="Deep dives on the four Pulseboard instrument panels: streaming boards, the versioned metric tree, anomaly alarms, and governed sharing — with limits, latency, and keyboard controls.">
+<meta name="theme-color" content="#4f46e5">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="canonical" href="features.html">
+<script src="app.js" defer></script>
+</head>
+<body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">
+      <span class="brand__mark" aria-hidden="true"><span></span><span></span><span></span></span>
+      Pulseboard
+      <span class="brand__tag">Telemetry&nbsp;OS</span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open navigation menu">
+      <i aria-hidden="true"></i>
+    </button>
+
+    <nav class="nav" id="site-nav" aria-label="Primary">
+      <ul class="nav-list">
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="features.html" aria-current="page">Features</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li class="nav__cta"><a class="btn btn--primary" href="contact.html">Book a live demo</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-cta">
+      <a class="btn btn--ghost" href="pricing.html">See pricing</a>
+      <a class="btn btn--primary" href="contact.html">Book a live demo<span class="btn__key" aria-hidden="true">30 MIN</span></a>
+    </div>
+    <div class="progress-rail" aria-hidden="true"><span></span></div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-head">
+    <div class="wrap">
+      <p class="crumbs"><a href="index.html">Pulseboard</a><span aria-hidden="true">/</span>Features</p>
+      <p class="eyebrow">Instrument catalogue // four panels, one tree</p>
+      <h1>Every panel you can reach from the console.</h1>
+      <p class="lede">Pulseboard ships four deep instruments plus the plumbing underneath them. Read each one the way you would use it: what it watches, what it costs you to set up, and what it says back when something moves.</p>
+      <div class="divider-readout" style="margin-top:30px">
+        <span>Streaming ingest</span><span>Versioned metrics</span><span>Learned baselines</span><span>Governed shares</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 01 — Live boards ============ -->
+  <section class="section" id="realtime" aria-labelledby="rt-h">
+    <div class="wrap">
+      <div class="split">
+        <div class="split__visual split__sticky">
+          <div class="mock">
+            <div class="mock__chrome">
+              <span class="mock__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="mock__path">board · realtime-1</span>
+              <span class="mock__live"><span class="led led--green" aria-hidden="true"></span> Streaming</span>
+            </div>
+            <div class="mock__body">
+              <div class="pane pane--span6">
+                <div class="pane__head"><span class="pane__title">Events per second · 60 min</span><span class="delta" aria-hidden="true">▲ live tail</span></div>
+                <div class="bars" aria-hidden="true">
+                  <i style="--h:44;--i:0"></i><i style="--h:58;--i:1"></i><i style="--h:39;--i:2"></i><i style="--h:66;--i:3"></i><i style="--h:71;--i:4"></i><i style="--h:52;--i:5"></i><i style="--h:79;--i:6"></i><i style="--h:63;--i:7"></i><i style="--h:88;--i:8"></i><i style="--h:70;--i:9"></i><i style="--h:95;--i:10" class="is-peak"></i><i style="--h:74;--i:11"></i><i style="--h:61;--i:12"></i><i style="--h:83;--i:13"></i><i style="--h:56;--i:14"></i><i style="--h:69;--i:15"></i><i style="--h:90;--i:16"></i><i style="--h:66;--i:17"></i><i style="--h:78;--i:18"></i><i style="--h:97;--i:19" class="is-peak"></i>
+                </div>
+              </div>
+              <div class="pane pane--span3">
+                <div class="pane__head"><span class="pane__title">Route health</span></div>
+                <ul class="tele">
+                  <li><span class="led led--green" aria-hidden="true"></span><span>web-sdk v4 · 218 k/min</span><b>ok</b></li>
+                  <li><span class="led led--green" aria-hidden="true"></span><span>ios-sdk v3 · 96 k/min</span><b>ok</b></li>
+                  <li><span class="led led--amber" aria-hidden="true"></span><span>kafka bridge · 41 k/min</span><b>lag 3 s</b></li>
+                </ul>
+              </div>
+              <div class="pane pane--span3 pane--tint">
+                <div class="pane__head"><span class="pane__title">Freshness budget</span></div>
+                <p class="tile__value">≤ 400 ms</p>
+                <p class="tile__note">p95 from click to painted tile, measured at the edge, not the origin.</p>
+              </div>
+            </div>
+            <div class="mock__sweep" aria-hidden="true"></div>
+          </div>
+          <p class="readout" style="margin-top:14px">FIG. 01 — Realtime board, tail window 60 min</p>
+        </div>
+
+        <div class="split__flow">
+          <div>
+            <p class="eyebrow">Panel 01 // live boards</p>
+            <h2 id="rt-h" class="balance">A board that repaints while you watch it.</h2>
+            <p class="lede">Tile any metric onto a shared console and it stays current without a refresh. The tail window, the breakdown, and the filter state live in the URL, so the link you paste is the view your teammate sees.</p>
+          </div>
+
+          <article class="flow-block">
+            <h3>Streaming tail, not a nightly rebuild</h3>
+            <p>Events land on the board the moment they clear validation. You can watch a launch unfold minute by minute instead of waiting for a batch job to confess what happened overnight.</p>
+            <ul class="spec">
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Tail windows</b> — 1 min to 90 days, switched inline with <kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>T</kbd></span></li>
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Pin &amp; freeze</b> — hold one tile while the rest of the board keeps streaming</span></li>
+            </ul>
+            <div class="metric-inline">
+              <div><b>400 ms</b> p95 paint</div>
+              <div><b>96</b> tiles per board</div>
+              <div><b>∞</b> viewers, no seat cost on read-only</div>
+            </div>
+          </article>
+
+          <article class="flow-block">
+            <h3>Layouts that read like a cockpit</h3>
+            <p>Grid snapping, grouped rows, and a density switch keep a 90-tile board legible on a wall display and on a laptop. Named views let support, growth, and platform each open the same board at their own zoom level.</p>
+            <ul class="spec">
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Density modes</b> — comfortable, compact, and display for TV walls</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Annotation lane</b> — drop deploy marks and campaign windows straight on the axis</span></li>
+            </ul>
+          </article>
+
+          <article class="flow-block">
+            <h3>Share a link, not a permission meeting</h3>
+            <p>Every board carries its own access policy. Internal viewers get full drill-down; external stakeholders get a scoped snapshot that expires on the date you set and never leaks row-level identifiers.</p>
+            <ul class="spec">
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Scoped snapshots</b> — expiring links with column-level redaction</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Watermark audit</b> — who opened which view, logged for 400 days</span></li>
+            </ul>
+            <p style="margin-top:20px"><a class="btn btn--ghost" href="pricing.html">See which limits apply per plan</a></p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 — Metric tree ============ -->
+  <section class="section section--alt" id="modeling" aria-labelledby="mt-h">
+    <div class="wrap">
+      <div class="split split--reverse">
+        <div class="split__visual split__sticky">
+          <div class="panel" style="padding:22px">
+            <div class="pane__head">
+              <span class="pane__title">Metric tree · growth-7</span>
+              <span class="chip chip--indigo">v41</span>
+            </div>
+            <ul class="tele">
+              <li><span class="led" aria-hidden="true"></span><span>revenue.mrr</span><b>$284,910</b></li>
+              <li><span class="led" aria-hidden="true"></span><span>↳ mrr.new_business</span><b>41,220</b></li>
+              <li><span class="led" aria-hidden="true"></span><span>↳ mrr.expansion</span><b>18,905</b></li>
+              <li><span class="led led--amber" aria-hidden="true"></span><span>↳ mrr.contraction</span><b>(6,480)</b></li>
+              <li><span class="led led--green" aria-hidden="true"></span><span>activation.rate</span><b>41.7%</b></li>
+              <li><span class="led led--green" aria-hidden="true"></span><span>↳ invite.accepted</span><b>63%</b></li>
+              <li><span class="led led--green" aria-hidden="true"></span><span>churn.logo</span><b>1.9%</b></li>
+            </ul>
+            <hr style="margin:16px 0">
+            <div class="stack">
+              <div class="tile">
+                <p class="tile__label">Diff · v40 → v41</p>
+                <p class="tile__note" style="margin:0">Denominator changed from <span class="mono">sessions.any</span> to <span class="mono">sessions.qualifying</span>. 14 boards affected; 3 alarms relearned their baseline.</p>
+              </div>
+              <div class="tile">
+                <p class="tile__label">Owner</p>
+                <p class="tile__note" style="margin:0">Priya Raghunathan · Platform analytics · review due 12 Nov</p>
+              </div>
+            </div>
+            <p class="readout" style="margin:16px 0 0">SYS // rollback available to v36 · 90-day definition history</p>
+          </div>
+          <p class="readout" style="margin-top:14px">FIG. 02 — One definition, propagated everywhere it is referenced</p>
+        </div>
+
+        <div class="split__flow">
+          <div>
+            <p class="eyebrow">Panel 02 // modeling</p>
+            <h2 id="mt-h" class="balance">Your metrics, versioned like source code.</h2>
+            <p class="lede">The metric tree is the single place where “activated”, “churned”, and “revenue” get their meaning. Boards, funnels, and alarms all read from it, so a number has one owner and one history.</p>
+          </div>
+
+          <article class="flow-block">
+            <h3>Compose instead of re-deriving</h3>
+            <p>Build a metric from other metrics. Ratios, deltas, moving windows, cohort-relative comparisons, and currency normalisation are primitives — not a SQL snippet someone pasted into a spreadsheet in 2023.</p>
+            <ul class="spec">
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Dependency graph</b> — see every parent, child, and consumer before you edit</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Guarded publish</b> — dry-run a change against 90 days of history first</span></li>
+            </ul>
+            <div class="metric-inline">
+              <div><b>86</b> metrics median per workspace</div>
+              <div><b>90 d</b> definition history</div>
+              <div><b>1</b> owner per metric</div>
+            </div>
+          </article>
+
+          <article class="flow-block">
+            <h3>Changes leave a trail you can defend</h3>
+            <p>Every publish records who changed what, why, and which boards moved as a result. When the number in the board deck disagrees with last quarter, the diff answers before anyone sends an email.</p>
+            <ul class="spec">
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Impact preview</b> — “this edit repaints 14 boards and 3 alarms” before you commit</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>One-click rollback</b> — return a tree to any stored version</span></li>
+            </ul>
+          </article>
+
+          <article class="flow-block">
+            <h3>Warehouse-native when you want it</h3>
+            <p>Run Pulseboard definitions as models in your own Snowflake, BigQuery, or Postgres and keep the compute where it already lives. The tree stays the interface; the numbers never leave your warehouse.</p>
+            <ul class="spec">
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Push-down mode</b> — compiled queries against your tables, no copying</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Imported history</b> — bring 18 months of legacy events forward on day one</span></li>
+            </ul>
+            <p style="margin-top:20px"><a class="btn btn--ghost" href="contact.html">Ask about push-down for your warehouse</a></p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 — Alarms ============ -->
+  <section class="section" id="alarms" aria-labelledby="al-h">
+    <div class="wrap">
+      <div class="split">
+        <div class="split__visual split__sticky">
+          <div class="panel" style="padding:22px">
+            <div class="pane__head">
+              <span class="pane__title">Alarm queue · today</span>
+              <span class="chip chip--amber">2 open</span>
+            </div>
+            <div class="stack">
+              <div class="tile">
+                <p class="tile__label"><span class="led led--amber" aria-hidden="true"></span> AL-118 · api.error_rate</p>
+                <p class="tile__value">2.41%</p>
+                <p class="tile__note">Band 0.6–1.8% broken for 11 min. Concentrated in <span class="mono">checkout.v3</span> · us-east-2. Correlated deploy <span class="mono">#4417</span> at 13:58.</p>
+              </div>
+              <div class="tile">
+                <p class="tile__label"><span class="led led--amber" aria-hidden="true"></span> AL-119 · trial_to_paid</p>
+                <p class="tile__value">−9.1 pt</p>
+                <p class="tile__note">Weekday-learned baseline. Cohort entered on the pricing-page change; EU segment unaffected.</p>
+              </div>
+              <div class="tile">
+                <p class="tile__label"><span class="led led--green" aria-hidden="true"></span> AL-114 · nightly_rollup</p>
+                <p class="tile__value">Closed</p>
+                <p class="tile__note">Resolved by <span class="mono">warehouse-bridge</span> at 02:11 UTC. No human needed.</p>
+              </div>
+            </div>
+            <hr style="margin:16px 0">
+            <ul class="tele">
+              <li><span class="led" aria-hidden="true"></span><span>Routing · platform → PagerDuty</span><b>on-call</b></li>
+              <li><span class="led" aria-hidden="true"></span><span>Routing · growth → Slack #pulse</span><b>quiet 22–07</b></li>
+              <li><span class="led" aria-hidden="true"></span><span>Webhook → incident.io</span><b>200</b></li>
+            </ul>
+            <p class="readout" style="margin:16px 0 0">SYS // detection-to-notice 41 s · 9 rules watched</p>
+          </div>
+          <p class="readout" style="margin-top:14px">FIG. 03 — An alert arrives with its own breakdown attached</p>
+        </div>
+
+        <div class="split__flow">
+          <div>
+            <p class="eyebrow">Panel 03 // detection</p>
+            <h2 id="al-h" class="balance">Alarms that hand you the evidence.</h2>
+            <p class="lede">A red number at 3 a.m. is not an insight. Pulseboard alarms learn the shape of each metric, break out the segments that caused the deviation, and name the change that landed in the same window.</p>
+          </div>
+
+          <article class="flow-block">
+            <h3>Baselines that respect your calendar</h3>
+            <p>Monday morning and Monday-night are different animals. Rules learn per-weekday and per-hour behaviour, seasonality around campaigns, and the noise floor of low-volume segments, so quiet metrics stop crying wolf.</p>
+            <ul class="spec">
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Static bands</b> — hard ceilings and floors for compliance and error budgets</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Learned bands</b> — recomputed nightly, explainer included on every breach</span></li>
+            </ul>
+            <div class="metric-inline">
+              <div><b>41 s</b> detect → notify</div>
+              <div><b>62%</b> less noise</div>
+              <div><b>73%</b> closed same day</div>
+            </div>
+          </article>
+
+          <article class="flow-block">
+            <h3>Correlation without a war room</h3>
+            <p>Deploy marks, experiment transitions, campaign starts, and warehouse job states sit on the same axis as the metric. When a rule fires, Pulseboard lists the overlapping events and ranks them by segment fit.</p>
+            <ul class="spec">
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Segment drill</b> — the alert body already contains the worst three breakdowns</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Ack &amp; assign</b> — claim an incident from Slack without opening the console</span></li>
+            </ul>
+          </article>
+
+          <article class="flow-block">
+            <h3>Escalation paths people can predict</h3>
+            <p>Rotations, quiet hours, and severity ladders are configured once and enforced everywhere. Nothing pages a VP at midnight for a metric nobody owns, and nothing sits unacknowledged for six hours either.</p>
+            <ul class="spec">
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Rotations</b> — PagerDuty and native schedules with override windows</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Post-incident export</b> — timeline, metric states, and acknowledgements as Markdown</span></li>
+            </ul>
+            <p style="margin-top:20px"><a class="btn btn--primary" href="contact.html">Walk an alarm rule with an engineer<span class="btn__key" aria-hidden="true">⏎</span></a></p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 — Governance, with photo ============ -->
+  <section class="section section--alt" id="governance" aria-labelledby="gv-h">
+    <div class="wrap">
+      <div class="split split--reverse">
+        <div class="split__visual split__sticky">
+          <figure class="figure" style="margin:0">
+            <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1600&q=80" alt="A product team gathered around two laptops, reviewing a live Pulseboard console together" width="1600" height="1067" loading="lazy">
+            <figcaption class="figure__cap">FIG. 04 — Review of board “growth-7”, Tuesday stand-up</figcaption>
+          </figure>
+          <div class="panel" style="padding:20px;margin-top:18px">
+            <div class="pane__head"><span class="pane__title">Access ledger · last 24 h</span></div>
+            <ul class="tele">
+              <li><span class="led led--green" aria-hidden="true"></span><span>marta.reyes · board.view</span><b>allow</b></li>
+              <li><span class="led led--green" aria-hidden="true"></span><span>analysts-growth · metric.edit</span><b>allow</b></li>
+              <li><span class="led led--amber" aria-hidden="true"></span><span>contractor-ux · raw.export</span><b>deny</b></li>
+              <li><span class="led led--green" aria-hidden="true"></span><span>finance-audit · snapshot.read</span><b>exp 12 nov</b></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="split__flow">
+          <div>
+            <p class="eyebrow">Panel 04 // governance</p>
+            <h2 id="gv-h" class="balance">Security review passes the first time.</h2>
+            <p class="lede">Analytics tools fail audits for the same reasons: vague access, silent exports, and data that quietly crossed a border. Pulseboard treats access as an instrument you read, not a settings page you forget.</p>
+          </div>
+
+          <article class="flow-block">
+            <h3>Access you can enumerate out loud</h3>
+            <p>Roles map to teams and groups rather than individual emails. Every board, metric, and export carries an explicit policy, and one screen answers “who can see revenue?” for your auditor and your legal team.</p>
+            <ul class="spec">
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>SSO &amp; SCIM</b> — Okta, Entra ID, Google Workspace, with enforced JIT</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Column redaction</b> — PII stripped at read time, not at ingest</span></li>
+            </ul>
+            <div class="metric-inline">
+              <div><b>SOC 2</b> Type II, annually</div>
+              <div><b>EU / US</b> region pinning</div>
+              <div><b>400 d</b> audit log retention</div>
+            </div>
+          </article>
+
+          <article class="flow-block">
+            <h3>Privacy by default, provable on request</h3>
+            <p>Identifiers are hashed at the edge, IP addresses never persist to storage, and deletion requests fan out to every replica inside the SLA. Subject-access exports come out of the console rather than a support ticket.</p>
+            <ul class="spec">
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Retention dials</b> — per-stream windows from 30 days to 5 years</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Erasure receipts</b> — signed confirmation once all replicas report back</span></li>
+            </ul>
+          </article>
+
+          <article class="flow-block">
+            <h3>A record that survives the team</h3>
+            <p>Definitions, dashboards, alarm histories, and metric diffs stay readable after the person who built them leaves. New analysts get orientation from the change log instead of an oral history.</p>
+            <ul class="spec">
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Workspace export</b> — full tree, boards, and rules as portable JSON</span></li>
+              <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5 7 13l8-8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><b>Handover pack</b> — generated on offboarding, with owners flagged for orphaned metrics</span></li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Secondary instruments ============ -->
+  <section class="section" id="also" aria-labelledby="also-h">
+    <div class="wrap">
+      <div class="section-head section-head--split">
+        <div>
+          <p class="eyebrow">Auxiliary instruments</p>
+          <h2 id="also-h" class="balance">Six more controls on the same panel.</h2>
+        </div>
+        <p class="ink-2" style="margin:0">They share the metric tree, the keyboard map, and the access model — no separate tool to learn, no second login to lose.</p>
+      </div>
+
+      <div class="grid grid--3">
+        <article class="card tilt">
+          <h3>Experiment Readout</h3>
+          <p>Attach a running experiment to the board and watch its effect on your north-star metric with confidence bands, without exporting to a stats notebook.</p>
+          <p class="readout">⌘ E — attach variant</p>
+          <div class="tilt__glare" aria-hidden="true"></div>
+        </article>
+        <article class="card tilt">
+          <h3>Retention Ledger</h3>
+          <p>Cohorts anchored to arrival day, tracked forward with payback, feature adoption, and expansion all held on one grid.</p>
+          <p class="readout">⌘ L — open ledger</p>
+          <div class="tilt__glare" aria-hidden="true"></div>
+        </article>
+        <article class="card tilt">
+          <h3>Segment Workbench</h3>
+          <p>Build a reusable segment once — plan tier, region, behaviour window — and apply it everywhere, including inside alarms.</p>
+          <p class="readout">⌘ S — new segment</p>
+          <div class="tilt__glare" aria-hidden="true"></div>
+        </article>
+        <article class="card tilt">
+          <h3>Query Notebook</h3>
+          <p>For the day a tile is not enough: a compose-mode notebook that reads the same definitions and stays governed by the same policy.</p>
+          <p class="readout">⌘ J — open notebook</p>
+          <div class="tilt__glare" aria-hidden="true"></div>
+        </article>
+        <article class="card tilt">
+          <h3>Pipeline Doctor</h3>
+          <p>Schema drift, replay lag, and duplicate keys surface here before they corrupt a board. Includes one-click replay of a quarantined batch.</p>
+          <p class="readout">⌘ D — run doctor</p>
+          <div class="tilt__glare" aria-hidden="true"></div>
+        </article>
+        <article class="card tilt">
+          <h3>Board Broadcast</h3>
+          <p>Publish a board to a wall display or a daily digest. Tiles repaint on the display; digests land in email and Slack at 08:00 local.</p>
+          <p class="readout">⌘ ⇧ B — broadcast</p>
+          <div class="tilt__glare" aria-hidden="true"></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Keyboard map ============ -->
+  <section class="section section--tight" id="keyboard" aria-labelledby="kb-h">
+    <div class="wrap">
+      <div class="panel" style="padding:clamp(24px,3vw,38px)">
+        <div class="section-head" style="margin-bottom:26px">
+          <p class="eyebrow">Command deck</p>
+          <h2 id="kb-h">The whole console is reachable without the mouse.</h2>
+          <p class="ink-2" style="margin:0">Operators live in the palette. Every command below works from any board, and <kbd>⌘</kbd> <kbd>K</kbd> lists them with the metric tree as a fallback search.</p>
+        </div>
+        <div class="grid grid--4">
+          <div class="tile">
+            <p class="tile__label">Palette</p>
+            <p style="margin:0"><kbd>⌘</kbd> <kbd>K</kbd></p>
+            <p class="tile__note">Jump to any board, metric, or alarm rule.</p>
+          </div>
+          <div class="tile">
+            <p class="tile__label">Tail window</p>
+            <p style="margin:0"><kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>T</kbd></p>
+            <p class="tile__note">Cycle 1 min → 24 h → 7 d → 90 d.</p>
+          </div>
+          <div class="tile">
+            <p class="tile__label">Slice by</p>
+            <p style="margin:0"><kbd>⌘</kbd> <kbd>1</kbd>…<kbd>6</kbd></p>
+            <p class="tile__note">Break the focused tile by your six saved dimensions.</p>
+          </div>
+          <div class="tile">
+            <p class="tile__label">Snapshot</p>
+            <p style="margin:0"><kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>S</kbd></p>
+            <p class="tile__note">Freeze a dated copy for the review deck.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Availability matrix ============ -->
+  <section class="section section--tight" id="matrix" aria-labelledby="mx-h">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Availability matrix // panel to plan</p>
+        <h2 id="mx-h">Which instruments ship in which plan.</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <caption>Pulseboard panel availability and hard limits by plan</caption>
+          <thead>
+            <tr>
+              <th scope="col">Instrument</th>
+              <th scope="col">Pilot</th>
+              <th scope="col">Operator</th>
+              <th scope="col">Mission</th>
+              <th scope="col">What it means in practice</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Live boards</th>
+              <td class="is-yes">3 boards</td>
+              <td class="is-yes">Unlimited</td>
+              <td class="is-yes">Unlimited</td>
+              <td>Display density and TV broadcast from Operator up.</td>
+            </tr>
+            <tr>
+              <th scope="row">Metric tree</th>
+              <td class="is-yes">25 metrics</td>
+              <td class="is-yes">300 metrics</td>
+              <td class="is-yes">Unlimited</td>
+              <td>Version history: 30 days on Pilot, 90 above.</td>
+            </tr>
+            <tr>
+              <th scope="row">Anomaly alarms</th>
+              <td class="is-no">Static bands</td>
+              <td class="is-yes">Learned bands</td>
+              <td class="is-yes">Learned + custom</td>
+              <td>PagerDuty and webhook routing from Operator up.</td>
+            </tr>
+            <tr>
+              <th scope="row">Retention ledger</th>
+              <td class="is-yes">12 cohorts</td>
+              <td class="is-yes">Unlimited</td>
+              <td class="is-yes">Unlimited</td>
+              <td>Payback and expansion columns need Mission.</td>
+            </tr>
+            <tr>
+              <th scope="row">Push-down warehouse</th>
+              <td class="is-no">—</td>
+              <td class="is-no">—</td>
+              <td class="is-yes">Included</td>
+              <td>Snowflake, BigQuery, Redshift, Postgres.</td>
+            </tr>
+            <tr>
+              <th scope="row">SSO &amp; SCIM</th>
+              <td class="is-no">—</td>
+              <td class="is-yes">SSO only</td>
+              <td class="is-yes">SSO + SCIM</td>
+              <td>Mission adds enforced JIT and group sync.</td>
+            </tr>
+            <tr>
+              <th scope="row">Data residency</th>
+              <td class="is-yes">EU or US</td>
+              <td class="is-yes">EU or US</td>
+              <td class="is-yes">Pinned per workspace</td>
+              <td>Mission adds in-region support engineers.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:22px"><a class="btn btn--primary" href="pricing.html">See full pricing and limits<span class="btn__key" aria-hidden="true">↵</span></a></p>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="section section--tight" aria-labelledby="fcta-h">
+    <div class="wrap">
+      <div class="cta">
+        <div>
+          <p class="eyebrow">Handshake // instrument test</p>
+          <h2 id="fcta-h" class="balance">Try any panel on your own event data.</h2>
+          <p style="margin-top:16px">Pick the panel you are least sure about. We will load a copy of your last 30 days into a sandbox workspace, wire one alarm, and you decide whether it earns its place.</p>
+        </div>
+        <div class="cta__side">
+          <a class="btn btn--primary btn--lg" href="contact.html">Request a sandbox<span class="btn__key" aria-hidden="true">⏎</span></a>
+          <a class="btn btn--ghost btn--lg" href="about.html">Meet the team behind it</a>
+          <p class="readout">Sandbox torn down after 14 days · no card, no drip</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="index.html">
+          <span class="brand__mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          Pulseboard
+          <span class="brand__tag">Telemetry&nbsp;OS</span>
+        </a>
+        <p class="footer-note">One instrument panel for the product numbers your team has to defend. Built in Rotterdam and Toronto.</p>
+        <ul class="chip-row" aria-label="Compliance">
+          <li><span class="chip chip--soft">SOC 2 Type II</span></li>
+          <li><span class="chip chip--soft">GDPR</span></li>
+          <li><span class="chip chip--soft">ISO 27001</span></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2>Console</h2>
+        <ul>
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="index.html#how">How the loop runs</a></li>
+          <li><a href="index.html#capabilities">Instrument catalogue</a></li>
+          <li><a href="features.html">Feature deep dives</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2>Plans</h2>
+        <ul>
+          <li><a href="pricing.html">Pricing &amp; limits</a></li>
+          <li><a href="pricing.html#compare">Compare tiers</a></li>
+          <li><a href="pricing.html#faq">Billing questions</a></li>
+          <li><a href="contact.html">Request a demo</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2>Company</h2>
+        <ul>
+          <li><a href="about.html">About Pulseboard</a></li>
+          <li><a href="about.html#story">Our story</a></li>
+          <li><a href="about.html#team">The crew</a></li>
+          <li><a href="contact.html">Contact &amp; support</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-status">
+      <span><span class="led" aria-hidden="true"></span> All systems nominal</span>
+      <span>Fleet p95 · 412 ms</span>
+      <span>Ingest · 2.4 B events / day</span>
+      <a href="contact.html">Talk to an engineer</a>
+    </div>
+
+    <div class="footer-bottom">
+      <p style="margin:0">© <span id="year">2026</span> Pulseboard B.V. · Keizergracht 118, Rotterdam</p>
+      <ul>
+        <li><a href="about.html">Privacy posture</a></li>
+        <li><a href="contact.html">Security contact</a></li>
+        <li><a href="pricing.html">Fair-use terms</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<a href="https://intertermux-code.github.io/daily-sites/" target="_blank" rel="noopener" translate="no" style="position:fixed;bottom:14px;right:14px;z-index:99999;font:12px/1.4 system-ui,sans-serif;background:rgba(17,17,17,.85);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);box-shadow:0 4px 14px rgba(0,0,0,.25)">Built by Clawdyy · Get a site like this →</a></body>
+</html>
